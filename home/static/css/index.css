@@ -35,7 +35,7 @@ img {
   border: none;
   vertical-align: top;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 input,
 textarea {
@@ -55,14 +55,105 @@ body {
 }
 #fly-main .main {
   box-sizing: border-box;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
 }
 #fly-main .main .fly-header {
+  flex-grow: 0;
   width: 100vw;
-  height: 6vh;
-  border: 1px solid red;
+  height: 50px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-right: none;
+  margin-top: 1px;
+  box-sizing: content-box;
+}
+#fly-main .main .fly-header div.fly-nav {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  -webkit-perspective: 800px;
+}
+#fly-main .main .fly-header div.fly-nav a {
+  -webkit-transform-origin: left;
+  transform-origin: left;
+  -webkit-transform: rotateY(-180deg);
+  transform: rotateY(-180deg);
+  backface-visibility: hidden;
+  background: #000;
+}
+#fly-main .main .fly-header div.fly-nav a.active {
+  -webkit-transition: 0.8s;
+  transition: 0.8s;
+  -webkit-transition-timing-function: cubic-bezier(0, 0.98, 0.68, 1.04);
+  transition-timing-function: cubic-bezier(0, 0.98, 0.68, 1.04);
+  background: #fff;
+  -webkit-transform: rotateY(0);
+  transform: rotateY(0);
+}
+#fly-main .main .fly-header div.fly-nav:nth-of-type(2) a {
+  -webkit-transition-delay: 400ms;
+  transition-delay: 400ms;
+}
+#fly-main .main .fly-header div.fly-nav:nth-of-type(3) a {
+  -webkit-transition-delay: 800ms;
+  transition-delay: 800ms;
+}
+#fly-main .main .fly-header div.fly-nav:nth-of-type(4) a {
+  -webkit-transition-delay: 1200ms;
+  transition-delay: 1200ms;
+}
+#fly-main .main .fly-header div.fly-nav:nth-of-type(5) a {
+  -webkit-transition-delay: 1600ms;
+  transition-delay: 1600ms;
+}
+#fly-main .main .fly-header div {
+  text-align: center;
+  line-height: 50px;
+  flex-grow: 1;
+  position: relative;
+}
+#fly-main .main .fly-header div:nth-of-type(7) {
+  flex-grow: 5;
+}
+#fly-main .main .fly-header div a {
+  display: block;
+  color: #000;
+  left: 0;
+  top: 0;
+  font-size: 18px;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#fly-main .main .fly-header div a:before {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, 0.2)), color-stop(0.5, #cccccc), to(rgba(204, 204, 204, 0.2)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+}
+#fly-main .main .fly-header div.fly-logo {
+  flex-grow: 0;
+  width: 180px !important;
+  text-align: center;
+  line-height: 50px;
+}
+#fly-main .main .fly-header div.fly-logo img {
+  height: 100%;
+  width: auto;
 }
 #fly-main .main .fly-content {
   width: 100vw;
-  height: 94vh;
-  border: 1px solid #0ff;
+  flex-grow: 10;
 }

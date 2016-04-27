@@ -48,6 +48,9 @@ const utilMethods = {
         return Array.from(obj.classList).indexOf(className) > -1;
 
     },
+    addClass(obj,className){
+        obj.classList.add(className)
+    },
     index(elems, parent, selector) {
         var parent = parent || elems.parentNode,
             cindex = - 1,

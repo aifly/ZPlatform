@@ -5,7 +5,6 @@ html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h
 a {
   text-decoration: none;
 }
-
 li {
   list-style: none;
 }
@@ -18,7 +17,7 @@ img {
   border: none;
   vertical-align: top;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
 input, textarea {
@@ -73,6 +72,10 @@ input, textarea {
   -webkit-transition: @value;
   transition: @value;
 }
+.transitionDelay(@time:0){
+  -webkit-transition-delay: @time;
+  transition-delay: @time;
+}
 
 .transitionTimingFunction(@value:cubic-bezier(1, -0.025, 1, 0.865)) {
   -webkit-transition-timing-function: @value;
@@ -109,10 +112,18 @@ input, textarea {
   -webkit-box-orient: @value;
 }
 
-.displayFlex(){
+.displayFlex(@val:column){
   display: flex;
   display: -webkit-flex;
+  flex-flow: @val;
 }
+
+.fly-v-gradient-line(@minOpacity:.2,@maxOpacity:1){
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, @minOpacity)), color-stop(0.5, rgba(204, 204, 204, @maxOpacity)), to(rgba(204, 204, 204, @minOpacity)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, @minOpacity), rgba(204, 204, 204, @maxOpacity) 50%, rgba(204, 204, 204, @minOpacity));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, @minOpacity), rgba(204, 204, 204, @maxOpacity) 50%, rgba(204, 204, 204, @minOpacity));
+}
+
 
   body {
   font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
@@ -123,17 +134,91 @@ input, textarea {
 #fly-main{
   .main{
     box-sizing: border-box;
-    @headerH:6vh;
+    @headerH:50px;
+    width:100vw;
+    height:100vh;
+    .displayFlex();
     .fly-header{
+      flex-grow: 0;
       width:100vw;
       height:@headerH;
-      border:1px solid red;
-
+      .displayFlex(row);
+      border: 1px solid #ccc;
+      border-left: none;
+      border-right:none;
+      margin-top:1px;
+      box-sizing: content-box;
+      div.fly-nav{
+        .transform3d;
+        a{
+          .transform_origin(left);
+          .transform(rotateY(-180deg));
+          backface-visibility: hidden;
+          background: #000;
+          &.active{
+            .transition(.8s);
+            .transitionTimingFunction(cubic-bezier(0, 0.98, 0.68, 1.04));
+            background: #fff;
+            .transform(rotateY(0));
+          }
+        }
+      }
+      @time:400ms;
+      div.fly-nav:nth-of-type(2) a{
+        .transitionDelay(@time);
+      }
+      div.fly-nav:nth-of-type(3) a{
+        .transitionDelay(@time*2);
+      }
+      div.fly-nav:nth-of-type(4) a{
+        .transitionDelay(@time*3);
+      }
+      div.fly-nav:nth-of-type(5) a{
+        .transitionDelay(@time*4);
+      }
+      div{
+        text-align: center;
+        line-height:@headerH;
+        flex-grow: 1;
+        &:nth-of-type(7){
+          flex-grow: 5;
+        }
+        .position(r);
+        a{
+          display: block;
+          color:#000;
+          left:0;
+          top:0;
+          font-size:18px;
+          width: 100%;
+          height:100%;
+          .position(r);
+          &:before{
+            content: '';
+            .position(a);
+            right:0;
+            top:0;
+            width:1px;
+            height:100%;
+            .fly-v-gradient-line;
+          }
+        }
+      }
+      div.fly-logo{
+        flex-grow: 0;
+        width:180px !important;
+        //background:#a40b16;
+        text-align: center;
+        line-height:@headerH;
+        img{
+          height:100%;
+          width:auto;
+        }
+      }
     }
     .fly-content{
       width:100vw;
-      height: 100vh - @headerH;
-      border:1px solid #0ff;
+      flex-grow: 10;
     }
   }
 }

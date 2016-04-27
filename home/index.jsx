@@ -14,23 +14,30 @@ class MainUI extends React.Component{
         return (
             <section className="main">
                 <header className="fly-header">
-                    <div>logo</div>
-                    <div>logo</div>
-                    <div>logo</div>
-                    <div>logo</div>
-                    <div>logo</div>
-                    <div>logo</div>
-                    <div>logo</div>
-                    <div>logo</div>
-                    <div>logo</div>
-                    <div>logo</div>
-                    <div>logo</div>
+                    <div className="fly-logo"><img src="./static/images/logo.png" alt=""/></div>
+                    <div className="fly-nav"><a href="#">控制平台</a></div>
+                    <div className="fly-nav"><a href="#">产品与服务</a></div>
+                    <div className="fly-nav"><a href="#">系统管理</a></div>
+                    <div className="fly-nav"><a href="#">项目洽谈</a></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </header>
                 <article className="fly-content">
-
+                   adsd
                 </article>
             </section>
         )
+    }
+    componentDidMount(){
+        setTimeout(()=>{
+            $$('.fly-nav a').forEach((a)=>{
+                utilMethods.addClass(a,'active');
+            });
+        },0)
     }
 }
 
