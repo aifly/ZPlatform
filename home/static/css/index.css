@@ -1,0 +1,68 @@
+html,
+body,
+div,
+p,
+ul,
+li,
+ol,
+dl,
+dt,
+dd,
+header,
+footer,
+video,
+h1,
+h2,
+h3,
+h4,
+canvas,
+section,
+figure {
+  padding: 0;
+  margin: 0;
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+html,
+body {
+  height: 100%;
+}
+img {
+  border: none;
+  vertical-align: top;
+  width: 100%;
+  height: 100%;
+}
+input,
+textarea {
+  outline: none;
+}
+.transform3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  -webkit-perspective: 800px;
+}
+body {
+  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  height: 100%;
+  overflow: hidden;
+}
+#fly-main .main {
+  box-sizing: border-box;
+}
+#fly-main .main .fly-header {
+  width: 100vw;
+  height: 6vh;
+  border: 1px solid red;
+}
+#fly-main .main .fly-content {
+  width: 100vw;
+  height: 94vh;
+  border: 1px solid #0ff;
+}
