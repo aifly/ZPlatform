@@ -3,8 +3,8 @@ var config = {
         'index': "./index.jsx"
     },
     output: {
-        publickPath: './home/static/js',
-        path: './home/static/js',
+        publickPath: './static/js',
+        path: './static/js',
         filename: "[name].js",
         chunkFilename: "[name].js"
     },
