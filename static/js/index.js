@@ -20544,7 +20544,7 @@
 	                                    ),
 	                                    _react2['default'].createElement(
 	                                        _antd.Menu.Item,
-	                                        { key: '/ZPlatform/richimg/' },
+	                                        { key: 'http://aifly.github.io/ZPlatform/richimg/' },
 	                                        _react2['default'].createElement(_antd.Icon, { type: 'picture', style: { marginRight: '32px' } }),
 	                                        '富图片'
 	                                    )
