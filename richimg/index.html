@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>富图片</title>
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+
+    <!--<link rel="stylesheet" href="static/css/index.min.css"/>
+    <link rel="stylesheet" href="static/css/jquery.minicolors.min.css">-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">-->
+    <style>
+        @-webkit-keyframes loading {
+            to{opacity: 0}
+        }
+        #loading{
+            position: absolute;
+            left:0;
+            top:0;
+            font-size: 18px;;
+        }
+        #loading span{
+            margin:0 1px;
+            -webkit-animation: loading .5s linear 100;
+        }
+        #loading span:nth-of-type(2){
+            margin:0 1px;
+            -webkit-animation: loading 0.5s .5s linear 100;
+        }
+        #fly-main{
+            transition:1s opacity;
+            -webkit-transition:1s opacity;
+        }
+    </style>
+</head>
+<body>
+    <header hidden class="fly-header">
+         头部
+    </header>
+
+    <div id="loading" style="color:red;">
+        加载中,请稍后.<span>.</span><span>.</span>
+    </div>
+
+    <section class="fly-main" style="opacity: 0;" id="fly-main">
+        <div class='fly-left-aside' id="fly-edit-prop-pannel">
+            <div class="fly-edit-pic">
+                <span>编辑图片</span>
+                <div></div>
+            </div>
+            <div class="fly-pannel-title" id="fly-pannel-title">
+
+            </div>
+            <div class="fly-widget-prop-setting-container" id="fly-widget-prop-setting-container">
+
+            </div>
+
+            <div class="fly-widget-prop-setting-container" id="fly-dialog">
+
+            </div>
+
+            <div id="fly-bottom-container"></div>
+        </div>
+        <div class='fly-right-aside' id="fly-edit-content-pannel">
+
+        </div>
+    </section>
+
+
+    <script src="build/bundle.js" onload="var loading = document.getElementById('loading');loading.parentNode.removeChild(loading);document.getElementById('fly-main').style.opacity=1"></script>
+
+</body>
+</html>

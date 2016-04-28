@@ -1,0 +1,32 @@
+{
+  "name": "knowledge",
+  "version": "1.0.0",
+  "description": "知识产权局网站",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --hot --inline"
+  },
+  "keywords": [
+    "es6"
+  ],
+  "dependencies": {
+    "antd": "^0.12.16",
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
+    "core-decorators": "^0.12.0",
+    "css-loader": "^0.23.0",
+    "file-loader": "^0.8.5",
+    "jquery": "^2.2.3",
+    "less": "^2.5.3",
+    "less-loader": "^2.2.2",
+    "react": "^15.0.1",
+    "react-dom": "^15.0.1",
+    "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.14",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "author": "fly",
+  "license": "ISC"
+}
