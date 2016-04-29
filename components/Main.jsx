@@ -1,6 +1,6 @@
 import React from 'react';
-import {Row,Col,Icon,Menu} from 'antd';
-import 'antd/lib/index.css';
+import {Row,Col,Icon,Menu,Input,Badge} from 'antd';
+import '../static/css/antd.css';
 const SubMenu = Menu.SubMenu;
 import {utilMethods,_$,$$} from '../utilMethod.es6';
 
@@ -41,7 +41,7 @@ export  default class MainUI extends React.Component {
         return (
             <section className="main">
                 <header className="fly-header">
-                    <div className="fly-logo"><img src="./static/images/logo.png" alt=""/></div>
+                    <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
                     <div className="fly-nav"><a href="#">系统管理</a></div>
@@ -49,9 +49,15 @@ export  default class MainUI extends React.Component {
                     <div></div>
                     <div></div>
                     <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div className="fly-search icon">
+                        <div><Icon type="search"/></div>
+                    </div>
+                    <div className="fly-msg icon">
+                        <Badge count={1} overflowCount={9}>
+                            <Icon type="mail"/>
+                        </Badge>
+                        </div>
+                    <div>ilinten@qq.com</div>
                 </header>
                 <article className="fly-content">
                     <section className={this.state.defaultClass}>

@@ -47,6 +47,11 @@ textarea {
   perspective: 800px;
   -webkit-perspective: 800px;
 }
+.fly-h-gradient-line {
+  background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, 0.2)), color-stop(0.5, #cccccc), to(rgba(204, 204, 204, 0.2)));
+  background: -moz-linear-gradient(left, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  background: -ms-linear-gradient(left, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+}
 body {
   font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -232,4 +237,44 @@ body {
 }
 #fly-main .main .fly-menu-bottom:hover {
   background: #99071e;
+}
+#fly-main .main .icon {
+  cursor: pointer;
+  font-size: 22px;
+  width: 30px;
+  color: #99071e;
+}
+#fly-main .main .icon:before,
+#fly-main .main .icon:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, 0.2)), color-stop(0.5, #cccccc), to(rgba(204, 204, 204, 0.2)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+}
+#fly-main .main .icon:after {
+  left: 0;
+}
+#fly-main .main .fly-search {
+  font-weight: bold;
+  padding: 0 10px;
+}
+#fly-main .main .fly-search div {
+  display: inline-block;
+  padding: 0 10px;
+}
+#fly-main .main .fly-search i {
+  display: inline-block;
+  padding: 10px;
+  box-sizing: border-box;
+}
+#fly-main .main .fly-search input {
+  border-radius: 0;
+}
+#fly-main .main .fly-search:before {
+  opacity: 0;
 }

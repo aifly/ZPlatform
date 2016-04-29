@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --hot --inline"
+    "start": "webpack-dev-server --hot --inline",
+    "build-home":"webpack --config webpack.home.config.js",
+    "home-server":"webpack-dev-server --hot --inline --config webpack.home.config.js"
   },
   "keywords": [
     "es6"
