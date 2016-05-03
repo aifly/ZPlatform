@@ -1,0 +1,123 @@
+.position(a) {
+  position: absolute;
+}
+
+.position(r) {
+  position: relative;
+}
+
+.position(f) {
+  position: fixed;
+}
+
+.opacity(@value:0) {
+  opacity: @value;
+}
+
+.transform(@value) {
+  -webkit-transform: @value;
+  transform: @value;
+}
+
+.transformOrigin(@value) {
+  -webkit-transform-origin: @value;
+  transform-origin: @value;
+}
+
+.background(@bg) {
+  background: @bg;
+}
+
+.backgroundSize(@value:cover) {
+  background-size: @value;
+}
+
+.transition_transform(@value) {
+  -webkit-transition: -webkit-transform @value;
+  transition: transform @value;
+}
+
+.transform_origin(@value:center) {
+  -webkit-transform-origin: @value;
+  transform-origin: @value;
+}
+
+.transition(@value) {
+  -webkit-transition: @value;
+  transition: @value;
+}
+
+.transitionTimingFunction(@value:cubic-bezier(1, -0.025, 1, 0.865)) {
+  -webkit-transition-timing-function: @value;
+  transition-timing-function: @value;
+}
+
+.transform(@value) {
+  -webkit-transform: @value;
+  transform: @value;
+}
+
+.background(@bg) {
+  background: @bg;
+}
+
+.backgroundSize(@value:cover) {
+  background-size: @value;
+}
+
+.animation(@value) {
+  -webkit-animation: @value;
+  animation: @value;
+}
+
+.transform3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  -webkit-perspective: 800px;
+}
+
+.displayBox(@value) {
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: @value;
+}
+.displayFlex(@val:column){
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: @val;
+}
+
+.borderRadius(@val:50%){
+  -webkit-border-radius: @val;
+  border-radius: @val;
+}
+@baseColor:#99071e;
+.fly-progress{
+  width:100%;
+  height:40px;
+  line-height:20px;
+  .displayFlex(row);
+  .fly-progress-bar{
+
+    flex-grow: 97;
+    height:20px;
+    margin-left:10px;
+    border:1px solid #b5b5b5;
+    .borderRadius(5px);
+    span{
+      .borderRadius(5px);
+      display: inline-block;
+      background:#00ada7;
+      width:10%;
+      height:100%;
+      .transition(.4s);
+    }
+  }
+  span.fly-progress-label{
+    flex-grow: 3;
+    display: inline-block;
+
+  }
+}
