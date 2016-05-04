@@ -233,13 +233,13 @@ body {
   cursor: pointer;
   z-index: 10;
 }
-.fly-user .module-container.active:before {
+.fly-user .module-container .ar.active:before {
   content: '';
   border-color: #00ada7;
   border-width: 3px;
   box-sizing: content-box;
 }
-.fly-user .module-container.error-active:before {
+.fly-user .module-container .ar.error-active:before {
   content: '';
   border-color: red;
   border-width: 3px;
