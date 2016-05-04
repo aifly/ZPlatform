@@ -57,7 +57,7 @@ body {
   font-size: 14px;
   height: 100%;
   overflow: hidden;
-  background: #f1f1f1;
+  background: #f1f1f1 !important;
 }
 #fly-main {
   height: 100%;
@@ -95,7 +95,7 @@ body {
   flex-grow: 1;
   height: 100%;
   width: 400px;
-  background: #eee;
+  background: #fff;
 }
 .fly-user figure:nth-of-type(2),
 .fly-office figure:nth-of-type(2) {
@@ -205,6 +205,95 @@ body {
 }
 .fly-user .user-count div.u-info:nth-of-type(3) a {
   font-size: .8vw;
+}
+.fly-user .module-container {
+  width: 96%;
+  height: 96%;
+  margin: 1% auto;
+  overflow: hidden;
+  position: relative;
+}
+.fly-user .module-container .ar {
+  position: absolute;
+  width: 2.3vw;
+  height: 2.3vw;
+}
+.fly-user .module-container .ar:before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 8px;
+  width: 1.3vw;
+  height: 1.3vw;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  border: 1px solid #999;
+  border-right: none;
+  border-top: none;
+  cursor: pointer;
+  z-index: 10;
+}
+.fly-user .module-container.active:before {
+  content: '';
+  border-color: #00ada7;
+  border-width: 3px;
+  box-sizing: content-box;
+}
+.fly-user .module-container.error-active:before {
+  content: '';
+  border-color: red;
+  border-width: 3px;
+  box-sizing: content-box;
+}
+.fly-user .module-container .ar-right {
+  right: 10px;
+  left: auto;
+  top: 0;
+}
+.fly-user .module-container .ar-right:before {
+  content: "";
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+.fly-user .module-container .module-item-c {
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
+  width: 100%;
+  height: 220px;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+.fly-user .module-container .module-item-c article {
+  flex-grow: 1;
+  text-align: center;
+}
+.fly-user .module-container .module-item-c article .title {
+  font-size: 1.2vw;
+  color: #999;
+  height: 40px;
+  line-height: 40px;
+  position: relative;
+}
+.fly-user .module-container .module-item-c article .title.active:after {
+  content: "";
+  position: absolute;
+  right: -5px;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, 0.2)), color-stop(0.5, #cccccc), to(rgba(204, 204, 204, 0.2)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+}
+.fly-user .module-container .module-item-c article .store {
+  margin-top: 30px;
+  font-size: 1.1vw;
+  height: 40px;
+  line-height: 40px;
+}
+.fly-user .module-container .module-item-c article .store span {
+  border-bottom: 2px solid #ec6c56;
 }
 .fly-office .office {
   flex-grow: 2;

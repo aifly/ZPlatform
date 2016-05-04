@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './progress.min.css';
 
-export default class FlyProgress extends React.Component {
+export default class ZmitiProgress extends React.Component {
     constructor(args) {
         super(...args);
         this.state = {

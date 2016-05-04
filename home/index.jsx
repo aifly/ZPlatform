@@ -2,10 +2,12 @@ import './static/css/index.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {utilMethods,_$,$$} from '../utilMethod.es6';
-import {Progress} from 'antd';
+import {Progress,Tabs} from 'antd';
+const TabPane = Tabs.TabPane;
 const ProgressLine = Progress.Line;
+import ZmitiTab from '../components/tab.jsx';
 import 'antd/lib/index.css';
-import FlyProgress from '../components/Progress.jsx';
+import ZmitiProgress from '../components/Progress.jsx';
 class MainUI extends React.Component{
     constructor(args){
         super(...args);
@@ -17,6 +19,7 @@ class MainUI extends React.Component{
             maxUsersCount:10
         }
     }
+
     render(){
         return(
             <div className="main">
@@ -28,7 +31,7 @@ class MainUI extends React.Component{
                         <figure className="user">
                             <div className="user-info">
                                 <aside className="user-head">
-                                    <div className="head"><img src='./static/images/user.png' alt=""/></div>
+                                    <div className="head"><img draggable="false" src='./static/images/user.png' alt=""/></div>
                                 </aside>
                                 <aside className="user-content">
                                     <div><span style={{color:'#f90'}}>早上好！</span><span className="current-user">@{this.state.currentUser}</span></div>
@@ -37,7 +40,7 @@ class MainUI extends React.Component{
                                 </aside>
                             </div>
                             <div className="capacity">
-                                <FlyProgress label="总容量" unit={1024} maxVal={1}></FlyProgress>
+                                <ZmitiProgress label="总容量" unit={1024} maxVal={1}></ZmitiProgress>
                                 <div className="dilatation">
                                     <a href="#">扩充&gt;&gt;</a>
                                 </div>
@@ -54,7 +57,7 @@ class MainUI extends React.Component{
                             </div>
                         </figure>
                         <figure className="module">
-                            2
+                            <ZmitiTab></ZmitiTab>
                         </figure>
                         <figure className="msg">
                              2
@@ -76,3 +79,11 @@ class MainUI extends React.Component{
 }
 
 ReactDOM.render(<MainUI></MainUI>,_$("#fly-main"));
+
+/*
+((document,window)=>{
+    let zmitiTab = new ZmitiTab();
+    window.addEventListener('resize',()=>{
+
+    });
+})(document,window)*/

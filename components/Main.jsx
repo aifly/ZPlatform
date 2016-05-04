@@ -12,6 +12,7 @@ export  default class MainUI extends React.Component {
             defaultClass: "fly-left-aside",
             isOpen: true,
             current: '3',
+            currentAcc:'iLinten@qq.com',
             frameSrc: './home/index.html'
         }
     }
@@ -57,7 +58,7 @@ export  default class MainUI extends React.Component {
                             <Icon type="mail"/>
                         </Badge>
                         </div>
-                    <div>ilinten@qq.com</div>
+                    <div className="curAcc">{this.state.currentAcc}</div>
                 </header>
                 <article className="fly-content">
                     <section className={this.state.defaultClass}>

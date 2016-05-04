@@ -79,6 +79,9 @@ body {
   margin-top: 1px;
   box-sizing: content-box;
 }
+#fly-main .main .fly-header .curAcc {
+  color: #99071e;
+}
 #fly-main .main .fly-header div.fly-nav {
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
