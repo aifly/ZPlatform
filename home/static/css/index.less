@@ -187,6 +187,7 @@ body {
 .fly-user{
 
   .user-info{
+
     flex-grow: 1;
     .displayFlex(row);
     width:80%;
@@ -290,8 +291,8 @@ body {
   .module-container{
 
     width:96%;
-    height:96%;
-    margin:1% auto;
+    height:90%;
+    margin:3% auto;
     overflow: hidden;
     .position(r);
     .ar{
@@ -368,6 +369,80 @@ body {
           height:40px;
           line-height:40px;
           span{border-bottom: 2px solid #ec6c56}
+        }
+      }
+    }
+
+    .other-link{
+      .position(r);
+
+      &:before{
+        content: '';
+        .position(a);
+        width:100%;
+        height:1px;
+        .fly-h-gradient-line();
+        left:0;
+        top:0;
+      }
+      ul{
+        .displayFlex(row);
+        .position(a);
+        left:30px;
+        top:20px;
+        li{
+          padding:3px 10px;
+          a{
+            color:#00ada7;
+            .transition(.2s);
+            display: block;
+            width:100%;
+            height:100%;
+            &:hover{
+              color:@baseColor;
+              .transform(scale(1.3));
+            }
+          }
+
+          .position(r);
+          &:not(:last-of-type):before{
+            content: '';
+            .fly-v-gradient-line;
+            .position(a);
+            width:1px;
+            height:100%;
+            right:0;
+            top:0;
+          }
+        }
+      }
+    }
+  }
+
+  .msg{
+    .product-title{
+      width:90%;
+      margin:10px auto;
+      font-weight: normal;
+      color: @baseColor;
+    }
+    .product-item{
+      width:80%;
+      margin:20px auto;
+      .displayFlex(row);
+      .product-thum{
+        width:60px;
+        height:60px;
+        border:1px solid #ccc;
+        margin-right:20px;
+      }
+      .product-name{
+        h4{
+          font-size:16px;
+          margin-top:2px;
+        }
+        p{
+          margin-top:10px;
         }
       }
     }

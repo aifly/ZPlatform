@@ -86,7 +86,7 @@ export  default class MainUI extends React.Component {
                                 </SubMenu>
                                 <SubMenu key="sub4"
                                          title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>个人中心</span></span>}>
-                                    <Menu.Item key="9"><Icon type="user" style={{marginRight:'32px'}}/>账号管理</Menu.Item>
+                                    <Menu.Item key="../personalAcc/"><Icon type="user" style={{marginRight:'32px'}}/>账号管理</Menu.Item>
                                     <Menu.Item key="10"><Icon type="customerservice" style={{marginRight:'32px'}}/>续费管理</Menu.Item>
                                     <Menu.Item key="11"><Icon type="edit" style={{marginRight:'32px'}}/>办公系统</Menu.Item>
                                 </SubMenu>

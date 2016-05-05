@@ -208,8 +208,8 @@ body {
 }
 .fly-user .module-container {
   width: 96%;
-  height: 96%;
-  margin: 1% auto;
+  height: 90%;
+  margin: 3% auto;
   overflow: hidden;
   position: relative;
 }
@@ -294,6 +294,82 @@ body {
 }
 .fly-user .module-container .module-item-c article .store span {
   border-bottom: 2px solid #ec6c56;
+}
+.fly-user .module-container .other-link {
+  position: relative;
+}
+.fly-user .module-container .other-link:before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, 0.2)), color-stop(0.5, #cccccc), to(rgba(204, 204, 204, 0.2)));
+  background: -moz-linear-gradient(left, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  background: -ms-linear-gradient(left, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  left: 0;
+  top: 0;
+}
+.fly-user .module-container .other-link ul {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  position: absolute;
+  left: 30px;
+  top: 20px;
+}
+.fly-user .module-container .other-link ul li {
+  padding: 3px 10px;
+  position: relative;
+}
+.fly-user .module-container .other-link ul li a {
+  color: #00ada7;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.fly-user .module-container .other-link ul li a:hover {
+  color: #99071e;
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3);
+}
+.fly-user .module-container .other-link ul li:not(:last-of-type):before {
+  content: '';
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, 0.2)), color-stop(0.5, #cccccc), to(rgba(204, 204, 204, 0.2)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  right: 0;
+  top: 0;
+}
+.fly-user .msg .product-title {
+  width: 90%;
+  margin: 10px auto;
+  font-weight: normal;
+  color: #99071e;
+}
+.fly-user .msg .product-item {
+  width: 80%;
+  margin: 20px auto;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+.fly-user .msg .product-item .product-thum {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #ccc;
+  margin-right: 20px;
+}
+.fly-user .msg .product-item .product-name h4 {
+  font-size: 16px;
+  margin-top: 2px;
+}
+.fly-user .msg .product-item .product-name p {
+  margin-top: 10px;
 }
 .fly-office .office {
   flex-grow: 2;

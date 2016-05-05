@@ -80,6 +80,10 @@
 
 	var _componentsProgressJsx2 = _interopRequireDefault(_componentsProgressJsx);
 
+	var _componentsProductListJsx = __webpack_require__(636);
+
+	var _componentsProductListJsx2 = _interopRequireDefault(_componentsProductListJsx);
+
 	var TabPane = _antd.Tabs.TabPane;
 	var ProgressLine = _antd.Progress.Line;
 
@@ -102,6 +106,13 @@
 	    _createClass(MainUI, [{
 	        key: 'render',
 	        value: function render() {
+
+	            var zmitiProgressProps = {
+	                currentVal: 700,
+	                label: '总容量',
+	                unit: 1024,
+	                maxVal: 1
+	            };
 	            return _react2['default'].createElement(
 	                'div',
 	                { className: 'main' },
@@ -184,7 +195,7 @@
 	                            _react2['default'].createElement(
 	                                'div',
 	                                { className: 'capacity' },
-	                                _react2['default'].createElement(_componentsProgressJsx2['default'], { label: '总容量', unit: 1024, maxVal: 1 }),
+	                                _react2['default'].createElement(_componentsProgressJsx2['default'], zmitiProgressProps),
 	                                _react2['default'].createElement(
 	                                    'div',
 	                                    { className: 'dilatation' },
@@ -242,7 +253,12 @@
 	                        _react2['default'].createElement(
 	                            'figure',
 	                            { className: 'msg' },
-	                            '2'
+	                            _react2['default'].createElement(
+	                                'h2',
+	                                { className: 'product-title' },
+	                                '新产品发布'
+	                            ),
+	                            _react2['default'].createElement(_componentsProductListJsx2['default'], null)
 	                        )
 	                    ),
 	                    _react2['default'].createElement(
@@ -251,13 +267,9 @@
 	                        _react2['default'].createElement(
 	                            'figure',
 	                            { className: 'office' },
-	                            '1'
+	                            '开发中...'
 	                        ),
-	                        _react2['default'].createElement(
-	                            'figure',
-	                            { className: 'work' },
-	                            '2'
-	                        )
+	                        _react2['default'].createElement('figure', { className: 'work' })
 	                    )
 	                )
 	            );
@@ -312,7 +324,7 @@
 
 
 	// module
-	exports.push([module.id, "html,body,div,p,ul,li,ol,dl,dt,dd,header,footer,video,h1,h2,h3,h4,canvas,section,figure{padding:0;margin:0}a{text-decoration:none}li{list-style:none}html,body{height:100%}img{border:0;vertical-align:top;width:100%;height:100%}input,textarea{outline:0}.transform3d{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}.fly-h-gradient-line{background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}body{font-family:'Microsoft Yahei',Tahoma,Helvetica,Arial,sans-serif;font-size:14px;height:100%;overflow:hidden;background:#f1f1f1 !important}#fly-main{height:100%}.main{height:100%;display:flex;display:-webkit-flex;flex-flow:column}.header{height:50px;width:100%;background:#eaf0f7;padding-left:30px;line-height:50px}.header a{color:#9cb3bb}.fly-content{flex-grow:1}.fly-user,.fly-office{width:98vw;margin:20px auto;height:300px;display:flex;display:-webkit-flex;flex-flow:row}.fly-user figure,.fly-office figure{flex-grow:1;height:100%;width:400px;background:#fff}.fly-user figure:nth-of-type(2),.fly-office figure:nth-of-type(2){margin:0 10px}.fly-user .user-info{flex-grow:1;display:flex;display:-webkit-flex;flex-flow:row;width:80%;margin:20px auto 10px}.fly-user .user-info aside{position:relative;height:160px;font-size:.8vw;flex-grow:1}.fly-user .user-info aside:nth-of-type(1):before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}.fly-user .user-info aside:nth-of-type(2){flex-grow:3}.fly-user .user-info aside div.head{width:100px;height:100px;overflow:hidden;padding:10px;box-sizing:border-box;margin:35px auto;border:1px solid #99071e;-webkit-border-radius:50%;border-radius:50%}.fly-user .user-info aside:nth-of-type(2){margin-left:20px;margin-top:20px}.fly-user .user-info aside:nth-of-type(2) div{line-height:35px}.fly-user .user-info aside:nth-of-type(2) div .current-user{font-size:30px}.fly-user .user-info aside:nth-of-type(2) div.account{color:#aaa}.fly-user .user-info aside:nth-of-type(2) .last-time{color:#99071e}.fly-user .user-info aside:nth-of-type(2) .last-time a{color:#6587b3}.fly-user .capacity{width:80%;margin:0 auto;display:flex;display:-webkit-flex;flex-flow:row}.fly-user .capacity .fly-progress{flex-grow:9}.fly-user .capacity .dilatation{flex-grow:1;width:80px;margin-left:10px;font-size:.8vw;line-height:20px}.fly-user .capacity .ant-progress-line-bg{background:#00ada7}.fly-user .capacity .ant-progress-line-inner{padding:1px;background:#fff}.fly-user .user-count{width:80%;margin:20px auto;height:20px;line-height:20px;display:flex;display:-webkit-flex;flex-flow:row}.fly-user .user-count div.u-info:nth-of-type(1){width:40px}.fly-user .user-count div.u-info:nth-of-type(2){flex-grow:14;margin-left:10px}.fly-user .user-count div.u-info:nth-of-type(3){margin-left:10px;flex-grow:1}.fly-user .user-count div.u-info:nth-of-type(3) a{font-size:.8vw}.fly-user .module-container{width:96%;height:96%;margin:1% auto;overflow:hidden;position:relative}.fly-user .module-container .ar{position:absolute;width:2.3vw;height:2.3vw}.fly-user .module-container .ar:before{content:\"\";position:absolute;left:10px;top:8px;width:1.3vw;height:1.3vw;-webkit-transform:rotate(45deg);transform:rotate(45deg);border:1px solid #999;border-right:0;border-top:0;cursor:pointer;z-index:10}.fly-user .module-container.active:before{content:'';border-color:#00ada7;border-width:3px;box-sizing:content-box}.fly-user .module-container.error-active:before{content:'';border-color:red;border-width:3px;box-sizing:content-box}.fly-user .module-container .ar-right{right:10px;left:auto;top:0}.fly-user .module-container .ar-right:before{content:\"\";-webkit-transform:rotate(-135deg);transform:rotate(-135deg)}.fly-user .module-container .module-item-c{-webkit-transition:-webkit-transform .2s;transition:transform .2s;width:100%;height:220px;display:flex;display:-webkit-flex;flex-flow:row}.fly-user .module-container .module-item-c article{flex-grow:1;text-align:center}.fly-user .module-container .module-item-c article .title{font-size:1.2vw;color:#999;height:40px;line-height:40px;position:relative}.fly-user .module-container .module-item-c article .title.active:after{content:\"\";position:absolute;right:-5px;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}.fly-user .module-container .module-item-c article .store{margin-top:30px;font-size:1.1vw;height:40px;line-height:40px}.fly-user .module-container .module-item-c article .store span{border-bottom:2px solid #ec6c56}.fly-office .office{flex-grow:2}.fly-office .work{flex-grow:1}.fly-office figure{height:100%}.fly-office figure:nth-of-type(1){margin:0}.fly-office figure:nth-of-type(2){margin:0}", ""]);
+	exports.push([module.id, "html,body,div,p,ul,li,ol,dl,dt,dd,header,footer,video,h1,h2,h3,h4,canvas,section,figure{padding:0;margin:0}a{text-decoration:none}li{list-style:none}html,body{height:100%}img{border:0;vertical-align:top;width:100%;height:100%}input,textarea{outline:0}.transform3d{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}.fly-h-gradient-line{background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}body{font-family:'Microsoft Yahei',Tahoma,Helvetica,Arial,sans-serif;font-size:14px;height:100%;overflow:hidden;background:#f1f1f1 !important}#fly-main{height:100%}.main{height:100%;display:flex;display:-webkit-flex;flex-flow:column}.header{height:50px;width:100%;background:#eaf0f7;padding-left:30px;line-height:50px}.header a{color:#9cb3bb}.fly-content{flex-grow:1}.fly-user,.fly-office{width:98vw;margin:20px auto;height:300px;display:flex;display:-webkit-flex;flex-flow:row}.fly-user figure,.fly-office figure{flex-grow:1;height:100%;width:400px;background:#fff}.fly-user figure:nth-of-type(2),.fly-office figure:nth-of-type(2){margin:0 10px}.fly-user .user-info{flex-grow:1;display:flex;display:-webkit-flex;flex-flow:row;width:80%;margin:20px auto 10px}.fly-user .user-info aside{position:relative;height:160px;font-size:.8vw;flex-grow:1}.fly-user .user-info aside:nth-of-type(1):before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}.fly-user .user-info aside:nth-of-type(2){flex-grow:3}.fly-user .user-info aside div.head{width:100px;height:100px;overflow:hidden;padding:10px;box-sizing:border-box;margin:35px auto;border:1px solid #99071e;-webkit-border-radius:50%;border-radius:50%}.fly-user .user-info aside:nth-of-type(2){margin-left:20px;margin-top:20px}.fly-user .user-info aside:nth-of-type(2) div{line-height:35px}.fly-user .user-info aside:nth-of-type(2) div .current-user{font-size:30px}.fly-user .user-info aside:nth-of-type(2) div.account{color:#aaa}.fly-user .user-info aside:nth-of-type(2) .last-time{color:#99071e}.fly-user .user-info aside:nth-of-type(2) .last-time a{color:#6587b3}.fly-user .capacity{width:80%;margin:0 auto;display:flex;display:-webkit-flex;flex-flow:row}.fly-user .capacity .fly-progress{flex-grow:9}.fly-user .capacity .dilatation{flex-grow:1;width:80px;margin-left:10px;font-size:.8vw;line-height:20px}.fly-user .capacity .ant-progress-line-bg{background:#00ada7}.fly-user .capacity .ant-progress-line-inner{padding:1px;background:#fff}.fly-user .user-count{width:80%;margin:20px auto;height:20px;line-height:20px;display:flex;display:-webkit-flex;flex-flow:row}.fly-user .user-count div.u-info:nth-of-type(1){width:40px}.fly-user .user-count div.u-info:nth-of-type(2){flex-grow:14;margin-left:10px}.fly-user .user-count div.u-info:nth-of-type(3){margin-left:10px;flex-grow:1}.fly-user .user-count div.u-info:nth-of-type(3) a{font-size:.8vw}.fly-user .module-container{width:96%;height:90%;margin:3% auto;overflow:hidden;position:relative}.fly-user .module-container .ar{position:absolute;width:2.3vw;height:2.3vw}.fly-user .module-container .ar:before{content:\"\";position:absolute;left:10px;top:8px;width:1.3vw;height:1.3vw;-webkit-transform:rotate(45deg);transform:rotate(45deg);border:1px solid #999;border-right:0;border-top:0;cursor:pointer;z-index:10}.fly-user .module-container .ar.active:before{content:'';border-color:#00ada7;border-width:3px;box-sizing:content-box}.fly-user .module-container .ar.error-active:before{content:'';border-color:red;border-width:3px;box-sizing:content-box}.fly-user .module-container .ar-right{right:10px;left:auto;top:0}.fly-user .module-container .ar-right:before{content:\"\";-webkit-transform:rotate(-135deg);transform:rotate(-135deg)}.fly-user .module-container .module-item-c{-webkit-transition:-webkit-transform .2s;transition:transform .2s;width:100%;height:220px;display:flex;display:-webkit-flex;flex-flow:row}.fly-user .module-container .module-item-c article{flex-grow:1;text-align:center}.fly-user .module-container .module-item-c article .title{font-size:1.2vw;color:#999;height:40px;line-height:40px;position:relative}.fly-user .module-container .module-item-c article .title.active:after{content:\"\";position:absolute;right:-5px;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}.fly-user .module-container .module-item-c article .store{margin-top:30px;font-size:1.1vw;height:40px;line-height:40px}.fly-user .module-container .module-item-c article .store span{border-bottom:2px solid #ec6c56}.fly-user .module-container .other-link{position:relative}.fly-user .module-container .other-link:before{content:'';position:absolute;width:100%;height:1px;background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));left:0;top:0}.fly-user .module-container .other-link ul{display:flex;display:-webkit-flex;flex-flow:row;position:absolute;left:30px;top:20px}.fly-user .module-container .other-link ul li{padding:3px 10px;position:relative}.fly-user .module-container .other-link ul li a{color:#00ada7;-webkit-transition:.2s;transition:.2s;display:block;width:100%;height:100%}.fly-user .module-container .other-link ul li a:hover{color:#99071e;-webkit-transform:scale(1.3);transform:scale(1.3)}.fly-user .module-container .other-link ul li:not(:last-of-type):before{content:'';background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));position:absolute;width:1px;height:100%;right:0;top:0}.fly-user .msg .product-title{width:90%;margin:10px auto;font-weight:normal;color:#99071e}.fly-user .msg .product-item{width:80%;margin:20px auto;display:flex;display:-webkit-flex;flex-flow:row}.fly-user .msg .product-item .product-thum{width:60px;height:60px;border:1px solid #ccc;margin-right:20px}.fly-user .msg .product-item .product-name h4{font-size:16px;margin-top:2px}.fly-user .msg .product-item .product-name p{margin-top:10px}.fly-office .office{flex-grow:2}.fly-office .work{flex-grow:1}.fly-office figure{height:100%}.fly-office figure:nth-of-type(1){margin:0}.fly-office figure:nth-of-type(2){margin:0}", ""]);
 
 	// exports
 
@@ -70751,7 +70763,50 @@
 	                    data
 	                ),
 	                _react2['default'].createElement('span', { className: 'ar-right ar', onClick: this.next.bind(this) }),
-	                _react2['default'].createElement('div', { className: 'other-link' })
+	                _react2['default'].createElement(
+	                    'div',
+	                    { className: 'other-link' },
+	                    _react2['default'].createElement(
+	                        'ul',
+	                        null,
+	                        _react2['default'].createElement(
+	                            'li',
+	                            null,
+	                            _react2['default'].createElement(
+	                                'a',
+	                                { href: '#' },
+	                                '项目洽谈室'
+	                            )
+	                        ),
+	                        _react2['default'].createElement(
+	                            'li',
+	                            null,
+	                            _react2['default'].createElement(
+	                                'a',
+	                                { href: '#' },
+	                                '索取发票'
+	                            )
+	                        ),
+	                        _react2['default'].createElement(
+	                            'li',
+	                            null,
+	                            _react2['default'].createElement(
+	                                'a',
+	                                { href: '#' },
+	                                '申请合同'
+	                            )
+	                        ),
+	                        _react2['default'].createElement(
+	                            'li',
+	                            null,
+	                            _react2['default'].createElement(
+	                                'a',
+	                                { href: '#' },
+	                                '工单管理'
+	                            )
+	                        )
+	                    )
+	                )
 	            );
 	        }
 	    }]);
@@ -82693,6 +82748,10 @@
 	        value: function render() {
 	            var s = this;
 
+	            var style = {
+	                display: this.props.isShowInfo ? "block" : 'none'
+	            };
+
 	            return _react2['default'].createElement(
 	                'div',
 	                { className: 'fly-progress' },
@@ -82704,10 +82763,10 @@
 	                _react2['default'].createElement(
 	                    'div',
 	                    { className: 'fly-progress-bar' },
-	                    _react2['default'].createElement('span', { style: { width: s.state.currentVal / s.props.maxVal / s.props.unit * 100 + '%' } }),
+	                    _react2['default'].createElement('span', { style: { width: s.props.currentVal / s.props.maxVal / s.props.unit * 100 + '%' } }),
 	                    _react2['default'].createElement(
 	                        'div',
-	                        null,
+	                        { style: style },
 	                        this.state.currentVal,
 	                        'M / ',
 	                        this.props.maxVal,
@@ -82722,6 +82781,10 @@
 	})(_react2['default'].Component);
 
 	exports['default'] = ZmitiProgress;
+
+	ZmitiProgress.defaultProps = {
+	    isShowInfo: true
+	};
 	module.exports = exports['default'];
 
 /***/ },
@@ -82763,6 +82826,87 @@
 
 	// exports
 
+
+/***/ },
+/* 636 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, '__esModule', {
+	    value: true
+	});
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var ZmitiProductList = (function (_React$Component) {
+	    _inherits(ZmitiProductList, _React$Component);
+
+	    function ZmitiProductList(args) {
+	        _classCallCheck(this, ZmitiProductList);
+
+	        _get(Object.getPrototypeOf(ZmitiProductList.prototype), 'constructor', this).apply(this, args);
+	    }
+
+	    _createClass(ZmitiProductList, [{
+	        key: 'render',
+	        value: function render() {
+
+	            var data = [{
+	                title: '可视化图表',
+	                remark: '可视化图表可视化图表可视化图表可视化图表可视化图表'
+	            }, {
+	                title: '3D新闻',
+	                remark: '可视化图表可视化图表可视化图表可视化图表可视化图表'
+	            }, {
+	                title: 'VR工具包',
+	                remark: '可视化图表可视化图表可视化图表可视化图表可视化图表'
+	            }].map(function (item, i) {
+	                return _react2['default'].createElement(
+	                    'div',
+	                    { className: 'product-item' },
+	                    _react2['default'].createElement('div', { className: 'product-thum' }),
+	                    _react2['default'].createElement(
+	                        'div',
+	                        { className: 'product-name' },
+	                        _react2['default'].createElement(
+	                            'h4',
+	                            null,
+	                            item.title
+	                        ),
+	                        _react2['default'].createElement(
+	                            'p',
+	                            null,
+	                            item.remark
+	                        )
+	                    )
+	                );
+	            });
+	            return _react2['default'].createElement(
+	                'div',
+	                null,
+	                data
+	            );
+	        }
+	    }]);
+
+	    return ZmitiProductList;
+	})(_react2['default'].Component);
+
+	exports['default'] = ZmitiProductList;
+	module.exports = exports['default'];
 
 /***/ }
 /******/ ]);

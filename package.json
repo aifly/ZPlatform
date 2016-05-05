@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --hot --inline",
-    "build-home": "webpack --config webpack.home.config.js",
-    "home-server": "webpack-dev-server --hot --inline --config webpack.home.config.js"
+    "home-build": "webpack --config webpack.home.config.js",
+    "home-server": "webpack-dev-server --hot --inline --config webpack.home.config.js",
+    "personal-build":"webpack --config webpack.personalAcc.config.js",
+    "personal-server":"webpack-dev-server --hot --inline --config webpack.personalAcc.config.js"
   },
   "keywords": [
     "es6"

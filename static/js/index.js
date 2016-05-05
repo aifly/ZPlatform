@@ -20621,7 +20621,7 @@
 	                                        ) },
 	                                    _react2['default'].createElement(
 	                                        _antd.Menu.Item,
-	                                        { key: '9' },
+	                                        { key: '../personalAcc/' },
 	                                        _react2['default'].createElement(_antd.Icon, { type: 'user', style: { marginRight: '32px' } }),
 	                                        '账号管理'
 	                                    ),

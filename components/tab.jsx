@@ -105,7 +105,15 @@ export default class ZmitiTab extends React.Component {
                     {data}
                 </div>
                 <span className="ar-right ar" onClick={this.next.bind(this)}></span>
-                <div className="other-link"></div>
+                <div className="other-link">
+                    <ul>
+                        <li><a href="#">项目洽谈室</a></li>
+                        <li><a href="#">索取发票</a></li>
+                        <li><a href="#">申请合同</a></li>
+                        <li><a href="#">工单管理</a></li>
+                    </ul>
+                </div>
+
             </div>
         )
     }

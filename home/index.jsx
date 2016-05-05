@@ -8,6 +8,7 @@ const ProgressLine = Progress.Line;
 import ZmitiTab from '../components/tab.jsx';
 import 'antd/lib/index.css';
 import ZmitiProgress from '../components/Progress.jsx';
+import ZmitiProductList from '../components/product-list.jsx';
 class MainUI extends React.Component{
     constructor(args){
         super(...args);
@@ -21,6 +22,13 @@ class MainUI extends React.Component{
     }
 
     render(){
+
+        let zmitiProgressProps = {
+            currentVal:700,
+            label:'总容量',
+            unit:1024,
+            maxVal:1
+        }
         return(
             <div className="main">
                 <header className="header">
@@ -40,7 +48,7 @@ class MainUI extends React.Component{
                                 </aside>
                             </div>
                             <div className="capacity">
-                                <ZmitiProgress label="总容量" unit={1024} maxVal={1}></ZmitiProgress>
+                                <ZmitiProgress {...zmitiProgressProps}></ZmitiProgress>
                                 <div className="dilatation">
                                     <a href="#">扩充&gt;&gt;</a>
                                 </div>
@@ -60,15 +68,15 @@ class MainUI extends React.Component{
                             <ZmitiTab></ZmitiTab>
                         </figure>
                         <figure className="msg">
-                             2
+                             <h2 className="product-title">新产品发布</h2>
+                            <ZmitiProductList></ZmitiProductList>
                         </figure>
                     </div>
                     <div className="fly-office">
                         <figure className='office'>
-                            1
+                           开发中...
                         </figure>
                         <figure className="work">
-                            2
                         </figure>
 
                     </div>
