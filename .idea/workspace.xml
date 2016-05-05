@@ -25,7 +25,7 @@
         <entry file="file://$PROJECT_DIR$/components/Main.jsx">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.5541899">
-              <caret line="88" column="61" selection-start-line="88" selection-start-column="61" selection-end-line="88" selection-end-column="61" />
+              <caret line="88" column="52" selection-start-line="88" selection-start-column="52" selection-end-line="88" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -1059,7 +1059,7 @@
     <entry file="file://$PROJECT_DIR$/components/Main.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5541899">
-          <caret line="88" column="61" selection-start-line="88" selection-start-column="61" selection-end-line="88" selection-end-column="61" />
+          <caret line="88" column="52" selection-start-line="88" selection-start-column="52" selection-end-line="88" selection-end-column="52" />
           <folding />
         </state>
       </provider>
