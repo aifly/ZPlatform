@@ -69,7 +69,7 @@ class MainUI extends React.Component{
                         </figure>
                         <figure className="msg">
                              <h2 className="product-title">新产品发布</h2>
-                            <ZmitiProductList></ZmitiProductList>
+                            <ZmitiProductList key="1"></ZmitiProductList>
                         </figure>
                     </div>
                     <div className="fly-office">

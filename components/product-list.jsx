@@ -21,7 +21,7 @@ export default class ZmitiProductList extends React.Component{
             }
         ].map((item,i)=>{
             return (
-                <div className="product-item">
+                <div key={i} className="product-item">
                     <div className="product-thum"></div>
                     <div className="product-name">
                         <h4>{item.title}</h4>

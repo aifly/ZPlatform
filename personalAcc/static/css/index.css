@@ -190,6 +190,14 @@ body {
 .ant-tabs-left .ant-tabs-content {
   padding: 0 !important;
 }
+.ant-tabs-left .ant-tabs-content .ant-tabs-tabpane {
+  opacity: 0;
+  -webkit-transition: 0.1s 200ms;
+  transition: 0.1s 200ms;
+}
+.ant-tabs-left .ant-tabs-content .ant-tabs-tabpane.show-tab {
+  opacity: 1;
+}
 .ant-tabs-left .ant-tabs-nav-container {
   margin-top: 30vh;
 }

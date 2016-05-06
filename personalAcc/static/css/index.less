@@ -176,9 +176,7 @@ body {
       .fly-v-gradient-line();
     }
   }
-
   height:28vh;
-
   .acc-user{
     width:90%;
     margin:10px auto;
@@ -275,6 +273,14 @@ body {
 
   .ant-tabs-content{
     padding:0 !important;
+
+    .ant-tabs-tabpane{
+      opacity:0;
+      .transition(.1s 200ms);
+      &.show-tab{
+        opacity:1;
+      }
+    }
   }
   height:100vh;
   .ant-tabs-nav-container{

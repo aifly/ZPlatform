@@ -258,7 +258,7 @@
 	                                { className: 'product-title' },
 	                                '新产品发布'
 	                            ),
-	                            _react2['default'].createElement(_componentsProductListJsx2['default'], null)
+	                            _react2['default'].createElement(_componentsProductListJsx2['default'], { key: '1' })
 	                        )
 	                    ),
 	                    _react2['default'].createElement(
@@ -82876,7 +82876,7 @@
 	            }].map(function (item, i) {
 	                return _react2['default'].createElement(
 	                    'div',
-	                    { className: 'product-item' },
+	                    { key: i, className: 'product-item' },
 	                    _react2['default'].createElement('div', { className: 'product-thum' }),
 	                    _react2['default'].createElement(
 	                        'div',
