@@ -166,13 +166,13 @@ body {
 }
 .acc-header .acc-company .acc-company-name {
   font-family: inherit;
-  font-size: 30px;
+  font-size: 1.8vw;
 }
 .acc-header .acc-company .acc-department {
   position: absolute;
   font-family: inherit;
   right: 0;
-  font-size: 16px;
+  font-size: 1vw;
 }
 .acc-header .acc-consume {
   width: 80%;
@@ -213,4 +213,29 @@ body {
 }
 .ant-tabs-left .ant-tabs-tab-active {
   background: #fff;
+}
+.acc-form {
+  width: 1000px;
+  height: 200px;
+  margin: 20px auto;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+.acc-form > div {
+  flex-grow: 1;
+  width: 50%;
+}
+.acc-form .acc-input-group {
+  width: 300px;
+}
+.acc-form .acc-input-group > span {
+  margin: 10px 0;
+}
+.acc-form .acc-form-left {
+  text-align: right;
+  padding-left: 100px;
+}
+.acc-form .ant-input-wrapper:last-of-type {
+  margin-top: 20px;
 }

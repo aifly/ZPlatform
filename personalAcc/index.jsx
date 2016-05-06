@@ -27,6 +27,13 @@ class ZmitiTab extends React.Component{
     changeTab(e){
 
         this.id = this.id || 1;
+        this.last = this.last || 1;
+
+
+        if(this.last === e){
+            return;
+        }
+
         if(this.id === 1){
             this.id = 2;
             //classie.removeClass($$('.ant-tabs-tabpane')[e-1],'show');
@@ -35,13 +42,16 @@ class ZmitiTab extends React.Component{
             classie.removeClass($$('.ant-tabs-tabpane')[e-1],'show-tab');
         }
 
+
+
+
         this.loader.show();
         setTimeout(()=>{
             this.loader.hide();
             classie.addClass($$('.ant-tabs-tabpane'),'show-tab');
         },800);
 
-
+        this.last = e;
     }
 
     componentDidMount(){
@@ -109,29 +119,24 @@ class ZmitiTab extends React.Component{
                             </div>
                         </article>
                     </div>
-                    <Form inline>
-                        <FormItem
-                            label="姓名：">
-                            <Input placeholder="请输入姓名"/>
-                        </FormItem>
-                        <FormItem label="紧急联系人：">
-                            <Input type="password" placeholder="紧急联系人" />
-                        </FormItem>
-                        <FormItem label="性别：">
-                            <Select size="large" defaultValue="我不想说" style={{ width: 200 }} >
-                                <Option value="jack">男</Option>
-                                <Option value="lucy">女</Option>
-                                <Option value="yiminghe">我不想说</Option>
-                            </Select>
-                        </FormItem>
-                        <FormItem label="紧急联系人电话：">
-                            <Input type="text" placeholder="紧急联系人电话" />
-                        </FormItem>
-                        <FormItem label="出生年月：">
-                            <div><DatePicker onChange={this.changeDate.bind(this)}></DatePicker>
-                            </div>
-                        </FormItem>
-                    </Form>
+                    <div className="acc-form">
+                        <div className="acc-form-left">
+                            <Input.Group className="acc-input-group">
+                                <Input addonBefore="姓名"/>
+                                <Select placeholder='性别' style={{width:300}} >
+                                    <Option value="0">男</Option>
+                                    <Option value="1">女</Option>
+                                    <Option value="2">我不想说</Option>
+                                </Select>
+                            </Input.Group>
+                        </div>
+                        <div className="acc-form-right">
+                            <Input.Group className="acc-input-group">
+                                <Input addonBefore="紧急联系人"/>
+                                <Input addonBefore="紧急联系人电话"/>
+                            </Input.Group>
+                        </div>
+                    </div>
                 </TabPane>
                 <TabPane tab="正式个人账户" key="2">正用个人账户内容</TabPane>
             </Tabs>

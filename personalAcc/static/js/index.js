@@ -106,6 +106,12 @@
 	            var _this = this;
 
 	            this.id = this.id || 1;
+	            this.last = this.last || 1;
+
+	            if (this.last === e) {
+	                return;
+	            }
+
 	            if (this.id === 1) {
 	                this.id = 2;
 	                //classie.removeClass($$('.ant-tabs-tabpane')[e-1],'show');
@@ -118,6 +124,8 @@
 	                _this.loader.hide();
 	                classie.addClass((0, _utilMethodEs6.$$)('.ant-tabs-tabpane'), 'show-tab');
 	            }, 800);
+
+	            this.last = e;
 	        }
 	    }, {
 	        key: 'componentDidMount',
@@ -279,54 +287,44 @@
 	                        )
 	                    ),
 	                    _react2['default'].createElement(
-	                        _antd.Form,
-	                        { inline: true },
+	                        'div',
+	                        { className: 'acc-form' },
 	                        _react2['default'].createElement(
-	                            FormItem,
-	                            {
-	                                label: '姓名：' },
-	                            _react2['default'].createElement(_antd.Input, { placeholder: '请输入姓名' })
-	                        ),
-	                        _react2['default'].createElement(
-	                            FormItem,
-	                            { label: '紧急联系人：' },
-	                            _react2['default'].createElement(_antd.Input, { type: 'password', placeholder: '紧急联系人' })
-	                        ),
-	                        _react2['default'].createElement(
-	                            FormItem,
-	                            { label: '性别：' },
+	                            'div',
+	                            { className: 'acc-form-left' },
 	                            _react2['default'].createElement(
-	                                _antd.Select,
-	                                { size: 'large', defaultValue: '我不想说', style: { width: 200 } },
+	                                _antd.Input.Group,
+	                                { className: 'acc-input-group' },
+	                                _react2['default'].createElement(_antd.Input, { addonBefore: '姓名' }),
 	                                _react2['default'].createElement(
-	                                    Option,
-	                                    { value: 'jack' },
-	                                    '男'
-	                                ),
-	                                _react2['default'].createElement(
-	                                    Option,
-	                                    { value: 'lucy' },
-	                                    '女'
-	                                ),
-	                                _react2['default'].createElement(
-	                                    Option,
-	                                    { value: 'yiminghe' },
-	                                    '我不想说'
+	                                    _antd.Select,
+	                                    { placeholder: '性别', style: { width: 300 } },
+	                                    _react2['default'].createElement(
+	                                        Option,
+	                                        { value: '0' },
+	                                        '男'
+	                                    ),
+	                                    _react2['default'].createElement(
+	                                        Option,
+	                                        { value: '1' },
+	                                        '女'
+	                                    ),
+	                                    _react2['default'].createElement(
+	                                        Option,
+	                                        { value: '2' },
+	                                        '我不想说'
+	                                    )
 	                                )
 	                            )
 	                        ),
 	                        _react2['default'].createElement(
-	                            FormItem,
-	                            { label: '紧急联系人电话：' },
-	                            _react2['default'].createElement(_antd.Input, { type: 'text', placeholder: '紧急联系人电话' })
-	                        ),
-	                        _react2['default'].createElement(
-	                            FormItem,
-	                            { label: '出生年月：' },
+	                            'div',
+	                            { className: 'acc-form-right' },
 	                            _react2['default'].createElement(
-	                                'div',
-	                                null,
-	                                _react2['default'].createElement(_antd.DatePicker, { onChange: this.changeDate.bind(this) })
+	                                _antd.Input.Group,
+	                                { className: 'acc-input-group' },
+	                                _react2['default'].createElement(_antd.Input, { addonBefore: '紧急联系人' }),
+	                                _react2['default'].createElement(_antd.Input, { addonBefore: '紧急联系人电话' })
 	                            )
 	                        )
 	                    )
@@ -20683,7 +20681,7 @@
 
 
 	// module
-	exports.push([module.id, "html,body,div,p,ul,li,ol,dl,dt,dd,header,footer,video,h1,h2,h3,h4,canvas,section,figure{padding:0;margin:0}a{text-decoration:none}li{list-style:none}html,body{height:100%}img{border:0;vertical-align:top;width:100%;height:auto}input,textarea{outline:0}.transform3d{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}.fly-h-gradient-line{background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}body{font-family:'Microsoft Yahei',Tahoma,Helvetica,Arial,sans-serif;font-size:14px;height:100%;overflow:hidden}.acc-header{position:relative;display:flex;display:-webkit-flex;flex-flow:row;height:28vh}.acc-header:after{content:'';position:absolute;width:100%;height:1px;background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));bottom:0;left:0}.acc-header article{flex-grow:1;width:33%;position:relative}.acc-header article:not(:last-of-type):before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}.acc-header .acc-user{width:90%;margin:10px auto;display:flex;display:-webkit-flex;flex-flow:row}.acc-header .acc-user .acc-portrait{text-align:center;position:relative;padding-right:50px}.acc-header .acc-user .acc-portrait:after{content:\"\";position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}.acc-header .acc-user .acc-portrait img{padding:10px;width:8vw;height:8vw;border:1px solid red;border-radius:50%;margin-bottom:10px}.acc-header .acc-user .acc-info{display:flex;display:-webkit-flex;flex-flow:column;margin-left:20px;margin-top:20px}.acc-header .acc-user .acc-info section{flex-grow:1;width:10vw}.acc-header .acc-user .acc-info section.acc-user-name{display:flex;display:-webkit-flex;flex-flow:row}.acc-header .acc-user .acc-info section.acc-user-name>div{flex-grow:1}.acc-header .acc-user .acc-info section.acc-user-name>div a{display:block;color:#f90}.acc-header .acc-user .acc-info section.acc-user-name>div a:nth-of-type(2){margin-top:1vh;color:#57c5f7}.acc-header .acc-user .acc-info section span{font-size:22px;margin-top:1vh;display:inline-block}.acc-header .acc-company{width:80%;position:absolute;left:10%;height:7vh;top:10vh;text-align:center;font-family:宋体}.acc-header .acc-company .acc-company-name{font-family:inherit;font-size:30px}.acc-header .acc-company .acc-department{position:absolute;font-family:inherit;right:0;font-size:16px}.acc-header .acc-consume{width:80%;margin:20px auto}.acc-header .acc-consume .acc-msg{margin-bottom:20px}.acc-header .acc-consume .acc-msg span{margin:0 10px}.ant-tabs-left{height:100vh}.ant-tabs-left .ant-tabs-content{padding:0 !important}.ant-tabs-left .ant-tabs-content .ant-tabs-tabpane{opacity:0;-webkit-transition:.1s 200ms;transition:.1s 200ms}.ant-tabs-left .ant-tabs-content .ant-tabs-tabpane.show-tab{opacity:1}.ant-tabs-left .ant-tabs-nav-container{margin-top:30vh}.ant-tabs-left .ant-tabs-ink-bar{display:none !important}.ant-tabs-left .ant-tabs-tab-inner{color:#fff}.ant-tabs-left .ant-tabs-bar{background:#505366;height:100vh}.ant-tabs-left .ant-tabs-tab-active{background:#fff}", ""]);
+	exports.push([module.id, "html,body,div,p,ul,li,ol,dl,dt,dd,header,footer,video,h1,h2,h3,h4,canvas,section,figure{padding:0;margin:0}a{text-decoration:none}li{list-style:none}html,body{height:100%}img{border:0;vertical-align:top;width:100%;height:auto}input,textarea{outline:0}.transform3d{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}.fly-h-gradient-line{background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}body{font-family:'Microsoft Yahei',Tahoma,Helvetica,Arial,sans-serif;font-size:14px;height:100%;overflow:hidden}.acc-header{position:relative;display:flex;display:-webkit-flex;flex-flow:row;height:28vh}.acc-header:after{content:'';position:absolute;width:100%;height:1px;background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(left,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));bottom:0;left:0}.acc-header article{flex-grow:1;width:33%;position:relative}.acc-header article:not(:last-of-type):before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}.acc-header .acc-user{width:90%;margin:10px auto;display:flex;display:-webkit-flex;flex-flow:row}.acc-header .acc-user .acc-portrait{text-align:center;position:relative;padding-right:50px}.acc-header .acc-user .acc-portrait:after{content:\"\";position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,0.2)),color-stop(0.5,#ccc),to(rgba(204,204,204,0.2)));background:-moz-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2));background:-ms-linear-gradient(top,rgba(204,204,204,0.2),#ccc 50%,rgba(204,204,204,0.2))}.acc-header .acc-user .acc-portrait img{padding:10px;width:8vw;height:8vw;border:1px solid red;border-radius:50%;margin-bottom:10px}.acc-header .acc-user .acc-info{display:flex;display:-webkit-flex;flex-flow:column;margin-left:20px;margin-top:20px}.acc-header .acc-user .acc-info section{flex-grow:1;width:10vw}.acc-header .acc-user .acc-info section.acc-user-name{display:flex;display:-webkit-flex;flex-flow:row}.acc-header .acc-user .acc-info section.acc-user-name>div{flex-grow:1}.acc-header .acc-user .acc-info section.acc-user-name>div a{display:block;color:#f90}.acc-header .acc-user .acc-info section.acc-user-name>div a:nth-of-type(2){margin-top:1vh;color:#57c5f7}.acc-header .acc-user .acc-info section span{font-size:22px;margin-top:1vh;display:inline-block}.acc-header .acc-company{width:80%;position:absolute;left:10%;height:7vh;top:10vh;text-align:center;font-family:宋体}.acc-header .acc-company .acc-company-name{font-family:inherit;font-size:1.8vw}.acc-header .acc-company .acc-department{position:absolute;font-family:inherit;right:0;font-size:1vw}.acc-header .acc-consume{width:80%;margin:20px auto}.acc-header .acc-consume .acc-msg{margin-bottom:20px}.acc-header .acc-consume .acc-msg span{margin:0 10px}.ant-tabs-left{height:100vh}.ant-tabs-left .ant-tabs-content{padding:0 !important}.ant-tabs-left .ant-tabs-content .ant-tabs-tabpane{opacity:0;-webkit-transition:.1s 200ms;transition:.1s 200ms}.ant-tabs-left .ant-tabs-content .ant-tabs-tabpane.show-tab{opacity:1}.ant-tabs-left .ant-tabs-nav-container{margin-top:30vh}.ant-tabs-left .ant-tabs-ink-bar{display:none !important}.ant-tabs-left .ant-tabs-tab-inner{color:#fff}.ant-tabs-left .ant-tabs-bar{background:#505366;height:100vh}.ant-tabs-left .ant-tabs-tab-active{background:#fff}.acc-form{width:1000px;height:200px;margin:20px auto;display:flex;display:-webkit-flex;flex-flow:row}.acc-form>div{flex-grow:1;width:50%}.acc-form .acc-input-group{width:300px}.acc-form .acc-input-group>span{margin:10px 0}.acc-form .acc-form-left{text-align:right;padding-left:100px}.acc-form .ant-input-wrapper:last-of-type{margin-top:20px}", ""]);
 
 	// exports
 

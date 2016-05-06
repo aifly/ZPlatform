@@ -246,13 +246,13 @@ body {
     font-family: 宋体;
     .acc-company-name{
       font-family:inherit;
-        font-size:30px;
+        font-size:1.8vw;
     }
     .acc-department{
       .position(a);
       font-family:inherit;
       right:0;
-      font-size:16px;
+      font-size:1vw;
     }
 
   }
@@ -299,6 +299,34 @@ body {
   }
   .ant-tabs-tab-active{
     background:#fff;
+  }
+}
+
+
+.acc-form{
+  width:1000px;
+  height:200px;
+  margin:20px auto;
+  .displayFlex(row);
+  &>div{
+    flex-grow: 1;
+    width:50%;
+  }
+
+  .acc-input-group{
+    width:300px;
+    &>span{
+      margin:10px 0;
+    }
+  }
+
+  .acc-form-left{
+    text-align: right;
+    padding-left:100px;
+
+  }
+  .ant-input-wrapper:last-of-type{
+    margin-top:20px;
   }
 }
 
