@@ -1,12 +1,14 @@
 import React  from 'react';
 import ReactDOM from 'react-dom';
-import 'antd/lib/index.css';
+import 'antd/dist/antd.css';
 import './static/css/index.min.css';
 import {utilMethods,_$,$$ } from '../utilMethod.es6';
 import { Tabs, Select,Button,Form, Input,DatePicker } from 'antd';
 const FormItem = Form.Item;
 import ZmitiProgress from '../components/Progress.jsx';
+import ZmitiScan from '../components/scan.jsx';
 import './static/css/component.min.css';
+import ZmitiCard from '../components/cardgroup.jsx';
 
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
@@ -52,6 +54,8 @@ class ZmitiTab extends React.Component{
         },800);
 
         this.last = e;
+
+        return false;
     }
 
     componentDidMount(){
@@ -63,11 +67,17 @@ class ZmitiTab extends React.Component{
             speedIn:300
         };
         this.loader = new SVGLoader( document.getElementById( currentLoader.id ), { speedIn : currentLoader.speedIn, easingIn : mina.easeinout } );
-
     }
 
     changeDate(){
 
+    }
+
+    save(){
+       /* this.refs['save-btn'].classList.add('active');
+        setTimeout(()=>{
+            this.refs['save-btn'].classList.remove('active');
+        },150)*/
     }
 
     render(){
@@ -137,8 +147,16 @@ class ZmitiTab extends React.Component{
                             </Input.Group>
                         </div>
                     </div>
+                    <ZmitiScan></ZmitiScan>
+                    <div className="acc-save-btn">
+                        <Button type="primary" ref="save-btn" size="large" onClick={this.save.bind(this)}>保存</Button>
+                    </div>
+
+                    <ZmitiCard></ZmitiCard>
+
                 </TabPane>
                 <TabPane tab="正式个人账户" key="2">正用个人账户内容</TabPane>
+
             </Tabs>
         )
     }

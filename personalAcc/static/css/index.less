@@ -268,12 +268,16 @@ body {
     }
   }
 }
+.ant-tabs-bar{
+  outline: none;
+  background: #2e2e2e;
+  color:#fff;
 
+  height:100vh;
+}
 .ant-tabs-left{
-
   .ant-tabs-content{
     padding:0 !important;
-
     .ant-tabs-tabpane{
       opacity:0;
       .transition(.1s 200ms);
@@ -295,7 +299,6 @@ body {
   }
   .ant-tabs-bar{
     background: #505366;
-    height:100vh;
   }
   .ant-tabs-tab-active{
     background:#fff;
@@ -305,7 +308,7 @@ body {
 
 .acc-form{
   width:1000px;
-  height:200px;
+  height:100px;
   margin:20px auto;
   .displayFlex(row);
   &>div{
@@ -329,4 +332,31 @@ body {
     margin-top:20px;
   }
 }
+
+.acc-save-btn{
+  width:100%;
+  text-align: center;
+  margin-top:20px;
+  .transform3d;
+  button{
+    margin:0 auto;
+    width:13vw;
+    height:40px;
+    font-size: 16px;
+    background:#57c5f7;
+    border-color: #57c5f7;
+
+  }
+}
+
+.zmit-card-C{
+  width:80%;
+  margin:40px auto 0;
+  .displayFlex(row);
+  div{
+    flex-grow: 1;
+    margin:0 20px;
+  }
+}
+
 

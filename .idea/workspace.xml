@@ -21,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/components/Main.jsx">
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/personalAcc/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.730769">
-              <caret line="78" column="18" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="18" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -34,23 +34,39 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/personalAcc/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.59147024">
-              <caret line="17" column="4" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="61" />
+            <state vertical-scroll-proportion="0.20875421">
+              <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/personalAcc/index.jsx">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.384615">
-              <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
-              <folding>
-                <element signature="e#2123#3394#0" expanded="false" />
-                <element signature="e#3419#3743#0" expanded="false" />
-                <element signature="e#3768#4139#0" expanded="false" />
-              </folding>
+            <state vertical-scroll-proportion="-7.233333">
+              <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cardgroup.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/components/cardgroup.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.8846154">
+              <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tab.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/components/tab.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -58,32 +74,14 @@
       <file leaf-file-name="index.less" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/personalAcc/static/css/index.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.785714">
-              <caret line="329" column="0" selection-start-line="329" selection-start-column="0" selection-end-line="329" selection-end-column="0" />
+            <state vertical-scroll-proportion="-27.633333">
+              <caret line="357" column="18" selection-start-line="357" selection-start-column="18" selection-end-line="357" selection-end-column="18" />
               <folding>
+                <element signature="e#3206#5211#0" expanded="false" />
                 <element signature="e#3646#4726#0" expanded="false" />
                 <element signature="e#3725#4139#0" expanded="false" />
+                <element signature="e#5763#6097#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="component.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/personalAcc/static/css/component.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="6.2">
-              <caret line="3" column="15" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.min.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/personalAcc/static/css/index.min.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -97,6 +95,7 @@
         <option value="HTML File" />
         <option value="JavaScript File" />
         <option value="Less File" />
+        <option value="SCSS File" />
       </list>
     </option>
     <option name="SCHEME" value="Project" />
@@ -107,7 +106,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/node_modules/antd/lib/index.css" />
         <option value="$PROJECT_DIR$/home/components/menu.jsx" />
         <option value="$PROJECT_DIR$/home/home.html" />
         <option value="$PROJECT_DIR$/qa/index.html" />
@@ -119,27 +117,35 @@
         <option value="$PROJECT_DIR$/webpack.home.config.js" />
         <option value="$PROJECT_DIR$/home/static/js/index.js" />
         <option value="$PROJECT_DIR$/static/js/index.js" />
-        <option value="$PROJECT_DIR$/webpack.config.js" />
         <option value="$PROJECT_DIR$/home/static/css/2.less" />
         <option value="$PROJECT_DIR$/static/css/antd.css" />
         <option value="$PROJECT_DIR$/home/static/css/index.css" />
         <option value="$PROJECT_DIR$/components/progress.less" />
         <option value="$PROJECT_DIR$/static/css/index.less" />
         <option value="$PROJECT_DIR$/components/tab.jsx" />
-        <option value="$PROJECT_DIR$/home/static/css/index.less" />
-        <option value="$PROJECT_DIR$/webpack.personalAcc.config.js" />
         <option value="$PROJECT_DIR$/home/index.html" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/components/Progress.jsx" />
         <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/home/index.jsx" />
         <option value="$PROJECT_DIR$/components/product-list.jsx" />
         <option value="$PROJECT_DIR$/static/libs/snap.svg-min.js" />
         <option value="$PROJECT_DIR$/personalAcc/static/libs/snap.svg-min.js" />
         <option value="$PROJECT_DIR$/personalAcc/static/css/component.css" />
+        <option value="$PROJECT_DIR$/home/static/css/index.scss" />
+        <option value="$PROJECT_DIR$/home/static/css/index.less" />
+        <option value="$PROJECT_DIR$/webpack.config.js" />
+        <option value="$PROJECT_DIR$/webpack.personalAcc.config.js" />
+        <option value="$PROJECT_DIR$/components/Progress.jsx" />
+        <option value="$PROJECT_DIR$/home/index.jsx" />
+        <option value="$PROJECT_DIR$/components/scan.jsx" />
+        <option value="$PROJECT_DIR$/components/scan.scss" />
         <option value="$PROJECT_DIR$/components/Main.jsx" />
+        <option value="$PROJECT_DIR$/node_modules/antd/lib/index.css" />
+        <option value="$PROJECT_DIR$/node_modules/antd/lib/index.min.css" />
+        <option value="$PROJECT_DIR$/home/static/css/antd.css" />
+        <option value="$PROJECT_DIR$/components/index.css" />
         <option value="$PROJECT_DIR$/personalAcc/index.jsx" />
         <option value="$PROJECT_DIR$/personalAcc/static/css/index.less" />
+        <option value="$PROJECT_DIR$/components/cardgroup.jsx" />
         <option value="$PROJECT_DIR$/personalAcc/index.html" />
       </list>
     </option>
@@ -180,6 +186,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -212,113 +219,22 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="personalAcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="personalAcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="personalAcc" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="static" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="home" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="watcher.settings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../测试代码" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../demos/react-canvas-master" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="js-jscs-nodeInterpreter" value="C:\Program Files\nodejs\node.exe" />
     <property name="JavaScriptPreferStrict" value="false" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="list.type.of.created.stylesheet" value="Less" />
+    <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="303" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="303" />
@@ -342,14 +258,14 @@
       <recent name="F:\xuchang2016\github\ZPlatform\static" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\xuchang2016\github\ZPlatform\home\static\css" />
+      <recent name="F:\xuchang2016\github\ZPlatform\node_modules\antd\lib" />
+      <recent name="F:\xuchang2016\github\ZPlatform\components" />
+      <recent name="F:\xuchang2016\github\ZPlatform\personalAcc\static\font" />
       <recent name="F:\xuchang2016\github\ZPlatform\personalAcc\static\css" />
-      <recent name="F:\xuchang2016\github\ZPlatform\personalAcc\static" />
-      <recent name="F:\xuchang2016\github\ZPlatform\personalAcc\static\images" />
-      <recent name="F:\xuchang2016\github\ZPlatform\home\static" />
-      <recent name="F:\xuchang2016\github\ZPlatform" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.index.html (3)">
+  <component name="RunManager" selected="JavaScript Debug.index.html (4)">
     <configuration default="false" name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/ZPlatform/index.html">
       <method />
     </configuration>
@@ -360,6 +276,9 @@
       <method />
     </configuration>
     <configuration default="false" name="index.html (3)" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/ZPlatform/personalAcc/index.html">
+      <method />
+    </configuration>
+    <configuration default="false" name="index.html (4)" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:39122/ZPlatform/personalAcc/index.html">
       <method />
     </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -410,18 +329,20 @@
       <recursive>false</recursive>
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
       <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html (1)" />
       <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index.html (2)" />
       <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index.html (3)" />
+      <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.index.html (4)" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html (3)" />
-        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html (2)" />
-        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index.html (1)" />
-        <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index.html (4)" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index.html (3)" />
+        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.index.html (2)" />
+        <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.index.html (1)" />
+        <item index="4" class="java.lang.String" itemvalue="JavaScript Debug.index.html" />
       </list>
     </recent_temporary>
   </component>
@@ -442,11 +363,11 @@
     <frame x="-8" y="-8" width="1924" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12683438" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17767295" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.05907173" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.058016878" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -478,19 +399,54 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/components/tab.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="68" column="12" selection-start-line="68" selection-start-column="12" selection-end-line="68" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/scan.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="189" column="39" selection-start-line="189" selection-start-column="33" selection-end-line="189" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/components/Main.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="71" column="93" selection-start-line="71" selection-start-column="93" selection-end-line="71" selection-end-column="93" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/home/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/qa/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
         </state>
       </provider>
     </entry>
@@ -512,7 +468,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -527,7 +482,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -542,59 +496,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/components/Main.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/home/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/qa/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="7" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -602,115 +503,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/index.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35414165">
-          <caret line="256" column="21" selection-start-line="256" selection-start-column="21" selection-end-line="256" selection-end-column="21" />
-          <caret line="260" column="21" selection-start-line="260" selection-start-column="21" selection-end-line="260" selection-end-column="21" />
-          <caret line="264" column="16" selection-start-line="264" selection-start-column="16" selection-end-line="264" selection-end-column="16" />
-          <caret line="3172" column="27" selection-start-line="3172" selection-start-column="27" selection-end-line="3172" selection-end-column="27" />
-          <caret line="3173" column="23" selection-start-line="3173" selection-start-column="23" selection-end-line="3173" selection-end-column="23" />
-          <caret line="3468" column="25" selection-start-line="3468" selection-start-column="25" selection-end-line="3468" selection-end-column="25" />
-          <caret line="3546" column="27" selection-start-line="3546" selection-start-column="27" selection-end-line="3546" selection-end-column="27" />
-          <caret line="3547" column="27" selection-start-line="3547" selection-start-column="27" selection-end-line="3547" selection-end-column="27" />
-          <caret line="3808" column="27" selection-start-line="3808" selection-start-column="27" selection-end-line="3808" selection-end-column="27" />
-          <caret line="4581" column="23" selection-start-line="4581" selection-start-column="23" selection-end-line="4581" selection-end-column="23" />
-          <caret line="4583" column="16" selection-start-line="4583" selection-start-column="16" selection-end-line="4583" selection-end-column="16" />
-          <caret line="4590" column="21" selection-start-line="4590" selection-start-column="21" selection-end-line="4590" selection-end-column="21" />
-          <caret line="4595" column="21" selection-start-line="4595" selection-start-column="21" selection-end-line="4595" selection-end-column="21" />
-          <caret line="4691" column="27" selection-start-line="4691" selection-start-column="27" selection-end-line="4691" selection-end-column="27" />
-          <caret line="4692" column="23" selection-start-line="4692" selection-start-column="23" selection-end-line="4692" selection-end-column="23" />
-          <caret line="5134" column="21" selection-start-line="5134" selection-start-column="21" selection-end-line="5134" selection-end-column="21" />
-          <caret line="5138" column="21" selection-start-line="5138" selection-start-column="21" selection-end-line="5138" selection-end-column="21" />
-          <caret line="5270" column="21" selection-start-line="5270" selection-start-column="21" selection-end-line="5270" selection-end-column="21" />
-          <caret line="5274" column="21" selection-start-line="5274" selection-start-column="21" selection-end-line="5274" selection-end-column="21" />
-          <caret line="5395" column="21" selection-start-line="5395" selection-start-column="21" selection-end-line="5395" selection-end-column="21" />
-          <caret line="5399" column="21" selection-start-line="5399" selection-start-column="21" selection-end-line="5399" selection-end-column="21" />
-          <caret line="5835" column="16" selection-start-line="5835" selection-start-column="16" selection-end-line="5835" selection-end-column="16" />
-          <caret line="5884" column="27" selection-start-line="5884" selection-start-column="27" selection-end-line="5884" selection-end-column="27" />
-          <caret line="6089" column="16" selection-start-line="6089" selection-start-column="16" selection-end-line="6089" selection-end-column="16" />
-          <caret line="6312" column="16" selection-start-line="6312" selection-start-column="16" selection-end-line="6312" selection-end-column="16" />
-          <caret line="6450" column="16" selection-start-line="6450" selection-start-column="16" selection-end-line="6450" selection-end-column="16" />
-          <caret line="6565" column="16" selection-start-line="6565" selection-start-column="16" selection-end-line="6565" selection-end-column="16" />
-          <caret line="6659" column="16" selection-start-line="6659" selection-start-column="16" selection-end-line="6659" selection-end-column="16" />
-          <caret line="6676" column="16" selection-start-line="6676" selection-start-column="16" selection-end-line="6676" selection-end-column="16" />
-          <caret line="6747" column="16" selection-start-line="6747" selection-start-column="16" selection-end-line="6747" selection-end-column="16" />
-          <caret line="7175" column="23" selection-start-line="7175" selection-start-column="23" selection-end-line="7175" selection-end-column="23" />
-          <caret line="7178" column="16" selection-start-line="7178" selection-start-column="16" selection-end-line="7178" selection-end-column="16" />
-          <caret line="7181" column="27" selection-start-line="7181" selection-start-column="27" selection-end-line="7181" selection-end-column="27" />
-          <caret line="7182" column="23" selection-start-line="7182" selection-start-column="23" selection-end-line="7182" selection-end-column="23" />
-          <caret line="7198" column="16" selection-start-line="7198" selection-start-column="16" selection-end-line="7198" selection-end-column="16" />
-          <caret line="7285" column="23" selection-start-line="7285" selection-start-column="23" selection-end-line="7285" selection-end-column="23" />
-          <caret line="7289" column="16" selection-start-line="7289" selection-start-column="16" selection-end-line="7289" selection-end-column="16" />
-          <caret line="7419" column="23" selection-start-line="7419" selection-start-column="23" selection-end-line="7419" selection-end-column="23" />
-          <caret line="7886" column="27" selection-start-line="7886" selection-start-column="27" selection-end-line="7886" selection-end-column="27" />
-          <caret line="7887" column="23" selection-start-line="7887" selection-start-column="23" selection-end-line="7887" selection-end-column="23" />
-          <caret line="8024" column="23" selection-start-line="8024" selection-start-column="23" selection-end-line="8024" selection-end-column="23" />
-          <caret line="8028" column="23" selection-start-line="8028" selection-start-column="23" selection-end-line="8028" selection-end-column="23" />
-          <caret line="8035" column="23" selection-start-line="8035" selection-start-column="23" selection-end-line="8035" selection-end-column="23" />
-          <caret line="8237" column="23" selection-start-line="8237" selection-start-column="23" selection-end-line="8237" selection-end-column="23" />
-          <caret line="8238" column="27" selection-start-line="8238" selection-start-column="27" selection-end-line="8238" selection-end-column="27" />
-          <caret line="8253" column="23" selection-start-line="8253" selection-start-column="23" selection-end-line="8253" selection-end-column="23" />
-          <caret line="8257" column="16" selection-start-line="8257" selection-start-column="16" selection-end-line="8257" selection-end-column="16" />
-          <caret line="8261" column="21" selection-start-line="8261" selection-start-column="21" selection-end-line="8261" selection-end-column="21" />
-          <caret line="8285" column="16" selection-start-line="8285" selection-start-column="16" selection-end-line="8285" selection-end-column="16" />
-          <caret line="8312" column="16" selection-start-line="8312" selection-start-column="16" selection-end-line="8312" selection-end-column="16" />
-          <caret line="8863" column="23" selection-start-line="8863" selection-start-column="23" selection-end-line="8863" selection-end-column="23" />
-          <caret line="8864" column="27" selection-start-line="8864" selection-start-column="27" selection-end-line="8864" selection-end-column="27" />
-          <caret line="8878" column="23" selection-start-line="8878" selection-start-column="23" selection-end-line="8878" selection-end-column="23" />
-          <caret line="8881" column="23" selection-start-line="8881" selection-start-column="23" selection-end-line="8881" selection-end-column="23" />
-          <caret line="8884" column="23" selection-start-line="8884" selection-start-column="23" selection-end-line="8884" selection-end-column="23" />
-          <caret line="8885" column="27" selection-start-line="8885" selection-start-column="27" selection-end-line="8885" selection-end-column="27" />
-          <caret line="9081" column="16" selection-start-line="9081" selection-start-column="16" selection-end-line="9081" selection-end-column="16" />
-          <caret line="9295" column="27" selection-start-line="9295" selection-start-column="27" selection-end-line="9295" selection-end-column="27" />
-          <caret line="9389" column="16" selection-start-line="9389" selection-start-column="16" selection-end-line="9389" selection-end-column="16" />
-          <caret line="9401" column="23" selection-start-line="9401" selection-start-column="23" selection-end-line="9401" selection-end-column="23" />
-          <caret line="9402" column="16" selection-start-line="9402" selection-start-column="16" selection-end-line="9402" selection-end-column="16" />
-          <caret line="9403" column="32" selection-start-line="9403" selection-start-column="32" selection-end-line="9403" selection-end-column="32" />
-          <caret line="9406" column="23" selection-start-line="9406" selection-start-column="23" selection-end-line="9406" selection-end-column="23" />
-          <caret line="9490" column="16" selection-start-line="9490" selection-start-column="16" selection-end-line="9490" selection-end-column="16" />
-          <caret line="9692" column="21" selection-start-line="9692" selection-start-column="21" selection-end-line="9692" selection-end-column="21" />
-          <caret line="9754" column="16" selection-start-line="9754" selection-start-column="16" selection-end-line="9754" selection-end-column="16" />
-          <caret line="9898" column="23" selection-start-line="9898" selection-start-column="23" selection-end-line="9898" selection-end-column="23" />
-          <caret line="9899" column="27" selection-start-line="9899" selection-start-column="27" selection-end-line="9899" selection-end-column="27" />
-          <caret line="9913" column="23" selection-start-line="9913" selection-start-column="23" selection-end-line="9913" selection-end-column="23" />
-          <caret line="9916" column="23" selection-start-line="9916" selection-start-column="23" selection-end-line="9916" selection-end-column="23" />
-          <caret line="9919" column="23" selection-start-line="9919" selection-start-column="23" selection-end-line="9919" selection-end-column="23" />
-          <caret line="9920" column="27" selection-start-line="9920" selection-start-column="27" selection-end-line="9920" selection-end-column="27" />
-          <caret line="10002" column="27" selection-start-line="10002" selection-start-column="27" selection-end-line="10002" selection-end-column="27" />
-          <caret line="10007" column="25" selection-start-line="10007" selection-start-column="25" selection-end-line="10007" selection-end-column="25" />
-          <caret line="10010" column="28" selection-start-line="10010" selection-start-column="28" selection-end-line="10010" selection-end-column="28" />
-          <caret line="10237" column="23" selection-start-line="10237" selection-start-column="23" selection-end-line="10237" selection-end-column="23" />
-          <caret line="10238" column="27" selection-start-line="10238" selection-start-column="27" selection-end-line="10238" selection-end-column="27" />
-          <caret line="10252" column="23" selection-start-line="10252" selection-start-column="23" selection-end-line="10252" selection-end-column="23" />
-          <caret line="10255" column="23" selection-start-line="10255" selection-start-column="23" selection-end-line="10255" selection-end-column="23" />
-          <caret line="10258" column="23" selection-start-line="10258" selection-start-column="23" selection-end-line="10258" selection-end-column="23" />
-          <caret line="10259" column="27" selection-start-line="10259" selection-start-column="27" selection-end-line="10259" selection-end-column="27" />
-          <caret line="10728" column="23" selection-start-line="10728" selection-start-column="23" selection-end-line="10728" selection-end-column="23" />
-          <caret line="11101" column="16" selection-start-line="11101" selection-start-column="16" selection-end-line="11101" selection-end-column="16" />
-          <caret line="11107" column="16" selection-start-line="11107" selection-start-column="16" selection-end-line="11107" selection-end-column="16" />
-          <caret line="11129" column="33" selection-start-line="11129" selection-start-column="33" selection-end-line="11129" selection-end-column="33" />
-          <caret line="11269" column="34" selection-start-line="11269" selection-start-column="34" selection-end-line="11269" selection-end-column="34" />
-          <caret line="11270" column="16" selection-start-line="11270" selection-start-column="16" selection-end-line="11270" selection-end-column="16" />
-          <caret line="11281" column="16" selection-start-line="11281" selection-start-column="16" selection-end-line="11281" selection-end-column="16" />
-          <caret line="11393" column="27" selection-start-line="11393" selection-start-column="27" selection-end-line="11393" selection-end-column="27" />
-          <caret line="11406" column="16" selection-start-line="11406" selection-start-column="16" selection-end-line="11406" selection-end-column="16" />
-          <caret line="11567" column="27" selection-start-line="11567" selection-start-column="27" selection-end-line="11567" selection-end-column="27" />
-          <caret line="11592" column="16" selection-start-line="11592" selection-start-column="16" selection-end-line="11592" selection-end-column="16" />
-          <caret line="11641" column="27" selection-start-line="11641" selection-start-column="27" selection-end-line="11641" selection-end-column="27" />
-          <caret line="11783" column="21" selection-start-line="11783" selection-start-column="21" selection-end-line="11783" selection-end-column="21" />
-          <caret line="11864" column="27" selection-start-line="11864" selection-start-column="27" selection-end-line="11864" selection-end-column="27" />
-          <caret line="11866" column="16" selection-start-line="11866" selection-start-column="16" selection-end-line="11866" selection-end-column="16" />
-          <caret line="11869" column="16" selection-start-line="11869" selection-start-column="16" selection-end-line="11869" selection-end-column="16" />
-          <caret line="11941" column="23" selection-start-line="11941" selection-start-column="23" selection-end-line="11941" selection-end-column="23" />
-          <caret line="11942" column="27" selection-start-line="11942" selection-start-column="27" selection-end-line="11942" selection-end-column="27" />
-          <caret line="11956" column="23" selection-start-line="11956" selection-start-column="23" selection-end-line="11956" selection-end-column="23" />
-          <caret line="11959" column="23" selection-start-line="11959" selection-start-column="23" selection-end-line="11959" selection-end-column="23" />
-          <caret line="11962" column="23" selection-start-line="11962" selection-start-column="23" selection-end-line="11962" selection-end-column="23" />
-          <caret line="11963" column="27" selection-start-line="11963" selection-start-column="27" selection-end-line="11963" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -735,13 +527,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/antd.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5519713">
@@ -753,17 +538,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.12921348">
           <caret line="161" column="1" selection-start-line="161" selection-start-column="1" selection-end-line="161" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/index.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.333334">
-          <caret line="157" column="25" selection-start-line="157" selection-start-column="25" selection-end-line="157" selection-end-column="25" />
-          <folding>
-            <element signature="e#5171#6588#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -771,37 +545,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.066667">
           <caret line="109" column="21" selection-start-line="109" selection-start-column="21" selection-end-line="109" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/components/tab.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="113" column="25" selection-start-line="113" selection-start-column="25" selection-end-line="113" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30415264">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.home.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22584148">
-          <caret line="15" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="32" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/antd/style/mixins/vendor-prefixes.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12215569">
-          <caret line="208" column="0" selection-start-line="208" selection-start-column="0" selection-end-line="211" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -809,7 +552,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.748597">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -817,46 +559,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/components/Progress.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webpack.personalAcc.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="16" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/home/static/css/index.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="407" column="38" selection-start-line="407" selection-start-column="10" selection-end-line="407" selection-end-column="38" />
-          <folding>
-            <element signature="e#3185#3333#0" expanded="false" />
-            <element signature="e#3346#3364#0" expanded="false" />
-            <element signature="e#5028#5414#0" expanded="false" />
-            <element signature="e#6322#7047#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/home/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -868,77 +570,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/components/product-list.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26927254">
-          <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/home/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4368715">
-          <caret line="71" column="37" selection-start-line="71" selection-start-column="29" selection-end-line="71" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17318435">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3479237">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/libs/snap.svg-min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.41769317">
           <caret line="73" column="39" selection-start-line="73" selection-start-column="39" selection-end-line="73" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/tabs/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.4290504">
-          <caret line="142" column="36" selection-start-line="0" selection-start-column="0" selection-end-line="142" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/antd/node_modules/object-assign/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.14301676">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/components/Main.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.730769">
-          <caret line="78" column="18" selection-start-line="78" selection-start-column="18" selection-end-line="78" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -946,45 +581,202 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6450168">
           <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/personalAcc/index.jsx">
+    <entry file="file://$PROJECT_DIR$/home/static/css/index.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.384615">
-          <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="423" column="23" selection-start-line="423" selection-start-column="23" selection-end-line="423" selection-end-column="23" />
           <folding>
-            <element signature="e#2123#3394#0" expanded="false" />
-            <element signature="e#3419#3743#0" expanded="false" />
-            <element signature="e#3768#4139#0" expanded="false" />
+            <element signature="e#3185#3333#0" expanded="false" />
+            <element signature="e#3346#3364#0" expanded="false" />
+            <element signature="e#5028#5414#0" expanded="false" />
+            <element signature="e#6322#7047#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utilMethod.es6">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="201" column="17" selection-start-line="201" selection-start-column="17" selection-end-line="201" selection-end-column="17" />
+          <folding>
+            <element signature="e#62#5749#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/personalAcc/static/css/component.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="6.2">
-          <caret line="3" column="15" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/home/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38271606">
+          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.home.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="32" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.personalAcc.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.17318435">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/product-list.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/Progress.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/scan.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="76" column="40" selection-start-line="76" selection-start-column="40" selection-end-line="76" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/index.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22921348">
+          <caret line="229" column="23" selection-start-line="229" selection-start-column="4" selection-end-line="229" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/Main.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.03583815">
+          <caret line="1" column="37" selection-start-line="1" selection-start-column="32" selection-end-line="1" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="37" selection-start-line="27" selection-start-column="37" selection-end-line="27" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.233333">
+          <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/home/static/css/antd.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9617225">
+          <caret line="12340" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="12351" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/index.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="436.4405">
+          <caret line="0" column="123881" selection-start-line="0" selection-start-column="122299" selection-end-line="0" selection-end-column="123881" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/home/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.3290994">
+          <caret line="93" column="35" selection-start-line="93" selection-start-column="29" selection-end-line="93" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/tab.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/personalAcc/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="26" selection-start-line="2" selection-start-column="26" selection-end-line="2" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/scan.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.17396185">
+          <caret line="189" column="38" selection-start-line="189" selection-start-column="38" selection-end-line="189" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/personalAcc/static/css/index.less">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.785714">
-          <caret line="329" column="0" selection-start-line="329" selection-start-column="0" selection-end-line="329" selection-end-column="0" />
+        <state vertical-scroll-proportion="-27.633333">
+          <caret line="357" column="18" selection-start-line="357" selection-start-column="18" selection-end-line="357" selection-end-column="18" />
           <folding>
+            <element signature="e#3206#5211#0" expanded="false" />
             <element signature="e#3646#4726#0" expanded="false" />
             <element signature="e#3725#4139#0" expanded="false" />
+            <element signature="e#5763#6097#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/components/cardgroup.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.8846154">
+          <caret line="9" column="41" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/personalAcc/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59147024">
-          <caret line="17" column="4" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="61" />
+        <state vertical-scroll-proportion="0.20875421">
+          <caret line="6" column="7" selection-start-line="6" selection-start-column="7" selection-end-line="6" selection-end-column="7" />
           <folding />
         </state>
       </provider>
