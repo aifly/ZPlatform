@@ -78,11 +78,13 @@ export  default class MainUI extends React.Component {
                                     <Menu.Item key="../qa/"><Icon  type="question-circle-o" style={{marginRight:'32px'}}/>微问答</Menu.Item>
                                     <Menu.Item key="http://aifly.github.io/ZPlatform/richimg/"><Icon  type="picture" style={{marginRight:'32px'}}/>富图片</Menu.Item>
                                 </SubMenu>
-                                <SubMenu key="sub2"
-                                         title={<span><Icon type="user" style={{marginRight:'22px'}} /><span>用户中心</span></span>}>
-                                    <Menu.Item key="5"><Icon type="team" style={{marginRight:'32px'}}/>公司管理</Menu.Item>
-                                    <Menu.Item key="6"><Icon type="appstore-o" style={{marginRight:'32px'}}/>部门管理</Menu.Item>
-                                    <Menu.Item key="7"><Icon type="user" style={{marginRight:'32px'}}/>用户管理</Menu.Item>
+                                <SubMenu key="sub2" title={<span><Icon type="user" style={{marginRight:'22px'}} /><span>用户中心</span></span>}>
+                                    <Menu.Item key="5"><Icon type="team" style={{marginRight:'32px'}}/>用户和部门</Menu.Item>
+                                    <Menu.Item key="6"><Icon type="book" style={{marginRight:'32px'}}/>项目管理</Menu.Item>
+                                    <Menu.Item key="7"><Icon type="user" style={{marginRight:'32px'}}/>办公管理</Menu.Item>
+                                    <Menu.Item key="8"><Icon type="user" style={{marginRight:'32px'}}/>作品管理</Menu.Item>
+                                    <Menu.Item key="9"><Icon type="user" style={{marginRight:'32px'}}/>素材管理</Menu.Item>
+                                    <Menu.Item key="10"><Icon type="user" style={{marginRight:'32px'}}/>系统日志</Menu.Item>
                                 </SubMenu>
                                 <SubMenu key="sub4"
                                          title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>个人中心</span></span>}>

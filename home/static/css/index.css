@@ -373,9 +373,187 @@ body {
 }
 .fly-office .office {
   flex-grow: 2;
+  width: 50%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+.fly-office .office div.off-left,
+.fly-office .office div.off-right {
+  flex-grow: 1;
+  width: 100px;
+}
+.fly-office .office div.off-left h2 {
+  margin-top: 20px;
+  font-weight: normal;
+  color: #99071e;
+  margin-left: 20px;
+}
+.fly-office .office div.off-right h2 {
+  margin-top: 20px;
+  margin-right: 20px;
+  height: 40px;
+  text-align: right;
+  font-weight: normal;
+  color: #444;
+  font-size: 14px;
+}
+.fly-office .office div.off-right h2 span:nth-of-type(1) a {
+  color: #78a58c;
+}
+.fly-office .office div.off-right h2 span:nth-of-type(2) a {
+  color: #7eb7e5;
+}
+.fly-office .office div.off-right h2 span:nth-of-type(3) a {
+  color: #ea2e49;
+}
+.fly-office .office .task-btns {
+  width: 100%;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+}
+.fly-office .office .task-btns button {
+  margin: 0 10px;
+  width: 120px;
+}
+.fly-office .office .task-state {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  align-items: center;
+}
+.fly-office .office .task-state .new-task {
+  color: red;
+}
+.fly-office .office .task-state .task-running {
+  color: #69ceb5;
+  position: relative;
+}
+.fly-office .office .task-state .task-running:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 170px;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, 0.2)), color-stop(0.5, #cccccc), to(rgba(204, 204, 204, 0.2)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+}
+.fly-office .office .task-state .task-running:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  height: 170px;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, 0.2)), color-stop(0.5, #cccccc), to(rgba(204, 204, 204, 0.2)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+}
+.fly-office .office .task-state .task-complete {
+  color: #8fc35b;
+}
+.fly-office .office .task-state article {
+  font-size: 16px;
+  flex-grow: 1;
+  text-align: center;
+  position: relative;
+  height: 170px;
+}
+.fly-office .office .task-state article div {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, 0, 0);
+  transform: translate3d(-50%, 0, 0);
+  color: #848383;
+}
+.fly-office .office .task-state article div span {
+  font-size: 50px;
 }
 .fly-office .work {
   flex-grow: 1;
+}
+.fly-office .work h2 {
+  margin: 20px 0 0 20px;
+  font-weight: normal;
+  color: #99071e;
+}
+.fly-office .work .attendance-C {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+}
+.fly-office .work .attendance-C .att-work-time {
+  position: relative;
+}
+.fly-office .work .attendance-C .att-work-time:before {
+  height: 100%;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 1px;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, 0.2)), color-stop(0.5, #cccccc), to(rgba(204, 204, 204, 0.2)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
+}
+.fly-office .work .attendance-C .att-month {
+  text-align: center;
+}
+.fly-office .work .attendance-C .att-month div.behavior {
+  height: 20px;
+  margin-top: 20px;
+}
+.fly-office .work .attendance-C .att-month div.behavior span {
+  font-size: 16px;
+}
+.fly-office .work .attendance-C .att-month div.behavior span:nth-of-type(2n-1) {
+  color: #77c4d3;
+}
+.fly-office .work .attendance-C .att-month div.behavior span:nth-of-type(2n) {
+  margin-left: 5vw;
+}
+.fly-office .work .attendance-C article {
+  flex-grow: 2;
+}
+.fly-office .work .attendance-C article:nth-of-type(2) {
+  flex-grow: 1;
+}
+.fly-office .work .attendance-C .att-time {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  margin-left: 20px;
+  height: 70px;
+  margin-top: 10px;
+}
+.fly-office .work .attendance-C .att-time aside {
+  flex-grow: 1;
+}
+.fly-office .work .attendance-C .att-time aside > div {
+  font-size: 18px;
+}
+.fly-office .work .attendance-C .att-p-time {
+  font-size: 20px;
+}
+.fly-office .work .attendance-C .att-p-time:nth-of-type(1) {
+  color: #99071e;
+}
+.fly-office .work .task-btns {
+  width: 100%;
+  text-align: center;
+}
+.fly-office .work .task-btns button {
+  width: 15vw;
+  height: 40px;
+  background: #d8271c;
+  color: #fff;
+  border: none;
 }
 .fly-office figure {
   height: 100%;
