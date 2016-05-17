@@ -111,6 +111,8 @@ header.header a {
 .fly-service h2 {
   height: 20px;
   margin: 30px;
+  font-weight: normal;
+  color: #99071e;
 }
 .fly-service .fly-service-C {
   width: 100%;
