@@ -237,17 +237,22 @@ header.header a {
   flex-flow: row;
 }
 .fly-user .user-count div.u-info:nth-of-type(1) {
-  width: 40px;
+  position: relative;
+  flex-grow: 10;
+  padding-left: 46px;
+  box-sizing: border-box;
+}
+.fly-user .user-count div.u-info:nth-of-type(1):before {
+  content: '总用户';
+  position: absolute;
+  left: 0;
 }
 .fly-user .user-count div.u-info:nth-of-type(2) {
-  flex-grow: 14;
-  margin-left: 10px;
-}
-.fly-user .user-count div.u-info:nth-of-type(3) {
-  margin-left: 10px;
   flex-grow: 1;
+  width: 47px;
+  margin-left: 10px;
 }
-.fly-user .user-count div.u-info:nth-of-type(3) a {
+.fly-user .user-count div.u-info:nth-of-type(2) a {
   font-size: .8vw;
 }
 .fly-user .module-container {
@@ -521,6 +526,7 @@ header.header a {
 }
 .fly-office .work {
   flex-grow: 1;
+  width: 300px;
 }
 .fly-office .work h2 {
   margin: 20px 0 0 20px;
@@ -607,4 +613,9 @@ header.header a {
 }
 .fly-office figure:nth-of-type(2) {
   margin: 0 0 0 0;
+}
+@media all and (max-width: 1366px) {
+  .fly-office .office .off-right .small > div {
+    margin: 0 !important;
+  }
 }

@@ -15,8 +15,8 @@ export default class ZmitiStep extends React.Component{
         })
 
         return (
-            <div style={{ marginTop:20 }}>
-                <div style={{margin:'0 20px 0  0',float:'left'}}>{this.props.name}：</div>
+            <div className="small" style={{ marginTop:20 }}>
+                <div style={{margin:'0 2% 0  0' ,float:'left'}}>{this.props.name}：</div>
                 <Steps style={{width:'80%',height:50,float:'left',display:'inline-block',position:'relative'}} size={this.props.size} current={this.props.current}>{step}</Steps>
             </div>
         )

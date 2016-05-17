@@ -11,13 +11,13 @@ export default class ZmitiProductList extends React.Component{
         let data  = [
             {
                 title:'可视化图表',
-                remark:'可视化图表可视化图表可视化图表可视化图表可视化图表'
+                remark:'可视化图表可视化图表可视化图表可视'
             }, {
                 title:'3D新闻',
-                remark:'可视化图表可视化图表可视化图表可视化图表可视化图表'
+                remark:'可视化图表可视化图表可视化图表可视化'
             },{
                 title:'VR工具包',
-                remark:'可视化图表可视化图表可视化图表可视化图表可视化图表'
+                remark:'可视化图表可视化图表可视化图表可'
             }
         ].map((item,i)=>{
             return (

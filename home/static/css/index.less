@@ -313,19 +313,25 @@ header.header{
     .displayFlex(row);
     div.u-info{
       &:nth-of-type(1){
-        width:40px;
+        .position(r);
+        &:before{
+          content: '总用户';
+          .position(a);
+          left:0;
+        }
+        flex-grow: 10;
+        padding-left: 46px;
+        box-sizing: border-box;
       }
       &:nth-of-type(2){
-        flex-grow: 14;
-        margin-left:10px;
-      }
-      &:nth-of-type(3){
-        margin-left:10px;
         flex-grow: 1;
+        width:47px;
+        margin-left:10px;
         a{
           font-size:.8vw;
         }
       }
+
     }
   }
 
@@ -590,6 +596,7 @@ header.header{
   }
   .work{
     flex-grow: 1;
+    width:300px;
     h2{
       margin:20px 0 0 20px;
       font-weight:normal;
@@ -687,6 +694,20 @@ header.header{
     }
     &:nth-of-type(2){
       margin:0 0 0 0;
+    }
+  }
+}
+
+@media all and (max-width: 1366px) {
+  .fly-office{
+    .office{
+      .off-right{
+        .small{
+          &>div{
+            margin:0 !important;
+          }
+        }
+      }
     }
   }
 }

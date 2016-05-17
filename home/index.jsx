@@ -82,7 +82,6 @@ class MainUI extends React.Component{
                                 </div>
                             </div>
                             <div className="user-count">
-                                <div className="u-info">总用户</div>
                                 <div className="u-info">
                                     <span><span style={{color:'#00ada7'}}>{this.state.curUsersCount}</span>/{this.state.maxUsersCount}</span>
                                     <span>最高上限为100人</span>
