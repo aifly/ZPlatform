@@ -1,5 +1,6 @@
 import React from 'react';
-import {Steps } from 'antd';
+import Steps from 'antd/lib/steps';
+import 'antd/lib/steps/style/css';
 const Step = Steps.Step;
 
 export default class ZmitiStep extends React.Component{
@@ -14,9 +15,13 @@ export default class ZmitiStep extends React.Component{
         })
 
         return (
-            <div style={{height:50}}>
-                <span style={{marginRight:'20px',position:'relative',top:'13'}}>{this.props.name}：</span><Steps style={{width:'80%',display:'inline-block'}} size={this.props.size} current={0}>{step}</Steps>
+            <div style={{ marginTop:20 }}>
+                <div style={{margin:'0 20px 0  0',float:'left'}}>{this.props.name}：</div>
+                <Steps style={{width:'80%',height:50,float:'left',display:'inline-block',position:'relative'}} size={this.props.size} current={this.props.current}>{step}</Steps>
             </div>
         )
     }
 }
+ZmitiStep.defaultProps = {
+    current:0
+};

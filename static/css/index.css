@@ -91,10 +91,6 @@ body {
 #fly-main .main .fly-header div.fly-nav a {
   -webkit-transform-origin: left;
   transform-origin: left;
-  -webkit-transform: rotateY(-180deg);
-  transform: rotateY(-180deg);
-  backface-visibility: hidden;
-  background: #000;
 }
 #fly-main .main .fly-header div.fly-nav a.active {
   -webkit-transition: -webkit-transform 0.8s, background 0.8s;

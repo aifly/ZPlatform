@@ -2,13 +2,23 @@ import './static/css/index.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {utilMethods,_$,$$} from '../utilMethod.es6';
-import {Progress,Tabs,Card,Button,DatePicker } from 'antd';
+
+import Progress from 'antd/lib/progress';
+import Tabs from 'antd/lib/tabs';
+import Card from 'antd/lib/card';
+import Button from 'antd/lib/button';
+import DatePicker from 'antd/lib/date-picker';
+import 'antd/lib/progress/style/css';
+import 'antd/lib/tabs/style/css';
+import 'antd/lib/card/style/css';
+import 'antd/lib/button/style/css';
+import 'antd/lib/date-picker/style/css';
 const MonthPicker = DatePicker.MonthPicker;
 import ZmitiStep from '../components/step.jsx';
 const TabPane = Tabs.TabPane;
 const ProgressLine = Progress.Line;
 import ZmitiTab from '../components/tab.jsx';
-import 'antd/dist/antd.css';
+
 import ZmitiProgress from '../components/Progress.jsx';
 import ZmitiProductList from '../components/product-list.jsx';
 class MainUI extends React.Component{
@@ -42,7 +52,12 @@ class MainUI extends React.Component{
             title: '已完成'
         }];
 
+        let style={
+            height:248,
+            margin:'0 auto'
+        }
         return(
+
             <div className="main">
                 <header className="header">
                     公告：智媒体新增新的交互工具"富图片"。<a href="#">点此查看</a>
@@ -113,10 +128,10 @@ class MainUI extends React.Component{
                                    您还有 <span><a href="#">5条</a></span>任务没有完成  <span><a href="#">2条</a></span>需要审核 <span><a
                                    href="#">10条</a></span>到期未提交
                                </h2>
-                                <div><ZmitiStep name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
-                                <div><ZmitiStep name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
-                                <div><ZmitiStep name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
-                                <div><ZmitiStep name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
+                                <div><ZmitiStep current="1" name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
+                                <div><ZmitiStep current="2" name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
+                                <div><ZmitiStep current="3" name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
+                                <div><ZmitiStep current="4" name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
                            </div>
                         </figure>
                         <figure className="work">
@@ -161,6 +176,47 @@ class MainUI extends React.Component{
 
                         </figure>
 
+                    </div>
+                    <div className="fly-service">
+                        <h2 className="fly-ser-title">产品与服务</h2>
+                        <div className="fly-service-C">
+                            <figure className="fly-service-item">
+                                <Card  title="产品工具系列" style={style} >
+                                    <ul>
+                                        <li>移动微场景 <a href="#">申请使用</a></li>
+                                        <li>微信问答</li>
+                                        <li>交互式富图片</li>
+                                    </ul>
+                                </Card>
+                            </figure>
+                            <figure className="fly-service-item">
+                                <Card  title="产品交互系列"  style={style}>
+                                    <ul>
+                                        <li>企业项目管理</li>
+                                        <li>设计图讨论工具</li>
+                                    </ul>
+                                </Card>
+                            </figure>
+                            <figure className="fly-service-item">
+                                <Card  title="项目服务系列" style={style} >
+                                    <ul>
+                                        <li>互联网整体文字服务</li>
+                                        <li>设计类服务<a href="#"><i>已使用 134个作品</i></a></li>
+                                        <li>交互方案服务</li>
+                                        <li>页面服务</li>
+                                        <li>方案书服务</li>
+                                    </ul>
+                                </Card>
+                            </figure>
+                            <figure className="fly-service-item">
+                                <Card  title="人工工具系列" style={style} >
+                                    <ul>
+                                        <li>会员服务问答</li>
+                                        <li>非会员服务问答</li>
+                                    </ul>
+                                </Card>
+                            </figure>
+                        </div>
                     </div>
                 </article>
             </div>

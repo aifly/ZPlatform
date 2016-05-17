@@ -139,7 +139,6 @@ body {
   font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
   font-size: 14px;
   height: 100%;
-  overflow: hidden;
   background:@bgColor !important;
 }
 @baseColor:#99071e;
@@ -153,9 +152,8 @@ body {
   .displayFlex();
 
 }
-.header{
+header.header{
   @headerH:50px;
-  height:@headerH;
   width:100%;
   background:#eaf0f7;
   padding-left:30px;
@@ -167,7 +165,7 @@ body {
 .fly-content{
   flex-grow:1;
 }
-.fly-user,.fly-office{
+.fly-user,.fly-office,.fly-service{
   width:98vw;
   margin:20px auto;
   height:300px;
@@ -182,6 +180,47 @@ body {
       margin:0 10px;
     }
   }
+}
+
+.fly-service{
+  background:#fff;
+  .displayFlex();
+  h2{
+    height:20px;
+    margin:30px;
+  }
+  .fly-service-C{
+    width:100%;
+    .displayFlex(row);
+
+    figure.fly-service-item{
+      flex-grow: 1;
+      height:100%;
+      width:400px;
+      background: #ccc;
+      padding:30px;
+      margin:0;
+      li{
+        height:30px;
+        line-height:30px;
+        .position(r);
+        padding-left:30px;
+        box-sizing:border-box;
+        &:before{
+          content: '';
+          .position(a);
+          width:10px;
+          height:10px;
+          background: #e9573e;
+          border-radius: 3px;
+          left:0;
+          top:10px;
+        }
+      }
+
+    }
+  }
+
 }
 
 .fly-user{
@@ -456,7 +495,6 @@ body {
     div.off-left,div.off-right{
       flex-grow: 1;
       width:100px;
-
     }
     div.off-left{
       h2{
@@ -496,7 +534,7 @@ body {
     }
     .task-state{
       width:100%;
-      height:100%;
+      height:65%;
       .displayFlex(row);
       align-items: center;
       .new-task{
@@ -529,7 +567,7 @@ body {
       }
       article{
         font-size:16px;
-        flex-grow: 1;;
+        flex-grow: 1;
         text-align: center;
         .position(r);
         height:170px;

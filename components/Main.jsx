@@ -1,7 +1,15 @@
 import React from 'react';
-import {Row,Col,Icon,Menu,Input,Badge} from 'antd';
-import '../static/css/antd.css';
+import Icon from  'antd/lib/icon/index';
+import Menu  from  'antd/lib/menu';
+import Input from  'antd/lib/input';
+import Badge from  'antd/lib/badge';
+import 'antd/lib/icon/style/css';
+import 'antd/lib/menu/style/css';
+import 'antd/lib/input/style/css';
+import 'antd/lib/badge/style/css';
+
 const SubMenu = Menu.SubMenu;
+
 import {utilMethods,_$,$$} from '../utilMethod.es6';
 
 export  default class MainUI extends React.Component {
@@ -13,7 +21,8 @@ export  default class MainUI extends React.Component {
             isOpen: true,
             current: '3',
             currentAcc:'iLinten@qq.com',
-            frameSrc: './home/index.html'
+            frameSrc: './home/index.html',
+            isCompany : false //是否是企业用户。默认为false.
         }
     }
 
@@ -21,6 +30,7 @@ export  default class MainUI extends React.Component {
         this.setState({
             current: e.key,
             frameSrc:e.key
+
         });
     }
 
@@ -39,13 +49,30 @@ export  default class MainUI extends React.Component {
 
     render() {
 
+        let companyMenu = [];
+
+        if(this.state.isCompany){
+            companyMenu = [1].map((item,i)=>{
+                return <SubMenu key="sub2" title={<span><Icon type="user" style={{marginRight:'22px'}} /><span>用户中心</span></span>}>
+                    <Menu.Item key="5"><Icon type="team" style={{marginRight:'32px'}}/>用户和部门</Menu.Item>
+                    <Menu.Item key="6"><Icon type="book" style={{marginRight:'32px'}}/>项目管理</Menu.Item>
+                    <Menu.Item key="7"><Icon type="user" style={{marginRight:'32px'}}/>办公管理</Menu.Item>
+                    <Menu.Item key="8"><Icon type="user" style={{marginRight:'32px'}}/>作品管理</Menu.Item>
+                    <Menu.Item key="9"><Icon type="picture" style={{marginRight:'32px'}}/>素材管理</Menu.Item>
+                    <Menu.Item key="10"><Icon type="user" style={{marginRight:'32px'}}/>系统日志</Menu.Item>
+                </SubMenu>;
+            });
+        }
+
+
+
         return (
             <section className="main">
                 <header className="fly-header">
                     <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    <div className="fly-nav"><a href="#">系统管理</a></div>
+                    <div style={{display:this.props.isAdmin?'block':'none'}} className="fly-nav"><a href="#">系统管理</a></div>
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
                     <div></div>
@@ -78,14 +105,7 @@ export  default class MainUI extends React.Component {
                                     <Menu.Item key="../qa/"><Icon  type="question-circle-o" style={{marginRight:'32px'}}/>微问答</Menu.Item>
                                     <Menu.Item key="http://aifly.github.io/ZPlatform/richimg/"><Icon  type="picture" style={{marginRight:'32px'}}/>富图片</Menu.Item>
                                 </SubMenu>
-                                <SubMenu key="sub2" title={<span><Icon type="user" style={{marginRight:'22px'}} /><span>用户中心</span></span>}>
-                                    <Menu.Item key="5"><Icon type="team" style={{marginRight:'32px'}}/>用户和部门</Menu.Item>
-                                    <Menu.Item key="6"><Icon type="book" style={{marginRight:'32px'}}/>项目管理</Menu.Item>
-                                    <Menu.Item key="7"><Icon type="user" style={{marginRight:'32px'}}/>办公管理</Menu.Item>
-                                    <Menu.Item key="8"><Icon type="user" style={{marginRight:'32px'}}/>作品管理</Menu.Item>
-                                    <Menu.Item key="9"><Icon type="user" style={{marginRight:'32px'}}/>素材管理</Menu.Item>
-                                    <Menu.Item key="10"><Icon type="user" style={{marginRight:'32px'}}/>系统日志</Menu.Item>
-                                </SubMenu>
+                                {companyMenu}
                                 <SubMenu key="sub4"
                                          title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>个人中心</span></span>}>
                                     <Menu.Item key="personalAcc/"><Icon type="user" style={{marginRight:'32px'}}/>账号管理</Menu.Item>
@@ -107,11 +127,11 @@ export  default class MainUI extends React.Component {
     }
 
     componentDidMount() {
-        setTimeout(()=> {
+       /* setTimeout(()=> {
             $$('.fly-nav a').forEach((a)=> {
                 utilMethods.addClass(a, 'active');
             });
-        }, 0)
+        }, 0)*/
     }
 }
 
