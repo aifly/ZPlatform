@@ -64,8 +64,6 @@ export  default class MainUI extends React.Component {
             });
         }
 
-
-
         return (
             <section className="main">
                 <header className="fly-header">

@@ -29,7 +29,8 @@ class MainUI extends React.Component{
             currentUser:"iLinten",
             lastTime:"2016.12.31",
             curUsersCount:5,
-            maxUsersCount:10
+            maxUsersCount:10,
+            isCompany:true //当前登录用户是否是企业账号
         }
     }
 
@@ -99,7 +100,7 @@ class MainUI extends React.Component{
                             <ZmitiProductList key="1"></ZmitiProductList>
                         </figure>
                     </div>
-                    <div className="fly-office">
+                    <div className="fly-office" style={{display:this.state.isCompany?'':'none'}}>
                         <figure className='office'>
                            <div className="off-left">
                                <h2>办公系统</h2>
