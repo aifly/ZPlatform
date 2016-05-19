@@ -1,11 +1,11 @@
-import '../css/index.css';
-import  '../images/jquery.minicolors.png';
-import '../css/jquery.minicolors.css';
+import './static/css/index.css';
+import  './static/images/jquery.minicolors.png';
+import './static/css/jquery.minicolors.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Button,Input,ButtonToolbar,Grid,Row,Col,Modal,Popover,Tooltip,Image} from 'react-bootstrap';
 import LinkedStateMixin from 'react-addons-linked-state-mixin';
-import Stage from './stage';
+import Stage from './static/js/stage';
 import $ from 'jquery';
 import miniColors from 'jquery-minicolors';
 

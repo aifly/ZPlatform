@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8"/>
     <title>富图片</title>
-    <link rel="stylesheet" href="static/css/bootstrap.css">
 
     <!--<link rel="stylesheet" href="static/css/index.min.css"/>
     <link rel="stylesheet" href="static/css/jquery.minicolors.min.css">-->
@@ -33,40 +32,21 @@
     </style>
 </head>
 <body>
-    <header hidden class="fly-header">
+<!--    <header hidden class="fly-header">
          头部
-    </header>
+    </header>-->
 
     <div id="loading" style="color:red;">
         加载中,请稍后.<span>.</span><span>.</span>
     </div>
 
     <section class="fly-main" style="opacity: 0;" id="fly-main">
-        <div class='fly-left-aside' id="fly-edit-prop-pannel">
-            <div class="fly-edit-pic">
-                <span>编辑图片</span>
-                <div></div>
-            </div>
-            <div class="fly-pannel-title" id="fly-pannel-title">
 
-            </div>
-            <div class="fly-widget-prop-setting-container" id="fly-widget-prop-setting-container">
-
-            </div>
-
-            <div class="fly-widget-prop-setting-container" id="fly-dialog">
-
-            </div>
-
-            <div id="fly-bottom-container"></div>
-        </div>
-        <div class='fly-right-aside' id="fly-edit-content-pannel">
-
-        </div>
     </section>
 
 
-    <script src="build/bundle.js" onload="var loading = document.getElementById('loading');loading.parentNode.removeChild(loading);document.getElementById('fly-main').style.opacity=1"></script>
+    <!--<script src="./static/js/index.js" onload="var loading = document.getElementById('loading');loading.parentNode.removeChild(loading);document.getElementById('fly-main').style.opacity=1"></script>-->
+    <script src="http://localhost:3000/index.js" onload="var loading = document.getElementById('loading');loading.parentNode.removeChild(loading);document.getElementById('fly-main').style.opacity=1"></script>
 
 </body>
 </html>

@@ -101,7 +101,7 @@ export  default class MainUI extends React.Component {
                                          title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>产品与服务</span></span>}>
                                     <Menu.Item key="http://www.zmiti.com" ><Icon  type='mobile' style={{marginRight:'32px'}}/>微场景</Menu.Item>
                                     <Menu.Item key="../qa/"><Icon  type="question-circle-o" style={{marginRight:'32px'}}/>微问答</Menu.Item>
-                                    <Menu.Item key="http://aifly.github.io/ZPlatform/richimg/"><Icon  type="picture" style={{marginRight:'32px'}}/>富图片</Menu.Item>
+                                    <Menu.Item key="richimg/"><Icon  type="picture" style={{marginRight:'32px'}}/>富图片</Menu.Item>
                                 </SubMenu>
                                 {companyMenu}
                                 <SubMenu key="sub4"

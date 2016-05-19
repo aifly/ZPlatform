@@ -1,0 +1,268 @@
+html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+html, body {
+  height: 100%;
+}
+
+img {
+  border: none;
+  vertical-align: top;
+  width: 100%;
+  height: auto;
+}
+
+input, textarea {
+  outline: none;
+}
+
+@mixin pos($v) {
+  @if
+  $v == a {
+  position: absolute;
+} @else if $v == r {
+  position: relative;
+} @else if $v == f {
+  position: fixed;
+}
+}
+
+@mixin br($v:50%) {
+  border-radius: $v;
+}
+
+@mixin opacity($v:0) {
+  opacity: $v;
+}
+
+@mixin transform($v) {
+  -webkit-transform: $v;
+  transform: $v;
+}
+
+@mixin transformOrigin($v) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+
+@mixin backgroundSize($v:cover) {
+  background-size: $v;
+}
+
+@mixin transition_transform($v) {
+  -webkit-transition: -webkit-transform $v;
+  transition: transform $v;
+}
+
+@mixin transform_origin($v:center) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+
+@mixin transition($v) {
+  -webkit-transition: $v;
+  transition: $v;
+}
+
+@mixin transitionTimingFunction($v:cubic-bezier(1, -0.025, 1, 0.865)
+
+)
+{
+  -webkit-transition-timing-function: $v;
+  transition-timing-function: $v;
+}
+
+@mixin transform($v) {
+  -webkit-transform: $v;
+  transform: $v;
+}
+
+@mixin background($bg) {
+  background: $bg;
+}
+
+@mixin backgroundSize($v:cover) {
+  background-size: $v;
+}
+
+@mixin animation($v) {
+  -webkit-animation: $v;
+  animation: $v;
+}
+
+@mixin transform3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  -webkit-perspective: 800px;
+}
+
+@mixin displayBox($v) {
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: $v;
+}
+
+@mixin fly-h-gradient-line {
+  background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, .2)), color-stop(0.5, rgba(204, 204, 204, 1)), to(rgba(204, 204, 204, .2)));
+  background: -moz-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
+  background: -ms-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
+}
+
+@mixin fly-v-gradient-line($minOpacity:.2,$maxOpacity:1) {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, $minOpacity)), color-stop(0.5, rgba(204, 204, 204, $maxOpacity)), to(rgba(204, 204, 204, $minOpacity)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
+}
+
+@mixin displayFlex($v:column) {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: $v;
+}
+$bodyBg:#454545;
+body {
+  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  height: 100%;
+  overflow: hidden;
+  background: $bodyBg !important;
+  min-width: 1024px;
+}
+
+.rm-main-ui{
+  @include displayFlex(row);
+}
+#rm-left-app{
+  height:100vh;
+  background-color: #1c1c1c;;
+  width:300px;
+  box-shadow:0 0  20px rgba(255,255,255,.3);
+  .rm-header{
+    width:80%;
+    margin:8vh auto 0;
+    height:30px;
+    color:#fff;
+    line-height:30px;
+    @include pos(r);
+    &:before{
+      content:"";
+      @include pos(a);
+      right:0;
+      top:15px;
+      width:70%;
+      height:1px;
+      @include fly-h-gradient-line();
+      //background:#ccc;
+    }
+  }
+  $borderColor:#990000;
+
+  .rm-pannel-bar{
+    width:90%;
+    height:30px;
+    margin:5vh auto 0;
+    @include displayFlex(row);
+    .rm-pannel-title{
+      padding:10px;
+    }
+    .rm-fill-left,.rm-fill-right{
+      border-bottom:1px solid $borderColor;
+    }
+    .rm-fill-left{
+      width:10%;
+    }
+    .rm-fill-right{
+      width:43%;
+    }
+    .rm-pic-video-title,.rm-text-pannel-title{
+      padding:4px 10px;
+      box-sizing: border-box;
+      color:#eee;
+      cursor:pointer;
+      border-bottom:1px solid $borderColor;
+    }
+    .active{
+      border:1px solid $borderColor;
+      border-bottom: none;
+    }
+  }
+
+  .rm-operator-C{
+    width:90%;
+    margin:3vh auto;
+
+    overflow: hidden;
+    height:70%;
+  }
+  .rm-operator-box{
+    width:200%;
+    height:100px;
+
+    @include transition_transform(.5s);
+    &.active{
+      @include transform(translate3d(-50%,0,0));
+    }
+
+    .ant-input-group-addon{
+      cursor: pointer;
+    }
+
+
+    @include displayFlex(row);
+    .rm-operator-t,.rm-operator-p{
+      width:50%;
+    }
+    .rm-operator-t{
+
+      .minicolors{
+      }
+
+      .color-container {
+        width: 100%;
+        @include pos(r);
+        height:40px;
+        top:2px;
+      }
+      .color-container .minicolor {
+
+        display: inline-block;
+        position: absolute;
+
+      }
+      .color-container input {
+        width: 75%;
+        display: inline-block;
+        border-radius: 5px;
+        padding-left:5px;
+        height: 28px;
+        margin-top:3px;
+        margin-left: 40px;
+      }
+
+    }
+
+    .rm-operator-p{
+      .rm-choose-img{
+        input[type='text']{
+
+        }
+      }
+    }
+  }
+
+}
+#rm-right-app{
+  width:700px;
+}
