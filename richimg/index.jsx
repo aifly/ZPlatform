@@ -17,6 +17,9 @@ const FormItem = Form.Item;
 import notification from 'antd/lib/notification';
 import 'antd/lib/notification/style/css';
 
+import Pubsub from  'pubsubjs';
+
+
 
 import ZmitiTextAreaBtns from './static/components/zmiti-textarea-btns.jsx';
 import ZmitiMiniColor from './static/components/zmiti-minicolor.jsx';
