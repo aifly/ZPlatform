@@ -12,17 +12,25 @@ import $ from 'jquery';
             this.each((i, n)=> {
                 $(n).find('aside').remove();
             });
+
+
             return this.each((i, n)=> {
+
                 let aside = $(`<aside style="border:1px solid #eee;width:100%;height:100%;position:absolute;left:0;top:0"></aside>`);
                 $(n).append(aside);
                 n.isCanMove = false;
                 aside.on('mousedown', (e)=> {
+                    e.preventDefault();
+
                     n.disX = e.clientX - $(n).offset().left;
                     n.disY = e.clientY - $(n).offset().top;
                     $(document).on('mousemove', e=> {
-                        let parent = $(n).parents('.fly-img-container');
+                        let parent = $(n).parents('.rm-img-container');
+
                         let x = e.clientX - parent.offset().left - n.disX,
                             y = e.clientY - parent.offset().top - n.disY;
+
+
                         x < 0 && (x = 0);
                         y <= 0 && (y = 0);
 
@@ -32,6 +40,8 @@ import $ from 'jquery';
                     }).on("mouseup", e=> {
                         $(document).off('mousemove mouseup');
                     });
+
+
                 });
 
 

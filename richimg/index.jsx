@@ -3,6 +3,7 @@ import './static/css/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import   './static/js/jquery.longShadow';
 
 import Form from 'antd/lib/form';
 import Input from 'antd/lib/input';
@@ -13,13 +14,18 @@ import 'antd/lib/button/style/css';
 import Radio from 'antd/lib/radio';
 import 'antd/lib/radio/style/css';
 const FormItem = Form.Item;
+import notification from 'antd/lib/notification';
+import 'antd/lib/notification/style/css';
 
 
 import ZmitiTextAreaBtns from './static/components/zmiti-textarea-btns.jsx';
 import ZmitiMiniColor from './static/components/zmiti-minicolor.jsx';
 import ZmitiChooseFile from './static/components/zmiti-choose-file.jsx';
-
-
+import ZmitiRipple from './static/components/zmiti-ripple.jsx';
+import ZmitiBtnGroup from './static/components/zmiti-btn-group.jsx';
+import ZmitiTopBanner from './static/components/zmiti-top-banner.jsx';
+import ZmitiMainStage from './static/components/zmiti-main-stage.jsx';
+import ZmitiModal from './static/components/zmiti-dialog.jsx';
 
 if (!Array.from) {
     Array.from = (c)=> {
@@ -27,29 +33,35 @@ if (!Array.from) {
     }
 }
 
-class ZmitiLeftApp extends React.Component{
-    constructor(args){
+class ZmitiLeftApp extends React.Component {
+    constructor(args) {
         super(...args);
         this.state = {
-            textClassName: "rm-text-pannel-title active",
-            picClassName: "rm-pic-video-title "
+            textClassName: "rm-text-pannel-title active rm-pannel",
+            picClassName: "rm-pic-video-title rm-pannel"
         }
     }
-    changePannel(e){
+
+    changePannel(e) {
         this.refs.text.classList.remove('active');
         this.refs.pic.classList.remove('active');
-
         e.target.classList.add("active");
-
+        let index = $(e.target).index();
+        this.refs['rm-operator-box'].classList[index - 1 ? 'add' : 'remove']('active');
+        this.refs.ripple.startMove(e);
 
     }
-    chooseImg(e){
-        if(e.target.className.indexOf('ant-input-group-addon')>-1){
-            this.refs['rm-upload'].click();
-        }
-    }
-    render(){
 
+    componentDidMount(){
+
+
+        $('.rm-pannel').longShadow({
+            colorShadow: '#990000',
+            sizeShadow: 8
+        });
+    }
+
+    render() {
 
         return (
             <aside id="rm-left-app" className="rm-left-app">
@@ -66,8 +78,9 @@ class ZmitiLeftApp extends React.Component{
                         &nbsp;
                     </div>
                 </section>
+                <ZmitiRipple id="rm-pannel-ripple" ref="ripple"></ZmitiRipple>
                 <section className="rm-operator-C">
-                    <section className="rm-operator-box active">
+                    <section className="rm-operator-box" ref="rm-operator-box">
                         <div className="rm-operator-t">
                             <Form >
                                 <FormItem
@@ -83,33 +96,42 @@ class ZmitiLeftApp extends React.Component{
                         </div>
                     </section>
                 </section>
+                <div className="rm-btn-group-C">
+                    <ZmitiBtnGroup></ZmitiBtnGroup>
+                </div>
+                <ZmitiModal></ZmitiModal>
             </aside>
         )
     }
 }
 
 
-
-
-class ZmitiRightApp extends React.Component{
-    constructor(args){
+class ZmitiRightApp extends React.Component {
+    constructor(args) {
         super(...args);
     }
-    render(){
+
+    render() {
         return (
             <aside id="rm-right-app" className="rm-right-app">
-                right
+                <div className="rm-main-ui-C">
+                    <div className="rm-top-banner-C">
+                        <ZmitiTopBanner></ZmitiTopBanner>
+                    </div>
+                    <div className="rm-stage-C">
+                        <ZmitiMainStage></ZmitiMainStage>
+                    </div>
+                </div>
             </aside>
         )
     }
 }
 
-class MainUI extends React.Component{
-    constructor(args){
+class MainUI extends React.Component {
+    constructor(args) {
         super(...args);
     }
-
-    render(){
+    render() {
         return (
             <div className="rm-main-ui">
                 <ZmitiLeftApp></ZmitiLeftApp>
@@ -119,7 +141,12 @@ class MainUI extends React.Component{
     }
 }
 
+ReactDOM.render(<MainUI></MainUI>, $("#fly-main")[0],()=>{
 
+    notification['info']({
+        message: '小提示',
+        description: '按住键盘空格键可以拖动图片哦~~'
+    });
 
-ReactDOM.render(<MainUI></MainUI>,$("#fly-main")[0]);
+});
 

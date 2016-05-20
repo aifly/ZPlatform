@@ -18,8 +18,6 @@ html, body {
 img {
   border: none;
   vertical-align: top;
-  width: 100%;
-  height: auto;
 }
 
 input, textarea {
@@ -118,6 +116,7 @@ input, textarea {
   background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, .2)), color-stop(0.5, rgba(204, 204, 204, 1)), to(rgba(204, 204, 204, .2)));
   background: -moz-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
   background: -ms-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
+
 }
 
 @mixin fly-v-gradient-line($minOpacity:.2,$maxOpacity:1) {
@@ -145,6 +144,7 @@ body {
   @include displayFlex(row);
 }
 #rm-left-app{
+  @include pos(r);
   height:100vh;
   background-color: #1c1c1c;;
   width:300px;
@@ -210,7 +210,7 @@ body {
     width:200%;
     height:100px;
 
-    @include transition_transform(.5s);
+    @include transition_transform(.2s);
     &.active{
       @include transform(translate3d(-50%,0,0));
     }
@@ -218,7 +218,6 @@ body {
     .ant-input-group-addon{
       cursor: pointer;
     }
-
 
     @include displayFlex(row);
     .rm-operator-t,.rm-operator-p{
@@ -261,8 +260,83 @@ body {
       }
     }
   }
+  .rm-btn-group-C{
+    @include pos(a);
+    bottom:20px;
+    width:98%;
+    left:1%;
+    button{
+      width:115px;
+      height:44px;
+      font-size:18px;
+      text-align: center;
+    }
+    button:nth-of-type(1){
+      margin:0 8px;
+    }
+    button:nth-of-type(2){
+      background: #468a65;
+      border-color: #468a65;
+    }
 
+  }
 }
 #rm-right-app{
-  width:700px;
+  flex-grow: 1;
+  .rm-main-ui-C{
+    width:80%;
+    margin:0 auto;
+    height:100%;
+    @include displayFlex();
+    .rm-top-banner-C{
+      height:10vh;
+      margin-top:2vh;
+
+      @include displayFlex();
+      justify-content: center;
+
+      .rm-top-banner-group{
+        @include displayFlex(row);
+        align-items: center;
+        div{
+          flex-grow: 1;
+          input[type='text']{
+            width:70%;
+            margin-right:4%;
+            height: 36px;
+          }
+          button{
+            height: 36px;
+            width:90px;
+          };
+        }
+        div.right-btn-group{
+          text-align: right;
+          button{
+            width:100px;
+            height:36px;
+            font-size:16px;
+            margin:0 10px;
+            &:nth-of-type(1){
+              background:#b64a26;
+              border-color: #b64a26;
+              color:#fff;
+            }
+          }
+
+        }
+      }
+    }
+    .rm-stage-C{
+      height:85vh;
+      border:1px solid #eee;
+      overflow: hidden;
+
+      .rm-img-container{
+        @include pos(r);
+        margin:0 auto;
+
+      }
+    }
+  }
 }

@@ -10,31 +10,46 @@ import ZmitiTextAreaBtns from './zmiti-textarea-btns.jsx'
 export default class ZmitiChooseFile extends React.Component{
     constructor(args){
         super(...args);
+        this.state={
+            currentId : 'c-video'
+        }
     }
-     chooseImg(){
-
-     }
+    chooseImg(e){
+        if(e.target.className.indexOf('ant-input-group-addon')>-1){
+            this.refs['rm-upload'].click();
+        }
+    }
+    changeTagType(e){
+        //e.preventDefault();
+        this.setState({
+            currentId:e.target.id
+        });
+    }
     render(){
-        //const { getFieldProps } = this.props.form;
+        let labelStyle= {
+            position:'relative',
+            top:-3,
+            left:5,
+            color:'#fff',
+            cursor:'pointer'
+        }
         return (
             <Form  onClick={this.chooseImg.bind(this)}  style={{marginTop:6}}>
-                <RadioGroup >
-                    <Radio value="pic">添加图片</Radio>
-                    <FormItem className="rm-choose-img">
-                        <Input disabled addonAfter="+选择"/>
-                        <input type="file" ref="rm-upload" style={{opacity:0,position:'fixed',zIndex:-1}} />
-                    </FormItem>
-                    <ZmitiTextAreaBtns label="图片说明"></ZmitiTextAreaBtns>
-                    <Radio value="video">添加视频</Radio>
-                    <FormItem className="rm-choose-img">
-                        <Input disabled addonAfter="+选择"/>
-                        <input type="file" ref="rm-upload" style={{opacity:0,position:'fixed',zIndex:-1}} />
-                    </FormItem>
-                    <ZmitiTextAreaBtns label="图片说明"></ZmitiTextAreaBtns>
-                </RadioGroup>
+                <div><input checked={this.state.currentId === 'c-pic'} onChange={this.changeTagType.bind(this)} ref="choose-img" type="radio" name="type" value="pic" id="c-pic"/><label style={labelStyle} htmlFor="c-pic">添加图片</label></div>
+                <FormItem className="rm-choose-img">
+                    <Input disabled addonAfter="+选择"/>
+                    <input type="file" ref="rm-upload" style={{opacity:0,position:'fixed',zIndex:-1}} />
+                </FormItem>
+                <ZmitiTextAreaBtns label="图片说明"></ZmitiTextAreaBtns>
+                <div><input checked={this.state.currentId === 'c-video'} onChange={this.changeTagType.bind(this)}  ref="choose-video" type="radio" name="type" value="video" id="c-video"/><label style={labelStyle} htmlFor="c-video">添加视频</label></div>
+                <FormItem className="rm-choose-img">
+                    <Input disabled addonAfter="+选择"/>
+                    <input type="file" ref="rm-upload" style={{opacity:0,position:'fixed',zIndex:-1}} />
+                </FormItem>
+                <ZmitiTextAreaBtns label="图片说明"></ZmitiTextAreaBtns>
             </Form>
         )
     }
 }
 
-
+//ZmitiChooseFile = Form.create({})(ZmitiChooseFile);
