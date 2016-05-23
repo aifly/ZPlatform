@@ -12,7 +12,7 @@ export default class ZmitiMainStage extends React.Component {
                 "type": "text",
                 "href": "http://www.zmiti.com",
                 "content": "",
-                "id": '1111',
+                "id": ZmitiTag.getGuid(),
                 "icon": "images/red-plain.png",
                 "iconHover": "images/hoverlink.png",
                 "styles": {

@@ -1,0 +1,24 @@
+img {
+  border: none;
+  vertical-align: top;
+  width: 100%;
+  height: auto; }
+
+input, textarea {
+  outline: none; }
+
+.rm-icon-C {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  flex-wrap: wrap; }
+  .rm-icon-C li {
+    width: 50px;
+    margin: 5px;
+    padding: 5px;
+    border: 0 solid #ccc; }
+    .rm-icon-C li:hover {
+      border-width: 1px;
+      cursor: pointer; }
+
+/*# sourceMappingURL=zmiti-modal.css.map */

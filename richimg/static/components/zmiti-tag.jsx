@@ -1,9 +1,10 @@
 import React from 'react';
 import '../js/dragAndResize';
 import $ from 'jquery';
-import './zmiti-tag.css'
+import './zmiti-tag.css';
+import {ZmitiEnhanceCom}  from  './zmiti-enhance-com.jsx';
 
-export default class ZmitiTag extends React.Component {
+class ZmitiTag extends React.Component {
     constructor(args) {
         super(...args);
         this.state = {
@@ -50,3 +51,5 @@ export default class ZmitiTag extends React.Component {
         });
     }
 }
+
+export default ZmitiEnhanceCom(ZmitiTag);
