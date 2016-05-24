@@ -297,6 +297,7 @@ body {
 
       .rm-top-banner-group{
         @include displayFlex(row);
+        width:67vw;
         align-items: center;
         div{
           flex-grow: 1;
@@ -308,6 +309,10 @@ body {
           button{
             height: 36px;
             width:90px;
+            margin:0 !important;
+            &:nth-of-type(2){
+              margin-left:20px !important;
+            }
           };
         }
         div.right-btn-group{
@@ -329,6 +334,7 @@ body {
     }
     .rm-stage-C{
       height:85vh;
+      width:67vw;
       border:1px solid #eee;
       overflow: hidden;
 
@@ -338,5 +344,25 @@ body {
 
       }
     }
+  }
+
+  .rm-main-stage{
+      @include pos(r);
+      .rm-operator-bar{
+        @include pos(a);
+        right:1vw;
+        top:1vh;
+        padding:5px;
+        font-size:20px;
+        text-align: center;
+        background: rgba(0,0,0,.5);
+        color:#fff;
+        div{
+          cursor:pointer;
+          margin:4px 0;
+          -webkit-user-drag:none;
+          -webkit-user-select: none;
+        }
+      }
   }
 }

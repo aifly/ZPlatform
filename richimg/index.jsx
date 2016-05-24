@@ -15,6 +15,9 @@ const FormItem = Form.Item;
 import notification from 'antd/lib/notification';
 import 'antd/lib/notification/style/css';
 
+/*import 'babel-polyfill';
+import { Provider } from 'react-redux';*/
+
 
 
 
@@ -143,9 +146,27 @@ class MainUI extends React.Component {
 
 ReactDOM.render(<MainUI></MainUI>, $("#fly-main")[0],()=>{
 
-    notification['info']({
+    const key = `open${Date.now()}`;
+    let btnClick = ()=>{
+        notification.close(key);
+        close();
+    }
+    const  close = () =>{
+        //
+        localStorage['hideInfo'] = true;
+
+    }
+    const btn = (
+        <Button type="primary" size="small" onClick={btnClick}>
+            不再提示我~
+        </Button>
+    );
+
+    !localStorage['hideInfo'] && notification['info']({
         message: '小提示',
-        description: '按住键盘空格键可以拖动图片哦~~'
+        description: '按住键盘空格键可以拖动图片哦~~,试试 ctrl+0(图片自适应舞台) , ctrl+1(显示图片的真实尺寸),ctrl+],ctrl+[ 分别为放大缩小图片 快捷键~~',
+        btn,
+        key
     });
 
 });

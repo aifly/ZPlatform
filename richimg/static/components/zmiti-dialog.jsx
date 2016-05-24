@@ -5,6 +5,9 @@ import 'antd/lib/modal/style/css';
 import '../js/pubsub';
 import './zmiti-modal.css';
 
+
+
+
 export default class ZmitiModal extends React.Component{
     constructor(args){
         super(...args);

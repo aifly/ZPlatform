@@ -19,9 +19,11 @@
   ],
   "dependencies": {
     "antd": "^1.0.1",
-    "babel-core": "^5.8.25",
+    "babel-core": "^5.8.38",
     "babel-loader": "^5.3.2",
     "babel-plugin-antd": "^0.4.0",
+    "babel-plugin-transform-object-assign": "^6.8.0",
+    "babel-polyfill": "^6.9.0",
     "core-decorators": "^0.12.0",
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",

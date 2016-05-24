@@ -1,5 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
+import Icon from 'antd/lib/icon';
+import 'antd/lib/icon/style/css';
 import ZmitiTag from './zmiti-tag.jsx';
 
 
@@ -7,7 +9,10 @@ export default class ZmitiMainStage extends React.Component {
     constructor(args) {
         super(...args);
         this.state = {
-            richImg:"./static/images/bg.jpg",
+            width:'auto',
+            defaultWidth:0,
+            richImg: "./static/images/2.png",
+            scale: 1,
             items: [{
                 "type": "text",
                 "href": "http://www.zmiti.com",
@@ -41,19 +46,59 @@ export default class ZmitiMainStage extends React.Component {
 
     }
 
+    setScale(sign = 1) {
+        let scale = this.state.scale+ .02 * sign;
+        scale <=.25 &&(scale=.25);
+        scale >=1.75 &&(scale=1.75);
+
+        this.setState({
+            scale: scale ,
+            width:this.state.defaultWidth * ( scale + .02 * sign)
+        });
+    }
+
+    default(){
+
+        let stage = $(this.refs.mainStage);
+        stage.transX = 0;
+        stage.transY = 0;
+        let imgContainer = $('.rm-img-container', stage);
+        imgContainer.css({transform: 'translate3d(0,0,0)'});
+        this.setState({
+            scale: 1,
+            width:this.state.defaultWidth
+        });
+    }
+
+    fit(){
+        this.setState({
+            scale: 1,
+            width:this.refs.mainStage.offsetWidth
+        });
+    }
+
     render() {
 
-        let item = this.state.items.map((item, i)=> {
+        let style = {
+            width:this.state.width
+        } ,
+            item = this.state.items.map((item, i)=> {
             return (
-                <ZmitiTag key={item.id} {...this.state.items[i]}></ZmitiTag>
+                <ZmitiTag key={item.id}  {...this.state.items[i]}></ZmitiTag>
             )
         });
 
         return (
             <div className='rm-main-stage' ref="mainStage">
-                <div className="rm-img-container" ref="img-c">
-                    <img  id="targetImg" src={this.state.richImg} alt="" draggable="false"/>
+                <div className="rm-img-container" ref="img-c" style={style}>
+                    <img style={{width:'100%',height:'auto'}} id="targetImg" src={this.state.richImg} alt=""
+                         draggable="false"/>
                     {item}
+                </div>
+                <div className="rm-operator-bar">
+                    <div onClick={this.setScale.bind(this,1)}><Icon type='plus'></Icon></div>
+                    <div onClick={this.default.bind(this)}>FIT</div>
+                    <div onClick={this.setScale.bind(this,-1)}><Icon type='minus'></Icon></div>
                 </div>
             </div>
         )
@@ -66,18 +111,23 @@ export default class ZmitiMainStage extends React.Component {
     componentDidMount() {
 
 
-
         let stage = $(this.refs.mainStage),
             targetImg = $('#targetImg');
         stage.keydown = false;
+
+
         stage.height(document.documentElement.clientHeight - stage.offset().top - 50);
 
-        targetImg.on('load', ()=> {
+        targetImg.on('load', (e)=> {
 
+            this.setState({
+               width: stage.offsetWidth,
+               defaultWidth: e.currentTarget.naturalWidth
+            });
 
-            stage.find('.rm-img-container')
+            /*stage.find('.rm-img-container')
                 .width(targetImg.width())
-                .height(targetImg.height());
+                .height(targetImg.height());*/
         });
 
 
@@ -98,9 +148,9 @@ export default class ZmitiMainStage extends React.Component {
 
             $(document).on('mousemove', e=> {
                 if (stage.keydown) {
-                    let ty = e.clientY - stage.startY + stage.currentY;
-                    let tx = e.clientX - stage.startX + stage.currentX;
-                    imgContainer.css({transform: 'translate3d(' + tx + 'px,' + ty + 'px,0)'});
+                    let ty = (e.clientY - stage.startY + stage.currentY) ;
+                    let tx = (e.clientX - stage.startX + stage.currentX);
+                    imgContainer.css({transform: 'translate3d(' + tx + 'px,' + ty + 'px,0) '});
                     stage.transY = ty;
                     stage.transX = tx;
                 }
@@ -116,6 +166,7 @@ export default class ZmitiMainStage extends React.Component {
         });
 
         $(window).on('keydown', e=> {
+
             if (e.keyCode === 32) {
                 if (stage.blur) {
                     e.preventDefault();
@@ -123,7 +174,26 @@ export default class ZmitiMainStage extends React.Component {
                 $('input').blur();
                 stage.keydown = true;
                 targetImg.css({cursor: 'pointer'});
-
+            }
+            if(e.ctrlKey && e.keyCode === 97){ // ctrl+1
+                e.preventDefault();
+                this.default();
+                return false;
+            }
+            else if(e.ctrlKey && e.keyCode === 96){ // ctrl+0
+                e.preventDefault();
+                this.fit();
+                return false;
+            }
+            else if (e.ctrlKey && e.keyCode === 221){
+                e.preventDefault();
+                this.setScale(1);
+                return false;
+            }
+            else if (e.ctrlKey && e.keyCode === 219){
+                e.preventDefault();
+                this.setScale(-1);
+                return false;
             }
         }).on('keyup', e=> {
             if (e.keyCode === 32) {
@@ -133,7 +203,8 @@ export default class ZmitiMainStage extends React.Component {
                 stage.keydown = false;
                 targetImg.css({cursor: 'default'})
             }
-        })
+        });
+
 
     }
 }
