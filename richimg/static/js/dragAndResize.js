@@ -36,7 +36,10 @@ import $ from 'jquery';
 
                         x > parent.width() - $(n).width() && (x = parent.width() - $(n).width());
                         y > parent.height() - $(n).height() && (y = parent.height() - $(n).height());
-                        $(n).css({left: x, top: y});
+
+                        setting.callback && setting.callback({x, y});
+
+                        ///$(n).css({left: x, top: y});
                     }).on("mouseup", e=> {
                         $(document).off('mousemove mouseup');
                     });
@@ -56,13 +59,13 @@ import $ from 'jquery';
         },
         showPoint(){
             return this.each((i, n)=> {
-                $(n).find('.point').css({opacity:1});
+                $(n).find('.point').css({opacity: 1});
             });
 
         },
         hidePoint(){
-            return this.each((i,n)=>{
-                $(n).find('.point').css({opacity:0});
+            return this.each((i, n)=> {
+                $(n).find('.point').css({opacity: 0});
             })
         }
 

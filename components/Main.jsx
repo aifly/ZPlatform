@@ -125,6 +125,14 @@ export  default class MainUI extends React.Component {
     }
 
     componentDidMount() {
+
+        window.addEventListener('message',function(event) {
+
+            console.log('message received:  ' + event.data,event);
+          //  alert('ok')
+
+        },false);
+
        /* setTimeout(()=> {
             $$('.fly-nav a').forEach((a)=> {
                 utilMethods.addClass(a, 'active');

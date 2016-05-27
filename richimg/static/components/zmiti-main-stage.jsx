@@ -79,6 +79,7 @@ export default class ZmitiMainStage extends React.Component {
 
     render() {
 
+
         let style = {
             width:this.state.width
         } ,
@@ -111,6 +112,7 @@ export default class ZmitiMainStage extends React.Component {
     componentDidMount() {
 
 
+
         let stage = $(this.refs.mainStage),
             targetImg = $('#targetImg');
         stage.keydown = false;
@@ -128,6 +130,36 @@ export default class ZmitiMainStage extends React.Component {
             /*stage.find('.rm-img-container')
                 .width(targetImg.width())
                 .height(targetImg.height());*/
+        }).on('click',(e)=>{
+
+
+            if(!stage.keydown){//当没有按下空格键的时候，才执行创建标签的操作，否则是移动图片的操作。
+                window.item= this.state.items[0];
+                let items = this.state.items;
+
+                items.push({
+                    "type": "text",
+                    "href": "http://www.zmiti.com",
+                    "content": "",
+                    "id": ZmitiTag.getGuid(),
+                    "icon": "images/red-plain.png",
+                    "iconHover": "images/hoverlink.png",
+                    "styles": {
+                        "left": "35%",
+                        "top": "22%"
+                    },
+                    "wrapStyles": {
+                        "width": "200px",
+                        "height": "130px",
+                        "fontFamily": "'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif"
+                    }
+                });
+
+                this.setState({
+                    items:items
+                });
+
+            }
         });
 
 
