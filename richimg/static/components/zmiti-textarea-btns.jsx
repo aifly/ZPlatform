@@ -22,17 +22,43 @@ console.log('store_0 state after initialization:', store_0.getState());
 
 export default class ZmitiTextAreaBtns extends React.Component{
     constructor(args){
-        super(...args)
+        super(...args);
+        this.state = {
+            defaultValue:''
+        }
     }
     showIconDialog(){
         PubSub.publish('showDialog',true);
     }
+
+    changeTagContent(e){
+        this.setState({
+            defaultValue:e.target.value
+        });
+
+        PubSub.publish('changeTagContent',{html:e.target.innerHTML,type:e.target.innerHTML?'block':'none'});
+    }
+
+   componentDidMount(){
+
+       PubSub.subscribe("getFocusTagContent",(d,e)=>{
+           this.setState({
+               defaultValue:e
+           });
+       });
+   }
+
     render(){
         return (
             <div className="rm-textarea-btn-group">
                 <div className="rm-textarea-btns">
                     <FormItem label={this.props.label}>
-                        <Input type="textarea" rows="4" placeholder=""/>
+                        <div className='rm-tag-content' contentEditable="true"
+                             onInput={this.changeTagContent.bind(this)}
+                             dangerouslySetInnerHTML={{__html:this.state.defaultValue}}
+                             onFocus={this.changeTagContent.bind(this)}
+                        >
+                        </div>
                     </FormItem>
                 </div>
                 <div className="rm-textarea-btns rm-btns">

@@ -16,7 +16,7 @@ export default class ZmitiMainStage extends React.Component {
             items: [{
                 "type": "text",
                 "href": "http://www.zmiti.com",
-                "content": "",
+                "content": "中华人民共和国中华人民共和国",
                 "id": ZmitiTag.getGuid(),
                 "icon": "images/red-plain.png",
                 "iconHover": "images/hoverlink.png",
@@ -130,8 +130,9 @@ export default class ZmitiMainStage extends React.Component {
             /*stage.find('.rm-img-container')
                 .width(targetImg.width())
                 .height(targetImg.height());*/
-        }).on('click',(e)=>{
+        }).on('click',(e)=>{//
 
+            return;
 
             if(!stage.keydown){//当没有按下空格键的时候，才执行创建标签的操作，否则是移动图片的操作。
                 window.item= this.state.items[0];

@@ -40,13 +40,13 @@ export default class ZmitiChooseFile extends React.Component{
                     <Input disabled addonAfter="+选择"/>
                     <input type="file" ref="rm-upload" style={{opacity:0,position:'fixed',zIndex:-1}} />
                 </FormItem>
-                <ZmitiTextAreaBtns label="图片说明"></ZmitiTextAreaBtns>
+                <ZmitiTextAreaBtns type="image" label="图片说明"></ZmitiTextAreaBtns>
                 <div><input checked={this.state.currentId === 'c-video'} onChange={this.changeTagType.bind(this)}  ref="choose-video" type="radio" name="type" value="video" id="c-video"/><label style={labelStyle} htmlFor="c-video">添加视频</label></div>
                 <FormItem className="rm-choose-img">
                     <Input disabled addonAfter="+选择"/>
                     <input type="file" ref="rm-upload" style={{opacity:0,position:'fixed',zIndex:-1}} />
                 </FormItem>
-                <ZmitiTextAreaBtns label="图片说明"></ZmitiTextAreaBtns>
+                <ZmitiTextAreaBtns type="video" label="视频说明"></ZmitiTextAreaBtns>
             </Form>
         )
     }

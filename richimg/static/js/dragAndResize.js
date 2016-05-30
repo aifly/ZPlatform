@@ -37,7 +37,7 @@ import $ from 'jquery';
                         x > parent.width() - $(n).width() && (x = parent.width() - $(n).width());
                         y > parent.height() - $(n).height() && (y = parent.height() - $(n).height());
 
-                        setting.callback && setting.callback({x, y});
+                        setting.callback && setting.callback({x, y,target:$(n)});
 
                         ///$(n).css({left: x, top: y});
                     }).on("mouseup", e=> {

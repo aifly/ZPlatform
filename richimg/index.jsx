@@ -90,7 +90,7 @@ class ZmitiLeftApp extends React.Component {
                                     label="标点链接：">
                                     <Input placeholder="http://www."/>
                                 </FormItem>
-                                <ZmitiTextAreaBtns label="标题文字"></ZmitiTextAreaBtns>
+                                <ZmitiTextAreaBtns type="text" label="标题文字"></ZmitiTextAreaBtns>
                                 <ZmitiMiniColor></ZmitiMiniColor>
                             </Form>
                         </div>

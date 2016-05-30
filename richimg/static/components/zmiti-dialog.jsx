@@ -27,10 +27,8 @@ export default class ZmitiModal extends React.Component{
     }
     componentDidMount(){
         PubSub.subscribe("showDialog",(d,e)=>{
-
             this.showModal();
         });
-
     }
     handleCancel() {
         this.setState({

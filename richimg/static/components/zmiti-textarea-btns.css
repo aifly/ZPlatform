@@ -4,6 +4,14 @@
   flex-flow: row; }
   .rm-textarea-btn-group .rm-textarea-btns {
     width: 50%; }
+  .rm-textarea-btn-group div.rm-tag-content {
+    height: 88px;
+    border-radius: 6px;
+    background: #fff;
+    outline: none;
+    line-height: 20px;
+    overflow: hidden;
+    padding: 6px 10px; }
   .rm-textarea-btn-group .rm-btns {
     margin-top: 15px;
     margin-left: 20px; }

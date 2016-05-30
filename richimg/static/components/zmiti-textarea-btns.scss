@@ -109,6 +109,16 @@
   .rm-textarea-btns{
     width:50%;
   }
+
+  div.rm-tag-content{
+    height:88px;
+    @include br(6px);
+    background: #fff;
+    outline: none;
+    line-height:20px;
+    overflow: hidden;
+    padding:6px 10px;
+  }
   .rm-btns{
 
     margin-top:15px;

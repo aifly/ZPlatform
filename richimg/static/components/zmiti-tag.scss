@@ -106,54 +106,80 @@
 
 
 .fly-tag{
-  cursor: move;
+  .tag{
+    cursor: move;
+    @include pos(a);
+    $tagW:50px;
+    width:$tagW;
+    height:$tagW;
+    aside{
+      $pointW:10px;
+      .point{
+        opacity:0;
+        width:$pointW;
+        height: $pointW;
+        background:#eee;
+        border:1px solid #000;
+        box-sizing: border-box;
+        @include pos(a);
+        left:-$pointW/2;
+        top:-$pointW/2;
+        z-index:10;
+      }
+      .point2{
+        left:auto;
+        right:-$pointW/2;
+      }
+      .point3{
+
+        top:auto;
+        bottom:-$pointW/2;
+      }
+      .point4{
+        left:auto;
+        top:auto;
+        right:-$pointW/2;
+        bottom:-$pointW/2;
+      }
+    }
+    .ico{
+      @include pos(a);
+      left:50%;
+      top:50%;
+      @include transform(translate3d(-50%,-50%,0));
+      width:$tagW/2;
+      height:$tagW/2;
+      background: url(../images/blue-plain.png) no-repeat center center;
+      background-size:contain;
+    }
+
+  }
   @include pos(a);
-  left:100px;
-  top:130px;
-  $tagW:50px;
-  width:$tagW;
-  height:$tagW;
-  border:1px solid #eee;
+
+  height:50px;
+  width:100%;
+
   border-radius: 3px;
   z-index:10;
-  aside{
-    $pointW:10px;
-    .point{
-      opacity:0;
-      width:$pointW;
-      height: $pointW;
-      background:#eee;
-      border:1px solid #000;
-      box-sizing: border-box;
-      @include pos(a);
-      left:-$pointW/2;
-      top:-$pointW/2;
-      z-index:10;
-    }
-    .point2{
-      left:auto;
-      right:-$pointW/2;
-    }
-    .point3{
 
-      top:auto;
-      bottom:-$pointW/2;
-    }
-    .point4{
-      left:auto;
-      top:auto;
-      right:-$pointW/2;
-      bottom:-$pointW/2;
-    }
-  }
-  .ico{
+
+  @at-root .rm-tag-remark{
+    padding:4px 6px;
+    @include br(5px);
+    height:auto;
+    background: #fff;
     @include pos(a);
-    left:50%;
-    top:50%;
-   @include transform(translate3d(-50%,-50%,0));
-    width:$tagW/2;
-    height:$tagW/2;
-    background: url(../images/blue-plain.png) no-repeat center center;
-    background-size:contain;
+    box-sizing: border-box;
+    &:before{
+      content:"";
+      @include pos(a);
+      width:10px;
+      height:10px;
+      @include transform(rotate(45deg));
+      background:#fff;
+      bottom:-5px;
+      margin-left:-5px;
+      left:50%;
+    }
   }
 }
