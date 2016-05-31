@@ -50,7 +50,7 @@ class ZmitiTag extends React.Component {
     }
 
     hover(){
-        if(!this.state.content){
+        if(!this.state.textContent){
             return;
         }
        let target =$(this.refs[this.props.id]),
@@ -58,7 +58,7 @@ class ZmitiTag extends React.Component {
             rmHeight = target.find('.rm-tag-remark').height(),
             tagWidth = 50;
 
-        //PubSub.publish('getFocusTagContent',this.props.content);
+        //
         this.setState({
             remarkStyle:{
                 left:(tagWidth-rmWidth - 10)/2,
@@ -103,11 +103,14 @@ class ZmitiTag extends React.Component {
             this.stageHeight = $('#targetImg').height() ;
         });
 
+        PubSub.publish('getFocusTagContent',this.props.content);
+
         this.setState({
             styles:{
                 left:style.left,
                 top:style.top
-            }
+            },
+            textContent:this.props.content
         });
 
         let self = this,
@@ -132,18 +135,16 @@ class ZmitiTag extends React.Component {
         });
 
         this.changeTagContent = PubSub.subscribe("changeTagContent",(d,e)=>{
-            let target =$(this.refs[this.props.id]),
-                rmWidth = target.find('.rm-tag-remark').width(),
-                rmHeight = target.find('.rm-tag-remark').height(),
+            let target =$(this.refs[this.props.id]).find('.rm-tag-remark'),
+                rmWidth = target.width(),
+                rmHeight = target.height(),
                 tagWidth = 50;
 
-            //PubSub.publish('getFocusTagContent',this.props.content);
             this.setState({
                 remarkStyle:{
                     left:(tagWidth-rmWidth - 10)/2,
                     top:-rmHeight-10,
                     display:e.type
-
                 },
                 textContent:e.html
             });

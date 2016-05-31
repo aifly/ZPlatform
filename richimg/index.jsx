@@ -18,17 +18,16 @@ import 'antd/lib/notification/style/css';
 /*import 'babel-polyfill';
 import { Provider } from 'react-redux';*/
 
-
-
-
 import ZmitiTextAreaBtns from './static/components/zmiti-textarea-btns.jsx';
 import ZmitiMiniColor from './static/components/zmiti-minicolor.jsx';
 import ZmitiChooseFile from './static/components/zmiti-choose-file.jsx';
-import ZmitiRipple from './static/components/zmiti-ripple.jsx';
+/*import ZmitiRipple from './static/components/zmiti-ripple.jsx';*/
 import ZmitiBtnGroup from './static/components/zmiti-btn-group.jsx';
 import ZmitiTopBanner from './static/components/zmiti-top-banner.jsx';
 import ZmitiMainStage from './static/components/zmiti-main-stage.jsx';
 import ZmitiModal from './static/components/zmiti-dialog.jsx';
+
+import ZmitiTag from './static/components/zmiti-tag.jsx';
 
 if (!Array.from) {
     Array.from = (c)=> {
@@ -40,8 +39,8 @@ class ZmitiLeftApp extends React.Component {
     constructor(args) {
         super(...args);
         this.state = {
-            textClassName: "rm-text-pannel-title active rm-pannel",
-            picClassName: "rm-pic-video-title rm-pannel"
+            textClassName: "rm-text-pannel-title  rm-pannel",
+            picClassName: "rm-pic-video-title rm-pannel active"
         }
     }
 
@@ -50,7 +49,7 @@ class ZmitiLeftApp extends React.Component {
         this.refs.pic.classList.remove('active');
         e.target.classList.add("active");
         let index = $(e.target).index();
-        this.refs['rm-operator-box'].classList[index - 1 ? 'add' : 'remove']('active');
+        //this.refs['rm-operator-box'].classList[index - 1 ? 'add' : 'remove']('active');
         this.refs.ripple.startMove(e);
 
     }
@@ -65,43 +64,37 @@ class ZmitiLeftApp extends React.Component {
     }
 
     render() {
+/*
+*  <div className={this.state.textClassName} ref="text" onClick={this.changePannel.bind(this)}>
+ 文本
+ </div>
+
+ <ZmitiRipple id="rm-pannel-ripple" ref="ripple"></ZmitiRipple>
+* */
 
         return (
             <aside id="rm-left-app" className="rm-left-app">
                 <header className="rm-header">编辑图片</header>
                 <section className="rm-pannel-bar">
                     <div className="rm-fill-left"> &nbsp;</div>
-                    <div className={this.state.textClassName} ref="text" onClick={this.changePannel.bind(this)}>
-                        文本
-                    </div>
-                    <div className={this.state.picClassName} ref="pic" onClick={this.changePannel.bind(this)}>
-                        图片视频
+                    <div className={this.state.picClassName} ref="pic">
+                        图片/视频
                     </div>
                     <div className="rm-fill-right">
                         &nbsp;
                     </div>
                 </section>
-                <ZmitiRipple id="rm-pannel-ripple" ref="ripple"></ZmitiRipple>
+
                 <section className="rm-operator-C">
                     <section className="rm-operator-box" ref="rm-operator-box">
-                        <div className="rm-operator-t">
-                            <Form >
-                                <FormItem
-                                    label="标点链接：">
-                                    <Input placeholder="http://www."/>
-                                </FormItem>
-                                <ZmitiTextAreaBtns type="text" label="标题文字"></ZmitiTextAreaBtns>
-                                <ZmitiMiniColor></ZmitiMiniColor>
-                            </Form>
-                        </div>
                         <div className="rm-operator-p">
-                            <ZmitiChooseFile></ZmitiChooseFile>
+                            <ZmitiChooseFile {...this.props}></ZmitiChooseFile>
                         </div>
                     </section>
+                    <div className="rm-btn-group-C">
+                        <ZmitiBtnGroup></ZmitiBtnGroup>
+                    </div>
                 </section>
-                <div className="rm-btn-group-C">
-                    <ZmitiBtnGroup></ZmitiBtnGroup>
-                </div>
                 <ZmitiModal></ZmitiModal>
             </aside>
         )
@@ -133,12 +126,38 @@ class ZmitiRightApp extends React.Component {
 class MainUI extends React.Component {
     constructor(args) {
         super(...args);
+        this.state = {
+            ltP:{
+                index:{
+                    tags:[
+                        {
+                            "type": "text",
+                            "href": "http://www.zmiti.com",
+                            "content": "中华人民共和国中华人民共和国",
+                            "id": ZmitiTag.getGuid(),
+                            "icon": "images/red-plain.png",
+                            "iconHover": "images/hoverlink.png",
+                            "styles": {
+                                "left": "55%",
+                                "top": "42%"
+                            },
+                            "wrapStyles": {
+                                "width": "200px",
+                                "height": "130px",
+                                "fontFamily": "'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif"
+                            }
+                        }
+                    ],
+                    focusTagIndex:0
+                }
+            }
+        }
     }
     render() {
         return (
             <div className="rm-main-ui">
-                <ZmitiLeftApp></ZmitiLeftApp>
-                <ZmitiRightApp></ZmitiRightApp>
+                <ZmitiLeftApp {...this.state.ltP.index}></ZmitiLeftApp>
+                <ZmitiRightApp {...this.state.ltP.index}></ZmitiRightApp>
             </div>
         )
     }

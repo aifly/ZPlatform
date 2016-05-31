@@ -8,6 +8,8 @@ import 'antd/lib/menu/style/css';
 import 'antd/lib/input/style/css';
 import 'antd/lib/badge/style/css';
 
+
+
 const SubMenu = Menu.SubMenu;
 
 import {utilMethods,_$,$$} from '../utilMethod.es6';
@@ -125,6 +127,10 @@ export  default class MainUI extends React.Component {
     }
 
     componentDidMount() {
+
+
+
+        console.log(document.cookie);
 
       /*  window.addEventListener('message',function(event) {
 

@@ -35,7 +35,7 @@ body {
   position: relative;
   height: 100vh;
   background-color: #1c1c1c;
-  width: 300px;
+  width: 320px;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); }
   #rm-left-app .rm-header {
     width: 80%;
@@ -68,7 +68,7 @@ body {
     #rm-left-app .rm-pannel-bar .rm-fill-left {
       width: 10%; }
     #rm-left-app .rm-pannel-bar .rm-fill-right {
-      width: 43%; }
+      width: 63%; }
     #rm-left-app .rm-pannel-bar .rm-pic-video-title, #rm-left-app .rm-pannel-bar .rm-text-pannel-title {
       padding: 4px 10px;
       box-sizing: border-box;
@@ -81,13 +81,17 @@ body {
   #rm-left-app .rm-operator-C {
     width: 90%;
     margin: 3vh auto;
-    overflow: hidden;
-    height: 70%; }
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: column;
+    height: 78vh; }
   #rm-left-app .rm-operator-box {
-    width: 200%;
-    height: 100px;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
     -webkit-transition: -webkit-transform 0.2s;
     transition: transform 0.2s;
+    flex-grow: 10;
     display: flex;
     display: -webkit-flex;
     flex-flow: row; }
@@ -97,7 +101,7 @@ body {
     #rm-left-app .rm-operator-box .ant-input-group-addon {
       cursor: pointer; }
     #rm-left-app .rm-operator-box .rm-operator-t, #rm-left-app .rm-operator-box .rm-operator-p {
-      width: 50%; }
+      width: 100%; }
     #rm-left-app .rm-operator-box .rm-operator-t .color-container {
       width: 100%;
       position: relative;
@@ -115,17 +119,15 @@ body {
       margin-top: 3px;
       margin-left: 40px; }
   #rm-left-app .rm-btn-group-C {
-    position: absolute;
-    bottom: 20px;
-    width: 98%;
-    left: 1%; }
+    width: 100%;
+    height: 100px; }
     #rm-left-app .rm-btn-group-C button {
-      width: 115px;
+      width: 110px;
       height: 44px;
       font-size: 18px;
       text-align: center; }
     #rm-left-app .rm-btn-group-C button:nth-of-type(1) {
-      margin: 0 8px; }
+      margin: 0 6px; }
     #rm-left-app .rm-btn-group-C button:nth-of-type(2) {
       background: #468a65;
       border-color: #468a65; }
