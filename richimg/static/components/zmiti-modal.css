@@ -21,4 +21,7 @@ input, textarea {
       border-width: 1px;
       cursor: pointer; }
 
+.rm-ico-modal button.ant-btn-ghost {
+  display: none; }
+
 /*# sourceMappingURL=zmiti-modal.css.map */

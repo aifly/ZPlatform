@@ -9,21 +9,19 @@ class ZmitiTag extends React.Component {
     constructor(args) {
         super(...args);
         this.state = {
-            styles:{
-                left:0,
-                top:0
+            styles: {
+                left: 0,
+                top: 0
             },
-            remarkStyle:{
-                left:0,
-                top:0,
-                display:'none'
+            remarkStyle: {
+                left: 0,
+                top: 0,
+                opacity: 0
             },
-            textContent:""
-
+            textContent: ""
 
         }
     }
-
 
 
     click() {
@@ -49,44 +47,45 @@ class ZmitiTag extends React.Component {
         this.forceUpdate();
     }
 
-    hover(){
-        if(!this.state.textContent){
+    hover() {
+        if (!this.state.textContent) {
             return;
         }
-       let target =$(this.refs[this.props.id]),
+        let target = $(this.refs[this.props.id]),
             rmWidth = target.find('.rm-tag-remark').width(),
             rmHeight = target.find('.rm-tag-remark').height(),
             tagWidth = 50;
 
         //
         this.setState({
-            remarkStyle:{
-                left:(tagWidth-rmWidth - 10)/2,
-                top:-rmHeight-10
+            remarkStyle: {
+                left: (tagWidth - rmWidth - 10) / 2,
+                top: -rmHeight - 10
             }
         });
     }
 
-    out(){
+    out() {
         this.setState({
-            remarkStyle:{
-                display:'none'
+            remarkStyle: {
+                display: 'none'
             }
         })
     }
 
     render() {
 
-        let componentType = null;
-        //switch (this.props)
+
         return (
-            <section  key={this.props.id}  ref={this.props.id}   style={this.state.styles} className="fly-tag">
-                <div className="rm-tag-remark"  style={this.state.remarkStyle}
-                     dangerouslySetInnerHTML={{__html:this.state.textContent}}>
+            <section key={this.props.id} id={this.props.id} ref={this.props.id} style={this.props.styles} className="fly-tag">
+                <div className="rm-tag-remark" hidden={this.props.id === this.props.focusTag.id ? '':'hidden'}
+                     style={this.state.remarkStyle}
+                     dangerouslySetInnerHTML={{__html:this.props.content}}>
                 </div>
-                <div className="tag" onMouseOver={this.hover.bind(this)} onMouseOut={this.out.bind(this)} >
-                    <div style={{background:"url("+this.props.icon+") no-repeat center",backgroundSize:'contain'}}
-                         className="ico"></div>
+                <div className="tag">
+                    <div
+                        style={{background:"url("+this.props.icon+") no-repeat center",backgroundSize:'contain',borderRadius:"50%"}}
+                        className="ico"></div>
                 </div>
             </section>
         )
@@ -94,64 +93,88 @@ class ZmitiTag extends React.Component {
 
     componentDidMount() {
 
+        this.initLoaded && this.setState({
+            remarkStyle: {
+                display: this.props.id === this.props.focusTag.id ? 'block' : 'none'
+            }
+        });
+
         let style = this.props.styles;
 
         this.stageWidth = this.stageWidth || 0;
-        this.stageHeight =this.stageHeight || 1;
-        $('#targetImg').on('load',(e)=>{
+        this.stageHeight = this.stageHeight || 1;
+        $('#targetImg').on('load', (e)=> {
             this.stageWidth = $('#targetImg').width();
-            this.stageHeight = $('#targetImg').height() ;
+            this.stageHeight = $('#targetImg').height();
         });
 
-        PubSub.publish('getFocusTagContent',this.props.content);
+        // PubSub.publish('getFocusTagContent',this.props.content);
 
         this.setState({
-            styles:{
-                left:style.left,
-                top:style.top
+            styles: {
+                left: style.left,
+                top: style.top
             },
-            textContent:this.props.content
+            textContent: this.props.content
         });
 
         let self = this,
-            target =$(this.refs[this.props.id]);
+            target = $(this.refs[this.props.id]);
 
-        target.find('.tag').dragAndReize({callback(option){
+        target.find('.tag').dragAndReize({
+            callback(option){
 
-            self.stageWidth = $('#targetImg').width();
-            self.stageHeight = $('#targetImg').height() ;
+                self.stageWidth = $('#targetImg').width();
+                self.stageHeight = $('#targetImg').height();
 
-            self.setState({
-                styles:{
-                    left:option.x / self.stageWidth *100 + '%',
-                    top :option.y / self.stageHeight*100 + '%'
-                }
-            });
+                self.props.changeTagPropValue("styles", {
+                    left: option.x / self.stageWidth * 100 + '%',
+                    top: option.y / self.stageHeight * 100 + '%'
+                });
 
-            //  console.log(self.state.styles.left,self.state.styles.top)
-        }}).on('mousedown', e=> {
+            }
+        }).on('mousedown', e=> {
             $('.fly-tag').hidePoint();
             $(e.target).parents('.fly-tag').showPoint();
-        });
-
-        this.changeTagContent = PubSub.subscribe("changeTagContent",(d,e)=>{
-            let target =$(this.refs[this.props.id]).find('.rm-tag-remark'),
-                rmWidth = target.width(),
-                rmHeight = target.height(),
-                tagWidth = 50;
+            this.initLoaded = true;
+            self.props.getFocusComponent(this.props.index);
 
             this.setState({
-                remarkStyle:{
-                    left:(tagWidth-rmWidth - 10)/2,
-                    top:-rmHeight-10,
-                    display:e.type
-                },
-                textContent:e.html
-            });
+                remarStyle: {
+                    opacity: 1
+                }
+            })
+
+
+        });
+
+        this.changeTagContent = PubSub.subscribe("changeTagContent", (d, e)=> {
+
+            if(this.props.id === this.props.focusTag.id){
+                let target = $(this.refs[this.props.id]).find('.rm-tag-remark'),
+                    rmWidth = target.width(),
+                    rmHeight = target.height(),
+                    tagWidth = 50;
+
+                this.props.changeTagPropValue('wrapStyles', {
+                    width: rmWidth + 'px',
+                    height: rmHeight + 'px'
+                });
+
+                this.setState({
+                    remarkStyle: {
+                        left: (tagWidth - rmWidth - 10) / 2,
+                        top: -rmHeight - 10,
+                        ///display: e.type
+                    },
+                    textContent: e.html
+                });
+            }
+
         });
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         PubSub.unsubscribe(this.changeTagContent);
     }
 

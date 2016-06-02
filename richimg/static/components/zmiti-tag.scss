@@ -147,8 +147,8 @@
       left:50%;
       top:50%;
       @include transform(translate3d(-50%,-50%,0));
-      width:$tagW/2;
-      height:$tagW/2;
+      width:$tagW/1.8;
+      height:$tagW/1.8;
       background: url(../images/blue-plain.png) no-repeat center center;
       background-size:contain;
     }

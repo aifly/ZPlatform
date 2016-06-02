@@ -44,15 +44,6 @@ class ZmitiLeftApp extends React.Component {
         }
     }
 
-    changePannel(e) {
-        this.refs.text.classList.remove('active');
-        this.refs.pic.classList.remove('active');
-        e.target.classList.add("active");
-        let index = $(e.target).index();
-        //this.refs['rm-operator-box'].classList[index - 1 ? 'add' : 'remove']('active');
-        this.refs.ripple.startMove(e);
-
-    }
 
     componentDidMount(){
 
@@ -72,6 +63,9 @@ class ZmitiLeftApp extends React.Component {
  <ZmitiRipple id="rm-pannel-ripple" ref="ripple"></ZmitiRipple>
 * */
 
+        let methods = {
+            changeTagPropValue:this.props.changeTagPropValue
+        }
         return (
             <aside id="rm-left-app" className="rm-left-app">
                 <header className="rm-header">编辑图片</header>
@@ -95,7 +89,7 @@ class ZmitiLeftApp extends React.Component {
                         <ZmitiBtnGroup></ZmitiBtnGroup>
                     </div>
                 </section>
-                <ZmitiModal></ZmitiModal>
+                <ZmitiModal {...methods}></ZmitiModal>
             </aside>
         )
     }
@@ -108,6 +102,9 @@ class ZmitiRightApp extends React.Component {
     }
 
     render() {
+        let methods = {
+            getFocusComponent:this.props.getFocusComponent
+        };
         return (
             <aside id="rm-right-app" className="rm-right-app">
                 <div className="rm-main-ui-C">
@@ -115,7 +112,7 @@ class ZmitiRightApp extends React.Component {
                         <ZmitiTopBanner></ZmitiTopBanner>
                     </div>
                     <div className="rm-stage-C">
-                        <ZmitiMainStage></ZmitiMainStage>
+                        <ZmitiMainStage {...this.props} {...methods}></ZmitiMainStage>
                     </div>
                 </div>
             </aside>
@@ -126,12 +123,13 @@ class ZmitiRightApp extends React.Component {
 class MainUI extends React.Component {
     constructor(args) {
         super(...args);
+       /// this.changeTagType = this.changeTagType.bind(this);
         this.state = {
             ltP:{
                 index:{
                     tags:[
                         {
-                            "type": "text",
+                            "type": "image",
                             "href": "http://www.zmiti.com",
                             "content": "中华人民共和国中华人民共和国",
                             "id": ZmitiTag.getGuid(),
@@ -146,18 +144,87 @@ class MainUI extends React.Component {
                                 "height": "130px",
                                 "fontFamily": "'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif"
                             }
+                        },
+                        {
+                            "type": "image",
+                            "href": "http://www.linten.cn",
+                            "content": "组件测试。react",
+                            "id": ZmitiTag.getGuid(),
+                            "icon": "images/red-plain.png",
+                            "iconHover": "images/hoverlink.png",
+                            "styles": {
+                                "left": "25%",
+                                "top": "62%"
+                            },
+                            "wrapStyles": {
+                                "width": "200px",
+                                "height": "130px",
+                                "fontFamily": "'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif"
+                            }
                         }
                     ],
                     focusTagIndex:0
                 }
             }
-        }
+        };
+
     }
+
+    componentDidMount(){
+        this.setState({
+            ltP:{
+                index:{
+                    tags:this.state.ltP.index.tags,
+                    focusTagIndex:0,
+                    focusTag:this.state.ltP.index.tags[this.state.ltP.index.focusTagIndex]
+                }
+            }
+        },()=>{
+            window.Zmiti = this.state.ltP;
+        });
+
+
+    }
+
+
+    /**
+     * 切换当前标签的属性。
+     * @param key  属性类型
+     * @param value 属性值
+     */
+    changeTagPropValue(key,value){//
+
+        this.state.ltP.index.focusTag[key] = value;
+        this.forceUpdate();
+    }
+    createTag(tagObj){
+        this.state.ltP.index.tags.push = tagObj;
+        this.forceUpdate();
+    }
+
+    deleteTag(index){
+        this.state.ltP.index.tags.splice(index,1);
+        this.forceUpdate();
+    }
+
+    getFocusComponent(index){
+        this.state.ltP.index.focusTagIndex = index;
+        this.state.ltP.index.focusTag =this.state.ltP.index.tags[index];
+        this.forceUpdate();
+    }
+
+
     render() {
+
+        let methods = {
+            changeTagPropValue:this.changeTagPropValue.bind(this),
+            getFocusComponent:this.getFocusComponent.bind(this)
+        }
+
         return (
             <div className="rm-main-ui">
-                <ZmitiLeftApp {...this.state.ltP.index}></ZmitiLeftApp>
-                <ZmitiRightApp {...this.state.ltP.index}></ZmitiRightApp>
+                <ZmitiLeftApp {...this.state.ltP.index} {...methods}></ZmitiLeftApp>
+                <ZmitiRightApp {...this.state.ltP.index} {...methods}></ZmitiRightApp>
             </div>
         )
     }

@@ -5,7 +5,9 @@ import Button from 'antd/lib/button';
 const FormItem = Form.Item;
 import './zmiti-textarea-btns.css';
 import '../js/pubsub';
+import 'babel-polyfill';
 import ContentEditable from 'react-contenteditable';
+
 /*
  import {createStore} from 'redux';
 
@@ -34,39 +36,65 @@ export default class ZmitiTextAreaBtns extends React.Component {
     }
 
     changeTagContent(e) {
-        let val = e.type === 'input' ? 'value' : 'innerHTML';
-        this.setState({
-            html: e.target[val]
-        });
+
+
+        let val = 'value';
+
+        switch (e.type) {
+            case "input":
+                val = 'value';
+                break;
+            case "focus":
+                val = 'innerHTML';
+                break;
+            default:
+            {
+                return false;
+            }
+        }
+
+        this.props.changeTagPropValue('content', e.target[val]);
+
+
 
         PubSub.publish('changeTagContent', {html: e.target[val], type: e.target[val] ? 'block' : 'none'});
     }
 
-    componentDidMount() {
+    changeTagContentStyle(type) {
+        let style = '';
+        switch (type) {
+            case"b":
+                this.bold = !this.bold;
+                style += 'font-weight:' + (this.bold ? 'bold' : 'normal');
+                break;
+            case 'i':
+                this.italic = !this.italic;
+                style += 'font-style:' + (this.italic ? 'italic' : 'normal');
+                break;
+        }
 
-        PubSub.subscribe("getFocusTagContent", (d, e)=> {
-            this.setState({
-                html: e
-            });
-        });
+        let content = this.props.textContent;
+        this.props.changeTagPropValue("content", content.replace("<div", "<div style=" + style + ""))
+
     }
 
-    onFocus(e) {
+    componentDidMount() {
+        let textContent = this.props.textContent.startsWith('<div') ? this.props.textContent : "<div>" + this.props.textContent + "</div>";
+        setTimeout(()=> {
+            this.props.changeTagPropValue('content', textContent);
+        }, 0);
 
-        this.setState({
-            html: e.target.innerHTML
-        });
-        PubSub.publish('changeTagContent', {html: e.target.innerHTML, type: e.target.innerHTML ? 'block' : 'none'});
     }
 
     render() {
+
         return (
             <div className="rm-textarea-btn-group">
                 <div className="rm-textarea-btns">
                     <FormItem label={this.props.label}>
                         <ContentEditable
                             className='rm-tag-content'
-                            html={this.state.html}
+                            html={this.props.textContent}
                             disabled={false}
                             onChange={this.changeTagContent.bind(this)}
                             onFocus={this.changeTagContent.bind(this)}
@@ -75,9 +103,11 @@ export default class ZmitiTextAreaBtns extends React.Component {
                 </div>
                 <div className="rm-textarea-btns rm-btns">
                     <FormItem>
-                        <Button type="primary" size="small">B</Button>
-                        <Button type="primary" size="small">I</Button>
-                        <Button type="primary" size="small">H</Button>
+                        <Button type="primary" size="small"
+                                onClick={this.changeTagContentStyle.bind(this,'b')}>B</Button>
+                        <Button type="primary" size="small"
+                                onClick={this.changeTagContentStyle.bind(this,'i')}>I</Button>
+                        <Button type="primary" size="small" disabled>H</Button>
                         <Button type="primary" size="large" onClick={this.showIconDialog.bind(this)}
                                 className="rm-large-btn">图标</Button>
                     </FormItem>

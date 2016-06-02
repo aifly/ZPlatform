@@ -17,8 +17,7 @@ export default class ZmitiTopBanner extends React.Component {
                     <Button bsStyle="success">添加标签</Button>
                 </div>
                 <div className="right-btn-group">
-                    <Button >保存</Button>
-                    <Button >返回</Button>
+
                 </div>
             </div>
         )

@@ -80,17 +80,26 @@ export default class ZmitiMainStage extends React.Component {
     render() {
 
 
+
         let style = {
             width:this.state.width
         } ,
-            item = this.state.items.map((item, i)=> {
+            methods={
+                changeTagPropValue:this.props.changeTagPropValue,
+                getFocusComponent:this.props.getFocusComponent
+            },
+            item = this.props.tags.map((item, i)=> {
+
             return (
-                <ZmitiTag key={item.id}  {...this.state.items[i]}></ZmitiTag>
+                <ZmitiTag index={i} key={item.id} focusTag = {this.props.tags[this.props.focusTagIndex]} {...this.props.tags[i]} {...methods}></ZmitiTag>
             )
         });
 
         return (
             <div className='rm-main-stage' ref="mainStage">
+
+                <div className="rm-tips">双击创建标签</div>
+
                 <div className="rm-img-container" ref="img-c" style={style}>
                     <img style={{width:'100%',height:'auto'}} id="targetImg" src={this.state.richImg} alt=""
                          draggable="false"/>
@@ -111,7 +120,20 @@ export default class ZmitiMainStage extends React.Component {
 
     componentDidMount() {
 
+         setTimeout(()=>{
+             $('.rm-tips').remove();
+         },3000);
 
+        /*//http://wenyiwen.ittun.com/RESTfulWSDemo/services/customers
+        //http://wenyiwen.ittun.com/RESTfulWSDemo/services/helloWorld
+        $.getJSON({
+            url:'http://wenyiwen.ittun.com/RESTfulWSDemo/services/helloWorld',
+            type:'GET',
+            dataType:"jsonp",
+            success(d){
+                alert(d);
+            }
+        });*/
 
         let stage = $(this.refs.mainStage),
             targetImg = $('#targetImg');

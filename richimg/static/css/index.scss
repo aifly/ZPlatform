@@ -318,6 +318,7 @@ body {
           };
         }
         div.right-btn-group{
+          flex-grow: 5;
           text-align: right;
           button{
             width:100px;
@@ -366,5 +367,33 @@ body {
           -webkit-user-select: none;
         }
       }
+
+    .rm-tips{
+      @include pos(a);
+      width:100%;
+      height:100px;
+      line-height:100px;
+      @include fly-h-gradient-line;
+      z-index:100;
+      top:40%;
+      text-align: center;
+      font-size:40px;
+      font-family:宋体;
+
+    }
   }
+}
+
+
+.rm-opaertor-C{
+  @include pos(r);
+
+}
+
+.rm-disabled{
+  width:100%;
+  height:100%;
+  @include pos(a);
+  left:0;
+  top:0;
 }

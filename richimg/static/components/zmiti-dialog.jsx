@@ -5,6 +5,8 @@ import 'antd/lib/modal/style/css';
 import '../js/pubsub';
 import './zmiti-modal.css';
 
+import $ from 'jquery';
+
 
 
 
@@ -35,12 +37,21 @@ export default class ZmitiModal extends React.Component{
             visible: false
         });
     }
+    chooseIco(e){
+
+        switch (e.type){
+
+        }
+        //alert(this.props.changeTagPropValue)
+        e.target.src && this.props.changeTagPropValue('icon',e.target.src);
+
+    }
     render(){
         return (
             <div>
-                <Modal title="选择图标" width={278}  visible={this.state.visible}
+                <Modal title="选择图标" width={278} wrapClassName="rm-ico-modal" visible={this.state.visible}
                        onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}>
-                    <ul className="rm-icon-C">
+                    <ul className="rm-icon-C" onClick={this.chooseIco.bind(this)}>
                         <li><img draggable="false" src="./static/images/red-plain.png" alt=""/></li>
                         <li><img draggable="false" src="./static/images/green-plain.png" alt=""/></li>
                         <li><img draggable="false" src="./static/images/black-plain.png" alt=""/></li>
