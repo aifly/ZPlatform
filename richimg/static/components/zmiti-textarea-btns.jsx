@@ -44,7 +44,7 @@ export default class ZmitiTextAreaBtns extends React.Component {
             case "input":
                 val = 'value';
                 break;
-            case "focus":
+            case "click":
                 val = 'innerHTML';
                 break;
             default:
@@ -54,8 +54,6 @@ export default class ZmitiTextAreaBtns extends React.Component {
         }
 
         this.props.changeTagPropValue('content', e.target[val]);
-
-
 
         PubSub.publish('changeTagContent', {html: e.target[val], type: e.target[val] ? 'block' : 'none'});
     }
@@ -97,7 +95,7 @@ export default class ZmitiTextAreaBtns extends React.Component {
                             html={this.props.textContent}
                             disabled={false}
                             onChange={this.changeTagContent.bind(this)}
-                            onFocus={this.changeTagContent.bind(this)}
+                            onClick={this.changeTagContent.bind(this)}
                         />
                     </FormItem>
                 </div>

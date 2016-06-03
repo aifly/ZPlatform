@@ -1,3 +1,31 @@
+html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+html, body {
+  height: 100%;
+}
+
+img {
+  border: none;
+  vertical-align: top;
+  width: 100%;
+  height: auto;
+}
+
+input, textarea {
+  outline: none;
+}
+
 @mixin pos($v) {
   @if
   $v == a {
@@ -104,86 +132,92 @@
   flex-flow: $v;
 }
 
+body {
+  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  height: 100%;
+  overflow: hidden;
+}
 
-.fly-tag{
-  .tag{
-    cursor: move;
-    @include pos(a);
-    $tagW:50px;
-    width:$tagW;
-    height:$tagW;
-    z-index: 101;
-    aside{
-      $pointW:10px;
-      .point{
-        opacity:0;
-        width:$pointW;
-        height: $pointW;
-        background:#eee;
-        border:1px solid #000;
-        box-sizing: border-box;
-        @include pos(a);
-        left:-$pointW/2;
-        top:-$pointW/2;
-        z-index:10;
-      }
-      .point2{
-        left:auto;
-        right:-$pointW/2;
-      }
-      .point3{
-
-        top:auto;
-        bottom:-$pointW/2;
-      }
-      .point4{
-        left:auto;
-        top:auto;
-        right:-$pointW/2;
-        bottom:-$pointW/2;
-      }
-    }
-    .ico{
-      @include pos(a);
-      left:50%;
-      top:50%;
-      @include transform(translate3d(-50%,-50%,0));
-      width:$tagW/1.8;
-      height:$tagW/1.8;
-      background: url(../images/blue-plain.png) no-repeat center center;
-      background-size:contain;
-    }
-
-  }
-  @include pos(a);
-
-  height:50px;
+.richimg-parent{
+  @include pos(r);
+}
+.richimg{
   width:100%;
-  max-width: 120px;
+  height: auto;
+}
 
-  border-radius: 3px;
+.widthAuto{
+  width:auto;
+  height:100%;
+}
+.heightAuto{
+  width:100%;
+  height:auto;
+}
 
+.lt-fly-tag,.lt-fly-icon-wrapper{
+  @include pos(a);
+}
 
-  @at-root .rm-tag-remark{
-    padding:4px 6px;
-    @include br(5px);
-    height:auto;
-    background: #fff;
+.lt-fly-icon-wrapper{
+  .triangle{
     @include pos(a);
-    box-sizing: border-box;
-    &:before{
-      content:"";
+    &.up{
+      $width:10px;
       @include pos(a);
-      width:10px;
-      height:10px;
-      @include transform(rotate(45deg));
-      background:#fff;
-      bottom:-5px;
-      margin-left:-5px;
+      left: 50%;
+      @include transform(translate(-50%,0));
+      width: 0;
+      bottom:-$width;
+      height: 0;
+      border-left: $width solid transparent;
+      border-right: $width solid transparent;
+      border-top: $width solid #fff;
+    }
+    &.down{
+      $width:10px;
+      content: "";
+      @include pos(a);
+      width: 0;
+      height: 0;
       left:50%;
+      @include transform(translate(-50%,0));
+      top:-$width;
+      border-left: $width solid transparent;
+      border-right: $width solid transparent;
+      border-bottom: $width solid #fff;
     }
-    img{
 
-    }
   }
 }
+.fly-tag-container{
+  &:hover .lt-fly-text-icon-wrapper{
+    z-index: 100;
+    opacity:1;
+  }
+
+}
+.lt-fly-text-icon-wrapper{
+  z-index: -100;
+  opacity: 0;
+  a{
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  &.hide{
+    z-index: -100;
+
+  }
+  &.show{
+    z-index: 100;
+  }
+  padding:20px;
+  text-align: center;
+  $borderColor:#000000;
+  @include background(#fff);
+  line-height: 20px;
+  box-sizing: border-box;
+}
+

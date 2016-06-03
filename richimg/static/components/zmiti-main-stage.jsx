@@ -2,6 +2,8 @@ import React from 'react';
 import $ from 'jquery';
 import Icon from 'antd/lib/icon';
 import 'antd/lib/icon/style/css';
+import message from 'antd/lib/message';
+import 'antd/lib/message/style/css';
 import ZmitiTag from './zmiti-tag.jsx';
 
 
@@ -42,7 +44,42 @@ export default class ZmitiMainStage extends React.Component {
         this.setState({items: newItems})
     }
 
-    createTag() {
+    createTag(e) {
+        if(e.target.id !== "targetImg"){
+            return;
+        }
+
+        Zmiti.richImgData.tags.forEach((tag,i)=>{//如果创建了空标签，没有添加任何的内容，那么再一次创建的时候，把之前的空标签删除掉。
+           if(tag.content.length <= 0){
+                message.warning('标签内容为空，自动删除！！');
+                this.props.deleteTag(i);
+           };
+        });
+        let self =this,
+            tagW = 50;
+        this.props.createTag({
+
+            "type": "image",
+            "href": "",
+            "content": "",
+            "imgSrc":"",
+            "videoSrc":"",
+            "id": ZmitiTag.getGuid(),
+            "icon": "images/red-plain.png",
+            "iconHover": "images/hoverlink.png",
+            "styles": {
+                "left":(e.pageX - self.refs['mainStage'].offsetLeft -tagW/2)+'px',
+                "top": (e.pageY - self.refs['mainStage'].offsetTop - tagW/2)+'px'
+            },
+            "wrapStyles": {
+                "width": "200px",
+                "height": "130px",
+                "fontFamily": "'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif"
+            }
+        });
+    }
+
+    deleteTag(){
 
     }
 
@@ -58,7 +95,6 @@ export default class ZmitiMainStage extends React.Component {
     }
 
     default(){
-
         let stage = $(this.refs.mainStage);
         stage.transX = 0;
         stage.transY = 0;
@@ -78,9 +114,6 @@ export default class ZmitiMainStage extends React.Component {
     }
 
     render() {
-
-
-
         let style = {
             width:this.state.width
         } ,
@@ -100,7 +133,7 @@ export default class ZmitiMainStage extends React.Component {
 
                 <div className="rm-tips">双击创建标签</div>
 
-                <div className="rm-img-container" ref="img-c" style={style}>
+                <div className="rm-img-container" ref="img-c" style={style} onDoubleClick={this.createTag.bind(this)}>
                     <img style={{width:'100%',height:'auto'}} id="targetImg" src={this.state.richImg} alt=""
                          draggable="false"/>
                     {item}
@@ -124,16 +157,8 @@ export default class ZmitiMainStage extends React.Component {
              $('.rm-tips').remove();
          },3000);
 
-        /*//http://wenyiwen.ittun.com/RESTfulWSDemo/services/customers
-        //http://wenyiwen.ittun.com/RESTfulWSDemo/services/helloWorld
-        $.getJSON({
-            url:'http://wenyiwen.ittun.com/RESTfulWSDemo/services/helloWorld',
-            type:'GET',
-            dataType:"jsonp",
-            success(d){
-                alert(d);
-            }
-        });*/
+
+
 
         let stage = $(this.refs.mainStage),
             targetImg = $('#targetImg');

@@ -1,12 +1,38 @@
+html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+html, body {
+  height: 100%;
+}
+
+img {
+  border: none;
+  vertical-align: top;
+}
+
+input, textarea {
+  outline: none;
+}
+
 @mixin pos($v) {
   @if
   $v == a {
-  position: absolute;
-} @else if $v == r {
-  position: relative;
-} @else if $v == f {
-  position: fixed;
-}
+    position: absolute;
+  } @else if $v == r {
+    position: relative;
+  } @else if $v == f {
+    position: fixed;
+  }
 }
 
 @mixin br($v:50%) {
@@ -90,6 +116,7 @@
   background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, .2)), color-stop(0.5, rgba(204, 204, 204, 1)), to(rgba(204, 204, 204, .2)));
   background: -moz-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
   background: -ms-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
+
 }
 
 @mixin fly-v-gradient-line($minOpacity:.2,$maxOpacity:1) {
@@ -98,92 +125,81 @@
   background: -ms-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
 }
 
-@mixin displayFlex($v:column) {
+@mixin displayFlex($v:column,$hC:center,$vC:center) {
   display: flex;
   display: -webkit-flex;
   flex-flow: $v;
+  justify-content: $hC;
+  align-items: $vC;
+}
+$bodyBg:#454545;
+body {
+  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  height: 100%;
+  overflow-x: hidden;
+  min-width: 1024px;
 }
 
+.zmiti-main-ui{
+  @include displayFlex();
+}
+$baseColor:#a30c15;
+.zmiti-header{
 
-.fly-tag{
-  .tag{
-    cursor: move;
-    @include pos(a);
-    $tagW:50px;
-    width:$tagW;
-    height:$tagW;
-    z-index: 101;
-    aside{
-      $pointW:10px;
-      .point{
-        opacity:0;
-        width:$pointW;
-        height: $pointW;
-        background:#eee;
-        border:1px solid #000;
-        box-sizing: border-box;
-        @include pos(a);
-        left:-$pointW/2;
-        top:-$pointW/2;
-        z-index:10;
-      }
-      .point2{
-        left:auto;
-        right:-$pointW/2;
-      }
-      .point3{
-
-        top:auto;
-        bottom:-$pointW/2;
-      }
-      .point4{
-        left:auto;
-        top:auto;
-        right:-$pointW/2;
-        bottom:-$pointW/2;
-      }
+  width:100vw;
+  height:10vh;
+  flex-grow: 1;
+  background:#ecf0f1;
+  @include displayFlex(row);
+  justify-content: center;
+  align-items: center;
+  .form-group{
+    flex-grow: 5;
+    @include displayFlex(row);
+    padding-left:10vw;
+    input{
+      width:50vw;
+      margin-right:1vw;
     }
-    .ico{
-      @include pos(a);
-      left:50%;
-      top:50%;
-      @include transform(translate3d(-50%,-50%,0));
-      width:$tagW/1.8;
-      height:$tagW/1.8;
-      background: url(../images/blue-plain.png) no-repeat center center;
-      background-size:contain;
-    }
-
-  }
-  @include pos(a);
-
-  height:50px;
-  width:100%;
-  max-width: 120px;
-
-  border-radius: 3px;
-
-
-  @at-root .rm-tag-remark{
-    padding:4px 6px;
-    @include br(5px);
-    height:auto;
-    background: #fff;
-    @include pos(a);
-    box-sizing: border-box;
-    &:before{
-      content:"";
-      @include pos(a);
-      width:10px;
-      height:10px;
-      @include transform(rotate(45deg));
-      background:#fff;
-      bottom:-5px;
-      margin-left:-5px;
-      left:50%;
-    }
-    img{
-
+    button{
+      background:#d8271d;
+      border-color:#d8271d;
     }
   }
+
+  .zmiti-create{
+    flex-grow: 4;
+    button{
+      height:32px;
+      background:$baseColor;
+      border-color:$baseColor;
+    }
+  }
+}
+.zmiti-main-content{
+  width:100vw;
+
+  .zmiti-tab-C{
+    width:90%;
+    margin:5vh auto;
+    .ant-tabs-ink-bar{
+      background-color:#a30b17;
+    }
+    .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-inner{
+      color:$baseColor;
+    }
+    .ant-tabs-bar{
+      border-color:#be5841;
+    }
+    .ant-tabs-nav .ant-tabs-tab-inner:hover{
+      color:#d8271d;
+    }
+
+    .ant-tabs-tabpane{
+      @include displayFlex(row);
+      flex-wrap: wrap;
+    }
+  }
+
 }

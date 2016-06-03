@@ -1,0 +1,89 @@
+html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
+  padding: 0;
+  margin: 0; }
+
+a {
+  text-decoration: none; }
+
+li {
+  list-style: none; }
+
+html, body {
+  height: 100%; }
+
+img {
+  border: none;
+  vertical-align: top; }
+
+input, textarea {
+  outline: none; }
+
+body {
+  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  height: 100%;
+  overflow-x: hidden;
+  min-width: 1024px; }
+
+.zmiti-main-ui {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center; }
+
+.zmiti-header {
+  width: 100vw;
+  height: 10vh;
+  flex-grow: 1;
+  background: #ecf0f1;
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  justify-content: center;
+  align-items: center; }
+  .zmiti-header .form-group {
+    flex-grow: 5;
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10vw; }
+    .zmiti-header .form-group input {
+      width: 50vw;
+      margin-right: 1vw; }
+    .zmiti-header .form-group button {
+      background: #d8271d;
+      border-color: #d8271d; }
+  .zmiti-header .zmiti-create {
+    flex-grow: 4; }
+    .zmiti-header .zmiti-create button {
+      height: 32px;
+      background: #a30c15;
+      border-color: #a30c15; }
+
+.zmiti-main-content {
+  width: 100vw; }
+  .zmiti-main-content .zmiti-tab-C {
+    width: 90%;
+    margin: 5vh auto; }
+    .zmiti-main-content .zmiti-tab-C .ant-tabs-ink-bar {
+      background-color: #a30b17; }
+    .zmiti-main-content .zmiti-tab-C .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-inner {
+      color: #a30c15; }
+    .zmiti-main-content .zmiti-tab-C .ant-tabs-bar {
+      border-color: #be5841; }
+    .zmiti-main-content .zmiti-tab-C .ant-tabs-nav .ant-tabs-tab-inner:hover {
+      color: #d8271d; }
+    .zmiti-main-content .zmiti-tab-C .ant-tabs-tabpane {
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: row;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap; }
+
+/*# sourceMappingURL=list.css.map */

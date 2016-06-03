@@ -75,12 +75,21 @@ class ZmitiTag extends React.Component {
 
     render() {
 
+        let img = '';
+        this.props.imgSrc === undefined && (this.props.imgSrc = '');
+        this.props.videoSrc === undefined && (this.props.videoSrc = '');
+        if(this.props.type === 'image'&& this.props.imgSrc.length>0 && (this.props.imgSrc.includes('.png')||this.props.imgSrc.includes('.jpg')||this.props.imgSrc.includes('.gif'))){
+                img = <img src={this.props.imgSrc} width={this.state.remarkStyle.width}  alt=""/>;
+        }
 
         return (
             <section key={this.props.id} id={this.props.id} ref={this.props.id} style={this.props.styles} className="fly-tag">
+
                 <div className="rm-tag-remark" hidden={this.props.id === this.props.focusTag.id ? '':'hidden'}
-                     style={this.state.remarkStyle}
-                     dangerouslySetInnerHTML={{__html:this.props.content}}>
+                     style={this.state.remarkStyle}>
+                    {img}
+                    <div dangerouslySetInnerHTML={{__html:this.props.content}}></div>
+
                 </div>
                 <div className="tag">
                     <div

@@ -36,7 +36,7 @@ export default class ZmitiChooseFile extends React.Component {
             color: '#fff',
             cursor: 'pointer'
         }
-        let focusTag = this.props.tags[this.props.focusTagIndex];
+        let focusTag = this.props.tags[this.props.focusTagIndex]||{};
 
         let methods={
             changeTagPropValue:this.props.changeTagPropValue

@@ -1,7 +1,9 @@
 var webpack = require('webpack');
 var config = {
     entry: {
-        'index': "./richimg/index.jsx"
+        'index': "./richimg/index.jsx",
+        'richimage':"./richimg/js/richimage.js",
+        'list':'./richimg/list.jsx'
     },
     output: {
         path: './richimg/static/js',

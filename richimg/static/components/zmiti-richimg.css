@@ -1,0 +1,35 @@
+img {
+  border: none;
+  vertical-align: top;
+  width: 100%;
+  height: auto; }
+
+input, textarea {
+  outline: none; }
+
+.zmiti-richimg-C {
+  flex-grow: 1;
+  width: 250px;
+  height: auto;
+  border: 1px solid #ccc;
+  padding: 7px;
+  border-radius: 5px;
+  margin: 4px 10px; }
+  .zmiti-richimg-C .zmiti-name {
+    margin-top: 8px; }
+  .zmiti-richimg-C .zmiti-athor-C {
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row;
+    justify-content: flex-start;
+    align-items: center; }
+    .zmiti-richimg-C .zmiti-athor-C aside {
+      flex-grow: 1; }
+      .zmiti-richimg-C .zmiti-athor-C aside i {
+        margin: 0 5px;
+        cursor: pointer; }
+      .zmiti-richimg-C .zmiti-athor-C aside:nth-of-type(2) {
+        text-align: right;
+        color: #f38142; }
+
+/*# sourceMappingURL=zmiti-richimg.css.map */

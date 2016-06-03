@@ -20,20 +20,15 @@ import { Provider } from 'react-redux';*/
 
 import ZmitiTextAreaBtns from './static/components/zmiti-textarea-btns.jsx';
 import ZmitiMiniColor from './static/components/zmiti-minicolor.jsx';
-import ZmitiChooseFile from './static/components/zmiti-choose-file.jsx';
+
 /*import ZmitiRipple from './static/components/zmiti-ripple.jsx';*/
 import ZmitiBtnGroup from './static/components/zmiti-btn-group.jsx';
 import ZmitiTopBanner from './static/components/zmiti-top-banner.jsx';
 import ZmitiMainStage from './static/components/zmiti-main-stage.jsx';
 import ZmitiModal from './static/components/zmiti-dialog.jsx';
-
+import ZmitiChooseFile from './static/components/zmiti-choose-file.jsx';
 import ZmitiTag from './static/components/zmiti-tag.jsx';
 
-if (!Array.from) {
-    Array.from = (c)=> {
-        return Array.prototype.slice.call(c);
-    }
-}
 
 class ZmitiLeftApp extends React.Component {
     constructor(args) {
@@ -64,7 +59,9 @@ class ZmitiLeftApp extends React.Component {
 * */
 
         let methods = {
-            changeTagPropValue:this.props.changeTagPropValue
+            changeTagPropValue:this.props.changeTagPropValue,
+            deleteTag:this.props.deleteTag,
+            getFocusComponent:this.props.getFocusComponent
         }
         return (
             <aside id="rm-left-app" className="rm-left-app">
@@ -86,7 +83,7 @@ class ZmitiLeftApp extends React.Component {
                         </div>
                     </section>
                     <div className="rm-btn-group-C">
-                        <ZmitiBtnGroup></ZmitiBtnGroup>
+                        <ZmitiBtnGroup {...methods}></ZmitiBtnGroup>
                     </div>
                 </section>
                 <ZmitiModal {...methods}></ZmitiModal>
@@ -103,7 +100,10 @@ class ZmitiRightApp extends React.Component {
 
     render() {
         let methods = {
-            getFocusComponent:this.props.getFocusComponent
+            getFocusComponent:this.props.getFocusComponent,
+            createTag:this.props.createTag,
+            deleteTag:this.props.deleteTag
+
         };
         return (
             <aside id="rm-right-app" className="rm-right-app">
@@ -126,12 +126,14 @@ class MainUI extends React.Component {
        /// this.changeTagType = this.changeTagType.bind(this);
         this.state = {
             ltP:{
-                index:{
+                richImgData:{
                     tags:[
                         {
                             "type": "image",
-                            "href": "http://www.zmiti.com",
-                            "content": "中华人民共和国中华人民共和国",
+                            "href": "",
+                            imgSrc:'images/w.png',
+                            videoSrc:'',
+                            "content": "",
                             "id": ZmitiTag.getGuid(),
                             "icon": "images/red-plain.png",
                             "iconHover": "images/hoverlink.png",
@@ -144,24 +146,8 @@ class MainUI extends React.Component {
                                 "height": "130px",
                                 "fontFamily": "'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif"
                             }
-                        },
-                        {
-                            "type": "image",
-                            "href": "http://www.linten.cn",
-                            "content": "组件测试。react",
-                            "id": ZmitiTag.getGuid(),
-                            "icon": "images/red-plain.png",
-                            "iconHover": "images/hoverlink.png",
-                            "styles": {
-                                "left": "25%",
-                                "top": "62%"
-                            },
-                            "wrapStyles": {
-                                "width": "200px",
-                                "height": "130px",
-                                "fontFamily": "'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif"
-                            }
                         }
+
                     ],
                     focusTagIndex:0
                 }
@@ -173,14 +159,16 @@ class MainUI extends React.Component {
     componentDidMount(){
         this.setState({
             ltP:{
-                index:{
-                    tags:this.state.ltP.index.tags,
+                richImgData:{
+                    tags:this.state.ltP.richImgData.tags,
                     focusTagIndex:0,
-                    focusTag:this.state.ltP.index.tags[this.state.ltP.index.focusTagIndex]
+                    focusTag:this.state.ltP.richImgData.tags[this.state.ltP.richImgData.focusTagIndex]
                 }
             }
         },()=>{
             window.Zmiti = this.state.ltP;
+           /* Zmiti.richImgData = Zmiti.index;
+            Zmiti.index = null;*/
         });
 
 
@@ -194,37 +182,51 @@ class MainUI extends React.Component {
      */
     changeTagPropValue(key,value){//
 
-        this.state.ltP.index.focusTag[key] = value;
+        this.state.ltP.richImgData.focusTag[key] = value;
         this.forceUpdate();
     }
+
+    /**
+     * 创建新的标签
+     * @param tagObj
+     */
     createTag(tagObj){
-        this.state.ltP.index.tags.push = tagObj;
+        this.state.ltP.richImgData.tags.push (tagObj);
         this.forceUpdate();
     }
 
+    /**
+     * 删除标签
+     * @param index
+     */
     deleteTag(index){
-        this.state.ltP.index.tags.splice(index,1);
+        this.state.ltP.richImgData.tags.splice(index,1);
         this.forceUpdate();
     }
 
+    /**
+     * 获取当前的标签。
+     * @param index
+     */
     getFocusComponent(index){
-        this.state.ltP.index.focusTagIndex = index;
-        this.state.ltP.index.focusTag =this.state.ltP.index.tags[index];
+        this.state.ltP.richImgData.focusTagIndex = index;
+        this.state.ltP.richImgData.focusTag =this.state.ltP.richImgData.tags[index];
         this.forceUpdate();
     }
-
 
     render() {
 
         let methods = {
             changeTagPropValue:this.changeTagPropValue.bind(this),
-            getFocusComponent:this.getFocusComponent.bind(this)
+            getFocusComponent:this.getFocusComponent.bind(this),
+            createTag:this.createTag.bind(this),
+            deleteTag:this.deleteTag.bind(this)
         }
 
         return (
             <div className="rm-main-ui">
-                <ZmitiLeftApp {...this.state.ltP.index} {...methods}></ZmitiLeftApp>
-                <ZmitiRightApp {...this.state.ltP.index} {...methods}></ZmitiRightApp>
+                <ZmitiLeftApp {...this.state.ltP.richImgData} {...methods}></ZmitiLeftApp>
+                <ZmitiRightApp {...this.state.ltP.richImgData} {...methods}></ZmitiRightApp>
             </div>
         )
     }

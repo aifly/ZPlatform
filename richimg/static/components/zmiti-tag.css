@@ -2,13 +2,14 @@
   position: absolute;
   height: 50px;
   width: 100%;
-  border-radius: 3px;
-  z-index: 10; }
+  max-width: 120px;
+  border-radius: 3px; }
   .fly-tag .tag {
     cursor: move;
     position: absolute;
     width: 50px;
-    height: 50px; }
+    height: 50px;
+    z-index: 101; }
     .fly-tag .tag aside .point {
       opacity: 0;
       width: 10px;

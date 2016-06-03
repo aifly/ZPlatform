@@ -1,3 +1,6 @@
+
+import '../css/richimg.min.css';
+import 'babel-polyfill'
 !function (window, undefined) {
     window.flyRequire = window.flyRequire || {};
     var g = {};
@@ -979,74 +982,75 @@ flyRequire.define("init", ["namespace", "util", "config", "sceneCache", "statusM
 
     });
 
-flyRequire.define("main", ["jQuery", "cssInjector","ltFlyText"], function ($, cssInjector,ltFlyText) {
-    cssInjector.injectEmbedCSS();
+flyRequire.define("main", ["jQuery", "cssInjector", "ltFlyText"], function ($, cssInjector, ltFlyText) {
+    //cssInjector.injectEmbedCSS();css通过es6的webpack打包到页面上的html style标签当中。
 
 
     $.ajax({
-        url: "js/richimg.json?callback="+new Date().getTime(),
+        url: "js/richimg.json?callback=" + new Date().getTime(),
         dataType: "json",
         type: "GET",
-        success: fnSuccess
+        success(data){
+            var curImg = $(".richimg");
+            var curParent = curImg.parent();
+            $(".richimg").remove();
+            curParent.append("<div class='richimg-parent'></div>");
+            $(".richimg-parent").append(curImg);
 
+            var json = data.richImgData;
+            var global = data.globalConfig;
+
+            var tags = json.tags;
+
+            tags.forEach(function (tag, index) {
+                ltFlyText(tag);
+            });
+        }
     })
 
-    function fnSuccess(data) {
-        var curImg = $(".richimg");
-        var curParent = curImg.parent();
-        $(".richimg").remove();
-        curParent.append("<div class='richimg-parent'></div>");
-        $(".richimg-parent").append(curImg);
 
-        var json = data.richImgData;
-        var global = data.globalConfig;
-
-        var tags = json.tags;
-
-        tags.forEach(function (tag, index) {
-            ltFlyText(tag);
-        });
-    }
 });
 
 
 //标签的基类。
 flyRequire.define("ltFlyBaseTag", ["jQuery"], function ($) {
 
-    var FlyBaseTag = function (option,widget) {
+    var FlyBaseTag = function (option, widget) {
         option = option || {};
         var s = this;
         s.id = option.id || "";
         s.name = option.name || "";
-        s.type = option.type || "text";
-        s.icon = option.icon  || "";//图标的地址。
+        s.type = option.type || "image";
+        s.imgSrc = option.imgSrc || '';
+        s.videoSrc = option.videoSrc || '';
+        s.icon = option.icon || "";//图标的地址。
         s.parent = $(".richimg").parent();
         s.style = option.styles || {
 //            width:"24px",
 //            height:"24px"
-        }
+            }
 
         s.wrapStyles = option.wrapStyles || {};
 
         s.flyCopy(widget);
     }
 
-    FlyBaseTag.prototype.flyCopy = function(widget){
+    FlyBaseTag.prototype.flyCopy = function (widget) {
 
         var s = this;
 
         for (var attr in s) {
-            if(typeof attr === "string"){
+            if (typeof attr === "string") {
                 widget[attr] = s[attr];
             }
-            else if(typeof attr === "object" && attr!== null){
+            else if (typeof attr === "object" && attr !== null) {
                 arguments.callee(attr);
             }
         }
     };
 
-    return function(option,widget){
-        return new FlyBaseTag(option,widget)
+    return function (option, widget) {
+        return new FlyBaseTag(option, widget)
     };
 
 });
@@ -1054,74 +1058,96 @@ flyRequire.define("ltFlyBaseTag", ["jQuery"], function ($) {
 flyRequire.define("ltFlyText", ["jQuery", "ltFlyBaseTag"], function ($, baseTag) {
     var FlyText = function (option) {
         var s = this;
-        option= option || {};
-        s.content=option.content || "";
+        option = option || {};
+        s.content = option.content || "";
         s.href = option.href || "#";
-        baseTag.call(s,option,s);
+        baseTag.call(s, option, s);
         s.create();
     }
 
-    FlyText.prototype.create = function(){
+    FlyText.prototype.create = function () {
         var s = this;
         var tagHtml = "<div class='lt-fly-text-tag lt-fly-tag'></div>";
-        if(s.href.charAt(0) === "#" && s.href.length === 1){
-            var showHtml = "<div id='"+ s.id +"-show' class=' lt-fly-icon-wrapper lt-fly-text-icon-wrapper'>"+ s.content +"<div class='triangle'></div></div>"
 
+        let otherHtml = '',
+            imgClass='heightAuto';
+
+        let img = new Image();
+
+        img.onload = function () {
+            if(Number.parseFloat(s.wrapStyles.width)/Number.parseFloat(s.wrapStyles.height)
+            >this.width/this.height){
+                $('.'+imgClass).removeClass().addClass('widthAuto')
+            }
+        };
+        img.src = s.imgSrc;
+        if (s.type === 'image' && s.imgSrc.length > 0) { //
+            otherHtml = '<img class='+imgClass+' src=' + s.imgSrc + ' alt=""/>'
         }
-        else{
-            var showHtml = "<div id='"+ s.id +"-show' class=' lt-fly-icon-wrapper lt-fly-text-icon-wrapper'><a href='"+ s.href+"' target='_blank'>"+ s.content +"</a><div class='triangle'></div></div>"
+        else if (s.type === 'video' && s.videoSrc.length > 0 && s.videoSrc.endsWith('.mp4')) {
+            otherHtml = `
+            <video width=${s.wrapStyles.width} height=${s.wrapStyles.height}>
+                <source src=${s.videoSrc} type="video/mp4"/>
+            </video>
+            `
         }
 
-        var container = $("<div id='"+ s.id+"-tag-container' class='fly-tag-container'></div>");
+        if (s.href.charAt(0) === "#" && s.href.length === 1) {
+            var showHtml = "<div id='" + s.id + "-show' class=' lt-fly-icon-wrapper lt-fly-text-icon-wrapper'>" + otherHtml + s.content + "<div class='triangle'></div></div>"
+        }
+        else {
+            var showHtml = "<div id='" + s.id + "-show' class=' lt-fly-icon-wrapper lt-fly-text-icon-wrapper'><a href='" + s.href + "' target='_blank'>" + otherHtml + s.content + "</a><div class='triangle'></div></div>"
+        }
 
 
-        container.append(tagHtml,showHtml);
+        var container = $("<div id='" + s.id + "-tag-container' class='fly-tag-container'></div>");
+
+
+        container.append(tagHtml, showHtml);
         s.parent.append(container);
 
 
-        setTimeout(function(){//加定时器，是为了兼容FF浏览器。
+        setTimeout(function () {//加定时器，是为了兼容FF浏览器。
             var width = parseFloat(s.wrapStyles.width),
-                left = parseFloat(s.style.left)/100* s.parent.width() - width/2 +16,
+                left = parseFloat(s.style.left) / 100 * s.parent.width() - width / 2 + 16,
                 height = parseFloat(s.wrapStyles.height),
-                top = parseFloat(s.style.top)/100* s.parent.height() - height -10,
-                iconLeft =parseFloat(s.style.left)/100* s.parent.width(),
+                top = parseFloat(s.style.top) / 100 * s.parent.height() - height - 10,
+                iconLeft = parseFloat(s.style.left) / 100 * s.parent.width(),
                 iconWidth = 24;
 
+            var showContent = $("#" + s.id + "-show");
 
-            var showContent = $("#"+ s.id + "-show");
-
-            var style = {left:left,top:top};
-            if(top < 0){
-                style.top = parseFloat(s.style.top)/100* s.parent.height()+iconWidth+10;
+            var style = {left: left, top: top};
+            if (top < 0) {
+                style.top = parseFloat(s.style.top) / 100 * s.parent.height() + iconWidth + 10;
                 showContent.find(".triangle").addClass("down");
             }
-            else{
+            else {
                 showContent.find(".triangle").addClass("up");
             }
 
-            if( left < 0 ){
+            if (left < 0) {
                 style.left = 0;
-                showContent.find(".triangle").css({left:iconLeft+iconWidth/2});
+                showContent.find(".triangle").css({left: iconLeft + iconWidth / 2});
             }
 
-            if(s.parent.width() - left < width){
-                style.left="auto";
+            if (s.parent.width() - left < width) {
+                style.left = "auto";
                 style.right = 0;
-                showContent.find(".triangle").css({left:width - (s.parent.width() - iconLeft) + iconWidth/2});
+                showContent.find(".triangle").css({left: width - (s.parent.width() - iconLeft) + iconWidth / 2});
             }
 
-            $("#"+ s.id + "-show").css(style).css(s.wrapStyles);
-            $("#"+ s.id + "-tag-container .lt-fly-text-tag").css(s.style).css({width:24,height:24,background:"url("+ s.icon +") no-repeat center"});
+            $("#" + s.id + "-show").css(style).css(s.wrapStyles);
+            $("#" + s.id + "-tag-container .lt-fly-text-tag").css(s.style).css({
+                width: 24,
+                height: 24,
+                background: "url(" + s.icon + ") no-repeat center"
+            });
 
-        },1);
-
-
-
+        }, 1);
 
     }
-
-
-    return function(option){
+    return (option)=> {
         return new FlyText(option);
     }
 
