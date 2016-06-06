@@ -78,12 +78,7 @@ body {
       border-color: #be5841; }
     .zmiti-main-content .zmiti-tab-C .ant-tabs-nav .ant-tabs-tab-inner:hover {
       color: #d8271d; }
-    .zmiti-main-content .zmiti-tab-C .ant-tabs-tabpane {
-      display: flex;
-      display: -webkit-flex;
-      flex-flow: row;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap; }
+    .zmiti-main-content .zmiti-tab-C .ant-tabs-tabpane .wf-column {
+      float: left; }
 
 /*# sourceMappingURL=list.css.map */

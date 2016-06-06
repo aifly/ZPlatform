@@ -9,10 +9,10 @@ input, textarea {
 
 .zmiti-richimg-C {
   flex-grow: 1;
-  width: 250px;
   height: auto;
   border: 1px solid #ccc;
   padding: 7px;
+  position: relative;
   border-radius: 5px;
   margin: 4px 10px; }
   .zmiti-richimg-C .zmiti-name {
@@ -31,5 +31,11 @@ input, textarea {
       .zmiti-richimg-C .zmiti-athor-C aside:nth-of-type(2) {
         text-align: right;
         color: #f38142; }
+        .zmiti-richimg-C .zmiti-athor-C aside:nth-of-type(2) ul {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          border: 1px solid #f38142;
+          padding: 5px; }
 
 /*# sourceMappingURL=zmiti-richimg.css.map */

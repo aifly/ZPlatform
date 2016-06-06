@@ -11,7 +11,7 @@ export default class ZmitiRichImg extends React.Component{
     }
     render(){
         return (
-            <div className="zmiti-richimg-C">
+            <div className="zmiti-richimg-C" style={{height:this.props.height}}>
                 <img src="./static/images/2.png" alt="" draggable="false"/>
                 <div className="zmiti-name">智媒体</div>
                 <div className="zmiti-athor-C">
@@ -19,6 +19,10 @@ export default class ZmitiRichImg extends React.Component{
                     <aside>
                         <Icon type="eye"></Icon>
                         <Icon type="setting"></Icon>
+                        <ul>
+                            <li>删除<Icon type="delete"></Icon></li>
+                            <li>分享<Icon type="share-alt"></Icon></li>
+                        </ul>
                     </aside>
                 </div>
             </div>

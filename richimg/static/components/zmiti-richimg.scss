@@ -118,19 +118,22 @@ input, textarea {
   align-items: $vC;
 }
 
+.zmiti-tab-content{
+
+}
 .zmiti-richimg-C{
     flex-grow: 1;
-    width:250px;
     height:auto;
     border:1px solid #ccc;
     padding:7px;
+    @include pos(r);
     @include br(5px);
     margin:4px 10px;
-
   .zmiti-name{
     margin-top:8px;
   }
   .zmiti-athor-C{
+
     @include displayFlex(row,flex-start);
     aside{
       flex-grow: 1;
@@ -140,6 +143,14 @@ input, textarea {
       &:nth-of-type(2){
         text-align: right;
         color:#f38142;
+
+        ul{
+          @include pos(a);
+          top:8px;
+          right:8px;
+          border:1px solid #f38142;
+          padding:5px;
+        }
       }
     }
   }

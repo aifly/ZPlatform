@@ -33,6 +33,9 @@ input, textarea {
   } @else if $v == f {
     position: fixed;
   }
+  @else if $v == s {
+    position: static;
+  }
 }
 
 @mixin br($v:50%) {
@@ -197,8 +200,15 @@ $baseColor:#a30c15;
     }
 
     .ant-tabs-tabpane{
-      @include displayFlex(row);
-      flex-wrap: wrap;
+
+
+
+      .wf-column{
+        float: left;
+      }
+
+
+
     }
   }
 

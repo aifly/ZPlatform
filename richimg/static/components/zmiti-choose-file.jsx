@@ -2,7 +2,8 @@ import React from 'react';
 import Form from 'antd/lib/form';
 import Input from 'antd/lib/input';
 const FormItem = Form.Item;
-import ZmitiTextAreaBtns from './zmiti-textarea-btns.jsx'
+import ZmitiTextAreaBtns from './zmiti-textarea-btns.jsx';
+import PubSub from '../js/pubsub';
 
 
 export default class ZmitiChooseFile extends React.Component {
@@ -14,8 +15,11 @@ export default class ZmitiChooseFile extends React.Component {
     }
 
     chooseImg(e) {
+
         if (e.target.className.indexOf('ant-input-group-addon') > -1) {
-            this.refs['rm-upload'].click();
+
+
+            PubSub.publish('showModal', true);
         }
     }
 
@@ -60,7 +64,6 @@ export default class ZmitiChooseFile extends React.Component {
                 </div>
                 <FormItem className="rm-choose-img">
                     <Input disabled addonAfter="+选择"/>
-                    <input type="file" ref="rm-upload" style={{opacity:0,position:'fixed',zIndex:-1}}/>
                 </FormItem>
                 <ZmitiTextAreaBtns type="video" {...methods} textContent={focusTag.content} label="图片/视频说明"></ZmitiTextAreaBtns>
                 <FormItem

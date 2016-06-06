@@ -9,6 +9,11 @@ import Tabs from 'antd/lib/tabs';
 const TabPane = Tabs.TabPane;
 import 'antd/lib/tabs/style/css';
 import Waterfall  from './static/js/waterfall';
+import 'babel-polyfill';
+import PubSub from './static/js/pubsub';
+
+
+import ZmitiUploadDialog from './static/components/zmiti-upload-dialog.jsx';
 
 
 
@@ -18,6 +23,9 @@ class ZmitiHeader extends React.Component{
     constructor(args){
         super(...args);
     }
+    createProject(){
+        PubSub.publish('showModal', true);
+    }
     render(){
         return(
             <div className="zmiti-header">
@@ -26,17 +34,10 @@ class ZmitiHeader extends React.Component{
                     <Button size="large" type="primary" icon="search">搜索</Button>
                 </div>
                 <div className="zmiti-create">
-                    <Button type="primary">创建作品</Button>
+                    <Button type="primary" onClick={this.createProject.bind(this)}>创建作品</Button>
                 </div>
             </div>
         )
-    }
-    componentDidMount(){
-        var waterfall = new Waterfall({
-            containerSelector: '.zmiti-tab-C .ant-tabs-tabpane',
-            boxSelector: '.zmiti-richimg-C',
-            minBoxWidth: 250
-        });
     }
 }
 
@@ -44,22 +45,64 @@ class ZmitiMainContent extends React.Component{
     constructor(args){
         super(...args);
     }
-    render(){
 
-       let richImg = [124].map((item,i)=>{
+    componentDidMount(){
+
+        new Waterfall({
+            containerSelector:'.zmiti-tab-my-project',
+            boxSelector:'.zmiti-richimg-C'
+        });
+
+    }
+
+    changeTab(e){
+        this.alreadyLaodArr =this.alreadyLaodArr || ['1'];
+        let a = ['zmiti-tab-my-project',
+            'zmiti-tab-department-project',
+            'zmiti-tab-company-project',
+            'zmiti-tab-platform-project'
+        ];
+
+        setTimeout(()=>{
+            new Waterfall({
+                containerSelector:'.'+a[e-1],
+                boxSelector:'.zmiti-richimg-C'
+            });
+        },0);
+    }
+    render(){
+        /**
+         * ,225,346,221,333,234,322,245,274
+         * @type {Array}
+         */
+       let richImg = [224].map((item,i)=>{
            return  <ZmitiRichImg key={i} height={item}></ZmitiRichImg>
        });
 
         return (
             <div className="zmiti-main-content">
                 <div className="zmiti-tab-C">
-                    <Tabs defaultActiveKey="1" >
+                    <Tabs defaultActiveKey="1" onChange={this.changeTab.bind(this)}>
                         <TabPane tab="我的作品" key="1">
-                            {richImg}
+                           <div className="zmiti-tab-my-project">
+                               {richImg}
+                           </div>
                         </TabPane>
-                        <TabPane tab="部门作品" key="2">部门作品</TabPane>
-                        <TabPane tab="公司作品" key="3">公司作品</TabPane>
-                        <TabPane tab="平台作品" key="4">平台作品</TabPane>
+                        <TabPane tab="部门作品" key="2">
+                            <div className="zmiti-tab-department-project">
+                                {richImg}
+                            </div>
+                        </TabPane>
+                        <TabPane tab="公司作品" key="3">
+                            <div className="zmiti-tab-company-project">
+                                {richImg}
+                            </div>
+                        </TabPane>
+                        <TabPane tab="平台作品" key="4">
+                            <div className="zmiti-tab-platform-project">
+                                {richImg}
+                            </div>
+                        </TabPane>
                     </Tabs>
                 </div>
             </div>
@@ -76,6 +119,7 @@ class MainUI extends React.Component{
             <div className="zmiti-main-ui">
                 <ZmitiHeader></ZmitiHeader>
                 <ZmitiMainContent></ZmitiMainContent>
+                <ZmitiUploadDialog></ZmitiUploadDialog>
             </div>
         )
     }

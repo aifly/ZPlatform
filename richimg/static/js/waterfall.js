@@ -47,9 +47,9 @@ let Waterfall = function(opts) {
 
 // compute the number of columns under current setting
 Waterfall.prototype.computeNumberOfColumns = function() {
+
     var num = Math.floor(this.container.clientWidth / this.minBoxWidth);
     num = num || 1; // at least one column
-
     return num;
 }
 
@@ -88,13 +88,20 @@ Waterfall.prototype.getMinHeightIndex = function() {
 // compose core
 Waterfall.prototype.compose = function(force) {
     var num = this.computeNumberOfColumns();
+
     var cols = this.columns.length;
 
     if(force || num != cols) {
         // remove old column
         for (var i = 0; i < this.columns.length; i++) {
             var columnElem = this.columns[i];
-            columnElem.remove();
+            if(columnElem.remove){
+                columnElem.remove();
+            }
+            else{//fixed ie
+                columnElem.parentNode.removeChild(columnElem);
+            }
+            //columnElem.remove();
         }
 
         // init new column
