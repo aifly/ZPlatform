@@ -1,0 +1,31 @@
+.ant-modal .ant-tabs-ink-bar {
+  bottom: auto !important; }
+
+.ant-tabs-tabpane {
+  height: 500px;
+  overflow: auto; }
+
+.zmiti-cate-line {
+  width: 100%;
+  -webkit-transform: scaleY(0.23);
+  transform: scaleY(0.23);
+  border-top: 1px solid #ccc;
+  margin: 5px 0; }
+
+.zmiti-img-list-C .zmiti-img-list-item {
+  margin: 5px;
+  cursor: pointer; }
+  .zmiti-img-list-C .zmiti-img-list-item.active {
+    position: relative; }
+    .zmiti-img-list-C .zmiti-img-list-item.active:before {
+      content: '';
+      background: rgba(0, 0, 0, 0.5) url("../images/checked.png") no-repeat center center;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%; }
+.zmiti-img-list-C .wf-column {
+  float: left; }
+
+/*# sourceMappingURL=zmiti-upload-dialog.css.map */
