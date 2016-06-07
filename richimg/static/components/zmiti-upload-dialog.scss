@@ -145,3 +145,34 @@
     float: left;
   }
 }
+
+.zmiti-upload-tool-C{
+  @include displayFlex(row);
+  padding-bottom:10px;
+  margin-bottom:10px;
+  @include pos(r);
+  height:60px;
+  line-height:60px;
+  margin-top:-20px;
+  &:before{
+    content: '';
+    @include pos(a);
+    bottom:0;
+    left:0;
+    width:100%;
+    height:1px;
+    @include fly-h-gradient-line;
+  }
+  &>div{
+    flex-grow: 1;
+    &:nth-of-type(1){
+      text-align: left;
+      button:nth-of-type(2){
+        margin-left:10px;
+      }
+    }
+    &:nth-of-type(2){
+      text-align: right;
+    }
+  }
+}

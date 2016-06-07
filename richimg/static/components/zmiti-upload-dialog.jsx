@@ -24,7 +24,7 @@ export default class ZmitiUploadDialog extends React.Component {
     constructor(args) {
         super(...args);
         this.state = {
-            visible: false,
+            visible: true,
             tabPosition: 'left'
         }
     }
@@ -61,6 +61,12 @@ export default class ZmitiUploadDialog extends React.Component {
             this.showModal();
         });
 
+        this.waterfall1 =  new Waterfall({
+            containerSelector: '.zmiti-img-list-C',
+            boxSelector: '.zmiti-img-list-item',
+            minBoxWidth: 120
+        });
+
     }
 
     checkImg(e) {
@@ -73,8 +79,6 @@ export default class ZmitiUploadDialog extends React.Component {
         e.target.parentNode.classList.add('active');
         return false;
     }
-
-
 
     render() {
         let parentTag1 = [
@@ -188,7 +192,7 @@ export default class ZmitiUploadDialog extends React.Component {
                 </div>
             },
             {
-                tab: 'XX公司资料库',
+                tab: '公司资料库',
                 tabPane: <p>XX公司资料库</p>,
                 cate: <div>
                     <div className="zmiti-cate-1">
@@ -226,12 +230,18 @@ export default class ZmitiUploadDialog extends React.Component {
             <div>
                 <Modal title="资料库" width={1000} visible={this.state.visible}
                        onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}>
-                    <div style={{textAlign:'right'}}>
-                        <Upload name="logo" listType="picture" onChange={this.upload.bind(this)}>
-                            <Button type="primary">
-                                <Icon type="upload"/> 点击上传
-                            </Button>
-                        </Upload>
+                    <div className="zmiti-upload-tool-C">
+                        <div>
+                            <Button type="primary"><Icon type="plus-circle-o"></Icon>添加分组</Button>
+                            <Button><Icon type="edit"></Icon>在线制作</Button>
+                        </div>
+                        <div>
+                            <Upload name="logo" listType="picture" onChange={this.upload.bind(this)}>
+                                <Button type="primary">
+                                    <Icon type="upload"/> 点击上传
+                                </Button>
+                            </Upload>
+                        </div>
                     </div>
                     <Tabs tabPosition={this.state.tabPosition} onChange={this.changeCate.bind(this)}>
                         {data}
