@@ -15,9 +15,14 @@ import 'antd/lib/button/style/css';
 import Icon from 'antd/lib/icon';
 import 'antd/lib/icon/style/css'
 
+
 import Upload from 'antd/lib/upload';
 import 'antd/lib/upload/style/css';
 import Waterfall from '../js/waterfall';
+
+import './theme.min.css';
+
+import {utilMethods,_$,$$} from  '../../utilMethod.es6';
 
 
 export default class ZmitiUploadDialog extends React.Component {
@@ -25,7 +30,12 @@ export default class ZmitiUploadDialog extends React.Component {
         super(...args);
         this.state = {
             visible: true,
-            tabPosition: 'left'
+            tabPosition: 'left',
+            isOpen: true,
+            current: 2,
+            currentCate:-1,
+            editable:true,
+            openKeys: ['sub2']
         }
     }
 
@@ -49,11 +59,11 @@ export default class ZmitiUploadDialog extends React.Component {
             visible: true
         });
 
-      this.waterfall1 =  new Waterfall({
-            containerSelector: '.zmiti-img-list-C',
-            boxSelector: '.zmiti-img-list-item',
-            minBoxWidth: 120
-        });
+        /* this.waterfall1 =  new Waterfall({
+         containerSelector: '.zmiti-img-list-C',
+         boxSelector: '.zmiti-img-list-item',
+         minBoxWidth: 120
+         });*/
     }
 
     componentDidMount() {
@@ -61,11 +71,19 @@ export default class ZmitiUploadDialog extends React.Component {
             this.showModal();
         });
 
-        this.waterfall1 =  new Waterfall({
-            containerSelector: '.zmiti-img-list-C',
-            boxSelector: '.zmiti-img-list-item',
-            minBoxWidth: 120
+        $$('li', this.refs['menu-C']).forEach((li, i)=> {
+            i === this.state.current && utilMethods.addClass(li,'active');
         });
+
+        this.state.currentCate !== -1 &&  $$('li',this.refs['Parent-C']).forEach((li,i)=>{
+            i === this.state.currentCate && utilMethods.addClass(li,'active');
+        });
+
+        /*  this.waterfall1 =  new Waterfall({
+         containerSelector: '.zmiti-img-list-C',
+         boxSelector: '.zmiti-img-list-item',
+         minBoxWidth: 120
+         });*/
 
     }
 
@@ -81,77 +99,7 @@ export default class ZmitiUploadDialog extends React.Component {
     }
 
     render() {
-        let parentTag1 = [
-                {name: '最新', id: 1},
-                {name: '图标', id: 2},
-                {name: '节日', id: 3},
-                {name: '风景', id: 4},
-                {name: '企业', id: 5},
-                {name: '行业', id: 6},
-                {name: '海外', id: 7},
-                {name: '背景', id: 8}
-            ].map((tag, i)=> {
-                return (
-                    <Tag key={i} style={{cursor:'pointer'}} color="blue">{tag.name}</Tag>
-                )
-            }),
-            subTag1 = [
-                {name: '边框1', id: 100},
-                {name: '图标1', id: 200},
-                {name: '线条1', id: 300}
-            ].map((tag, i)=> {
-                return (
-                    <Tag key={i} style={{cursor:'pointer'}} color="red">{tag.name}</Tag>
-                )
-            });
 
-        let parentTag2 = [
-                {name: '最新', id: 1},
-                {name: '图标', id: 2},
-                {name: '节日', id: 3},
-                {name: '风景', id: 4},
-                {name: '企业', id: 5},
-                {name: '行业', id: 6},
-                {name: '海外', id: 7},
-                {name: '背景', id: 8}
-            ].map((tag, i)=> {
-                return (
-                    <Tag key={i} style={{cursor:'pointer'}} color="blue">{tag.name}</Tag>
-                )
-            }),
-            subTag2 = [
-                {name: '边框', id: 100},
-                {name: '图标', id: 200},
-                {name: '线条', id: 300}
-            ].map((tag, i)=> {
-                return (
-                    <Tag key={i} style={{cursor:'pointer'}} color="red">{tag.name}</Tag>
-                )
-            });
-
-        let parentTag3 = [
-                {name: '最新', id: 1},
-                {name: '图标1', id: 2},
-                {name: '节日', id: 3},
-                {name: '风景', id: 4},
-                {name: '企业2', id: 5},
-                {name: '行业', id: 6},
-                {name: '海外', id: 7},
-                {name: '背景', id: 8}
-            ].map((tag, i)=> {
-                return (
-                    <Tag key={i} style={{cursor:'pointer'}} color="blue">{tag.name}</Tag>
-                )
-            }),
-            subTag3 = [
-                {name: '边框', id: 100},
-                {name: '图标', id: 200},
-                {name: '线条', id: 300}
-            ].map((tag, i)=> {
-                return (
-                    <Tag key={i} style={{cursor:'pointer'}} color="red">{tag.name}</Tag>
-                )
-            });
 
 
         let imgArr1 = [
@@ -175,80 +123,461 @@ export default class ZmitiUploadDialog extends React.Component {
                 </div>
             )
         });
+
+
+        let ajaxData =[
+            {
+                parentNames:[
+                    '图标1',
+                    '图标2',
+                    '图标4',
+                    '图标3'
+                ],
+                subNames:[
+                    [
+                        '我的资料库',
+                        '图标1',
+                        '动画1',
+                        '节日1',
+                        '风格1',
+                        '风景1'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标2',
+                        '动画2',
+                        '节日2',
+                        '风格2',
+                        '风景2'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标3',
+                        '动画3',
+                        '节日3',
+                        '风格3',
+                        '风景3'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标4',
+                        '动画4',
+                        '节日4',
+                        '风格4',
+                        '风景4'
+                    ]
+                ]
+            },
+            {
+                parentNames:[
+                    '图标1',
+                    '图标2',
+                    '图标4',
+                    '图标3'
+                ],
+                subNames:[
+                    [
+                        '我的资料库',
+                        '图标1',
+                        '动画1',
+                        '节日1',
+                        '风格1',
+                        '风景1'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标2',
+                        '动画2',
+                        '节日2',
+                        '风格2',
+                        '风景2'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标3',
+                        '动画3',
+                        '节日3',
+                        '风格3',
+                        '风景3'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标4',
+                        '动画4',
+                        '节日4',
+                        '风格4',
+                        '风景4'
+                    ]
+                ]
+            },
+            {
+                    parentNames:[
+                        '图标1',
+                        '图标2',
+                        '图标4',
+                        '图标3'
+                    ],
+                    subNames:[
+                        [
+                            '我的资料库',
+                            '图标1',
+                            '动画1',
+                            '节日1',
+                            '风格1',
+                            '风景1'
+                        ],
+                        [
+                            '我的资料库',
+                            '图标2',
+                            '动画2',
+                            '节日2',
+                            '风格2',
+                            '风景2'
+                        ],
+                        [
+                            '我的资料库',
+                            '图标3',
+                            '动画3',
+                            '节日3',
+                            '风格3',
+                            '风景3'
+                        ],
+                        [
+                            '我的资料库',
+                            '图标4',
+                            '动画4',
+                            '节日4',
+                            '风格4',
+                            '风景4'
+                        ]
+                    ]
+                },
+            {
+                parentNames:[
+                    '图标1',
+                    '图标2',
+                    '图标4',
+                    '图标3'
+                ],
+                subNames:[
+                    [
+                        '我的资料库',
+                        '图标1',
+                        '动画1',
+                        '节日1',
+                        '风格1',
+                        '风景1'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标2',
+                        '动画2',
+                        '节日2',
+                        '风格2',
+                        '风景2'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标3',
+                        '动画3',
+                        '节日3',
+                        '风格3',
+                        '风景3'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标4',
+                        '动画4',
+                        '节日4',
+                        '风格4',
+                        '风景4'
+                    ]
+                ]
+            },
+            {
+                parentNames:[
+                    '图标1',
+                    '图标2',
+                    '图标4',
+                    '图标3'
+                ],
+                subNames:[
+                    [
+                        '我的资料库',
+                        '图标1',
+                        '动画1',
+                        '节日1',
+                        '风格1',
+                        '风景1'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标2',
+                        '动画2',
+                        '节日2',
+                        '风格2',
+                        '风景2'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标3',
+                        '动画3',
+                        '节日3',
+                        '风格3',
+                        '风景3'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标4',
+                        '动画4',
+                        '节日4',
+                        '风格4',
+                        '风景4'
+                    ]
+                ]
+            },
+            {
+                parentNames:[
+                    '图标1',
+                    '图标2',
+                    '图标4',
+                    '图标3'
+                ],
+                subNames:[
+                    [
+                        '我的资料库',
+                        '图标1',
+                        '动画1',
+                        '节日1',
+                        '风格1',
+                        '风景1'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标2',
+                        '动画2',
+                        '节日2',
+                        '风格2',
+                        '风景2'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标3',
+                        '动画3',
+                        '节日3',
+                        '风格3',
+                        '风景3'
+                    ],
+                    [
+                        '我的资料库',
+                        '图标4',
+                        '动画4',
+                        '节日4',
+                        '风格4',
+                        '风景4'
+                    ]
+                ]
+            },
+            ];
+
+
+
+
         let data = [
             {
-                tab: '公共资料库',
-                tabPane: <div className="zmiti-img-list-C">
-                    {imgArr1}
-                </div>,
-                cate: <div>
-                    <div className="zmiti-cate-1">
-                        {parentTag1}
-                    </div>
-                    <div className="zmiti-cate-line"></div>
-                    <div className="zmiti-cate-2">
-                        {subTag1}
-                    </div>
-                </div>
+                tab: [
+                    <TabPane  tab="全部" key={'all-0'}>
+                    </TabPane>,
+                    ajaxData[2].parentNames.map((parentName,n)=>{
+                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
+                            <ol>
+                                {ajaxData[2].subNames[n].map((li,i)=>{
+                                    return <li key={'subname-'+i}>{li}</li>
+                                })}
+                            </ol>
+                        </TabPane>
+                    })
+                ]
             },
             {
-                tab: '公司资料库',
-                tabPane: <p>XX公司资料库</p>,
-                cate: <div>
-                    <div className="zmiti-cate-1">
-                        {parentTag2}
-                    </div>
-                    <div className="zmiti-cate-line"></div>
-                    <div className="zmiti-cate-2">
-                        {subTag2}
-                    </div>
-                </div>
+                tab: [
+                    <TabPane  tab="全部" key={'all-1'}>
+                    </TabPane>,
+                    ajaxData[2].parentNames.map((parentName,n)=>{
+                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
+                            <ol>
+                                {ajaxData[2].subNames[n].map((li,i)=>{
+                                    return <li key={'subname-'+i}>{li}</li>
+                                })}
+                            </ol>
+                        </TabPane>
+                    })
+                ]
             },
             {
-                tab: '我的资料库',
-                tabPane: <p>我的资料库</p>,
-                cate: <div>
-                    <div className="zmiti-cate-1">
-                        {parentTag3}
-                    </div>
-                    <div className="zmiti-cate-line"></div>
-                    <div className="zmiti-cate-2">
-                        {subTag3}
-                    </div>
-                </div>
+                tab: [
+                    <TabPane  tab="全部" key={'all-2'}>
+                    </TabPane>,
+                    ajaxData[2].parentNames.map((parentName,n)=>{
+                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
+                            <ol>
+                                {ajaxData[2].subNames[n].map((li,i)=>{
+                                    return <li key={'subname-'+i}>{li}</li>
+                                })}
+                            </ol>
+                        </TabPane>
+                    })
+                ]
+            },
+            {
+                tab: [
+                    <TabPane  tab="全部" key={'all-3'}>
+                    </TabPane>,
+                    ajaxData[2].parentNames.map((parentName,n)=>{
+                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
+                            <ol>
+                                {ajaxData[2].subNames[n].map((li,i)=>{
+                                    return <li key={'subname-'+i}>{li}</li>
+                                })}
+                            </ol>
+                        </TabPane>
+                    })
+                ]
+            },
+            {
+                tab: [
+                    <TabPane  tab="全部" key={'all-4'}>
+                    </TabPane>,
+                    ajaxData[2].parentNames.map((parentName,n)=>{
+                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
+                            <ol>
+                                {ajaxData[2].subNames[n].map((li,i)=>{
+                                    return <li key={'subname-'+i}>{li}</li>
+                                })}
+                            </ol>
+                        </TabPane>
+                    })
+                ]
+            },
+            {
+                tab: [
+                    <TabPane  tab="全部" key={'all-5'}>
+                    </TabPane>,
+                    ajaxData[2].parentNames.map((parentName,n)=>{
+                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
+                            <ol>
+                                {ajaxData[2].subNames[n].map((li,i)=>{
+                                    return <li key={'subname-'+i}>{li}</li>
+                                })}
+                            </ol>
+                        </TabPane>
+                    })
+                ]
             }
-        ].map((d, i)=> {
-            return (
-                <TabPane tab={d.tab} key={i}>
-                    {d.cate}
-                    {d.tabPane}
-                </TabPane>
-            )
-        });
+        ];
+
+        let currentData = {
+
+        };
+
+
+        /*
+         *
+         *  <Tabs defaultActiveKey="2" tabPosition={this.state.tabPosition} onChange={this.changeCate.bind(this)}>
+         {data}
+         </Tabs>
+         <div className="zmiti-upload-tool-C">
+         <div>
+         <Button type="primary"><Icon type="plus-circle-o"></Icon>添加分组</Button>
+         <Button><Icon type="edit"></Icon>在线制作</Button>
+         </div>
+         <div>
+         <Upload name="logo" listType="picture" onChange={this.upload.bind(this)}>
+         <Button type="primary">
+         <Icon type="upload"/> 点击上传
+         </Button>
+         </Upload>
+         </div>
+         </div>
+         <Menu
+         style={{ width: 240 }}
+         openKeys={this.state.openKeys}
+         onClick={this.menuClick.bind(this)}
+         onOpen={this.onToggle.bind(this)}
+         onClose={this.onToggle.bind(this)}
+         mode="inline"
+         >
+         <Menu.Item key="1">公共资料库</Menu.Item>
+         <Menu.Item key="2">公司资料库</Menu.Item>
+         <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>我的资料库</span></span>}>
+         <Menu.Item key="3">基本资料库</Menu.Item>
+         <Menu.Item key="4">我的素材库</Menu.Item>
+         <Menu.Item key="5">我的作品库</Menu.Item>
+         </SubMenu>
+         </Menu>
+         * */
 
         return (
-            <div>
+            <div className="zmiti-upload-C">
                 <Modal title="资料库" width={1000} visible={this.state.visible}
                        onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}>
-                    <div className="zmiti-upload-tool-C">
-                        <div>
-                            <Button type="primary"><Icon type="plus-circle-o"></Icon>添加分组</Button>
-                            <Button><Icon type="edit"></Icon>在线制作</Button>
-                        </div>
-                        <div>
-                            <Upload name="logo" listType="picture" onChange={this.upload.bind(this)}>
-                                <Button type="primary">
-                                    <Icon type="upload"/> 点击上传
-                                </Button>
-                            </Upload>
-                        </div>
+
+                    <div className="zmiti-upload-body">
+                        <section className="zmiti-upload-body-L">
+                            <ul className={'zmiti-sub-menu-'+this.state.current} ref="menu-C"
+                                onClick={this.onLeftMenuClick.bind(this)}>
+                                <li>公共资料库</li>
+                                <li>公司资料库</li>
+                                <li>我的资料库</li>
+                                <li className="zmiti-sub-menu">基本资料库</li>
+                                <li className="zmiti-sub-menu">我的素材库</li>
+                                <li className="zmiti-sub-menu">我的作品库</li>
+                            </ul>
+                            <div>
+                                <Button size="large" type="primary"><Icon type="plus-circle-o"></Icon>添加分组</Button>
+                                <Button size="large"><Icon type="edit"></Icon>在线制作</Button>
+                            </div>
+                        </section>
+                        <section className="zmiti-upload-body-R">
+                           <article>
+                               <div className="zmiti-asset-C active">
+                                   <Tabs>
+                                       {data[this.state.current].tab}
+                                   </Tabs>
+                                   <div className="zmiti-edit-btn"><Icon type="edit"></Icon></div>
+                               </div>
+                           </article>
+                        </section>
                     </div>
-                    <Tabs tabPosition={this.state.tabPosition} onChange={this.changeCate.bind(this)}>
-                        {data}
-                    </Tabs>
+
                 </Modal>
             </div>
         )
+    }
+
+
+    onToggle(info) {
+
+        this.setState({
+            openKeys: info.open ? info.keyPath : info.keyPath.slice(1),
+        });
+
+    }
+
+    onLeftMenuClick(e) {
+        if (e.target.nodeName === "LI") {
+
+            utilMethods.removeClass($$('li', this.refs['menu-C']), 'active');
+
+            let index = utilMethods.index(e.target);
+
+            utilMethods.addClass($$('li', this.refs['menu-C'])[index], 'active');
+
+            this.setState({
+                current:index
+            });
+        }
+
     }
 
     upload(e) {
@@ -256,12 +585,12 @@ export default class ZmitiUploadDialog extends React.Component {
     }
 
     changeCate(index) {
-        setTimeout(()=>{
-            this.waterfall1 =  new Waterfall({
+        setTimeout(()=> {
+            this.waterfall1 = new Waterfall({
                 containerSelector: '.zmiti-img-list-C',
                 boxSelector: '.zmiti-img-list-item',
                 minBoxWidth: 120
             });
-        },1)
+        }, 1)
     }
 }

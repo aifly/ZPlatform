@@ -105,16 +105,10 @@
 
 
 .ant-modal{
-  .ant-tabs-ink-bar {
-    bottom:auto !important;
-  }
-}
-
-.ant-tabs-tabpane{
-  height:500px;
-  overflow: auto;
 
 }
+
+
 .zmiti-cate-line{
 
   width:100%;
@@ -145,8 +139,148 @@
     float: left;
   }
 }
+.ant-modal{
+  .ant-menu-inline{
+    height:99%;
+  }
+  .ant-modal-body {
+    height:500px;
+    width:100%;
+
+  }
+}
+
+$baseColor:#99071e;
+
+.zmiti-upload-body{
+  height:100%;
+  @include displayFlex(row);
+  .zmiti-upload-body-L,.zmiti-upload-body-R{
+    height:100%;
+  }
+  .zmiti-upload-body-L{
+    width:240px;
+    $liH:42px;
+    border-right:1px solid #ccc;
+    @include pos(r);
+
+    @for $i from 0 through 5{
+      .zmiti-sub-menu-#{$i}{
+        &:before{
+          @include transition_transform(.3s);
+          @include transitionTimingFunction(cubic-bezier(.645,.045,.355,1));
+          content:"";
+          @include pos(a);
+          right:0;
+          height: $liH;
+          width:1px;
+          @include transform(translate3d(0,$i*$liH,0));
+          background:$baseColor;
+        }
+      }
+    }
+
+    div{
+      @include pos(a);
+      bottom:-15px;
+      button{
+        margin:0 2px;
+      }
+    }
+
+
+    ul{
+      width:100%;
+      li{
+
+        height: $liH;
+        line-height: $liH;
+        padding-left:30px;
+        cursor: pointer;
+        box-sizing: border-box;
+        margin:1px 0 0 -17px;
+
+        @include transition( all 0.4s);
+        @include transitionTimingFunction(cubic-bezier(0.645, 0.045, 0.355, 1));
+
+        &.zmiti-sub-menu{
+          padding-left:50px;
+        }
+        &.active{
+          color:$baseColor;
+        }
+        &:hover{
+          color:$baseColor;
+          padding-left:40px;
+        }
+
+        &.zmiti-sub-menu:hover{
+          padding-left:60px;
+        }
+
+      }
+    }
+  }
+
+  .zmiti-upload-body-R{
+    width:740px;
+    padding-left:10px;
+    height:100%;
+    article{
+      @include pos(r);
+    }
+  }
+  .zmiti-asset-C{
+    @include pos(a);
+    opacity: 0;
+    z-index:-1;
+    &.active{
+      opacity: 1 ;
+      z-index:1 ;
+    }
+    $assetH:30px;
+    width:95%;
+    height: 100%;
+    .zmiti-edit-btn{
+      @include pos(a);
+      right:-30px;
+      top:10px;
+      font-size:15px;
+      cursor: pointer;
+    }
+    ol{
+      li{
+        font-size: 12px;
+        &.active{
+          color:#ff3333;
+        }
+      }
+    }
+    ul{
+      border-bottom: 1px solid #ccc;
+      height: $assetH;
+      width:100%;
+
+      li{
+        &.active{
+          color: $baseColor;
+        }
+      }
+    }
+    li{
+      height: $assetH;
+      line-height: $assetH;
+      float: left;
+      font-size:14px;
+      margin:0 10px;
+      cursor: pointer;
+    }
+
+  }
+}
 
 .zmiti-upload-tool-C{
+  display: none;
   @include displayFlex(row);
   padding-bottom:10px;
   margin-bottom:10px;
