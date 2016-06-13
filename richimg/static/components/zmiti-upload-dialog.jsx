@@ -24,18 +24,22 @@ import './theme.min.css';
 
 import {utilMethods,_$,$$} from  '../../utilMethod.es6';
 
+import ContentEditable from 'react-contenteditable';
+
+import message from 'antd/lib/message';
+import 'antd/lib/message/style/css';
+
 
 export default class ZmitiUploadDialog extends React.Component {
     constructor(args) {
         super(...args);
         this.state = {
             visible: true,
-            tabPosition: 'left',
-            isOpen: true,
-            current: 2,
-            currentCate:-1,
-            editable:true,
-            openKeys: ['sub2']
+            current: 0,
+            currentCate: -1,
+            editable: false,
+            ajaxData: [],
+            allData:[]
         }
     }
 
@@ -72,12 +76,12 @@ export default class ZmitiUploadDialog extends React.Component {
         });
 
         $$('li', this.refs['menu-C']).forEach((li, i)=> {
-            i === this.state.current && utilMethods.addClass(li,'active');
+            i === this.state.current && utilMethods.addClass(li, 'active');
         });
 
-        this.state.currentCate !== -1 &&  $$('li',this.refs['Parent-C']).forEach((li,i)=>{
-            i === this.state.currentCate && utilMethods.addClass(li,'active');
-        });
+        /* this.state.currentCate !== -1 && $$('li', this.refs['Parent-C']).forEach((li, i)=> {
+         i === this.state.currentCate && utilMethods.addClass(li, 'active');
+         });*/
 
         /*  this.waterfall1 =  new Waterfall({
          containerSelector: '.zmiti-img-list-C',
@@ -85,6 +89,436 @@ export default class ZmitiUploadDialog extends React.Component {
          minBoxWidth: 120
          });*/
 
+        this.setState({
+            ajaxData: [
+                [
+                    {
+                        parentName: {
+                            name: '公共',
+                            id: 0,
+                            imgs: [
+
+                                {
+                                    src: './static/images/w.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                }
+                            ]
+                        },
+                        subNames: []
+                    },
+                    {
+                        parentName: {name: '公共', id: 100, imgs: [
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            }
+                        ]},
+                        subNames: []
+                    }
+                ],
+                [
+                    {
+                        parentName: {
+                            name: '公共',
+                            id: 0,
+                            imgs: [
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: './static/images/w.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                }
+                            ]
+                        },
+                        subNames: []
+                    },
+                    {
+                        parentName: {name: '公共', id: 100, imgs: []},
+                        subNames: []
+                    }
+                ],
+                [
+                    {
+                        parentName: {
+                            name: '公共',
+                            id: 0,
+                            imgs: [
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: './static/images/w.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                }
+                            ]
+                        },
+                        subNames: []
+                    },
+                    {
+                        parentName: {name: '公共', id: 100, imgs: []},
+                        subNames: []
+                    }
+                ],
+                [
+                    {
+                        parentName: {
+                            name: '公共',
+                            id: 0,
+                            imgs: [
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: './static/images/w.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                }
+                            ]
+                        },
+                        subNames: []
+                    },
+                    {
+                        parentName: {name: '公共', id: 100, imgs: []},
+                        subNames: []
+                    }
+                ],
+                [
+                    {
+                        parentName: {
+                            name: '公共',
+                            id: 0,
+                            imgs: [
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: './static/images/w.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                }
+                            ]
+                        },
+                        subNames: []
+                    },
+                    {
+                        parentName: {name: '公共', id: 100, imgs: []},
+                        subNames: []
+                    }
+                ],
+                [
+                    {
+                        parentName: {
+                            name: '公共',
+                            id: 0,
+                            imgs: [
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                },
+                                {
+                                    src: './static/images/w.png',
+                                    size: '100x100',
+                                    storageSize: '0.1M',
+                                    id: 1
+
+                                }
+                            ]
+                        },
+                        subNames: []
+                    },
+                    {
+                        parentName: {name: '公共', id: 100, imgs: []},
+                        subNames: []
+                    }
+                ]
+            ],
+            allData:[
+                {
+                    imgs: [
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        }
+                    ]
+                },
+                {
+                    imgs: [
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: './static/images/w.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        }
+                    ]
+                },
+                {
+                    imgs: [
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: './static/images/w.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        }
+                    ]
+                },{
+                    imgs: [
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: './static/images/w.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        }
+                    ]
+                },{
+                    imgs: [
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: './static/images/w.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        }
+                    ]
+                },{
+                    imgs: [
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: './static/images/w.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        }
+                    ]
+                }
+            ]
+        });
+
+        setTimeout(()=>{
+            let arr = [];
+
+            this.state.ajaxData[this.state.current].forEach(data=>{
+                arr= arr.concat(data.parentName.imgs);
+            });
+            this.state.allData[this.state.current].imgs = this.state.allData[this.state.current].imgs.concat(arr);
+            this.forceUpdate();
+        },0)
     }
 
     checkImg(e) {
@@ -97,10 +531,7 @@ export default class ZmitiUploadDialog extends React.Component {
         e.target.parentNode.classList.add('active');
         return false;
     }
-
     render() {
-
-
 
         let imgArr1 = [
             {src: "./static/images/2.png"},
@@ -125,456 +556,153 @@ export default class ZmitiUploadDialog extends React.Component {
         });
 
 
-        let ajaxData =[
-            {
-                parentNames:[
-                    '图标1',
-                    '图标2',
-                    '图标4',
-                    '图标3'
-                ],
-                subNames:[
-                    [
-                        '我的资料库',
-                        '图标1',
-                        '动画1',
-                        '节日1',
-                        '风格1',
-                        '风景1'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标2',
-                        '动画2',
-                        '节日2',
-                        '风格2',
-                        '风景2'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标3',
-                        '动画3',
-                        '节日3',
-                        '风格3',
-                        '风景3'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标4',
-                        '动画4',
-                        '节日4',
-                        '风格4',
-                        '风景4'
-                    ]
-                ]
-            },
-            {
-                parentNames:[
-                    '图标1',
-                    '图标2',
-                    '图标4',
-                    '图标3'
-                ],
-                subNames:[
-                    [
-                        '我的资料库',
-                        '图标1',
-                        '动画1',
-                        '节日1',
-                        '风格1',
-                        '风景1'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标2',
-                        '动画2',
-                        '节日2',
-                        '风格2',
-                        '风景2'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标3',
-                        '动画3',
-                        '节日3',
-                        '风格3',
-                        '风景3'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标4',
-                        '动画4',
-                        '节日4',
-                        '风格4',
-                        '风景4'
-                    ]
-                ]
-            },
-            {
-                    parentNames:[
-                        '图标1',
-                        '图标2',
-                        '图标4',
-                        '图标3'
-                    ],
-                    subNames:[
-                        [
-                            '我的资料库',
-                            '图标1',
-                            '动画1',
-                            '节日1',
-                            '风格1',
-                            '风景1'
-                        ],
-                        [
-                            '我的资料库',
-                            '图标2',
-                            '动画2',
-                            '节日2',
-                            '风格2',
-                            '风景2'
-                        ],
-                        [
-                            '我的资料库',
-                            '图标3',
-                            '动画3',
-                            '节日3',
-                            '风格3',
-                            '风景3'
-                        ],
-                        [
-                            '我的资料库',
-                            '图标4',
-                            '动画4',
-                            '节日4',
-                            '风格4',
-                            '风景4'
-                        ]
-                    ]
-                },
-            {
-                parentNames:[
-                    '图标1',
-                    '图标2',
-                    '图标4',
-                    '图标3'
-                ],
-                subNames:[
-                    [
-                        '我的资料库',
-                        '图标1',
-                        '动画1',
-                        '节日1',
-                        '风格1',
-                        '风景1'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标2',
-                        '动画2',
-                        '节日2',
-                        '风格2',
-                        '风景2'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标3',
-                        '动画3',
-                        '节日3',
-                        '风格3',
-                        '风景3'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标4',
-                        '动画4',
-                        '节日4',
-                        '风格4',
-                        '风景4'
-                    ]
-                ]
-            },
-            {
-                parentNames:[
-                    '图标1',
-                    '图标2',
-                    '图标4',
-                    '图标3'
-                ],
-                subNames:[
-                    [
-                        '我的资料库',
-                        '图标1',
-                        '动画1',
-                        '节日1',
-                        '风格1',
-                        '风景1'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标2',
-                        '动画2',
-                        '节日2',
-                        '风格2',
-                        '风景2'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标3',
-                        '动画3',
-                        '节日3',
-                        '风格3',
-                        '风景3'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标4',
-                        '动画4',
-                        '节日4',
-                        '风格4',
-                        '风景4'
-                    ]
-                ]
-            },
-            {
-                parentNames:[
-                    '图标1',
-                    '图标2',
-                    '图标4',
-                    '图标3'
-                ],
-                subNames:[
-                    [
-                        '我的资料库',
-                        '图标1',
-                        '动画1',
-                        '节日1',
-                        '风格1',
-                        '风景1'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标2',
-                        '动画2',
-                        '节日2',
-                        '风格2',
-                        '风景2'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标3',
-                        '动画3',
-                        '节日3',
-                        '风格3',
-                        '风景3'
-                    ],
-                    [
-                        '我的资料库',
-                        '图标4',
-                        '动画4',
-                        '节日4',
-                        '风格4',
-                        '风景4'
-                    ]
-                ]
-            },
-            ];
-
-
-
-
-        let data = [
-            {
-                tab: [
-                    <TabPane  tab="全部" key={'all-0'}>
-                    </TabPane>,
-                    ajaxData[2].parentNames.map((parentName,n)=>{
-                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
-                            <ol>
-                                {ajaxData[2].subNames[n].map((li,i)=>{
-                                    return <li key={'subname-'+i}>{li}</li>
-                                })}
-                            </ol>
-                        </TabPane>
-                    })
-                ]
-            },
-            {
-                tab: [
-                    <TabPane  tab="全部" key={'all-1'}>
-                    </TabPane>,
-                    ajaxData[2].parentNames.map((parentName,n)=>{
-                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
-                            <ol>
-                                {ajaxData[2].subNames[n].map((li,i)=>{
-                                    return <li key={'subname-'+i}>{li}</li>
-                                })}
-                            </ol>
-                        </TabPane>
-                    })
-                ]
-            },
-            {
-                tab: [
-                    <TabPane  tab="全部" key={'all-2'}>
-                    </TabPane>,
-                    ajaxData[2].parentNames.map((parentName,n)=>{
-                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
-                            <ol>
-                                {ajaxData[2].subNames[n].map((li,i)=>{
-                                    return <li key={'subname-'+i}>{li}</li>
-                                })}
-                            </ol>
-                        </TabPane>
-                    })
-                ]
-            },
-            {
-                tab: [
-                    <TabPane  tab="全部" key={'all-3'}>
-                    </TabPane>,
-                    ajaxData[2].parentNames.map((parentName,n)=>{
-                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
-                            <ol>
-                                {ajaxData[2].subNames[n].map((li,i)=>{
-                                    return <li key={'subname-'+i}>{li}</li>
-                                })}
-                            </ol>
-                        </TabPane>
-                    })
-                ]
-            },
-            {
-                tab: [
-                    <TabPane  tab="全部" key={'all-4'}>
-                    </TabPane>,
-                    ajaxData[2].parentNames.map((parentName,n)=>{
-                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
-                            <ol>
-                                {ajaxData[2].subNames[n].map((li,i)=>{
-                                    return <li key={'subname-'+i}>{li}</li>
-                                })}
-                            </ol>
-                        </TabPane>
-                    })
-                ]
-            },
-            {
-                tab: [
-                    <TabPane  tab="全部" key={'all-5'}>
-                    </TabPane>,
-                    ajaxData[2].parentNames.map((parentName,n)=>{
-                        return <TabPane tab={this.state.editable?<span>{parentName}<Icon type="cross"></Icon></span>:parentName} key={'parentName-'+n}>
-                            <ol>
-                                {ajaxData[2].subNames[n].map((li,i)=>{
-                                    return <li key={'subname-'+i}>{li}</li>
-                                })}
-                            </ol>
-                        </TabPane>
-                    })
-                ]
-            }
-        ];
-
-        let currentData = {
-
-        };
-
-
         /*
-         *
-         *  <Tabs defaultActiveKey="2" tabPosition={this.state.tabPosition} onChange={this.changeCate.bind(this)}>
-         {data}
-         </Tabs>
-         <div className="zmiti-upload-tool-C">
-         <div>
-         <Button type="primary"><Icon type="plus-circle-o"></Icon>添加分组</Button>
-         <Button><Icon type="edit"></Icon>在线制作</Button>
-         </div>
-         <div>
-         <Upload name="logo" listType="picture" onChange={this.upload.bind(this)}>
-         <Button type="primary">
-         <Icon type="upload"/> 点击上传
-         </Button>
-         </Upload>
-         </div>
-         </div>
-         <Menu
-         style={{ width: 240 }}
-         openKeys={this.state.openKeys}
-         onClick={this.menuClick.bind(this)}
-         onOpen={this.onToggle.bind(this)}
-         onClose={this.onToggle.bind(this)}
-         mode="inline"
-         >
-         <Menu.Item key="1">公共资料库</Menu.Item>
-         <Menu.Item key="2">公司资料库</Menu.Item>
-         <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>我的资料库</span></span>}>
-         <Menu.Item key="3">基本资料库</Menu.Item>
-         <Menu.Item key="4">我的素材库</Menu.Item>
-         <Menu.Item key="5">我的作品库</Menu.Item>
-         </SubMenu>
-         </Menu>
+         *  <ol>
+         {parent.subNames.map((li, i)=> {
+         let subEditCom = li.editable ?<ContentEditable onChange={this.onCateNameChange.bind(this)} html={li.name}></ContentEditable>:<span>{li.name}</span>;
+         return <li key={'subname-'+i} data-id={li.id}>{this.state.editable ? (<span>{subEditCom}<Icon type="cross"></Icon></span>) : li.name}</li>
+         })}
+         {this.state.editable? <li><Button onClick={this.addSubCate.bind(this)} size="small" type="dashed" data-id={parent.parentName.id}>+ 添加分类</Button></li>:''}
+         </ol>
          * */
+
+
+        let data = [];
+
+        for (let k = 0, len = this.state.ajaxData.length; k < len; k++) {
+            data.push({
+                tab: [
+                    <TabPane tab="全部" key={'all-'+k}>
+                    </TabPane>,
+                    this.state.ajaxData[k].map((parent, n)=> {
+                        let editableCom = parent.parentName.editable ?
+                            <ContentEditable onChange={this.onCateNameChange.bind(this)}
+                                             html={parent.parentName.name}></ContentEditable> : parent.parentName.name;
+                        return <TabPane
+                            tab={this.state.editable?<span data-id={parent.parentName.id} >{editableCom}<Icon type="cross" onClick={this.deleteCate.bind(this)}></Icon></span>:parent.parentName.name}
+                            key={'parentName-'+n}>
+                        </TabPane>
+                    })
+                ],
+            });
+        }
 
         return (
             <div className="zmiti-upload-C">
-                <Modal title="资料库" width={1000} visible={this.state.visible}
+                <Modal title="资料库" width={1000} className="zmiti-upload-C" visible={this.state.visible}
                        onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}>
-
                     <div className="zmiti-upload-body">
                         <section className="zmiti-upload-body-L">
                             <ul className={'zmiti-sub-menu-'+this.state.current} ref="menu-C"
                                 onClick={this.onLeftMenuClick.bind(this)}>
                                 <li>公共资料库</li>
                                 <li>公司资料库</li>
-                                <li>我的资料库</li>
+                                <li style={{cursor:'not-allowed'}}>我的资料库</li>
                                 <li className="zmiti-sub-menu">基本资料库</li>
                                 <li className="zmiti-sub-menu">我的素材库</li>
                                 <li className="zmiti-sub-menu">我的作品库</li>
                             </ul>
-                            <div>
-                                <Button size="large" type="primary"><Icon type="plus-circle-o"></Icon>添加分组</Button>
-                                <Button size="large"><Icon type="edit"></Icon>在线制作</Button>
-                            </div>
+
                         </section>
                         <section className="zmiti-upload-body-R">
-                           <article>
-                               <div className="zmiti-asset-C active">
-                                   <Tabs>
-                                       {data[this.state.current].tab}
-                                   </Tabs>
-                                   <div className="zmiti-edit-btn"><Icon type="edit"></Icon></div>
-                               </div>
-                           </article>
+                            <article>
+                                <div className="zmiti-asset-C active">
+                                    <Tabs onTabClick={this.onTabClick.bind(this)}
+                                          tabBarExtraContent={<div className="zmiti-edit-btn" style={{color:this.state.editable?'red':''}}>{this.state.editable ?<Button onClick={this.addParentCate.bind(this)} type="dashed" size="small" >+添加分类</Button>:''}<Icon type="edit" onClick={this.changeEditable.bind(this)} ></Icon></div>}>
+                                        {data[this.state.current] && data[this.state.current].tab}
+                                    </Tabs>
+                                    <div className="zmmiti-asset-content">
+                                        <figure className="zmiti-img-figure-C">
+                                            <figcaption>
+                                                <Upload>
+                                                    <Icon type="plus"/>
+                                                    <div className="ant-upload-text">上传照片</div>
+                                                </Upload>
+                                            </figcaption>
+                                            {this.state.allData[this.state.current] && this.state.allData[this.state.current].imgs.map((img,i)=>{
+                                                return (
+                                                    <figcaption key = {i}>
+                                                        <img src={img.src} draggable="false" alt=""/>
+                                                    </figcaption>
+                                                )
+                                            })};
+                                        </figure>
+                                    </div>
+                                </div>
+                            </article>
                         </section>
                     </div>
-
                 </Modal>
             </div>
         )
     }
 
+    onCateNameChange(e) {
+        this.state.ajaxData[this.state.current][this.state.currentCate].parentName.name = e.target.value.replace(/<[^>]+>/g, "");
+        //this.state.ajaxData[this.state.current][keys[1]*1].parentName.id = -1 && (this.state.ajaxData[this.state.current][keys[1]*1].parentName.id = -2);
+        this.forceUpdate();
+    }
 
-    onToggle(info) {
+    deleteCate(e) {
+        //  this.state.ajaxData[this.state.current][this.state.currentCate].parentName.id = -2;
+        setTimeout(()=> {
+            if (this.state.editable) {
+                if (this.state.ajaxData[this.state.current][this.state.currentCate].parentName.imgs.length > 0) {//有图片.不让删除
+                    message.error('当前分类下有资源文件,不能删除此分类!!');
+                    return;
+                }
 
-        this.setState({
-            openKeys: info.open ? info.keyPath : info.keyPath.slice(1),
-        });
+                this.state.ajaxData[this.state.current].splice(this.state.currentCate, 1);
+                this.forceUpdate();
+            }
+            ;
+        }, 0);
+        /**/
+    }
+
+    onTabClick(e) {
+
+        let keys = e.split('-');
+        if (keys[0] === 'all') {
+            return;
+        }
+        this.state.currentCate = keys[1] * 1;
+
+        this.forceUpdate();
 
     }
+
+
+    addParentCate() {//添加父级分类
+        this.state.ajaxData[this.state.current].push(
+            {
+                parentName: {name: '新增分类', id: -1, editable: true, imgs: []},
+                subNames: []
+            }
+        )
+        this.forceUpdate();
+    }
+
+    changeEditable() {
+        this.setState({
+            editable: !this.state.editable
+        });
+    }
+
 
     onLeftMenuClick(e) {
         if (e.target.nodeName === "LI") {
 
-            utilMethods.removeClass($$('li', this.refs['menu-C']), 'active');
-
             let index = utilMethods.index(e.target);
+            if (index === 2) {
+                return;
+            } //禁用我的资料库选项
 
+            utilMethods.removeClass($$('li', this.refs['menu-C']), 'active');
             utilMethods.addClass($$('li', this.refs['menu-C'])[index], 'active');
 
             this.setState({
-                current:index
+                current: index
             });
         }
 
