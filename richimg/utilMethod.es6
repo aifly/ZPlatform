@@ -48,64 +48,110 @@ const utilMethods = {
         return Array.from(obj.classList).indexOf(className) > -1;
 
     },
-    removeClass(obj,className){
-        if(obj.length){
-            obj.forEach(o=>{
+    removeClass(obj, className){
+        if (obj.length) {
+            obj.forEach(o=> {
                 o.classList.remove(className);
             })
         }
-        else{
+        else {
             obj.classList.remove(className)
         }
 
     },
-    addClass(obj,className){
-        if(obj.length){
-            obj.forEach(o=>{
+    addClass(obj, className){
+        if (obj.length) {
+            obj.forEach(o=> {
                 o.classList.add(className);
             })
         }
-        else{
+        else {
             obj.classList.add(className)
         }
 
     },
     index(elems, parent, selector) {
         var parent = parent || elems.parentNode,
-            cindex = - 1,
+            cindex = -1,
             selector = selector || "*";
-        Array.from(parent.querySelectorAll (selector)).forEach(function(item,i){
+        Array.from(parent.querySelectorAll(selector)).forEach(function (item, i) {
             "use strict";
-            if(item === elems){
+            if (item === elems) {
                 cindex = i;
             }
         });
         return cindex;
     },
 
-    ajax(url, fn){
-        let xmlhttp = null;
-        if (window.XMLHttpRequest) {// code for all new browsers
-            xmlhttp = new XMLHttpRequest();
+    ajax: function (opt) {
+        var xhr = this.createXhrObject();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState != 4) return;
+            (xhr.status === 200 ?
+                opt.success(xhr.responseText, xhr.responseXML) :
+                opt.error(xhr.responseText, xhr.status));
         }
-        if (xmlhttp != null) {
-            xmlhttp.onreadystatechange = ()=> {
-                this.stateChange(xmlhttp, fn)
-            };
-            xmlhttp.overrideMimeType && xmlhttp.overrideMimeType('text/html');//设置MiME类别
-            xmlhttp.open("GET", url, true);
-            xmlhttp.send(null);
-        }
+        xhr.open(opt.type, opt.url, true);
+        if (opt.type !== 'POST')
+            opt.data = null;
+        else
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        opt.data = this.parseQuery(opt.data);
+        xhr.send(opt.data);
     },
-    stateChange(xmlhttp, fn){
-        if (xmlhttp.readyState == 4) {// 4 = "loaded"
-            if (xmlhttp.status == 200) {// 200 = OK
-                fn && fn(xmlhttp.responseText)
-
+    post: function (url, success, data) {
+        var popt = {
+            url: url,
+            type: 'POST',
+            data: data,
+            success: success,
+            error: function (data) {
             }
-            else {
-                alert("Problem retrieving XML data");
+        }
+        this.ajax(popt);
+    },
+    get: function (url, success) {
+        var gopt = {
+            url: url,
+            type: 'get',
+            success: success,
+            error: function () {
             }
+        }
+        this.ajax(gopt);
+    },
+    createXhrObject: function () {
+        var methods = [
+            function () {
+                return new XMLHttpRequest();
+            },
+            function () {
+                return new ActiveXObject('Msxml2.XMLHTTP');
+            },
+            function () {
+                return new ActiveXObject('Microsoft.XMLHTTP');
+            }
+        ];
+        for (var i = 0, len = methods.length; i < len; i++) {
+            try {
+                methods[i]();
+            } catch (e) {
+                continue;
+            }
+            this.createXhrObject = methods[i];
+            return methods[i]();
+        }
+        throw new Error('Could not create an XHR object.');
+    },
+    parseQuery: function (json) {
+        if (typeof json == 'object') {
+            var str = '';
+            for (var i in json) {
+                str += "&" + i + "=" + encodeURIComponent(json[i]);
+            }
+            return str.length == 0 ? str : str.substring(1);
+        } else {
+            return json;
         }
     }
 }

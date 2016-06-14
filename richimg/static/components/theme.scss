@@ -164,4 +164,7 @@ $hoverColor:#bf1616;
   background-color: $hoverColor;
   border-color: $hoverColor;
 }
- 
+
+.ant-modal-wrap{
+  background: rgba(0, 0, 0, .5);
+}

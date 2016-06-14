@@ -26,6 +26,10 @@ var config = {
                 loader: 'style-loader!css-loader'
             },
             {
+              test:/\.svg$/,
+                loader:'url-loader'
+            },
+            {
                 test: /\.(png|jpg)$/,
                 loader: 'url-loader?limit=8192'
             }]

@@ -20,6 +20,8 @@ import Upload from 'antd/lib/upload';
 import 'antd/lib/upload/style/css';
 import Waterfall from '../js/waterfall';
 
+import clip from '../images/clip.svg';
+
 import './theme.min.css';
 
 import {utilMethods,_$,$$} from  '../../utilMethod.es6';
@@ -29,17 +31,29 @@ import ContentEditable from 'react-contenteditable';
 import message from 'antd/lib/message';
 import 'antd/lib/message/style/css';
 
+import Input from 'antd/lib/input';
+import 'antd/lib/input/style/css';
+
+import $ from 'jquery';
+
 
 export default class ZmitiUploadDialog extends React.Component {
     constructor(args) {
         super(...args);
         this.state = {
             visible: true,
-            current: 0,
+            current: 4,
             currentCate: -1,
             editable: false,
             ajaxData: [],
-            allData:[]
+            cateVisible:false,//添加分类的对话框
+            defaultIds: ['1465782065', '1465782285', '1465782327', '1465782386', '1465285201', '1465285261'],
+            allData: [
+                {
+                    imgs: []
+                }
+            ],
+            alreadyRequest: []
         }
     }
 
@@ -54,7 +68,6 @@ export default class ZmitiUploadDialog extends React.Component {
         this.setState({
             visible: false
         });
-        this.waterfall1 = null;
     }
 
     showModal() {
@@ -89,260 +102,188 @@ export default class ZmitiUploadDialog extends React.Component {
          minBoxWidth: 120
          });*/
 
+        let self = this;
+
+        $.ajax({
+            url: self.props.baseUrl + self.props.cateUrl+ 'get_datainfo',
+            type: "POST",
+            data: {
+                "getusersigid": self.props.getusersigid,
+                "id": self.state.defaultIds[self.state.current]
+            },
+            success(data){
+                let d = data;
+                if (d.getret === -101) {
+                    return;
+                }
+                self.state.ajaxData[self.state.current] = d.dataInfo;
+                self.state.alreadyRequest.push(self.state.current);
+                self.forceUpdate();
+            },
+            error(e){
+                console.log(e)
+            }
+        })
+
+
+        /*  utilMethods.post(this.props.baseUrl + 'datainfoclass/get_datainfo', (data)=> {
+
+         }, {
+         "getusersigid": this.props.getusersigid, "id": this.state.defaultIds[this.state.current]
+         });*/
+
         this.setState({
             ajaxData: [
                 [
                     {
-                        parentName: {
-                            name: '公共',
-                            id: 0,
-                            imgs: [
-
-                                {
-                                    src: './static/images/w.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                }
-                            ]
-                        },
+                        parentName: {},
                         subNames: []
                     },
                     {
-                        parentName: {name: '公共', id: 100, imgs: [
-                            {
-                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                size: '100x100',
-                                storageSize: '0.1M',
-                                id: 1
-
-                            }
-                        ]},
+                        parentName: {},
                         subNames: []
                     }
                 ],
                 [
                     {
-                        parentName: {
-                            name: '公共',
-                            id: 0,
-                            imgs: [
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: './static/images/w.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                }
-                            ]
-                        },
+                        parentName: {},
                         subNames: []
                     },
                     {
-                        parentName: {name: '公共', id: 100, imgs: []},
+                        parentName: {},
                         subNames: []
                     }
                 ],
                 [
                     {
-                        parentName: {
-                            name: '公共',
-                            id: 0,
-                            imgs: [
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: './static/images/w.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                }
-                            ]
-                        },
+                        parentName: {},
                         subNames: []
                     },
                     {
-                        parentName: {name: '公共', id: 100, imgs: []},
+                        parentName: {},
                         subNames: []
                     }
                 ],
                 [
                     {
-                        parentName: {
-                            name: '公共',
-                            id: 0,
-                            imgs: [
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: './static/images/w.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                }
-                            ]
-                        },
+                        parentName: {},
                         subNames: []
                     },
                     {
-                        parentName: {name: '公共', id: 100, imgs: []},
+                        parentName: {},
                         subNames: []
                     }
                 ],
                 [
                     {
-                        parentName: {
-                            name: '公共',
-                            id: 0,
-                            imgs: [
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: './static/images/w.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                }
-                            ]
-                        },
+                        parentName: {},
                         subNames: []
                     },
                     {
-                        parentName: {name: '公共', id: 100, imgs: []},
+                        parentName: {},
                         subNames: []
                     }
                 ],
                 [
                     {
-                        parentName: {
-                            name: '公共',
-                            id: 0,
-                            imgs: [
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                },
-                                {
-                                    src: './static/images/w.png',
-                                    size: '100x100',
-                                    storageSize: '0.1M',
-                                    id: 1
-
-                                }
-                            ]
-                        },
+                        parentName: {},
                         subNames: []
                     },
                     {
-                        parentName: {name: '公共', id: 100, imgs: []},
+                        parentName: {},
                         subNames: []
                     }
                 ]
             ],
-            allData:[
+            allData: [
+                {
+                    imgs: [
+                        {
+                            src: './static/images/2.png',
+                            size: '1920x1080',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: './static/images/2.png',
+                            size: '1920x1080',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: './static/images/1.jpg',
+                            size: '160x253',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        }, {
+                            src: './static/images/2.png',
+                            size: '1920x1080',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        }
+                    ]
+                },
                 {
                     imgs: [
                         {
                             src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: './static/images/w.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        }
+                    ]
+                },
+                {
+                    imgs: [
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                            size: '100x100',
+                            storageSize: '0.1M',
+                            id: 1
+
+                        },
+                        {
+                            src: './static/images/w.png',
                             size: '100x100',
                             storageSize: '0.1M',
                             id: 1
@@ -413,69 +354,8 @@ export default class ZmitiUploadDialog extends React.Component {
 
                         }
                     ]
-                },{
-                    imgs: [
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: './static/images/w.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        }
-                    ]
-                },{
-                    imgs: [
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: './static/images/w.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        }
-                    ]
-                },{
+                },
+                {
                     imgs: [
                         {
                             src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
@@ -510,15 +390,15 @@ export default class ZmitiUploadDialog extends React.Component {
             ]
         });
 
-        setTimeout(()=>{
+        setTimeout(()=> {
             let arr = [];
 
-            this.state.ajaxData[this.state.current].forEach(data=>{
-                arr= arr.concat(data.parentName.imgs);
+            this.state.ajaxData[this.state.current].forEach(data=> {
+                arr = arr.concat(data.parentName.imgs);
             });
             this.state.allData[this.state.current].imgs = this.state.allData[this.state.current].imgs.concat(arr);
             this.forceUpdate();
-        },0)
+        }, 0)
     }
 
     checkImg(e) {
@@ -531,50 +411,19 @@ export default class ZmitiUploadDialog extends React.Component {
         e.target.parentNode.classList.add('active');
         return false;
     }
+
     render() {
-
-        let imgArr1 = [
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"},
-            {src: "./static/images/2.png"}
-        ].map((img, i)=> {
-            return (
-                <div key={i} data-index={i} className="zmiti-img-list-item" onClick={this.checkImg.bind(this)}>
-                    <img draggable="false" src={img.src} alt=""/>
-                </div>
-            )
-        });
-
-
-        /*
-         *  <ol>
-         {parent.subNames.map((li, i)=> {
-         let subEditCom = li.editable ?<ContentEditable onChange={this.onCateNameChange.bind(this)} html={li.name}></ContentEditable>:<span>{li.name}</span>;
-         return <li key={'subname-'+i} data-id={li.id}>{this.state.editable ? (<span>{subEditCom}<Icon type="cross"></Icon></span>) : li.name}</li>
-         })}
-         {this.state.editable? <li><Button onClick={this.addSubCate.bind(this)} size="small" type="dashed" data-id={parent.parentName.id}>+ 添加分类</Button></li>:''}
-         </ol>
-         * */
-
 
         let data = [];
 
         for (let k = 0, len = this.state.ajaxData.length; k < len; k++) {
-            data.push({
+
+            this.state.ajaxData[k] && data.push({
                 tab: [
                     <TabPane tab="全部" key={'all-'+k}>
                     </TabPane>,
                     this.state.ajaxData[k].map((parent, n)=> {
+
                         let editableCom = parent.parentName.editable ?
                             <ContentEditable onChange={this.onCateNameChange.bind(this)}
                                              html={parent.parentName.name}></ContentEditable> : parent.parentName.name;
@@ -586,6 +435,21 @@ export default class ZmitiUploadDialog extends React.Component {
                 ],
             });
         }
+
+        let imgList = [];
+
+        if (this.state.currentCate === -1) {
+
+
+            this.state.allData[this.state.current] && ( imgList = this.getImageFigcaption(this.state.allData[this.state.current].imgs));
+        }
+        else {
+            if (!this.state.ajaxData[this.state.current][this.state.currentCate].parentName) {
+                return;
+            }
+            imgList = this.getImageFigcaption(this.state.ajaxData[this.state.current][this.state.currentCate].parentName.imgs);
+        }
+
 
         return (
             <div className="zmiti-upload-C">
@@ -608,24 +472,18 @@ export default class ZmitiUploadDialog extends React.Component {
                             <article>
                                 <div className="zmiti-asset-C active">
                                     <Tabs onTabClick={this.onTabClick.bind(this)}
-                                          tabBarExtraContent={<div className="zmiti-edit-btn" style={{color:this.state.editable?'red':''}}>{this.state.editable ?<Button onClick={this.addParentCate.bind(this)} type="dashed" size="small" >+添加分类</Button>:''}<Icon type="edit" onClick={this.changeEditable.bind(this)} ></Icon></div>}>
+                                          tabBarExtraContent={<div className="zmiti-edit-btn" style={{color:this.state.editable?'red':''}}>{this.state.editable ?<Button onClick={this.addParentCate.bind(this)} type="dashed" size="small" >+添加分类</Button>:''}<Icon type={this.state.editable?'check':'edit'} onClick={this.changeEditable.bind(this)} ></Icon></div>}>
                                         {data[this.state.current] && data[this.state.current].tab}
                                     </Tabs>
                                     <div className="zmmiti-asset-content">
                                         <figure className="zmiti-img-figure-C">
-                                            <figcaption>
+                                            <figcaption style={{display:this.state.current === 4 ?'block':'none'}}>
                                                 <Upload>
                                                     <Icon type="plus"/>
-                                                    <div className="ant-upload-text">上传照片</div>
+                                                    <div className="ant-upload-text">上传图片</div>
                                                 </Upload>
                                             </figcaption>
-                                            {this.state.allData[this.state.current] && this.state.allData[this.state.current].imgs.map((img,i)=>{
-                                                return (
-                                                    <figcaption key = {i}>
-                                                        <img src={img.src} draggable="false" alt=""/>
-                                                    </figcaption>
-                                                )
-                                            })};
+                                            {imgList}
                                         </figure>
                                     </div>
                                 </div>
@@ -633,8 +491,107 @@ export default class ZmitiUploadDialog extends React.Component {
                         </section>
                     </div>
                 </Modal>
+
+                <Modal title="添加分类" visible={this.state.cateVisible}
+                       style={{ top: 300 }}
+                       onOk={this.cateHandleOk.bind(this)} onCancel={this.cateHandleCancel.bind(this)}
+                >
+                    <p><Input type="text" size="large" defaultValue="" onKeyDown={this.onKeyDown.bind(this)} ref="cate-name" placeholder="分类名称"/></p>
+                </Modal>
             </div>
         )
+    }
+
+    onKeyDown(e){
+        if(e.keyCode === 13){
+            this.cateHandleOk();
+        }
+    }
+    cateHandleOk(e){ //添加分类.
+
+        let value =this.refs['cate-name'].refs.input.value;
+
+        if(value.length <= 0){
+            message.error('分类名称不能为空');
+            return;
+        }
+
+        this.setState({
+            cateVisible:false
+        });
+
+
+        this.state.ajaxData[this.state.current].unshift(
+            {
+                parentName: {
+                    name:value,
+                    id: -1,
+                    editable: true,
+                    imgs: []
+                },
+                subNames: []
+            }
+        )
+        this.forceUpdate();
+
+    }
+
+    cateHandleCancel(){
+        this.setState({
+            cateVisible:false
+        })
+    }
+
+
+    getImageFigcaption(obj) {
+
+        return obj.map((img, i)=> {
+            if (!img) {
+                return;
+            }
+            let [width,height] = img.size.split('x'),
+                style = {
+                    width: width > height ? '100%' : 'auto',
+                    height: width > height ? 'auto' : '100%',
+                    top: width > height ? "50%" : 0,
+                    left: width > height ? 0 : '50%',
+                    marginLeft: width > height ? 0 : -140 / height * width / 2,
+                    marginTop: width > height ? -140 / width * height / 2 : 0
+                };
+
+            return (
+                <figcaption key={i} className="overflow figcaption" onMouseOver={this.figcaptionMouse.bind(this)}
+                            onMouseOut={this.figcaptionMouse.bind(this)} style={{position:'relative',zIndex:100-i}}>
+                    <img src={img.src} style={style} draggable="false" alt=""/>
+                    <div className="zmiti-img-info">
+                        <section className="zmiti-img-i">
+                            <span>{img.storageSize}</span>
+                            <span>{img.size}</span>
+                        </section>
+                        <section>
+                            <Icon type="setting"></Icon>
+                            <ul>
+                                <li>删除</li>
+                                <li>裁剪</li>
+                                <li>分享</li>
+                            </ul>
+                        </section>
+                    </div>
+                </figcaption>
+            )
+        })
+    }
+
+    figcaptionMouse(e) {
+        switch (e.type) {
+            case "mouseover":
+                utilMethods.removeClass($$('.figcaption'), 'overflow');
+                break;
+            case "mouseout":
+                // this.refs['figcaption'].classList.add('overflow')
+                utilMethods.addClass($$('.figcaption'), 'overflow');
+                break;
+        }
     }
 
     onCateNameChange(e) {
@@ -645,17 +602,29 @@ export default class ZmitiUploadDialog extends React.Component {
 
     deleteCate(e) {
         //  this.state.ajaxData[this.state.current][this.state.currentCate].parentName.id = -2;
+        let self=this;
         setTimeout(()=> {
             if (this.state.editable) {
                 if (this.state.ajaxData[this.state.current][this.state.currentCate].parentName.imgs.length > 0) {//有图片.不让删除
                     message.error('当前分类下有资源文件,不能删除此分类!!');
                     return;
                 }
-
+                $.ajax({
+                   url:self.props.baseUrl + self.props.cateUrl+'class_info_del',
+                   type:"POST",
+                    data:{datainfoclassid:self.state.ajaxData[self.state.current][self.state.currentCate].parentName.id},
+                    success(d){
+                        if(d.getret===-101){
+                            message.error(d.getmsg);
+                        }
+                        else{
+                            message.success('删除成功');
+                        }
+                    }
+                });
                 this.state.ajaxData[this.state.current].splice(this.state.currentCate, 1);
                 this.forceUpdate();
             }
-            ;
         }, 0);
         /**/
     }
@@ -663,10 +632,8 @@ export default class ZmitiUploadDialog extends React.Component {
     onTabClick(e) {
 
         let keys = e.split('-');
-        if (keys[0] === 'all') {
-            return;
-        }
-        this.state.currentCate = keys[1] * 1;
+
+        this.state.currentCate = keys[0] === 'all' ? -1 : keys[1] * 1;
 
         this.forceUpdate();
 
@@ -674,21 +641,66 @@ export default class ZmitiUploadDialog extends React.Component {
 
 
     addParentCate() {//添加父级分类
-        this.state.ajaxData[this.state.current].push(
-            {
-                parentName: {name: '新增分类', id: -1, editable: true, imgs: []},
-                subNames: []
-            }
-        )
-        this.forceUpdate();
+
+        this.setState({
+            cateVisible:true
+        });
+
+       /**/
     }
 
     changeEditable() {
+
+        let self = this;
+        if (this.state.editable) {//开始更新
+            let isRequest = false;
+            self.state.ajaxData[self.state.current].forEach(data=> {
+                if(data.parentName.id < 0){
+                    isRequest = true;
+                }
+
+            });
+
+
+            isRequest && $.ajax({
+                type: "POST",
+                url: self.props.baseUrl+self.props.cateUrl + 'add_class_info',
+                data: {
+                    "getusersigid": self.props.getusersigid,
+                    "id": self.state.defaultIds[self.state.current],
+                    "json": self.state.ajaxData[self.state.current]
+                },
+                success(d){
+
+                    if (d.getret === 0) {
+                        message.success('添加分类成功');
+                        self.state.ajaxData[self.state.current] = d.dataInfo;
+                        self.state.alreadyRequest.push(self.state.current);
+                        self.forceUpdate();
+                    }
+                    else {
+                        message.error(d.getmsg);
+                    }
+
+
+                }
+            });
+
+
+        }
         this.setState({
             editable: !this.state.editable
         });
     }
 
+    toString(obj) {
+
+        if (obj instanceof Array) {
+            obj.forEach(o=> {
+
+            });
+        }
+    }
 
     onLeftMenuClick(e) {
         if (e.target.nodeName === "LI") {
@@ -712,13 +724,9 @@ export default class ZmitiUploadDialog extends React.Component {
         console.log(e.file)
     }
 
-    changeCate(index) {
-        setTimeout(()=> {
-            this.waterfall1 = new Waterfall({
-                containerSelector: '.zmiti-img-list-C',
-                boxSelector: '.zmiti-img-list-item',
-                minBoxWidth: 120
-            });
-        }, 1)
-    }
 }
+ZmitiUploadDialog.defaultProps = {
+    baseUrl: 'http://webapi.zmiti.com/v1/',
+    cateUrl:"datainfoclass/",
+    getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071"
+};

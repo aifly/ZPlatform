@@ -43,4 +43,7 @@ input, textarea {
   background-color: #bf1616;
   border-color: #bf1616; }
 
+.ant-modal-wrap {
+  background: rgba(0, 0, 0, 0.5); }
+
 /*# sourceMappingURL=theme.css.map */
