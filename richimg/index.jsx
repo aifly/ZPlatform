@@ -29,7 +29,7 @@ import ZmitiModal from './static/components/zmiti-dialog.jsx';
 import ZmitiChooseFile from './static/components/zmiti-choose-file.jsx';
 import ZmitiTag from './static/components/zmiti-tag.jsx';
 
-import ZmitiUploadDialog from './static/components/zmiti-upload-dialog.jsx';
+import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
 
 class ZmitiLeftApp extends React.Component {

@@ -40,13 +40,15 @@ import $ from 'jquery';
 export default class ZmitiUploadDialog extends React.Component {
     constructor(args) {
         super(...args);
+        this.uploadBtnClick = this.uploadBtnClick.bind(this);
+        this.beginUploadFile = this.beginUploadFile.bind(this);
         this.state = {
             visible: true,
             current: 4,
             currentCate: -1,
             editable: false,
             ajaxData: [],
-            cateVisible:false,//添加分类的对话框
+            cateVisible: false,//添加分类的对话框
             defaultIds: ['1465782065', '1465782285', '1465782327', '1465782386', '1465285201', '1465285261'],
             allData: [
                 {
@@ -104,8 +106,8 @@ export default class ZmitiUploadDialog extends React.Component {
 
         let self = this;
 
-        $.ajax({
-            url: self.props.baseUrl + self.props.cateUrl+ 'get_datainfo',
+        $.ajax({//获取当前分类信息.
+            url: self.props.baseUrl + self.props.cateUrl + 'get_datainfo',
             type: "POST",
             data: {
                 "getusersigid": self.props.getusersigid,
@@ -123,7 +125,23 @@ export default class ZmitiUploadDialog extends React.Component {
             error(e){
                 console.log(e)
             }
-        })
+        });
+
+        $.ajax({ //获取当前分类下的资源.
+                url: self.props.baseUrl + self.props.getImgInfoUrl,
+                type: "POST",
+                data: {
+                    "getusersigid": self.props.getusersigid,
+                    "id":self.state.currentCate=== -1 ? self.state.defaultIds[self.state.current]: self.state.ajaxData[self.state.current][self.state.currentCate].parentName.id
+                },
+                success(da){
+                    console.log(da)
+                },
+                error(){
+
+                }
+            }
+        );
 
 
         /*  utilMethods.post(this.props.baseUrl + 'datainfoclass/get_datainfo', (data)=> {
@@ -164,26 +182,8 @@ export default class ZmitiUploadDialog extends React.Component {
                         subNames: []
                     }
                 ],
-                [
-                    {
-                        parentName: {},
-                        subNames: []
-                    },
-                    {
-                        parentName: {},
-                        subNames: []
-                    }
-                ],
-                [
-                    {
-                        parentName: {},
-                        subNames: []
-                    },
-                    {
-                        parentName: {},
-                        subNames: []
-                    }
-                ],
+                [],
+                [],
                 [
                     {
                         parentName: {},
@@ -324,36 +324,7 @@ export default class ZmitiUploadDialog extends React.Component {
                     ]
                 },
                 {
-                    imgs: [
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: './static/images/w.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        }
-                    ]
+                    imgs: []
                 },
                 {
                     imgs: [
@@ -477,11 +448,11 @@ export default class ZmitiUploadDialog extends React.Component {
                                     </Tabs>
                                     <div className="zmmiti-asset-content">
                                         <figure className="zmiti-img-figure-C">
-                                            <figcaption style={{display:this.state.current === 4 ?'block':'none'}}>
-                                                <Upload>
-                                                    <Icon type="plus"/>
-                                                    <div className="ant-upload-text">上传图片</div>
-                                                </Upload>
+                                            <figcaption onClick={this.uploadBtnClick}
+                                                        style={{display:this.state.current === 4 ?'block':'none'}}>
+                                                <Icon type="plus"/>
+                                                <div className="ant-upload-text">上传图片</div>
+                                                <input onChange={this.beginUploadFile} type="file" ref="upload-file"/>
                                             </figcaption>
                                             {imgList}
                                         </figure>
@@ -496,35 +467,89 @@ export default class ZmitiUploadDialog extends React.Component {
                        style={{ top: 300 }}
                        onOk={this.cateHandleOk.bind(this)} onCancel={this.cateHandleCancel.bind(this)}
                 >
-                    <p><Input type="text" size="large" defaultValue="" onKeyDown={this.onKeyDown.bind(this)} ref="cate-name" placeholder="分类名称"/></p>
+                    <p><Input type="text" size="large" defaultValue="" onKeyDown={this.onKeyDown.bind(this)}
+                              ref="cate-name" placeholder="分类名称"/></p>
                 </Modal>
             </div>
         )
     }
 
-    onKeyDown(e){
-        if(e.keyCode === 13){
+    beginUploadFile() {//开始上传
+
+        if (this.refs['upload-file'].files.length <= 0) {
+            message.warning('请选择一个要上传的文件.');
+            return;
+        }
+
+        let formData = new FormData(),
+            s = this;
+        formData.append('setupfile', this.refs['upload-file'].files[0]);
+        formData.append('setuploadtype', 0);
+        formData.append('getusersigid', s.props.getusersigid);
+        formData.append('datainfoclassid', s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id);
+        formData.append('setisthum', 1);
+
+        $.ajax({
+            url: s.props.baseUrl + s.props.uploadUrl,
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success(da){
+                console.log(da);
+                if (da.getret === 0) {
+                    message.success(da.getmsg);
+                    let option = {
+                        src: 'http://webapi.zmiti.com/' + da.getfileurl[0],
+                        size: '300x300',
+                        storageSize: '0.1M',
+                        id: 1
+                    };
+                    if (s.state.currentCate === -1) {
+                        s.state.allData[s.state.current].imgs.push(option);
+                    }
+                    else{
+                        s.state.ajaxData[s.state.current][s.state.currentCate].parentName.imgs.push(option);
+                    }
+                    s.forceUpdate();
+                }
+
+            },
+            error(){
+
+            }
+        })
+
+    };
+
+    uploadBtnClick(e) {
+        this.refs['upload-file'].click();
+    }
+
+    onKeyDown(e) {
+        if (e.keyCode === 13) {
             this.cateHandleOk();
         }
     }
-    cateHandleOk(e){ //添加分类.
 
-        let value =this.refs['cate-name'].refs.input.value;
+    cateHandleOk(e) { //添加分类.
 
-        if(value.length <= 0){
+        let value = this.refs['cate-name'].refs.input.value;
+
+        if (value.length <= 0) {
             message.error('分类名称不能为空');
             return;
         }
 
         this.setState({
-            cateVisible:false
+            cateVisible: false
         });
 
 
         this.state.ajaxData[this.state.current].unshift(
             {
                 parentName: {
-                    name:value,
+                    name: value,
                     id: -1,
                     editable: true,
                     imgs: []
@@ -536,9 +561,9 @@ export default class ZmitiUploadDialog extends React.Component {
 
     }
 
-    cateHandleCancel(){
+    cateHandleCancel() {
         this.setState({
-            cateVisible:false
+            cateVisible: false
         })
     }
 
@@ -602,7 +627,7 @@ export default class ZmitiUploadDialog extends React.Component {
 
     deleteCate(e) {
         //  this.state.ajaxData[this.state.current][this.state.currentCate].parentName.id = -2;
-        let self=this;
+        let self = this;
         setTimeout(()=> {
             if (this.state.editable) {
                 if (this.state.ajaxData[this.state.current][this.state.currentCate].parentName.imgs.length > 0) {//有图片.不让删除
@@ -610,20 +635,21 @@ export default class ZmitiUploadDialog extends React.Component {
                     return;
                 }
                 $.ajax({
-                   url:self.props.baseUrl + self.props.cateUrl+'class_info_del',
-                   type:"POST",
-                    data:{datainfoclassid:self.state.ajaxData[self.state.current][self.state.currentCate].parentName.id},
+                    url: self.props.baseUrl + self.props.cateUrl + 'class_info_del',
+                    type: "POST",
+                    data: {datainfoclassid: self.state.ajaxData[self.state.current][self.state.currentCate].parentName.id},
                     success(d){
-                        if(d.getret===-101){
-                            message.error(d.getmsg);
+                        if (d.getret === -101) {
+                            message.error('服务器返回错误: ' + d.getmsg);
                         }
-                        else{
+                        else {
+                            this.state.ajaxData[this.state.current].splice(this.state.currentCate, 1);
+                            this.forceUpdate();
                             message.success('删除成功');
                         }
                     }
                 });
-                this.state.ajaxData[this.state.current].splice(this.state.currentCate, 1);
-                this.forceUpdate();
+
             }
         }, 0);
         /**/
@@ -643,10 +669,10 @@ export default class ZmitiUploadDialog extends React.Component {
     addParentCate() {//添加父级分类
 
         this.setState({
-            cateVisible:true
+            cateVisible: true
         });
 
-       /**/
+        /**/
     }
 
     changeEditable() {
@@ -655,7 +681,7 @@ export default class ZmitiUploadDialog extends React.Component {
         if (this.state.editable) {//开始更新
             let isRequest = false;
             self.state.ajaxData[self.state.current].forEach(data=> {
-                if(data.parentName.id < 0){
+                if (data.parentName.id < 0) {
                     isRequest = true;
                 }
 
@@ -664,7 +690,7 @@ export default class ZmitiUploadDialog extends React.Component {
 
             isRequest && $.ajax({
                 type: "POST",
-                url: self.props.baseUrl+self.props.cateUrl + 'add_class_info',
+                url: self.props.baseUrl + self.props.cateUrl + 'add_class_info',
                 data: {
                     "getusersigid": self.props.getusersigid,
                     "id": self.state.defaultIds[self.state.current],
@@ -714,7 +740,8 @@ export default class ZmitiUploadDialog extends React.Component {
             utilMethods.addClass($$('li', this.refs['menu-C'])[index], 'active');
 
             this.setState({
-                current: index
+                current: index,
+                currentCate: -1
             });
         }
 
@@ -727,6 +754,8 @@ export default class ZmitiUploadDialog extends React.Component {
 }
 ZmitiUploadDialog.defaultProps = {
     baseUrl: 'http://webapi.zmiti.com/v1/',
-    cateUrl:"datainfoclass/",
+    cateUrl: "datainfoclass/",
+    uploadUrl: 'upload/upload_file/',
+    getImgInfoUrl: 'datainfoclass/resinfo/',
     getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071"
 };

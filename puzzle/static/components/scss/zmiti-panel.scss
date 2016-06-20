@@ -1,0 +1,249 @@
+html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+html, body {
+  height: 100%;
+}
+
+img {
+  border: none;
+  vertical-align: top;
+  width: 100%;
+  height: auto;
+}
+
+input, textarea {
+  outline: none;
+}
+
+@mixin pos($v) {
+  @if
+  $v == a {
+  position: absolute;
+} @else if $v == r {
+  position: relative;
+} @else if $v == f {
+  position: fixed;
+}
+}
+
+@mixin br($v:50%) {
+  border-radius: $v;
+}
+
+@mixin opacity($v:0) {
+  opacity: $v;
+}
+
+@mixin transform($v) {
+  -webkit-transform: $v;
+  transform: $v;
+}
+
+@mixin transformOrigin($v) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+
+@mixin backgroundSize($v:cover) {
+  background-size: $v;
+}
+
+@mixin transition_transform($v) {
+  -webkit-transition: -webkit-transform $v;
+  transition: transform $v;
+}
+
+@mixin transform_origin($v:center) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+
+@mixin transition($v) {
+  -webkit-transition: $v;
+  transition: $v;
+}
+
+@mixin transitionTimingFunction($v:cubic-bezier(1, -0.025, 1, 0.865)
+
+)
+{
+  -webkit-transition-timing-function: $v;
+  transition-timing-function: $v;
+}
+
+@mixin transform($v) {
+  -webkit-transform: $v;
+  transform: $v;
+}
+
+@mixin background($bg) {
+  background: $bg;
+}
+
+@mixin backgroundSize($v:cover) {
+  background-size: $v;
+}
+
+@mixin animation($v) {
+  -webkit-animation: $v;
+  animation: $v;
+}
+
+@mixin transform3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  -webkit-perspective: 800px;
+}
+
+@mixin displayBox($v) {
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: $v;
+}
+
+@mixin fly-h-gradient-line {
+  background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, .2)), color-stop(0.5, rgba(204, 204, 204, 1)), to(rgba(204, 204, 204, .2)));
+  background: -moz-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
+  background: -ms-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
+}
+
+@mixin fly-v-gradient-line($minOpacity:.2,$maxOpacity:1) {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, $minOpacity)), color-stop(0.5, rgba(204, 204, 204, $maxOpacity)), to(rgba(204, 204, 204, $minOpacity)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
+}
+
+@mixin displayFlex($v:column) {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: $v;
+}
+
+body {
+  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  height: 100%;
+  overflow: hidden;
+}
+
+$baseColor:#99071e;
+.zmiti-panel-ui{
+  @include pos(a);
+  left:0;
+  top:0;
+  width:300px;
+  height:80vh;
+  border:1px solid #ccc;
+}
+.zmiti-panel-title{
+  width:300px;
+  height:46px;
+  line-height:42px;
+  font-weight: bold;
+  background: $baseColor;
+  cursor: move;
+
+  span{
+    color:#fff;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  span:nth-of-type(1){
+      width:26px;
+      height:26px;
+      border:1px solid #fff;
+      margin:0 20px;
+    @include pos(r);
+    &:before,&:after{
+      content:'';
+      @include pos(a);
+      width:1px;
+      height:100%;
+      background-color: #fff;
+      left:50%;
+      @include transform(rotate(10deg));
+    }
+    &:after{
+      height:1px;
+      width:50%;
+      top:50%;
+      left:0;
+    }
+  }
+
+
+}
+
+.p-mould-C{
+  @include displayFlex(row);
+  flex-grow: 1;
+  flex-wrap: wrap;
+}
+$mouldColor1:#ff99c1;
+$mouldColor2:#ffdb71;
+$mouldColor3:yellowgreen;
+$mouldColor4:#f90;
+
+.p-mould{
+  width:54px;
+  height:54px;
+  border:1px solid #ccc;
+  margin:5px 10px ;
+  @include pos(r);
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.p-mould-left-right{
+  aside{
+    @include pos(a);
+      &:nth-of-type(1){
+        left:1px;
+        top:1px;
+        bottom:1px;
+        right:50%;
+      background: $mouldColor1;
+      border-right:1px solid #fff;
+    }
+    &:nth-of-type(2){
+      left:50%;
+      top:1px;
+      bottom:1px;
+      right:1px;
+      background: $mouldColor2;
+    }
+  }
+}
+.p-mould-top-bottom{
+  aside{
+    @include pos(a);
+    &:nth-of-type(1){
+      left:1px;
+      top:1px;
+      bottom:50%;
+      right:1px;
+      background: $mouldColor1;
+      border-bottom:1px solid #fff;
+    }
+    &:nth-of-type(2){
+      left:1px;
+      top:50%;
+      bottom:1px;
+      right:1px;
+      background: $mouldColor2;
+    }
+  }
+}
+

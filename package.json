@@ -12,7 +12,10 @@
     "personal-server": "webpack-dev-server --hot --inline --config webpack.personalAcc.config.js",
     "r-server": "webpack-dev-server --hot --inline --config webpack.richimg.config.js",
     "r-build": "webpack --config webpack.richimg.config.js",
-    "r-u": "webpack -p --config webpack.richimg.config.js"
+    "r-u": "webpack -p --config webpack.richimg.config.js",
+    "p-server":"webpack-dev-server --hot --inline --config webpack.puzzle.config.js",
+    "p-build":"webpack  --config webpack.puzzle.config.js",
+    "p-u":"webpack -p --config webpack.puzzle.config.js"
   },
   "keywords": [
     "es6"

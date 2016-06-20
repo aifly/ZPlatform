@@ -289,6 +289,14 @@ $baseColor:#99071e;
   .zmmiti-asset-content{
     height:400px;
     .zmiti-img-figure-C{
+
+
+      input[type='file']{
+        opacity:0;
+        @include pos(f);
+        z-index:-1;
+      }
+
       @include displayFlex(row);
       flex-wrap: wrap;
       align-items: center;
@@ -409,13 +417,14 @@ $baseColor:#99071e;
         text-align: center;
 
         i{
-          font-size:80px;
+          font-size:70px;
           color:#d9d9dc;
           margin-top:15px;
           font-weight: bold;
         }
         div{
-          font-size:20px;
+          margin-top:8px;
+          font-size:16px;
         }
       }
 

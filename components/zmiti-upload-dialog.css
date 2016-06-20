@@ -190,6 +190,10 @@
       flex-flow: row;
       flex-wrap: wrap;
       align-items: center; }
+      .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C input[type='file'] {
+        opacity: 0;
+        position: fixed;
+        z-index: -1; }
       .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption {
         width: 140px;
         height: 140px;
@@ -292,12 +296,13 @@
         cursor: pointer;
         text-align: center; }
         .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption:first-of-type i {
-          font-size: 80px;
+          font-size: 70px;
           color: #d9d9dc;
           margin-top: 15px;
           font-weight: bold; }
         .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption:first-of-type div {
-          font-size: 20px; }
+          margin-top: 8px;
+          font-size: 16px; }
 
 .zmiti-upload-tool-C {
   display: none;

@@ -13,7 +13,7 @@ import 'babel-polyfill';
 import PubSub from './static/js/pubsub';
 
 
-import ZmitiUploadDialog from './static/components/zmiti-upload-dialog.jsx';
+import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
 
 
