@@ -61,7 +61,7 @@ export default class ZmitiPanel extends React.Component {
                             </div>
                         </TabPane>
                         <TabPane tab="2" key="2">
-                           
+
                         </TabPane>
                         <TabPane tab="3" key="3">
                             2
