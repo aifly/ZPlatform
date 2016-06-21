@@ -76,7 +76,6 @@ body {
 .p-mould {
   width: 54px;
   height: 54px;
-  height: 54px;
   border: 1px solid #ccc;
   margin: 5px 10px;
   position: relative;
@@ -114,5 +113,23 @@ body {
     bottom: 1px;
     right: 1px;
     background: #ffdb71; }
+
+.zmiti-panel-type-C {
+  width: 100%; }
+  .zmiti-panel-type-C ul {
+    border-bottom: 1px dashed #ccc;
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row; }
+  .zmiti-panel-type-C li {
+    width: 40px;
+    line-height: 30px;
+    margin: 5px;
+    text-align: center;
+    cursor: pointer; }
+    .zmiti-panel-type-C li.active {
+      background: #60c645;
+      color: #fff;
+      border-radius: 5px; }
 
 /*# sourceMappingURL=zmiti-panel.css.map */

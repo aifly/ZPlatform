@@ -247,3 +247,23 @@ $mouldColor4:#f90;
   }
 }
 
+.zmiti-panel-type-C{
+  width:100%;
+  ul{
+    border-bottom: 1px dashed #ccc;
+    @include displayFlex(row);
+  }
+
+  li{
+    width:40px;
+    line-height:30px;
+    margin:5px;
+    text-align: center;
+    cursor: pointer;
+    &.active{
+      background:#60c645;
+      color:#fff;
+      @include br(5px);
+    }
+  }
+}

@@ -126,7 +126,7 @@
       @include pos(r);
       &:before{
         content: '';
-        background:rgba(0,0,0,.5) url('../images/checked.png') no-repeat center center;
+        background:rgba(0,0,0,.5) url('../richimg/static/images/checked.png') no-repeat center center;
         @include pos(a);
         left:0;
         top:0;
@@ -364,7 +364,7 @@ $baseColor:#99071e;
               display: none;
               @include pos(a);
               width:130px;
-              height:100px;
+              height:130px;
               border:1px solid #ccc;
               top:34px;
               left:-10px;

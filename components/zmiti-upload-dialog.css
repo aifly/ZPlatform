@@ -12,7 +12,7 @@
     position: relative; }
     .zmiti-img-list-C .zmiti-img-list-item.active:before {
       content: '';
-      background: rgba(0, 0, 0, 0.5) url("../images/checked.png") no-repeat center center;
+      background: rgba(0, 0, 0, 0.5) url("../richimg/static/images/checked.png") no-repeat center center;
       position: absolute;
       left: 0;
       top: 0;
@@ -249,7 +249,7 @@
               display: none;
               position: absolute;
               width: 130px;
-              height: 100px;
+              height: 130px;
               border: 1px solid #ccc;
               top: 34px;
               left: -10px;

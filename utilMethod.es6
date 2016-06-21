@@ -48,146 +48,110 @@ const utilMethods = {
         return Array.from(obj.classList).indexOf(className) > -1;
 
     },
-    addClass(obj,className){
-        obj.classList.add(className)
+    removeClass(obj, className){
+        if (obj.length) {
+            obj.forEach(o=> {
+                o.classList.remove(className);
+            })
+        }
+        else {
+            obj.classList.remove(className)
+        }
+
+    },
+    addClass(obj, className){
+        if (obj.length) {
+            obj.forEach(o=> {
+                o.classList.add(className);
+            })
+        }
+        else {
+            obj.classList.add(className)
+        }
+
     },
     index(elems, parent, selector) {
         var parent = parent || elems.parentNode,
-            cindex = - 1,
+            cindex = -1,
             selector = selector || "*";
-        Array.from(parent.querySelectorAll (selector)).forEach(function(item,i){
+        Array.from(parent.querySelectorAll(selector)).forEach(function (item, i) {
             "use strict";
-            if(item === elems){
+            if (item === elems) {
                 cindex = i;
             }
         });
         return cindex;
     },
 
-    ajax(url, fn){
-        let xmlhttp = null;
-        if (window.XMLHttpRequest) {// code for all new browsers
-            xmlhttp = new XMLHttpRequest();
+    ajax: function (opt) {
+        var xhr = this.createXhrObject();
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState != 4) return;
+            (xhr.status === 200 ?
+                opt.success(xhr.responseText, xhr.responseXML) :
+                opt.error(xhr.responseText, xhr.status));
         }
-        if (xmlhttp != null) {
-            xmlhttp.onreadystatechange = ()=> {
-                this.stateChange(xmlhttp, fn)
-            };
-            xmlhttp.overrideMimeType && xmlhttp.overrideMimeType('text/html');//设置MiME类别
-            xmlhttp.open("GET", url, true);
-            xmlhttp.send(null);
-        }
+        xhr.open(opt.type, opt.url, true);
+        if (opt.type !== 'POST')
+            opt.data = null;
+        else
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        opt.data = this.parseQuery(opt.data);
+        xhr.send(opt.data);
     },
-    stateChange(xmlhttp, fn){
-        if (xmlhttp.readyState == 4) {// 4 = "loaded"
-            if (xmlhttp.status == 200) {// 200 = OK
-                fn && fn(xmlhttp.responseText)
-
-            }
-            else {
-                alert("Problem retrieving XML data");
+    post: function (url, success, data) {
+        var popt = {
+            url: url,
+            type: 'POST',
+            data: data,
+            success: success,
+            error: function (data) {
             }
         }
+        this.ajax(popt);
     },
-    tempLoaded(){
-        var link = document.createElement('link');
-        link.href = './static/css/temp.css';
-        link.rel = 'stylesheet';
-        document.head.appendChild(link);
-
-        document.getElementById('temp').innerHTML += '<div class="border-effect"><img draggable="false" src="./static/images/logo1.png" alt=""></div>';
-
-        !Array.from && (Array.from = function (c) {
-            return Array.prototype.slice.call(c);
-        });
-
-
-        let href = window.location.href.split('/').pop();
-        let id = 1;
-        ["huigu.html","shuhuai.html","tushuo.html","licheng.html","fengcai.html"].forEach((h,i)=>{
-            if(href.indexOf(h)>-1){
-                id = i+1;
+    get: function (url, success) {
+        var gopt = {
+            url: url,
+            type: 'get',
+            success: success,
+            error: function () {
             }
-        });
-        if(href.indexOf("detail.html")>-1){
-            id = 3;
         }
-
-
-
-        $$("img", $$("#temp .pub-nav li")[id])[0].src = './static/images/nav-' + id + '.jpg';
-
-        var nav = _$(".pub-nav");
-        var aLi = Array.from(nav.getElementsByTagName('li'));
-
-        function Nav(option) {
-            var s = this;
-            s.obj = option.obj || {};
-            s.xINow = 0;
-            s.speedX = r(.05, .08);
-            s.speedY = r(.05, .1);
-            s.yINow = 0;
-            s.transX = 0;
-            s.transY = 0;
-            s.xLife = r(120, 200);
-            s.yLife = r(150, 200);
-        }
-
-        Nav.prototype.move = function () {
-            var s = this;
-            s.xINow++;
-            if (s.xINow >= s.xLife) {
-                s.xINow = 0;
-                s.speedX *= -1;
+        this.ajax(gopt);
+    },
+    createXhrObject: function () {
+        var methods = [
+            function () {
+                return new XMLHttpRequest();
+            },
+            function () {
+                return new ActiveXObject('Msxml2.XMLHTTP');
+            },
+            function () {
+                return new ActiveXObject('Microsoft.XMLHTTP');
             }
-            s.yINow++;
-            if (s.yINow >= s.yLife) {
-                s.yINow = 0;
-                s.speedY *= -1;
+        ];
+        for (var i = 0, len = methods.length; i < len; i++) {
+            try {
+                methods[i]();
+            } catch (e) {
+                continue;
             }
-
-            var x = s.transX + s.speedX,
-                y = (s.transY + s.speedY);
-            s.obj.style.transform = 'translate3d(' + x + 'px,' + y + 'px,0)';
-            s.obj.style.webkitTransform = 'translate3d(' + x + 'px,' + y + 'px,0)';
-            s.transX = x;
-            s.transY = y;
-        };
-
-
-        var n = new Nav({obj: nav});
-        var t = setInterval(function () {
-            n.move();
-        }, 17);
-
-        addEvent(addEvent(nav, 'mouseover', function (e) {
-            aLi.forEach(function (item, i) {
-                item.classList.add('active');
-                item.style.transitionDelay = 80 * i + 'ms';
-                item.style.webkitTransitionDelay = 80 * i + 'ms';
-            });
-
-        }), 'mouseout', function (e) {
-            aLi.forEach(function (item, i) {
-                item.classList.remove('active');
-                item.style.transitionDelay = 80 * (6 - i) + 'ms';
-                item.style.webkitTransitionDelay = 80 * (6 - i) + 'ms';
-            })
-        });
-
-        function r(m, n) {
-            return m + Math.random() * (n - m);
+            this.createXhrObject = methods[i];
+            return methods[i]();
         }
-
-        function addEvent(obj, event, fn) {
-            obj.addEventListener(event, function (e) {
-                fn && fn(e)
-            });
-            return obj;
-        }
-
-        function _$(selector) {
-            return document.querySelector(selector);
+        throw new Error('Could not create an XHR object.');
+    },
+    parseQuery: function (json) {
+        if (typeof json == 'object') {
+            var str = '';
+            for (var i in json) {
+                str += "&" + i + "=" + encodeURIComponent(json[i]);
+            }
+            return str.length == 0 ? str : str.substring(1);
+        } else {
+            return json;
         }
     }
 }
