@@ -15,19 +15,22 @@ import PubSub from './static/js/pubsub';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
+import $ from 'jquery';
 
 
 import ZmitiRichImg from './static/components/zmiti-richimg.jsx';
 
-class ZmitiHeader extends React.Component{
-    constructor(args){
+class ZmitiHeader extends React.Component {
+    constructor(args) {
         super(...args);
     }
-    createProject(){
+
+    createProject() {
         PubSub.publish('showModal', true);
     }
-    render(){
-        return(
+
+    render() {
+        return (
             <div className="zmiti-header">
                 <div className="form-group">
                     <Input size="large" placeholder="搜索"/>
@@ -41,52 +44,53 @@ class ZmitiHeader extends React.Component{
     }
 }
 
-class ZmitiMainContent extends React.Component{
-    constructor(args){
+class ZmitiMainContent extends React.Component {
+    constructor(args) {
         super(...args);
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
         new Waterfall({
-            containerSelector:'.zmiti-tab-my-project',
-            boxSelector:'.zmiti-richimg-C'
+            containerSelector: '.zmiti-tab-my-project',
+            boxSelector: '.zmiti-richimg-C'
         });
 
     }
 
-    changeTab(e){
-        this.alreadyLaodArr =this.alreadyLaodArr || ['1'];
+    changeTab(e) {
+        this.alreadyLaodArr = this.alreadyLaodArr || ['1'];
         let a = ['zmiti-tab-my-project',
             'zmiti-tab-department-project',
             'zmiti-tab-company-project',
             'zmiti-tab-platform-project'
         ];
 
-        setTimeout(()=>{
+        setTimeout(()=> {
             new Waterfall({
-                containerSelector:'.'+a[e-1],
-                boxSelector:'.zmiti-richimg-C'
+                containerSelector: '.' + a[e - 1],
+                boxSelector: '.zmiti-richimg-C'
             });
-        },0);
+        }, 0);
     }
-    render(){
+
+    render() {
         /**
          * ,225,346,221,333,234,322,245,274
          * @type {Array}
          */
-       let richImg = [224].map((item,i)=>{
-           return  <ZmitiRichImg key={i} height={item}></ZmitiRichImg>
-       });
+        let richImg = [224].map((item, i)=> {
+            return <ZmitiRichImg key={i} height={item}></ZmitiRichImg>
+        });
 
         return (
             <div className="zmiti-main-content">
                 <div className="zmiti-tab-C">
                     <Tabs defaultActiveKey="1" onChange={this.changeTab.bind(this)}>
                         <TabPane tab="我的作品" key="1">
-                           <div className="zmiti-tab-my-project">
-                               {richImg}
-                           </div>
+                            <div className="zmiti-tab-my-project">
+                                {richImg}
+                            </div>
                         </TabPane>
                         <TabPane tab="部门作品" key="2">
                             <div className="zmiti-tab-department-project">
@@ -110,22 +114,75 @@ class ZmitiMainContent extends React.Component{
     }
 }
 
-class MainUI extends React.Component{
-    constructor(args){
+class MainUI extends React.Component {
+    constructor(args) {
         super(...args);
     }
-    render(){
+
+    render() {
+
+        let s = this;
+        const props = {
+            baseUrl: 'http://webapi.zmiti.com/v1/',
+            onFinish(imgData){
+
+                $.ajax({
+                    url: s.props.baseUrl + 'works/create_works',
+                    type: "POST",
+                    data: {
+                        worksname: "",
+                        worksdesc: "",
+                        imgSrc: imgData.src,
+                        workstag: '',
+                        workico: '',
+                        datajsontwo: '',
+                        datajsonth: '',
+                        comtent: '',
+                        datajson: JSON.stringify({
+                            richImgData: {
+                                tags: [],
+                                focusTagIndex: 0
+                            }
+                        }),
+                        workstype: 0,//富图片。
+                        getusersigid: s.props.getusersigid
+                    },
+                    success(da){
+                        console.log(da)
+                        if (da.getret === 0) {
+                            let richimg = {
+                                projectId: da.projectId,
+                                imgSrc: da.imgSrc,
+                                jsonSrc: da.jsonSrc
+                            }
+
+                            window.location.href= './index.html?richimg='+ encodeURI(JSON.stringify(richimg));
+
+                        }
+                    },
+                    error(){
+
+                    }
+
+                });
+            }
+        };
+
         return (
             <div className="zmiti-main-ui">
                 <ZmitiHeader></ZmitiHeader>
                 <ZmitiMainContent></ZmitiMainContent>
-                <ZmitiUploadDialog></ZmitiUploadDialog>
+                <ZmitiUploadDialog {...props}></ZmitiUploadDialog>
             </div>
         )
     }
 }
+MainUI.defaultProps = {
+    baseUrl: 'http://webapi.zmiti.com/v1/',
+    getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071"
+}
 
-ReactDOM.render(<MainUI></MainUI>,document.getElementById('fly-main'));
+ReactDOM.render(<MainUI></MainUI>, document.getElementById('fly-main'));
 
 
 

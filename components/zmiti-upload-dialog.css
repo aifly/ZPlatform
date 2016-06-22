@@ -165,23 +165,6 @@
       cursor: pointer; }
       .zmiti-upload-body .zmiti-asset-C .zmiti-edit-btn button {
         margin-right: 10px; }
-    .zmiti-upload-body .zmiti-asset-C ol li {
-      font-size: 12px; }
-      .zmiti-upload-body .zmiti-asset-C ol li.active {
-        color: #ff3333; }
-    .zmiti-upload-body .zmiti-asset-C ul {
-      border-bottom: 1px solid #ccc;
-      height: 30px;
-      width: 100%; }
-      .zmiti-upload-body .zmiti-asset-C ul li.active {
-        color: #99071e; }
-    .zmiti-upload-body .zmiti-asset-C li {
-      height: 30px;
-      line-height: 30px;
-      float: left;
-      font-size: 14px;
-      margin: 0 10px;
-      cursor: pointer; }
   .zmiti-upload-body .zmmiti-asset-content {
     height: 400px; }
     .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C {
@@ -203,13 +186,24 @@
         border-radius: 1px;
         background: #eaeaf0;
         position: relative; }
-        .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption.overflow {
-          overflow: hidden; }
+        .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption.active:before {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5) url("../richimg/static/images/checked.png") no-repeat center center;
+          z-index: 1; }
+        .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption:not(:first-of-type):hover {
+          border-color: #f00; }
         .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption:hover img {
           -webkit-transform: scale(0.9);
           transform: scale(0.9); }
         .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption:hover .zmiti-img-info {
           opacity: 1; }
+        .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-C {
+          width: 100%;
+          height: 140px;
+          overflow: hidden; }
         .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info {
           width: 100%;
           height: 40px;
@@ -225,12 +219,12 @@
           flex-flow: row; }
           .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info .zmiti-img-i {
             margin-left: 4px;
-            flex-grow: 4; }
+            flex-grow: 10; }
             .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info .zmiti-img-i span {
               margin: 0 4px; }
           .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info section:nth-of-type(2) {
             flex-grow: 1;
-            text-align: right;
+            text-align: left;
             margin-right: 10px;
             position: relative; }
             .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info section:nth-of-type(2):before {
@@ -243,53 +237,8 @@
               background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, 0.2)), color-stop(0.5, #cccccc), to(rgba(204, 204, 204, 0.2)));
               background: -moz-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2));
               background: -ms-linear-gradient(top, rgba(204, 204, 204, 0.2), #cccccc 50%, rgba(204, 204, 204, 0.2)); }
-            .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info section:nth-of-type(2):hover ul {
-              display: block; }
-            .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info section:nth-of-type(2) ul {
-              display: none;
-              position: absolute;
-              width: 130px;
-              height: 130px;
-              border: 1px solid #ccc;
-              top: 34px;
-              left: -10px;
-              background: #fff;
-              border-radius: 4px;
-              z-index: 1;
-              padding: 0; }
-              .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info section:nth-of-type(2) ul:before {
-                content: '';
-                position: absolute;
-                width: 10px;
-                height: 10px;
-                background: inherit;
-                left: 11px;
-                top: -5px;
-                z-index: -1;
-                border: 1px solid #ccc;
-                -webkit-transform: rotate(45deg);
-                transform: rotate(45deg);
-                border-bottom: none;
-                border-right: none; }
-              .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info section:nth-of-type(2) ul li {
-                width: 100%;
-                float: none;
-                -webkit-transition: 0.2s;
-                transition: 0.2s;
-                margin: 0;
-                text-indent: 2em;
-                padding: 0;
-                text-align: left; }
-                .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info section:nth-of-type(2) ul li:first-of-type {
-                  margin-top: 5px; }
-                .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info section:nth-of-type(2) ul li:hover {
-                  background: #0b97c4;
-                  color: #fff;
-                  text-indent: 3em; }
-              .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info section:nth-of-type(2) ul img {
-                width: 20px; }
         .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption img {
-          position: absolute;
+          position: relative;
           -webkit-transition: -webkit-transform 0.2s;
           transition: transform 0.2s; }
       .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption:first-of-type {

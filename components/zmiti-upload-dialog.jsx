@@ -30,6 +30,11 @@ import 'antd/lib/message/style/css';
 import Input from 'antd/lib/input';
 import 'antd/lib/input/style/css';
 
+import Menu from 'antd/lib/menu';
+import 'antd/lib/menu/style/css';
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
 import $ from 'jquery';
 
 
@@ -39,8 +44,9 @@ export default class ZmitiUploadDialog extends React.Component {
         this.uploadBtnClick = this.uploadBtnClick.bind(this);
         this.beginUploadFile = this.beginUploadFile.bind(this);
         this.operatorRes = this.operatorRes.bind(this);
+        this.chooseImg = this.chooseImg.bind(this);
         this.state = {
-            visible: true,
+            visible: false,
             current: 4,
             currentCate: -1,
             editable: false,
@@ -59,10 +65,14 @@ export default class ZmitiUploadDialog extends React.Component {
     }
 
     handleOk() {
-
+        if (this.imgData === undefined) {
+            message.warning('您还没选择资源', 2);
+            return !1;
+        }
         this.setState({
             visible: false
         });
+        this.props.onFinish &&this.props.onFinish(this.imgData);
     }
 
     handleCancel() {
@@ -76,32 +86,6 @@ export default class ZmitiUploadDialog extends React.Component {
         this.setState({
             visible: true
         });
-
-        /* this.waterfall1 =  new Waterfall({
-         containerSelector: '.zmiti-img-list-C',
-         boxSelector: '.zmiti-img-list-item',
-         minBoxWidth: 120
-         });*/
-    }
-
-    componentDidMount() {
-        PubSub.subscribe("showModal", (d, e)=> {
-            this.showModal();
-        });
-
-        $$('li', this.refs['menu-C']).forEach((li, i)=> {
-            i === this.state.current && utilMethods.addClass(li, 'active');
-        });
-
-        /* this.state.currentCate !== -1 && $$('li', this.refs['Parent-C']).forEach((li, i)=> {
-         i === this.state.currentCate && utilMethods.addClass(li, 'active');
-         });*/
-
-        /*  this.waterfall1 =  new Waterfall({
-         containerSelector: '.zmiti-img-list-C',
-         boxSelector: '.zmiti-img-list-item',
-         minBoxWidth: 120
-         });*/
 
         let self = this;
 
@@ -129,7 +113,9 @@ export default class ZmitiUploadDialog extends React.Component {
 
                 self.state.allData[self.state.current].imgs = self.state.allData[self.state.current].imgs.concat(d.allImgs);
 
-                self.state.ajaxData[self.state.current].forEach(img=> {
+                self.state.ajaxData[self.state.current].forEach((img, i)=> {
+
+                    img.parentName.imgs[i] && ( img.parentName.imgs[i].index = i); // 记录全部分类下面的图片所属哪个分类.
                     self.state.allData[self.state.current].imgs = self.state.allData[self.state.current].imgs.concat(img.parentName.imgs);
                 });
 
@@ -142,28 +128,6 @@ export default class ZmitiUploadDialog extends React.Component {
             }
         });
 
-        /*$.ajax({ //获取当前分类下的资源.
-         url: self.props.baseUrl + self.props.getImgInfoUrl,
-         type: "POST",
-         data: {
-         "getusersigid": self.props.getusersigid,
-         "id":self.state.currentCate=== -1 ? self.state.defaultIds[self.state.current]: self.state.ajaxData[self.state.current][self.state.currentCate].parentName.id
-         },
-         success(da){
-         console.log(da)
-         },
-         error(){
-
-         }
-         }
-         );*/
-
-
-        /*  utilMethods.post(this.props.baseUrl + 'datainfoclass/get_datainfo', (data)=> {
-
-         }, {
-         "getusersigid": this.props.getusersigid, "id": this.state.defaultIds[this.state.current]
-         });*/
 
         this.setState({
             ajaxData: [
@@ -367,19 +331,19 @@ export default class ZmitiUploadDialog extends React.Component {
             ]
         });
 
-
     }
 
-    checkImg(e) {
-        e.preventDefault();
-
-        Array.from(document.getElementsByClassName('zmiti-img-list-item')).forEach(item=> {
-            item.classList.remove('active');
+    componentDidMount() {
+        PubSub.subscribe("showModal", (d, e)=> {
+            this.showModal();
         });
 
-        e.target.parentNode.classList.add('active');
-        return false;
+        $$('li', this.refs['menu-C']).forEach((li, i)=> {
+            i === this.state.current && utilMethods.addClass(li, 'active');
+        });
+
     }
+
 
     render() {
 
@@ -516,6 +480,7 @@ export default class ZmitiUploadDialog extends React.Component {
 
                     }
                     else {
+                        option.index = s.state.currentCate;
                         s.state.ajaxData[s.state.current][s.state.currentCate].parentName.imgs.push(option);
                     }
 
@@ -533,18 +498,51 @@ export default class ZmitiUploadDialog extends React.Component {
 
     };
 
-    operatorRes(e) {//删除,移动,分享 资源
-        if (e.target.nodeName !== 'LI') {
-            return;
-        }
+    chooseImg(e) {
+        e.preventDefault();
+        e.persist();
+        let target = $(e.target).parents('.figcaption');
+        $('.zmiti-img-figure-C .figcaption').removeClass('active');
+        target.addClass('active');
+        let img = null,
+            infos = target.data('id').split('_'),
+            id = infos[0],
+            index = infos[1] * 1;
 
-        let index = utilMethods.index(e.target),
+        if (this.state.currentCate === -1) {
+            if (isNaN(index)) {//是全部的分类下、
+                this.state.allData[this.state.current].imgs.forEach((item, i)=> {
+                    if (item.id === id) {
+                        img = item;
+                        return false;
+                    }
+                });
+            } else {//非全部的子分类下。
+                this.state.ajaxData[this.state.current][index].parentName.imgs.forEach(item=> {
+                    if (item.id === id) {
+                        img = item;
+                        return false;
+                    }
+                });
+            }
+        }
+        this.imgData = img;
+        return false;
+    }
+
+    operatorRes(e) {//删除,移动,分享 资源
+
+
+        let infos = e.key.split('_'),
+            index = infos[0],
             self = this;
 
+        let id = infos[1];
+
+        let currentCate = infos[2] * 1;
 
         switch (index) {
-            case 0://删除
-                let id =e.target.getAttribute('data-id')
+            case 'delete'://删除
                 $.ajax({
                     url: self.props.baseUrl + self.props.deleteResUrl,
                     type: "POST",
@@ -559,17 +557,30 @@ export default class ZmitiUploadDialog extends React.Component {
                         else {
                             message.success(da.getmsg);
 
-                            if(self.state.currentCate >= 0){
-                                self.state.ajaxData[self.state.current][self.state.currentCate].parentName.imgs.forEach((img,i)=>{
-                                    if(img.id === id){
-                                        self.state.ajaxData[self.state.current][self.state.currentCate].parentName.imgs.splice(i,1);
+                            if (self.state.currentCate >= 0) {//
+                                self.state.ajaxData[self.state.current][self.state.currentCate].parentName.imgs.forEach((img, i)=> {
+                                    if (img.id === id) {
+                                        self.state.ajaxData[self.state.current][self.state.currentCate].parentName.imgs.splice(i, 1);
+                                        return false;
                                     }
                                 })
                             }
-                            self.state.allData[self.state.current].imgs.forEach((img,i)=>{
-                                if(img.id ===id){
-                                    self.state.allData[self.state.current].imgs.splice(i,1);
+                            else { //在全部分类下面删除其它的分类的图片
+                                if (currentCate > -1) {//当前删除的图片,是其它分类的图片.
+                                    self.state.ajaxData[self.state.current][currentCate].parentName.imgs.forEach((img, i)=> {
+                                        if (img.id === id) {
+                                            self.state.ajaxData[self.state.current][currentCate].parentName.imgs.splice(i, 1);
+                                            return false;
+                                        }
+                                    })
+                                }
+                            }
+
+                            self.state.allData[self.state.current].imgs.forEach((img, i)=> {
+                                if (img.id === id) {
+                                    self.state.allData[self.state.current].imgs.splice(i, 1);
                                     self.forceUpdate();
+                                    return false;
                                 }
                             });
 
@@ -582,11 +593,11 @@ export default class ZmitiUploadDialog extends React.Component {
 
                 })
                 break;
-            case 1://裁剪
+            case 'clip'://裁剪
                 break;
-            case 2://移动
+            case 'move'://移动
                 break;
-            case 3://分享
+            case 'share'://分享
                 break;
         }
 
@@ -654,23 +665,39 @@ export default class ZmitiUploadDialog extends React.Component {
                     marginTop: width > height ? -140 / width * height / 2 : 0
                 };
 
+
             return (
-                <figcaption key={i} className="overflow figcaption" onMouseOver={this.figcaptionMouse.bind(this)}
-                            onMouseOut={this.figcaptionMouse.bind(this)} style={{position:'relative',zIndex:100-i}}>
-                    <img src={img.src} style={style} draggable="false" alt=""/>
+                <figcaption key={i} onClick={this.chooseImg}
+                            data-id={img.id+(img.index === undefined?'_none':'_'+img.index)} className="figcaption"
+                            style={{position:'relative',zIndex:100-i}}>
+                    <div className="zmiti-img-C"><img src={img.src} style={style} draggable="false" alt=""/></div>
                     <div className="zmiti-img-info">
                         <section className="zmiti-img-i">
                             <span>{img.storageSize}</span>
                             <span>{img.size}</span>
                         </section>
-                        <section>
+                        <section onMouseOver={this.figcaptionMouse.bind(this)}
+                                 onMouseOut={this.figcaptionMouse.bind(this)}>
                             <Icon type="setting"></Icon>
-                            <ul onClick={this.operatorRes}>
-                                <li data-id={img.id}>删除</li>
-                                <li data-id={img.id}>裁剪</li>
-                                <li data-id={img.id}>移动</li>
-                                <li data-id={img.id}>分享</li>
-                            </ul>
+                            <Menu mode="vertical" onClick={this.operatorRes} ref="menu">
+                                <Menu.Item key={'delete_'+img.id+'_'+(img.index === undefined?-101:img.index)}><Icon
+                                    type="delete"/>删除</Menu.Item>
+                                <Menu.Item key={'clip_'+img.id+'_'+(img.index === undefined?-101:img.index)}><Icon
+                                    type="cross"/>裁剪</Menu.Item>
+                                <SubMenu key={'move_'+img.id+'_'+(img.index === undefined?-101:img.index)}
+                                         title={<span><Icon type="swap" /><span>移动</span></span>}>
+                                    <Menu.Item
+                                        key={'9_'+img.id+'_'+(img.index === undefined?-101:img.index)}>选项9</Menu.Item>
+                                    <Menu.Item
+                                        key={'10_'+img.id+'_'+(img.index === undefined?-101:img.index)}>选项10</Menu.Item>
+                                    <Menu.Item
+                                        key={'11_'+img.id+'_'+(img.index === undefined?-101:img.index)}>选项11</Menu.Item>
+                                    <Menu.Item
+                                        key={'12_'+img.id+'_'+(img.index === undefined?-101:img.index)}>选项12</Menu.Item>
+                                </SubMenu>
+                                <Menu.Item key={'share_'+img.id+'_'+(img.index === undefined?-101:img.index)}><Icon
+                                    type="share-alt"/>分享</Menu.Item>
+                            </Menu>
                         </section>
                     </div>
                 </figcaption>
@@ -679,13 +706,19 @@ export default class ZmitiUploadDialog extends React.Component {
     }
 
     figcaptionMouse(e) {
-        switch (e.type) {
+        var eventType = e.type;
+        e.persist();
+
+        switch (eventType) {
             case "mouseover":
-                utilMethods.removeClass($$('.figcaption'), 'overflow');
+                this.timer && clearTimeout(this.timer);
+                $('.ant-menu-root').show()
                 break;
             case "mouseout":
-                // this.refs['figcaption'].classList.add('overflow')
-                utilMethods.addClass($$('.figcaption'), 'overflow');
+                this.timer = setTimeout(()=> {
+                    $('.ant-menu-root').hide();
+                }, 500);
+
                 break;
         }
     }
@@ -848,10 +881,6 @@ export default class ZmitiUploadDialog extends React.Component {
 
     }
 
-    upload(e) {
-        console.log(e.file)
-    }
-
 }
 ZmitiUploadDialog.defaultProps = {
     baseUrl: 'http://webapi.zmiti.com/v1/',
@@ -860,4 +889,5 @@ ZmitiUploadDialog.defaultProps = {
     getImgInfoUrl: 'datainfoclass/resinfo/',//获取当前分类下的所有图片资源
     getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071",
     deleteResUrl: 'datainfoclass/resource_del' //删除资源
+
 };

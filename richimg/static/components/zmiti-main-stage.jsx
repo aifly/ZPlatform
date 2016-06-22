@@ -4,6 +4,8 @@ import Icon from 'antd/lib/icon';
 import 'antd/lib/icon/style/css';
 import message from 'antd/lib/message';
 import 'antd/lib/message/style/css';
+import Spin from 'antd/lib/spin';
+import 'antd/lib/spin/style/css';
 import ZmitiTag from './zmiti-tag.jsx';
 
 
@@ -11,6 +13,7 @@ export default class ZmitiMainStage extends React.Component {
     constructor(args) {
         super(...args);
         this.state = {
+            loading:true,
             width:'auto',
             defaultWidth:0,
             richImg: "./static/images/2.png",
@@ -132,12 +135,14 @@ export default class ZmitiMainStage extends React.Component {
             <div className='rm-main-stage' ref="mainStage">
 
                 <div className="rm-tips">双击创建标签</div>
+                <Spin  spinning={this.state.loading}>
+                    <div className="rm-img-container" ref="img-c" style={style} onDoubleClick={this.createTag.bind(this)}>
+                        <img style={{width:'100%',height:'auto'}} id="targetImg" src={this.state.richImg} alt=""
+                             draggable="false"/>
+                        {item}
+                    </div>
+                </Spin>
 
-                <div className="rm-img-container" ref="img-c" style={style} onDoubleClick={this.createTag.bind(this)}>
-                    <img style={{width:'100%',height:'auto'}} id="targetImg" src={this.state.richImg} alt=""
-                         draggable="false"/>
-                    {item}
-                </div>
                 <div className="rm-operator-bar">
                     <div onClick={this.setScale.bind(this,1)}><Icon type='plus'></Icon></div>
                     <div onClick={this.default.bind(this)}>FIT</div>
@@ -165,14 +170,24 @@ export default class ZmitiMainStage extends React.Component {
         stage.keydown = false;
 
 
+
+        this.setState({
+            richImg:this.props.richImg
+        });
+
+
         stage.height(document.documentElement.clientHeight - stage.offset().top - 50);
 
         targetImg.on('load', (e)=> {
 
             this.setState({
                width: stage.offsetWidth,
+                loading:false,
                defaultWidth: e.currentTarget.naturalWidth
             });
+
+            $('.fly-tag .tag').eq(0).trigger('mousedown');
+
 
             /*stage.find('.rm-img-container')
                 .width(targetImg.width())

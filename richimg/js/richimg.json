@@ -1,1 +1,43 @@
-{"richImgData":{"tags":[{"type":"image","href":"","imgSrc":"images/w.png","videoSrc":"","content":"中华人民共和国<div></div><div>哈哈哈</div>","id":"6d43b682-a59f-5d25-6694-1c718817a728","icon":"images/red-plain.png","iconHover":"images/hoverlink.png","styles":{"left":"85.54025423728814%","top":"91.9175911251981%"},"wrapStyles":{"width":"175px","height":"211px"}}],"focusTagIndex":0,"focusTag":{"type":"image","href":"","imgSrc":"images/w.png","videoSrc":"","content":"中华人民共和国<div></div><div>哈哈哈</div>","id":"6d43b682-a59f-5d25-6694-1c718817a728","icon":"images/red-plain.png","iconHover":"images/hoverlink.png","styles":{"left":"85.54025423728814%","top":"91.9175911251981%"},"wrapStyles":{"width":"175px","height":"211px"}}}}
+{
+  "richImgData": {
+    "tags": [
+      {
+        "type": "image",
+        "href": "",
+        "imgSrc": "images/w.png",
+        "videoSrc": "",
+        "content": "中华人民共和国<div></div><div>哈哈哈</div>",
+        "id": "6d43b682-a59f-5d25-6694-1c718817a728",
+        "icon": "images/red-plain.png",
+        "iconHover": "images/hoverlink.png",
+        "styles": {
+          "left": "85.54025423728814%",
+          "top": "91.9175911251981%"
+        },
+        "wrapStyles": {
+          "width": "175px",
+          "height": "211px"
+        }
+      }
+    ],
+    "focusTagIndex": 0,
+    "focusTag": {
+      "type": "image",
+      "href": "",
+      "imgSrc": "images/w.png",
+      "videoSrc": "",
+      "content": "中华人民共和国<div></div><div>哈哈哈</div>",
+      "id": "6d43b682-a59f-5d25-6694-1c718817a728",
+      "icon": "images/red-plain.png",
+      "iconHover": "images/hoverlink.png",
+      "styles": {
+        "left": "85.54025423728814%",
+        "top": "91.9175911251981%"
+      },
+      "wrapStyles": {
+        "width": "175px",
+        "height": "211px"
+      }
+    }
+  }
+}

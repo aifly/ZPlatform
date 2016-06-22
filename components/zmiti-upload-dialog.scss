@@ -256,34 +256,6 @@ $baseColor:#99071e;
         margin-right:10px;
       }
     }
-    ol{
-      li{
-        font-size: 12px;
-        &.active{
-          color:#ff3333;
-        }
-      }
-    }
-    ul{
-      border-bottom: 1px solid #ccc;
-      height: $assetH;
-      width:100%;
-
-      li{
-        &.active{
-          color: $baseColor;
-        }
-      }
-    }
-    li{
-      height: $assetH;
-      line-height: $assetH;
-      float: left;
-      font-size:14px;
-      margin:0 10px;
-      cursor: pointer;
-    }
-
   }
 
   .zmmiti-asset-content{
@@ -305,24 +277,41 @@ $baseColor:#99071e;
         width:140px;
         height:140px;
         border:1px solid #ccc;
+        &.active{
+          &:before{
+            content: '';
+            @include pos(a);
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,.5) url('../richimg/static/images/checked.png') no-repeat center center;
+            z-index:1;
+
+
+          }
+        }
         margin:2px;
         box-sizing: border-box;
         @include br(1px);
         background:#eaeaf0;
-
+        //overflow: hidden;
         &.overflow{
-          overflow: hidden;
+          //overflow: hidden;
         }
 
         @include pos(r);
-        &:hover{
-
+        &:not(:first-of-type):hover{
+          border-color:#f00;
         }
         &:hover img{
           @include transform(scale(.9));
         }
         &:hover .zmiti-img-info{
           opacity: 1;
+        }
+        .zmiti-img-C{
+          width:100%;
+          height: 140px;
+          overflow: hidden;
 
         }
         .zmiti-img-info{
@@ -338,14 +327,14 @@ $baseColor:#99071e;
           @include displayFlex(row);
           .zmiti-img-i{
             margin-left: 4px;
-            flex-grow: 4;
+            flex-grow: 10;
             span{
               margin:0 4px;
             }
           }
           section:nth-of-type(2){
             flex-grow: 1;
-            text-align: right;
+            text-align:left;
             margin-right:10px;
             @include pos(r);
             &:before{
@@ -357,58 +346,10 @@ $baseColor:#99071e;
               top:10px;
               @include fly-v-gradient-line();
             }
-            &:hover ul{
-              display: block;
-            }
-            ul{
-              display: none;
-              @include pos(a);
-              width:130px;
-              height:130px;
-              border:1px solid #ccc;
-              top:34px;
-              left:-10px;
-              background:#fff;
-              @include br(4px);
-              z-index:1;
-              padding:0;
-              &:before{
-                content: '';
-                @include pos(a);
-                width:10px;
-                height:10px;
-                background: inherit;
-                left:11px;
-                top:-5px;
-                z-index:-1;
-                border:1px solid #ccc;
-                @include transform(rotate(45deg));
-                border-bottom: none;
-                border-right:none;
-              }
-              li{
-                &:first-of-type{
-                  margin-top:5px;
-                }
-                width:100%;
-                float: none;
-                @include transition(.2s);
-                &:hover{
-                  background:#0b97c4;
-                  color:#fff;
-                  text-indent: 3em;
-                }
-                margin:0;
-                text-indent: 2em;
-                padding:0;
-                text-align: left;
-              }
-              img{width: 20px;}
-            }
           }
         }
         img{
-          @include pos(a);
+          @include pos(r);
           @include transition_transform(.2s);
         }
       }

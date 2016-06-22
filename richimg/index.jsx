@@ -30,7 +30,7 @@ import ZmitiChooseFile from './static/components/zmiti-choose-file.jsx';
 import ZmitiTag from './static/components/zmiti-tag.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
-
+import {utilMethods,_$,$$} from './utilMethod.es6';
 
 class ZmitiLeftApp extends React.Component {
     constructor(args) {
@@ -40,7 +40,6 @@ class ZmitiLeftApp extends React.Component {
             picClassName: "rm-pic-video-title rm-pannel active"
         }
     }
-
 
     componentDidMount(){
 
@@ -63,8 +62,13 @@ class ZmitiLeftApp extends React.Component {
         let methods = {
             changeTagPropValue:this.props.changeTagPropValue,
             deleteTag:this.props.deleteTag,
-            getFocusComponent:this.props.getFocusComponent
+            getFocusComponent:this.props.getFocusComponent,
+                worksid: this.props.worksid,
+            baseUrl:this.props.baseUrl
         }
+
+
+
         return (
             <aside id="rm-left-app" className="rm-left-app">
                 <header className="rm-header">编辑图片</header>
@@ -106,7 +110,10 @@ class ZmitiRightApp extends React.Component {
             createTag:this.props.createTag,
             deleteTag:this.props.deleteTag
 
+
         };
+
+
         return (
             <aside id="rm-right-app" className="rm-right-app">
                 <div className="rm-main-ui-C">
@@ -114,7 +121,7 @@ class ZmitiRightApp extends React.Component {
                         <ZmitiTopBanner></ZmitiTopBanner>
                     </div>
                     <div className="rm-stage-C">
-                        <ZmitiMainStage {...this.props} {...methods}></ZmitiMainStage>
+                        <ZmitiMainStage {...this.props}  {...methods}></ZmitiMainStage>
                     </div>
                 </div>
             </aside>
@@ -127,28 +134,11 @@ class MainUI extends React.Component {
         super(...args);
        /// this.changeTagType = this.changeTagType.bind(this);
         this.state = {
+            richImg:"",
             ltP:{
                 richImgData:{
                     tags:[
-                        {
-                            "type": "image",
-                            "href": "",
-                            imgSrc:'images/w.png',
-                            videoSrc:'',
-                            "content": "",
-                            "id": ZmitiTag.getGuid(),
-                            "icon": "images/red-plain.png",
-                            "iconHover": "images/hoverlink.png",
-                            "styles": {
-                                "left": "55%",
-                                "top": "42%"
-                            },
-                            "wrapStyles": {
-                                "width": "200px",
-                                "height": "130px",
-                                "fontFamily": "'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif"
-                            }
-                        }
+
 
                     ],
                     focusTagIndex:0
@@ -159,19 +149,21 @@ class MainUI extends React.Component {
     }
 
     componentDidMount(){
-        this.setState({
-            ltP:{
-                richImgData:{
-                    tags:this.state.ltP.richImgData.tags,
-                    focusTagIndex:0,
-                    focusTag:this.state.ltP.richImgData.tags[this.state.ltP.richImgData.focusTagIndex]
-                }
-            }
-        },()=>{
-            window.Zmiti = this.state.ltP;
-           /* Zmiti.richImgData = Zmiti.index;
-            Zmiti.index = null;*/
+
+        let data = utilMethods.getQueryString('richimg'),
+            d = JSON.parse(decodeURI(data));
+
+        $.getJSON(d.jsonSrc,null,(json)=>{
+
+            this.state.ltP = json;
+            this.state.ltP.focusTagIndex = 0;
+            this.state.ltP.focusTag = this.state.ltP.richImgData.tags[0];
+            this.forceUpdate(()=>{
+                window.Zmiti = this.state.ltP;
+            });
         });
+
+
 
 
     }
@@ -183,9 +175,11 @@ class MainUI extends React.Component {
      * @param value 属性值
      */
     changeTagPropValue(key,value){//
+        if(this.state.ltP.richImgData.focusTag){
+            this.state.ltP.richImgData.focusTag[key] = value;
+            this.forceUpdate();
+        }
 
-        this.state.ltP.richImgData.focusTag[key] = value;
-        this.forceUpdate();
     }
 
     /**
@@ -217,24 +211,32 @@ class MainUI extends React.Component {
     }
 
     render() {
+        let data = utilMethods.getQueryString('richimg'),
+            d = JSON.parse(decodeURI(data));
 
         let methods = {
             changeTagPropValue:this.changeTagPropValue.bind(this),
             getFocusComponent:this.getFocusComponent.bind(this),
             createTag:this.createTag.bind(this),
-            deleteTag:this.deleteTag.bind(this)
+            deleteTag:this.deleteTag.bind(this),
+            worksid:d.projectId,
+            baseUrl:this.props.baseUrl
         }
 
         return (
             <div className="rm-main-ui">
                 <ZmitiLeftApp {...this.state.ltP.richImgData} {...methods}></ZmitiLeftApp>
-                <ZmitiRightApp {...this.state.ltP.richImgData} {...methods}></ZmitiRightApp>
-                <ZmitiUploadDialog></ZmitiUploadDialog>
+                <ZmitiRightApp {...this.state.ltP.richImgData} richImg={d.imgSrc} {...methods}></ZmitiRightApp>
+
             </div>
         )
     }
 }
 
+MainUI.defaultProps = {
+    baseUrl: 'http://webapi.zmiti.com/v1/',
+    getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071"
+}
 ReactDOM.render(<MainUI></MainUI>, $("#fly-main")[0],()=>{
 
     const key = `open${Date.now()}`;

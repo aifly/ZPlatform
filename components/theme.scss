@@ -168,3 +168,7 @@ $hoverColor:#bf1616;
 .ant-modal-wrap{
   background: rgba(0, 0, 0, .5);
 }
+
+.ant-menu{
+  @include pos(a);
+}

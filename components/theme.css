@@ -46,4 +46,7 @@ input, textarea {
 .ant-modal-wrap {
   background: rgba(0, 0, 0, 0.5); }
 
+.ant-menu {
+  position: absolute; }
+
 /*# sourceMappingURL=theme.css.map */

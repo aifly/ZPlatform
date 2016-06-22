@@ -71,12 +71,15 @@ export default class ZmitiTextAreaBtns extends React.Component {
                 break;
         }
 
+
+
         let content = this.props.textContent;
         this.props.changeTagPropValue("content", content.replace("<div", "<div style=" + style + ""))
 
     }
 
     componentDidMount() {
+
         let textContent = this.props.textContent.startsWith('<div') ? this.props.textContent : "<div>" + this.props.textContent + "</div>";
         setTimeout(()=> {
             this.props.changeTagPropValue('content', textContent);
@@ -113,4 +116,8 @@ export default class ZmitiTextAreaBtns extends React.Component {
             </div>
         )
     }
+}
+
+ZmitiTextAreaBtns.defaultProps = {
+    textContent:''
 }
