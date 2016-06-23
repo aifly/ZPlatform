@@ -61,4 +61,11 @@
       margin-left: -5px;
       left: 50%; }
 
+.fly-z-close {
+  position: absolute;
+  right: 0;
+  top: -10px;
+  cursor: pointer;
+  font-size: 30px; }
+
 /*# sourceMappingURL=zmiti-tag.css.map */

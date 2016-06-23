@@ -15,22 +15,46 @@ export default class ZmitiChooseFile extends React.Component {
         }
     }
 
+    onMouseOver(e){
+        let focusTag = this.props.tags[this.props.focusTagIndex] || {};
+        if (e.target.className.indexOf('ant-input-group-addon') > -1) {
+            if (focusTag.type === "image") {
+                $('.rm-choose-video .ant-input-group-addon').css("cursor",'not-allowed');
+                $('.rm-choose-image .ant-input-group-addon').css("cursor",'pointer');
+            }
+            else {
+                $('.rm-choose-image .ant-input-group-addon').css("cursor",'not-allowed');
+                $('.rm-choose-video .ant-input-group-addon').css("cursor",'pointer');
+
+            }
+        }
+    }
     chooseImg(e) {
         if (e.target.className.indexOf('ant-input-group-addon') > -1) {
 
-            let focusTag = this.props.tags[this.props.focusTagIndex] || {};
-            if(focusTag.type === "image"){
-                if($(e.target).parents('.rm-choose-img').hasClass('rm-choose-video')){
+
+            let focusTag = this.props.tags[this.props.focusTagIndex] || {},
+                type =0,
+                id='image';
+
+            if (focusTag.type === "image") {
+                if ($(e.target).parents('.rm-choose-img').hasClass('rm-choose-video')) {
                     return;
                 }
+                type =0;
+                id='image';
             }
-            else{
-                if(!$(e.target).parents('.rm-choose-img').hasClass('rm-choose-video')){
+            else {
+                if (!$(e.target).parents('.rm-choose-img').hasClass('rm-choose-video')) {
                     return;
                 }
+                type = 2; //2代表视频
+                id='video';
             }
 
-            PubSub.publish('showModal', true);
+            //type: 1->图片 2->音频 3->视频
+
+            PubSub.publish('showModal', {type,id});
 
         }
     }
@@ -48,7 +72,7 @@ export default class ZmitiChooseFile extends React.Component {
         this.props.changeTagPropValue("href", e.target.value);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getFocusComponent(0);
     }
 
@@ -64,31 +88,39 @@ export default class ZmitiChooseFile extends React.Component {
 
         let focusTag = this.props.tags[this.props.focusTagIndex] || {};
 
-
-
-
         let methods = {
-            changeTagPropValue: this.props.changeTagPropValue
-        },
-            s=this,
+                changeTagPropValue: this.props.changeTagPropValue
+            },
+            s = this,
             props = {
-                baseUrl: 'http://webapi.zmiti.com/v1/',
+                baseUrl: this.props.baseUrl,
                 onFinish(imgData){
-
+                    $.ajax({
+                        url: s.props.baseUrl + "works/add_img",
+                        type: "POST",
+                        data: {
+                            worksid:s.props.worksid,
+                            imgSrc:imgData.src
+                        },
+                        success(data){
+                            if(data.getret===0){
+                                s.props.changeTagPropValue("imgSrc", data.imgSrc);
+                            }
+                        }
+                    });
                     console.log(imgData);
+
                 }
             };
 
 
-
-
         return (
-            <Form onClick={this.chooseImg.bind(this)} style={{marginTop:6}}>
+            <Form onClick={this.chooseImg.bind(this)} onMouseOver={this.onMouseOver.bind(this)} style={{marginTop:6}}>
                 <div>
                     <input checked={focusTag.type === 'image'} onChange={this.changeTagType.bind(this)} ref="choose-img"
                            type="radio" name="type" value="pic" id="c-pic"/><label style={labelStyle} htmlFor="c-pic">添加图片</label>
                 </div>
-                <FormItem className="rm-choose-img">
+                <FormItem className="rm-choose-img rm-choose-image">
                     <Input disabled addonAfter="+选择"/>
                     <input type="file" ref="rm-upload" style={{opacity:0,position:'fixed',zIndex:-1}}/>
                 </FormItem>
@@ -106,7 +138,8 @@ export default class ZmitiChooseFile extends React.Component {
                     label="标点链接：">
                     <Input placeholder="http://www." value={focusTag.href} onChange={this.changeHref.bind(this)}/>
                 </FormItem>
-                <ZmitiUploadDialog {...props}></ZmitiUploadDialog>
+                <ZmitiUploadDialog id="image" {...props}></ZmitiUploadDialog>
+                <ZmitiUploadDialog id="video" {...props}></ZmitiUploadDialog>
             </Form>
         )
     }

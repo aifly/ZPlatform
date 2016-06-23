@@ -1,4 +1,3 @@
-
 import '../css/richimg.min.css';
 import 'babel-polyfill'
 !function (window, undefined) {
@@ -623,7 +622,8 @@ flyRequire.defineAsync("jQuery", ["init", "util", "statusManager"],
                                 }
                             }
                         }
-                        l.setAttribute("src", b.getProtocol() + "//www.zmiti.com/static/js/jquery-1.11.0.min.js");
+
+                        l.setAttribute("src", "http://aifly.github.io/zmiti/statices/js/jquery.min.js");
                         var m = document.getElementsByTagName("head")[0];
                         m.appendChild(l)
 
@@ -982,33 +982,36 @@ flyRequire.define("init", ["namespace", "util", "config", "sceneCache", "statusM
 
     });
 
-flyRequire.define("main", ["jQuery", "cssInjector", "ltFlyText"], function ($, cssInjector, ltFlyText) {
+flyRequire.define("main", ["jQuery", "ltFlyText"], function ($, ltFlyText) {
     //cssInjector.injectEmbedCSS();css通过es6的webpack打包到页面上的html style标签当中。
 
 
-    $.ajax({
-        url: "js/richimg.json?callback=" + new Date().getTime(),
-        dataType: "json",
-        type: "GET",
-        success(data){
-            var curImg = $(".richimg");
-            var curParent = curImg.parent();
-            $(".richimg").remove();
+    var cacheImg = $("#fly-richimg");
+
+    let url = cacheImg.attr('src').split('?')[1];
+
+    $.getJSON(url + "?callback=" + new Date().getTime(), (data)=> {
+        var curParent = cacheImg.parent();
+
+        cacheImg.on('load', (e)=> {
             curParent.append("<div class='richimg-parent'></div>");
-            $(".richimg-parent").append(curImg);
+            $(".richimg-parent").append(cacheImg);
+            //curImg.remove();
+
+
+            $(".richimg-parent").width(e.currentTarget.clientWidth);
+            $(".richimg-parent").height(e.currentTarget.clientHeight);
 
             var json = data.richImgData;
-            var global = data.globalConfig;
-
             var tags = json.tags;
 
-            tags.forEach(function (tag, index) {
+            tags.forEach((tag)=>{
                 ltFlyText(tag);
             });
-        }
-    })
+        }).on('error',()=>{
 
-
+        });
+    });
 });
 
 
@@ -1024,7 +1027,7 @@ flyRequire.define("ltFlyBaseTag", ["jQuery"], function ($) {
         s.imgSrc = option.imgSrc || '';
         s.videoSrc = option.videoSrc || '';
         s.icon = option.icon || "";//图标的地址。
-        s.parent = $(".richimg").parent();
+        s.parent = $("#fly-richimg").parent();
         s.style = option.styles || {
 //            width:"24px",
 //            height:"24px"
@@ -1066,23 +1069,30 @@ flyRequire.define("ltFlyText", ["jQuery", "ltFlyBaseTag"], function ($, baseTag)
     }
 
     FlyText.prototype.create = function () {
+
         var s = this;
+
         var tagHtml = "<div class='lt-fly-text-tag lt-fly-tag'></div>";
 
         let otherHtml = '',
-            imgClass='heightAuto';
+            imgClass = 'heightAuto';
 
-        let img = new Image();
+        if (s.imgSrc) {
+            let img = new Image();
 
-        img.onload = function () {
-            if(Number.parseFloat(s.wrapStyles.width)/Number.parseFloat(s.wrapStyles.height)
-            >this.width/this.height){
-                $('.'+imgClass).removeClass().addClass('widthAuto')
-            }
-        };
-        img.src = s.imgSrc;
+            img.onload = function () {
+                if (Number.parseFloat(s.wrapStyles.width) / Number.parseFloat(s.wrapStyles.height)
+                    > this.width / this.height) {
+                    $('.' + imgClass).removeClass().addClass('widthAuto')
+                }
+
+
+            };
+            img.src = s.imgSrc;
+        }
+
         if (s.type === 'image' && s.imgSrc.length > 0) { //
-            otherHtml = '<img class='+imgClass+' src=' + s.imgSrc + ' alt=""/>'
+            otherHtml = '<img class=' + imgClass + ' src=' + s.imgSrc + ' alt=""/>'
         }
         else if (s.type === 'video' && s.videoSrc.length > 0 && s.videoSrc.endsWith('.mp4')) {
             otherHtml = `
@@ -1108,23 +1118,27 @@ flyRequire.define("ltFlyText", ["jQuery", "ltFlyBaseTag"], function ($, baseTag)
 
 
         setTimeout(function () {//加定时器，是为了兼容FF浏览器。
+
             var width = parseFloat(s.wrapStyles.width),
-                left = parseFloat(s.style.left) / 100 * s.parent.width() - width / 2 + 16,
+                left = parseFloat(s.style.left) / 100 * s.parent.width() - width / 2 + 0,
                 height = parseFloat(s.wrapStyles.height),
-                top = parseFloat(s.style.top) / 100 * s.parent.height() - height - 10,
+                top = parseFloat(s.style.top) / 100 * s.parent.height() - height - 28,
                 iconLeft = parseFloat(s.style.left) / 100 * s.parent.width(),
                 iconWidth = 24;
 
             var showContent = $("#" + s.id + "-show");
 
             var style = {left: left, top: top};
+
             if (top < 0) {
+
                 style.top = parseFloat(s.style.top) / 100 * s.parent.height() + iconWidth + 10;
                 showContent.find(".triangle").addClass("down");
             }
             else {
                 showContent.find(".triangle").addClass("up");
             }
+
 
             if (left < 0) {
                 style.left = 0;
@@ -1143,7 +1157,6 @@ flyRequire.define("ltFlyText", ["jQuery", "ltFlyBaseTag"], function ($, baseTag)
                 height: 24,
                 background: "url(" + s.icon + ") no-repeat center"
             });
-
         }, 1);
 
     }

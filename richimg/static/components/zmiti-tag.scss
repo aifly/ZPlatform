@@ -187,3 +187,12 @@
     }
   }
 }
+
+.fly-z-close{
+  @include pos(a);
+  right:0;
+  top:-10px;
+  cursor: pointer;
+  font-size:30px;
+
+}

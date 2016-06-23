@@ -59,28 +59,35 @@ export default class ZmitiTextAreaBtns extends React.Component {
     }
 
     changeTagContentStyle(type) {
-        let style = '';
+        this.style = this.style || [];
         switch (type) {
             case"b":
                 this.bold = !this.bold;
-                style += 'font-weight:' + (this.bold ? 'bold' : 'normal');
+                this.style[this.bold?'push':'remove']('bold');
                 break;
             case 'i':
                 this.italic = !this.italic;
-                style += 'font-style:' + (this.italic ? 'italic' : 'normal');
+                this.style[this.italic?'push':'remove']('italic');
                 break;
         }
 
-
-
-        let content = this.props.textContent;
-        this.props.changeTagPropValue("content", content.replace("<div", "<div style=" + style + ""))
+        let content = "<div  class='"+this.style.join(' ')+"'>" + this.props.textContent.replace(/<[^>]+>/g,"") + "</div>";
+        this.props.changeTagPropValue("content", content);
 
     }
 
     componentDidMount() {
 
+        Array.prototype.remove = function(item){
+            this.forEach((a,i)=>{
+               if(a === item){
+                   this.splice(i,1);
+               }
+            });
+        };
+
         let textContent = this.props.textContent.startsWith('<div') ? this.props.textContent : "<div>" + this.props.textContent + "</div>";
+
         setTimeout(()=> {
             this.props.changeTagPropValue('content', textContent);
         }, 0);
@@ -119,5 +126,5 @@ export default class ZmitiTextAreaBtns extends React.Component {
 }
 
 ZmitiTextAreaBtns.defaultProps = {
-    textContent:''
+    textContent: ''
 }

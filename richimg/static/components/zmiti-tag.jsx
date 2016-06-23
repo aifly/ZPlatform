@@ -76,10 +76,10 @@ class ZmitiTag extends React.Component {
     render() {
 
         let img = '';
-        this.props.imgSrc === undefined && (this.props.imgSrc = '');
-        this.props.videoSrc === undefined && (this.props.videoSrc = '');
+      /*  this.props.imgSrc === undefined && (this.props.imgSrc = '');
+        this.props.videoSrc === undefined && (this.props.videoSrc = '');*/
         if(this.props.type === 'image'&& this.props.imgSrc.length>0 && (this.props.imgSrc.includes('.png')||this.props.imgSrc.includes('.jpg')||this.props.imgSrc.includes('.gif'))){
-                img = <img src={this.props.imgSrc} width={this.state.remarkStyle.width}  alt=""/>;
+                img = <div><img src={this.props.imgSrc} width={this.state.remarkStyle.width}  alt=""/><span onClick={this.deleteImg.bind(this)} className="fly-z-close">&times;</span></div>;
         }
 
         return (
@@ -98,6 +98,10 @@ class ZmitiTag extends React.Component {
                 </div>
             </section>
         )
+    }
+    deleteImg(){
+
+        this.props.changeTagPropValue('imgSrc','');
     }
 
     componentDidMount() {

@@ -26,7 +26,7 @@ class ZmitiHeader extends React.Component {
     }
 
     createProject() {
-        PubSub.publish('showModal', true);
+        PubSub.publish('showModal', {type:0,id:'image'});
     }
 
     render() {
@@ -172,7 +172,7 @@ class MainUI extends React.Component {
             <div className="zmiti-main-ui">
                 <ZmitiHeader></ZmitiHeader>
                 <ZmitiMainContent></ZmitiMainContent>
-                <ZmitiUploadDialog {...props}></ZmitiUploadDialog>
+                <ZmitiUploadDialog  id="image" {...props}></ZmitiUploadDialog>
             </div>
         )
     }

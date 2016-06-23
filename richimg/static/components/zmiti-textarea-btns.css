@@ -26,4 +26,10 @@
       transform: scale(1);
       margin-left: 4px; }
 
+.bold {
+  font-weight: bold; }
+
+.italic {
+  font-style: italic; }
+
 /*# sourceMappingURL=zmiti-textarea-btns.css.map */

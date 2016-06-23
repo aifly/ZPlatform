@@ -18,7 +18,7 @@ import 'antd/lib/notification/style/css';
 /*import 'babel-polyfill';
 import { Provider } from 'react-redux';*/
 
-import ZmitiTextAreaBtns from './static/components/zmiti-textarea-btns.jsx';
+
 import ZmitiMiniColor from './static/components/zmiti-minicolor.jsx';
 
 /*import ZmitiRipple from './static/components/zmiti-ripple.jsx';*/
@@ -63,7 +63,7 @@ class ZmitiLeftApp extends React.Component {
             changeTagPropValue:this.props.changeTagPropValue,
             deleteTag:this.props.deleteTag,
             getFocusComponent:this.props.getFocusComponent,
-                worksid: this.props.worksid,
+            worksid: this.props.worksid,
             baseUrl:this.props.baseUrl
         }
 
@@ -109,8 +109,6 @@ class ZmitiRightApp extends React.Component {
             getFocusComponent:this.props.getFocusComponent,
             createTag:this.props.createTag,
             deleteTag:this.props.deleteTag
-
-
         };
 
 
@@ -220,7 +218,9 @@ class MainUI extends React.Component {
             createTag:this.createTag.bind(this),
             deleteTag:this.deleteTag.bind(this),
             worksid:d.projectId,
-            baseUrl:this.props.baseUrl
+            baseUrl:this.props.baseUrl,
+            imgSrc:d.imgSrc,
+            jsonSrc:d.jsonSrc
         }
 
         return (

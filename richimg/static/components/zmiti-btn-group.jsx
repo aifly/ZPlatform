@@ -10,6 +10,9 @@ export default class ZmitiBtnGroup extends React.Component {
     constructor(args) {
         super(...args);
         this.save = this.save.bind(this);
+        this.state = {
+            loading: false
+        }
     }
 
     warning() {
@@ -17,21 +20,38 @@ export default class ZmitiBtnGroup extends React.Component {
     }
 
     save() {
+        this.setState({
+            loading: true
+        }, ()=> {
 
-        let url = this.props.baseUrl + "works/upload_json";
+        });
+
+        let url = this.props.baseUrl + "works/upload_json",
+            s = this;
+
+        /*window.Zmiti.richImgData.tags = window.Zmiti.richImgData.tags.map(tag=> {
+
+            if (!tag.content.startsWith('<div')) {
+                return "<div>" + tag.content + "</div>";
+            }
+        });*/
+
         $.ajax({
             type: "POST",
             url: url,
             data: {
-                worksid: this.props.worksid,
+                worksid: s.props.worksid,
                 json: window.Zmiti
             },
             success(data){
                 if (data.getret === 0) {
-                    message.success('保存成功',4);
+                    message.success('保存成功', 4);
+                    s.setState({
+                        loading: false
+                    });
                 }
-                else{
-                    message.error('保存失败',3);
+                else {
+                    message.error('保存失败', 3);
                 }
             }
         });
@@ -49,10 +69,10 @@ export default class ZmitiBtnGroup extends React.Component {
     render() {
         let style = {
             color: '#fff',
-            fontSize: 30,
+            fontSize: 20,
             border: '1px solid #ccc',
             position: 'relative',
-            top: 8,
+            top: 4,
             padding: 6,
             borderRadius: 5,
             cursor: 'pointer'
@@ -61,7 +81,7 @@ export default class ZmitiBtnGroup extends React.Component {
             <div className="rm-btn-group">
                 <Icon onClick={this.delete.bind(this)} type="delete" style={style}/>
                 <Button type="" size="large">CANCEL</Button>
-                <Button type="primary" size="large" onClick={this.save}>SAVE TAG</Button>
+                <Button type="primary" size="large" loading={this.state.loading} onClick={this.save}>SAVE TAG</Button>
             </div>
         )
     }

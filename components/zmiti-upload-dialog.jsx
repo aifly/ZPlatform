@@ -51,6 +51,7 @@ export default class ZmitiUploadDialog extends React.Component {
             currentCate: -1,
             editable: false,
             loading: false,
+            type: 0,//当前显示的类型，0表示图片，1表示音频，2表示视频
             uploadLoading: false,
             ajaxData: [],
             cateVisible: false,//添加分类的对话框
@@ -72,7 +73,7 @@ export default class ZmitiUploadDialog extends React.Component {
         this.setState({
             visible: false
         });
-        this.props.onFinish &&this.props.onFinish(this.imgData);
+        this.props.onFinish && this.props.onFinish(this.imgData);
     }
 
     handleCancel() {
@@ -81,261 +82,268 @@ export default class ZmitiUploadDialog extends React.Component {
         });
     }
 
-    showModal() {
+    showModal(data) {
 
+        if (this.props.id !== data.id) {
+            return;
+        }
         this.setState({
-            visible: true
+            visible: true,
+            type: data.type
         });
 
-        let self = this;
+        if (!this.isShowModel) { //当再次打开对话框的时候，如果第一次请求成功。不再进行第二次请求
+            this.isShowModel = true;
+            let self = this;
 
-        self.setState({
-            loading: true
-        });
-        $.ajax({//获取当前分类信息.
-            url: self.props.baseUrl + self.props.cateUrl + 'get_datainfo',
-            type: "POST",
-            data: {
-                "getusersigid": self.props.getusersigid,
-                "id": self.state.defaultIds[self.state.current]
-            },
-            success(data){
-                let d = data;
-                if (d.getret === -101) {
-                    return;
+            self.setState({
+                loading: true
+            });
+
+            $.ajax({//获取当前分类信息.
+                url: self.props.baseUrl + self.props.cateUrl + 'get_datainfo',
+                type: "POST",
+                data: {
+                    "datainfotype": data.type,
+                    "getusersigid": self.props.getusersigid,
+                    "id": self.state.defaultIds[self.state.current]
+                },
+                success(data){
+                    let d = data;
+                    if (d.getret === -101) {
+                        this.isShowModel = false;
+                        return;
+                    }
+
+                    self.state.ajaxData[self.state.current] = d.dataInfo;
+                    self.state.alreadyRequest.push(self.state.current);
+                    self.state.loading = false;
+                    self.state.allData[self.state.current].imgs.length = 0;
+
+                    self.state.allData[self.state.current].imgs = self.state.allData[self.state.current].imgs.concat(d.allImgs);
+
+                    self.state.ajaxData[self.state.current].forEach((img, i)=> {
+
+                        img.parentName.imgs[i] && ( img.parentName.imgs[i].index = i); // 记录全部分类下面的图片所属哪个分类.
+                        self.state.allData[self.state.current].imgs = self.state.allData[self.state.current].imgs.concat(img.parentName.imgs);
+                    });
+
+                    self.forceUpdate();
+
+                },
+                error(e){
+                    console.log(e)
                 }
-
-
-                self.state.ajaxData[self.state.current] = d.dataInfo;
-                self.state.alreadyRequest.push(self.state.current);
-                self.state.loading = false;
-                self.state.allData[self.state.current].imgs.length = 0;
-
-                self.state.allData[self.state.current].imgs = self.state.allData[self.state.current].imgs.concat(d.allImgs);
-
-                self.state.ajaxData[self.state.current].forEach((img, i)=> {
-
-                    img.parentName.imgs[i] && ( img.parentName.imgs[i].index = i); // 记录全部分类下面的图片所属哪个分类.
-                    self.state.allData[self.state.current].imgs = self.state.allData[self.state.current].imgs.concat(img.parentName.imgs);
-                });
-
-                self.forceUpdate();
-
-
-            },
-            error(e){
-                console.log(e)
-            }
-        });
-
-
-        this.setState({
-            ajaxData: [
-                [],
-                [
-                    {
-                        parentName: {},
-                        subNames: []
-                    },
-                    {
-                        parentName: {},
-                        subNames: []
-                    }
+            });
+            this.setState({
+                ajaxData: [
+                    [],
+                    [
+                        {
+                            parentName: {},
+                            subNames: []
+                        },
+                        {
+                            parentName: {},
+                            subNames: []
+                        }
+                    ],
+                    [
+                        {
+                            parentName: {},
+                            subNames: []
+                        },
+                        {
+                            parentName: {},
+                            subNames: []
+                        }
+                    ],
+                    [],
+                    [],
+                    [
+                        {
+                            parentName: {},
+                            subNames: []
+                        },
+                        {
+                            parentName: {},
+                            subNames: []
+                        }
+                    ]
                 ],
-                [
+                allData: [
                     {
-                        parentName: {},
-                        subNames: []
+                        imgs: [
+                            {
+                                src: './static/images/2.png',
+                                size: '1920x1080',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: './static/images/2.png',
+                                size: '1920x1080',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: './static/images/1.jpg',
+                                size: '160x253',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            }, {
+                                src: './static/images/2.png',
+                                size: '1920x1080',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            }
+                        ]
                     },
                     {
-                        parentName: {},
-                        subNames: []
-                    }
-                ],
-                [],
-                [],
-                [
-                    {
-                        parentName: {},
-                        subNames: []
+                        imgs: [
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: './static/images/w.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            }
+                        ]
                     },
                     {
-                        parentName: {},
-                        subNames: []
+                        imgs: [
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: './static/images/w.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            }
+                        ]
+                    },
+                    {
+                        imgs: [
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: './static/images/w.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            }
+                        ]
+                    },
+                    {
+                        imgs: []
+                    },
+                    {
+                        imgs: [
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            },
+                            {
+                                src: './static/images/w.png',
+                                size: '100x100',
+                                storageSize: '0.1M',
+                                id: 1
+
+                            }
+                        ]
                     }
                 ]
-            ],
-            allData: [
-                {
-                    imgs: [
-                        {
-                            src: './static/images/2.png',
-                            size: '1920x1080',
-                            storageSize: '0.1M',
-                            id: 1
+            });
+        }
 
-                        },
-                        {
-                            src: './static/images/2.png',
-                            size: '1920x1080',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: './static/images/1.jpg',
-                            size: '160x253',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        }, {
-                            src: './static/images/2.png',
-                            size: '1920x1080',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        }
-                    ]
-                },
-                {
-                    imgs: [
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: './static/images/w.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        }
-                    ]
-                },
-                {
-                    imgs: [
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: './static/images/w.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        }
-                    ]
-                },
-                {
-                    imgs: [
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: './static/images/w.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        }
-                    ]
-                },
-                {
-                    imgs: []
-                },
-                {
-                    imgs: [
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: 'https://os.alipayobjects.com/rmsportal/NDbkJhpzmLxtPhB.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        },
-                        {
-                            src: './static/images/w.png',
-                            size: '100x100',
-                            storageSize: '0.1M',
-                            id: 1
-
-                        }
-                    ]
-                }
-            ]
-        });
 
     }
 
     componentDidMount() {
         PubSub.subscribe("showModal", (d, e)=> {
-            this.showModal();
+            this.showModal(e);
         });
 
         $$('li', this.refs['menu-C']).forEach((li, i)=> {
@@ -451,7 +459,7 @@ export default class ZmitiUploadDialog extends React.Component {
         });
 
         formData.append('setupfile', this.refs['upload-file'].files[0]);
-        formData.append('setuploadtype', 0);
+        formData.append('setuploadtype', this.state.type);
         formData.append('getusersigid', s.props.getusersigid);
         formData.append('datainfoclassid', s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "");
         formData.append('setisthum', 1);
@@ -465,7 +473,15 @@ export default class ZmitiUploadDialog extends React.Component {
             processData: false,
             data: formData,
             success(da){
+
+                if (da.gettips) {//
+                    message.error(d.gettips[0]);
+                    return;
+                }
                 if (da.getret === 0) {
+
+
+
                     message.success(da.getmsg, 4);
 
                     da = da.getfileurlArr[0];
