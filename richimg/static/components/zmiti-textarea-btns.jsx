@@ -52,10 +52,14 @@ export default class ZmitiTextAreaBtns extends React.Component {
                 return false;
             }
         }
+        let target=e.target;
+        if(e.target.parentNode && e.target.parentNode.classList.contains('rm-tag-content')){
+            target = e.target.parentNode;
+        }
 
-        this.props.changeTagPropValue('content', e.target[val]);
+        this.props.changeTagPropValue('content', target[val]);
 
-        PubSub.publish('changeTagContent', {html: e.target[val], type: e.target[val] ? 'block' : 'none'});
+        PubSub.publish('changeTagContent', {html: target[val], type: target[val] ? 'block' : 'none'});
     }
 
     changeTagContentStyle(type) {
@@ -63,26 +67,26 @@ export default class ZmitiTextAreaBtns extends React.Component {
         switch (type) {
             case"b":
                 this.bold = !this.bold;
-                this.style[this.bold?'push':'remove']('bold');
+                this.style[this.bold ? 'push' : 'remove']('bold');
                 break;
             case 'i':
                 this.italic = !this.italic;
-                this.style[this.italic?'push':'remove']('italic');
+                this.style[this.italic ? 'push' : 'remove']('italic');
                 break;
         }
 
-        let content = "<div  class='"+this.style.join(' ')+"'>" + this.props.textContent.replace(/<[^>]+>/g,"") + "</div>";
+        let content = "<div  class='" + this.style.join(' ') + "'>" + this.props.textContent.replace(/<[^>]+>/g, "") + "</div>";
         this.props.changeTagPropValue("content", content);
 
     }
 
     componentDidMount() {
 
-        Array.prototype.remove = function(item){
-            this.forEach((a,i)=>{
-               if(a === item){
-                   this.splice(i,1);
-               }
+        Array.prototype.remove = function (item) {
+            this.forEach((a, i)=> {
+                if (a === item) {
+                    this.splice(i, 1);
+                }
             });
         };
 

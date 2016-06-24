@@ -399,7 +399,7 @@ export default class ZmitiUploadDialog extends React.Component {
                                 <li>公司资料库</li>
                                 <li style={{cursor:'not-allowed'}}>我的资料库</li>
                                 <li className="zmiti-sub-menu">基本资料库</li>
-                                <li className="zmiti-sub-menu">我的素材库</li>
+                                <li className="zmiti-sub-menu active">我的素材库</li>
                                 <li className="zmiti-sub-menu">我的作品库</li>
                             </ul>
 
@@ -518,31 +518,42 @@ export default class ZmitiUploadDialog extends React.Component {
         e.preventDefault();
         e.persist();
         let target = $(e.target).parents('.figcaption');
-        $('.zmiti-img-figure-C .figcaption').removeClass('active');
-        target.addClass('active');
-        let img = null,
-            infos = target.data('id').split('_'),
-            id = infos[0],
-            index = infos[1] * 1;
+        let img = null;
 
-        if (this.state.currentCate === -1) {
-            if (isNaN(index)) {//是全部的分类下、
-                this.state.allData[this.state.current].imgs.forEach((item, i)=> {
-                    if (item.id === id) {
-                        img = item;
-                        return false;
-                    }
-                });
-            } else {//非全部的子分类下。
-                this.state.ajaxData[this.state.current][index].parentName.imgs.forEach(item=> {
-                    if (item.id === id) {
-                        img = item;
-                        return false;
-                    }
-                });
-            }
+        if(e.target.nodeName==="LI"){
+            return;
         }
-        this.imgData = img;
+
+        if(target.data('id')){
+            $('.zmiti-img-figure-C .figcaption').removeClass('active');
+            target.addClass('active');
+
+
+            let
+                infos = target.data('id').split('_'),
+                id = infos[0],
+                index = infos[1] * 1;
+
+            if (this.state.currentCate === -1) {
+                if (isNaN(index)) {//是全部的分类下、
+                    this.state.allData[this.state.current].imgs.forEach((item, i)=> {
+                        if (item.id === id) {
+                            img = item;
+                            return false;
+                        }
+                    });
+                } else {//非全部的子分类下。
+                    this.state.ajaxData[this.state.current][index].parentName.imgs.forEach(item=> {
+                        if (item.id === id) {
+                            img = item;
+                            return false;
+                        }
+                    });
+                }
+            }
+            this.imgData = img;
+        }
+
         return false;
     }
 
@@ -695,7 +706,7 @@ export default class ZmitiUploadDialog extends React.Component {
                         <section onMouseOver={this.figcaptionMouse.bind(this)}
                                  onMouseOut={this.figcaptionMouse.bind(this)}>
                             <Icon type="setting"></Icon>
-                            <Menu mode="vertical" onClick={this.operatorRes} ref="menu">
+                            <Menu mode="vertical" className="zmiti-asset-menu" onClick={this.operatorRes} ref="menu">
                                 <Menu.Item key={'delete_'+img.id+'_'+(img.index === undefined?-101:img.index)}><Icon
                                     type="delete"/>删除</Menu.Item>
                                 <Menu.Item key={'clip_'+img.id+'_'+(img.index === undefined?-101:img.index)}><Icon

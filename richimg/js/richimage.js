@@ -815,7 +815,6 @@ flyRequire.define("jQueryRichImage", ["jQuery", "adMatcher", "config", "globalCa
             };
             d.fn.richImage = function (i) {
                 return f[i].apply(this, Array.prototype.slice.call(arguments, 1))
-
             }
 
         }
@@ -989,28 +988,34 @@ flyRequire.define("main", ["jQuery", "ltFlyText"], function ($, ltFlyText) {
     var cacheImg = $("#fly-richimg");
 
     let url = cacheImg.attr('src').split('?')[1];
+    let json, tags, imgLoad = false;
+    cacheImg.on('load', (e)=> {
+        let curParent = cacheImg.parent();
+        curParent.append("<div class='richimg-parent'></div>");
+        $(".richimg-parent").append(cacheImg);
+        //curImg.remove();
 
-    $.getJSON(url + "?callback=" + new Date().getTime(), (data)=> {
-        var curParent = cacheImg.parent();
+        $(".richimg-parent").width(e.currentTarget.clientWidth);
+        $(".richimg-parent").height(e.currentTarget.clientHeight);
 
-        cacheImg.on('load', (e)=> {
-            curParent.append("<div class='richimg-parent'></div>");
-            $(".richimg-parent").append(cacheImg);
-            //curImg.remove();
-
-
-            $(".richimg-parent").width(e.currentTarget.clientWidth);
-            $(".richimg-parent").height(e.currentTarget.clientHeight);
-
-            var json = data.richImgData;
-            var tags = json.tags;
-
-            tags.forEach((tag)=>{
+        if (json && tags) { //先加载json数据
+            tags.forEach((tag)=> {
                 ltFlyText(tag);
             });
-        }).on('error',()=>{
+        }
+        imgLoad = true;
+    }).on('error', ()=> {
+        console.log('richimg loaded failed')
+    });
 
-        });
+    $.getJSON(url + "?callback=" + new Date().getTime(), (data)=> {
+        json = data.richImgData;
+        tags = json.tags;
+        if (imgLoad) { //先加载图片。
+            tags.forEach((tag)=> {
+                ltFlyText(tag);
+            });
+        }
     });
 });
 
@@ -1119,6 +1124,8 @@ flyRequire.define("ltFlyText", ["jQuery", "ltFlyBaseTag"], function ($, baseTag)
 
         setTimeout(function () {//加定时器，是为了兼容FF浏览器。
 
+            s.wrapStyles.width += 4;
+
             var width = parseFloat(s.wrapStyles.width),
                 left = parseFloat(s.style.left) / 100 * s.parent.width() - width / 2 + 0,
                 height = parseFloat(s.wrapStyles.height),
@@ -1128,7 +1135,7 @@ flyRequire.define("ltFlyText", ["jQuery", "ltFlyBaseTag"], function ($, baseTag)
 
             var showContent = $("#" + s.id + "-show");
 
-            var style = {left: left, top: top};
+            var style = {left: left+4, top: top};
 
             if (top < 0) {
 

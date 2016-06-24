@@ -283,4 +283,7 @@
     .zmiti-upload-tool-C > div:nth-of-type(2) {
       text-align: right; }
 
+.zmiti-asset-menu {
+  display: none; }
+
 /*# sourceMappingURL=zmiti-upload-dialog.css.map */

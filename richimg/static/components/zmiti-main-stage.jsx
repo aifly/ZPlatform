@@ -24,7 +24,7 @@ export default class ZmitiMainStage extends React.Component {
             value: '',
             width: 'auto',
             defaultWidth: 0,
-            richImg: "./static/images/2.png",
+            richImg: "",
             scale: 1,
             items: [{
                 "type": "text",
@@ -52,7 +52,7 @@ export default class ZmitiMainStage extends React.Component {
         });
     }
 
-    copyCode(){
+    copyCode() {
         this.refs.text.focus();
         this.refs.text.select();
         document.execCommand("Copy");
@@ -64,11 +64,10 @@ export default class ZmitiMainStage extends React.Component {
         this.setState({
             visible: true
         });
-        setTimeout(()=>{
+        setTimeout(()=> {
             this.refs.text.focus();
             this.refs.text.select();
-        },0)
-
+        }, 0)
 
 
     }
@@ -101,7 +100,12 @@ export default class ZmitiMainStage extends React.Component {
             ;
         });
         let self = this,
-            tagW = 50;
+            tagW = 50,
+            rmImgC = $('.rm-img-container')[0],
+            offsetLeft = rmImgC.offsetLeft,
+            offsetTop = rmImgC.offsetTop;
+
+
         this.props.createTag({
 
             "type": "image",
@@ -113,8 +117,8 @@ export default class ZmitiMainStage extends React.Component {
             "icon": "images/red-plain.png",
             "iconHover": "images/hoverlink.png",
             "styles": {
-                "left": (e.pageX - self.refs['mainStage'].offsetLeft - tagW / 2) + 'px',
-                "top": (e.pageY - self.refs['mainStage'].offsetTop - tagW / 2) + 'px'
+                "left": ( (e.pageX - self.refs['mainStage'].offsetLeft - tagW / 2 - offsetLeft) / rmImgC.clientWidth * 100) + '%',
+                "top": ((e.pageY - self.refs['mainStage'].offsetTop - tagW / 2 - offsetTop) / rmImgC.clientHeight) * 100 + '%'
             },
             "wrapStyles": {
                 "width": "200px",
@@ -197,8 +201,10 @@ export default class ZmitiMainStage extends React.Component {
                        onOk={this.handleOk} onCancel={this.handleCancel}
                        style={{top:300}}
                 >
-                    <textarea onClick={(e)=>{e.preventDefault();e.target.select()}} ref="text" name="" id="" cols="30" rows="6" onChange={()=>{}} value={this.state.value}></textarea>
-                    <div style={{textAlign:'right'}}><Button onClick={this.copyCode.bind(this)} type="primary">复制此代码</Button></div>
+                    <textarea onClick={(e)=>{e.preventDefault();e.target.select()}} ref="text" name="" id="" cols="30"
+                              rows="6" onChange={()=>{}} value={this.state.value}></textarea>
+                    <div style={{textAlign:'right'}}><Button onClick={this.copyCode.bind(this)}
+                                                             type="primary">复制此代码</Button></div>
                 </Modal>
             </div>
         )
@@ -242,6 +248,8 @@ export default class ZmitiMainStage extends React.Component {
                 defaultWidth: e.currentTarget.naturalWidth
             });
 
+            PubSub.publish('closeLoading');
+
             $('.fly-tag .tag').eq(0).trigger('mousedown');
 
 
@@ -249,36 +257,6 @@ export default class ZmitiMainStage extends React.Component {
              .width(targetImg.width())
              .height(targetImg.height());*/
         }).on('click', (e)=> {//
-
-            return;
-
-            if (!stage.keydown) {//当没有按下空格键的时候，才执行创建标签的操作，否则是移动图片的操作。
-                window.item = this.state.items[0];
-                let items = this.state.items;
-
-                items.push({
-                    "type": "text",
-                    "href": "http://www.zmiti.com",
-                    "content": "",
-                    "id": ZmitiTag.getGuid(),
-                    "icon": "images/red-plain.png",
-                    "iconHover": "images/hoverlink.png",
-                    "styles": {
-                        "left": "35%",
-                        "top": "22%"
-                    },
-                    "wrapStyles": {
-                        "width": "200px",
-                        "height": "130px",
-                        "fontFamily": "'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif"
-                    }
-                });
-
-                this.setState({
-                    items: items
-                });
-
-            }
         });
 
 
