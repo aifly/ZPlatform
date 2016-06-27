@@ -1,4 +1,5 @@
 node_modules/
+main/node_modules/
 .idea/
 *.xml
 .idea/*.xml

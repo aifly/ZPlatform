@@ -3,15 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
-    <title>芸智媒平台</title>
+    <title>智媒体首页---测试</title>
+    <style>
+
+        body{
+            overflow: hidden;}
+        #loading{
+            position: absolute;
+            left:0;
+            top:0;
+            font-size: 28px;;
+            z-index:100;
+            background:#60b4b4;
+            width:100%;
+            height:100%;
+            color:#a40b16 !important;
+        }
+        #main-ui{
+            transition:1s opacity;
+            -webkit-transition:1s opacity;
+            opacity: 0;
+        }
+        #main-ui.active{
+            opacity:1;
+        }
+        .ant-spin{
+            color: #fff;
+
+            vertical-align: middle;
+            text-align: center;
+            opacity: 0;
+            position: absolute;
+            visibility: hidden;
+            -webkit-transition: opacity .3s cubic-bezier(.78,.14,.15,.86);
+            transition: opacity .3s cubic-bezier(.78,.14,.15,.86);
+            font-size: 12px;
+        }
+        .ant-spin-spinning {
+            opacity: 1;
+            position: static;
+            visibility: visible;
+            font-size:30px;;
+            margin:25% auto;
+        }
+        .ant-spin-dot {
+            -webkit-animation: antSpinPulse 1s infinite cubic-bezier(.78,.14,.15,.86);
+            animation: antSpinPulse 1s infinite cubic-bezier(.78,.14,.15,.86);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            background-color: #fff;
+        }
+        .ant-spin-dot-third {
+            -webkit-animation-delay: .4s;
+            animation-delay: .4s;
+        }
+        .ant-spin-dot-second {
+            -webkit-animation-delay: .2s;
+            animation-delay: .2s;
+        }
+        @keyframes antSpinPulse {
+            0%,
+            80%,
+            100% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+        }
+        @-webkit-keyframes antSpinPulse {
+            0%,
+            80%,
+            100% {
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+        }
+
+    </style>
 </head>
 <body>
 
-<div id="fly-main"></div>
+<div id="loading">
+    <div class="ant-spin ant-spin-spinning">
+        <span>正在进入</span>
+        <span class="ant-spin-dot ant-spin-dot-first"></span>
+        <span class="ant-spin-dot ant-spin-dot-second"></span>
+        <span class="ant-spin-dot ant-spin-dot-third"></span>
+    </div>
+</div>
+
+<div id="main-ui">
+    <header class="fly-header">
+        <aside class="logo-box">
+            <div class="logo"><img draggable="false" src="statices/images/logo.png" alt=""></div>
+        </aside>
+        <aside class="login-box">
+            <!--<a href="#" class="btn-login">登录</a>-->
+            <button class="btn-login button button--rayen button--border-thin button--text-thick button--text-upper button--size-s" data-text="登录"><span>登录</span></button>
+
+            <button class="btn-reg button button--rayen button--border-thin button--text-thick button--text-upper button--size-s" data-text="注册"><span>注册</span></button>
+            <span style="margin-left: 20%">beta</span>
+        </aside>
+    </header>
+
+    <section id="fly-main">
+        <div class="cloud1 cloud"><img draggable="false" src="statices/images/cloud1.png" alt=""></div>
+        <div class="cloud2 cloud"><img draggable="false" src="statices/images/cloud2.png" alt=""></div>
+        <div class="cloud3 cloud"><img draggable="false" src="statices/images/cloud3.png" alt=""></div>
+        <canvas id="fly-stage"></canvas>
+
+        <div class="fly-login-mask" >
+            <div id="login">
+                <div class="owl">
+                    <div class="hand"></div>
+                    <div class="hand hand-r"></div>
+                    <div class="arms">
+                        <div class="arm"></div>
+                        <div class="arm arm-r"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fly-login-container">
+                <div class="fly-login-box">
+                    <header>
+                        <div class="title"><img draggable="false" src="./statices/images/login-title.png" alt=""></div>
+                        <div class="close"><span>&times;</span></div>
+                    </header>
+                    <section class="fly-login-text">
+                        <img src="./statices/images/login-text.png" draggable="false" alt="">
+                    </section>
+                    <div class="fly-username input-box ">
+                        <canvas id="canvas" height="20" ></canvas>
+                        <span class="placeholder">账号</span>
+                        <div class="fly-tips">账号不能空！</div>
+                        <input type="text" name="username" value="" autocomplete="off">
+                    </div>
+                    <div class="fly-pwd input-box ">
+                        <canvas id="canvas-pwd" height="20" ></canvas>
+                        <span class="placeholder">密码</span>
+                        <div class="fly-tips">密码不能空！</div>
+                        <input  type="password" name="pwd" autocomplete="off">
+                    </div>
+                    <div class="login-btn loaded">
+                        <input type="button" value="" class="btn-ok">
+                        <span>确定</span>
+                        <div class="loading">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class="login-error-info">账号或者密码错误<span>&times;</span></div>
+                    <div class="fly-line">
+
+                    </div>
+
+                    <div class="other-login-box">
+                        <span class="three">第三方登录</span>
+                        <div class="share-box">
+                            <span class="qq"></span>
+                            <span class="wx"></span>
+                            <span class="txwb"></span>
+                            <span class="weibo"></span>
+                        </div>
+                        <div class="forget">
+                            <a href="javascrpt:void(0)">忘记密码</a> |
+                            <a href="javascript:void(0)" class="go-to-reg">注册</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="fly-reg-box">
+                    <header>
+                        <div class="title"><img draggable="false" src="./statices/images/login-title.png" alt=""></div>
+                        <div class="close"><span>&times;</span></div>
+                    </header>
+                    <section class="fly-login-text">
+                        <img src="./statices/images/reg-text.png" draggable="false" alt="">
+                    </section>
+                   <article class="fly-reg-C">
+                       <div class="fly-reg-l">
+                          <div class="reg-title">
+                              <span>请选择</span>
+                              <div></div>
+                          </div>
+                           <div class="reg-type" id="reg-type">
+                               <div class="active"><img draggable="false" src="./statices/images/person.png" alt=""></div>
+                               <div><img draggable="false" src="./statices/images/company.png" alt=""></div>
+                           </div>
+                           <div class="fly-reg-next">
+                               <button>下一步</button>
+                           </div>
+                       </div>
+                       <div class="fly-reg-r">
+                           <section>
+                               <div class="fly-reg-input ">
+                                   <div class="error-msg">账号为6-18位数字和字母的组合</div>
+                                   <span class="fly-label">账号</span><span class="fly-v-line"></span><input  type="text" class="reg-input fly-input" name="reg-username"><label class="mark">请输入用户名</label>
+                               </div>
+                               <div class="fly-reg-input company hide">
+                                   <div class="error-msg">公司名称不能为空</div>
+                                   <span class="fly-label">公司名称</span><span class="fly-v-line"></span><input type="text" class="reg-input-company  fly-input" name="reg-company">
+                               </div>
+                               <div class="fly-reg-input ">
+                                   <div class="error-msg">密码不能小于6位</div>
+                                   <span class="fly-label">设置密码</span><span class="fly-v-line"></span><input type="password"  name="reg-pass" class="fly-input">
+                               </div>
+                               <div class="fly-reg-input">
+                                   <div class="error-msg">两次密码不一致</div>
+                                   <span class="fly-label">确认密码</span><span class="fly-v-line"></span><input type="password" class="sure-pass  fly-input">
+                               </div>
+                               <div class="fly-reg-input no-border full-width">
+                                   <div class="error-msg">手机号或者邮箱格式不正确</div>
+                                   <input type="text" class=" reg-input  fly-input" name="reg-email"  ><label class="mark" style="left:2%;">请录入邮箱/手机号</label>
+                               </div>
+                               <div class="fly-reg-input no-border get-code">
+                                   <input type="text" class="reg-input  fly-input" name="reg-tel"><label style="left: 2%;" class="mark">请录入验证码</label><a href="javascript:void(0)" class="fly-get-code">获取验证码</a>
+                               </div>
+
+                               <div class="fly-reg-input no-border  agree-clause">
+                                   <input id="green" type="checkbox"><label  for="green">我已阅读并同意 <a href="#" class="clause">《智媒体平台服务条款》</a></label>
+                               </div>
+                               <div class="fly-reg-input no-border">
+                                   <button class="btn-begin-reg disabled">立即注册</button>
+                               </div>
+                           </section>
+                       </div>
+
+                   </article>
+                    <div class="go-login">
+                        <a href="javascript:void(0)" class="go-to-login">已有账号？直接登录>></a>
+                    </div>
+                </div>
+                <div class="reg-info">正在注册...</div>
+            </div>
+
+
+        </div>
+    </section>
+</div>
+<span id="keleyivisitorip" style="opacity: 0;z-index: -1;position:fixed;"></span>
+<script src="statices/js/createjs.js" ></script>
+
+<script src="./statices/js/index.js" onload="var loading =document.getElementById('loading') ;loading.parentNode.removeChild(loading);document.getElementById('main-ui').classList.add('active')"></script>
+
 <!--
-<script src="http://localhost:3000/index.js"></script>
+<script src="http://localhost:5000/index.js"  onload="var loading =document.getElementById('loading') ;loading.parentNode.removeChild(loading);document.getElementById('main-ui').classList.add('active')"></script>
 -->
-<script src="./static/js/index.js"></script>
+
+<script type="text/javascript" src="http://tool.keleyi.com/ip/visitoriphost/"></script>
 
 </body>
 </html>

@@ -1,34 +1,38 @@
-var webpack = require('webpack');
-var config = {
-    entry: {
-        'index': "./index.jsx"
+/**
+ * Created by linten01 on 2016/5/24 0024.
+ */
+var path = require('path');
+module.exports = {
+
+    entry:{
+        'index':'./index.es6'
     },
-    output: {
-        publickPath: './static/js',
-        path: './static/js',
-        filename: "[name].js",
-        chunkFilename: "[name].js"
+    output:{
+        path:"./statices/js/",
+        filename:'[name].js'
     },
     devServer: {
         inline: true,
-        port: 3000,
+        port: 5000,
         hot: true
     },
-    module: {
-        loaders: [{
-            test: /\.jsx|\.js|\.es6$/,
-            exclude: /node_modules/,
-            loaders: ['babel']
-        },
+    module:{
+        loaders:[
             {
-                test: /\.(css)$/,
-                loader: 'style-loader!css-loader'
+                test:path.join(__dirname,''),
+                loaders:['babel-loader'],
+                exclude:/node_modules/,
             },
             {
-                test: /\.(png|jpg)$/,
-                loader: 'url-loader?limit=8192'
-            }]
+                test:/\.png|\.jpg$/,
+                loaders:["url-loader?limit=30720"] //30720
+            },
+            {
+                test:/.css$/,
+                loader:'style-loader!css-loader'
+            }
+        ]
     }
-}
 
-module.exports = config;
+
+};

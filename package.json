@@ -1,52 +1,43 @@
 {
-  "name": "knowledge",
+  "name": "es6-compile",
   "version": "1.0.0",
-  "description": "知识产权局网站",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --hot --inline",
-    "home-build": "webpack --config webpack.home.config.js",
-    "home-server": "webpack-dev-server --hot --inline --config webpack.home.config.js",
-    "personal-build": "webpack --config webpack.personalAcc.config.js",
-    "personal-server": "webpack-dev-server --hot --inline --config webpack.personalAcc.config.js",
-    "r-server": "webpack-dev-server --hot --inline --config webpack.richimg.config.js",
-    "r-build": "webpack --config webpack.richimg.config.js",
-    "r-u": "webpack -p --config webpack.richimg.config.js",
-    "p-server":"webpack-dev-server --hot --inline --config webpack.puzzle.config.js",
-    "p-build":"webpack  --config webpack.puzzle.config.js",
-    "p-u":"webpack -p --config webpack.puzzle.config.js"
-  },
-  "keywords": [
-    "es6"
-  ],
+  "description": "",
+  "main": "gulpFile.js",
   "dependencies": {
-    "antd": "^1.0.1",
     "babel-core": "^5.8.38",
     "babel-loader": "^5.3.2",
-    "babel-plugin-antd": "^0.4.0",
-    "babel-plugin-transform-object-assign": "^6.8.0",
     "babel-polyfill": "^6.9.0",
+    "babel-preset-es2015": "^6.5.0",
     "core-decorators": "^0.12.0",
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
-    "jquery": "^2.2.3",
-    "jquery-minicolors": "^2.1.10",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-less": "^3.0.5",
+    "gulp-livereload": "^3.8.1",
+    "gulp-minify-css": "^1.2.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-watch": "^4.3.5",
+    "jquery": "^2.2.4",
     "jquery.cookie": "^1.4.1",
-    "less": "^2.5.3",
-    "less-loader": "^2.2.2",
-    "pubsub": "^2.1.7",
-    "react": "^15.1.0",
-    "react-addons": "^0.9.0",
-    "react-contenteditable": "^1.1.0",
-    "react-dom": "^15.0.1",
-    "react-redux": "^4.4.5",
-    "redux": "^3.5.2",
-    "style-loader": "^0.13.0",
+    "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.12.14",
+    "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   },
+  "devDependencies": {
+    "babel-cli": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server  --hot --inline --port 5000",
+    "z-u": "webpack -p"
+  },
+  "keywords": [
+    "智媒体",
+    "es6"
+  ],
   "author": "fly",
   "license": "ISC"
 }
