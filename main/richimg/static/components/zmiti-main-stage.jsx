@@ -101,10 +101,9 @@ export default class ZmitiMainStage extends React.Component {
         });
         let self = this,
             tagW = 50,
-            rmImgC = $('.rm-img-container')[0],
-            offsetLeft = rmImgC.offsetLeft,
-            offsetTop = rmImgC.offsetTop;
-
+            rmImgC = $('.rm-img-container')[0];
+            let offsetLeft = self.position.x||0,
+            offsetTop = self.position.x||0;
 
         this.props.createTag({
 
@@ -256,8 +255,14 @@ export default class ZmitiMainStage extends React.Component {
             /*stage.find('.rm-img-container')
              .width(targetImg.width())
              .height(targetImg.height());*/
+
         }).on('click', (e)=> {//
         });
+
+        this.position ={
+            x:0,
+            y:0
+        }
 
 
         let imgContainer = $('.rm-img-container', stage);
@@ -282,6 +287,9 @@ export default class ZmitiMainStage extends React.Component {
                     imgContainer.css({transform: 'translate3d(' + tx + 'px,' + ty + 'px,0) '});
                     stage.transY = ty;
                     stage.transX = tx;
+                    this.position.x= tx;
+                    this.position.y = ty;
+
                 }
             }).on('mouseup', e=> {
                 $(document).off('mousemove mouseup');
