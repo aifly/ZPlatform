@@ -989,24 +989,27 @@ flyRequire.define("main", ["jQuery", "ltFlyText"], function ($, ltFlyText) {
     var cacheImg = $(".fly-richimg"),
         len = cacheImg.length,
         imgArr = [];
+
     cacheImg.each((i, n)=> {
 
-        let url = $(n).attr('src').split('?')[1];
-        $(n).on('load', e=> {
+        let url = $(n).attr('src').split('?')[1],
+            src = $(n).attr('src').split('?')[0];
+        let img = new Image();
+        if(img.complete){
             let imgObject = {
-                width: e.currentTarget.clientWidth,
-                height: e.currentTarget.clientHeight,
+                width: $(n).width(),
+                height:$(n).height(),
                 curParent: $(n).parent(),
                 url: url,
                 json: '',
-                iNow : i,
-                target:$(n)
+                iNow: i,
+                target: $(n)
             };
 
             imgArr.push(imgObject);
 
             if (imgArr.length >= len) {
-                imgArr = imgArr.sort((a,b)=>{
+                imgArr = imgArr.sort((a, b)=> {
                     return a.iNow > b.iNow
                 });
 
@@ -1028,7 +1031,7 @@ flyRequire.define("main", ["jQuery", "ltFlyText"], function ($, ltFlyText) {
                     });
                 });
             }
-        });
+        }
     });
 });
 
@@ -1108,10 +1111,14 @@ flyRequire.define("ltFlyText", ["jQuery", "ltFlyBaseTag"], function ($, baseTag)
 
             };
             img.src = s.imgSrc;
+
+
         }
 
         if (s.type === 'image' && s.imgSrc.length > 0) { //
             otherHtml = '<img class=' + imgClass + ' src=' + s.imgSrc + ' alt=""/>'
+            ///s.wrapStyles.height = 'auto';
+            //alert(1)
         }
         else if (s.type === 'video' && s.videoSrc.length > 0 && s.videoSrc.endsWith('.mp4')) {
             otherHtml = `
@@ -1122,10 +1129,10 @@ flyRequire.define("ltFlyText", ["jQuery", "ltFlyBaseTag"], function ($, baseTag)
         }
 
         if (s.href.charAt(0) === "#" && s.href.length === 1) {
-            var showHtml = "<div id='" + s.id + "-show' class=' lt-fly-icon-wrapper lt-fly-text-icon-wrapper'>" + otherHtml + s.content + "<div class='triangle'></div></div>"
+            var showHtml = "<div id='" + s.id + "-show' class=' lt-fly-icon-wrapper lt-fly-text-icon-wrapper'>" + otherHtml + "<p>" + s.content + "</p>" + "<div class='triangle'></div></div>"
         }
         else {
-            var showHtml = "<div id='" + s.id + "-show' class=' lt-fly-icon-wrapper lt-fly-text-icon-wrapper'><a href='" + s.href + "' target='_blank'>" + otherHtml + s.content + "</a><div class='triangle'></div></div>"
+            var showHtml = "<div id='" + s.id + "-show' class=' lt-fly-icon-wrapper lt-fly-text-icon-wrapper'><a href='" + s.href + "' target='_blank'>" + otherHtml +  "<p>" + s.content + "</p>" + "</a><div class='triangle'></div></div>"
         }
 
 
@@ -1138,18 +1145,20 @@ flyRequire.define("ltFlyText", ["jQuery", "ltFlyBaseTag"], function ($, baseTag)
 
         setTimeout(function () {//加定时器，是为了兼容FF浏览器。
 
-            s.wrapStyles.width += 4;
+           // s.wrapStyles.width = parseFloat(s.wrapStyles.width) + 4 + 'px';
+
 
             var width = parseFloat(s.wrapStyles.width),
                 left = parseFloat(s.style.left) / 100 * s.parent.width() - width / 2 + 0,
                 height = parseFloat(s.wrapStyles.height),
-                top = parseFloat(s.style.top) / 100 * s.parent.height() - height - 28,
+                top = parseFloat(s.style.top) / 100 * s.parent.height() - height - (s.type === 'image' && s.imgSrc.length > 0 ? 40 : 30),
                 iconLeft = parseFloat(s.style.left) / 100 * s.parent.width(),
                 iconWidth = 24;
 
             var showContent = $("#" + s.id + "-show");
 
             var style = {left: left + 4, top: top};
+
 
             if (top < 0) {
 
@@ -1172,6 +1181,11 @@ flyRequire.define("ltFlyText", ["jQuery", "ltFlyBaseTag"], function ($, baseTag)
                 showContent.find(".triangle").css({left: width - (s.parent.width() - iconLeft) + iconWidth / 2});
             }
 
+            if (s.type === 'image' && s.imgSrc.length > 0) { //
+
+               s.wrapStyles.height = 'auto';
+
+            }
             $("#" + s.id + "-show").css(style).css(s.wrapStyles);
             $("#" + s.id + "-tag-container .lt-fly-text-tag").css(s.style).css({
                 width: 24,

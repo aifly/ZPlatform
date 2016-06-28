@@ -1,4 +1,3 @@
-
 @mixin pos($v) {
   @if
   $v == a {
@@ -14,9 +13,7 @@
   border-radius: $v;
 }
 
-@mixin opacity($v:0) {
-  opacity: $v;
-}
+
 
 @mixin transform($v) {
   -webkit-transform: $v;

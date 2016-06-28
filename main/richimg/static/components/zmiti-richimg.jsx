@@ -2,23 +2,61 @@ import React from 'react';
 import './zmiti-richimg.css';
 import Icon from 'antd/lib/icon';
 import 'antd/lib/icon/style/css';
+import message  from 'antd/lib/message';
+import 'antd/lib/message/style/css';
+import Modal from 'antd/lib/modal';
+import 'antd/lib/modal/style/css';
+const confirm = Modal.confirm;
 import $ from 'jquery';
-
 
 
 export default class ZmitiRichImg extends React.Component {
     constructor(args) {
         super(...args);
-        this.operatorRichImg=this.operatorRichImg.bind(this);
+        this.operatorRichImg = this.operatorRichImg.bind(this);
     }
-    operatorRichImg(e){
+
+    showConfirm(e){
+        let s =this;
+        confirm({
+            title: '您是否确认要删除该富图片?',
+            content: '删除之后将无法恢复',
+            onOk() {
+                $.ajax({
+                    url: s.props.baseUrl + s.props.deleteRichImgUrl,
+                    type: "POST",
+                    data: {
+                        worksid: s.props.worksid,
+                        getusersigid: s.props.getusersigid
+                    },
+                    success(data){
+                        if (data.getret === 0) {
+
+                            //s.props.deleteRichImg(s.props.index);
+                            message.success('删除成功');
+                            $(e.target).parents('.zmiti-richimg-C').remove();
+                        }
+                    },
+                    error(){
+
+                    }
+                })
+            },
+            onCancel() {},
+        });
+    }
+
+    operatorRichImg(e) {
         e.preventDefault();//阻止a标签默认跳转行为
-        if(e.target.nodeName === "LI"){
+        e.persist();
+        let s = this;
+        if (e.target.nodeName === "LI") {
             let index = $(e.target).index();
-            switch (index){
+            switch (index) {
                 case 0://预览
                     break;
                 case 1://删除
+                    s.showConfirm(e);
                     break;
                 case 2://分享
                     break;
@@ -27,6 +65,7 @@ export default class ZmitiRichImg extends React.Component {
 
         return false;
     }
+
     render() {
 
         let richimg = {

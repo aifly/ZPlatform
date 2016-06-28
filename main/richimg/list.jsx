@@ -62,7 +62,7 @@ class ZmitiMainContent extends React.Component {
 
 
 
-        if( window.localStorage.getItem('richimgList')){
+      /*  if( window.localStorage.getItem('richimgList')){
             let arr = window.localStorage.getItem('richimgList').split('|');
             arr.pop();
             arr = arr.map(a=>{
@@ -77,7 +77,7 @@ class ZmitiMainContent extends React.Component {
                 });
             })
 
-        }
+        }*/
 
 
 
@@ -89,11 +89,11 @@ class ZmitiMainContent extends React.Component {
                 type:0
             },
             success(data){
-                data.getWorksInfo.length>0 &&  message.success(data.getmsg);
+                data.getWorksInfo && data.getWorksInfo.length>0 &&  message.success(data.getmsg);
 
                 if(data.getret === 0){
 
-                    let infos  = '';
+                    /*   let infos  = '';
                     data.getWorksInfo.forEach(d=>{
                         infos += JSON.stringify(d) + '|';
                     });
@@ -108,16 +108,14 @@ class ZmitiMainContent extends React.Component {
                         });
 
                         arr.forEach((a,i)=>{
-                            if(a.worksid !== data.getWorksInfo[i].worksid){
+                            if(!data.getWorksInfo[i] || a.worksid !== data.getWorksInfo[i].worksid){
                                 isNeedUpdate =true;
                             }
                         })
-                    }
+                    }*/
+                   // (isNeedUpdate || !window.localStorage.getItem('richimgList')) &&  window.localStorage.setItem('richimgList',infos);
 
-
-                    (isNeedUpdate || !window.localStorage.getItem('richimgList')) &&  window.localStorage.setItem('richimgList',infos);
-
-                    isNeedUpdate &&  s.setState({
+                     s.setState({
                         richimg : data.getWorksInfo
                     },()=>{
                         new Waterfall({
@@ -150,6 +148,7 @@ class ZmitiMainContent extends React.Component {
         }, 0);
     }
 
+
     render() {
         /**
          * ,225,346,221,333,234,322,245,274
@@ -159,7 +158,7 @@ class ZmitiMainContent extends React.Component {
 
 
         let richImg = this.state.richimg.map((item, i)=> {
-            return <ZmitiRichImg key={i} {...this.state.richimg[i]}></ZmitiRichImg>
+            return <ZmitiRichImg key={i} index={i} {...this.state.richimg[i]} {...this.props}></ZmitiRichImg>
         });
         /*
         *
@@ -200,7 +199,8 @@ class ZmitiMainContent extends React.Component {
 ZmitiMainContent.defaultProps = {
     baseUrl: 'http://webapi.zmiti.com/v1/',
     getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071",
-    getUserInfoUrl:'works/get_worksinfo'
+    getUserInfoUrl:'works/get_worksinfo',
+    deleteRichImgUrl:'works/del_works'
 };
 
 class MainUI extends React.Component {

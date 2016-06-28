@@ -165,14 +165,16 @@ class ZmitiTag extends React.Component {
 
             if(this.props.id === this.props.focusTag.id){
                 let target = $(this.refs[this.props.id]).find('.rm-tag-remark'),
-                    rmWidth = target.width(),
-                    rmHeight = target.height(),
+                    rmWidth = target[0].offsetWidth,
+                    rmHeight = target[0].offsetHeight,
                     tagWidth = 50;
+
 
                 this.props.changeTagPropValue('wrapStyles', {
                     width: rmWidth + 'px',
                     height: rmHeight + 'px'
                 });
+
 
                 this.setState({
                     remarkStyle: {

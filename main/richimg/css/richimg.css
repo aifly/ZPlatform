@@ -1,112 +1,69 @@
-html,
-body,
-div,
-p,
-ul,
-li,
-ol,
-dl,
-dt,
-dd,
-header,
-footer,
-video,
-h1,
-h2,
-h3,
-h4,
-canvas,
-section,
-figure {
-  padding: 0;
-  margin: 0;
-}
-a {
-  text-decoration: none;
-}
-li {
-  list-style: none;
-}
-html,
-body {
-  height: 100%;
-}
-img {
-  border: none;
-  vertical-align: top;
-  width: 100%;
-  height: 100%;
-}
-input,
-textarea {
-  outline: none;
-}
-body {
-  font-family: "微软雅黑";
-  font-size: 14px;
-  height: 100%;
-}
-.transform3d {
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-}
 .richimg-parent {
-  position: relative;
-}
+  position: relative; }
+
 .richimg {
   width: 100%;
-  height: auto;
-}
-.lt-fly-tag,
-.lt-fly-icon-wrapper {
-  position: absolute;
-}
+  height: auto; }
+
+.widthAuto {
+  width: auto;
+  height: 100%; }
+
+.heightAuto {
+  width: 100%;
+  height: auto; }
+
+.lt-fly-tag, .lt-fly-icon-wrapper {
+  position: absolute; }
+
 .lt-fly-icon-wrapper .triangle {
-  position: absolute;
-}
-.lt-fly-icon-wrapper .triangle.up {
-  position: absolute;
-  left: 50%;
-  -webkit-transform: translate(-50%, 0);
-  transform: translate(-50%, 0);
-  width: 0;
-  bottom: -10px;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid #fff;
-}
-.lt-fly-icon-wrapper .triangle.down {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  left: 50%;
-  -webkit-transform: translate(-50%, 0);
-  transform: translate(-50%, 0);
-  top: -10px;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid #fff;
-}
+  position: absolute; }
+  .lt-fly-icon-wrapper .triangle.up {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    width: 0;
+    bottom: -10px;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #fff; }
+  .lt-fly-icon-wrapper .triangle.down {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
+    top: -10px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #fff; }
+
 .fly-tag-container:hover .lt-fly-text-icon-wrapper {
   z-index: 100;
-  opacity: 1;
-}
+  opacity: 1; }
+
 .lt-fly-text-icon-wrapper {
   z-index: -100;
   opacity: 0;
+  padding: 10px;
   background: #fff;
-  padding: 15px;
-  line-height: 20px;
-  box-sizing: border-box;
-}
-.lt-fly-text-icon-wrapper a:hover {
-  text-decoration: underline;
-}
-.lt-fly-text-icon-wrapper.hide {
-  z-index: -100;
-}
-.lt-fly-text-icon-wrapper.show {
-  z-index: 100;
-}
+  font-size: 12px;
+  line-height: 20px; }
+  .lt-fly-text-icon-wrapper a:hover {
+    text-decoration: underline; }
+  .lt-fly-text-icon-wrapper.hide {
+    z-index: -100; }
+  .lt-fly-text-icon-wrapper.show {
+    z-index: 100; }
+
+.bold {
+  font-weight: bold; }
+
+.italic {
+  font-style: italic; }
+
+/*# sourceMappingURL=richimg.css.map */
