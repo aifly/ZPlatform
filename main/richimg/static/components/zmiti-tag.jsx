@@ -4,7 +4,6 @@ import $ from 'jquery';
 import './zmiti-tag.css';
 import {ZmitiEnhanceCom}  from  './zmiti-enhance-com.jsx';
 
-
 class ZmitiTag extends React.Component {
     constructor(args) {
         super(...args);

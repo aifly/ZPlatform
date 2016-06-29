@@ -13,7 +13,8 @@ import 'babel-polyfill';
 import PubSub from './static/js/pubsub';
 import message from 'antd/lib/message';
 import 'antd/lib/message/style/css';
-
+import Spin from 'antd/lib/spin'
+import 'antd/lib/spin/style/css';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
 import $ from 'jquery';
@@ -116,7 +117,8 @@ class ZmitiMainContent extends React.Component {
                    // (isNeedUpdate || !window.localStorage.getItem('richimgList')) &&  window.localStorage.setItem('richimgList',infos);
 
                      s.setState({
-                        richimg : data.getWorksInfo
+                        richimg : data.getWorksInfo,
+                         loading:false
                     },()=>{
                         new Waterfall({
                             containerSelector: '.zmiti-tab-my-project',
@@ -172,24 +174,26 @@ class ZmitiMainContent extends React.Component {
         return (
             <div className="zmiti-main-content">
                 <div className="zmiti-tab-C">
-                       <Tabs defaultActiveKey="1" onChange={this.changeTab.bind(this)}>
-                           <TabPane tab="我的作品" key="1">
-                               <div className="zmiti-tab-my-project">
-                                   {richImg}
-                               </div>
-                           </TabPane>
+                      <Spin spinning={this.state.loading}>
+                          <Tabs defaultActiveKey="1" onChange={this.changeTab.bind(this)}>
+                              <TabPane tab="我的作品" key="1">
+                                  <div className="zmiti-tab-my-project">
+                                      {richImg}
+                                  </div>
+                              </TabPane>
 
-                           <TabPane tab="公司作品" key="3">
-                               <div className="zmiti-tab-company-project">
-                                   {richImg}
-                               </div>
-                           </TabPane>
-                           <TabPane tab="平台作品" key="4">
-                               <div className="zmiti-tab-platform-project">
-                                   {richImg}
-                               </div>
-                           </TabPane>
-                       </Tabs>
+                              <TabPane tab="公司作品" key="3">
+                                  <div className="zmiti-tab-company-project">
+                                      {richImg}
+                                  </div>
+                              </TabPane>
+                              <TabPane tab="平台作品" key="4">
+                                  <div className="zmiti-tab-platform-project">
+                                      {richImg}
+                                  </div>
+                              </TabPane>
+                          </Tabs>
+                      </Spin>
                 </div>
             </div>
         )
@@ -212,7 +216,8 @@ class MainUI extends React.Component {
 
         let s = this;
         const props = {
-            baseUrl: 'http://webapi.zmiti.com/v1/',
+            baseUrl: s.props.baseUrl,
+            getusersigid:s.props.getusersigid,
             onFinish(imgData){
 
                 $.ajax({
@@ -230,7 +235,9 @@ class MainUI extends React.Component {
                         datajson: JSON.stringify({
                             richImgData: {
                                 tags: [],
-                                focusTagIndex: 0
+                                focusTagIndex: 0,
+                                projectName:'',
+                                tagList:''
                             }
                         }),
                         workstype: 0,//富图片。
@@ -245,8 +252,13 @@ class MainUI extends React.Component {
                                 jsonSrc: da.jsonSrc
                             }
 
-                            window.location.href= './index.html?richimg='+ encodeURI(JSON.stringify(richimg));
-
+                            let a = document.createElement('a');
+                            document.body.appendChild(a);
+                            a.style.position = 'fixed';
+                            a.style.opacity= 0;
+                            a.style.zIndex = -1;
+                            a.href =  './index.html?richimg='+ encodeURI(JSON.stringify(richimg))
+                            a.click();
                         }
                     },
                     error(){
@@ -260,7 +272,7 @@ class MainUI extends React.Component {
         return (
             <div className="zmiti-main-ui">
                 <ZmitiHeader></ZmitiHeader>
-                <ZmitiMainContent></ZmitiMainContent>
+                <ZmitiMainContent {...props}></ZmitiMainContent>
                 <ZmitiUploadDialog  id="image" {...props}></ZmitiUploadDialog>
             </div>
         )
@@ -270,8 +282,10 @@ MainUI.defaultProps = {
     baseUrl: 'http://webapi.zmiti.com/v1/',
     getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071"
 }
-
-ReactDOM.render(<MainUI></MainUI>, document.getElementById('fly-main'));
+let props ={
+    getusersigid: window.parent.userId
+}
+ReactDOM.render(<MainUI {...props}></MainUI>, document.getElementById('fly-main'));
 
 
 

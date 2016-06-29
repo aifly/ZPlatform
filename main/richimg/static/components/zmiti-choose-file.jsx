@@ -88,11 +88,13 @@ export default class ZmitiChooseFile extends React.Component {
 
         let focusTag = this.props.tags[this.props.focusTagIndex] || {};
 
+
         let methods = {
                 changeTagPropValue: this.props.changeTagPropValue
             },
             s = this,
             props = {
+                getusersigid:this.props.getusersigid,
                 baseUrl: this.props.baseUrl,
                 onFinish(imgData){
                     $.ajax({
@@ -108,8 +110,6 @@ export default class ZmitiChooseFile extends React.Component {
                             }
                         }
                     });
-                    console.log(imgData);
-
                 }
             };
 

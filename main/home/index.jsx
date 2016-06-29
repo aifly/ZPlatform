@@ -34,6 +34,11 @@ class MainUI extends React.Component{
         }
     }
 
+    componentDidMount(){
+
+        console.log(window.parent.userId)
+    }
+
     render(){
 
         let zmitiProgressProps = {
@@ -223,6 +228,7 @@ class MainUI extends React.Component{
         )
     }
 }
+
 
 ReactDOM.render(<MainUI></MainUI>,_$("#fly-main"));
 

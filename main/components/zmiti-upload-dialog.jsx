@@ -18,7 +18,7 @@ import 'antd/lib/icon/style/css'
 
 import Waterfall from '../richimg/static/js/waterfall';
 
-import './theme.min.css';
+import './theme.css';
 
 import {utilMethods,_$,$$} from  '../utilMethod.es6';
 
@@ -109,6 +109,7 @@ export default class ZmitiUploadDialog extends React.Component {
                     "id": self.state.defaultIds[self.state.current]
                 },
                 success(data){
+
                     let d = data;
                     if (d.getret === -101) {
                         this.isShowModel = false;
@@ -384,7 +385,7 @@ export default class ZmitiUploadDialog extends React.Component {
             if (!this.state.ajaxData[this.state.current][this.state.currentCate]) {
                 return;
             }
-            imgList = this.getImageFigcaption(this.state.ajaxData[this.state.current][this.state.currentCate].parentName.imgs);
+            this.state.ajaxData[this.state.current][this.state.currentCate].parentName.imgs&&(  imgList = this.getImageFigcaption(this.state.ajaxData[this.state.current][this.state.currentCate].parentName.imgs));
         }
 
         return (
@@ -464,6 +465,8 @@ export default class ZmitiUploadDialog extends React.Component {
         formData.append('datainfoclassid', s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "");
         formData.append('setisthum', 1);
         formData.append('seturltype', 'material' /*s.state.defaultIds[s.state.current]*/);
+
+        console.log( s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "")
 
 
         $.ajax({
@@ -703,7 +706,7 @@ export default class ZmitiUploadDialog extends React.Component {
                             <span>{img.storageSize}</span>
                             <span>{img.size}</span>
                         </section>
-                        <section onMouseOver={this.figcaptionMouse.bind(this)}
+                        <section ref="menu" onMouseOver={this.figcaptionMouse.bind(this)}
                                  onMouseOut={this.figcaptionMouse.bind(this)}>
                             <Icon type="setting"></Icon>
                             <Menu mode="vertical" className="zmiti-asset-menu" onClick={this.operatorRes} ref="menu">
@@ -735,17 +738,18 @@ export default class ZmitiUploadDialog extends React.Component {
     figcaptionMouse(e) {
         var eventType = e.type;
         e.persist();
+        this.menu = this.menu || $('.zmiti-asset-menu');
 
+        let index =$(e.target).parents('.figcaption').index('.figcaption');
         switch (eventType) {
             case "mouseover":
                 this.timer && clearTimeout(this.timer);
-                $('.ant-menu-root').show()
+                this.menu.eq(index).show();
                 break;
             case "mouseout":
                 this.timer = setTimeout(()=> {
-                    $('.ant-menu-root').hide();
+                    this.menu.eq(index).hide();
                 }, 500);
-
                 break;
         }
     }
@@ -845,13 +849,15 @@ export default class ZmitiUploadDialog extends React.Component {
                 },
                 success(d){
 
+
                     if (d.getret === 0) {
                         message.success('添加分类成功');
 
                         self.state.ajaxData[self.state.current].length = 0;
+
                         d.datainfo.forEach(info=> {
 
-                            info.parentName.imgs = [];
+                            //info.parentName.imgs = [];
                             let item = {
                                 parentName: info.parentName,
                                 subNames: ''
@@ -860,7 +866,6 @@ export default class ZmitiUploadDialog extends React.Component {
                             self.state.ajaxData[self.state.current].push(item);
                         });
 
-                        self.state.alreadyRequest.push(self.state.current);
                         self.forceUpdate();
                     }
                     else {
@@ -909,6 +914,7 @@ export default class ZmitiUploadDialog extends React.Component {
     }
 
 }
+
 ZmitiUploadDialog.defaultProps = {
     baseUrl: 'http://webapi.zmiti.com/v1/',
     cateUrl: "datainfoclass/",

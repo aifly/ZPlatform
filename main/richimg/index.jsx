@@ -31,7 +31,6 @@ import ZmitiModal from './static/components/zmiti-dialog.jsx';
 import ZmitiChooseFile from './static/components/zmiti-choose-file.jsx';
 import ZmitiTag from './static/components/zmiti-tag.jsx';
 
-import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import {utilMethods,_$,$$} from './utilMethod.es6';
 
 class ZmitiLeftApp extends React.Component {
@@ -123,7 +122,8 @@ class ZmitiRightApp extends React.Component {
         let methods = {
             getFocusComponent: this.props.getFocusComponent,
             createTag: this.props.createTag,
-            deleteTag: this.props.deleteTag
+            deleteTag: this.props.deleteTag,
+            changeProjectName:this.props.changeProjectName
         };
 
 
@@ -131,7 +131,7 @@ class ZmitiRightApp extends React.Component {
             <aside id="rm-right-app" className="rm-right-app">
                 <div className="rm-main-ui-C">
                     <div className="rm-top-banner-C">
-                        <ZmitiTopBanner></ZmitiTopBanner>
+                        <ZmitiTopBanner {...this.props} {...methods}></ZmitiTopBanner>
                     </div>
                     <div className="rm-stage-C">
                         <ZmitiMainStage {...this.props} {...methods}></ZmitiMainStage>
@@ -164,7 +164,7 @@ class MainUI extends React.Component {
             d = JSON.parse(decodeURI(data));
 
         $.getJSON(d.jsonSrc, null, (json)=> {
-
+            console.log(json);
             this.state.ltP = json;
             this.state.ltP.focusTagIndex = 0;
             this.state.ltP.focusTag = this.state.ltP.richImgData.tags[0];
@@ -172,8 +172,6 @@ class MainUI extends React.Component {
                 window.Zmiti = this.state.ltP;
             });
         });
-
-
     }
 
 
@@ -187,7 +185,16 @@ class MainUI extends React.Component {
             this.state.ltP.richImgData.focusTag[key] = value;
             this.forceUpdate();
         }
+    }
 
+    changeProjectName(value){
+        this.state.ltP.richImgData.projectName = value;
+        this.forceUpdate();
+    }
+
+    changeTagList(value){
+        this.state.ltP.richImgData.tagList = value;
+        this.forceUpdate();
     }
 
     /**
@@ -227,6 +234,8 @@ class MainUI extends React.Component {
             getFocusComponent: this.getFocusComponent.bind(this),
             createTag: this.createTag.bind(this),
             deleteTag: this.deleteTag.bind(this),
+            changeProjectName:this.changeProjectName.bind(this),
+            changeTagList:this.changeTagList.bind(this),
             worksid: d.projectId,
             baseUrl: this.props.baseUrl,
             imgSrc: d.imgSrc,
@@ -235,7 +244,7 @@ class MainUI extends React.Component {
 
         return (
             <div className="rm-main-ui">
-                <ZmitiLeftApp {...this.state.ltP.richImgData} {...methods}></ZmitiLeftApp>
+                <ZmitiLeftApp {...this.state.ltP.richImgData} {...this.props} {...methods}></ZmitiLeftApp>
                 <ZmitiRightApp {...this.state.ltP.richImgData} richImg={d.imgSrc} {...methods}></ZmitiRightApp>
 
             </div>
@@ -245,8 +254,9 @@ class MainUI extends React.Component {
 
 MainUI.defaultProps = {
     baseUrl: 'http://webapi.zmiti.com/v1/',
-    getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071"
+    getusersigid:window.parent.userId
 }
+
 ReactDOM.render(<MainUI></MainUI>, $("#fly-main")[0], ()=> {
 
     const key = `open${Date.now()}`;

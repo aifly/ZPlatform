@@ -8,6 +8,8 @@ import Modal from 'antd/lib/modal';
 import 'antd/lib/modal/style/css';
 const confirm = Modal.confirm;
 import $ from 'jquery';
+import Tag from 'antd/lib/tag';
+import 'antd/lib/tag/style/css';
 
 
 export default class ZmitiRichImg extends React.Component {
@@ -73,11 +75,17 @@ export default class ZmitiRichImg extends React.Component {
             imgSrc: this.props.imgurl,
             jsonSrc: this.props.datajsonpath
         }
+
         return (
             <div className="zmiti-richimg-C">
-                <a href={'./index.html?richimg='+encodeURI(JSON.stringify(richimg))} target="_blank">
+                <a href={'./index.html?richimg='+encodeURI(JSON.stringify(richimg))} >
                     <img src={this.props.worksico} alt="" draggable="false"/>
                     <div className="zmiti-name">{this.props.worksname || '新建作品'}</div>
+                    <div className="zmiti-label">
+                        {this.props.workstag.split(',').map((tag,i)=>{
+                           return <Tag color="red" key={i}>{tag}</Tag>
+                        })}
+                    </div>
                     <div className="zmiti-athor-C">
                         <aside>作者：<span>{this.props.username}</span></aside>
                         <aside>

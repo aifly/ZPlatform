@@ -24,7 +24,7 @@ module.exports = {
                 exclude:/node_modules/,
             },
             {
-                test:/\.png|\.jpg$/,
+                test:/\.png|\.jpg|\.gif$/,
                 loaders:["url-loader?limit=30720"] //30720
             },
             {

@@ -29,11 +29,12 @@ export  default class MainUI extends React.Component {
     }
 
     handleClick(e) {
+
         this.setState({
             current: e.key,
             frameSrc:e.key
-
         });
+
     }
 
     toggleMenu() {
@@ -103,7 +104,7 @@ export  default class MainUI extends React.Component {
                                          title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>产品与服务</span></span>}>
                                     <Menu.Item key="http://www.zmiti.com" ><Icon  type='mobile' style={{marginRight:'32px'}}/>微场景</Menu.Item>
                                     <Menu.Item key="qa/"><Icon  type="question-circle-o" style={{marginRight:'32px'}}/>微问答</Menu.Item>
-                                    <Menu.Item key="richimg/list.html"><Icon  type="picture" style={{marginRight:'32px'}}/>富图片</Menu.Item>
+                                    <Menu.Item key={'richimg/list.html?t='+(+new Date())}><Icon  type="picture" style={{marginRight:'32px'}}/>富图片</Menu.Item>
                                     <Menu.Item key="puzzle/"><Icon  type="picture" style={{marginRight:'32px'}}/>拼图</Menu.Item>
                                 </SubMenu>
                                 {companyMenu}
@@ -131,7 +132,8 @@ export  default class MainUI extends React.Component {
 
 
 
-        console.log(document.cookie);
+        window.userId = document.cookie;
+
 
       /*  window.addEventListener('message',function(event) {
 

@@ -13,6 +13,7 @@ export default class ZmitiPanel extends React.Component {
         this.onMouseUp = this.onMouseUp.bind(this);
         this.onMouseOut = this.onMouseOut.bind(this);
         this.changeMould = this.changeMould.bind(this);
+        this.closePanel = this.closePanel.bind(this);
         this.state = {
             current: 0
         }
@@ -52,8 +53,13 @@ export default class ZmitiPanel extends React.Component {
                          onMouseUp={this.onMouseUp}
                 >
                     <span></span><span>选择模板</span>
+                    <ul className="zmiti-close" refs="close-bar" onClick={this.closePanel}>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
                 </section>
-                <section className="zmiti-panel-body">
+                <section className="zmiti-panel-body" ref="panel-body">
                     <section className="zmiti-panel-type-C">
                         <ul onClick={this.changeMould}>
                             <li className={this.state.current === 0 ? 'active':''}>全部</li>
@@ -62,16 +68,30 @@ export default class ZmitiPanel extends React.Component {
                             <li className={this.state.current === 3 ? 'active':''}>4</li>
                             <li className={this.state.current === 4 ? 'active':''}>4+</li>
                         </ul>
+                        <article className="zmiti-panel-C">
+
+                        </article>
                     </section>
                 </section>
             </div>
         )
     }
 
+    closePanel() {
+        this.open = !this.open;
+        let panel = this.refs['panel-body'];
+        panel.classList[this.open ? 'add':'remove']('close');
+        let closeBar = _$('.zmiti-close');
+        closeBar.classList[this.open ? 'add':'remove']('scroll');
+        $$('li',closeBar)[0].classList[this.open?'add':'remove']('close1');
+        $$('li',closeBar)[1].classList[this.open?'add':'remove']('scroll');
+        $$('li',closeBar)[2].classList[this.open?'add':'remove']('close2');
+    }
+
     changeMould(e) {
         if (e.target.nodeName === 'LI') {
             this.setState({
-               current:utilMethods.index(e.target)
+                current: utilMethods.index(e.target)
             });
         }
     }

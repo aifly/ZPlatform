@@ -20,6 +20,8 @@ import zI from './statices/images/z-i.png';
 import zM from './statices/images/z-m.png';
 import zPs from './statices/images/z-ps.png';
 import zT from './statices/images/z-t.png';
+
+
 //console.log(cCenter,pc,a,c,i,mobile,pad,t,v,v1,zAi,zE,zI,zM,zPs,zT);
 
 
@@ -155,10 +157,10 @@ window.addEventListener('load', ()=> {
                 waitingComArr = [],
                 deviceArr = [],
                 imgArr = [a, v, i, t, v1, zAi, zE, zI, zM, zPs, zT];
-            this.deviceArr = deviceArr,
-                shapeArr.forEach(item=> {
-                    centerContainer.addChild(item);
-                });
+            this.deviceArr = deviceArr;
+            shapeArr.forEach(item=> {
+                centerContainer.addChild(item);
+            });
 
             class Z1FlyLine {
                 constructor(option) {
@@ -465,21 +467,97 @@ window.addEventListener('load', ()=> {
                     }
                 }
             }
+            this.deviceIndex = 1;
+            this.deviceData = [
+                {
+                    type:'pc',
+                    img: pc,
+                    x: containerWidth / 2 - 20,
+                    y: containerWidth / 2,
+                    regX: 100,
+                    regY: 0,
+                    scale: 0,
+                    top:-20
+                },
+                {
+                    type:'mobile',
+                    img: mobile,
+                    x: containerWidth / 2 - 20,
+                    y: containerWidth / 2,
+                    scale: 0,
+                    regX: 10,
+                    regY: 10
+                },
+                {
+                    img: pad,
+                    type:'pad',
+                    x: containerWidth / 2 - 20,
+                    y: containerWidth / 2,
+                    regX: 30,
+                    regY: 20,
+                    scale: 0
+                }
+            ]
 
             class DeviceCom extends Components {
                 constructor(option) {
                     super(option);
-                    [this.speedX, this.speedY, this.isStart] = [-1, 1, false];
+                    [this.speedX, this.speedY, this.isStart,this.top] = [-1, 1, false,option.top];
+                }
+
+                createDOMElement(type) {
+                    let id = utilMethods.getGuid(),
+                        html = '';
+                    switch (type) {
+                        case "mobile":
+                            html = `
+                                <div class="zmiti-mobile" id="${id}">
+                                    <h1></h1>
+                                    <div class="red-top"></div>
+                                    <div class="zmiti-line"></div>
+                                    <div class="zmiti-line"></div>
+                                    <div class="zmiti-line"></div>
+                                    <div class="zmiti-line"></div>
+                                </div>`;
+                            break;
+                        case "pc":
+                            html = `
+                            <div class="zmiti-pc" id="${id}">
+                                <div class="ball"></div>
+                                <div class="red-block"></div>
+                                <div class="zmiti-line-C">
+                                    <div class="zmiti-line"></div>
+                                    <div class="zmiti-line"></div>
+                                    <div class="zmiti-line"></div>
+                                </div>
+                            </div>
+                            `
+                            break;
+                        case "pad":
+                            break;
+                        case "watch":
+                            break;
+                    }
+
+                    $('body').append(html);
+
+                    return id;
                 }
 
                 draw() {//
-                    let img = new createjs.Bitmap(this.src).set({x: this.x, y: this.y, scale: 1});
+                    ///let img = new createjs.Bitmap(this.src).set({x: this.x, y: this.y, scale: 1});
+                   // self.deviceIndex = Math.random() > .5 ? 0:1;
+                    let type = self.deviceData[self.deviceIndex].type;
+                    let id  = this.createDOMElement(type);
+                    $("#"+id).css("opacity",1);
+                    this.id=  id;
+                    let img = new createjs.DOMElement(id).set({x: this.x, y: this.y, scale: 1});
                     this.img = img;
                     this.img.regX = this.regX;
                     this.img.regY = this.regY;
                     this.img.scaleX = this.scale;
                     this.img.scaleY = this.scale;
-
+                    this.img.top = self.deviceData[self.deviceIndex].top;
                     centerContainer.addChildAt(img, centerContainer.getChildIndex(cloudImg) + 1);
                 }
 
@@ -498,7 +576,8 @@ window.addEventListener('load', ()=> {
                     }
                     this.img.x += this.speedX;
                     this.img.y += this.speedY;
-                    if (this.img.y > z3.y + 30) {
+
+                    if (this.img.y > z3.y +(this.img.top|| 44)) {
                         this.speedY = 0;
                         this.speedX = 1;
                         if (this.img.x > containerWidth - 20) {
@@ -512,36 +591,12 @@ window.addEventListener('load', ()=> {
                     centerContainer.removeChild(this.img);
                     this.img = null;
                     deviceArr.shift();
+                    $("#"+this.id).remove();
                 }
             }
             this.DeviceCom = DeviceCom;
 
-            this.deviceData = [
-                {
-                    img: pc,
-                    x: containerWidth / 2 - 60,
-                    y: containerWidth / 2,
-                    regX: 60,
-                    regY: 20,
-                    scale: 0
-                },
-                {
-                    img: pad,
-                    x: containerWidth / 2 - 20,
-                    y: containerWidth / 2,
-                    regX: 30,
-                    regY: 20,
-                    scale: 0
-                },
-                {
-                    img: mobile,
-                    x: containerWidth / 2 - 20,
-                    y: containerWidth / 2,
-                    scale: 0,
-                    regX: 10,
-                    regY: 10
-                }
-            ]
+
 
 
             WaittingForProduceCom.comId = 0;
@@ -724,34 +779,33 @@ window.addEventListener('load', ()=> {
                         if (d.getret === 0) {
                             data.loginMask.removeClass('show');
 
-                            document.cookie =  d.getusersigid;
+                            document.cookie = d.getusersigid;
 
 //                            var domain = 'http://localhost:3000';
 
 
+                            /*  var myPopup = window.open(domain + '/index.html','_self');
 
-                          /*  var myPopup = window.open(domain + '/index.html','_self');
-
-                           myPopup.postMessage('asd', domain);
-*/
+                             myPopup.postMessage('asd', domain);
+                             */
 
 
                             var a = document.createElement('a');
                             document.body.appendChild(a);
 
                             //a.href = 'http://localhost:3000/index.html';
-                            a.href = 'http://www.zmiti.com/server/';
+                            a.href = './main/';
                             a.style.position = 'fixed';
                             a.style.zIndex = -1;
                             a.style.opacity = 0;
                             a.click();
                         }
-                        else if(d.getret === 1300){
+                        else if (d.getret === 1300) {
                             $(".login-error-info").addClass("fail");
                             self.removeErrorInfo($(".login-error-info"), "fail");
                             $(e.target).removeClass("shadow").removeClass("hide").parent().find('.loading').removeClass("show");
                         }
-                        else if(d.getret === -101){
+                        else if (d.getret === -101) {
                             alert('系统错误！');
                         }
                     }
@@ -1130,7 +1184,7 @@ window.addEventListener('load', ()=> {
                         scaleY: .8,
                         rotation: 0
                     }, 1000, createjs.Ease.elasticOut).call(()=> {
-                        this.deviceArr.push(new this.DeviceCom(this.deviceData[2]).ripe());
+                        this.deviceArr.push(new this.DeviceCom(this.deviceData[this.deviceIndex]).ripe());
                     });
                 });
         },

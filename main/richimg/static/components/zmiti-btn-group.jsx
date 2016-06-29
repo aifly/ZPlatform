@@ -41,7 +41,9 @@ export default class ZmitiBtnGroup extends React.Component {
             url: url,
             data: {
                 worksid: s.props.worksid,
-                json: window.Zmiti
+                json: window.Zmiti,
+                projectName:window.Zmiti.richImgData.projectName,
+                tagList:window.Zmiti.richImgData.tagList
             },
             success(data){
                 if (data.getret === 0) {

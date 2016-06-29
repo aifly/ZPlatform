@@ -1,25 +1,3 @@
-html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
-  padding: 0;
-  margin: 0; }
-
-a {
-  text-decoration: none; }
-
-li {
-  list-style: none; }
-
-html, body {
-  height: 100%; }
-
-img {
-  border: none;
-  vertical-align: top;
-  width: 100%;
-  height: auto; }
-
-input, textarea {
-  outline: none; }
-
 .ant-tabs-ink-bar {
   background-color: #99071e; }
 
@@ -48,5 +26,19 @@ input, textarea {
 
 .ant-menu {
   position: absolute; }
+
+.ant-input:focus {
+  border-color: #99071e;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(153, 74, 71, 0.2); }
+
+.ant-input:hover {
+  border-color: #99071e; }
+
+.zmiti-asset-menu {
+  display: none; }
+
+.ant-tag {
+  cursor: default; }
 
 /*# sourceMappingURL=theme.css.map */

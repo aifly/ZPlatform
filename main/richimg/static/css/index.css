@@ -168,8 +168,7 @@ body {
             #rm-right-app .rm-main-ui-C .rm-top-banner-C .rm-top-banner-group div button:nth-of-type(2) {
               margin-left: 20px !important; }
         #rm-right-app .rm-main-ui-C .rm-top-banner-C .rm-top-banner-group div.right-btn-group {
-          flex-grow: 5;
-          text-align: right; }
+          flex-grow: 5; }
           #rm-right-app .rm-main-ui-C .rm-top-banner-C .rm-top-banner-group div.right-btn-group button {
             width: 100px;
             height: 36px;
