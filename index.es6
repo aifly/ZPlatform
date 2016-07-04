@@ -233,7 +233,10 @@ window.addEventListener('load', ()=> {
             class Components {
                 constructor(option) {
                     let s = this;
-                    s.src = option.img;
+                    if(!option){
+                        return;
+                    }
+                    s.src = (option && option.img)|| '';
                     s.x = option.x;
                     s.y = option.y;
                     s.scale = option.scale;
@@ -241,13 +244,16 @@ window.addEventListener('load', ()=> {
                     s.h = 0;
                     s.regX = option.regX;
                     s.regY = option.regY;
-                    let image = new Image();
-                    image.onload = function () {
-                        s.w = this.width * (s.scale || 1);
-                        s.h = this.height * (s.scale || 1);
-                    };
-                    image.src = s.src;
-                    this.image = image;
+                    if(s.src){
+                        let image = new Image();
+                        image.onload = function () {
+                            s.w = this.width * (s.scale || 1);
+                            s.h = this.height * (s.scale || 1);
+                        };
+                        image.src = s.src;
+                        this.image = image;
+                    }
+
                     s.container = option.container || centerContainer;
                     s.draw();
                 }
@@ -467,42 +473,61 @@ window.addEventListener('load', ()=> {
                     }
                 }
             }
-            this.deviceIndex = 1;
+            this.deviceIndex = 3;
             this.deviceData = [
                 {
-                    type:'pc',
-                    img: pc,
-                    x: containerWidth / 2 - 20,
+                    type: 'pc',
+                    x: containerWidth / 2 + 100,
                     y: containerWidth / 2,
                     regX: 100,
                     regY: 0,
                     scale: 0,
-                    top:-20
+                    top: -20,
+                    scaleXY: 1,
                 },
                 {
-                    type:'mobile',
+                    type: 'mobile',
                     img: mobile,
-                    x: containerWidth / 2 - 20,
+                    x: containerWidth / 2 - 20 + 100,
                     y: containerWidth / 2,
                     scale: 0,
                     regX: 10,
                     regY: 10
                 },
                 {
-                    img: pad,
-                    type:'pad',
-                    x: containerWidth / 2 - 20,
+                    type: 'pad',
+                    x: containerWidth / 2 - 20 + 100,
                     y: containerWidth / 2,
                     regX: 30,
                     regY: 20,
-                    scale: 0
+                    scale: 0,
+                    scaleXY: .8,
+                    top: 30
+                },
+                {
+                    type: 'watch',
+                    x: containerWidth / 2+ 10 + 100,
+                    y: containerWidth / 2,
+                    regX: 30,
+                    regY: 20,
+                    scale: 0,
+                    top: 44
                 }
             ]
 
-            class DeviceCom extends Components {
+            class DeviceCom extends  Components{
                 constructor(option) {
                     super(option);
-                    [this.speedX, this.speedY, this.isStart,this.top] = [-1, 1, false,option.top];
+                    [this.speedX, this.speedY, this.isStart] = [-1, 1, false];
+                    let s=this;
+
+                    s.x = option.x;
+                    s.y = option.y;
+                    s.scale = option.scale;
+                    s.w = 0;
+                    s.h = 0;
+                    s.regX = option.regX;
+                    s.regY = option.regY;
                 }
 
                 createDOMElement(type) {
@@ -534,8 +559,33 @@ window.addEventListener('load', ()=> {
                             `
                             break;
                         case "pad":
+                            html = `
+                            <div class="zmiti-pad" id="${id}">
+                                <div class="red-top"></div>
+                                <div class="ball"></div>
+                                <div class="zmiti-line"></div>
+                                <div class="zmiti-line"></div>
+                                <div class="zmiti-line"></div>
+                                <div class="zmiti-line"></div>
+
+                                <div class="zmiti-line1"></div>
+                                <div class="zmiti-line1"></div>
+                                <div class="zmiti-line1"></div>
+                                <div class="zmiti-line1"></div>
+                            </div>
+                            `
                             break;
                         case "watch":
+                            html =   `
+                                <div class="zmiti-watch" id="${id}">
+                                    <div class="red-block">
+                                    </div>
+                                    <h1></h1>
+                                    <div class="zmiti-line"></div>
+                                    <div class="zmiti-line"></div>
+                                    <div class="zmiti-line"></div>
+                                </div>
+                            `
                             break;
                     }
 
@@ -546,11 +596,13 @@ window.addEventListener('load', ()=> {
 
                 draw() {//
                     ///let img = new createjs.Bitmap(this.src).set({x: this.x, y: this.y, scale: 1});
-                   // self.deviceIndex = Math.random() > .5 ? 0:1;
+
+
                     let type = self.deviceData[self.deviceIndex].type;
-                    let id  = this.createDOMElement(type);
-                    $("#"+id).css("opacity",1);
-                    this.id=  id;
+
+                    let id = this.createDOMElement(type);
+                    $("#" + id).css("opacity", 1);
+                    this.id = id;
                     let img = new createjs.DOMElement(id).set({x: this.x, y: this.y, scale: 1});
                     this.img = img;
                     this.img.regX = this.regX;
@@ -558,15 +610,18 @@ window.addEventListener('load', ()=> {
                     this.img.scaleX = this.scale;
                     this.img.scaleY = this.scale;
                     this.img.top = self.deviceData[self.deviceIndex].top;
+                    this.scaleXY = self.deviceData[self.deviceIndex].scaleXY || 1;
+
+
                     centerContainer.addChildAt(img, centerContainer.getChildIndex(cloudImg) + 1);
                 }
 
                 ripe() {
+
                     createjs.Tween.get(this.img)
-                        .to({scaleX: 1, scaleY: 1}, 700, createjs.Ease.elasticOut).call(()=> {
+                        .to({scaleX: this.scaleXY, scaleY: this.scaleXY}, 700, createjs.Ease.elasticOut).call(()=> {
                         this.isStart = true;
                     });
-
                     return this;
                 }
 
@@ -577,10 +632,10 @@ window.addEventListener('load', ()=> {
                     this.img.x += this.speedX;
                     this.img.y += this.speedY;
 
-                    if (this.img.y > z3.y +(this.img.top|| 44)) {
+                    if (this.img.y > z3.y + (this.img.top || 36)) {
                         this.speedY = 0;
                         this.speedX = 1;
-                        if (this.img.x > containerWidth - 20) {
+                        if (this.img.x > containerWidth - 20 + 100) {
                             this.speedX = 0;
                             this.die();
                         }
@@ -591,13 +646,10 @@ window.addEventListener('load', ()=> {
                     centerContainer.removeChild(this.img);
                     this.img = null;
                     deviceArr.shift();
-                    $("#"+this.id).remove();
+                    $("#" + this.id).remove();
                 }
             }
             this.DeviceCom = DeviceCom;
-
-
-
 
             WaittingForProduceCom.comId = 0;
 
@@ -650,7 +702,6 @@ window.addEventListener('load', ()=> {
 
 
             for (let i = 10; i >= 0; i--) {
-
                 lineArr.push(new Z1FlyLine([borderRadius * (i + 1), 4, zHeight - 8, containerWidth - 85 - borderRadius * (i + 1)]));
                 lineArr.push(new Z1FlyLine([(borderRadius) * (i + 1) + 20, z3.y + 5, zHeight - 8, containerWidth - 58 - borderRadius * (i + 1) + 20, 4, '', '', '', centerContainer.getChildIndex(z2) - 1]));
             }
@@ -678,7 +729,7 @@ window.addEventListener('load', ()=> {
                 deviceArr.forEach(item=>item.roll());
 
                 componentsArr.iNow++;
-                if (componentsArr.iNow % 200 === 0 && !componentsArr.stop) {
+                if (componentsArr.iNow % 250 === 0 && !componentsArr.stop) {
                     componentsArr.iNow = 0;
                     let index = Math.floor(utilMethods.r(0, 10));
                     let height = index > 4 ? 55 : 70;
@@ -691,7 +742,7 @@ window.addEventListener('load', ()=> {
                 }
                 else {
 
-                    if (componentsArr.iNow % 200 === 0) {
+                    if (componentsArr.iNow % 250 === 0) {
                         componentsArr.stop = false;
                         componentsArr.iNow = 0;
                         let index = Math.floor(utilMethods.r(0, 10));
@@ -1147,7 +1198,9 @@ window.addEventListener('load', ()=> {
                 obj.removeClass(className);
             }, 2000)
         },
-
+        r(m, n, name) {
+            return name ? (m + Math[name](Math.random() * (n - m))) : m + Math.random() * (n - m);
+        },
         getFXBitmap(source, filters, x, y, w, h) {
             // cache the source, so we can grab a rasterized image of it:
             source.cache(x, y, w, h);
@@ -1184,7 +1237,8 @@ window.addEventListener('load', ()=> {
                         scaleY: .8,
                         rotation: 0
                     }, 1000, createjs.Ease.elasticOut).call(()=> {
-                        this.deviceArr.push(new this.DeviceCom(this.deviceData[this.deviceIndex]).ripe());
+                        self.deviceIndex = self.r(0,4,'floor');
+                        self.deviceArr.push(new self.DeviceCom(self.deviceData[self.deviceIndex]).ripe());
                     });
                 });
         },
