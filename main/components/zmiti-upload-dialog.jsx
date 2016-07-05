@@ -87,6 +87,7 @@ export default class ZmitiUploadDialog extends React.Component {
         if (this.props.id !== data.id) {
             return;
         }
+        this.target = data.target;
         this.setState({
             visible: true,
             type: data.type
@@ -343,13 +344,17 @@ export default class ZmitiUploadDialog extends React.Component {
     }
 
     componentDidMount() {
+
+
         PubSub.subscribe("showModal", (d, e)=> {
             this.showModal(e);
         });
 
+        window.showModal = this.showModal.bind(this);
+/*
         $$('li', this.refs['menu-C']).forEach((li, i)=> {
             i === this.state.current && utilMethods.addClass(li, 'active');
-        });
+        });*/
 
     }
 
@@ -554,6 +559,8 @@ export default class ZmitiUploadDialog extends React.Component {
                     });
                 }
             }
+
+            img.target = this.target;
             this.imgData = img;
         }
 

@@ -1,0 +1,14 @@
+.z-puzzle-stage {
+  width: 100vw;
+  height: 94vh;
+  position: relative; }
+  .z-puzzle-stage .z-puzzle-canvas-C {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    -webkit-box-orient: row; }
+
+/*# sourceMappingURL=zmiti-stage.css.map */
