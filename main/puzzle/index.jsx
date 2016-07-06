@@ -39,7 +39,6 @@ class ZmitiPuzzleApp extends React.Component{
             <div className="p-main-ui">
                 <ZmitiStage  {...this.props}></ZmitiStage>
                 <ZmitiPannel></ZmitiPannel>
-
             </div>
         )
     }

@@ -99,6 +99,15 @@ body {
     right: 1px;
     background: #ffdb71; }
 
+.p-mould-tilt {
+  background: url("../../images/m.png") no-repeat center; }
+
+.p-mould-bessel {
+  background: url("../../images/m1.png") no-repeat center; }
+
+.p-mould-three1 {
+  background: url("../../images/m2.png") no-repeat center; }
+
 .p-mould-top-bottom aside {
   position: absolute; }
   .p-mould-top-bottom aside:nth-of-type(1) {

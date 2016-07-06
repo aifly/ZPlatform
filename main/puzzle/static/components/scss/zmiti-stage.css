@@ -5,10 +5,12 @@
   .z-puzzle-stage .z-puzzle-canvas-C {
     width: 100%;
     height: 100%;
-    position: absolute;
-    display: -webkit-box;
-    -webkit-box-align: center;
-    -webkit-box-pack: center;
-    -webkit-box-orient: row; }
+    position: absolute; }
+    .z-puzzle-stage .z-puzzle-canvas-C canvas {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate3d(-50%, -50%, 0);
+      transform: translate3d(-50%, -50%, 0); }
 
 /*# sourceMappingURL=zmiti-stage.css.map */

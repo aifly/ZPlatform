@@ -231,6 +231,16 @@ $mouldColor4:#f90;
     }
   }
 }
+.p-mould-tilt{
+
+  background:url("../../images/m.png") no-repeat center;
+}
+.p-mould-bessel{
+  background:url("../../images/m1.png") no-repeat center;
+}
+.p-mould-three1{
+  background:url("../../images/m2.png") no-repeat center;
+}
 .p-mould-top-bottom{
   aside{
     @include pos(a);

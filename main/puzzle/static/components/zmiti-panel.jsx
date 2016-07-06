@@ -19,23 +19,30 @@ export default class ZmitiPanel extends React.Component {
         this.changeMould = this.changeMould.bind(this);
         this.closePanel = this.closePanel.bind(this);
         this.chooseMould = this.chooseMould.bind(this);
-        this.changeWidth=this.changeWidth.bind(this);
-        this.changeHeight=this.changeHeight.bind(this);
+        this.changeWidth = this.changeWidth.bind(this);
+        this.changeHeight = this.changeHeight.bind(this);
         this.state = {
-            current: 1,
-            width:1000,
-            height:500,
-            currentMethod :'renderRectLeftRight'
+            current: 2,
+            width: 1000,
+            height: 500,
+            currentMethod: 'renderRectLeftRight'
         }
     }
 
-    changeHeight(value){
-        PubSub.publish('setCanvasHeight',value);
-        PubSub.publish('renderCanvas',this.state.currentMethod);
+    changeHeight(value) {
+        PubSub.publish('setCanvasHeight', value);
+        PubSub.publish('renderCanvas', this.state.currentMethod);
+        this.setState({
+            height:value
+        });
     }
-    changeWidth(value){
-        PubSub.publish('setCanvasWidth',value);
-        PubSub.publish('renderCanvas',this.state.currentMethod);
+
+    changeWidth(value) {
+        PubSub.publish('setCanvasWidth', value);
+        PubSub.publish('renderCanvas', this.state.currentMethod);
+        this.setState({
+            width:value
+        });
     }
 
     render() {
@@ -43,16 +50,32 @@ export default class ZmitiPanel extends React.Component {
         let moulds = [
             {
                 type: 2,
-                html: <div className="p-mould p-mould-left-right active" data-method="renderRectLeftRight" key='renderRectLeftRight'>
+                html: <div className="p-mould p-mould-left-right active"  data-size="1000*500" data-method="renderRectLeftRight"
+                           key='renderRectLeftRight'>
                     <aside></aside>
                     <aside></aside>
                 </div>
             },
             {
                 type: 2,
-                html: <div className="p-mould p-mould-top-bottom" data-method="renderRectUpDown" key='moulds-2'>
+                html: <div className="p-mould p-mould-top-bottom"  data-size="1000*500" data-method="renderRectUpDown" key='renderRectUpDown'>
                     <aside></aside>
                     <aside></aside>
+                </div>
+            },
+            {
+                type: 2,
+                html: <div className="p-mould p-mould-tilt" data-size="1000*500" data-method="renderRectTilt" key='renderRectTilt'>
+                </div>
+            },
+            {
+                type: 2,
+                html: <div className="p-mould p-mould-bessel" data-size="500*800" data-method="renderRectBessel" key='renderRectBessel'>
+                </div>
+            },
+            {
+                type: 3,
+                html: <div className="p-mould p-mould-three1" data-size="1000*500" data-method="renderRectThree1" key='renderRectThree1'>
                 </div>
             }
         ];
@@ -70,10 +93,10 @@ export default class ZmitiPanel extends React.Component {
                 </section>
                 <header className="z-puzzle-header">
                     <div className="z-puzzle-width">
-                        宽 <InputNumber min={1} max={1920} defaultValue={1000} size="large" onChange={this.changeWidth} />
+                        宽 <InputNumber min={1} max={1920} className="width-input-number" ref="input-number" value={this.state.width} size="large" onChange={this.changeWidth}/>
                     </div>
                     <div className="z-puzzle-height">
-                        高 <InputNumber min={1} max={1920} defaultValue={500} size="large" onChange={this.changeHeight} />
+                        高 <InputNumber min={1} max={1920} className="height-input-number" value={this.state.height} size="large" onChange={this.changeHeight}/>
                     </div>
                 </header>
                 <section className="zmiti-panel-body " ref="panel-body">
@@ -103,28 +126,56 @@ export default class ZmitiPanel extends React.Component {
         )
     }
 
-    chooseMould(e){
+    componentDidMount() {
+
+
+    }
+
+    chooseMould(e) { //切换模板。
         e.persist();
         let target = null;
-        if(e.target.classList.contains('p-mould')){
+        if (e.target.classList.contains('p-mould')) {
             target = e.target;
         }
-        else if(e.target.parentNode.classList.contains('p-mould')){
+        else if (e.target.parentNode.classList.contains('p-mould')) {
             target = e.target.parentNode;
         }
-        if(target){
+        this.lastTarget = this.lastTarget || null;
+        if(this.lastTarget === target){
+            return;
+        }
+        if (target) {
 
-            $$('.p-mould',this.refs['zmiti-panel-C']).forEach(item=>{
+            $$('.p-mould', this.refs['zmiti-panel-C']).forEach(item=> {
                 item.classList.contains('active') && item.classList.remove('active');
             });
 
             let method = target.dataset['method'];
-            PubSub.publish('renderCanvas',method);
+            let size = target.dataset['size'];
+            if(size){
+                let sizeArr = size.split('*');
 
-            PubSub.publish('getMethod',method);
+             /*   !isNaN(sizeArr[0]*1) && this.changeWidth(sizeArr[0]*1);
+                !isNaN(sizeArr[1]*1) && this.changeHeight(sizeArr[1]*1);*/
+
+                this.setState({
+                   width:sizeArr[0]*1,
+                   height:sizeArr[1]*1
+                });
+
+                PubSub.publish('setCanvasWidth', sizeArr[0]*1);
+                PubSub.publish('setCanvasHeight', sizeArr[1]*1);
+
+            }
+            this.setState({
+                currentMethod: method
+            });
+            PubSub.publish('renderCanvas', method);
+
+            PubSub.publish('getMethod', method);
 
             target.classList.add('active');
-
+            this.lastTarget = target;
         }
     }
 
