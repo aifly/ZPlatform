@@ -141,6 +141,10 @@ body {
 
 $baseColor:#99071e;
 .zmiti-panel-ui{
+  &.active{
+    @include transitionTimingFunction();
+    @include transition(.5s);
+  }
   @include pos(a);
   left:0;
   top:0;
@@ -241,6 +245,12 @@ $mouldColor4:#f90;
 .p-mould-three1{
   background:url("../../images/m2.png") no-repeat center;
 }
+.p-mould-four1{
+  background:url("../../images/m4.png") no-repeat center;
+}
+.p-mould-four2{
+  background:url("../../images/m3.png") no-repeat center;
+}
 .p-mould-top-bottom{
   aside{
     @include pos(a);
@@ -300,14 +310,13 @@ $mouldColor4:#f90;
 }
 
 .zmiti-panel-body{
-  @include transitionTimingFunction();
-  @include transition(.5s);
+
   border:1px solid #ccc;
   background: #fff;
   height:100%;
 }
-.zmiti-panel-body.close{
-  height:0;
+.zmiti-panel-ui.close{
+  height:12vh;
   overflow: hidden;
 
 }

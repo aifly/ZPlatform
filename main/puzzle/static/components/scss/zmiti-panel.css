@@ -32,6 +32,11 @@ body {
   top: 0;
   width: 300px;
   height: 80vh; }
+  .zmiti-panel-ui.active {
+    -webkit-transition-timing-function: cubic-bezier(1, -0.025, 1, 0.865);
+    transition-timing-function: cubic-bezier(1, -0.025, 1, 0.865);
+    -webkit-transition: 0.5s;
+    transition: 0.5s; }
 
 .zmiti-panel-title {
   width: 300px;
@@ -108,6 +113,12 @@ body {
 .p-mould-three1 {
   background: url("../../images/m2.png") no-repeat center; }
 
+.p-mould-four1 {
+  background: url("../../images/m4.png") no-repeat center; }
+
+.p-mould-four2 {
+  background: url("../../images/m3.png") no-repeat center; }
+
 .p-mould-top-bottom aside {
   position: absolute; }
   .p-mould-top-bottom aside:nth-of-type(1) {
@@ -158,16 +169,12 @@ body {
     margin-left: 20px; }
 
 .zmiti-panel-body {
-  -webkit-transition-timing-function: cubic-bezier(1, -0.025, 1, 0.865);
-  transition-timing-function: cubic-bezier(1, -0.025, 1, 0.865);
-  -webkit-transition: 0.5s;
-  transition: 0.5s;
   border: 1px solid #ccc;
   background: #fff;
   height: 100%; }
 
-.zmiti-panel-body.close {
-  height: 0;
+.zmiti-panel-ui.close {
+  height: 12vh;
   overflow: hidden; }
 
 .zmiti-close {

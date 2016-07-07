@@ -55,7 +55,8 @@ export default class ZmitiStage extends React.Component {
                 s.forceUpdate();
 
                 let img = new Image();
-                imgData.target.text.alpha = 1;
+                imgData.target.text.text = '        loading...';
+
 
                 s.stage.update();
 
@@ -156,7 +157,7 @@ export default class ZmitiStage extends React.Component {
         !this.stage && (this.stage = new createjs.Stage(canvas));
         this.stage.removeAllChildren();
 
-        let colors = ['#ff99c1', '#ffdb71','#b6d172'];
+        let colors = ['#ff99c1', '#ffdb71','#b6d172','#aaddff','#78c9ba'];
 
         let stage = this.stage,
             s = this;
@@ -170,6 +171,7 @@ export default class ZmitiStage extends React.Component {
                 if(s.state.imgList.length >= arr.length){
                     arr.forEach((img,i)=> {
                         let image = new Image();
+                        image.crossOrigin = "Anonymous";
                         arr[i].text.alpha =1;//显示loading
                         stage.update();
                         image.onload = function(){

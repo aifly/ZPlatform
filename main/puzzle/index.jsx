@@ -70,7 +70,7 @@ ReactDOM.render(<ZmitiPuzzleApp></ZmitiPuzzleApp>,document.getElementById('fly-m
 
     !localStorage['tipInfo'] && notification['info']({
         message: '小提示',
-        description: '双击色块上传图片',
+        description: '按住空格键不松开,可以拖拽整张图片~',
         btn,
         key
     });

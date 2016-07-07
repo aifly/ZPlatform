@@ -88,26 +88,26 @@ const ShapeGenerater = {
         rect1.graphics.beginFill(colors[1]).drawRect(width / len + 1, 0, width / len - 1, height);
 
         let rect2 = new createjs.Shape();
-        rect2.graphics.beginFill(colors[2]).drawRect(width / len*2 + 1, 0, width / len - 1, height);
+        rect2.graphics.beginFill(colors[2]).drawRect(width / len*2 + 2, 0, width / len - 2, height);
 
-        let text = new createjs.Text('loading...', "20px Arial", '#fff');
+        let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
 
-        text.x = width / len /2 - 30;
+        text.x = width / len /2 - 60;
         text.y = height / 2;
         text.name = 'text';
-        text.alpha = 0;
 
-        let text1 = new createjs.Text('loading...', "20px Arial", '#fff');
-        text1.x = width / 2 - 30;
+
+        let text1 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text1.x = width / 2 - 60;
         text1.y = height / 2;
         text1.name = 'text1';
-        text1.alpha = 0;
 
-        let text2 = new createjs.Text('loading...', "20px Arial", '#fff');
-        text2.x = width / len/2 * 5 - 30;
+
+        let text2 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text2.x = width / len/2 * 5 - 60;
         text2.y = height / 2;
         text2.name = 'text2';
-        text2.alpha = 0;
+
 
         this.bindDblClick({rect: rect, text: text, x: 0, y: 0}, {rect: rect1, text: text1, x: width / len, y: 0}, {rect: rect2, text: text2, x: width / len*2, y: 0});
 
@@ -116,45 +116,157 @@ const ShapeGenerater = {
         stage.update();
         fn && fn({rect: rect, text: text, x: 0, y: 0}, {rect: rect1, text: text1, x: width / len, y: 0}, {rect: rect2, text: text2, x: width / len*2, y: 0});
     },
-    addLoadingHorText(width, height){
-        let text = new createjs.Text('loading...', "20px Arial", '#fff');
+    renderRectFour1(options,fn){
+        let {stage,colors,width,height} = options,
+            rect = new createjs.Shape(),
+            len = 4;
 
-        text.x = width / 4 - 30;
+        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / len - 1, height);
+
+        let rect1 = new createjs.Shape();
+        rect1.graphics.beginFill(colors[1]).drawRect(width / len + 1, 0, width / len - 1, height);
+
+        let rect2 = new createjs.Shape();
+        rect2.graphics.beginFill(colors[2]).drawRect(width / len*2 + 2, 0, width / len - 2, height);
+
+        let rect3 = new createjs.Shape();
+        rect3.graphics.beginFill(colors[3]).drawRect(width / len * 3 + 2, 0, width / len - 2, height);
+
+        let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+
+        text.x = width / len /2 - 60;
         text.y = height / 2;
         text.name = 'text';
-        text.alpha = 0;
 
-        let text1 = new createjs.Text('loading...', "20px Arial", '#fff');
-        text1.x = width / 4 * 3 - 30;
+
+        let text1 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text1.x = width / len/ 2 *3 - 60;
         text1.y = height / 2;
         text1.name = 'text1';
-        text1.alpha = 0;
+
+
+        let text2 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text2.x = width / len/2 * 5 - 60;
+        text2.y = height / 2;
+        text2.name = 'text2';
+
+
+        let text3 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text3.x = width / len/2 * 7 - 60;
+        text3.y = height / 2;
+        text3.name = 'text2';
+
+
+        this.bindDblClick(
+            {rect: rect, text: text, x: 0, y: 0},
+            {rect: rect1, text: text1, x: width / len, y: 0},
+            {rect: rect2, text: text2, x: width / len*2, y: 0},
+            {rect: rect3, text: text3, x: width / len*3, y: 0}
+        );
+
+        stage.addChild(rect, rect1,rect2, rect3,text1, text,text2,text3);
+
+        stage.update();
+        fn && fn(
+            {rect: rect, text: text, x: 0, y: 0},
+            {rect: rect1, text: text1, x: width / len, y: 0},
+            {rect: rect2, text: text2, x: width / len*2, y: 0},
+            {rect: rect3, text: text3, x: width / len*3, y: 0}
+        );
+    },
+    renderRectFour2(options,fn){//
+        let {stage,colors,width,height} = options,
+            rect = new createjs.Shape(),
+            len = 2;
+
+        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / len - 1, height/len-1);
+
+        let rect1 = new createjs.Shape();
+        rect1.graphics.beginFill(colors[1]).drawRect(width / len + 1, 0, width / len - 1, height/len-1);
+
+        let rect2 = new createjs.Shape();
+        rect2.graphics.beginFill(colors[2]).drawRect(0, height/len +1, width / len - 1, height/2);
+
+        let rect3 = new createjs.Shape();
+        rect3.graphics.beginFill(colors[3]).drawRect(width / len + 1, height/len + 1, width / len - 2, height/2);
+
+        let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+
+        text.x = width / len /2  - 60;
+        text.y = height /len/ 2;
+
+
+        let text1 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text1.x = width / len/ 2 * 3 - 60;
+        text1.y = height / 2 /len;
+
+
+        let text2 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text2.x = width / len /2  - 60;
+        text2.y = height / 4 *3 ;
+
+
+        let text3 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text3.x = width / len/ 2 * 3 - 60;
+        text3.y = height / 4 *3 ;
+
+
+        this.bindDblClick(
+            {rect: rect, text: text, x: 0, y: 0},
+            {rect: rect1, text: text1, x: width / len, y: 0},
+            {rect: rect2, text: text2, x: 0, y: height/len},
+            {rect: rect3, text: text3, x: width / len, y: height/len}
+        );
+
+        stage.addChild(rect, rect1,rect2, rect3,text1, text,text2,text3);
+
+        stage.update();
+        fn && fn(
+            {rect: rect, text: text, x: 0, y: 0},
+            {rect: rect1, text: text1, x: width / len, y: 0},
+            {rect: rect2, text: text2, x: 0, y: height/len},
+            {rect: rect3, text: text3, x: width / len, y: height/len}
+        );
+    },
+    addLoadingHorText(width, height){
+        let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+
+        text.x = width / 4 - 60;
+        text.y = height / 2;
+        text.name = 'text';
+
+
+        let text1 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text1.x = width / 4 * 3 - 60;
+        text1.y = height / 2;
+        text1.name = 'text1';
+
 
         return {text, text1};
     },
     addLoadingVerText(width, height){
-        let text = new createjs.Text('loading...', "20px Arial", '#fff');
+        let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
 
-        text.x = width / 2 - 30;
+        text.x = width / 2 - 60;
         text.y = height / 4;
         text.name = 'text';
-        text.alpha = 0;
 
-        let text1 = new createjs.Text('loading...', "20px Arial", '#fff');
-        text1.x = width / 2 - 30;
+
+        let text1 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text1.x = width / 2 - 60;
         text1.y = height / 4 * 3;
         text1.name = 'text1';
-        text1.alpha = 0;
+
 
         return {text, text1};
     },
     bindDblClick(){
         Array.from(arguments).forEach(r=> {
-            r.rect.on('dblclick', ()=> {
+            r.rect.on('dblclick', (e)=> {
                 window.showModal({
                     type: 0,
                     id: 'puzzle',
-                    target: {rect: r.rect, text: r.text, x: r.x || 0, y: r.y || 0}
+                    target: {rect: r.rect, text: r.text, x: r.x ||  0 , y: r.y ||  0}
                 });
             });
         });

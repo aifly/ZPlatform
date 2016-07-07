@@ -22,7 +22,7 @@ export default class ZmitiPanel extends React.Component {
         this.changeWidth = this.changeWidth.bind(this);
         this.changeHeight = this.changeHeight.bind(this);
         this.state = {
-            current: 2,
+            current: 0,
             width: 1000,
             height: 500,
             currentMethod: 'renderRectLeftRight'
@@ -33,7 +33,7 @@ export default class ZmitiPanel extends React.Component {
         PubSub.publish('setCanvasHeight', value);
         PubSub.publish('renderCanvas', this.state.currentMethod);
         this.setState({
-            height:value
+            height: value
         });
     }
 
@@ -41,7 +41,7 @@ export default class ZmitiPanel extends React.Component {
         PubSub.publish('setCanvasWidth', value);
         PubSub.publish('renderCanvas', this.state.currentMethod);
         this.setState({
-            width:value
+            width: value
         });
     }
 
@@ -50,7 +50,8 @@ export default class ZmitiPanel extends React.Component {
         let moulds = [
             {
                 type: 2,
-                html: <div className="p-mould p-mould-left-right active"  data-size="1000*500" data-method="renderRectLeftRight"
+                html: <div className="p-mould p-mould-left-right active" data-size="1000*500"
+                           data-method="renderRectLeftRight"
                            key='renderRectLeftRight'>
                     <aside></aside>
                     <aside></aside>
@@ -58,24 +59,40 @@ export default class ZmitiPanel extends React.Component {
             },
             {
                 type: 2,
-                html: <div className="p-mould p-mould-top-bottom"  data-size="1000*500" data-method="renderRectUpDown" key='renderRectUpDown'>
+                html: <div className="p-mould p-mould-top-bottom" data-size="1000*500" data-method="renderRectUpDown"
+                           key='renderRectUpDown'>
                     <aside></aside>
                     <aside></aside>
                 </div>
             },
             {
                 type: 2,
-                html: <div className="p-mould p-mould-tilt" data-size="1000*500" data-method="renderRectTilt" key='renderRectTilt'>
+                html: <div className="p-mould p-mould-tilt" data-size="1000*500" data-method="renderRectTilt"
+                           key='renderRectTilt'>
                 </div>
             },
             {
                 type: 2,
-                html: <div className="p-mould p-mould-bessel" data-size="500*800" data-method="renderRectBessel" key='renderRectBessel'>
+                html: <div className="p-mould p-mould-bessel" data-size="500*800" data-method="renderRectBessel"
+                           key='renderRectBessel'>
                 </div>
             },
             {
                 type: 3,
-                html: <div className="p-mould p-mould-three1" data-size="1000*500" data-method="renderRectThree1" key='renderRectThree1'>
+                html: <div className="p-mould p-mould-three1" data-size="1000*500" data-method="renderRectThree1"
+                           key='renderRectThree1'>
+                </div>
+            },
+            {
+                type: 4,
+                html: <div className="p-mould p-mould-four1" data-size="1000*500" data-method="renderRectFour1"
+                           key='renderRectFour1'>
+                </div>
+            },
+            {
+                type: 4,
+                html: <div className="p-mould p-mould-four2" data-size="600*600" data-method="renderRectFour2"
+                           key='renderRectFour2'>
                 </div>
             }
         ];
@@ -93,10 +110,12 @@ export default class ZmitiPanel extends React.Component {
                 </section>
                 <header className="z-puzzle-header">
                     <div className="z-puzzle-width">
-                        宽 <InputNumber min={1} max={1920} className="width-input-number" ref="input-number" value={this.state.width} size="large" onChange={this.changeWidth}/>
+                        宽 <InputNumber min={1} max={1920} className="width-input-number" ref="input-number"
+                                       value={this.state.width} size="large" onChange={this.changeWidth}/>
                     </div>
                     <div className="z-puzzle-height">
-                        高 <InputNumber min={1} max={1920} className="height-input-number" value={this.state.height} size="large" onChange={this.changeHeight}/>
+                        高 <InputNumber min={1} max={1920} className="height-input-number" value={this.state.height}
+                                       size="large" onChange={this.changeHeight}/>
                     </div>
                 </header>
                 <section className="zmiti-panel-body " ref="panel-body">
@@ -106,7 +125,6 @@ export default class ZmitiPanel extends React.Component {
                             <li className={this.state.current === 1 ? 'active':''}>2</li>
                             <li className={this.state.current === 2 ? 'active':''}>3</li>
                             <li className={this.state.current === 3 ? 'active':''}>4</li>
-                            <li className={this.state.current === 4 ? 'active':''}>4+</li>
                         </ul>
                         <article className="zmiti-panel-C" ref="zmiti-panel-C" onClick={this.chooseMould}>
                             {
@@ -141,7 +159,7 @@ export default class ZmitiPanel extends React.Component {
             target = e.target.parentNode;
         }
         this.lastTarget = this.lastTarget || null;
-        if(this.lastTarget === target){
+        if (this.lastTarget === target) {
             return;
         }
         if (target) {
@@ -152,19 +170,19 @@ export default class ZmitiPanel extends React.Component {
 
             let method = target.dataset['method'];
             let size = target.dataset['size'];
-            if(size){
+            if (size) {
                 let sizeArr = size.split('*');
 
-             /*   !isNaN(sizeArr[0]*1) && this.changeWidth(sizeArr[0]*1);
-                !isNaN(sizeArr[1]*1) && this.changeHeight(sizeArr[1]*1);*/
+                /*   !isNaN(sizeArr[0]*1) && this.changeWidth(sizeArr[0]*1);
+                 !isNaN(sizeArr[1]*1) && this.changeHeight(sizeArr[1]*1);*/
 
                 this.setState({
-                   width:sizeArr[0]*1,
-                   height:sizeArr[1]*1
+                    width: sizeArr[0] * 1,
+                    height: sizeArr[1] * 1
                 });
 
-                PubSub.publish('setCanvasWidth', sizeArr[0]*1);
-                PubSub.publish('setCanvasHeight', sizeArr[1]*1);
+                PubSub.publish('setCanvasWidth', sizeArr[0] * 1);
+                PubSub.publish('setCanvasHeight', sizeArr[1] * 1);
 
             }
             this.setState({
@@ -180,9 +198,15 @@ export default class ZmitiPanel extends React.Component {
     }
 
     closePanel() {
+
         this.open = !this.open;
-        let panel = this.refs['panel-body'];
+        let panel = this.refs['panel'];
         panel.classList[this.open ? 'add' : 'remove']('close');
+        panel.classList.add("active");
+        this.closeTimer && clearTimeout(this.closeTimer);
+        this.closeTimer = setTimeout(()=> {
+            panel.classList.remove("active");
+        }, 500);
         let closeBar = _$('.zmiti-close');
         closeBar.classList[this.open ? 'add' : 'remove']('scroll');
         $$('li', closeBar)[0].classList[!this.open ? 'add' : 'remove']('close1');
