@@ -155,14 +155,15 @@ body {
 
 .z-puzzle-header {
   width: 100%;
-  height: 6vh;
+  height: 8vh;
   background: #dfdfdf;
-  text-align: center;
-  display: flex;
-  display: -webkit-flex;
-  flex-flow: row;
-  justify-content: center;
-  align-items: center; }
+  text-align: center; }
+  .z-puzzle-header article {
+    display: flex;
+    display: -webkit-flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center; }
   .z-puzzle-header .z-puzzle-width {
     margin-right: 20px; }
   .z-puzzle-header .z-puzzle-height {
@@ -174,7 +175,7 @@ body {
   height: 100%; }
 
 .zmiti-panel-ui.close {
-  height: 12vh;
+  height: 14vh;
   overflow: hidden; }
 
 .zmiti-close {

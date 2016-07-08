@@ -96,6 +96,7 @@ export default class ZmitiStage extends React.Component {
 
     componentDidMount() {
         this.renderCanvas();
+
         PubSub.subscribe('renderCanvas', (e, method)=> {
             this.renderCanvas(method);
         });
@@ -161,6 +162,8 @@ export default class ZmitiStage extends React.Component {
 
         let stage = this.stage,
             s = this;
+
+
 
 
 

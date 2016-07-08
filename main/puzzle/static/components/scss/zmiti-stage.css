@@ -12,5 +12,9 @@
       top: 50%;
       -webkit-transform: translate3d(-50%, -50%, 0);
       transform: translate3d(-50%, -50%, 0); }
+  .z-puzzle-stage .z-puzzle-download {
+    position: absolute;
+    left: 400px;
+    top: 100px; }
 
 /*# sourceMappingURL=zmiti-stage.css.map */

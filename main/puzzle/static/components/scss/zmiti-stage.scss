@@ -120,5 +120,11 @@
       @include transform(translate3d(-50%,-50%,0));
     }
   }
+
+  .z-puzzle-download{
+    @include pos(a);
+    left:400px;
+    top:100px;
+  }
 }
 

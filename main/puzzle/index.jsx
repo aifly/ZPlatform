@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
 
-
+import message from 'antd/lib/message';
+import 'antd/lib/message/style/css';
 
 import ZmitiPannel from './static/components/zmiti-panel.jsx';
 import ZmitiStage from './static/components/zmiti-stage.jsx';
@@ -13,6 +14,13 @@ import 'antd/lib/notification/style/css';
 import Button from 'antd/lib/button';
 import 'antd/lib/button/style/css';
 
+if(!window.parent.userId){
+    message.warning('请重新登录');
+
+    setTimeout(()=>{
+       window.parent.location.href= '/'
+    },1000)
+}
 
 class ZmitiPuzzleApp extends React.Component{
     constructor(args){
@@ -21,9 +29,11 @@ class ZmitiPuzzleApp extends React.Component{
         this.state = {
             width:1000,
             height:500,
-            currentMethod :'renderRectLeftRight'
+            currentMethod :'renderRectLeftRight',
         }
     }
+
+
     componentDidMount(){
         PubSub.subscribe('getMethod',(e,method)=>{
             this.setState({

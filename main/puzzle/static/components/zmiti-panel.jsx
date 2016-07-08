@@ -5,9 +5,12 @@ const TabPane = Tabs.TabPane;
 import 'antd/lib/tabs/style/css';
 import {utilMethods,_$,$$} from '../../../utilMethod.es6';
 import PubSub from '../js/pubsub';
+import Button from 'antd/lib/button';
 
 import InputNumber from 'antd/lib/input-number';
 import 'antd/lib/input-number/style/css';
+
+import  $ from 'jquery';
 
 export default class ZmitiPanel extends React.Component {
     constructor(args) {
@@ -21,11 +24,13 @@ export default class ZmitiPanel extends React.Component {
         this.chooseMould = this.chooseMould.bind(this);
         this.changeWidth = this.changeWidth.bind(this);
         this.changeHeight = this.changeHeight.bind(this);
+        this.downloadImg = this.downloadImg.bind(this);
         this.state = {
             current: 0,
             width: 1000,
             height: 500,
-            currentMethod: 'renderRectLeftRight'
+            currentMethod: 'renderRectLeftRight',
+            dataUrl:'#'
         }
     }
 
@@ -109,15 +114,19 @@ export default class ZmitiPanel extends React.Component {
                     </ul>
                 </section>
                 <header className="z-puzzle-header">
-                    <div className="z-puzzle-width">
-                        宽 <InputNumber min={1} max={1920} className="width-input-number" ref="input-number"
-                                       value={this.state.width} size="large" onChange={this.changeWidth}/>
-                    </div>
-                    <div className="z-puzzle-height">
-                        高 <InputNumber min={1} max={1920} className="height-input-number" value={this.state.height}
-                                       size="large" onChange={this.changeHeight}/>
-                    </div>
+                    <article>
+                        <div className="z-puzzle-width">
+                            宽 <InputNumber min={1} max={1920} className="width-input-number" ref="input-number"
+                                           value={this.state.width} size="large" onChange={this.changeWidth}/>
+                        </div>
+                        <div className="z-puzzle-height">
+                            高 <InputNumber min={1} max={1920} className="height-input-number" value={this.state.height}
+                                           size="large" onChange={this.changeHeight}/>
+                        </div>
+                    </article>
+                    <div style={{marginTop:6}}><a target="_blank" download={this.state.dataUrl} href={this.state.dataUrl}>下载图片</a></div>
                 </header>
+
                 <section className="zmiti-panel-body " ref="panel-body">
                     <section className="zmiti-panel-type-C">
                         <ul onClick={this.changeMould}>
@@ -144,8 +153,25 @@ export default class ZmitiPanel extends React.Component {
         )
     }
 
+
+    downloadImg() {
+
+
+        let imgPathURL = window.ZmitiState.toDataURL();
+
+
+
+
+
+    }
+
     componentDidMount() {
 
+       this.setState({
+           dataUrl:document.getElementsByTagName('canvas')[0].toDataURL()
+       })
+
+        //alert(PubSub.publish("returnStage"))
 
     }
 
