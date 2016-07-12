@@ -1,12 +1,28 @@
 import 'babel-polyfill';
 const ShapeGenerater = {
-    renderRectLeftRight(options, fn){//左右两侧的长方形。
+    renderRectLeftRight(options, fn,target){//左右两侧的长方形。
         let {stage,colors,width,height} = options,
             rect = new createjs.Shape();
-        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / 2 - 1, height);
+            rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / 2 - 1, height);
+            rect.name= 'rect';
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).drawRect(width / 2 + 1, 0, width / 2 - 1, height);
+            rect1.graphics.beginFill(colors[1]).drawRect(width / 2 + 1, 0, width / 2 - 1, height);
+            rect1.name= 'rect1';
+
+        
+       /*
+         if(target){
+             switch (target.name){
+             case 'rect':
+             rect.graphics.setStrokeStyle(2).beginStroke("#f00").beginFill(colors[0]).drawRect(0, 0, width / 2 - 1, height);
+             break;
+             case 'rect1':
+             rect1.graphics.setStrokeStyle(2).beginStroke("#f00").beginFill(colors[1]).drawRect(width / 2 + 1, 0, width / 2 - 1, height);
+             break;
+         }
+         }*/
+
 
         let {text,text1} = this.addLoadingHorText(width, height);
 
@@ -16,6 +32,7 @@ const ShapeGenerater = {
 
         stage.update();
         fn && fn({rect: rect, text: text,x: 0, y: 0}, {rect: rect1, text: text1,x: width / 2, y: 0});
+
 
     },
     renderRectUpDown(options, fn){
@@ -262,12 +279,16 @@ const ShapeGenerater = {
     },
     bindDblClick(){
         Array.from(arguments).forEach(r=> {
-            r.rect.on('dblclick', (e)=> {
+            r.rect.on('dblclick', ()=> {
                 window.showModal({
                     type: 0,
                     id: 'puzzle',
                     target: {rect: r.rect, text: r.text, x: r.x ||  0 , y: r.y ||  0}
                 });
+            });
+            r.rect.on('mousedown',e=>{
+
+                PubSub.publish('renderCanvas', 'renderRectLeftRight',r.rect);
             });
         });
     }

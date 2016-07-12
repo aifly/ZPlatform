@@ -155,14 +155,7 @@ export default class ZmitiPanel extends React.Component {
 
 
     downloadImg() {
-
-
         let imgPathURL = window.ZmitiState.toDataURL();
-
-
-
-
-
     }
 
     componentDidMount() {

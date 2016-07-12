@@ -2,25 +2,36 @@
  * Created by fly on 2016/6/20 0020.
  */
 var webpack = require('webpack');
+
+var path = require('path');
 var config = {
-    entry: {
-        'index': "./puzzle/index.jsx"
-    },
+    entry:[
+        'webpack-hot-middleware/client',
+        './puzzle/index.jsx'
+
+    ],
     output: {
-        path: './puzzle/static/js',
-        filename: "[name].js",
-        chunkFilename: "[name].js"
+        path:path.join(__dirname,'puzzle/static/js'),
+        filename: "index.js",
+        publicPath:"/puzzle/"
     },
     devServer: {
         inline: true,
         port: 3000,
         hot: true
     },
+    plugins: [
+        new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
+    ],
     module: {
-        loaders: [{
+        loaders: [
+            {
             test: /\.jsx|\.js|\.es6$/,
-            exclude: /node_modules/,
-            loaders: ['babel']
+            loaders:['react-hot','babel?presets[]=es2015&presets[]=react'],
+            include: __dirname,
+            exclude: /node_modules/
         },
             {
                 test: /\.(css)$/,
@@ -30,6 +41,7 @@ var config = {
                 test:/\.svg$/,
                 loader:'url-loader'
             },
+
             {
                 test: /\.(png|jpg)$/,
                 loader: 'url-loader?limit=8192'

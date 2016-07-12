@@ -125,7 +125,6 @@ input, textarea {
   background: -moz-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
   background: -ms-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
 }
-
 @mixin displayFlex($v:column) {
   display: flex;
   display: -webkit-flex;

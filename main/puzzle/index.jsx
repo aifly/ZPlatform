@@ -18,7 +18,7 @@ if(!window.parent.userId){
     message.warning('请重新登录');
 
     setTimeout(()=>{
-       window.parent.location.href= '/'
+        ///  window.parent.location.href= '/'
     },1000)
 }
 
@@ -33,7 +33,6 @@ class ZmitiPuzzleApp extends React.Component{
         }
     }
 
-
     componentDidMount(){
         PubSub.subscribe('getMethod',(e,method)=>{
             this.setState({
@@ -45,8 +44,13 @@ class ZmitiPuzzleApp extends React.Component{
 
     render(){
 
+
+        var style = {
+            width:100
+        }
+
         return (
-            <div className="p-main-ui">
+            <div className="p-main-ui" style={style}>
                 <ZmitiStage  {...this.props}></ZmitiStage>
                 <ZmitiPannel></ZmitiPannel>
             </div>
@@ -85,3 +89,7 @@ ReactDOM.render(<ZmitiPuzzleApp></ZmitiPuzzleApp>,document.getElementById('fly-m
         key
     });
 });
+
+
+
+

@@ -146,7 +146,7 @@ export default class ZmitiStage extends React.Component {
 
     }
 
-    renderCanvas(method = 'renderRectLeftRight') {
+    renderCanvas(method = 'renderRectLeftRight',target= null) {
 
         let canvas = this.refs['z-puzzle-canvas'];
 
@@ -162,9 +162,6 @@ export default class ZmitiStage extends React.Component {
 
         let stage = this.stage,
             s = this;
-
-
-
 
 
         ShapeGenerater[method]({stage, colors, width, height}, function () {
@@ -215,7 +212,7 @@ export default class ZmitiStage extends React.Component {
 
             }
 
-        });
+        },target);
 
     }
 
