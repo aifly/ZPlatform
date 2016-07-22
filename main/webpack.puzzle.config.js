@@ -5,15 +5,19 @@ var webpack = require('webpack');
 
 var path = require('path');
 var config = {
-    entry:[
-        'webpack-hot-middleware/client',
-        './puzzle/index.jsx'
+    entry:{ /*
+     [
 
-    ],
+        './puzzle/index.jsx'
+        ]
+    */
+        index:'./puzzle/index.jsx'
+    },
     output: {
-        path:path.join(__dirname,'puzzle/static/js'),
-        filename: "index.js",
-        publicPath:"/puzzle/"
+        path:'./puzzle/static/js',
+        filename: "[name].js",
+        chunkFilename: "[name].js"
+       // publicPath:"/puzzle/"
     },
     devServer: {
         inline: true,
@@ -21,16 +25,19 @@ var config = {
         hot: true
     },
     plugins: [
-        new webpack.optimize.OccurenceOrderPlugin(),
+      /*  new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin()
+        new webpack.NoErrorsPlugin()*/
+    ],
+    externals:[
+      /*  {"./node_modules/react/react.js":"React"}*/
     ],
     module: {
         loaders: [
             {
             test: /\.jsx|\.js|\.es6$/,
-            loaders:['react-hot','babel?presets[]=es2015&presets[]=react'],
-            include: __dirname,
+            loaders:['babel'],//['react-hot','babel?presets[]=es2015&presets[]=react'],
+            //include: __dirname,
             exclude: /node_modules/
         },
             {

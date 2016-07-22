@@ -107,7 +107,7 @@ export default class ZmitiPanel extends React.Component {
                          onMouseUp={this.onMouseUp}
                 >
                     <span></span><span>选择模板</span>
-                    <ul className="zmiti-close scroll" refs="close-bar" onClick={this.closePanel}>
+                    <ul className="zmiti-close scroll" ref="close-bar" onClick={this.closePanel}>
                         <li className="close1"></li>
                         <li className="scroll"></li>
                         <li className="close2"></li>
@@ -124,7 +124,7 @@ export default class ZmitiPanel extends React.Component {
                                            size="large" onChange={this.changeHeight}/>
                         </div>
                     </article>
-                    <div style={{marginTop:6}}><a target="_blank" download={this.state.dataUrl} href={this.state.dataUrl}>下载图片</a></div>
+                    <div style={{marginTop:6}}><a target="_blank" download={this.state.dataUrl} onClick={this.downloadImg} href={this.state.dataUrl}>下载图片</a></div>
                 </header>
 
                 <section className="zmiti-panel-body " ref="panel-body">
@@ -155,16 +155,13 @@ export default class ZmitiPanel extends React.Component {
 
 
     downloadImg() {
-        let imgPathURL = window.ZmitiState.toDataURL();
+      ///  let imgPathURL = window.ZmitiState.toDataURL();
+        this.setState({
+            dataUrl:document.getElementsByTagName('canvas')[0].toDataURL()
+        })
     }
 
     componentDidMount() {
-
-       this.setState({
-           dataUrl:document.getElementsByTagName('canvas')[0].toDataURL()
-       })
-
-        //alert(PubSub.publish("returnStage"))
 
     }
 

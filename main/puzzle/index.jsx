@@ -39,11 +39,9 @@ class ZmitiPuzzleApp extends React.Component{
                 currentMethod:method
             })
         });
-
     }
 
     render(){
-
 
         var style = {
             width:100

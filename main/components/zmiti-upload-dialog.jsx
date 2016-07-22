@@ -457,7 +457,6 @@ export default class ZmitiUploadDialog extends React.Component {
             return;
         }
 
-
         let formData = new FormData(),
             s = this;
         s.setState({
@@ -471,7 +470,7 @@ export default class ZmitiUploadDialog extends React.Component {
         formData.append('setisthum', 1);
         formData.append('seturltype', 'material' /*s.state.defaultIds[s.state.current]*/);
 
-        console.log( s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "")
+        ///console.log( s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "")
 
 
         $.ajax({

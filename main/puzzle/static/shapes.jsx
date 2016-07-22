@@ -32,8 +32,6 @@ const ShapeGenerater = {
 
         stage.update();
         fn && fn({rect: rect, text: text,x: 0, y: 0}, {rect: rect1, text: text1,x: width / 2, y: 0});
-
-
     },
     renderRectUpDown(options, fn){
         let {stage,colors,width,height} = options,
