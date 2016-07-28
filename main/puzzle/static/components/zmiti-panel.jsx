@@ -89,6 +89,18 @@ export default class ZmitiPanel extends React.Component {
                 </div>
             },
             {
+                type: 3,
+                html: <div className="p-mould p-mould-three2" data-size="500*500" data-method="renderRectThree2"
+                           key='renderRectThree2'>
+                </div>
+            },
+            {
+                type: 3,
+                html: <div className="p-mould p-mould-three3" data-size="500*500" data-method="renderRectThree3"
+                           key='renderRectThree3'>
+                </div>
+            },
+            {
                 type: 4,
                 html: <div className="p-mould p-mould-four1" data-size="1000*500" data-method="renderRectFour1"
                            key='renderRectFour1'>
