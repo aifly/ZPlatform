@@ -243,6 +243,121 @@ const ShapeGenerater = {
             {rect: rect3, text: text3, x: width / len, y: height/len}
         );
     },
+
+    renderRectFour3(options,fn){
+
+        let {stage,colors,width,height} = options,
+            rect = new createjs.Shape(),
+            len = 2;
+
+        rect.graphics.beginFill(colors[0]).drawRect(1, 0, width -1, height/len-1);
+
+        let rect1 = new createjs.Shape();
+        rect1.graphics.beginFill(colors[1]).drawRect(1, height/len+1, width / len - 1, height/len-1);
+
+        let rect2 = new createjs.Shape();
+        rect2.graphics.beginFill(colors[2]).drawRect(width / len + 2, height/len +1, width / len - 1, height/2/2-2);
+
+        let rect3 = new createjs.Shape();
+        rect3.graphics.beginFill(colors[3]).drawRect(width / len + 2, height/len /2 *3 + 1, width / len - 2, height/2/2);
+
+        let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+
+        text.x = width / len   - 60;
+        text.y = height /len/ 2;
+
+
+        let text1 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+
+        text1.x = width / len /2  - 60;
+        text1.y = height / 4 *3 ;
+
+
+        let text2 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text2.x = width / len /2*3  - 60;
+        text2.y = height / 2+ height / 8;
+
+
+        let text3 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text3.x = width / len/ 2 * 3 - 60;
+        text3.y = height / 8 +height / 4*3 ;
+
+
+        this.bindDblClick(
+            {rect: rect, text: text, x: 0, y: 0},
+            {rect: rect1, text: text1, x:0, y: height/2},
+            {rect: rect2, text: text2, x: width/2, y: height/len},
+            {rect: rect3, text: text3, x: width / len, y: height/len+height/len/2}
+        );
+
+        stage.addChild(rect, rect1,rect2, rect3,text1, text,text2,text3);
+
+        stage.update();
+        fn && fn(
+            {rect: rect, text: text, x: 0, y: 0},
+            {rect: rect1, text: text1, x:0, y: height/2},
+            {rect: rect2, text: text2, x: width/2, y: height/len},
+            {rect: rect3, text: text3, x: width / len, y: height/len+height/len/2}
+        );
+    },
+
+    renderRectFour4(options,fn){
+
+        let {stage,colors,width,height} = options,
+            rect = new createjs.Shape(),
+            len = 2;
+
+        rect.graphics.beginFill(colors[0]).drawRect(1, 0, width/len -1, height/(len+1)-1);
+
+        let rect1 = new createjs.Shape();
+        rect1.graphics.beginFill(colors[1]).drawRect(1,height/(len+1)+1, width / len - 1, height/(len+1)-1);
+
+        let rect2 = new createjs.Shape();
+        rect2.graphics.beginFill(colors[2]).drawRect(1, height/(len+1)*2 +1, width / len - 1, height/(len+1)-1);
+
+        let rect3 = new createjs.Shape();
+        rect3.graphics.beginFill(colors[3]).drawRect(width / len + 2,0, width / len - 2, height);
+
+        let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+
+        text.x = width / len/2   - 60;
+        text.y = height /len/ 2-height /len/ 2/2;
+
+
+        let text1 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+
+        text1.x = width / len/2   - 60;
+        text1.y = height / 2 ;
+
+
+        let text2 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text2.x = width / len/2   - 60;
+        text2.y = height / 6*5;
+
+
+        let text3 = new createjs.Text('双击上传图片', "20px Arial", '#fff');
+        text3.x = width / len/ 2 * 3 - 60;
+        text3.y = height / 2 ;
+
+
+        this.bindDblClick(
+            {rect: rect, text: text, x: 0, y: 0},
+            {rect: rect1, text: text1, x:0, y: height/3},
+            {rect: rect2, text: text2, x: 0, y: height/3*len},
+            {rect: rect3, text: text3, x: width / len, y: 0}
+        );
+
+        stage.addChild(rect, rect1,rect2, rect3,text1, text,text2,text3);
+
+        stage.update();
+        fn && fn(
+            {rect: rect, text: text, x: 0, y: 0},
+            {rect: rect1, text: text1, x:0, y: height/3},
+            {rect: rect2, text: text2, x: 0, y: height/3*len},
+            {rect: rect3, text: text3, x: width / len, y: 0}
+        );
+    },
+
     addLoadingHorText(width, height){
         let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
 
