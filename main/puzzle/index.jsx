@@ -15,11 +15,11 @@ import Button from 'antd/lib/button';
 import 'antd/lib/button/style/css';
 
 if(!window.parent.userId){
-    message.warning('请重新登录');
+   /* message.warning('请重新登录');
 
     setTimeout(()=>{
         ///  window.parent.location.href= '/'
-    },1000)
+    },1000)*/
 }
 
 class ZmitiPuzzleApp extends React.Component{
@@ -58,7 +58,7 @@ class ZmitiPuzzleApp extends React.Component{
 }
 
 ZmitiPuzzleApp.defaultProps = {
-    baseUrl: 'http://webapi.zmiti.com/v1/',
+    baseUrl: 'http://api.zmiti.com/v2/',//http://webapi.zmiti.com/v1/
     getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071"
 };
 

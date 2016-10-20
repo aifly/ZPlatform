@@ -52,7 +52,7 @@ window.addEventListener('load', ()=> {
         animationEnd: 'onwebkitanimationend' in window ? 'webkitAnimationEnd' : 'animationend',
         transitionEnd: 'onwebkittransitionend' in window ? 'webkitTransitionEnd' : 'transitionend',
         regType: $("#reg-type"),
-        baseUrl: 'http://webapi.zmiti.com/v1/'
+        baseUrl:'http://api.zmiti.com/v2/'// 'http://webapi.zmiti.com/v1/'//
     };
 
     let utilMethods = {
@@ -832,6 +832,9 @@ window.addEventListener('load', ()=> {
 
                             document.cookie = d.getusersigid;
 
+                            console.log(d)
+
+
 //                            var domain = 'http://localhost:3000';
 
 
@@ -844,12 +847,30 @@ window.addEventListener('load', ()=> {
                             var a = document.createElement('a');
                             document.body.appendChild(a);
 
-                            //a.href = 'http://localhost:3000/index.html';
+                            a.href = 'http://localhost:3000/index.html';
                             a.href = './main/';
                             a.style.position = 'fixed';
                             a.style.zIndex = -1;
                             a.style.opacity = 0;
                             a.click();
+
+                            let params = {
+                                page:1,
+                                pagesize:20,
+                                userid:'8e5e6ee6-5448-4405-8a59-4d61be2bf574',
+                                getusersigid:d.getusersigid
+                            }
+
+                            //console.log(params);
+/*
+                            $.ajax({
+                                url:"http://api.zmiti.com/v2/user/get_userlist/",
+                                type:"POST",
+                                data:params,
+                                success(data){
+                                    console.log(data,1111)
+                                }
+                            });*/
                         }
                         else if (d.getret === 1300) {
                             $(".login-error-info").addClass("fail");
@@ -985,6 +1006,7 @@ window.addEventListener('load', ()=> {
                     type: "POST",
                     data: dd,
                     success(d){
+                        console.log(d);
                         if (d.getret === 0) {//成功
                             //data.loginMask.removeClass('show');
                             data.goToLogin.trigger('click');

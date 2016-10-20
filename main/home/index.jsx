@@ -68,8 +68,8 @@ class MainUI extends React.Component{
                 <header className="header">
                     公告：智媒体新增新的交互工具"富图片"。<a href="#">点此查看</a>
                 </header>
-                <article className="fly-content">
-                    <div className="fly-user">
+                <article className="fly-home-content">
+                    <div className="fly-home-user">
                         <figure className="user">
                             <div className="user-info">
                                 <aside className="user-head">
@@ -105,7 +105,7 @@ class MainUI extends React.Component{
                             <ZmitiProductList key="1"></ZmitiProductList>
                         </figure>
                     </div>
-                    <div className="fly-office" style={{display:this.state.isCompany?'':'none'}}>
+                    <div className="fly-home-office" style={{display:this.state.isCompany?'':'none'}}>
                         <figure className='office'>
                            <div className="off-left">
                                <h2>办公系统</h2>
@@ -182,10 +182,10 @@ class MainUI extends React.Component{
                         </figure>
 
                     </div>
-                    <div className="fly-service">
-                        <h2 className="fly-ser-title">产品与服务</h2>
-                        <div className="fly-service-C">
-                            <figure className="fly-service-item">
+                    <div className="fly-home-service">
+                        <h2 className="fly-home-ser-title">产品与服务</h2>
+                        <div className="fly-home-service-C">
+                            <figure className="fly-home-service-item">
                                 <Card  title="产品工具系列" style={style} >
                                     <ul>
                                         <li>移动微场景 <a href="#">申请使用</a></li>
@@ -194,7 +194,7 @@ class MainUI extends React.Component{
                                     </ul>
                                 </Card>
                             </figure>
-                            <figure className="fly-service-item">
+                            <figure className="fly-home-service-item">
                                 <Card  title="产品交互系列"  style={style}>
                                     <ul>
                                         <li>企业项目管理</li>
@@ -202,7 +202,7 @@ class MainUI extends React.Component{
                                     </ul>
                                 </Card>
                             </figure>
-                            <figure className="fly-service-item">
+                            <figure className="fly-home-service-item">
                                 <Card  title="项目服务系列" style={style} >
                                     <ul>
                                         <li>互联网整体文字服务</li>
@@ -213,7 +213,7 @@ class MainUI extends React.Component{
                                     </ul>
                                 </Card>
                             </figure>
-                            <figure className="fly-service-item">
+                            <figure className="fly-home-service-item">
                                 <Card  title="人工工具系列" style={style} >
                                     <ul>
                                         <li>会员服务问答</li>

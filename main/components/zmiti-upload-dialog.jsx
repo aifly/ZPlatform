@@ -38,6 +38,7 @@ const MenuItemGroup = Menu.ItemGroup;
 import $ from 'jquery';
 
 
+
 export default class ZmitiUploadDialog extends React.Component {
     constructor(args) {
         super(...args);
@@ -118,6 +119,8 @@ export default class ZmitiUploadDialog extends React.Component {
                     }
 
                     self.state.ajaxData[self.state.current] = d.dataInfo;
+
+                    console.log(d)
                     self.state.alreadyRequest.push(self.state.current);
                     self.state.loading = false;
                     self.state.allData[self.state.current].imgs.length = 0;
@@ -427,7 +430,7 @@ export default class ZmitiUploadDialog extends React.Component {
                                                     <Icon type="plus"/>
                                                     <div className="ant-upload-text">上传图片</div>
                                                     <input onChange={this.beginUploadFile} type="file"
-                                                           ref="upload-file"/>
+                                                           ref="upload-file" />
                                                 </figcaption>
                                                 {imgList}
                                             </figure>
@@ -467,27 +470,28 @@ export default class ZmitiUploadDialog extends React.Component {
         formData.append('setuploadtype', this.state.type);
         formData.append('getusersigid', s.props.getusersigid);
         formData.append('datainfoclassid', s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "");
-        formData.append('setisthum', 1);
+        formData.append('setisthum', 1);//是否是缩略图。
         formData.append('seturltype', 'material' /*s.state.defaultIds[s.state.current]*/);
 
         ///console.log( s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "")
 
+        //console.log( this.refs['upload-file'].files[0]);
 
         $.ajax({
-            url: s.props.baseUrl + s.props.uploadUrl,
+            url:s.props.baseUrl + s.props.uploadUrl,// 'http://192.168.23.2/v2/upload/upload_file/',//
             type: "POST",
             contentType: false,
             processData: false,
             data: formData,
             success(da){
 
+
                 if (da.gettips) {//
                     message.error(d.gettips[0]);
                     return;
                 }
+
                 if (da.getret === 0) {
-
-
 
                     message.success(da.getmsg, 4);
 
@@ -922,7 +926,7 @@ export default class ZmitiUploadDialog extends React.Component {
 }
 
 ZmitiUploadDialog.defaultProps = {
-    baseUrl: 'http://webapi.zmiti.com/v1/',
+    baseUrl: 'http://api.zmiti.com/v2/',//http://webapi.zmiti.com/v1/
     cateUrl: "datainfoclass/",
     uploadUrl: 'upload/upload_file/',
     getImgInfoUrl: 'datainfoclass/resinfo/',//获取当前分类下的所有图片资源

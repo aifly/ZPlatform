@@ -79,7 +79,7 @@
 
     $('#create').on('click',function () {
 
-      /*  var formData = new FormData();
+        var formData = new FormData();
 
         formData.append('file', document.getElementById('file').files[0]);
 
@@ -95,7 +95,7 @@
         });
 
 
-        return;*/
+        return;
         if(!canvas){
             return;
         };

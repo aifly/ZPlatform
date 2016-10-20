@@ -8,8 +8,6 @@ import 'antd/lib/menu/style/css';
 import 'antd/lib/input/style/css';
 import 'antd/lib/badge/style/css';
 
-
-
 const SubMenu = Menu.SubMenu;
 
 import {utilMethods,_$,$$} from '../utilMethod.es6';
@@ -18,6 +16,7 @@ export  default class MainUI extends React.Component {
     constructor(args) {
         super(...args);
 
+        this.menuClickHandler=this.menuClickHandler.bind(this);
         this.state = {
             defaultClass: "fly-left-aside",
             isOpen: true,
@@ -27,6 +26,13 @@ export  default class MainUI extends React.Component {
             isCompany : false //是否是企业用户。默认为false.
         }
     }
+
+    menuClickHandler(e){
+        e.preventDefault();
+          this.setState({
+            frameSrc:e.target.href
+        });
+    };
 
     handleClick(e) {
 
@@ -69,11 +75,11 @@ export  default class MainUI extends React.Component {
 
         return (
             <section className="main">
-                <header className="fly-header">
+                <header className="fly-header" onClick={this.menuClickHandler}>
                     <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    <div style={{display:this.props.isAdmin?'block':'none'}} className="fly-nav"><a href="#">系统管理</a></div>
+                    <div style={{display:this.props.isAdmin?'block':'none'}} className="fly-nav"><a href="./admin/index.html">系统管理</a></div>
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
                     <div></div>
@@ -129,8 +135,6 @@ export  default class MainUI extends React.Component {
     }
 
     componentDidMount() {
-
-
 
         window.userId = document.cookie;
 

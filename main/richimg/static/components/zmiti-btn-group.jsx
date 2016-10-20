@@ -26,7 +26,7 @@ export default class ZmitiBtnGroup extends React.Component {
 
         });
 
-        let url = this.props.baseUrl + "works/upload_json",
+        let url = this.props.baseUrl + "works/upload_json",//update_works
             s = this;
 
         /*window.Zmiti.richImgData.tags = window.Zmiti.richImgData.tags.map(tag=> {

@@ -87,7 +87,7 @@ class ZmitiMainContent extends React.Component {
             type:"POST",
             data:{
                 getusersigid:s.props.getusersigid,
-                type:0
+                type:0 //0表示我的作品，1、表示公司作品，2表示平台作品。
             },
             success(data){
                 data.getWorksInfo && data.getWorksInfo.length>0 &&  message.success(data.getmsg);
