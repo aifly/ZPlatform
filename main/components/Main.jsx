@@ -22,7 +22,7 @@ export  default class MainUI extends React.Component {
             isOpen: true,
             current: '3',
             currentAcc:'iLinten@qq.com',
-            frameSrc: './home/index.html',
+            frameSrc: './puzzle',
             isCompany : false //是否是企业用户。默认为false.
         }
     }
@@ -128,6 +128,7 @@ export  default class MainUI extends React.Component {
                     </section>
                     <section className="fly-right-aside">
                         <iframe src={this.state.frameSrc} frameborder="0"></iframe>
+                        
                     </section>
                 </article>
             </section>
