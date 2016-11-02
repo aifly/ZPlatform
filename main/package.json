@@ -16,6 +16,14 @@
     "puzzle-server": "webpack-dev-server --hot --inline --config webpack.puzzle.config.js",
     "p-server": "node puzzle-server",
     "p-build": "webpack -w --config webpack.puzzle.config.js",
+    "user-build": "webpack -w --config webpack.user.config.js",
+    "user-server": "webpack-dev-server --hot --line --config webpack.user.config.js",
+    "company-build": "webpack -w --config webpack.company.config.js",
+    "company-server": "webpack-dev-server --hot --line --config webpack.company.config.js",
+    "system-build": "webpack -w --config webpack.system.config.js",
+    "system-server": "webpack-dev-server --hot --line --config webpack.system.config.js",
+    "userdepartment-build": "webpack -w --config webpack.userdepartment.config.js",
+    "userdepartment-server": "webpack-dev-server --hot --line --config webpack.userdepartment.config.js",
     "p-u": "webpack -p --config webpack.puzzle.config.js"
   },
   "keywords": [

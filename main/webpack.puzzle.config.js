@@ -16,8 +16,8 @@ var config = {
     output: {
         path:'./puzzle/static/js',
         filename: "[name].js",
-        chunkFilename: "[name].js"
-       // publicPath:"/puzzle/"
+        chunkFilename: "[name].js",
+        publicPath:"/puzzle/"
     },
     devServer: {
         inline: true,

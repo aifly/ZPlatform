@@ -1,0 +1,61 @@
+.user-main-ui {
+  width: 100vw;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  -ms-flex-flow: horizontal;
+      flex-flow: horizontal; }
+  .user-main-ui .user-left-pannel {
+    width: 15vw;
+    height: 100vh;
+    background: #EAEDF1; }
+    .user-main-ui .user-left-pannel ul {
+      margin-top: 20vh; }
+      .user-main-ui .user-left-pannel ul li {
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        cursor: pointer;
+        text-align: center; }
+        .user-main-ui .user-left-pannel ul li.active {
+          -webkit-transition: 0.5s background;
+          transition: 0.5s background;
+          background: #fff;
+          color: #d8271d; }
+  .user-main-ui .user-right-pannel {
+    width: 85vw; }
+    .user-main-ui .user-right-pannel header {
+      width: 60%;
+      margin: 20px auto; }
+      .user-main-ui .user-right-pannel header button {
+        margin-left: 10px;
+        background: #d8271d;
+        border-color: #d8271d; }
+    .user-main-ui .user-right-pannel .ant-table tr.ant-table-row-hover, .user-main-ui .user-right-pannel .ant-table tr:hover {
+      background: #EAEDF1; }
+    .user-main-ui .user-right-pannel .user-list-section {
+      width: 80%;
+      margin: 20px auto; }
+      .user-main-ui .user-right-pannel .user-list-section table td, .user-main-ui .user-right-pannel .user-list-section table th {
+        text-align: center; }
+      .user-main-ui .user-right-pannel .user-list-section table a {
+        color: #06C; }
+      .user-main-ui .user-right-pannel .user-list-section .ant-table-pagination .ant-pagination-item-active {
+        background-color: #d8271d;
+        border-color: #d8271d; }
+        .user-main-ui .user-right-pannel .user-list-section .ant-table-pagination .ant-pagination-item-active a {
+          color: #fff; }
+        .user-main-ui .user-right-pannel .user-list-section .ant-table-pagination .ant-pagination-item-active:hover a {
+          color: #fff; }
+      .user-main-ui .user-right-pannel .user-list-section .ant-pagination-item:hover {
+        border-color: #d8271d; }
+        .user-main-ui .user-right-pannel .user-list-section .ant-pagination-item:hover a {
+          color: #d8271d; }
+      .user-main-ui .user-right-pannel .user-list-section .ant-pagination-prev:hover, .user-main-ui .user-right-pannel .user-list-section .ant-pagination-next:hover {
+        border-color: #d8271d; }
+        .user-main-ui .user-right-pannel .user-list-section .ant-pagination-prev:hover a, .user-main-ui .user-right-pannel .user-list-section .ant-pagination-next:hover a {
+          color: #d8271d; }
+
+/*# sourceMappingURL=user-list.css.map */

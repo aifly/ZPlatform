@@ -830,10 +830,7 @@ window.addEventListener('load', ()=> {
                         if (d.getret === 0) {
                             data.loginMask.removeClass('show');
 
-                            document.cookie = d.getusersigid;
-
-                            console.log(d)
-
+                            document.cookie = d.getusersigid+"|"+d.userid;
 
 //                            var domain = 'http://localhost:3000';
 
@@ -847,7 +844,7 @@ window.addEventListener('load', ()=> {
                             var a = document.createElement('a');
                             document.body.appendChild(a);
 
-                            a.href = 'http://localhost:3000/index.html';
+                           // a.href = 'http://localhost:3000/index.html';
                             a.href = './main/';
                             a.style.position = 'fixed';
                             a.style.zIndex = -1;

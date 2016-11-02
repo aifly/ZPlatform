@@ -28,7 +28,7 @@ export default class ZmitiPanel extends React.Component {
         this.state = {
             current: 0,
             width: 1000,
-            height: 500,
+            height: 600,
             currentMethod: 'renderRectLeftRight',
             dataUrl:'#'
         }

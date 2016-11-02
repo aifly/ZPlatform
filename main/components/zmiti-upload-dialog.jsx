@@ -102,14 +102,19 @@ export default class ZmitiUploadDialog extends React.Component {
                 loading: true
             });
 
+
+            var params ={
+                    "datainfotype": data.type,
+                    "getusersigid": self.props.getusersigid,
+                    "userid":self.props.userId,
+                    "setdatainfoclassid": self.state.defaultIds[self.state.current]
+                };
+
+           
             $.ajax({//获取当前分类信息.
                 url: self.props.baseUrl + self.props.cateUrl + 'get_datainfo',
                 type: "POST",
-                data: {
-                    "datainfotype": data.type,
-                    "getusersigid": self.props.getusersigid,
-                    "id": self.state.defaultIds[self.state.current]
-                },
+                data: params,
                 success(data){
 
                     let d = data;
@@ -120,7 +125,8 @@ export default class ZmitiUploadDialog extends React.Component {
 
                     self.state.ajaxData[self.state.current] = d.dataInfo;
 
-                    console.log(d)
+                    console.log('----------')
+                    console.log(d);
                     self.state.alreadyRequest.push(self.state.current);
                     self.state.loading = false;
                     self.state.allData[self.state.current].imgs.length = 0;
@@ -358,6 +364,23 @@ export default class ZmitiUploadDialog extends React.Component {
         $$('li', this.refs['menu-C']).forEach((li, i)=> {
             i === this.state.current && utilMethods.addClass(li, 'active');
         });*/
+        let self= this;
+        console.log({
+                "getusersigid": self.props.getusersigid,
+                "userid":self.props.userId
+            })
+        $.ajax({
+            url: self.props.baseUrl + self.props.cateUrl + 'get_datainfoclass',
+            type:"post",
+            data:{
+                "getusersigid": self.props.getusersigid,
+                "userid":self.props.userId
+            },
+            success(data){
+                console.log(data);
+            }
+        })
+
 
     }
 

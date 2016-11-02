@@ -14,7 +14,7 @@ import 'antd/lib/notification/style/css';
 import Button from 'antd/lib/button';
 import 'antd/lib/button/style/css';
 
-if(!window.parent.userId){
+if(!window.parent.getusersingid){
    /* message.warning('请重新登录');
 
     setTimeout(()=>{
@@ -28,7 +28,7 @@ class ZmitiPuzzleApp extends React.Component{
 
         this.state = {
             width:1000,
-            height:500,
+            height:800,
             currentMethod :'renderRectLeftRight',
         }
     }
@@ -46,10 +46,13 @@ class ZmitiPuzzleApp extends React.Component{
         var style = {
             width:100
         }
-
+        let props = {
+            getusersigid:window.parent.getusersingid,
+            userId:window.parent.userId
+        }
         return (
             <div className="p-main-ui" style={style}>
-                <ZmitiStage  {...this.props}></ZmitiStage>
+                <ZmitiStage  {...this.props} {...props} ></ZmitiStage>
                 <ZmitiPannel></ZmitiPannel>
             </div>
         )
@@ -68,7 +71,6 @@ ReactDOM.render(<ZmitiPuzzleApp></ZmitiPuzzleApp>,document.getElementById('fly-m
     let btnClick = ()=> {
         notification.close(key);
         close();
-
     }
     const close = () => {
         //
