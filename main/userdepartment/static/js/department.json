@@ -1,0 +1,66 @@
+﻿{
+	"treeData": [
+		{
+			"title": "麟腾传媒文化有限公司",
+			"key": "f",
+			"children": [
+				{
+					"title": "D&S设计中心",
+					"key": "a",
+					"children": [
+						{
+							"key": "b",
+							"title": "VI设计部",
+							"userList": [
+								{
+									"key": 1,
+									"username": "邓彬",
+									"email": "1345542525@163.com",
+									"mobile": "13455422525",
+									"department": "麟腾传媒/设计中心/设计部"
+								}
+							]
+						},
+						{
+							"key": "c",
+							"title": "UI设计部",
+							"userList": [
+								{
+									"key": 1,
+									"username": "邓彬",
+									"email": "1345542525@163.com",
+									"mobile": "13455422525",
+									"department": "麟腾传媒/设计中心/设计部"
+								}
+							]
+						},
+						{
+							"key": "d",
+							"title": "编码设计部"
+						}
+					],
+					"userList": [
+						{
+							"key": 1,
+							"username": "邓彬",
+							"email": "1345542525@163.com",
+							"mobile": "13455422525",
+							"department": "麟腾传媒/设计中心/设计部"
+						},
+						{
+							"key": 2,
+							"username": "邓彬",
+							"email": "15852547852@163.com",
+							"mobile": "15852547852",
+							"department": "麟腾传媒/设计中心/设计部"
+						}
+					]
+				}
+			]
+		}
+	],
+	"totalUserNum": 35,
+	//总成员数
+	"disableUserNum": 8
+	// 禁用的成员
+}

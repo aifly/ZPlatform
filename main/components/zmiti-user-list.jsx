@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './css/user-list.css';
-import Input from 'antd/lib/input';
-const InputGroup = Input.Group;
-import 'antd/lib/input/style/css';
-import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css';
-import '../public/css/base.css';
+
+
+
 import Table from 'antd/lib/table';
 import 'antd/lib/table/style/css';
+import  ZmitiSearchInput  from './zmiti-search-input.jsx';
 export default class ZmitiUserList extends Component {
 	constructor(props) {
 	  super(props);
@@ -34,15 +32,7 @@ export default class ZmitiUserList extends Component {
 				</div>
 				<div className='user-right-pannel'>
 					<header>
-						<InputGroup>
-							<Input />
-							  <div className="ant-input-group-wrap">
-					            <Button icon="search" type='primary'>
-					            	搜索
-					            </Button>
-					          </div>
-						</InputGroup>
-						
+						<ZmitiSearchInput></ZmitiSearchInput>
 					</header>
 					<section className='user-list-section'>
 						<Table dataSource={this.props.userList} columns={this.props.columns} />
