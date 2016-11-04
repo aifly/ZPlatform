@@ -24,7 +24,8 @@ input, textarea {
 body {
   font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
   font-size: 14px;
-  height: 100%; }
+  height: 100%;
+  overflow-x: hidden; }
 
 .ud-main-ui {
   width: 100vw;
@@ -108,24 +109,39 @@ body {
       .ud-main-ui .ud-right-side .ud-main-section table a {
         color: #06C; }
       .ud-main-ui .ud-right-side .ud-main-section .ant-table-pagination .ant-pagination-item-active {
-        background-color: #99071e;
-        border-color: #99071e; }
+        background-color: #d8271d;
+        border-color: #d8271d; }
         .ud-main-ui .ud-right-side .ud-main-section .ant-table-pagination .ant-pagination-item-active a {
           color: #fff; }
         .ud-main-ui .ud-right-side .ud-main-section .ant-table-pagination .ant-pagination-item-active:hover a {
           color: #fff; }
       .ud-main-ui .ud-right-side .ud-main-section .ant-pagination-item:hover {
-        border-color: #99071e; }
+        border-color: #d8271d; }
         .ud-main-ui .ud-right-side .ud-main-section .ant-pagination-item:hover a {
-          color: #99071e; }
+          color: #d8271d; }
       .ud-main-ui .ud-right-side .ud-main-section .ant-pagination-prev:hover, .ud-main-ui .ud-right-side .ud-main-section .ant-pagination-next:hover {
-        border-color: #99071e; }
+        border-color: #d8271d; }
         .ud-main-ui .ud-right-side .ud-main-section .ant-pagination-prev:hover a, .ud-main-ui .ud-right-side .ud-main-section .ant-pagination-next:hover a {
-          color: #99071e; }
-      .ud-main-ui .ud-right-side .ud-main-section .ant-btn {
-        background: #d8271d;
-        border-color: #e2534a !important; }
-      .ud-main-ui .ud-right-side .ud-main-section .ant-btn-clicked:after {
-        border: 0 solid #e2534a; }
+          color: #d8271d; }
+
+.ant-tree li a:hover {
+  background-color: #d8271d !important;
+  color: #fff; }
+
+.ant-btn {
+  background: #d8271d !important;
+  border-color: #e2534a !important;
+  color: #fff !important; }
+
+.ant-btn-ghost {
+  color: #666 !important;
+  background: #fff !important; }
+
+.ant-btn-clicked:after {
+  border: 0 solid #e2534a !important; }
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #d8271d !important;
+  border-color: #d8271d !important; }
 
 /*# sourceMappingURL=index.css.map */

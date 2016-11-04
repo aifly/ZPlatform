@@ -146,7 +146,7 @@ body {
   overflow: hidden;
 }
 
-
+@btnColor:#d8271d;
 .acc-header{
 
   .position(r);
@@ -222,7 +222,7 @@ body {
               color:#f90;
               &:nth-of-type(2){
                 margin-top:1vh;
-                color:#57c5f7;
+                color:#000;
               }
             }
           }
@@ -360,3 +360,35 @@ body {
 }
 
 
+
+.ant-btn{
+    background:@btnColor !important;
+    border-color:#e2534a !important;
+    color:#fff !important;
+  }
+   .ant-btn-ghost{
+      color:#666!important;
+      background:#fff !important;
+   }
+  .ant-btn-clicked{
+      &:after{
+        border: 0 solid #e2534a !important;
+      }
+  }
+
+  .ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover,.ant-select-selection:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}
+
+.ant-input-group-addon{
+  background: @btnColor;
+  border-color:@btnColor;
+  color:#fff;
+}
+
+
+.ant-input,.ant-select-selection{
+  border-color:@btnColor;
+}

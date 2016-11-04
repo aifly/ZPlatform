@@ -136,10 +136,12 @@ body {
   font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
   font-size: 14px;
   height: 100%;
+  overflow-x:hidden;
 }
 
 
 $baseColor:#99071e;
+$btnColor:#d8271d;
 .ud-main-ui{
   width: 100vw;
   height:100vh;
@@ -164,7 +166,7 @@ $baseColor:#99071e;
       border-color:#be5841;
     }
     .ant-tabs-nav .ant-tabs-tab-inner:hover{
-      color:#d8271d;
+      color:$btnColor;
     }
 
     .ant-tabs-tabpane{
@@ -174,7 +176,7 @@ $baseColor:#99071e;
     }
   }
   .ud-right-side{
-    $color:#d8271d;
+    $color:$btnColor;
     width: 100 - $leftSize;
     .ud-main-section{
 
@@ -252,8 +254,8 @@ $baseColor:#99071e;
       }
       .ant-table-pagination{
         .ant-pagination-item-active {
-          background-color:$baseColor;
-          border-color:$baseColor;
+          background-color:$btnColor;
+          border-color:$btnColor;
           a{
             color:#fff;
           }
@@ -265,28 +267,44 @@ $baseColor:#99071e;
         }
       }
       .ant-pagination-item:hover {
-        border-color: $baseColor;
+        border-color: $btnColor;
         a{
-          color:$baseColor;
+          color:$btnColor;
         }
       }
       .ant-pagination-prev:hover, .ant-pagination-next:hover {
-        border-color: $baseColor;
+        border-color: $btnColor;
         a{
-          color:$baseColor;
+          color:$btnColor;
         }
       }
       /*---------------*/
-      .ant-btn{
-        background:#d8271d;
-        border-color:#e2534a !important;
-      }
-
-      .ant-btn-clicked{
-        &:after{
-          border: 0 solid #e2534a;
-        }
-      }
+     
     }
   }
+}
+
+.ant-tree li a:hover{
+  background-color: $btnColor !important;
+  color:#fff;
+}
+
+ .ant-btn{
+    background:$btnColor !important;
+    border-color:#e2534a !important;
+    color:#fff !important;
+  }
+   .ant-btn-ghost{
+      color:#666!important;
+      background:#fff !important;
+   }
+    .ant-btn-clicked{
+      &:after{
+        border: 0 solid #e2534a !important;
+      }
+}
+
+.ant-checkbox-checked .ant-checkbox-inner{
+  background-color:$btnColor !important;
+  border-color:$btnColor !important;
 }

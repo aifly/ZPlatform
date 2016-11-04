@@ -1,7 +1,7 @@
 import React  from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import './static/css/index.min.css';
+import './static/css/index.css';
 import {utilMethods,_$,$$ } from '../utilMethod.es6';
 import { Tabs, Select,Button,Form, Input,DatePicker } from 'antd';
 const FormItem = Form.Item;
@@ -9,6 +9,7 @@ import ZmitiProgress from '../components/Progress.jsx';
 import ZmitiScan from '../components/scan.jsx';
 import './static/css/component.min.css';
 import ZmitiCard from '../components/cardgroup.jsx';
+ 
 
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
@@ -26,47 +27,17 @@ class ZmitiTab extends React.Component{
         }
     }
 
-    changeTab(e){
-
-        this.id = this.id || 1;
-        this.last = this.last || 1;
-
-
-        if(this.last === e){
-            return;
-        }
-
-        if(this.id === 1){
-            this.id = 2;
-            //classie.removeClass($$('.ant-tabs-tabpane')[e-1],'show');
-        }
-        else{
-            classie.removeClass($$('.ant-tabs-tabpane')[e-1],'show-tab');
-        }
-
-
-
-
-        this.loader.show();
-        setTimeout(()=>{
-            this.loader.hide();
-            classie.addClass($$('.ant-tabs-tabpane'),'show-tab');
-        },800);
-
-        this.last = e;
-
-        return false;
-    }
+    
 
     componentDidMount(){
 
-        classie.addClass($$('.ant-tabs-tabpane'),'show-tab');
+     /*   classie.addClass($$('.ant-tabs-tabpane'),'show-tab');
 
         var currentLoader = {
             id:"loader5",
             speedIn:300
         };
-        this.loader = new SVGLoader( document.getElementById( currentLoader.id ), { speedIn : currentLoader.speedIn, easingIn : mina.easeinout } );
+        this.loader = new SVGLoader( document.getElementById( currentLoader.id ), { speedIn : currentLoader.speedIn, easingIn : mina.easeinout } );*/
     }
 
     changeDate(){

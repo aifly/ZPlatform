@@ -143,16 +143,17 @@ $baseColor:#99071e;
       content: '';
       @include pos(a);
       width:0;
+      left: 10px;
       cursor: not-allowed;
       height:0;
-      border-top: 25px solid transparent;
-      border-right: 50px solid #aaa;
-      border-bottom: 25px solid transparent;
+      border-top: 30px solid transparent;
+      border-right: 40px solid #aaa;
+      border-bottom: 30px solid transparent;
       top:50%;
       @include transform(translate3d(0,-50%,0));
     }
   }
-
+ $btnColor:#d8271d;
   .ar{
     @include pos(r);
     flex-grow: 1;
@@ -167,10 +168,11 @@ $baseColor:#99071e;
         content: '';
         @include pos(a);
         width:0;
+        left: 10px;
         height:0;
-        border-top: 25px solid transparent;
-        border-right: 50px solid #57c5f7;
-        border-bottom: 25px solid transparent;
+        border-top: 30px solid transparent;
+        border-right: 40px solid  $btnColor;
+        border-bottom: 30px solid transparent;
         top:50%;
         @include transform(translate3d(0,-50%,0));
       }
@@ -185,10 +187,10 @@ $baseColor:#99071e;
         @include pos(a);
         width:0;
         height:0;
-        right:0;
-        border-top: 25px solid transparent;
-        border-left: 50px solid #57c5f7;
-        border-bottom: 25px solid transparent;
+        right:10px;
+        border-top: 30px solid transparent;
+        border-left: 40px solid $btnColor;
+        border-bottom: 30px solid transparent;
         top:50%;
         @include transform(translate3d(0,-50%,0));
       }
@@ -201,10 +203,10 @@ $baseColor:#99071e;
       @include pos(a);
       width:0;
       height:0;
-      right:0;
-      border-top: 25px solid transparent;
-      border-left: 50px solid #aaa;
-      border-bottom: 25px solid transparent;
+      right:10px;
+      border-top: 30px solid transparent;
+      border-left: 40px solid #aaa;
+      border-bottom: 30px solid transparent;
       cursor: not-allowed;
       top:50%;
       @include transform(translate3d(0,-50%,0));

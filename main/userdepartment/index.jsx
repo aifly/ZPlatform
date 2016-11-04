@@ -9,9 +9,16 @@ import Button from 'antd/lib/button';
 import 'antd/lib/button/style/css';
 import Table from 'antd/lib/table';
 import 'antd/lib/table/style/css';
+import Modal from 'antd/lib/modal';
+import 'antd/lib/modal/style/css';
+import Input from 'antd/lib/input';
+import 'antd/lib/input/style/css';
+import ZmitiDialog from './static/components/zmiti-dialog.jsx';
 const ButtonGroup = Button.Group;
 const TreeNode = Tree.TreeNode;
 const TabPane = Tabs.TabPane;
+import Popconfirm from 'antd/lib/popconfirm';
+import 'antd/lib/popconfirm/style/css';
 import ZmitiSearchInput from '../components/zmiti-search-input.jsx';
 import $ from  'jquery';
 export default class ZmitiUserDepartmentApp extends Component {
@@ -22,69 +29,84 @@ export default class ZmitiUserDepartmentApp extends Component {
 	  	  defaultExpandedKeys: keys,
 	      defaultSelectedKeys: keys,
 	      defaultCheckedKeys: keys,
+	      updateCompanyDialogVisible:false,
+	      createDepartmentDialogVisible:false,
+	      updateDepartmentDialogVisible:false,//修改当前部门名称.
+	      createSubDepartmentDialogVisible:false,//修改子部门名称
+	      parentId:-1,//公司的Id,最外一层的ID
+	      totalUserNum:0,//公司总成员
+	      disableUserNum:0,//被禁用的员工
 	      currentDepartment:{
-			title:'VI设计部',
-			key:'b',
-			userList:[
-				{
-		  			key:1,
-		  			username:'邓彬',
-		  			email:'1345542525@163.com',
-		  			mobile:'13455422525',
-		  			department:'麟腾传媒/设计中心/设计部'
-		  		}
-			]
+			
 	      },
 	      treeData:[
-	      	{
-	      		title:'麟腾传媒文化有限公司',
-	      		key:'f',
-	      		children:[
-	      			{
-	      				title:'D&S设计中心',
-	      				key:'a',
-	      				children:[
-	      					{
-	      						title:'VI设计部',
-	      						key:'b',
-	      					},
-	      					{	
-	      						key:'c',
-	      						title:'UI设计部'
-	      					},
-	      					{
-	      						key:'d',
-	      						title:'编码设计部'
-	      					}
-	      				]
-	      			}
-	      		]
-	      	}
+	      	
 	      ]
 
 	  };
 
 	  this.changeDepartment = this.changeDepartment.bind(this);
+	  this.updateCompanyName = this.updateCompanyName.bind(this);
+	  this.createDepartment = this.createDepartment.bind(this);
+	  this.deleteDepartment = this.deleteDepartment.bind(this);
+	  this.updateDepartmentName = this.updateDepartmentName.bind(this); //
+	  this.createSubDepartment = this.createSubDepartment.bind(this); //
+	  this.deleteSubDepartment = this.deleteSubDepartment.bind(this); //
+	  this.rowClick = this.rowClick.bind(this); //
 	}
 
 	render() {
-		
-		 const loop = data => data.map((item) => {
-		      if (item.children) {
-		        return <TreeNode title={item.title} key={item.key}>{loop(item.children)}</TreeNode>;
-		      }
-		      return <TreeNode title={item.title} key={item.key}   />;
-	    });
+
+		const text = '确定要删除么?';
+ 
+		 const loop = data => {
+		 		if(!data.map){
+		 			return null;
+		 		}
+ 				return data.map((item) => {
+	 		      if (item.children) {
+	 		        return <TreeNode title={item.title}  key={item.key}>{loop(item.children)}</TreeNode>;
+	 		      }
+	 		      return <TreeNode title={item.title} key={item.key} userList={item.userList}  />;
+	 	    })};
    		 const treeNodes = loop(this.state.treeData);
+
+
+		const companyUserRowSelection = {
+		  onChange(selectedRowKeys, selectedRows) {
+		    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+		  },
+		  onSelect(record, selected, selectedRows) {
+		    console.log(record, selected, selectedRows);
+		  },
+		  onSelectAll(selected, selectedRows, changeRows) {
+		    console.log(selected, selectedRows, changeRows);
+		  },
+		};
+
+		const departmentUserRowSelection ={
+			  onChange(selectedRowKeys, selectedRows) {
+		    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+		  },
+		  onSelect(record, selected, selectedRows) {
+		    console.log(record, selected, selectedRows);
+		  },
+		  onSelectAll(selected, selectedRows, changeRows) {
+		    console.log(selected, selectedRows, changeRows);
+		  }
+		}
+
+
+
 		return (
 			<section className='ud-main-ui'>
 				<aside className='ud-left-side'>
 					<Tabs defaultActiveKey="1">
 					    <TabPane tab="组织架构" key="1">
 					    	 <Tree className="myCls" showLine onSelect={this.changeDepartment}
-					    	    defaultExpandedKeys={this.state.defaultExpandedKeys}
-						        defaultSelectedKeys={this.state.defaultSelectedKeys}
-						        defaultCheckedKeys={this.state.defaultCheckedKeys}>
+						        defaultExpandAll = {true}
+						        
+						        >
 						        {treeNodes}
 						      </Tree>
 					    </TabPane>
@@ -94,9 +116,15 @@ export default class ZmitiUserDepartmentApp extends Component {
 				<aside className='ud-right-side'>
 					<div className='ud-main-section'>
 						<header>
-							<h1>{this.state.treeData[0].title}</h1>
-							<div className='ud-operator-bar'><a href='#'>修改名称</a><a href=''>|</a><a href='#'>新建子部门</a><a href=''>|</a><a href='#'>删除</a></div>
-							<div>成员:<span>29人</span>,<a href="">禁用9人</a></div>
+							<h1>{this.state.treeData[0] && this.state.treeData[0].title}</h1>
+							<div className='ud-operator-bar'>
+								<a href='javascript:void(0)' onClick={()=>{this.setState({updateCompanyDialogVisible:true})}}>修改名称</a><a href=''>|</a>
+								<a href='javascript:void(0)'  onClick={()=>{this.setState({createDepartmentDialogVisible:true})}}>新建子部门</a><a href=''>|</a>
+								<Popconfirm placement="top" title={text} onConfirm={this.deleteDepartment} okText="Yes" cancelText="No">
+      						<a href='javascript:void(0)'>删除</a>
+    						</Popconfirm>
+    					</div>
+							<div>成员:<span>{this.state.totalUserNum}人</span>,<a href="javascript:void(0)">禁用{this.state.disableUserNum}人</a></div>
 						</header>
 						<section className='ud-operator-btn-group'>
 							 <ButtonGroup>
@@ -109,41 +137,65 @@ export default class ZmitiUserDepartmentApp extends Component {
 							</ButtonGroup>
 						</section>
 						<section>
-							<Table dataSource={this.props.userList} columns={this.props.columns} />
+							<Table onRowClick={this.rowClick} rowSelection={companyUserRowSelection} dataSource={this.state.treeData[0] && this.state.treeData[0].userList} columns={this.props.columns} />
 						</section>
-						<section className='ud-current-department'>
-							<div className="ud-current-header">
-								<h2>
-									{this.state.currentDepartment.title}
-									<div className='ud-operator-bar'><a href="#">修改名称</a><a href="#">|</a><a href="#">新建子部门</a><a href="#">|</a><a href="#">删除</a></div>
-								</h2>
-								<aside><ZmitiSearchInput></ZmitiSearchInput></aside>
-							</div>
-							<section className="ud-current-user-section">
-								{ this.state.currentDepartment.userList.length <= 0 && 
-									<div>
-										<p>当前部门下没有成员,您可以</p>
-										<ButtonGroup>
-											<Button type="primary">新增成员</Button>
-											<Button type="primary">批量导入成员</Button>
-											<Button type="primary">移入其它部门成员</Button>
-										</ButtonGroup>
-									</div>
-								}
-								{
-									this.state.currentDepartment.userList.length>0 && 
-									<Table dataSource={this.state.currentDepartment.userList} columns={this.props.columns} />
-								}
-							</section>
-						</section>
+						{this.state.currentDepartment.userList && <section className='ud-current-department'>
+								<div className="ud-current-header">
+									<h2>
+										{this.state.currentDepartment.title}
+										<div className='ud-operator-bar'><a href="javascript:void(0)" onClick={()=>{this.setState({updateDepartmentDialogVisible:true})}}>修改名称</a><a href="javascript:void(0)">|</a><a href="javascript:void(0)" onClick={()=>{this.setState({createSubDepartmentDialogVisible:true})}}>新建子部门</a><a href="javascript:void(0)">|</a>
+										<Popconfirm placement="top" title={text} onConfirm={this.deleteSubDepartment} okText="Yes" cancelText="No">
+		      						<a href='javascript:void(0)'>删除</a>
+		    						</Popconfirm>
+    						</div>
+									</h2>
+									<aside><ZmitiSearchInput></ZmitiSearchInput></aside>
+								</div>
+								<section className="ud-current-user-section">
+									{this.state.currentDepartment.userList && this.state.currentDepartment.userList.length <= 0 && 
+										<div>
+											<p>当前部门下没有成员,您可以</p>
+											<ButtonGroup>
+												<Button type="primary">新增成员</Button>
+												<Button type="primary">批量导入成员</Button>
+												<Button type="primary">移入其它部门成员</Button>
+											</ButtonGroup>
+										</div>
+									}
+									{
+										this.state.currentDepartment.userList && this.state.currentDepartment.userList.length>0 && 
+										<Table rowSelection={departmentUserRowSelection} dataSource={this.state.currentDepartment.userList} columns={this.props.columns} />
+									}
+								</section>
+							</section>}
 					</div>
+
+					<Modal title='修改公司名称' visible={this.state.updateCompanyDialogVisible} onOk={this.updateCompanyName} onCancel={()=>{this.setState({updateCompanyDialogVisible:false})}}>
+		         <Input value={this.state.treeData[0] && this.state.treeData[0].title } onChange={()=>{}}/>
+        	</Modal>
+
+        	<Modal title='新建子部门' visible={this.state.createDepartmentDialogVisible} onOk={this.createDepartment} onCancel={()=>{this.setState({createDepartmentDialogVisible:false})}}>
+		         <Input placeholder='请输入部门名称' onChange={()=>{}}/>
+        	</Modal>
+
+        	<Modal title='修改当前部门名称' visible={this.state.updateDepartmentDialogVisible} onOk={this.updateDepartmentName} onCancel={()=>{this.setState({updateDepartmentDialogVisible:false})}}>
+		         <Input value={this.state.currentDepartment.title } onChange={()=>{}}/>
+        	</Modal>
+
+        	<Modal title='新建子部门' visible={this.state.createSubDepartmentDialogVisible} onOk={this.createSubDepartment} onCancel={()=>{this.setState({createSubDepartmentDialogVisible:false})}}>
+		         <Input placeholder='请输入部门名称' onChange={()=>{}}/>
+        	</Modal>
 					
 				</aside>
 			</section>
 		);
 	}
-	componentDidMount() {
+	rowClick(e){
 
+			location.href= '../personalAcc/index.html?userId='+ e.key;
+	}
+	componentDidMount() {
+		let s = this;
 		$.ajax({
 			url:'http://localhost:90/12306/data.php',
 			data:{},
@@ -152,41 +204,82 @@ export default class ZmitiUserDepartmentApp extends Component {
 				//console.log( e.responseText);
 			},
 			success(data){
-				console.log('--------')
-				console.log(JSON.parse(data));
+				data = JSON.parse(data);
+				console.log(data.treeData)
+				s.parentId =data.treeData[0].key;
+				s.setState({
+					treeData:data.treeData,
+					totalUserNum:data.totalUserNum,
+					disableUserNum:data.disableUserNum,
+					parentId:data.treeData[0].key,
+					defaultExpandedKeys:[data.treeData[0].key]
+				});
 			}
 		});
 	}
-	changeDepartment(e,b){
+
+	deleteDepartment(){//删除部门
+		console.log('delete department')
+	}
+
+	deleteSubDepartment(){//删除子部门
+
+	}
+	createDepartment(){//新建子部门
+
+	}
+
+	createSubDepartment(){//新建子部门
+			console.log('新建子部门')
+	}
+	updateCompanyName(){
 		this.setState({
-		 currentDepartment:{
-			title:b.selectedNodes[0].props.title,
-			key:'b',
-			userList:[
-				{
-		  			key:1,
-		  			username:'邓彬',
-		  			email:'1345542525@163.com',
-		  			mobile:'13455422525',
-		  			department:'麟腾传媒/设计中心/设计部'
-		  		}
-			]
-      },
+			updateCompanyDialogVisible:false
 		})
+	}
+	updateDepartmentName(){//修改当前部门名称
+		 console.log('修改当前部门名称')
+		 this.setState({
+			updateDepartmentDialogVisible:false
+		})
+	}
+	changeDepartment(e,b,c){//切换部门，显示当前部门下的所有员工
+		
+		if(!b.selected){
+			return;
+		}
+
+		if(e[0] === this.parentId){ // 
+			this.setState({
+				 currentDepartment:{
+					
+		     },
+			})
+		}
+		else{
+
+			let s = this;
+			$.ajax({
+				url:'http://localhost:90/12306/userList.php',
+				data:{},
+				success(data){
+					data = JSON.parse(data);
+
+					s.setState({
+						 currentDepartment:{
+								title:data.name,
+								key:data.key,
+								userList:data.userList
+				     },
+					})
+				}
+			})
+		}
 	}
 }
 
 ZmitiUserDepartmentApp.defaultProps = {
-	 keys: ['0-0-0', '0-0-1'],
-	  userList:[
-	  		{
-	  			key:1,
-	  			username:'邓彬',
-	  			email:'1345542525@163.com',
-	  			mobile:'13455422525',
-	  			department:'麟腾传媒/设计中心/设计部'
-	  		}
-      ],
+	 keys: ['123', '0-0-1'],
       columns:[{
 		 	title:"用户名",
 		 	dataIndex: 'username',
