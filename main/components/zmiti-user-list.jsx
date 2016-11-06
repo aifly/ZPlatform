@@ -10,7 +10,7 @@ export default class ZmitiUserList extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	current:0,
+	  	current:1,
 	  	userList:[
 	  		
 	  	],
@@ -19,22 +19,36 @@ export default class ZmitiUserList extends Component {
 	  this.changeAccount = this.changeAccount.bind(this);
 	}
 	render() {
-		
+
+
+		var userList = this.props.userList.filter(item=>{
+			return item.isover === this.state.current ||  item.isover === 2;//isover : 0 正式账号，1为试用账户
+		});
 		return (
 			<section className='user-main-ui'>
 				<div className='user-left-pannel'>
 					<ul onClick={this.changeAccount}>
-						<li data-index='0' className={this.state.current === 0 ?'active':''}>{this.props.tags[0]}</li>
-						<li data-index='1' className={this.state.current === 1 ?'active':''}>{this.props.tags[1]}</li>
+						<li data-index='1' className={this.state.current === 1 ?'active':''}>{this.props.tags[0]}</li>
+						<li data-index='0' className={this.state.current === 0 ?'active':''}>{this.props.tags[1]}</li>
 					</ul>
 				</div>
 				<div className='user-right-pannel'>
 					<header>
 						<ZmitiSearchInput></ZmitiSearchInput>
 					</header>
-					<section className='user-list-section'>
-						<Table dataSource={this.props.userList} columns={this.props.columns} />
-					</section>
+					
+					{
+						this.state.current === 1 &&
+						<section className='user-list-section'>
+							<Table dataSource={userList} columns={this.props.columns} />
+						</section>
+					}
+					{
+						this.state.current === 0 &&
+						<section className='user-list-section'>
+							<Table dataSource={userList} columns={this.props.columns1} />
+						</section>
+					}
 				</div>
 			</section>
 		);

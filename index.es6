@@ -826,26 +826,35 @@ window.addEventListener('load', ()=> {
                         userpwd: $("input[name='pwd']").val(),
                         userlogip: $("#keleyivisitorip").html()
                     },
+                    error(e){
+                        console.log(e)
+                    },
                     success(d){
+                        
                         if (d.getret === 0) {
                             data.loginMask.removeClass('show');
 
                             document.cookie = d.getusersigid+"|"+d.userid;
 
-//                            var domain = 'http://localhost:3000';
+                           /*   var domain = './main/';
 
 
-                            /*  var myPopup = window.open(domain + '/index.html','_self');
+                              var myPopup = window.open(domain + '/','_self');
 
-                             myPopup.postMessage('asd', domain);
-                             */
+                             myPopup.postMessage('asd', domain);*/
+                             
+                             var companyid = d.companyid;
 
 
                             var a = document.createElement('a');
                             document.body.appendChild(a);
 
                            // a.href = 'http://localhost:3000/index.html';
-                            a.href = './main/';
+                           var url = './main/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
+                            if(companyid){
+                                url+='&companyid='+companyid;
+                            }
+                            a.href =url;// './main/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
                             a.style.position = 'fixed';
                             a.style.zIndex = -1;
                             a.style.opacity = 0;
@@ -998,6 +1007,8 @@ window.addEventListener('load', ()=> {
                 $(".reg-info").addClass('info').html('开始注册...');
 
                 ///data.baseUrl='http://localhost:23627/v1/'
+                console.log('------------------');
+                console.log(dd);
                 $.ajax({
                     url: data.baseUrl + 'user/create_user/',
                     type: "POST",
@@ -1174,7 +1185,7 @@ window.addEventListener('load', ()=> {
 
 
             $(".fly-input").on("blur", ()=> {
-
+                console.log(company)
                 $('.btn-begin-reg')[successArr.length === (company === 1 ? 6 : 7) ? "removeClass" : "addClass"]('disabled')
             });
 

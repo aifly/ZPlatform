@@ -104,7 +104,7 @@ export default class ZmitiUploadDialog extends React.Component {
 
 
             var params ={
-                    "datainfotype": data.type,
+                    "setdatainfotype": data.type,
                     "getusersigid": self.props.getusersigid,
                     "userid":self.props.userId,
                     "setdatainfoclassid": self.state.defaultIds[self.state.current]
@@ -364,7 +364,7 @@ export default class ZmitiUploadDialog extends React.Component {
         $$('li', this.refs['menu-C']).forEach((li, i)=> {
             i === this.state.current && utilMethods.addClass(li, 'active');
         });*/
-        let self= this;
+    /*    let self= this;
         console.log({
                 "getusersigid": self.props.getusersigid,
                 "userid":self.props.userId
@@ -379,7 +379,7 @@ export default class ZmitiUploadDialog extends React.Component {
             success(data){
                 console.log(data);
             }
-        })
+        })*/
 
 
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
+import $ from 'jquery';
 export default class ZmitiCompanyApp extends Component {
 	constructor(props) {
 	  super(props);
@@ -9,65 +10,7 @@ export default class ZmitiCompanyApp extends Component {
 	  this.state = {
 	  	current:0,
 	  	userList:[
-	  		{
-	  			key:1,
-	  			companyName:'麟腾传媒文化有限公司',
-	  			chargePersonName:'fly',
-	  			totalUserNum:"80/100",
-	  			expireDate:'2016-11-01',
-	  			userSpace:'40M/100M',
-	  			serviceName:'刘小庆'
-	  		},
-	  		{
-	  			key:2,
-	  			companyName:'麟腾传媒文化有限公司',
-	  			chargePersonName:'fly',
-	  			totalUserNum:"80/100",
-	  			expireDate:'2016-11-01',
-	  			userSpace:'40M/100M',
-	  			serviceName:'刘小庆'
-	  		}
-	  		,{
-	  			key:3,
-	  			companyName:'麟腾传媒文化有限公司',
-	  			chargePersonName:'fly',
-	  			totalUserNum:"80/100",
-	  			expireDate:'2016-11-01',
-	  			userSpace:'40M/100M',
-	  			serviceName:'刘小庆'
-	  		},{
-	  			key:4,
-	  			companyName:'麟腾传媒文化有限公司',
-	  			chargePersonName:'fly',
-	  			totalUserNum:"80/100",
-	  			expireDate:'2016-11-01',
-	  			userSpace:'40M/100M',
-	  			serviceName:'刘小庆'
-	  		},{
-	  			key:5,
-	  			companyName:'麟腾传媒文化有限公司',
-	  			chargePersonName:'fly',
-	  			totalUserNum:"80/100",
-	  			expireDate:'2016-11-01',
-	  			userSpace:'40M/100M',
-	  			serviceName:'刘小庆'
-	  		},{
-	  			key:6,
-	  		companyName:'麟腾传媒文化有限公司',
-	  			chargePersonName:'fly',
-	  			totalUserNum:"80/100",
-	  			expireDate:'2016-11-01',
-	  			userSpace:'40M/100M',
-	  			serviceName:'刘小庆'
-	  		},{
-	  			key:7,
-	  			companyName:'麟腾传媒文化有限公司',
-	  			chargePersonName:'fly',
-	  			totalUserNum:"80/100",
-	  			expireDate:'2016-11-01',
-	  			userSpace:'40M/100M',
-	  			serviceName:'刘小庆'
-	  		}
+	  		
 	  	],
 
 	  };
@@ -102,13 +45,19 @@ export default class ZmitiCompanyApp extends Component {
 			  title: '负责客服',
 			  dataIndex: 'serviceName',
 			  key: 'serviceName',
-			},  { 
+			}];
+		var columns1 = columns.concat( { 
 				title: '操作', 
 				dataIndex: '', key: 'x',
-				render: () => <div><a href="#">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"> 转正</a></div> }];
+				render: () => <div><a href="#">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"> 转正</a></div> });
+		var columns2 = columns.concat( { 
+				title: '操作', 
+				dataIndex: '', key: 'x',
+				render: () => <div><a href="#">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"> 设置权限</a></div> })
 		let props={
 			userList:this.state.userList,
-			columns:columns,
+			columns:columns1,
+			columns1:columns2,
 			changeAccount:this.changeAccount,
 			tags:['试用公司账户','正式公司账户']
 		}
@@ -117,7 +66,33 @@ export default class ZmitiCompanyApp extends Component {
 		);
 	}
 	componentDidMount() {
+		var params = {
+			  getusersigid:window.parent.getusersingid,
+           	 userid:window.parent.userId,
+           	 setusertypesign:2
+		}
+		var baseUrl = window.parent.baseUrl || 'http://api.zmiti.com/v2'
 		
+		let s = this;
+		$.ajax({
+			type:"POST",
+			url:baseUrl+"/user/get_userlist/",
+			data:params,
+			success(data){
+				console.log(data);
+				if(data.getret === 0){
+
+					s.setState({
+						userList:data.userlist
+					})
+				}
+				else if(data.getret === -3){
+					message.error('您没有访问的权限');
+				}
+				
+			}
+
+		})
 	}
 	changeAccount(e){
 		// e : 0  1;

@@ -22,7 +22,7 @@ export  default class MainUI extends React.Component {
             isOpen: true,
             current: '3',
             currentAcc:'iLinten@qq.com',
-            frameSrc: './user',
+            frameSrc: './puzzle',
             isCompany : true //是否是企业用户。默认为false.
 
         }
@@ -141,14 +141,21 @@ export  default class MainUI extends React.Component {
         )
     }
 
+     getQueryString(name){
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+
     componentDidMount() {
 
-            window.getusersingid = document.cookie.split('|')[0];
-            window.userId = document.cookie.split('|')[0];
+            window.getusersingid = this.getQueryString('getusersigid');
+            window.userId =this.getQueryString('userId');
             window.baseUrl = 'http://api.zmiti.com/v2/';
 
-      /*  window.addEventListener('message',function(event) {
-
+       /* window.addEventListener('message',function(event) {
+            alert(1234)
             console.log('message received:  ' + event.data,event);
             alert('ok')
 

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
+import $ from 'jquery';
+import message from 'antd/lib/message';
+import 'antd/lib/message/style/css';
 export default class ZmitiUserApp extends Component {
 	constructor(props) {
 	  super(props);
@@ -9,101 +12,13 @@ export default class ZmitiUserApp extends Component {
 	  this.state = {
 	  	current:0,
 	  	userList:[
-	  		{
-	  			key:1,
-	  			username:'bmyuan',
-	  			mobile:'13455422525',
-	  			email:'1345542525@163.com',
-	  			regDate:'2016-11-01',
-	  			surplusDays:13, //剩余天数
-	  			userSpace:'40M/100M'
-	  		},
-	  		{
-	  			key:2,
-	  			username:'fly',
-	  			mobile:'15718879215',
-	  			email:'15718879215@163.com',
-	  			regDate:'2016-10-01',
-	  			surplusDays:23, //剩余天数
-	  			userSpace:'41M/100M'
-	  		}
-	  		,{
-	  			key:3,
-	  			username:'bmyuan',
-	  			mobile:'13455242525',
-	  			email:'1345542525@163.com',
-	  			regDate:'2016-11-01',
-	  			surplusDays:13, //剩余天数
-	  			userSpace:'40M/100M'
-	  		},{
-	  			key:4,
-	  			username:'bmyuan',
-	  			mobile:'13455142525',
-	  			email:'1345542525@163.com',
-	  			regDate:'2016-11-01',
-	  			surplusDays:13, //剩余天数
-	  			userSpace:'40M/100M'
-	  		},{
-	  			key:5,
-	  			username:'bmyuan',
-	  			mobile:'15445542525',
-	  			email:'1345542525@163.com',
-	  			regDate:'2016-11-01',
-	  			surplusDays:13, //剩余天数
-	  			userSpace:'40M/100M'
-	  		},{
-	  			key:11,
-	  			username:'bmyuan',
-	  			mobile:'15445542525',
-	  			email:'1345542525@163.com',
-	  			regDate:'2016-11-01',
-	  			surplusDays:13, //剩余天数
-	  			userSpace:'40M/100M'
-	  		},{
-	  			key:6,
-	  			username:'bmyuan',
-	  			mobile:'15445542525',
-	  			email:'1345542525@163.com',
-	  			regDate:'2016-11-01',
-	  			surplusDays:13, //剩余天数
-	  			userSpace:'40M/100M'
-	  		},{
-	  			key:7,
-	  			username:'bmyuan',
-	  			mobile:'15445542525',
-	  			email:'1345542525@163.com',
-	  			regDate:'2016-11-01',
-	  			surplusDays:13, //剩余天数
-	  			userSpace:'40M/100M'
-	  		},{
-	  			key:8,
-	  			username:'bmyuan',
-	  			mobile:'15445542525',
-	  			email:'1345542525@163.com',
-	  			regDate:'2016-11-01',
-	  			surplusDays:13, //剩余天数
-	  			userSpace:'40M/100M'
-	  		},{
-	  			key:9,
-	  			username:'bmyuan',
-	  			mobile:'15445542525',
-	  			email:'1345542525@163.com',
-	  			regDate:'2016-11-01',
-	  			surplusDays:13, //剩余天数
-	  			userSpace:'40M/100M'
-	  		},{
-	  			key:10,
-	  			username:'bmyuan',
-	  			mobile:'15445542525',
-	  			email:'1345542525@163.com',
-	  			regDate:'2016-11-01',
-	  			surplusDays:13, //剩余天数
-	  			userSpace:'40M/100M'
-	  		}
+	  		
 	  	],
 
 	  };
 	  this.changeAccount = this.changeAccount.bind(this);
+	  this.transFormal = this.transFormal.bind(this);
+	  this.disableUser = this.disableUser.bind(this);
 	}
 	render() {
 		const columns = [{
@@ -134,13 +49,20 @@ export default class ZmitiUserApp extends Component {
 			  title: '空间使用量',
 			  dataIndex: 'userSpace',
 			  key: 'userSpace',
-			},  { 
+			}];
+		var columns1 = columns.concat( { 
 				title: '操作', 
 				dataIndex: '', key: 'x',
-				render: () => <div><a href="#">延长试用</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">转为正式用户</a></div> },];
+				render:  (text, record)  => <div data-userid={record.userid}><a href="#" data-index='0' style={{color:record.isover === 2?'red':''}} onClick={this.disableUser}>{record.isover === 2?'启用':'禁用'}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">延长试用</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onClick={this.transFormal}>转为正式用户</a></div> });
+		var columns2= columns.concat( { 
+				title: '操作', 
+				dataIndex: '', key: 'x',
+				render: (text, record) => <div data-userid={record.userid}><a href="#" data-index='0'  style={{color:record.isover === 2?'red':''}} onClick={this.disableUser}>{record.isover === 2?'启用':'禁用'}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">设置权限</a></div> });
+		
 		let props={
 			userList:this.state.userList,
-			columns:columns,
+			columns:columns1,
+			columns1:columns2,
 			changeAccount:this.changeAccount
 		}
 		return (
@@ -148,12 +70,114 @@ export default class ZmitiUserApp extends Component {
 		);
 	}
 	componentDidMount() {
+		var params = {
+			  getusersigid:window.parent.getusersingid,
+           	 userid:window.parent.userId,
+           	 setusertypesign:1
+		}
+		var baseUrl = window.parent.baseUrl || 'http://api.zmiti.com/v2'
 		
+		let s = this;
+		$.ajax({
+			type:"POST",
+			url:baseUrl+"/user/get_userlist/",
+			data:params,
+			success(data){
+				console.log(data);
+				if(data.getret === 0){
+
+					s.setState({
+						userList:data.userlist
+					})
+				}
+				else if(data.getret === -3){
+					message.error('您没有访问的权限');
+				}
+				
+			}
+
+		})
+	}
+	disableUser(e){
+		var userid = e.target.parentNode.getAttribute('data-userid');
+		var isover = -1;
+		this.state.userList.forEach(user=>{
+			if(user.userid === userid){
+				isover = user.isover;
+			}
+		});
+		if(isover===-1){
+			return;
+		}
+
+		var params = {
+			 getusersigid:this.props.getusersingid,
+           	 userid:this.props.userid,
+           	 setuserid:userid,
+           	 setisover:isover === 2 ? 0 : 2 //0:正式用户，1 试用用户，2禁用用户，3已删除。
+		}
+		var baseUrl = this.props.baseUrl || 'http://api.zmiti.com/v2';
+		let s = this;
+		
+		$.ajax({
+			type:"post",
+			url:baseUrl+'user/disable_user/',
+			data:params,
+			success(data){
+				console.log(data);	
+				if(data.getret === 0){
+					message.success('操作成功');
+					s.state.userList.forEach(user=>{
+						if(user.userid === userid){
+							user.isover = isover === 2 ? 0 : 2;
+						}
+					});
+					s.forceUpdate();
+				}else{
+					message.error('操作失败');
+				}
+			}
+		})
+	}
+	transFormal(e){//转成正式用户
+		var userid = e.target.parentNode.getAttribute('data-userid');
+		var params = {
+			 getusersigid:window.parent.getusersingid,
+           	 userid:window.parent.userId,
+           	 setuserid:userid,
+           	 setisover:0 //0:正式用户，1 试用用户，2禁用用户，3已删除。
+		}
+		var baseUrl = window.parent.baseUrl || 'http://api.zmiti.com/v2';
+		let s = this;
+		
+		$.ajax({
+			type:"post",
+			url:baseUrl+'user/disable_user/',
+			data:params,
+			success(data){
+				console.log(data);	
+				if(data.getret === 0){
+					message.success('操作成功');
+					s.state.userList.forEach(user=>{
+						if(user.userid === userid){
+							user.isover = 0;
+						}
+					});
+					s.forceUpdate();
+				}else{
+					message.error('操作失败');
+				}
+			}
+		})
 	}
 	changeAccount(e){
 		// e : 0  1;
 	}
 }
-
+ZmitiUserApp.defaultProps = {
+	getusersingid:window.parent.getusersingid,
+     userid:window.parent.userId,
+     baseUrl : window.parent.baseUrl || 'http://api.zmiti.com/v2'
+}
 
 ReactDOM.render(<ZmitiUserApp></ZmitiUserApp>,document.getElementById('fly-main'));

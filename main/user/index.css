@@ -1,21 +1,21 @@
 /*
 Error: Invalid GBK character "\xE5"
-        on line 55 of F:\xuchang2016\ZPlatform\main\components\zmiti-upload-dialog.jsx
+        on line 25 of F:\xuchang2016\ZPlatform\main\user\index.jsx
 
-50:             visible: false,
-51:             current: 4,
-52:             currentCate: -1,
-53:             editable: false,
-54:             loading: false,
-55:             type: 0,//当前显示的类型，0表示图片，1表示音频，2表示视频
-56:             uploadLoading: false,
-57:             ajaxData: [],
-58:             cateVisible: false,//添加分类的对话框
-59:             defaultIds: ['1465782065', '1465782285', '1465782327', '1465782386', '1465285201', '1465285261'],
-60:             allData: [
+20: 	  this.transFormal = this.transFormal.bind(this);
+21: 	  this.disableUser = this.disableUser.bind(this);
+22: 	}
+23: 	render() {
+24: 		const columns = [{
+25: 			  title: '序号',
+26: 			  dataIndex: 'key',
+27: 			  key: 'xx',
+28: 			},{
+29: 			  title: '用户名',
+30: 			  dataIndex: 'username',
 
 Backtrace:
-F:\xuchang2016\ZPlatform\main\components\zmiti-upload-dialog.jsx:55
+F:\xuchang2016\ZPlatform\main\user\index.jsx:25
 D:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/sass-3.4.22/lib/sass/util.rb:1300:in `rescue in block in find_encoding_error'
 D:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/sass-3.4.22/lib/sass/util.rb:1297:in `block in find_encoding_error'
 D:/Ruby23-x64/lib/ruby/gems/2.3.0/gems/sass-3.4.22/lib/sass/util.rb:1296:in `each'
@@ -42,4 +42,4 @@ D:/Ruby23-x64/bin/sass:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Error: Invalid GBK character \"\xE5\"\A         on line 55 of F:\xuchang2016\ZPlatform\main\components\zmiti-upload-dialog.jsx\A \A 50:             visible: false,\A 51:             current: 4,\A 52:             currentCate: -1,\A 53:             editable: false,\A 54:             loading: false,\A 55:             type: 0,//当前显示的类型，0表示图片，1表示音频，2表示视频\A 56:             uploadLoading: false,\A 57:             ajaxData: [],\A 58:             cateVisible: false,//添加分类的对话框\A 59:             defaultIds: ['1465782065', '1465782285', '1465782327', '1465782386', '1465285201', '1465285261'],\A 60:             allData: ["; }
+  content: "Error: Invalid GBK character \"\xE5\"\A         on line 25 of F:\xuchang2016\ZPlatform\main\user\index.jsx\A \A 20: 	  this.transFormal = this.transFormal.bind(this);\A 21: 	  this.disableUser = this.disableUser.bind(this);\A 22: 	}\A 23: 	render() {\A 24: 		const columns = [{\A 25: 			  title: '序号',\A 26: 			  dataIndex: 'key',\A 27: 			  key: 'xx',\A 28: 			},{\A 29: 			  title: '用户名',\A 30: 			  dataIndex: 'username',"; }

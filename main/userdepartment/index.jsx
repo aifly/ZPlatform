@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+   import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
 import Tabs from 'antd/lib/tabs';
@@ -36,6 +36,7 @@ export default class ZmitiUserDepartmentApp extends Component {
 	      parentId:-1,//公司的Id,最外一层的ID
 	      totalUserNum:0,//公司总成员
 	      disableUserNum:0,//被禁用的员工
+	      currentDepartmentId:-1,
 	      currentDepartment:{
 			
 	      },
@@ -226,7 +227,14 @@ export default class ZmitiUserDepartmentApp extends Component {
 
 	}
 	createDepartment(){//新建子部门
+		var s = this;
+		$.ajax({
+			type:'post',
+			url:s.props.baseUrl+'/user/create_department/',
+			data:{
 
+			}
+		})
 	}
 
 	createSubDepartment(){//新建子部门
@@ -298,6 +306,12 @@ ZmitiUserDepartmentApp.defaultProps = {
 			  key: 'department',
 			}
       ]
+}
+
+ZmitiUserDepartmentApp.defaultProps = {
+	getusersingid:window.parent.getusersingid,
+     userid:window.parent.userId,
+     baseUrl : window.parent.baseUrl || 'http://api.zmiti.com/v2'
 }
 
 
