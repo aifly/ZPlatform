@@ -21516,8 +21516,9 @@
 	            isOpen: true,
 	            current: '3',
 	            currentAcc: 'iLinten@qq.com',
-	            frameSrc: './home/index.html',
-	            isCompany: false //是否是企业用户。默认为false.
+	            frameSrc: './puzzle',
+	            isCompany: true //是否是企业用户。默认为false.
+
 	        };
 	    }
 
@@ -21574,7 +21575,7 @@
 	                            ) },
 	                        _react2['default'].createElement(
 	                            _antdLibMenu2['default'].Item,
-	                            { key: '5' },
+	                            { key: 'userdepartment/' },
 	                            _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'team', style: { marginRight: '32px' } }),
 	                            '用户和部门'
 	                        ),
@@ -21782,6 +21783,38 @@
 	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'edit', style: { marginRight: '32px' } }),
 	                                        '办公系统'
 	                                    )
+	                                ),
+	                                _react2['default'].createElement(
+	                                    SubMenu,
+	                                    { key: 'sub5',
+	                                        title: _react2['default'].createElement(
+	                                            'span',
+	                                            null,
+	                                            _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'setting', style: { marginRight: '22px' } }),
+	                                            _react2['default'].createElement(
+	                                                'span',
+	                                                null,
+	                                                '用户管理'
+	                                            )
+	                                        ) },
+	                                    _react2['default'].createElement(
+	                                        _antdLibMenu2['default'].Item,
+	                                        { key: 'user/' },
+	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'user', style: { marginRight: '32px' } }),
+	                                        '个人账户管理'
+	                                    ),
+	                                    _react2['default'].createElement(
+	                                        _antdLibMenu2['default'].Item,
+	                                        { key: 'company/' },
+	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'customerservice', style: { marginRight: '32px' } }),
+	                                        '公司账户管理'
+	                                    ),
+	                                    _react2['default'].createElement(
+	                                        _antdLibMenu2['default'].Item,
+	                                        { key: 'system/' },
+	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'edit', style: { marginRight: '32px' } }),
+	                                        '系统账户管理'
+	                                    )
 	                                )
 	                            ),
 	                            _react2['default'].createElement(
@@ -21794,21 +21827,36 @@
 	                    _react2['default'].createElement(
 	                        'section',
 	                        { className: 'fly-right-aside' },
-	                        _react2['default'].createElement('iframe', { src: this.state.frameSrc, frameborder: '0' })
+	                        _react2['default'].createElement('iframe', { src: this.state.frameSrc, frameBorder: '0' })
 	                    )
 	                )
 	            );
 	        }
 	    }, {
+	        key: 'getQueryString',
+	        value: function getQueryString(name) {
+	            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+	            var r = window.location.search.substr(1).match(reg);
+	            if (r != null) return unescape(r[2]);
+	            return null;
+	        }
+	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 
-	            window.userId = document.cookie;
+	            window.getusersingid = this.getQueryString('getusersigid');
+	            window.userId = this.getQueryString('userId');
+	            window.baseUrl = 'http://api.zmiti.com/v2/';
+	            window.companyId = this.getQueryString('companyid');
+	            this.setState({
+	                isCompany: window.companyId
+	            });
 
-	            /*  window.addEventListener('message',function(event) {
-	                    console.log('message received:  ' + event.data,event);
-	                  alert('ok')
-	                },false);*/
+	            /* window.addEventListener('message',function(event) {
+	                 alert(1234)
+	                 console.log('message received:  ' + event.data,event);
+	                 alert('ok')
+	               },false);*/
 
 	            /* setTimeout(()=> {
 	                 $$('.fly-nav a').forEach((a)=> {

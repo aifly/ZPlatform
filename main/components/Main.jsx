@@ -153,6 +153,10 @@ export  default class MainUI extends React.Component {
             window.getusersingid = this.getQueryString('getusersigid');
             window.userId =this.getQueryString('userId');
             window.baseUrl = 'http://api.zmiti.com/v2/';
+            window.companyId = this.getQueryString('companyid');
+            this.setState({
+                isCompany:window.companyId
+            })
 
        /* window.addEventListener('message',function(event) {
             alert(1234)

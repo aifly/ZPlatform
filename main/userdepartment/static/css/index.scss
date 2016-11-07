@@ -204,21 +204,20 @@ $btnColor:#d8271d;
 
       .ud-current-department{//当前部门样式
         padding-bottom:20px;
-        @include pos(r);
-        &:before{
-          content:'';
-          @include pos(a);
-          width:100%;
-          height:1px;
-          @include fly-h-gradient-line;
-          bottom:0;
-        }
+     
         .ud-current-header{
           @include displayFlex(horizontal);
           align-items: center;
+          margin-top: 20px;
           h2{
             font-family: '宋体';
             width:20%;
+            div{
+              a,span{
+                font-weight: normal;
+                font-size:12px;
+              }
+            }
           }
           aside{
             width:60%;

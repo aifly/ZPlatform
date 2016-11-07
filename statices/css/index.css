@@ -562,10 +562,6 @@ body {
 }
 #fly-main .fly-login-mask .fly-login-container .fly-reg-box .fly-reg-input input[type='password'] {
   width: 196px;
-  position: relative;
-  left: 70px;
-  top: -33px;
-  height: 24px;
 }
 #fly-main .fly-login-mask .fly-login-container .fly-reg-box .fly-reg-input input[name='reg-username'] {
   width: 220px;
@@ -643,8 +639,6 @@ body {
 }
 #fly-main .fly-login-mask .fly-login-container .fly-reg-box .fly-reg-input .reg-input[name='reg-username'] {
   position: relative;
-  top: -33px;
-  left: 50px;
   height: 24px;
 }
 #fly-main .fly-login-mask .fly-login-container .fly-reg-box .fly-reg-input input {

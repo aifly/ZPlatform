@@ -818,6 +818,11 @@ window.addEventListener('load', ()=> {
 
                 let self = this;
 
+                console.log({
+                        username: $("input[name='username']").val(),
+                        userpwd: $("input[name='pwd']").val(),
+                        userlogip: $("#keleyivisitorip").html()
+                    })
                 $.ajax({
                     url: data.baseUrl + "user/login_user",
                     type: "POST",
@@ -830,7 +835,7 @@ window.addEventListener('load', ()=> {
                         console.log(e)
                     },
                     success(d){
-                        
+                     
                         if (d.getret === 0) {
                             data.loginMask.removeClass('show');
 
@@ -850,7 +855,7 @@ window.addEventListener('load', ()=> {
                             document.body.appendChild(a);
 
                            // a.href = 'http://localhost:3000/index.html';
-                           var url = './main/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
+                           var url = 'http://localhost:3000/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
                             if(companyid){
                                 url+='&companyid='+companyid;
                             }
