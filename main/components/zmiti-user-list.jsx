@@ -54,7 +54,7 @@ export default class ZmitiUserList extends Component {
 		);
 	}
 	componentDidMount() {
-
+	
 	}
 	changeAccount(e){
 		if(e.target.nodeName === "LI"){

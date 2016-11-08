@@ -21516,7 +21516,7 @@
 	            isOpen: true,
 	            current: '3',
 	            currentAcc: 'iLinten@qq.com',
-	            frameSrc: './puzzle',
+	            frameSrc: './userdepartment',
 	            isCompany: true //是否是企业用户。默认为false.
 
 	        };
@@ -21525,10 +21525,10 @@
 	    _createClass(MainUI, [{
 	        key: 'menuClickHandler',
 	        value: function menuClickHandler(e) {
-	            e.preventDefault();
-	            this.setState({
-	                frameSrc: e.target.href
-	            });
+	            /* e.preventDefault();
+	               this.setState({
+	                 frameSrc:e.target.href
+	             });*/
 	        }
 	    }, {
 	        key: 'handleClick',
@@ -21651,7 +21651,7 @@
 	                        { style: { display: this.props.isAdmin ? 'block' : 'none' }, className: 'fly-nav' },
 	                        _react2['default'].createElement(
 	                            'a',
-	                            { href: './admin/index.html' },
+	                            { href: "./admin/?userid=" + window.userId + '&getusersigid=' + window.getusersingid },
 	                            '系统管理'
 	                        )
 	                    ),
@@ -21783,38 +21783,6 @@
 	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'edit', style: { marginRight: '32px' } }),
 	                                        '办公系统'
 	                                    )
-	                                ),
-	                                _react2['default'].createElement(
-	                                    SubMenu,
-	                                    { key: 'sub5',
-	                                        title: _react2['default'].createElement(
-	                                            'span',
-	                                            null,
-	                                            _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'setting', style: { marginRight: '22px' } }),
-	                                            _react2['default'].createElement(
-	                                                'span',
-	                                                null,
-	                                                '用户管理'
-	                                            )
-	                                        ) },
-	                                    _react2['default'].createElement(
-	                                        _antdLibMenu2['default'].Item,
-	                                        { key: 'user/' },
-	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'user', style: { marginRight: '32px' } }),
-	                                        '个人账户管理'
-	                                    ),
-	                                    _react2['default'].createElement(
-	                                        _antdLibMenu2['default'].Item,
-	                                        { key: 'company/' },
-	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'customerservice', style: { marginRight: '32px' } }),
-	                                        '公司账户管理'
-	                                    ),
-	                                    _react2['default'].createElement(
-	                                        _antdLibMenu2['default'].Item,
-	                                        { key: 'system/' },
-	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'edit', style: { marginRight: '32px' } }),
-	                                        '系统账户管理'
-	                                    )
 	                                )
 	                            ),
 	                            _react2['default'].createElement(
@@ -21844,7 +21812,7 @@
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 
-	            window.getusersingid = this.getQueryString('getusersigid');
+	            window.getusersingid = window.getusersigid = this.getQueryString('getusersigid');
 	            window.userId = this.getQueryString('userId');
 	            window.baseUrl = 'http://api.zmiti.com/v2/';
 	            window.companyId = this.getQueryString('companyid');

@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import $ from 'jquery';
+
+import MainUI from '../admin/components/main.jsx';
 export default class ZmitiCompanyApp extends Component {
 	constructor(props) {
 	  super(props);
@@ -62,16 +64,30 @@ export default class ZmitiCompanyApp extends Component {
 			tags:['试用公司账户','正式公司账户']
 		}
 		return (
-			<ZmitiUserList {...props}></ZmitiUserList>
+			<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
 		);
 	}
+
+	getQueryString(name){
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return unescape(r[2]);
+      return null;
+  }
+
 	componentDidMount() {
+
+		 this.getusersingid = this.getusersigid = this.getQueryString('getusersigid');
+      this.userid =this.getQueryString('userId');
+      this.baseUrl = 'http://api.zmiti.com/v2/';
+      this.companyId = this.getQueryString('companyid');
+      
 		var params = {
-			  getusersigid:window.parent.getusersingid,
-           	 userid:window.parent.userId,
-           	 setusertypesign:2
+			  getusersigid:this.getusersingid,
+       	 userid:this.userid,
+       	 setusertypesign:2
 		}
-		var baseUrl = window.parent.baseUrl || 'http://api.zmiti.com/v2'
+		var baseUrl = this.baseUrl || 'http://api.zmiti.com/v2'
 		
 		let s = this;
 		$.ajax({
@@ -79,15 +95,14 @@ export default class ZmitiCompanyApp extends Component {
 			url:baseUrl+"/user/get_userlist/",
 			data:params,
 			success(data){
-				console.log(data);
 				if(data.getret === 0){
-
 					s.setState({
 						userList:data.userlist
 					})
 				}
 				else if(data.getret === -3){
-					message.error('您没有访问的权限');
+					message.error('您没有访问的权限,请重新登录');
+					window.location.href='/';
 				}
 				
 			}
@@ -100,4 +115,4 @@ export default class ZmitiCompanyApp extends Component {
 }
 
 
-ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));
+/*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/

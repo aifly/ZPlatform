@@ -5,6 +5,7 @@ import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import $ from 'jquery';
 import message from 'antd/lib/message';
 import 'antd/lib/message/style/css';
+import MainUI from '../admin/components/main.jsx';
 export default class ZmitiUserApp extends Component {
 	constructor(props) {
 	  super(props);
@@ -66,16 +67,30 @@ export default class ZmitiUserApp extends Component {
 			changeAccount:this.changeAccount
 		}
 		return (
-			<ZmitiUserList {...props}></ZmitiUserList>
+			<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
 		);
 	}
+
+  getQueryString(name){
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return unescape(r[2]);
+      return null;
+  }
 	componentDidMount() {
+		  this.getusersingid = this.getusersigid = this.getQueryString('getusersigid');
+      this.userid =this.getQueryString('userId');
+      this.baseUrl = 'http://api.zmiti.com/v2/';
+      this.companyId = this.getQueryString('companyid');
+      
 		var params = {
-			  getusersigid:window.parent.getusersingid,
-           	 userid:window.parent.userId,
-           	 setusertypesign:1
+			  getusersigid:this.getusersingid,
+        userid:this.userid,
+       	setusertypesign:1
 		}
-		var baseUrl = window.parent.baseUrl || 'http://api.zmiti.com/v2'
+
+
+		var baseUrl = this.props.baseUrl;
 		
 		let s = this;
 		$.ajax({
@@ -88,12 +103,14 @@ export default class ZmitiUserApp extends Component {
 
 					s.setState({
 						userList:data.userlist
-					})
+					});
 				}
 				else if(data.getret === -3){
-					message.error('您没有访问的权限');
+					message.error('您没有访问的权限,2秒后跳转到首页');
+					setTimeout(()=>{
+						location.href='/';
+					},2000)
 				}
-				
 			}
 
 		})
@@ -111,8 +128,8 @@ export default class ZmitiUserApp extends Component {
 		}
 
 		var params = {
-			 getusersigid:this.props.getusersingid,
-           	 userid:this.props.userid,
+			 getusersigid:this.getusersingid,
+           	 userid:this.userid,
            	 setuserid:userid,
            	 setisover:isover === 2 ? 0 : 2 //0:正式用户，1 试用用户，2禁用用户，3已删除。
 		}
@@ -124,7 +141,6 @@ export default class ZmitiUserApp extends Component {
 			url:baseUrl+'user/disable_user/',
 			data:params,
 			success(data){
-				console.log(data);	
 				if(data.getret === 0){
 					message.success('操作成功');
 					s.state.userList.forEach(user=>{
@@ -142,8 +158,8 @@ export default class ZmitiUserApp extends Component {
 	transFormal(e){//转成正式用户
 		var userid = e.target.parentNode.getAttribute('data-userid');
 		var params = {
-			 getusersigid:window.parent.getusersingid,
-           	 userid:window.parent.userId,
+				 getusersigid:this.getusersingid,
+           	 userid:this.userid,
            	 setuserid:userid,
            	 setisover:0 //0:正式用户，1 试用用户，2禁用用户，3已删除。
 		}
@@ -175,9 +191,7 @@ export default class ZmitiUserApp extends Component {
 	}
 }
 ZmitiUserApp.defaultProps = {
-	getusersingid:window.parent.getusersingid,
-     userid:window.parent.userId,
-     baseUrl : window.parent.baseUrl || 'http://api.zmiti.com/v2'
+     baseUrl : window.parent.baseUrl || 'http://api.zmiti.com/v2/'
 }
 
-ReactDOM.render(<ZmitiUserApp></ZmitiUserApp>,document.getElementById('fly-main'));
+/*ReactDOM.render(<ZmitiUserApp></ZmitiUserApp>,document.getElementById('fly-main'));*/

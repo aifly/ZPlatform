@@ -859,6 +859,7 @@ window.addEventListener('load', ()=> {
                             if(companyid){
                                 url+='&companyid='+companyid;
                             }
+                            url+='&isover='+d.isover;
                             a.href =url;// './main/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
                             a.style.position = 'fixed';
                             a.style.zIndex = -1;

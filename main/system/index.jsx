@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
+import MainUI from '../admin/components/main.jsx';
 export default class ZmitiSystemApp extends Component {
 	constructor(props) {
 	  super(props);
@@ -89,11 +90,12 @@ export default class ZmitiSystemApp extends Component {
 		let props={
 			userList:this.state.userList,
 			columns:columns,
+			columns1:columns,
 			changeAccount:this.changeAccount,
 			tags:['账户管理','分配用户']
 		}
 		return (
-			<ZmitiUserList {...props}></ZmitiUserList>
+			<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
 		);
 	}
 	componentDidMount() {
@@ -105,4 +107,4 @@ export default class ZmitiSystemApp extends Component {
 }
 
 
-ReactDOM.render(<ZmitiSystemApp></ZmitiSystemApp>,document.getElementById('fly-main'));
+/*ReactDOM.render(<ZmitiSystemApp></ZmitiSystemApp>,document.getElementById('fly-main'));*/

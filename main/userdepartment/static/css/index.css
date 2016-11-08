@@ -119,6 +119,28 @@ body {
         .ud-main-ui .ud-right-side .ud-main-section .ant-pagination-prev:hover a, .ud-main-ui .ud-right-side .ud-main-section .ant-pagination-next:hover a {
           color: #d8271d; }
 
+.user-error {
+  position: absolute;
+  z-index: 100;
+  top: -100%;
+  margin-top: -10px;
+  left: 10%;
+  background-color: #99071e;
+  color: #fff;
+  padding: 2px 10px;
+  border-radius: 10px; }
+  .user-error:before {
+    content: '';
+    position: absolute;
+    left: 45%;
+    width: 10px;
+    height: 10px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background-color: inherit;
+    top: 100%;
+    margin-top: -6px; }
+
 .ant-tree li a:hover {
   background-color: #d8271d !important;
   color: #fff; }
@@ -138,5 +160,13 @@ body {
 .ant-checkbox-checked .ant-checkbox-inner {
   background-color: #d8271d !important;
   border-color: #d8271d !important; }
+
+.ant-btn:focus, .ant-btn:hover, .ant-input:focus, .ant-input:hover, .ant-select-selection:hover {
+  background-color: #fff !important;
+  border-color: #bf1616 !important;
+  box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1) !important; }
+
+.ant-input, .ant-select-selection {
+  border-color: #d8271d; }
 
 /*# sourceMappingURL=index.css.map */

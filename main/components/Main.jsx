@@ -22,17 +22,17 @@ export  default class MainUI extends React.Component {
             isOpen: true,
             current: '3',
             currentAcc:'iLinten@qq.com',
-            frameSrc: './puzzle',
+            frameSrc: './userdepartment',
             isCompany : true //是否是企业用户。默认为false.
 
         }
     }
 
     menuClickHandler(e){
-        e.preventDefault();
+       /* e.preventDefault();
           this.setState({
             frameSrc:e.target.href
-        });
+        });*/
     };
 
     handleClick(e) {
@@ -80,7 +80,7 @@ export  default class MainUI extends React.Component {
                     <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    <div style={{display:this.props.isAdmin?'block':'none'}} className="fly-nav"><a href="./admin/index.html">系统管理</a></div>
+                    <div style={{display:this.props.isAdmin?'block':'none'}} className="fly-nav"><a href={"./admin/?userid="+window.userId+'&getusersigid='+window.getusersingid}>系统管理</a></div>
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
                     <div></div>
@@ -121,12 +121,6 @@ export  default class MainUI extends React.Component {
                                     <Menu.Item key="10"><Icon type="customerservice" style={{marginRight:'32px'}}/>续费管理</Menu.Item>
                                     <Menu.Item key="11"><Icon type="edit" style={{marginRight:'32px'}}/>办公系统</Menu.Item>
                                 </SubMenu>
-                                <SubMenu key="sub5"
-                                         title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>用户管理</span></span>}>
-                                    <Menu.Item key="user/"><Icon type="user" style={{marginRight:'32px'}}/>个人账户管理</Menu.Item>
-                                    <Menu.Item key="company/"><Icon type="customerservice" style={{marginRight:'32px'}}/>公司账户管理</Menu.Item>
-                                    <Menu.Item key="system/"><Icon type="edit" style={{marginRight:'32px'}}/>系统账户管理</Menu.Item>
-                                </SubMenu>
                             </Menu>
                             <div className="fly-menu-bottom">
                                 系统日志
@@ -150,7 +144,7 @@ export  default class MainUI extends React.Component {
 
     componentDidMount() {
 
-            window.getusersingid = this.getQueryString('getusersigid');
+            window.getusersingid = window.getusersigid = this.getQueryString('getusersigid');
             window.userId =this.getQueryString('userId');
             window.baseUrl = 'http://api.zmiti.com/v2/';
             window.companyId = this.getQueryString('companyid');

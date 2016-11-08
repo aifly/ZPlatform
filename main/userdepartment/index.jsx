@@ -13,6 +13,10 @@ import Modal from 'antd/lib/modal';
 import 'antd/lib/modal/style/css';
 import Input from 'antd/lib/input';
 import 'antd/lib/input/style/css';
+import Form from 'antd/lib/form';
+import 'antd/lib/form/style/css';
+import Select from 'antd/lib/select';
+import 'antd/lib/select/style/css';
 import ZmitiDialog from './static/components/zmiti-dialog.jsx';
 const ButtonGroup = Button.Group;
 const TreeNode = Tree.TreeNode;
@@ -25,7 +29,10 @@ import message from 'antd/lib/message';
 import 'antd/lib/message/style/css';
 import Icon from 'antd/lib/icon';
 import 'antd/lib/icon/style/css';
-export default class ZmitiUserDepartmentApp extends Component {
+const FormItem = Form.Item;
+const Option = Select.Option;
+
+export default class  ZmitiUserDepartmentApp extends Component {
 	constructor(props) {
 	  super(props);
 		const keys = this.props.keys;
@@ -96,6 +103,11 @@ export default class ZmitiUserDepartmentApp extends Component {
 		}
 
 
+    const formItemLayout = {
+      labelCol: { span: 6 },
+      wrapperCol: { span: 14 },
+    };
+
 
 		return (
 			<section className='ud-main-ui'>
@@ -156,12 +168,48 @@ export default class ZmitiUserDepartmentApp extends Component {
 							</section>
 					</div>
 
-					<Modal title='修改公司名称' visible={this.state.updateCompanyDialogVisible} onOk={this.updateCompanyName} onCancel={()=>{this.setState({updateCompanyDialogVisible:false})}}>
+					<Modal title='修改名称' visible={this.state.updateCompanyDialogVisible} onOk={this.updateCompanyName} onCancel={()=>{this.setState({updateCompanyDialogVisible:false})}}>
 		         <Input value={this.state.treeData[0] && this.state.treeData[0].title } onChange={()=>{}}/>
         	</Modal>
 
         	<Modal title='新建子部门' visible={this.state.createDepartmentDialogVisible} onOk={this.createDepartment} onCancel={()=>{this.setState({createDepartmentDialogVisible:false})}}>
 		         <Input ref='newDepartment' placeholder='请输入部门名称' onChange={()=>{}}/>
+        	</Modal>
+
+        	<Modal title='新增成员' visible={true} >
+        		<Form horizontal >
+        				 <FormItem
+					          {...formItemLayout}
+					          label={<span><span style={{color:'red',marginRight:4,}}>*</span>账号</span>}
+					          hasFeedback={true}
+					        >
+					        	<Input ref='username' onFocus={()=>{}} placeholder='请输入账号' onChange={()=>{}}/>
+					        	<div className='user-error'>账号不合法(6位以上的数字字母)</div>
+					        </FormItem>
+					         <FormItem
+					          {...formItemLayout}
+					          label={<span><span style={{color:'red',marginRight:4,}}>*</span>所属部门</span>}
+					        >
+					        	 <Select placeholder="Please select a department">
+					              <Option value="china">China</Option>
+					              <Option value="use">U.S.A</Option>
+					            </Select>
+					        </FormItem>
+					         <FormItem
+					          {...formItemLayout}
+					          label="密码"
+					        >
+					        	<Input ref='username' placeholder='' value='(密码默认为111111),此处不用填写' disabled={true} onChange={()=>{}}/>
+					        </FormItem>
+
+					         <FormItem
+					          {...formItemLayout}
+					          label={<span><span style={{color:'red',marginRight:4,}}>*</span>手机号/邮箱</span>}
+					        >
+					        	<Input ref='username' placeholder='请输入成员的手机号或者邮箱'  onChange={()=>{}}/>
+					        </FormItem>
+
+        		</Form>
         	</Modal>
 					
 				</aside>

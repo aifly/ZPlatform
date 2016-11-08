@@ -283,6 +283,31 @@ $btnColor:#d8271d;
   }
 }
 
+
+.user-error{
+  @include pos(a);
+  z-index: 100;
+  top: -100%;
+  margin-top: -10px;
+  left:10%;
+  background-color:$baseColor;
+  color:#fff;
+  padding:2px 10px;;
+  @include br(10px);
+  &:before{
+     content:'';
+     @include pos(a);
+     left:45%;
+     width: 10px;
+     height: 10px;
+     @include transform(rotate(45deg));
+     background-color:inherit;
+     top: 100%;
+     margin-top: -6px;
+  }
+
+}
+
 .ant-tree li a:hover{
   background-color: $btnColor !important;
   color:#fff;
@@ -306,4 +331,15 @@ $btnColor:#d8271d;
 .ant-checkbox-checked .ant-checkbox-inner{
   background-color:$btnColor !important;
   border-color:$btnColor !important;
+}
+
+
+  .ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover,.ant-select-selection:hover {
+    background-color: #fff !important;
+    border-color: #bf1616 !important;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1) !important;
+}
+$btnColor:#d8271d;
+.ant-input,.ant-select-selection{
+  border-color:$btnColor ;
 }
