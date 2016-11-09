@@ -77,10 +77,11 @@ export default class ZmitiCompanyApp extends Component {
 
 	componentDidMount() {
 
-		 this.getusersingid = this.getusersigid = this.getQueryString('getusersigid');
-      this.userid =this.getQueryString('userId');
-      this.baseUrl = 'http://api.zmiti.com/v2/';
-      this.companyId = this.getQueryString('companyid');
+		  var {userid,getusersigid} = this.props.params;
+		  this.getusersingid = this.getusersigid = getusersigid;
+      this.userid =userid;
+      this.baseUrl = window.baseUrl;
+
       
 		var params = {
 			  getusersigid:this.getusersingid,

@@ -14,15 +14,17 @@ import 'antd/lib/notification/style/css';
 import Button from 'antd/lib/button';
 import 'antd/lib/button/style/css';
 
-if(!window.parent.getusersingid){
-   /* message.warning('请重新登录');
+import MainUI from '../components/Main.jsx';
+import  createjs from './static/js/createjs.js';
 
-    setTimeout(()=>{
-        ///  window.parent.location.href= '/'
-    },1000)*/
-}
 
-class ZmitiPuzzleApp extends React.Component{
+
+
+
+
+
+
+export default class ZmitiPuzzleApp extends React.Component{
     constructor(args){
         super(...args);
 
@@ -34,6 +36,29 @@ class ZmitiPuzzleApp extends React.Component{
     }
 
     componentDidMount(){
+
+        const key = `open${Date.now()}`;
+        let btnClick = ()=> {
+            notification.close(key);
+            close();
+        }
+        const close = () => {
+            //
+            localStorage['tipInfo'] = true;
+        }
+        const btn = (
+            <Button type="primary" size="small" onClick={btnClick}>
+                不再提示我~
+            </Button>
+        );
+
+        !localStorage['tipInfo'] && notification['info']({
+            message: '小提示',
+            description: '按住空格键不松开,可以拖拽整张图片~',
+            btn,
+            key
+        });
+
         PubSub.subscribe('getMethod',(e,method)=>{
             this.setState({
                 currentMethod:method
@@ -50,11 +75,13 @@ class ZmitiPuzzleApp extends React.Component{
             getusersigid:window.parent.getusersingid,
             userId:window.parent.userId
         }
-        return (
-            <div className="p-main-ui" style={style}>
+        let component = <div className="p-main-ui" style={style}>
                 <ZmitiStage  {...this.props} {...props} ></ZmitiStage>
                 <ZmitiPannel></ZmitiPannel>
-            </div>
+            </div>;
+        return (
+            
+            <MainUI component={component}></MainUI>
         )
     }
 
@@ -65,31 +92,11 @@ ZmitiPuzzleApp.defaultProps = {
     getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071"
 };
 
-ReactDOM.render(<ZmitiPuzzleApp></ZmitiPuzzleApp>,document.getElementById('fly-main'),()=>{
+/*ReactDOM.render(<ZmitiPuzzleApp></ZmitiPuzzleApp>,document.getElementById('fly-main'),()=>{
 
-    const key = `open${Date.now()}`;
-    let btnClick = ()=> {
-        notification.close(key);
-        close();
-    }
-    const close = () => {
-        //
-        localStorage['tipInfo'] = true;
-    }
-    const btn = (
-        <Button type="primary" size="small" onClick={btnClick}>
-            不再提示我~
-        </Button>
-    );
-
-    !localStorage['tipInfo'] && notification['info']({
-        message: '小提示',
-        description: '按住空格键不松开,可以拖拽整张图片~',
-        btn,
-        key
-    });
+    
 });
 
-
+*/
 
 

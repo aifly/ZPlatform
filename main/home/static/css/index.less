@@ -134,6 +134,8 @@ input, textarea {
   border-radius: @val;
 }
 
+
+
 @bgColor:#f1f1f1;
 body {
   font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
@@ -144,11 +146,14 @@ body {
 @baseColor:#99071e;
 #fly-main{
   height:100%;
-
 }
+
+
 
 .home-main{
   height:100%;
+  width: 100%;
+  overflow: auto;
   .displayFlex();
   header.header{
     @headerH:50px;
@@ -164,7 +169,7 @@ body {
     flex-grow:1;
   }
   .fly-home-user,.fly-home-office,.fly-home-service{
-    width:98vw;
+    width:98%;
     margin:20px auto;
     height:300px;
     .displayFlex(row);
@@ -334,7 +339,6 @@ body {
     }
 
     .module-container{
-
       width:96%;
       height:90%;
       margin:3% auto;
@@ -342,49 +346,25 @@ body {
       .position(r);
       .ar{
         .position(a);
-        width:2.3vw;
-        height:2.3vw;
-      }
-      .ar:before{
-        content:"";
-        .position(a);
-        left:10px;
-        top:8px;
-        width:1.3vw;
-        height:1.3vw;
-        .transform(rotate(45deg));
-        border:1px solid #999;
-        border-right:none;
-        border-top:none;
+        width:2vw;
+        height:1vw;
+        line-height: 1vw;
+        top:.7vw;
+        text-align: center;
+        z-index: 10000;
+        left: 10px;
         cursor: pointer;
-        z-index:10;
+        .transform(scale(1.2,3));
+      }
+      
 
-      }
-
-      .ar.active:before{
-        content: '';
-        border-color:#00ada7;
-        border-width:3px;
-        box-sizing: content-box;
-      }
-      .ar.error-active:before{
-        content: '';
-        border-color:red;
-        border-width:3px;
-        box-sizing: content-box;
-      }
 
       .ar-right{
-        right: 10px;
+        right: 0px;
         left:auto;
-        top:0;
       }
-      .ar-right:before{
-        content: "";
-        .transform(rotate(-135deg));
-      }
+      
       .module-item-c{
-
         .transition_transform(.2s);
         width:100%;
         height:220px;
@@ -492,6 +472,7 @@ body {
       }
     }
   }
+
   .fly-home-office{
 
     .office{

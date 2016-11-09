@@ -159,11 +159,13 @@ $btnColor:#d8271d;
         color:#fff;
        }
     }
-    .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-inner{
-      color:$baseColor;
+    .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-inner,.ant-tabs-tab-inner{
+      color:$baseColor !important;
     }
     .ant-tabs-bar{
       border-color:#be5841;
+      background:none !important;
+      height: auto;
     }
     .ant-tabs-nav .ant-tabs-tab-inner:hover{
       color:$btnColor;
@@ -200,6 +202,42 @@ $btnColor:#d8271d;
       }
       .ud-operator-btn-group{
         margin:20px 0;
+      }
+
+      .ant-tree li a:hover{
+        background-color: $btnColor !important;
+        color:#fff;
+      }
+
+       .ant-btn{
+          background:$btnColor !important;
+          border-color:#e2534a !important;
+          color:#fff !important;
+        }
+         .ant-btn-ghost{
+            color:#666!important;
+            background:#fff !important;
+         }
+          .ant-btn-clicked{
+            &:after{
+              border: 0 solid #e2534a !important;
+            }
+      }
+
+      .ant-checkbox-checked .ant-checkbox-inner{
+        background-color:$btnColor !important;
+        border-color:$btnColor !important;
+      }
+
+
+      .ant-select-selection:hover {
+          background-color: #fff !important;
+          border-color: #bf1616 !important;
+          box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1) !important;
+      }
+      $btnColor:#d8271d;
+      .ant-input,.ant-select-selection{
+        border-color:$btnColor ;
       }
 
       .ud-current-department{//当前部门样式
@@ -308,38 +346,3 @@ $btnColor:#d8271d;
 
 }
 
-.ant-tree li a:hover{
-  background-color: $btnColor !important;
-  color:#fff;
-}
-
- .ant-btn{
-    background:$btnColor !important;
-    border-color:#e2534a !important;
-    color:#fff !important;
-  }
-   .ant-btn-ghost{
-      color:#666!important;
-      background:#fff !important;
-   }
-    .ant-btn-clicked{
-      &:after{
-        border: 0 solid #e2534a !important;
-      }
-}
-
-.ant-checkbox-checked .ant-checkbox-inner{
-  background-color:$btnColor !important;
-  border-color:$btnColor !important;
-}
-
-
-  .ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover,.ant-select-selection:hover {
-    background-color: #fff !important;
-    border-color: #bf1616 !important;
-    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1) !important;
-}
-$btnColor:#d8271d;
-.ant-input,.ant-select-selection{
-  border-color:$btnColor ;
-}

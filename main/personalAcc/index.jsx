@@ -9,12 +9,12 @@ import ZmitiProgress from '../components/Progress.jsx';
 import ZmitiScan from '../components/scan.jsx';
 import './static/css/component.min.css';
 import ZmitiCard from '../components/cardgroup.jsx';
- 
+import MainUI from '../components/Main.jsx';
 
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
 
-class ZmitiTab extends React.Component{
+export default class ZmitiPersonalAccApp extends React.Component{
     constructor(args){
         super(...args);
         this.state = {
@@ -38,6 +38,8 @@ class ZmitiTab extends React.Component{
             speedIn:300
         };
         this.loader = new SVGLoader( document.getElementById( currentLoader.id ), { speedIn : currentLoader.speedIn, easingIn : mina.easeinout } );*/
+        var userid =this.props.params.userid;
+        //console.log(this.props.params)
     }
 
     changeDate(){
@@ -60,13 +62,12 @@ class ZmitiTab extends React.Component{
             maxVal:100,
             isShowInfo:false
         }
-        return (
-           <div>
+        let component =  <div>
                <div className="acc-header">
                    <article>
                        <div className="acc-user">
                            <div className="acc-portrait">
-                               <img src="./static/images/user.png" alt=""/>
+                               <img src="./personalAcc/static/images/user.png" alt=""/>
                                <div>
                                    <Button type="primary">更换头像</Button>
                                </div>
@@ -123,10 +124,12 @@ class ZmitiTab extends React.Component{
                </div>
 
                <ZmitiCard></ZmitiCard>
-           </div>
+           </div>;
+        return (
+          <MainUI component={component}></MainUI>
         )
     }
 }
 
 
-ReactDOM.render(<ZmitiTab></ZmitiTab>,document.getElementById('fly-main'));
+/*ReactDOM.render(<ZmitiTab></ZmitiTab>,document.getElementById('fly-main'));*/

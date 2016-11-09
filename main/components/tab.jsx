@@ -13,9 +13,11 @@ export default class ZmitiTab extends React.Component {
 
     componentDidMount() {
         let s = this;
-        this.setState({
-            moduleW: s.refs.moduleC.offsetWidth / 3
-        });
+        setTimeout(()=>{
+            this.setState({
+                moduleW: s.refs.moduleC.offsetWidth / 3
+            });
+        },1)
 
         window.addEventListener('resize', ()=> {
             this.setState({
@@ -100,11 +102,11 @@ export default class ZmitiTab extends React.Component {
         }
         return (
             <div className="module-container" ref="moduleC">
-                <span className="ar-left ar" onClick={this.prev.bind(this)}></span>
+                <span className="ar-left ar" onClick={this.prev.bind(this)}>&lt;</span>
                 <div className="module-item-c" ref="moduleItemC" style={style}>
                     {data}
                 </div>
-                <span className="ar-right ar" onClick={this.next.bind(this)}></span>
+                <span className="ar-right ar" onClick={this.next.bind(this)}>&gt;</span>
                 <div className="other-link">
                     <ul>
                         <li><a href="#">项目洽谈室</a></li>

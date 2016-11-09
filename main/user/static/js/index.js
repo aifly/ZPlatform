@@ -208,14 +208,28 @@
 				return _react2['default'].createElement(_adminComponentsMainJsx2['default'], { component: _react2['default'].createElement(_componentsZmitiUserListJsx2['default'], props) });
 			}
 		}, {
+			key: 'getQueryString',
+			value: function getQueryString(name) {
+				var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+				var r = window.location.search.substr(1).match(reg);
+				if (r != null) return unescape(r[2]);
+				return null;
+			}
+		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				this.getusersingid = this.getusersigid = this.getQueryString('getusersigid');
+				this.userid = this.getQueryString('userId');
+				this.baseUrl = 'http://api.zmiti.com/v2/';
+				this.companyId = this.getQueryString('companyid');
+
 				var params = {
-					getusersigid: window.parent.getusersingid,
-					userid: window.parent.userId,
+					getusersigid: this.getusersingid,
+					userid: this.userid,
 					setusertypesign: 1
 				};
-				var baseUrl = window.parent.baseUrl || 'http://api.zmiti.com/v2';
+
+				var baseUrl = this.props.baseUrl;
 
 				var s = this;
 				_jquery2['default'].ajax({
@@ -230,7 +244,10 @@
 								userList: data.userlist
 							});
 						} else if (data.getret === -3) {
-							_antdLibMessage2['default'].error('您没有访问的权限');
+							_antdLibMessage2['default'].error('您没有访问的权限,2秒后跳转到首页');
+							setTimeout(function () {
+								location.href = '/';
+							}, 2000);
 						}
 					}
 
@@ -251,8 +268,8 @@
 				}
 
 				var params = {
-					getusersigid: this.props.getusersingid,
-					userid: this.props.userid,
+					getusersigid: this.getusersingid,
+					userid: this.userid,
 					setuserid: userid,
 					setisover: isover === 2 ? 0 : 2 //0:正式用户，1 试用用户，2禁用用户，3已删除。
 				};
@@ -264,7 +281,6 @@
 					url: baseUrl + 'user/disable_user/',
 					data: params,
 					success: function success(data) {
-						console.log(data);
 						if (data.getret === 0) {
 							_antdLibMessage2['default'].success('操作成功');
 							s.state.userList.forEach(function (user) {
@@ -285,8 +301,8 @@
 				//转成正式用户
 				var userid = e.target.parentNode.getAttribute('data-userid');
 				var params = {
-					getusersigid: window.parent.getusersingid,
-					userid: window.parent.userId,
+					getusersigid: this.getusersingid,
+					userid: this.userid,
 					setuserid: userid,
 					setisover: 0 //0:正式用户，1 试用用户，2禁用用户，3已删除。
 				};
@@ -326,9 +342,7 @@
 	exports['default'] = ZmitiUserApp;
 
 	ZmitiUserApp.defaultProps = {
-		getusersingid: window.parent.getusersingid,
-		userid: window.parent.userId,
-		baseUrl: window.parent.baseUrl || 'http://api.zmiti.com/v2'
+		baseUrl: window.parent.baseUrl || 'http://api.zmiti.com/v2/'
 	};
 
 	/*ReactDOM.render(<ZmitiUserApp></ZmitiUserApp>,document.getElementById('fly-main'));*/
@@ -21881,7 +21895,7 @@
 
 
 	// module
-	exports.push([module.id, ".user-main-ui {\r\n  width: 100vw;\r\n  height: 100vh;\r\n  display: -webkit-box;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  display: -webkit-flex;\r\n  -ms-flex-flow: horizontal;\r\n      flex-flow: horizontal; }\r\n  .user-main-ui .user-left-pannel {\r\n    width: 15vw;\r\n    height: 100vh;\r\n    background: #EAEDF1; }\r\n    .user-main-ui .user-left-pannel ul {\r\n      margin-top: 20vh; }\r\n      .user-main-ui .user-left-pannel ul li {\r\n        width: 100%;\r\n        height: 30px;\r\n        line-height: 30px;\r\n        cursor: pointer;\r\n        text-align: center; }\r\n        .user-main-ui .user-left-pannel ul li.active {\r\n          -webkit-transition: 0.5s background;\r\n          transition: 0.5s background;\r\n          background: #fff;\r\n          color: #d8271d; }\r\n  .user-main-ui .user-right-pannel {\r\n    width: 85vw; }\r\n    .user-main-ui .user-right-pannel header {\r\n      width: 60%;\r\n      margin: 20px auto; }\r\n      .user-main-ui .user-right-pannel header button {\r\n        margin-left: 10px;\r\n        background: #d8271d;\r\n        border-color: #d8271d; }\r\n    .user-main-ui .user-right-pannel .ant-table tr.ant-table-row-hover, .user-main-ui .user-right-pannel .ant-table tr:hover {\r\n      background: #EAEDF1; }\r\n    .user-main-ui .user-right-pannel .user-list-section {\r\n      width: 80%;\r\n      margin: 20px auto; }\r\n      .user-main-ui .user-right-pannel .user-list-section table td, .user-main-ui .user-right-pannel .user-list-section table th {\r\n        text-align: center; }\r\n      .user-main-ui .user-right-pannel .user-list-section table a {\r\n        color: #06C; }\r\n      .user-main-ui .user-right-pannel .user-list-section .ant-table-pagination .ant-pagination-item-active {\r\n        background-color: #d8271d;\r\n        border-color: #d8271d; }\r\n        .user-main-ui .user-right-pannel .user-list-section .ant-table-pagination .ant-pagination-item-active a {\r\n          color: #fff; }\r\n        .user-main-ui .user-right-pannel .user-list-section .ant-table-pagination .ant-pagination-item-active:hover a {\r\n          color: #fff; }\r\n      .user-main-ui .user-right-pannel .user-list-section .ant-pagination-item:hover {\r\n        border-color: #d8271d; }\r\n        .user-main-ui .user-right-pannel .user-list-section .ant-pagination-item:hover a {\r\n          color: #d8271d; }\r\n      .user-main-ui .user-right-pannel .user-list-section .ant-pagination-prev:hover, .user-main-ui .user-right-pannel .user-list-section .ant-pagination-next:hover {\r\n        border-color: #d8271d; }\r\n        .user-main-ui .user-right-pannel .user-list-section .ant-pagination-prev:hover a, .user-main-ui .user-right-pannel .user-list-section .ant-pagination-next:hover a {\r\n          color: #d8271d; }\r\n\r\n/*# sourceMappingURL=user-list.css.map */", ""]);
+	exports.push([module.id, ".user-main-ui {\r\n  width: 100%;\r\n  height: 100vh;\r\n  display: -webkit-box;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  display: -webkit-flex;\r\n  -ms-flex-flow: horizontal;\r\n      flex-flow: horizontal; }\r\n  .user-main-ui .user-left-pannel {\r\n    width: 15vw;\r\n    height: 100vh;\r\n    background: #EAEDF1; }\r\n    .user-main-ui .user-left-pannel ul {\r\n      margin-top: 20vh; }\r\n      .user-main-ui .user-left-pannel ul li {\r\n        width: 100%;\r\n        height: 30px;\r\n        line-height: 30px;\r\n        cursor: pointer;\r\n        text-align: center; }\r\n        .user-main-ui .user-left-pannel ul li.active {\r\n          -webkit-transition: 0.5s background;\r\n          transition: 0.5s background;\r\n          background: #fff;\r\n          color: #d8271d; }\r\n  .user-main-ui .user-right-pannel {\r\n    width: 85vw; }\r\n    .user-main-ui .user-right-pannel header {\r\n      width: 60%;\r\n      margin: 20px auto; }\r\n      .user-main-ui .user-right-pannel header button {\r\n        margin-left: 10px;\r\n        background: #d8271d;\r\n        border-color: #d8271d; }\r\n    .user-main-ui .user-right-pannel .ant-table tr.ant-table-row-hover, .user-main-ui .user-right-pannel .ant-table tr:hover {\r\n      background: #EAEDF1; }\r\n    .user-main-ui .user-right-pannel .user-list-section {\r\n      width: 80%;\r\n      margin: 20px auto; }\r\n      .user-main-ui .user-right-pannel .user-list-section table td, .user-main-ui .user-right-pannel .user-list-section table th {\r\n        text-align: center; }\r\n      .user-main-ui .user-right-pannel .user-list-section table a {\r\n        color: #06C; }\r\n      .user-main-ui .user-right-pannel .user-list-section .ant-table-pagination .ant-pagination-item-active {\r\n        background-color: #d8271d;\r\n        border-color: #d8271d; }\r\n        .user-main-ui .user-right-pannel .user-list-section .ant-table-pagination .ant-pagination-item-active a {\r\n          color: #fff; }\r\n        .user-main-ui .user-right-pannel .user-list-section .ant-table-pagination .ant-pagination-item-active:hover a {\r\n          color: #fff; }\r\n      .user-main-ui .user-right-pannel .user-list-section .ant-pagination-item:hover {\r\n        border-color: #d8271d; }\r\n        .user-main-ui .user-right-pannel .user-list-section .ant-pagination-item:hover a {\r\n          color: #d8271d; }\r\n      .user-main-ui .user-right-pannel .user-list-section .ant-pagination-prev:hover, .user-main-ui .user-right-pannel .user-list-section .ant-pagination-next:hover {\r\n        border-color: #d8271d; }\r\n        .user-main-ui .user-right-pannel .user-list-section .ant-pagination-prev:hover a, .user-main-ui .user-right-pannel .user-list-section .ant-pagination-next:hover a {\r\n          color: #d8271d; }\r\n\r\n/*# sourceMappingURL=user-list.css.map */", ""]);
 
 	// exports
 
@@ -47841,7 +47855,8 @@
 	            isOpen: true,
 	            current: '3',
 	            currentAcc: 'iLinten@qq.com',
-	            frameSrc: './puzzle'
+	            rightWidth: 0
+
 	        };
 	    }
 
@@ -47858,15 +47873,9 @@
 	        key: 'handleClick',
 	        value: function handleClick(e) {
 
-	            /*   this.setState({
-	                   current: e.key,
-	                   //frameSrc:e.key
-	               });*/
-
 	            // this.context.router.replace('/company');
 
 	            //window.location.hash =  'company';
-
 	        }
 	    }, {
 	        key: 'toggleMenu',
@@ -47874,11 +47883,11 @@
 	            var _this = this;
 
 	            if (this.state.defaultClass === "fly-left-aside") {
-	                this.setState({ defaultClass: "fly-left-aside unfold", isOpen: false });
+	                this.setState({ defaultClass: "fly-left-aside unfold", isOpen: false, rightWidth: document.documentElement.clientWidth - 60 });
 	            } else {
 	                this.setState({ defaultClass: "fly-left-aside" });
 	                setTimeout(function () {
-	                    _this.setState({ isOpen: true });
+	                    _this.setState({ isOpen: true, rightWidth: document.documentElement.clientWidth - 180 });
 	                }, 200);
 	            }
 	        }
@@ -47890,7 +47899,7 @@
 	                { className: 'main' },
 	                _react2['default'].createElement(
 	                    'header',
-	                    { className: 'fly-header', onClick: this.menuClickHandler },
+	                    { className: 'fly-header' },
 	                    _react2['default'].createElement(
 	                        'div',
 	                        { className: 'fly-logo' },
@@ -47920,7 +47929,7 @@
 	                    ),
 	                    _react2['default'].createElement(
 	                        'div',
-	                        { style: { display: this.props.isAdmin ? 'block' : 'none' }, className: 'fly-nav' },
+	                        { className: 'fly-nav' },
 	                        _react2['default'].createElement(
 	                            'a',
 	                            { href: './admin/index.html' },
@@ -47980,9 +47989,9 @@
 	                            { className: 'fly-menu-c' },
 	                            _react2['default'].createElement(
 	                                _antdLibMenu2['default'],
-	                                { onClick: this.handleClick.bind(this),
+	                                {
 	                                    style: { width: 180 },
-	                                    defaultOpenKeys: ['sub1'],
+	                                    defaultOpenKeys: ['sub5'],
 	                                    selectedKeys: [this.state.current],
 	                                    mode: 'inline' },
 	                                _react2['default'].createElement(
@@ -48000,7 +48009,7 @@
 	                                        ) },
 	                                    _react2['default'].createElement(
 	                                        _antdLibMenu2['default'].Item,
-	                                        { key: 'user/' },
+	                                        { key: 'user' },
 	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'user', style: { marginRight: '32px' } }),
 	                                        _react2['default'].createElement(
 	                                            _reactRouter.Link,
@@ -48010,7 +48019,7 @@
 	                                    ),
 	                                    _react2['default'].createElement(
 	                                        _antdLibMenu2['default'].Item,
-	                                        { key: 'company/' },
+	                                        { key: 'company' },
 	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'customerservice', style: { marginRight: '32px' } }),
 	                                        _react2['default'].createElement(
 	                                            _reactRouter.Link,
@@ -48020,7 +48029,51 @@
 	                                    ),
 	                                    _react2['default'].createElement(
 	                                        _antdLibMenu2['default'].Item,
-	                                        { key: 'system/' },
+	                                        { key: 'system' },
+	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'edit', style: { marginRight: '32px' } }),
+	                                        _react2['default'].createElement(
+	                                            _reactRouter.Link,
+	                                            { to: '/system' },
+	                                            '系统账户管理'
+	                                        )
+	                                    )
+	                                ),
+	                                _react2['default'].createElement(
+	                                    SubMenu,
+	                                    { key: 'sub6',
+	                                        title: _react2['default'].createElement(
+	                                            'span',
+	                                            null,
+	                                            _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'setting', style: { marginRight: '22px' } }),
+	                                            _react2['default'].createElement(
+	                                                'span',
+	                                                null,
+	                                                '用户管理111'
+	                                            )
+	                                        ) },
+	                                    _react2['default'].createElement(
+	                                        _antdLibMenu2['default'].Item,
+	                                        { key: 'user1' },
+	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'user', style: { marginRight: '32px' } }),
+	                                        _react2['default'].createElement(
+	                                            _reactRouter.Link,
+	                                            { to: '/user' },
+	                                            '个人账户管理'
+	                                        )
+	                                    ),
+	                                    _react2['default'].createElement(
+	                                        _antdLibMenu2['default'].Item,
+	                                        { key: 'company1' },
+	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'customerservice', style: { marginRight: '32px' } }),
+	                                        _react2['default'].createElement(
+	                                            _reactRouter.Link,
+	                                            { to: '/company' },
+	                                            '公司账户管理'
+	                                        )
+	                                    ),
+	                                    _react2['default'].createElement(
+	                                        _antdLibMenu2['default'].Item,
+	                                        { key: 'system2' },
 	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'edit', style: { marginRight: '32px' } }),
 	                                        _react2['default'].createElement(
 	                                            _reactRouter.Link,
@@ -48034,11 +48087,32 @@
 	                    ),
 	                    _react2['default'].createElement(
 	                        'section',
-	                        { className: 'fly-right-aside' },
-	                        this.props.conponent
+	                        { className: 'fly-right-aside', style: { width: this.state.rightWidth } },
+	                        this.props.component
 	                    )
 	                )
 	            );
+	        }
+	    }, {
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var hash = window.location.hash;
+	            if (hash.indexOf('#/user?') > -1) {
+	                this.setState({
+	                    current: 'user'
+	                });
+	            } else if (hash.indexOf('#/company?') > -1) {
+	                this.setState({
+	                    current: 'company'
+	                });
+	            } else if (hash.indexOf('#/system?') > -1) {
+	                this.setState({
+	                    current: 'system'
+	                });
+	            }
+	            this.setState({
+	                rightWidth: document.documentElement.clientWidth - 180
+	            });
 	        }
 	    }]);
 
@@ -48688,7 +48762,7 @@
 
 
 	// module
-	exports.push([module.id, "body,canvas,dd,div,dl,dt,figure,footer,h1,h2,h3,h4,header,html,li,ol,p,section,ul,video{padding:0;margin:0}a{text-decoration:none}li{list-style:none}body,html{height:100%}img{border:none;vertical-align:top;width:100%;height:auto}input,textarea{outline:0}.transform3d{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}.fly-h-gradient-line{background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(left,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(left,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}body{font-family:'Microsoft Yahei',Tahoma,Helvetica,Arial,sans-serif;font-size:14px;height:100%;overflow:hidden}#fly-main .main{box-sizing:border-box;width:100vw;height:100vh;display:flex;display:-webkit-flex;flex-flow:column}#fly-main .main .fly-header{flex-grow:0;width:100vw;height:50px;display:flex;display:-webkit-flex;flex-flow:row;border:1px solid #ccc;border-left:none;border-right:none;margin-top:1px;box-sizing:content-box}#fly-main .main .fly-header .curAcc{color:#99071e}#fly-main .main .fly-header div.fly-nav{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}#fly-main .main .fly-header div.fly-nav a{-webkit-transform-origin:left;transform-origin:left}#fly-main .main .fly-header div.fly-nav a.active{-webkit-transition:-webkit-transform .8s,background .8s;transition:-webkit-transform .8s,background .8s;-webkit-transition-timing-function:cubic-bezier(0,.98,.68,1.04);transition-timing-function:cubic-bezier(0,.98,.68,1.04);background:#fff;-webkit-transform:rotateY(0);transform:rotateY(0)}#fly-main .main .fly-header div.fly-nav:nth-of-type(2) a{-webkit-transition-delay:400ms;transition-delay:400ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(3) a{-webkit-transition-delay:800ms;transition-delay:800ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(4) a{-webkit-transition-delay:1200ms;transition-delay:1200ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(5) a{-webkit-transition-delay:1600ms;transition-delay:1600ms}#fly-main .main .fly-header div{text-align:center;line-height:50px;flex-grow:1;position:relative}#fly-main .main .fly-header div:nth-of-type(7){flex-grow:5}#fly-main .main .fly-header div a{display:block;color:#000;left:0;top:0;font-size:1vw;width:100%;height:100%;position:relative}#fly-main .main .fly-header div a:before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}#fly-main .main .fly-header div.fly-logo{flex-grow:0;width:180px!important;text-align:center;line-height:50px}#fly-main .main .fly-header div.fly-logo img{height:100%;width:auto}#fly-main .main .fly-content{width:100vw;flex-grow:10;display:flex;display:-webkit-flex;flex-flow:row}#fly-main .main .fly-content .fly-left-aside{position:relative;width:180px;background:#333645;overflow:hidden;-webkit-transition:.2s;transition:.2s}#fly-main .main .fly-content .fly-left-aside .fly-menu-c{-webkit-transition:.2s opacity -.2s;transition:.2s opacity -.2s}#fly-main .main .fly-content .fly-left-aside.unfold{width:60px}#fly-main .main .fly-content .fly-left-aside .ant-menu-item{padding-left:24px!important}#fly-main .main .fly-content .fly-left-aside .fly-toggle-menu{color:#fff;text-align:center;cursor:pointer;height:30px;line-height:30px;font-size:24px;background:#394555}#fly-main .main .fly-content .fly-left-aside .ant-menu{background:#333645}#fly-main .main .fly-content .fly-left-aside .ant-menu li{color:#fff}#fly-main .main .fly-content .fly-left-aside .ant-menu li.ant-menu-submenu-active .ant-menu-submenu-title{background:#99071e!important}#fly-main .main .fly-content .fly-left-aside .ant-menu li.ant-menu-item-active{background:#99071e!important}#fly-main .main .fly-content .fly-left-aside .ant-menu-item-selected{background:#99071e}#fly-main .main .fly-content .fly-right-aside{position:relative;flex-grow:1;overflow:hidden}#fly-main .main .fly-content .fly-right-aside iframe{left:0;top:0;width:100%;z-index:100;overflow:hidden;right:0;position:absolute;height:100%;border:none}#fly-main .main .fly-menu-bottom{position:absolute;bottom:0;left:0;text-align:center;height:40px;line-height:40px;width:100%;color:#fff;-webkit-transition:background .5s;transition:background .5s}#fly-main .main .fly-menu-bottom:hover{background:#99071e}#fly-main .main .icon{cursor:pointer;font-size:22px;width:30px;color:#99071e}#fly-main .main .icon:after,#fly-main .main .icon:before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}#fly-main .main .icon:after{left:0}#fly-main .main .fly-search{font-weight:700;padding:0 10px}#fly-main .main .fly-search div{display:inline-block;padding:0 10px}#fly-main .main .fly-search i{display:inline-block;padding:10px;box-sizing:border-box}#fly-main .main .fly-search input{border-radius:0}#fly-main .main .fly-search:before{opacity:0}.ant-menu-item>a{display:inline;color:#fff}.ant-menu-item:hover a{color:#fff}", ""]);
+	exports.push([module.id, "body,canvas,dd,div,dl,dt,figure,footer,h1,h2,h3,h4,header,html,li,ol,p,section,ul,video{padding:0;margin:0}a{text-decoration:none}li{list-style:none}body,html{height:100%}img{border:none;vertical-align:top;width:100%;height:auto}input,textarea{outline:0}.transform3d{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}.fly-h-gradient-line{background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(left,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(left,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}body{font-family:'Microsoft Yahei',Tahoma,Helvetica,Arial,sans-serif;font-size:14px;height:100%;overflow:hidden}#fly-main .main{box-sizing:border-box;width:100vw;height:100vh;display:flex;display:-webkit-flex;flex-flow:column}#fly-main .main .fly-header{flex-grow:0;width:100vw;height:50px;display:flex;display:-webkit-flex;flex-flow:row;border:1px solid #ccc;border-left:none;border-right:none;margin-top:1px;box-sizing:content-box}#fly-main .main .fly-header .curAcc{color:#99071e}#fly-main .main .fly-header div.fly-nav{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}#fly-main .main .fly-header div.fly-nav a{-webkit-transform-origin:left;transform-origin:left}#fly-main .main .fly-header div.fly-nav a.active{-webkit-transition:-webkit-transform .8s,background .8s;transition:-webkit-transform .8s,background .8s;-webkit-transition-timing-function:cubic-bezier(0,.98,.68,1.04);transition-timing-function:cubic-bezier(0,.98,.68,1.04);background:#fff;-webkit-transform:rotateY(0);transform:rotateY(0)}#fly-main .main .fly-header div.fly-nav:nth-of-type(2) a{-webkit-transition-delay:400ms;transition-delay:400ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(3) a{-webkit-transition-delay:800ms;transition-delay:800ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(4) a{-webkit-transition-delay:1200ms;transition-delay:1200ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(5) a{-webkit-transition-delay:1600ms;transition-delay:1600ms}#fly-main .main .fly-header div{text-align:center;line-height:50px;flex-grow:1;position:relative}#fly-main .main .fly-header div:nth-of-type(7){flex-grow:5}#fly-main .main .fly-header div a{display:block;color:#000;left:0;top:0;font-size:1vw;width:100%;height:100%;position:relative}#fly-main .main .fly-header div a:before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}#fly-main .main .fly-header div.fly-logo{flex-grow:0;width:180px!important;text-align:center;line-height:50px}#fly-main .main .fly-header div.fly-logo img{height:100%;width:auto}#fly-main .main .fly-content{width:100vw;flex-grow:10;display:flex;display:-webkit-flex;flex-flow:row}#fly-main .main .fly-content .fly-left-aside{position:relative;width:180px;background:#333645;overflow:hidden;-webkit-transition:.2s;transition:.2s}#fly-main .main .fly-content .fly-left-aside .fly-menu-c{-webkit-transition:.2s opacity -.2s;transition:.2s opacity -.2s}#fly-main .main .fly-content .fly-left-aside.unfold{width:60px}#fly-main .main .fly-content .fly-left-aside .fly-toggle-menu{color:#fff;text-align:center;cursor:pointer;height:30px;line-height:30px;font-size:24px;background:#394555}#fly-main .main .fly-content .fly-left-aside .ant-menu{background:#333645}#fly-main .main .fly-content .fly-left-aside .ant-menu li{color:#fff}#fly-main .main .fly-content .fly-left-aside .ant-menu li.ant-menu-submenu-active .ant-menu-submenu-title{background:#99071e!important}#fly-main .main .fly-content .fly-left-aside .ant-menu li.ant-menu-item-active{background:#99071e!important}#fly-main .main .fly-content .fly-left-aside .ant-menu-item-selected{background:#99071e}#fly-main .main .fly-content .fly-right-aside{position:relative;overflow:hidden}#fly-main .main .fly-content .fly-right-aside iframe{left:0;top:0;width:100%;z-index:100;overflow:hidden;right:0;position:absolute;height:100%;border:none}#fly-main .main .fly-menu-bottom{position:absolute;bottom:0;left:0;text-align:center;height:40px;line-height:40px;width:100%;color:#fff;-webkit-transition:background .5s;transition:background .5s}#fly-main .main .fly-menu-bottom:hover{background:#99071e}#fly-main .main .icon{cursor:pointer;font-size:22px;width:30px;color:#99071e}#fly-main .main .icon:after,#fly-main .main .icon:before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}#fly-main .main .icon:after{left:0}#fly-main .main .fly-search{font-weight:700;padding:0 10px}#fly-main .main .fly-search div{display:inline-block;padding:0 10px}#fly-main .main .fly-search i{display:inline-block;padding:10px;box-sizing:border-box}#fly-main .main .fly-search input{border-radius:0}#fly-main .main .fly-search:before{opacity:0}.ant-menu-item>a{display:inline;color:#fff}.ant-menu-item:hover a{color:#fff}", ""]);
 
 	// exports
 

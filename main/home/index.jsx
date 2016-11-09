@@ -1,4 +1,4 @@
-import './static/css/index.min.css';
+import './static/css/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {utilMethods,_$,$$} from '../utilMethod.es6';
@@ -21,7 +21,8 @@ import ZmitiTab from '../components/tab.jsx';
 
 import ZmitiProgress from '../components/Progress.jsx';
 import ZmitiProductList from '../components/product-list.jsx';
-class MainUI extends React.Component{
+import MainUI from '../components/Main.jsx';
+export default class ZmitiHomeApp extends React.Component{
     constructor(args){
         super(...args);
         this.state = {
@@ -62,9 +63,7 @@ class MainUI extends React.Component{
             height:248,
             margin:'0 auto'
         }
-        return(
-
-            <div className="main">
+        let component =  <div className="home-main">
                 <header className="header">
                     公告：智媒体新增新的交互工具"富图片"。<a href="#">点此查看</a>
                 </header>
@@ -73,7 +72,7 @@ class MainUI extends React.Component{
                         <figure className="user">
                             <div className="user-info">
                                 <aside className="user-head">
-                                    <div className="head"><img draggable="false" src='./static/images/user.png' alt=""/></div>
+                                    <div className="head"><img draggable="false" src='./home/static/images/user.png' alt=""/></div>
                                 </aside>
                                 <aside className="user-content">
                                     <div><span style={{color:'#f90'}}>早上好！</span><span className="current-user">@{this.state.currentUser}</span></div>
@@ -225,12 +224,14 @@ class MainUI extends React.Component{
                     </div>
                 </article>
             </div>
+        return(
+            <MainUI component={component}></MainUI>
         )
     }
 }
 
 
-ReactDOM.render(<MainUI></MainUI>,_$("#fly-main"));
+/*ReactDOM.render(<ZmitiHomeApp></ZmitiHomeApp>,_$("#fly-main"));*/
 
 /*
 ((document,window)=>{

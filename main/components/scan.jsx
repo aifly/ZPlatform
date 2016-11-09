@@ -25,15 +25,15 @@ export default class ZmitiScan extends React.Component {
         s.setState({
             scanW: width / 5,
             data: [
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"}
+                {src: "./personalAcc/static/images/user.png"},
+                {src: "./personalAcc/static/images/user.png"},
+                {src: "./personalAcc/static/images/user.png"},
+                {src: "./personalAcc/static/images/user.png"},
+                {src: "./personalAcc/static/images/user.png"},
+                {src: "./personalAcc/static/images/user.png"},
+                {src: "./personalAcc/static/images/user.png"},
+                {src: "./personalAcc/static/images/user.png"},
+                {src: "./personalAcc/static/images/user.png"}
             ]
         })
 
@@ -67,7 +67,7 @@ export default class ZmitiScan extends React.Component {
                 backgroundSize: 'contain'
             };
             return (
-                <li style={style}><img hidden draggable="false" src={item.src} alt=""/></li>
+                <li style={style} key={i}><img hidden draggable="false" src={item.src} alt=""/></li>
             )
         });
         var cx = addons.classSet;

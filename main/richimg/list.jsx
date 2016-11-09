@@ -1,6 +1,5 @@
 import React from 'react';
-import './static/css/list.min.css';
-import ReactDOM from 'react-dom';
+import './static/css/list.css';
 import Input from 'antd/lib/input';
 import 'antd/lib/input/style/css';
 import Button from 'antd/lib/button';
@@ -17,6 +16,7 @@ import Spin from 'antd/lib/spin'
 import 'antd/lib/spin/style/css';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
+import MainUI from '../components/Main.jsx';
 import $ from 'jquery';
 
 
@@ -51,7 +51,10 @@ class ZmitiMainContent extends React.Component {
         super(...args);
         this.state ={
             richimg:[],
-            loading:true
+            loading:true,
+            userid:'',
+            getusersigid:''
+          
         }
     }
 
@@ -60,6 +63,19 @@ class ZmitiMainContent extends React.Component {
 
 
         let s = this;
+        
+        try{
+            var params = JSON.parse(document.cookie);
+            this.setState({
+                userid:params.userid,
+                getusersigid:params.getusersigid
+            });
+        }catch(e){
+            message.error('登录超时,请重新登录');
+            window.location.href = '/';
+        }
+        
+        
 
 
 
@@ -160,7 +176,7 @@ class ZmitiMainContent extends React.Component {
 
 
         let richImg = this.state.richimg.map((item, i)=> {
-            return <ZmitiRichImg key={i} index={i} {...this.state.richimg[i]} {...this.props}></ZmitiRichImg>
+            return <ZmitiRichImg key={i} index={i} {...this.state.richimg[i]} {...this.props} {...this.state}></ZmitiRichImg>
         });
         /*
         *
@@ -207,7 +223,7 @@ ZmitiMainContent.defaultProps = {
     deleteRichImgUrl:'works/del_works'
 };
 
-class MainUI extends React.Component {
+export default class ZmitiRichImgListApp extends React.Component {
     constructor(args) {
         super(...args);
     }
@@ -269,23 +285,25 @@ class MainUI extends React.Component {
             }
         };
 
-        return (
-            <div className="zmiti-main-ui">
+        let component = <div className="zmiti-main-ui">
                 <ZmitiHeader></ZmitiHeader>
                 <ZmitiMainContent {...props}></ZmitiMainContent>
                 <ZmitiUploadDialog  id="image" {...props}></ZmitiUploadDialog>
-            </div>
+            </div>;
+
+        return (
+            <MainUI component={component}></MainUI>
         )
     }
 }
-MainUI.defaultProps = {
+/*MainUI.defaultProps = {
     baseUrl: 'http://webapi.zmiti.com/v1/',
     getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071"
-}
+}*/
 let props ={
-    getusersigid: window.parent.userId
+    getusersigid: window.userId
 }
-ReactDOM.render(<MainUI {...props}></MainUI>, document.getElementById('fly-main'));
+/*ReactDOM.render(<MainUI {...props}></MainUI>, document.getElementById('fly-main'));*/
 
 
 

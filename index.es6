@@ -839,7 +839,7 @@ window.addEventListener('load', ()=> {
                         if (d.getret === 0) {
                             data.loginMask.removeClass('show');
 
-                            document.cookie = d.getusersigid+"|"+d.userid;
+                            
 
                            /*   var domain = './main/';
 
@@ -855,23 +855,27 @@ window.addEventListener('load', ()=> {
                             document.body.appendChild(a);
 
                            // a.href = 'http://localhost:3000/index.html';
-                           var url = 'http://localhost:3000/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
-                            if(companyid){
-                                url+='&companyid='+companyid;
+                           var url =window.mainUrl+'#';
+
+                            var params = {
+                                getusersigid:d.getusersigid,
+                                userid:d.userid,
+                                companyid:d.companyid,
+                                isover:d.isover
                             }
-                            url+='&isover='+d.isover;
+                         
+                            var p = JSON.stringify(params);
+                            document.cookie = p;
+                            
+                            url+='/'+d.userid+'/'+d.getusersigid;
+
+                           // alert(url)
                             a.href =url;// './main/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
                             a.style.position = 'fixed';
                             a.style.zIndex = -1;
                             a.style.opacity = 0;
                             a.click();
-
-                            let params = {
-                                page:1,
-                                pagesize:20,
-                                userid:'8e5e6ee6-5448-4405-8a59-4d61be2bf574',
-                                getusersigid:d.getusersigid
-                            }
+ 
 
                             //console.log(params);
 /*

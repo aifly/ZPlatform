@@ -31,6 +31,7 @@ import Icon from 'antd/lib/icon';
 import 'antd/lib/icon/style/css';
 const FormItem = Form.Item;
 const Option = Select.Option;
+import MainUI from '../components/Main.jsx';
 
 export default class  ZmitiUserDepartmentApp extends Component {
 	constructor(props) {
@@ -108,9 +109,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
       wrapperCol: { span: 14 },
     };
 
-
-		return (
-			<section className='ud-main-ui'>
+    let component = 	<section className='ud-main-ui'>
 				<aside className='ud-left-side'>
 					<Tabs defaultActiveKey="1">
 					    <TabPane tab="组织架构" key="1">
@@ -176,7 +175,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
 		         <Input ref='newDepartment' placeholder='请输入部门名称' onChange={()=>{}}/>
         	</Modal>
 
-        	<Modal title='新增成员' visible={true} >
+        	<Modal title='新增成员' visible={false} >
         		<Form horizontal >
         				 <FormItem
 					          {...formItemLayout}
@@ -213,12 +212,16 @@ export default class  ZmitiUserDepartmentApp extends Component {
         	</Modal>
 					
 				</aside>
-			</section>
+			</section>;
+
+
+		return (
+			<MainUI component={component}></MainUI>
 		);
 	}
 	rowClick(e){
-
-			location.href= '../personalAcc/index.html?userId='+ e.key;
+			console.log(e)
+			//location.hash= '/personalAcc?userId='+ e.key;
 	}
 	componentDidMount() {
 
@@ -236,7 +239,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
 			},
 			success(data){
 				data = JSON.parse(data);
-				console.log(data.treeData)
+				console.log(data.treeData[0])
 				s.parentId =data.treeData[0].key;
 				s.setState({
 					treeData:data.treeData,
@@ -292,7 +295,6 @@ export default class  ZmitiUserDepartmentApp extends Component {
 		});
 	}
 
-
 	updateCompanyName(){
 		this.setState({
 			updateCompanyDialogVisible:false
@@ -342,12 +344,9 @@ ZmitiUserDepartmentApp.defaultProps = {
 			  dataIndex: 'department',
 			  key: 'department',
 			}
-  ],
-	getusersingid:window.parent.getusersingid,
-  userid:window.parent.userId,
-  baseUrl : window.parent.baseUrl || 'http://api.zmiti.com/v2',
-  companyId : window.parent.companyId
+  ]
+  
 }
 
 
-ReactDOM.render(<ZmitiUserDepartmentApp></ZmitiUserDepartmentApp>,document.getElementById('fly-main'));
+/*ReactDOM.render(<ZmitiUserDepartmentApp></ZmitiUserDepartmentApp>,document.getElementById('fly-main'));*/

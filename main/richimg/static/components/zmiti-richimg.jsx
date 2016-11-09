@@ -10,6 +10,7 @@ const confirm = Modal.confirm;
 import $ from 'jquery';
 import Tag from 'antd/lib/tag';
 import 'antd/lib/tag/style/css';
+import {Link} from 'react-router';
 
 
 export default class ZmitiRichImg extends React.Component {
@@ -73,12 +74,19 @@ export default class ZmitiRichImg extends React.Component {
         let richimg = {
             projectId: this.props.worksid,
             imgSrc: this.props.imgurl,
-            jsonSrc: this.props.datajsonpath
+            jsonSrc: this.props.datajsonpath,
+            userid:this.props.userid,
+            getusersigid:this.props.getusersigid
         }
+
+
+
+
+        let p = richimg.userid+'/'+richimg.getusersigid+'/'+richimg.projectId+'/'+richimg.imgSrc+'/'+ richimg.jsonSrc;
 
         return (
             <div className="zmiti-richimg-C">
-                <a href={'./index.html?richimg='+encodeURI(JSON.stringify(richimg))} >
+                <Link to={'/richimg#/'+ p} >
                     <img src={this.props.worksico} alt="" draggable="false"/>
                     <div className="zmiti-name">{this.props.worksname || '新建作品'}</div>
                     <div className="zmiti-label">
@@ -97,7 +105,7 @@ export default class ZmitiRichImg extends React.Component {
                             </ul>
                         </aside>
                     </div>
-                </a>
+                </Link>
             </div>
         )
     }

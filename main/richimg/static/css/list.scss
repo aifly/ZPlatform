@@ -150,7 +150,7 @@ body {
 $baseColor:#a30c15;
 .zmiti-header{
 
-  width:100vw;
+  width:100%;
   height:10vh;
   flex-grow: 1;
   background:#ecf0f1;
@@ -181,7 +181,7 @@ $baseColor:#a30c15;
   }
 }
 .zmiti-main-content{
-  width:100vw;
+  width:100% !important;;
 
   .zmiti-tab-C{
     width:90%;
@@ -189,11 +189,13 @@ $baseColor:#a30c15;
     .ant-tabs-ink-bar{
       background-color:#a30b17;
     }
-    .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-inner{
+    .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-inner,.ant-tabs-tab-inner{
       color:$baseColor;
     }
     .ant-tabs-bar{
       border-color:#be5841;
+      height: auto;
+      background:none;
     }
     .ant-tabs-nav .ant-tabs-tab-inner:hover{
       color:#d8271d;

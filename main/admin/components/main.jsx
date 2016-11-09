@@ -19,7 +19,9 @@ export default class MainUI extends Component {
       isOpen: true,
       current: '3',
       currentAcc:'iLinten@qq.com',
-      rightWidth:0
+      rightWidth:0,
+      userid:'',
+      getusersigid:''
 
 	  };
 	}
@@ -53,13 +55,14 @@ export default class MainUI extends Component {
       }
   }
 	render() {
+    let params = this.state.userid+'/'+this.state.getusersigid;
 		return (
 			 <section className="main">
                 <header className="fly-header">
                     <div className="fly-logo"><a href="/"><img src="../static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    <div  className="fly-nav"><a href="./admin/index.html">系统管理</a></div>
+                    <div  className="fly-nav"><a href={"./#/"+params}>系统管理</a></div>
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
                     <div></div>
@@ -88,9 +91,9 @@ export default class MainUI extends Component {
                                   mode="inline">
                                 <SubMenu key="sub5"
                                 title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>用户管理</span></span>}>
-                                    <Menu.Item key="user"><Icon type="user" style={{marginRight:'32px'}}/><Link to="/user">个人账户管理</Link></Menu.Item>
-                                    <Menu.Item key="company"><Icon type="customerservice" style={{marginRight:'32px'}}/><Link to="/company">公司账户管理</Link></Menu.Item>
-                                    <Menu.Item key="system"><Icon type="edit" style={{marginRight:'32px'}}/><Link to="/system">系统账户管理</Link></Menu.Item>
+                                    <Menu.Item key="user"><Icon type="user" style={{marginRight:'32px'}}/><Link to={"/user/"+params}>个人账户管理</Link></Menu.Item>
+                                    <Menu.Item key="company"><Icon type="customerservice" style={{marginRight:'32px'}}/><Link to={"/company/"+params}>公司账户管理</Link></Menu.Item>
+                                    <Menu.Item key="system"><Icon type="edit" style={{marginRight:'32px'}}/><Link to={"/system/"+params}>系统账户管理</Link></Menu.Item>
                                 </SubMenu>
                             </Menu>
                         </div>
@@ -103,19 +106,28 @@ export default class MainUI extends Component {
 		);
 	}
 	componentDidMount() {
+        var params = JSON.parse(document.cookie);
+
+        
+        this.setState({
+            userid:params.userid,
+            isover:params.isover,
+            getusersigid:params.getusersigid
+        })
+
 		  var hash = window.location.hash;
-    if(hash.indexOf('#/user?')>-1){
+    if(hash.indexOf('#/user')>-1){
 		 this.setState({
           current: 'user',
       });
 		 
     }
-    else if(hash.indexOf('#/company?')>-1){
+    else if(hash.indexOf('#/company')>-1){
     	 this.setState({
           current: 'company',
       });
     }
-    else if(hash.indexOf('#/system?')>-1){
+    else if(hash.indexOf('#/system')>-1){
 		 			this.setState({
 		          current: 'system',
 		      });

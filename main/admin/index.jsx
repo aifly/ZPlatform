@@ -20,62 +20,19 @@ import ZmitiUserApp from '../user/index.jsx';
 import ZmitiCompanyApp from '../company/index.jsx';
 import ZmitiSystemApp from '../system/index.jsx';
 
-const SubMenu = Menu.SubMenu;
 class App extends React.Component{
     constructor(args) {
       super(...args);
-
-      this.menuClickHandler=this.menuClickHandler.bind(this);
-      this.state = {
-          defaultClass: "fly-left-aside",
-          isOpen: true,
-          current: '3',
-          currentAcc:'iLinten@qq.com',
-          frameSrc: './puzzle',
-         
-      }
   }
 
-  menuClickHandler(e){
-     /* e.preventDefault();
-        this.setState({
-          frameSrc:e.target.href
-      });
-*/
-  };
-
-  handleClick(e) {
-
-   /*   this.setState({
-          current: e.key,
-          //frameSrc:e.key
-      });*/
-
-      // this.context.router.replace('/company');
-
-      //window.location.hash =  'company';
-
-  }
-
-  toggleMenu() {
-
-      if (this.state.defaultClass === "fly-left-aside") {
-          this.setState({defaultClass: "fly-left-aside unfold", isOpen: false});
-
-      } else {
-          this.setState({defaultClass: "fly-left-aside"});
-          setTimeout(()=> {
-              this.setState({isOpen: true});
-          }, 200);
-      }
-  }
+ 
 	render(){
         return (
              <Router history={hashHistory} >
-					    <Route path="/" component={ZmitiUserApp}/>
-					    <Route path="/user" component={ZmitiUserApp}/>
-					    <Route path="/company" component={ZmitiCompanyApp}/>
-					    <Route path="/system" component={ZmitiSystemApp}/>
+					    <Route path="/:userid/:getusersigid" component={ZmitiUserApp}/>
+					    <Route path="/user/:userid/:getusersigid" component={ZmitiUserApp}/>
+					    <Route path="/company/:userid/:getusersigid" component={ZmitiCompanyApp}/>
+					    <Route path="/system/:userid/:getusersigid" component={ZmitiSystemApp}/>
 					  </Router>
         )
 	}

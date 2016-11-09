@@ -1,0 +1,44 @@
+.ant-tabs-ink-bar {
+  background-color: #99071e; }
+
+.ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-inner {
+  color: #99071e; }
+
+.ant-tabs-nav .ant-tabs-tab-inner:hover {
+  color: #bf1616; }
+
+.ant-btn-primary {
+  background-color: #99071e;
+  border-color: #99071e; }
+
+.ant-btn:hover, .ant-btn:focus {
+  color: #bf1616;
+  background-color: white;
+  border-color: #bf1616; }
+
+.ant-btn-primary:hover, .ant-btn-primary:focus {
+  color: #ffffff;
+  background-color: #bf1616;
+  border-color: #bf1616; }
+
+.ant-modal-wrap {
+  background: rgba(0, 0, 0, 0.5); }
+
+.ant-menu {
+  position: absolute; }
+
+.ant-input:focus {
+  border-color: #99071e;
+  outline: 0;
+  box-shadow: 0 0 0 2px rgba(153, 74, 71, 0.2); }
+
+.ant-input:hover {
+  border-color: #99071e; }
+
+.zmiti-asset-menu {
+  display: none; }
+
+.ant-tag {
+  cursor: default; }
+
+/*# sourceMappingURL=theme.css.map */

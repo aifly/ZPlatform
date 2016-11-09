@@ -111,8 +111,6 @@
 
 	var _systemIndexJsx2 = _interopRequireDefault(_systemIndexJsx);
 
-	var SubMenu = _antdLibMenu2['default'].SubMenu;
-
 	var App = (function (_React$Component) {
 	  _inherits(App, _React$Component);
 
@@ -120,65 +118,18 @@
 	    _classCallCheck(this, App);
 
 	    _get(Object.getPrototypeOf(App.prototype), 'constructor', this).apply(this, args);
-
-	    this.menuClickHandler = this.menuClickHandler.bind(this);
-	    this.state = {
-	      defaultClass: "fly-left-aside",
-	      isOpen: true,
-	      current: '3',
-	      currentAcc: 'iLinten@qq.com',
-	      frameSrc: './puzzle'
-
-	    };
 	  }
 
 	  _createClass(App, [{
-	    key: 'menuClickHandler',
-	    value: function menuClickHandler(e) {
-	      /* e.preventDefault();
-	         this.setState({
-	           frameSrc:e.target.href
-	       });
-	      */
-	    }
-	  }, {
-	    key: 'handleClick',
-	    value: function handleClick(e) {
-
-	      /*   this.setState({
-	             current: e.key,
-	             //frameSrc:e.key
-	         });*/
-
-	      // this.context.router.replace('/company');
-
-	      //window.location.hash =  'company';
-
-	    }
-	  }, {
-	    key: 'toggleMenu',
-	    value: function toggleMenu() {
-	      var _this = this;
-
-	      if (this.state.defaultClass === "fly-left-aside") {
-	        this.setState({ defaultClass: "fly-left-aside unfold", isOpen: false });
-	      } else {
-	        this.setState({ defaultClass: "fly-left-aside" });
-	        setTimeout(function () {
-	          _this.setState({ isOpen: true });
-	        }, 200);
-	      }
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
 	        _reactRouter.Router,
 	        { history: _reactRouter.hashHistory },
-	        _react2['default'].createElement(_reactRouter.Route, { path: '/', component: _userIndexJsx2['default'] }),
-	        _react2['default'].createElement(_reactRouter.Route, { path: '/user', component: _userIndexJsx2['default'] }),
-	        _react2['default'].createElement(_reactRouter.Route, { path: '/company', component: _companyIndexJsx2['default'] }),
-	        _react2['default'].createElement(_reactRouter.Route, { path: '/system', component: _systemIndexJsx2['default'] })
+	        _react2['default'].createElement(_reactRouter.Route, { path: '/:userid/:getusersigid', component: _userIndexJsx2['default'] }),
+	        _react2['default'].createElement(_reactRouter.Route, { path: '/user/:userid/:getusersigid', component: _userIndexJsx2['default'] }),
+	        _react2['default'].createElement(_reactRouter.Route, { path: '/company/:userid/:getusersigid', component: _companyIndexJsx2['default'] }),
+	        _react2['default'].createElement(_reactRouter.Route, { path: '/system/:userid/:getusersigid', component: _systemIndexJsx2['default'] })
 	      );
 	    }
 	  }, {
@@ -27237,7 +27188,7 @@
 
 
 	// module
-	exports.push([module.id, "body,canvas,dd,div,dl,dt,figure,footer,h1,h2,h3,h4,header,html,li,ol,p,section,ul,video{padding:0;margin:0}a{text-decoration:none}li{list-style:none}body,html{height:100%}img{border:none;vertical-align:top;width:100%;height:auto}input,textarea{outline:0}.transform3d{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}.fly-h-gradient-line{background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(left,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(left,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}body{font-family:'Microsoft Yahei',Tahoma,Helvetica,Arial,sans-serif;font-size:14px;height:100%;overflow:hidden}#fly-main .main{box-sizing:border-box;width:100vw;height:100vh;display:flex;display:-webkit-flex;flex-flow:column}#fly-main .main .fly-header{flex-grow:0;width:100vw;height:50px;display:flex;display:-webkit-flex;flex-flow:row;border:1px solid #ccc;border-left:none;border-right:none;margin-top:1px;box-sizing:content-box}#fly-main .main .fly-header .curAcc{color:#99071e}#fly-main .main .fly-header div.fly-nav{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}#fly-main .main .fly-header div.fly-nav a{-webkit-transform-origin:left;transform-origin:left}#fly-main .main .fly-header div.fly-nav a.active{-webkit-transition:-webkit-transform .8s,background .8s;transition:-webkit-transform .8s,background .8s;-webkit-transition-timing-function:cubic-bezier(0,.98,.68,1.04);transition-timing-function:cubic-bezier(0,.98,.68,1.04);background:#fff;-webkit-transform:rotateY(0);transform:rotateY(0)}#fly-main .main .fly-header div.fly-nav:nth-of-type(2) a{-webkit-transition-delay:400ms;transition-delay:400ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(3) a{-webkit-transition-delay:800ms;transition-delay:800ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(4) a{-webkit-transition-delay:1200ms;transition-delay:1200ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(5) a{-webkit-transition-delay:1600ms;transition-delay:1600ms}#fly-main .main .fly-header div{text-align:center;line-height:50px;flex-grow:1;position:relative}#fly-main .main .fly-header div:nth-of-type(7){flex-grow:5}#fly-main .main .fly-header div a{display:block;color:#000;left:0;top:0;font-size:1vw;width:100%;height:100%;position:relative}#fly-main .main .fly-header div a:before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}#fly-main .main .fly-header div.fly-logo{flex-grow:0;width:180px!important;text-align:center;line-height:50px}#fly-main .main .fly-header div.fly-logo img{height:100%;width:auto}#fly-main .main .fly-content{width:100vw;flex-grow:10;display:flex;display:-webkit-flex;flex-flow:row}#fly-main .main .fly-content .fly-left-aside{position:relative;width:180px;background:#333645;overflow:hidden;-webkit-transition:.2s;transition:.2s}#fly-main .main .fly-content .fly-left-aside .fly-menu-c{-webkit-transition:.2s opacity -.2s;transition:.2s opacity -.2s}#fly-main .main .fly-content .fly-left-aside.unfold{width:60px}#fly-main .main .fly-content .fly-left-aside .ant-menu-item{padding-left:24px!important}#fly-main .main .fly-content .fly-left-aside .fly-toggle-menu{color:#fff;text-align:center;cursor:pointer;height:30px;line-height:30px;font-size:24px;background:#394555}#fly-main .main .fly-content .fly-left-aside .ant-menu{background:#333645}#fly-main .main .fly-content .fly-left-aside .ant-menu li{color:#fff}#fly-main .main .fly-content .fly-left-aside .ant-menu li.ant-menu-submenu-active .ant-menu-submenu-title{background:#99071e!important}#fly-main .main .fly-content .fly-left-aside .ant-menu li.ant-menu-item-active{background:#99071e!important}#fly-main .main .fly-content .fly-left-aside .ant-menu-item-selected{background:#99071e}#fly-main .main .fly-content .fly-right-aside{position:relative;overflow:hidden}#fly-main .main .fly-content .fly-right-aside iframe{left:0;top:0;width:100%;z-index:100;overflow:hidden;right:0;position:absolute;height:100%;border:none}#fly-main .main .fly-menu-bottom{position:absolute;bottom:0;left:0;text-align:center;height:40px;line-height:40px;width:100%;color:#fff;-webkit-transition:background .5s;transition:background .5s}#fly-main .main .fly-menu-bottom:hover{background:#99071e}#fly-main .main .icon{cursor:pointer;font-size:22px;width:30px;color:#99071e}#fly-main .main .icon:after,#fly-main .main .icon:before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}#fly-main .main .icon:after{left:0}#fly-main .main .fly-search{font-weight:700;padding:0 10px}#fly-main .main .fly-search div{display:inline-block;padding:0 10px}#fly-main .main .fly-search i{display:inline-block;padding:10px;box-sizing:border-box}#fly-main .main .fly-search input{border-radius:0}#fly-main .main .fly-search:before{opacity:0}.ant-menu-item>a{display:inline;color:#fff}.ant-menu-item:hover a{color:#fff}", ""]);
+	exports.push([module.id, "body,canvas,dd,div,dl,dt,figure,footer,h1,h2,h3,h4,header,html,li,ol,p,section,ul,video{padding:0;margin:0}a{text-decoration:none}li{list-style:none}body,html{height:100%}img{border:none;vertical-align:top;width:100%;height:auto}input,textarea{outline:0}.transform3d{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}.fly-h-gradient-line{background:-webkit-gradient(linear,left top,right top,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(left,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(left,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}body{font-family:'Microsoft Yahei',Tahoma,Helvetica,Arial,sans-serif;font-size:14px;height:100%;overflow:hidden}#fly-main .main{box-sizing:border-box;width:100vw;height:100vh;display:flex;display:-webkit-flex;flex-flow:column}#fly-main .main .fly-header{flex-grow:0;width:100vw;height:50px;display:flex;display:-webkit-flex;flex-flow:row;border:1px solid #ccc;border-left:none;border-right:none;margin-top:1px;box-sizing:content-box}#fly-main .main .fly-header .curAcc{color:#99071e}#fly-main .main .fly-header div.fly-nav{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px}#fly-main .main .fly-header div.fly-nav a{-webkit-transform-origin:left;transform-origin:left}#fly-main .main .fly-header div.fly-nav a.active{-webkit-transition:-webkit-transform .8s,background .8s;transition:-webkit-transform .8s,background .8s;-webkit-transition-timing-function:cubic-bezier(0,.98,.68,1.04);transition-timing-function:cubic-bezier(0,.98,.68,1.04);background:#fff;-webkit-transform:rotateY(0);transform:rotateY(0)}#fly-main .main .fly-header div.fly-nav:nth-of-type(2) a{-webkit-transition-delay:400ms;transition-delay:400ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(3) a{-webkit-transition-delay:800ms;transition-delay:800ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(4) a{-webkit-transition-delay:1200ms;transition-delay:1200ms}#fly-main .main .fly-header div.fly-nav:nth-of-type(5) a{-webkit-transition-delay:1600ms;transition-delay:1600ms}#fly-main .main .fly-header div{text-align:center;line-height:50px;flex-grow:1;position:relative}#fly-main .main .fly-header div:nth-of-type(7){flex-grow:5}#fly-main .main .fly-header div a{display:block;color:#000;left:0;top:0;font-size:1vw;width:100%;height:100%;position:relative}#fly-main .main .fly-header div a:before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}#fly-main .main .fly-header div.fly-logo{flex-grow:0;width:180px!important;text-align:center;line-height:50px}#fly-main .main .fly-header div.fly-logo img{height:100%;width:auto}#fly-main .main .fly-content{width:100vw;flex-grow:10;display:flex;display:-webkit-flex;flex-flow:row}#fly-main .main .fly-content .fly-left-aside{position:relative;width:180px;background:#333645;overflow:hidden;-webkit-transition:.2s;transition:.2s}#fly-main .main .fly-content .fly-left-aside .fly-menu-c{-webkit-transition:.2s opacity -.2s;transition:.2s opacity -.2s}#fly-main .main .fly-content .fly-left-aside.unfold{width:60px}#fly-main .main .fly-content .fly-left-aside .ant-menu-item{padding-left:24px!important}#fly-main .main .fly-content .fly-left-aside .fly-toggle-menu{color:#fff;text-align:center;cursor:pointer;height:30px;line-height:30px;font-size:24px;background:#394555}#fly-main .main .fly-content .fly-left-aside .ant-menu{background:#333645;position:relative}#fly-main .main .fly-content .fly-left-aside .ant-menu li{color:#fff}#fly-main .main .fly-content .fly-left-aside .ant-menu li.ant-menu-submenu-active .ant-menu-submenu-title{background:#99071e!important}#fly-main .main .fly-content .fly-left-aside .ant-menu li.ant-menu-item-active{background:#99071e!important}#fly-main .main .fly-content .fly-left-aside .ant-menu-item-selected{background:#99071e}#fly-main .main .fly-content .fly-right-aside{position:relative;overflow:hidden}#fly-main .main .fly-content .fly-right-aside iframe{left:0;top:0;width:100%;z-index:100;overflow:hidden;right:0;position:absolute;height:100%;border:none}#fly-main .main .fly-menu-bottom{position:absolute;bottom:0;left:0;text-align:center;height:40px;line-height:40px;width:100%;color:#fff;-webkit-transition:background .5s;transition:background .5s}#fly-main .main .fly-menu-bottom:hover{background:#99071e}#fly-main .main .icon{cursor:pointer;font-size:22px;width:30px;color:#99071e}#fly-main .main .icon:after,#fly-main .main .icon:before{content:'';position:absolute;right:0;top:0;width:1px;height:100%;background:-webkit-gradient(linear,left top,left bottom,from(rgba(204,204,204,.2)),color-stop(.5,#ccc),to(rgba(204,204,204,.2)));background:-moz-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2));background:-ms-linear-gradient(top,rgba(204,204,204,.2),#ccc 50%,rgba(204,204,204,.2))}#fly-main .main .icon:after{left:0}#fly-main .main .fly-search{font-weight:700;padding:0 10px}#fly-main .main .fly-search div{display:inline-block;padding:0 10px}#fly-main .main .fly-search i{display:inline-block;padding:10px;box-sizing:border-box}#fly-main .main .fly-search input{border-radius:0}#fly-main .main .fly-search:before{opacity:0}.ant-menu-item>a{display:inline!important;color:#fff!important}.ant-menu-item:hover a{color:#fff}", ""]);
 
 	// exports
 
@@ -33016,7 +32967,9 @@
 	            isOpen: true,
 	            current: '3',
 	            currentAcc: 'iLinten@qq.com',
-	            rightWidth: 0
+	            rightWidth: 0,
+	            userid: '',
+	            getusersigid: ''
 
 	        };
 	    }
@@ -33055,6 +33008,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+	            var params = this.state.userid + '/' + this.state.getusersigid;
 	            return _react2['default'].createElement(
 	                'section',
 	                { className: 'main' },
@@ -33093,7 +33047,7 @@
 	                        { className: 'fly-nav' },
 	                        _react2['default'].createElement(
 	                            'a',
-	                            { href: './admin/index.html' },
+	                            { href: "./#/" + params },
 	                            '系统管理'
 	                        )
 	                    ),
@@ -33174,7 +33128,7 @@
 	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'user', style: { marginRight: '32px' } }),
 	                                        _react2['default'].createElement(
 	                                            _reactRouter.Link,
-	                                            { to: '/user' },
+	                                            { to: "/user/" + params },
 	                                            '个人账户管理'
 	                                        )
 	                                    ),
@@ -33184,7 +33138,7 @@
 	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'customerservice', style: { marginRight: '32px' } }),
 	                                        _react2['default'].createElement(
 	                                            _reactRouter.Link,
-	                                            { to: '/company' },
+	                                            { to: "/company/" + params },
 	                                            '公司账户管理'
 	                                        )
 	                                    ),
@@ -33194,7 +33148,7 @@
 	                                        _react2['default'].createElement(_antdLibIconIndex2['default'], { type: 'edit', style: { marginRight: '32px' } }),
 	                                        _react2['default'].createElement(
 	                                            _reactRouter.Link,
-	                                            { to: '/system' },
+	                                            { to: "/system/" + params },
 	                                            '系统账户管理'
 	                                        )
 	                                    )
@@ -33213,16 +33167,24 @@
 	    }, {
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
+	            var params = JSON.parse(document.cookie);
+
+	            this.setState({
+	                userid: params.userid,
+	                isover: params.isover,
+	                getusersigid: params.getusersigid
+	            });
+
 	            var hash = window.location.hash;
-	            if (hash.indexOf('#/user?') > -1) {
+	            if (hash.indexOf('#/user') > -1) {
 	                this.setState({
 	                    current: 'user'
 	                });
-	            } else if (hash.indexOf('#/company?') > -1) {
+	            } else if (hash.indexOf('#/company') > -1) {
 	                this.setState({
 	                    current: 'company'
 	                });
-	            } else if (hash.indexOf('#/system?') > -1) {
+	            } else if (hash.indexOf('#/system') > -1) {
 	                this.setState({
 	                    current: 'system'
 	                });
@@ -33417,10 +33379,13 @@
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				this.getusersingid = this.getusersigid = this.getQueryString('getusersigid');
-				this.userid = this.getQueryString('userId');
-				this.baseUrl = 'http://api.zmiti.com/v2/';
-				this.companyId = this.getQueryString('companyid');
+				var _props$params = this.props.params;
+				var userid = _props$params.userid;
+				var getusersigid = _props$params.getusersigid;
+
+				this.getusersingid = this.getusersigid = getusersigid;
+				this.userid = userid;
+				this.baseUrl = window.baseUrl;
 
 				var params = {
 					getusersigid: this.getusersingid,
@@ -54695,11 +54660,13 @@
 		}, {
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				var _props$params = this.props.params;
+				var userid = _props$params.userid;
+				var getusersigid = _props$params.getusersigid;
 
-				this.getusersingid = this.getusersigid = this.getQueryString('getusersigid');
-				this.userid = this.getQueryString('userId');
-				this.baseUrl = 'http://api.zmiti.com/v2/';
-				this.companyId = this.getQueryString('companyid');
+				this.getusersingid = this.getusersigid = getusersigid;
+				this.userid = userid;
+				this.baseUrl = window.baseUrl;
 
 				var params = {
 					getusersigid: this.getusersingid,
