@@ -867,7 +867,7 @@ window.addEventListener('load', ()=> {
                             var p = JSON.stringify(params);
                             document.cookie = p;
                             
-                            url+='/'+d.userid+'/'+d.getusersigid;
+                           // url+='/'+d.userid+'/'+d.getusersigid;
 
                            // alert(url)
                             a.href =url;// './main/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;

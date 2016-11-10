@@ -70,9 +70,10 @@ export default class  ZmitiUserDepartmentApp extends Component {
 		 		if(!data.map){
 		 			return null;
 		 		}
- 				return data.map((item) => {
+ 				return data.map((item,i) => {
+ 					
 	 		      if (item.children) {
-	 		        return <TreeNode title={item.title}  key={item.key}>{loop(item.children)}</TreeNode>;
+	 		        return <TreeNode title={item.title} key={item.key} >{loop(item.children)}</TreeNode>;
 	 		      }
 	 		      return <TreeNode title={item.title} key={item.key} userList={item.userList}  />;
 	 	    })};
@@ -109,13 +110,17 @@ export default class  ZmitiUserDepartmentApp extends Component {
       wrapperCol: { span: 14 },
     };
 
+     var params = JSON.parse(document.cookie);
+     var companyId = params.companyid;
+
     let component = 	<section className='ud-main-ui'>
 				<aside className='ud-left-side'>
 					<Tabs defaultActiveKey="1">
 					    <TabPane tab="组织架构" key="1">
-					    	 <Tree className="myCls" showLine onSelect={this.changeDepartment}
+					    	 <Tree title='' className="myCls" showLine onSelect={this.changeDepartment}
 						        defaultExpandAll = {true}
-						        
+						        defaultExpandedKeys={[companyId]}
+						        defaultSelectedKeys={[companyId]}
 						        >
 						        {treeNodes}
 						      </Tree>
@@ -224,32 +229,54 @@ export default class  ZmitiUserDepartmentApp extends Component {
 			//location.hash= '/personalAcc?userId='+ e.key;
 	}
 	componentDidMount() {
+		try{
+        var params = JSON.parse(document.cookie);
+        var companyId = params.companyid;
 
-		this.setState({
-				companyId:this.props.companyId
-		});
-
-		let s = this;
-		$.ajax({
-			url:'http://localhost:90/12306/data.php',
-			data:{},
-			error(e){
-			//	var data = JSON.parse(e.responseText);
-				//console.log( e.responseText);
-			},
-			success(data){
-				data = JSON.parse(data);
-				console.log(data.treeData[0])
-				s.parentId =data.treeData[0].key;
-				s.setState({
-					treeData:data.treeData,
-					totalUserNum:data.totalUserNum,
-					disableUserNum:data.disableUserNum,
-					parentId:data.treeData[0].key,
-					defaultExpandedKeys:[data.treeData[0].key]
+        this.userid = params.userid;
+        this.getusersigid = params.getusersigid;
+        this.companyid = companyId;
+        	
+      	let s = this;
+				$.ajax({
+					url:window.baseUrl+'/user/get_departmentlist/',//window.baseUrl+'/user/get_departmentlist/',//'http://localhost:90/12306/data.php',
+					type:"POST",
+					data:{
+							userid:params.userid,
+							getusersigid:params.getusersigid,
+							setcompanyid:companyId
+					},
+					error(e){
+					//	var data = JSON.parse(e.responseText);
+						//console.log( e.responseText);
+					},
+					success(data){
+						///data = JSON.parse(data);
+						var data = data.getdata;
+						
+						s.parentId =data.treeData[0].key;
+						s.defaultUserList = data.treeData[0];
+						s.setState({
+							treeData:data.treeData,
+							totalUserNum:data.totalUserNum,
+							disableUserNum:data.disableUserNum,
+							
+							currentDepartment:{
+								title:data.treeData[0].title,
+								key:data.treeData[0],
+								userList:s.defaultUserList.userList
+							},
+							
+						});
+					}
 				});
-			}
-		});
+    }catch(e){
+        message.error('登录超时');
+        setTimeout(()=>{
+            window.location.href= window.loginUrl;    
+        },1000)
+    }
+		
 	}
 
 	deleteDepartment(){//删除部门
@@ -270,7 +297,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
 				getusersigid:s.props.getusersingid,
 				userid :s.props.userid,
 				departmenname:departmentName,
-				fatherid:this.props.companyId
+				fatherid:s.parentId
 			})
 		$.ajax({
 			type:"post",
@@ -279,7 +306,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
 				getusersigid:s.props.getusersingid,
 				userid :s.props.userid,
 				departmenname:departmentName,
-				fatherid:this.props.companyId
+				fatherid:s.parentId
 			},
 			success(data){
 					console.log(data);
@@ -300,28 +327,73 @@ export default class  ZmitiUserDepartmentApp extends Component {
 			updateCompanyDialogVisible:false
 		})
 	}
-	
+
+	getDepartmentNameById(id){
+		var name = '';
+		var key = '';
+		var loop = (obj)=>{
+				if(!obj || !obj instanceof Array){return};
+
+				obj.forEach((item,i)=>{
+				if(item.key === id){
+						name = item.title;
+						key = item.key;
+				}else{
+					loop(item.children);
+				}
+		});			
+		}
+		loop(this.state.treeData);
+		
+		return {name:name,key:key};
+	}
 	changeDepartment(e,b,c){//切换部门，显示当前部门下的所有员工
 		
+
 		if(!b.selected){
 			return;
 		}
 
-			let s = this;
-				$.ajax({
-					url:'http://localhost:90/12306/userList.php',
-					data:{},
-					success(data){
-						data = JSON.parse(data);
-						s.setState({
-							 currentDepartment:{
-									title:data.name,
-									key:data.key,
-									userList:data.userList
-					     },
-						})
-					}
-			})
+		this.parentId = e[0];
+		var s = this;
+		if(this.parentId === this.companyid){
+
+			 this.setState({
+				 	currentDepartment:{
+						title:s.defaultUserList.title,
+						key:s.defaultUserList.key,
+						userList:s.defaultUserList.userList
+					},
+			 });
+			 return;
+		}
+		var departObj = s.getDepartmentNameById(s.parentId);
+			s.setState({
+				 currentDepartment:{
+						title:departObj.name,
+						key:departObj.key
+		     },
+			})	
+		/*	$.ajax({
+				type:"POST",
+				url:window.baseUrl+'/user/get_departmentuserlist',
+				data:{
+					userid:s.userid,
+					getusersigid:s.getusersigid,
+					setdepartmentid:s.parentId
+				},
+				success(data){
+					//data = JSON.parse(data);
+					//console.log(data);
+					s.setState({
+						 currentDepartment:{
+								title:s.getDepartmentNameById(s.parentId),
+								key:data.key,
+								userList:data.userList
+				     },
+					})
+				}
+		})*/
 	}
 }
 

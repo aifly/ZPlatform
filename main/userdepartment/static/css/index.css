@@ -28,7 +28,7 @@ body {
   overflow-x: hidden; }
 
 .ud-main-ui {
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -39,6 +39,11 @@ body {
   .ud-main-ui .ud-left-side {
     width: 15vw;
     background: #EAEDF1; }
+    .ud-main-ui .ud-left-side .ant-tree li a {
+      padding: 3px 10px; }
+      .ud-main-ui .ud-left-side .ant-tree li a:hover {
+        background-color: #d8271d !important;
+        color: #fff; }
     .ud-main-ui .ud-left-side .ant-tabs-ink-bar {
       background-color: #a30b17; }
     .ud-main-ui .ud-left-side .ant-tree-node-selected {
@@ -58,7 +63,7 @@ body {
   .ud-main-ui .ud-right-side {
     width: 85vw; }
     .ud-main-ui .ud-right-side .ud-main-section {
-      width: 80vw;
+      width: 95%;
       margin: 0 auto;
       /*---------------*/
       /*---------------*/ }
@@ -73,9 +78,6 @@ body {
         font-family: "瀹嬩綋"; }
       .ud-main-ui .ud-right-side .ud-main-section .ud-operator-btn-group {
         margin: 20px 0; }
-      .ud-main-ui .ud-right-side .ud-main-section .ant-tree li a:hover {
-        background-color: #d8271d !important;
-        color: #fff; }
       .ud-main-ui .ud-right-side .ud-main-section .ant-btn {
         background: #d8271d !important;
         border-color: #e2534a !important;
@@ -117,11 +119,13 @@ body {
             width: 60%; }
             .ud-main-ui .ud-right-side .ud-main-section .ud-current-department .ud-current-header aside button {
               margin-left: 21px; }
-      .ud-main-ui .ud-right-side .ud-main-section .ud-current-user-section > div {
-        margin-top: 20px;
-        text-align: center; }
-        .ud-main-ui .ud-right-side .ud-main-section .ud-current-user-section > div p {
-          margin: 20px 0; }
+      .ud-main-ui .ud-right-side .ud-main-section .ud-current-user-section {
+        border: 1px soldi red; }
+        .ud-main-ui .ud-right-side .ud-main-section .ud-current-user-section > div {
+          margin-top: 20px;
+          text-align: center; }
+          .ud-main-ui .ud-right-side .ud-main-section .ud-current-user-section > div p {
+            margin: 20px 0; }
       .ud-main-ui .ud-right-side .ud-main-section table td, .ud-main-ui .ud-right-side .ud-main-section table th {
         text-align: center; }
       .ud-main-ui .ud-right-side .ud-main-section table a {
