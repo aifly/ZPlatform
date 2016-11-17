@@ -54,13 +54,16 @@ export  default class MainUI extends React.Component {
     toggleMenu() {
 
         if (this.state.defaultClass === "fly-left-aside") {
-            this.setState({defaultClass: "fly-left-aside unfold", isOpen: false});
+            this.setState({defaultClass: "fly-left-aside unfold", isOpen: false,rightWidth:document.documentElement.clientWidth - 60});
 
         } else {
             this.setState({defaultClass: "fly-left-aside"});
             setTimeout(()=> {
-                this.setState({isOpen: true});
-            }, 200);
+              this.setState({
+                isOpen: true,
+                rightWidth:document.documentElement.clientWidth - 180
+              });
+          }, 200);
         }
     }
 

@@ -131,7 +131,7 @@ input, textarea {
 }
 
 
-  body {
+body {
   font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
   font-size: 14px;
   height: 100%;
@@ -148,6 +148,7 @@ input, textarea {
       flex-grow: 0;
       width:100vw;
       height:@headerH;
+
       .displayFlex(row);
       border: 1px solid #ccc;
       border-left: none;
@@ -233,7 +234,7 @@ input, textarea {
       .displayFlex(row);
       .fly-left-aside{
         .position(r);
-         width:180px;
+        width:180px;
         background:#333645;
         overflow: hidden;
         .transition(.2s);
@@ -241,7 +242,7 @@ input, textarea {
           .transition(.2s opacity -.2s);
         }
         &.unfold{
-            width:60px;
+          width:60px;
         }
 
         .ant-menu-item{
