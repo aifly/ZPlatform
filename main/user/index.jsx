@@ -6,6 +6,8 @@ import $ from 'jquery';
 import message from 'antd/lib/message';
 import 'antd/lib/message/style/css';
 import MainUI from '../admin/components/main.jsx';
+import {ZmitiValidateUser} from '../public/validate-user.jsx';
+
 export default class ZmitiUserApp extends Component {
 	constructor(props) {
 	  super(props);
@@ -83,6 +85,12 @@ export default class ZmitiUserApp extends Component {
       this.userid =userid;
       this.baseUrl = window.baseUrl;
       
+
+      let  {validateUser} = this.props;
+      var {userid,getusersigid,companyid}=validateUser();
+      this.userid = userid;
+      this.getusersigid = getusersigid;
+      this.companyid = companyid;
       
 		var params = {
 			  getusersigid:this.getusersingid,
@@ -90,13 +98,11 @@ export default class ZmitiUserApp extends Component {
        	setusertypesign:1
 		}
 
-
-		var baseUrl = this.props.baseUrl;
 		
 		let s = this;
 		$.ajax({
 			type:"POST",
-			url:baseUrl+"/user/get_userlist/",
+			url:window.baseUrl+"/user/get_userlist/",
 			data:params,
 			success(data){
 				console.log(data);
@@ -191,6 +197,7 @@ export default class ZmitiUserApp extends Component {
 		// e : 0  1;
 	}
 }
+export default ZmitiValidateUser(ZmitiUserApp);
 ZmitiUserApp.defaultProps = {
      baseUrl : window.parent.baseUrl || 'http://api.zmiti.com/v2/'
 }

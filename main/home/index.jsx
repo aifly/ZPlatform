@@ -19,10 +19,13 @@ const TabPane = Tabs.TabPane;
 const ProgressLine = Progress.Line;
 import ZmitiTab from '../components/tab.jsx';
 
+import {ZmitiValidateUser} from '../public/validate-user.jsx';
+
 import ZmitiProgress from '../components/Progress.jsx';
 import ZmitiProductList from '../components/product-list.jsx';
 import MainUI from '../components/Main.jsx';
-export default class ZmitiHomeApp extends React.Component{
+
+ class ZmitiHomeApp extends React.Component{
     constructor(args){
         super(...args);
         this.state = {
@@ -37,7 +40,9 @@ export default class ZmitiHomeApp extends React.Component{
 
     componentDidMount(){
 
-        console.log(window.parent.userId)
+        let  {validateUser} = this.props;
+        var {userid}=validateUser();
+        console.log(userid)
     }
 
     render(){
@@ -230,6 +235,7 @@ export default class ZmitiHomeApp extends React.Component{
     }
 }
 
+export default ZmitiValidateUser(ZmitiHomeApp);
 
 /*ReactDOM.render(<ZmitiHomeApp></ZmitiHomeApp>,_$("#fly-main"));*/
 

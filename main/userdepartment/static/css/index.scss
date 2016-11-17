@@ -213,7 +213,6 @@ $btnColor:#d8271d;
       }
 
 
-
        .ant-btn{
           background:$btnColor !important;
           border-color:#e2534a !important;
@@ -326,6 +325,16 @@ $btnColor:#d8271d;
     }
   }
 }
+
+ .ant-modal-body{
+       .ant-input,.ant-select-selection{
+        border-color:#2db7f5 !important;
+      }
+      .ant-input:hover{
+       border-color:#2db7f5 !important; 
+      }
+  }
+
 
 
 .user-error{

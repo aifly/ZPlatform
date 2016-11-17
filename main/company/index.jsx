@@ -5,7 +5,9 @@ import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import $ from 'jquery';
 
 import MainUI from '../admin/components/main.jsx';
-export default class ZmitiCompanyApp extends Component {
+import {ZmitiValidateUser} from '../public/validate-user.jsx';
+
+ class ZmitiCompanyApp extends Component {
 	constructor(props) {
 	  super(props);
 	
@@ -81,19 +83,24 @@ export default class ZmitiCompanyApp extends Component {
 		  this.getusersingid = this.getusersigid = getusersigid;
       this.userid =userid;
       this.baseUrl = window.baseUrl;
-
       
-		var params = {
+
+      let  {validateUser} = this.props;
+      var {userid,getusersigid,companyid}=validateUser();
+      this.userid = userid;
+      this.getusersigid = getusersigid;
+      this.companyid = companyid;
+			var params = {
 			  getusersigid:this.getusersingid,
        	 userid:this.userid,
        	 setusertypesign:2
-		}
-		var baseUrl = this.baseUrl || 'http://api.zmiti.com/v2'
+			}
+
 		
 		let s = this;
 		$.ajax({
 			type:"POST",
-			url:baseUrl+"/user/get_userlist/",
+			url:window.baseUrl+"/user/get_userlist/",
 			data:params,
 			success(data){
 				if(data.getret === 0){
@@ -115,5 +122,5 @@ export default class ZmitiCompanyApp extends Component {
 	}
 }
 
-
+export default ZmitiValidateUser(ZmitiCompanyApp);
 /*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/

@@ -146,6 +146,11 @@ body {
         .ud-main-ui .ud-right-side .ud-main-section .ant-pagination-prev:hover a, .ud-main-ui .ud-right-side .ud-main-section .ant-pagination-next:hover a {
           color: #d8271d; }
 
+.ant-modal-body .ant-input, .ant-modal-body .ant-select-selection {
+  border-color: #2db7f5 !important; }
+.ant-modal-body .ant-input:hover {
+  border-color: #2db7f5 !important; }
+
 .user-error {
   position: absolute;
   z-index: 100;

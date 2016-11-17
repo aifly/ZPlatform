@@ -32,8 +32,9 @@ import 'antd/lib/icon/style/css';
 const FormItem = Form.Item;
 const Option = Select.Option;
 import MainUI from '../components/Main.jsx';
+import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
-export default class  ZmitiUserDepartmentApp extends Component {
+ class  ZmitiUserDepartmentApp extends Component {
 	constructor(props) {
 	  super(props);
 		const keys = this.props.keys;
@@ -46,6 +47,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
 	      companyId:-1,//公司的Id,最外一层的ID
 	      totalUserNum:0,//公司总成员
 	      disableUserNum:0,//被禁用的员工
+	      addNewUserDialogVisible:false,
 	      currentDepartment:{
 					userList:[]
 	      },
@@ -60,6 +62,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
 	  this.createDepartment = this.createDepartment.bind(this);
 	  this.deleteDepartment = this.deleteDepartment.bind(this);
 	  this.rowClick = this.rowClick.bind(this); //
+	  this.createUserByDepartment = this.createUserByDepartment.bind(this); //
 	}
 
 	render() {
@@ -145,7 +148,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
 								</div>
 									<section className='ud-operator-btn-group'>
 							 <ButtonGroup>
-							      <Button className='ant-btn-clicked' type="primary" icon='plus-circle-o'>新增成员</Button>
+							      <Button onClick={()=>{this.setState({addNewUserDialogVisible:true})}} className='ant-btn-clicked' type="primary" icon='plus-circle-o'>新增成员</Button>
 							      <Button type="primary" icon='setting'>设置所在部门</Button>
 							      <Button type="primary" icon='info-circle'>添加到项目组</Button>
 							      <Button type="primary" icon='minus-circle'>禁用</Button>
@@ -180,17 +183,17 @@ export default class  ZmitiUserDepartmentApp extends Component {
 		         <Input ref='newDepartment' placeholder='请输入部门名称' onChange={()=>{}}/>
         	</Modal>
 
-        	<Modal title='新增成员' visible={false} >
+        	<Modal title='新增成员' visible={this.state.addNewUserDialogVisible} onOk={this.createUserByDepartment} onCancel={()=>{this.setState({addNewUserDialogVisible:false})}}>
         		<Form horizontal >
         				 <FormItem
 					          {...formItemLayout}
 					          label={<span><span style={{color:'red',marginRight:4,}}>*</span>账号</span>}
 					          hasFeedback={true}
 					        >
-					        	<Input ref='username' onFocus={()=>{}} placeholder='请输入账号' onChange={()=>{}}/>
-					        	<div className='user-error'>账号不合法(6位以上的数字字母)</div>
+					        	<Input ref='username' onBlur={this.usernameBlur.bind(this)} onFocus={()=>{this.setState({showUserNameError:false})}} placeholder='请输入账号' onChange={()=>{}}/>
+					        	{this.state.showUserNameError && <div className='user-error'>账号不合法(6位以上的数字字母)</div>}
 					        </FormItem>
-					         <FormItem
+					        {/* <FormItem
 					          {...formItemLayout}
 					          label={<span><span style={{color:'red',marginRight:4,}}>*</span>所属部门</span>}
 					        >
@@ -198,7 +201,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
 					              <Option value="china">China</Option>
 					              <Option value="use">U.S.A</Option>
 					            </Select>
-					        </FormItem>
+					        </FormItem>*/}
 					         <FormItem
 					          {...formItemLayout}
 					          label="密码"
@@ -210,7 +213,8 @@ export default class  ZmitiUserDepartmentApp extends Component {
 					          {...formItemLayout}
 					          label={<span><span style={{color:'red',marginRight:4,}}>*</span>手机号/邮箱</span>}
 					        >
-					        	<Input ref='username' placeholder='请输入成员的手机号或者邮箱'  onChange={()=>{}}/>
+					        	<Input onBlur={this.userEmailMobileBlur.bind(this)} onFocus={()=>{this.setState({showEmailMobileError:false})}} ref='email-mobile' placeholder='请输入成员的手机号或者邮箱'  onChange={()=>{}}/>
+					        	{this.state.showEmailMobileError && <div className='user-error'>邮箱或者手机号不合法</div>}
 					        </FormItem>
 
         		</Form>
@@ -229,22 +233,20 @@ export default class  ZmitiUserDepartmentApp extends Component {
 			//location.hash= '/personalAcc?userId='+ e.key;
 	}
 	componentDidMount() {
-		try{
-        var params = JSON.parse(document.cookie);
-        var companyId = params.companyid;
-
-        this.userid = params.userid;
-        this.getusersigid = params.getusersigid;
-        this.companyid = companyId;
-        	
-      	let s = this;
+			
+		  let  {validateUser} = this.props;
+      var {userid,getusersigid,companyid}=validateUser();
+      this.userid = userid;
+      this.getusersigid = getusersigid;
+      this.companyid = companyid;
+			let s = this;
 				$.ajax({
 					url:window.baseUrl+'/user/get_departmentlist/',//window.baseUrl+'/user/get_departmentlist/',//'http://localhost:90/12306/data.php',
 					type:"POST",
 					data:{
-							userid:params.userid,
-							getusersigid:params.getusersigid,
-							setcompanyid:companyId
+							userid:s.userid,
+							getusersigid:s.getusersigid,
+							setcompanyid:s.companyid
 					},
 					error(e){
 					//	var data = JSON.parse(e.responseText);
@@ -256,6 +258,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
 						
 						s.parentId =data.treeData[0].key;
 						s.defaultUserList = data.treeData[0];
+
 						s.setState({
 							treeData:data.treeData,
 							totalUserNum:data.totalUserNum,
@@ -270,13 +273,79 @@ export default class  ZmitiUserDepartmentApp extends Component {
 						});
 					}
 				});
-    }catch(e){
-        message.error('登录超时');
-        setTimeout(()=>{
-            window.location.href= window.loginUrl;    
-        },1000)
-    }
+
+	}
+
+	usernameBlur(e){//验证用户名
+
+			var username = e.target.value;
+			
+			if(!username || username.length < 6){
+				this.setState({
+					showUserNameError:true
+				})
+					this.username = undefined;
+			}else{
+				this.username = username;
+			}
+	}
+	userEmailMobileBlur(e){
+			 let regMobile = /^0?1[3|4|5|8][0-9]\d{8}$/;
+			 let regEmail = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+
+			 if(!regMobile.test(e.target.value) && !regEmail.test(e.target.value) ){
+			 		this.setState({
+			 			showEmailMobileError:true
+			 		});
+			 		this.userEmail = undefined;
+			 		this.userMobile= undefined;
+			 }else{
+			 	if(regMobile.test(e.target.value)){
+			 		this.userMobile=  e.target.value;;
+			 		this.userEmail =  '';
+			 	}
+			 	else{
+			 		this.userEmail = e.target.value;	
+			 		this.userMobile= '';
+			 	}
+			 	
+			 }
+	}
+	createUserByDepartment(){//在部门下创建员工
+
+		if(!this.username){
+			message.error('用户名不合法');
+			return;
+		}
 		
+
+		if(!this.userEmail && !this.userMobile){
+
+			message.error('用户邮箱或者手机号不合法');
+			return;
+		}
+
+
+		var s = this;
+		$.ajax({
+			url:window.baseUrl + 'user/create_departmentuser/',
+			type:"POST",
+			data:{
+					userid:s.userid,
+					getusersigid:s.getusersigid,
+					departmentid:s.parentId,
+					username:s.username,
+					userpwd:'111111',
+					useremail:s.userEmail,
+					usermobile:s.userMobile
+			},
+			success(data){
+				message[data.getret===0 ?'success':'error'](data.getmsg);
+				this.setState({
+					addNewUserDialogVisible:false
+				});
+			}
+		})
 	}
 
 	deleteDepartment(){//删除部门
@@ -293,18 +362,13 @@ export default class  ZmitiUserDepartmentApp extends Component {
 			return;
 		}
 		let s = this;
-		console.log({
-				getusersigid:s.props.getusersingid,
-				userid :s.props.userid,
-				departmenname:departmentName,
-				fatherid:s.parentId
-			})
+	
 		$.ajax({
 			type:"post",
-			url:s.props.baseUrl + '/user/create_department/',
+			url:window.baseUrl+ '/user/create_department/',
 			data:{
-				getusersigid:s.props.getusersingid,
-				userid :s.props.userid,
+				getusersigid:s.getusersingid,
+				userid :s.userid,
 				departmenname:departmentName,
 				fatherid:s.parentId
 			},
@@ -347,6 +411,24 @@ export default class  ZmitiUserDepartmentApp extends Component {
 		
 		return {name:name,key:key};
 	}
+
+	getDepartmentUsersById(id){
+		var result = [];
+		var fathers = [];
+		var loop = obj=>{
+				if(!obj || !obj instanceof Array){return};
+				obj.forEach((item,i)=>{
+					 if(item.departmentid === id){
+					 		result.push(item);
+					 }
+					 else if(item.departmentfatherid === id){
+
+					 }
+				});
+
+		}
+	}
+
 	changeDepartment(e,b,c){//切换部门，显示当前部门下的所有员工
 		
 
@@ -368,10 +450,12 @@ export default class  ZmitiUserDepartmentApp extends Component {
 			 return;
 		}
 		var departObj = s.getDepartmentNameById(s.parentId);
+			console.log(s.defaultUserList.userList)
 			s.setState({
 				 currentDepartment:{
 						title:departObj.name,
-						key:departObj.key
+						key:departObj.key,
+						userList:s.defaultUserList.userList
 		     },
 			})	
 		/*	$.ajax({
@@ -396,6 +480,7 @@ export default class  ZmitiUserDepartmentApp extends Component {
 		})*/
 	}
 }
+export default ZmitiValidateUser(ZmitiUserDepartmentApp);
 
 ZmitiUserDepartmentApp.defaultProps = {
 	keys: ['123', '0-0-1'],
@@ -413,8 +498,8 @@ ZmitiUserDepartmentApp.defaultProps = {
 			key: 'mobile',
    		}, {
 			  title: '部门',
-			  dataIndex: 'department',
-			  key: 'department',
+			  dataIndex: 'departmentname',
+			  key: 'departmentname',
 			}
   ]
   

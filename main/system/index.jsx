@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import MainUI from '../admin/components/main.jsx';
-export default class ZmitiSystemApp extends Component {
+import {ZmitiValidateUser} from '../public/validate-user.jsx';
+
+ class ZmitiSystemApp extends Component {
 	constructor(props) {
 	  super(props);
 	
@@ -105,6 +107,8 @@ export default class ZmitiSystemApp extends Component {
 		// e : 0  1;
 	}
 }
+
+export default ZmitiValidateUser(ZmitiSystemApp);
 
 
 /*ReactDOM.render(<ZmitiSystemApp></ZmitiSystemApp>,document.getElementById('fly-main'));*/
