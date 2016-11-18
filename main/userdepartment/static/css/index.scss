@@ -142,29 +142,21 @@ body {
 
 $baseColor:#99071e;
 $btnColor:#d8271d;
-.ud-main-ui{
-  width: 100%;
-  height:100vh;
-  @include displayFlex(horizontal);
-  $leftSize:15vw;
-  .ud-left-side{
-    .ant-tree li a{
-      padding:3px 10px;
+
+  .ant-tree li a{
+      padding:0 10px !important;
       &:hover{
         background-color: $btnColor !important;
-        color:#fff;
+        color:#fff !important;
       }
     }
-  
-    width: $leftSize;
-    background:#EAEDF1;
-    .ant-tabs-ink-bar{
-      background-color:#a30b17;
+    .ant-form-item-control{
+      line-height: 20px !important;
     }
-    .ant-tree-node-selected{
-       background:$baseColor;
+ .ant-tree-node-selected{
+       background:$baseColor !important;
        span{
-        color:#fff;
+        color:#fff !important;
        }
     }
     .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-inner,.ant-tabs-tab-inner{
@@ -184,6 +176,53 @@ $btnColor:#d8271d;
         float: left;
       }
     }
+
+.ud-main-ui{
+  width: 100%;
+  height:100vh;
+  @include displayFlex(horizontal);
+  $leftSize:15vw;
+
+ .ant-tree-node-selected{
+       background:$baseColor !important;
+       span{
+        color:#fff !important;
+       }
+    }
+    .ant-tabs-nav .ant-tabs-tab-active .ant-tabs-tab-inner,.ant-tabs-tab-inner{
+      color:$baseColor !important;
+    }
+    .ant-tabs-bar{
+      border-color:#be5841;
+      background:none !important;
+      height: auto;
+    }
+    .ant-tabs-nav .ant-tabs-tab-inner:hover{
+      color:$btnColor;
+    }
+
+    .ant-tabs-tabpane{
+      .wf-column{
+        float: left;
+      }
+    }
+
+
+  .ud-left-side{
+    .ant-tree li a{
+      padding:3px 10px;
+      &:hover{
+        background-color: $btnColor !important;
+        color:#fff;
+      }
+    }
+  
+    width: $leftSize;
+    background:#EAEDF1;
+    .ant-tabs-ink-bar{
+      background-color:#a30b17;
+    }
+    
   }
   .ud-right-side{
     $color:$btnColor;
@@ -321,8 +360,9 @@ $btnColor:#d8271d;
         }
       }
       /*---------------*/
-     
+
     }
+
   }
 }
 
@@ -336,6 +376,25 @@ $btnColor:#d8271d;
   }
 
 
+.tree-C{
+  left:135px;
+  width: 240px;
+  height: 50px;
+  @include pos(a);
+  z-index: 1000;
+  background:#fff;
+  top: -6px;
+  overflow: auto;
+ }
+
+ .departmentname-C{
+   margin-top: 6px;
+   display: inline-block;
+   padding:1px 4px;
+   background: #e5e5e5;
+   @include br(3px);
+
+ }
 
 .user-error{
   @include pos(a);

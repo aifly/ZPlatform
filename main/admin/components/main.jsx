@@ -117,7 +117,6 @@ class MainUI extends Component {
       this.usertypesign = usertypesign;
      
       if(this.usertypesign !== 3 &&  this.usertypesign !== 4){
-        
         loginOut('您没有访问的权限');
       }
 
