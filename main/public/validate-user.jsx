@@ -19,10 +19,13 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
         }
 		 }
 		 catch(e){
-		 		 message.error('登录超时');
-        setTimeout(()=>{
-       	   window.location.href= window.loginUrl;    
-        },1000);
+
+		 		if(!window.isDebug){
+		 				message.error('登录超时');
+		        setTimeout(()=>{
+		       	   window.location.href= window.loginUrl;    
+		        },1000);	
+		 		}
         return null;
 		 }
 	}

@@ -11,10 +11,10 @@ import message from 'antd/lib/message';
 import 'antd/lib/message/style/css';
 import { Link } from 'react-router'; 
 const SubMenu = Menu.SubMenu;
-
+import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import {utilMethods,_$,$$} from '../utilMethod.es6';
 
-export  default class MainUI extends React.Component {
+ class MainUI extends React.Component {
     constructor(args) {
         super(...args);
 
@@ -198,3 +198,4 @@ export  default class MainUI extends React.Component {
     }
 }
 
+export  default ZmitiValidateUser(MainUI);
