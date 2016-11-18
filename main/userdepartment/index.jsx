@@ -15,8 +15,6 @@ import Input from 'antd/lib/input';
 import 'antd/lib/input/style/css';
 import Form from 'antd/lib/form';
 import 'antd/lib/form/style/css';
-import Select from 'antd/lib/select';
-import 'antd/lib/select/style/css';
 import ZmitiDialog from './static/components/zmiti-dialog.jsx';
 const ButtonGroup = Button.Group;
 const TreeNode = Tree.TreeNode;
@@ -30,9 +28,11 @@ import 'antd/lib/message/style/css';
 import Icon from 'antd/lib/icon';
 import 'antd/lib/icon/style/css';
 const FormItem = Form.Item;
-const Option = Select.Option;
 import MainUI from '../components/Main.jsx';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
+
+import Cascader from 'antd/lib/cascader';
+import 'antd/lib/cascader/style/css';
 
  class  ZmitiUserDepartmentApp extends Component {
 	constructor(props) {
@@ -51,9 +51,14 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 	      currentDepartment:{
 					userList:[]
 	      },
+	      treeHeight:50,//300
 	      treeData:[
 	      	
-	      ]
+	      ],
+	      selectedRowKeys:false,
+	      overflow:'hidden',
+	      currentDepartmentNameForChoose:'',
+	      departmentData:[] //
 
 	  };
 
@@ -63,12 +68,14 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 	  this.deleteDepartment = this.deleteDepartment.bind(this);
 	  this.rowClick = this.rowClick.bind(this); //
 	  this.createUserByDepartment = this.createUserByDepartment.bind(this); //
+	  this.changeDepartmentForAddUser = this.changeDepartmentForAddUser.bind(this); //
+	  this.expandTree = this.expandTree.bind(this); //
 	}
 
 	render() {
 
 		const text = '确定要删除么?';
- 
+ 		var random = (Math.random()*10000)|0;
 		 const loop = data => {
 		 		if(!data.map){
 		 			return null;
@@ -83,27 +90,21 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
    		 const treeNodes = loop(this.state.treeData);
 
 
-		const companyUserRowSelection = {
-		  onChange(selectedRowKeys, selectedRows) {
-		    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-		  },
-		  onSelect(record, selected, selectedRows) {
-		    console.log(record, selected, selectedRows);
-		  },
-		  onSelectAll(selected, selectedRows, changeRows) {
-		    console.log(selected, selectedRows, changeRows);
-		  },
-		};
+   		var s = this;
+
 
 		const departmentUserRowSelection ={
-			  onChange(selectedRowKeys, selectedRows) {
-		    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+			onChange(selectedRowKeys, selectedRows) {
+		    //console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+		  	s.setState({
+		  		selectedRowKeys:selectedRowKeys.length>0
+		  	})
 		  },
 		  onSelect(record, selected, selectedRows) {
-		    console.log(record, selected, selectedRows);
+		   // console.log(record, selected, selectedRows);
 		  },
 		  onSelectAll(selected, selectedRows, changeRows) {
-		    console.log(selected, selectedRows, changeRows);
+		    //console.log(selected, selectedRows, changeRows);
 		  }
 		}
 
@@ -148,29 +149,16 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 								</div>
 									<section className='ud-operator-btn-group'>
 							 <ButtonGroup>
-							      <Button onClick={()=>{this.setState({addNewUserDialogVisible:true})}} className='ant-btn-clicked' type="primary" icon='plus-circle-o'>新增成员</Button>
-							      <Button type="primary" icon='setting'>设置所在部门</Button>
-							      <Button type="primary" icon='info-circle'>添加到项目组</Button>
-							      <Button type="primary" icon='minus-circle'>禁用</Button>
-							      <Button type="primary" icon='check-circle'>启用</Button>
-							      <Button type="primary" icon='delete'>删除</Button>
+							      <Button size='large' onClick={()=>{this.setState({addNewUserDialogVisible:true})}} className='ant-btn-clicked' type="primary" icon='plus-circle-o'>新增成员</Button>
+							      {this.state.selectedRowKeys && <Button size='large' type="primary" icon='setting'>设置所在部门</Button>}
+							      {this.state.selectedRowKeys && <Button size='large' type="primary" icon='info-circle'>添加到项目组</Button>}
+							      {this.state.selectedRowKeys && <Button size='large' type="primary" icon='minus-circle'>禁用</Button>}
+							      {this.state.selectedRowKeys && <Button size='large' type="primary" icon='check-circle'>启用</Button>}
+							      {this.state.selectedRowKeys && <Button size='large' type="primary" icon='delete'>删除</Button>}
 							</ButtonGroup>
 						</section>
 								<section className="ud-current-user-section">
-									{this.state.currentDepartment.userList && this.state.currentDepartment.userList.length <= 0 && 
-										<div>
-											<p>当前部门下没有成员,您可以</p>
-											<ButtonGroup>
-												<Button type="primary"  icon='plus-circle-o'>新增成员</Button>
-												<Button type="primary"  icon='export'>批量导入成员</Button>
-												<Button type="primary">移入其它部门成员</Button>
-											</ButtonGroup>
-										</div>
-									}
-									{
-										this.state.currentDepartment.userList && this.state.currentDepartment.userList.length>0 && 
-										<Table  onRowClick={this.rowClick}  rowSelection={departmentUserRowSelection} dataSource={this.state.currentDepartment.userList} columns={this.props.columns} />
-									}
+									<Table  onRowClick={this.rowClick}  rowSelection={departmentUserRowSelection} dataSource={this.state.currentDepartment.userList} columns={this.props.columns} />
 								</section>
 							</section>
 					</div>
@@ -193,15 +181,20 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 					        	<Input ref='username' onBlur={this.usernameBlur.bind(this)} onFocus={()=>{this.setState({showUserNameError:false})}} placeholder='请输入账号' onChange={()=>{}}/>
 					        	{this.state.showUserNameError && <div className='user-error'>账号不合法(6位以上的数字字母)</div>}
 					        </FormItem>
-					        {/* <FormItem
+					       <FormItem
 					          {...formItemLayout}
 					          label={<span><span style={{color:'red',marginRight:4,}}>*</span>所属部门</span>}
 					        >
-					        	 <Select placeholder="Please select a department">
-					              <Option value="china">China</Option>
-					              <Option value="use">U.S.A</Option>
-					            </Select>
-					        </FormItem>*/}
+					        <span className='departmentname-C'>{this.state.currentDepartmentNameForChoose || this.state.currentDepartment.title}</span>
+					        <div className='tree-C' style={{height:this.state.treeHeight,overflow:this.state.overflow}}>
+					        	<Tree title='' className="myCls" showLine onExpand={this.expandTree} onSelect={this.changeDepartmentForAddUser}
+						        defaultExpandAll = {false}
+						        >
+						        {treeNodes}
+						      </Tree>
+					        </div>
+
+					        </FormItem>
 					         <FormItem
 					          {...formItemLayout}
 					          label="密码"
@@ -255,6 +248,22 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 					success(data){
 						///data = JSON.parse(data);
 						var data = data.getdata;
+
+						var departmentData = [];
+						data.treeData.forEach(dep=>{
+
+							var str = JSON.stringify(dep);
+							str = str.replace(/key/gi,'value');
+							str = str.replace(/title/gi,'label');
+							var d = JSON.parse(str)
+							departmentData.push({
+								value:d.value,
+								label:d.label,
+								children:d.children
+							});
+						});
+
+						console.log(departmentData[0])
 						
 						s.parentId =data.treeData[0].key;
 						s.defaultUserList = data.treeData[0];
@@ -263,7 +272,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 							treeData:data.treeData,
 							totalUserNum:data.totalUserNum,
 							disableUserNum:data.disableUserNum,
-							
+							departmentData:departmentData,
 							currentDepartment:{
 								title:data.treeData[0].title,
 								key:data.treeData[0],
@@ -341,7 +350,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 			},
 			success(data){
 				message[data.getret===0 ?'success':'error'](data.getmsg);
-				this.setState({
+				s.setState({
 					addNewUserDialogVisible:false
 				});
 			}
@@ -386,6 +395,17 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 		});
 	}
 
+	expandTree(e,b){
+		
+		if(b.node.props.eventKey ===this.companyid){//展开的状态
+				this.setState({
+					treeHeight:b.expanded ? 200:50,
+					overflow:b.expanded ? 'auto':'hidden'
+				})
+		}
+
+	}
+
 	updateCompanyName(){
 		this.setState({
 			updateCompanyDialogVisible:false
@@ -412,23 +432,45 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 		return {name:name,key:key};
 	}
 
-	getDepartmentUsersById(id){
-		var result = [];
-		var fathers = [];
-		var loop = obj=>{
-				if(!obj || !obj instanceof Array){return};
-				obj.forEach((item,i)=>{
-					 if(item.departmentid === id){
-					 		result.push(item);
-					 }
-					 else if(item.departmentfatherid === id){
 
-					 }
-				});
 
-		}
+	getDepartmentUsersById(id){//获取当前部门下所有的用户
+		var s = this;
+		$.ajax({
+				type:"POST",
+				url:window.baseUrl+'/user/get_departmentuserlist',
+				data:{
+					userid:s.userid,
+					getusersigid:s.getusersigid,
+					setdepartmentid:id
+				},
+				success(data){
+					//data = JSON.parse(data);
+
+					s.setState({
+						 currentDepartment:{
+								title:s.getDepartmentNameById(id).name,
+								key:data.key,
+								userList:data.getdata ? data.getdata.userList:[]
+				     },
+					})
+				}
+		})
 	}
+	changeDepartmentForAddUser(e,b,c){//在部门下创建员工的时候
 
+			if(!b.selected){
+				return;
+			}
+
+			this.parentId = e[0];
+			this.setState({
+				//currentDepartmentNameForChoose:
+			})
+			this.setState({
+				currentDepartmentNameForChoose:this.getDepartmentNameById(this.parentId).name
+			})
+	}
 	changeDepartment(e,b,c){//切换部门，显示当前部门下的所有员工
 		
 
@@ -441,6 +483,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 		if(this.parentId === this.companyid){
 
 			 this.setState({
+		 			selectedRowKeys:false,
 				 	currentDepartment:{
 						title:s.defaultUserList.title,
 						key:s.defaultUserList.key,
@@ -450,34 +493,17 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 			 return;
 		}
 		var departObj = s.getDepartmentNameById(s.parentId);
-			console.log(s.defaultUserList.userList)
 			s.setState({
+				selectedRowKeys:false,
 				 currentDepartment:{
 						title:departObj.name,
 						key:departObj.key,
 						userList:s.defaultUserList.userList
 		     },
 			})	
-		/*	$.ajax({
-				type:"POST",
-				url:window.baseUrl+'/user/get_departmentuserlist',
-				data:{
-					userid:s.userid,
-					getusersigid:s.getusersigid,
-					setdepartmentid:s.parentId
-				},
-				success(data){
-					//data = JSON.parse(data);
-					//console.log(data);
-					s.setState({
-						 currentDepartment:{
-								title:s.getDepartmentNameById(s.parentId),
-								key:data.key,
-								userList:data.userList
-				     },
-					})
-				}
-		})*/
+
+			this.getDepartmentUsersById(this.parentId);
+		/*	*/
 	}
 }
 export default ZmitiValidateUser(ZmitiUserDepartmentApp);
