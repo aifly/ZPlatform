@@ -1,11 +1,10 @@
-var webpack = require('webpack');
 var config = {
     entry: {
-        'index': "./index.jsx"
+        'index': "./project/index.jsx"
     },
     output: {
-        publickPath: './static/js',
-        path: './static/js',
+        publickPath: './project/static/js',
+        path: './project/static/js',
         filename: "[name].js",
         chunkFilename: "[name].js"
     },

@@ -19,6 +19,7 @@ import ZmitiPuzzleApp from './puzzle/index.jsx';
 import ZmitiQaApp from './qa/index.jsx';
 import ZmitiUserDepartmentApp from './userdepartment/index.jsx';
 import ZmitiPersonalAccApp from './personalAcc/index.jsx';
+import ZmitiProject from './project/index.jsx';
 const SubMenu = Menu.SubMenu;
 class App extends React.Component{
     constructor(args) {
@@ -36,6 +37,7 @@ class App extends React.Component{
 					    <Route path="/personalAcc/" component={ZmitiPersonalAccApp}/>
 					    <Route path="/richimg/" component={ZmitiRichImgApp}/>
 					    <Route path="/qa/" component={ZmitiQaApp}/>
+					    <Route path="/project/" component={ZmitiProject}/>
 					  </Router>
         )
 	}

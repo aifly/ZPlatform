@@ -76,7 +76,7 @@ import {utilMethods,_$,$$} from '../utilMethod.es6';
             companyMenu = [1].map((item,i)=>{
                 return <SubMenu key="sub2" title={<span><Icon type="user" style={{marginRight:'22px'}} /><span>用户中心</span></span>}>
                 <Menu.Item key="userdepartment"><Icon type="team" style={{marginRight:'32px'}}/><Link to={'/userdepartment/'}>用户和部门</Link></Menu.Item>
-                    <Menu.Item key="6"><Icon type="book" style={{marginRight:'32px'}}/>项目管理</Menu.Item>
+                    <Menu.Item key="project"><Icon  type="picture" style={{marginRight:'32px'}}/><Link to={'/project/'}>项目管理</Link></Menu.Item>
                     <Menu.Item key="7"><Icon type="user" style={{marginRight:'32px'}}/>办公管理</Menu.Item>
                     <Menu.Item key="8"><Icon type="user" style={{marginRight:'32px'}}/>作品管理</Menu.Item>
                     <Menu.Item key="9"><Icon type="picture" style={{marginRight:'32px'}}/>素材管理</Menu.Item>
@@ -170,6 +170,9 @@ import {utilMethods,_$,$$} from '../utilMethod.es6';
                 current='userdepartment';
             }else if(hash.indexOf('personalAcc')>-1){
                 current='personalAcc';
+            }
+            else if(hash.indexOf('project')>-1){
+                current='project';
             }
             this.setState({
                 isCompany:this.companyid,
