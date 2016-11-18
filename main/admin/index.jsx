@@ -29,10 +29,10 @@ class App extends React.Component{
 	render(){
         return (
              <Router history={hashHistory} >
-					    <Route path="/:userid/:getusersigid" component={ZmitiUserApp}/>
-					    <Route path="/user/:userid/:getusersigid" component={ZmitiUserApp}/>
-					    <Route path="/company/:userid/:getusersigid" component={ZmitiCompanyApp}/>
-					    <Route path="/system/:userid/:getusersigid" component={ZmitiSystemApp}/>
+					    <Route path="/" component={ZmitiUserApp}/>
+					    <Route path="/user/" component={ZmitiUserApp}/>
+					    <Route path="/company" component={ZmitiCompanyApp}/>
+					    <Route path="/system" component={ZmitiSystemApp}/>
 					  </Router>
         )
 	}

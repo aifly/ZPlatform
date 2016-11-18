@@ -25,7 +25,7 @@
     "userdepartment-build": "webpack -w --config webpack.userdepartment.config.js",
     "userdepartment-server": "webpack-dev-server --hot --line --config webpack.userdepartment.config.js",
     "admin-build": "webpack -w --config webpack.admin.config.js",
-    "admin-server": "webpack-dev-server --hot --line --config webpack.admin.config.js",
+    "admin-server": "webpack-dev-server --port 3001 --hot --line --config webpack.admin.config.js",
     "p-u": "webpack -p --config webpack.puzzle.config.js"
   },
   "keywords": [

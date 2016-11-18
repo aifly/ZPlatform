@@ -856,12 +856,13 @@ window.addEventListener('load', ()=> {
 
                            // a.href = 'http://localhost:3000/index.html';
                            var url =window.mainUrl+'#';
-
+                           console.log(d)
                             var params = {
                                 getusersigid:d.getusersigid,
                                 userid:d.userid,
                                 companyid:d.companyid,
-                                isover:d.isover
+                                isover:d.isover,
+                                usertypesign:d.usertypesign
                             }
                          
                             var p = JSON.stringify(params);
@@ -874,7 +875,7 @@ window.addEventListener('load', ()=> {
                             a.style.position = 'fixed';
                             a.style.zIndex = -1;
                             a.style.opacity = 0;
-                            a.click();
+                             a.click();
  
 
                             //console.log(params);

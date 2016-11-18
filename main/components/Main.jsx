@@ -91,7 +91,7 @@ import {utilMethods,_$,$$} from '../utilMethod.es6';
                     <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    <div style={{display:this.state.isover === 0?'block':'none'}} className="fly-nav"><a href={"./admin/#/"+this.state.userid+'/'+this.state.getusersigid}>系统管理</a></div>
+                    <div style={{display:this.state.isover === 0?'block':'none'}} className="fly-nav"><a href={window.adminUrl+"/admin/#/"}>系统管理</a></div>
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
                     <div></div>
@@ -145,47 +145,41 @@ import {utilMethods,_$,$$} from '../utilMethod.es6';
             </section>
         )
     }
- 
+    
+    componentWillMount(){
+      let  {validateUser} = this.props;
+      var {userid,getusersigid,companyid,isover}=validateUser();
+      this.userid = userid;
+      this.getusersigid = getusersigid;
+      this.companyid = companyid;
+      this.isover = isover;
+    }
 
     componentDidMount() {
+            
 
-
-
-            try{
-                 var params = JSON.parse(document.cookie);
-                var companyId = params.companyid;
-                var hash = window.location.hash;
-                var current = '';
-                if(hash.indexOf('puzzle')>-1){
-                    current = 'puzzle';
-                }else if(hash.indexOf('richimg')>-1){
-                    current='richimg';
-                }else if(hash.indexOf('qa')>-1){
-                    current='qa';
-                }else if(hash.indexOf('userdepartment')>-1){
-                    current='userdepartment';
-                }else if(hash.indexOf('personalAcc')>-1){
-                    current='personalAcc';
-                }
-                this.setState({
-                    isCompany:companyId,
-                    companyId:companyId,
-                    userid:params.userid,
-                    current:current,
-                    isover:params.isover,
-                    getusersigid:params.getusersigid,
-                    rightWidth:document.documentElement.clientWidth - 180
-                })
-            }catch(e){
-                message.error('登录超时');
-                setTimeout(()=>{
-                    window.location.href= window.loginUrl;    
-                },1000)
-                
+            var hash = window.location.hash;
+            var current = '';
+            if(hash.indexOf('puzzle')>-1){
+                current = 'puzzle';
+            }else if(hash.indexOf('richimg')>-1){
+                current='richimg';
+            }else if(hash.indexOf('qa')>-1){
+                current='qa';
+            }else if(hash.indexOf('userdepartment')>-1){
+                current='userdepartment';
+            }else if(hash.indexOf('personalAcc')>-1){
+                current='personalAcc';
             }
-
-           
-
+            this.setState({
+                isCompany:this.companyid,
+                companyId:this.companyid,
+                userid:this.userid,
+                current:current,
+                isover:this.isover,
+                getusersigid:this.getusersigid,
+                rightWidth:document.documentElement.clientWidth - 180
+            })
        /* window.addEventListener('message',function(event) {
             alert(1234)
             console.log('message received:  ' + event.data,event);

@@ -5,7 +5,7 @@ var webpack = require('webpack');
 
 var path = require('path');
 
-function configs(modules){
+function configs(modules,port){
     var config = {
     entry:{ /*
      [
@@ -23,7 +23,7 @@ function configs(modules){
     },
     devServer: {
         inline: true,
-        port: 3000,
+        port: port || 3000,
         hot: true
     },
     plugins: [

@@ -9,30 +9,44 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	  this.state = {};
 	}
 
+	loginOut(errorMsg='登录超时'){
+			message.error(errorMsg);
+      setTimeout(()=>{
+     	   window.location.href= window.loginUrl;    
+      },1000);	
+	}
+
 	validateUser(){
+		var s = this;
 		 try{
 		 	 var params = JSON.parse(document.cookie);
         return {
         	userid:params.userid,
         	getusersigid:params.getusersigid,
         	companyid:params.companyid,
+        	isover:params.isover,
+        	usertypesign:params.usertypesign
         }
 		 }
 		 catch(e){
 
 		 		if(!window.isDebug){
-		 				message.error('登录超时');
-		        setTimeout(()=>{
-		       	   window.location.href= window.loginUrl;    
-		        },1000);	
+		 				s.loginOut();
 		 		}
-        return null;
+        return  {
+        	userid:-1,
+        	getusersigid:-1,
+        	companyid:-1,
+        	isover:-1,
+        	usertypesign:-1
+        };
 		 }
 	}
 	render() {
 
 		let methods = {
-			validateUser:this.validateUser
+			validateUser:this.validateUser,
+			loginOut:this.loginOut
 		}
 
 		return <ComponsedComponent {...methods} {...this.props} {...this.state} />;

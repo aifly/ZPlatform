@@ -80,10 +80,10 @@ export default class ZmitiUserApp extends Component {
       return null;
   }
 	componentDidMount() {
-		  var {userid,getusersigid} = this.props.params;
+		/*  var {userid,getusersigid} = this.props.params;
 		  this.getusersingid = this.getusersigid = getusersigid;
       this.userid =userid;
-      this.baseUrl = window.baseUrl;
+      this.baseUrl = window.baseUrl;*/
       
 
       let  {validateUser} = this.props;

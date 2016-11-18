@@ -9,8 +9,10 @@ import 'antd/lib/input/style/css';
 import 'antd/lib/badge/style/css';
 import '../../static/css/index.css';
 import { Link } from 'react-router';
+import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 const SubMenu = Menu.SubMenu;
-export default class MainUI extends Component {
+
+class MainUI extends Component {
 	constructor(props) {
 	  super(props);
 	
@@ -55,7 +57,7 @@ export default class MainUI extends Component {
       }
   }
 	render() {
-    let params = this.state.userid+'/'+this.state.getusersigid;
+    let params = '';//this.state.userid+'/'+this.state.getusersigid;
 		return (
 			 <section className="main">
                 <header className="fly-header">
@@ -105,17 +107,29 @@ export default class MainUI extends Component {
             </section>
 		);
 	}
-	componentDidMount() {
-        var params = JSON.parse(document.cookie);
-
+  componentWillMount() {
+     let  {validateUser,loginOut} = this.props;
+      var {userid,getusersigid,companyid,isover,usertypesign}=validateUser();
+      this.userid = userid;
+      this.getusersigid = getusersigid;
+      this.companyid = companyid;
+      this.isover = isover;
+      this.usertypesign = usertypesign;
+     
+      if(this.usertypesign !== 3 &&  this.usertypesign !== 4){
         
-        this.setState({
-            userid:params.userid,
-            isover:params.isover,
-            getusersigid:params.getusersigid
-        })
+        loginOut('您没有访问的权限');
+      }
 
-		  var hash = window.location.hash;
+  }
+	componentDidMount() {
+        
+    this.setState({
+        userid:this.userid,
+        isover:this.isover,
+        getusersigid:this.getusersigid
+    })
+		var hash = window.location.hash;
     if(hash.indexOf('#/user')>-1){
 		 this.setState({
           current: 'user',
@@ -137,3 +151,4 @@ export default class MainUI extends Component {
 		})
 	}
 }
+export default ZmitiValidateUser(MainUI);
