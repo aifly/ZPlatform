@@ -26,4 +26,8 @@ body {
   height: 100%;
   overflow: hidden; }
 
+.ant-tabs-bar {
+  color: #000 !important;
+  height: auto !important; }
+
 /*# sourceMappingURL=index.css.map */

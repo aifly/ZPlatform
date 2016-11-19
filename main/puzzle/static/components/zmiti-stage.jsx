@@ -48,7 +48,7 @@ export default class ZmitiStage extends React.Component {
         const props = {
             baseUrl: s.props.baseUrl,
             getusersigid: s.props.getusersigid,
-            userId: s.props.userId,
+            userid: s.props.userid,
             onFinish(imgData){
 
 

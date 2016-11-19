@@ -1,16 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
-import MainUI from './components/Main.jsx';
 
-import Icon from  'antd/lib/icon/index';
-import Menu  from  'antd/lib/menu';
-import Input from  'antd/lib/input';
-import Badge from  'antd/lib/badge';
-import 'antd/lib/icon/style/css';
-import 'antd/lib/menu/style/css';
-import 'antd/lib/input/style/css';
-import 'antd/lib/badge/style/css';
 import { Router, Route, hashHistory ,Link ,browserHistory } from 'react-router';
 import ZmitiHomeApp from './home/index.jsx';
 import ZmitiRichImgListApp from './richimg/list.jsx';
@@ -20,32 +11,42 @@ import ZmitiQaApp from './qa/index.jsx';
 import ZmitiUserDepartmentApp from './userdepartment/index.jsx';
 import ZmitiPersonalAccApp from './personalAcc/index.jsx';
 import ZmitiProject from './project/index.jsx';
-const SubMenu = Menu.SubMenu;
+import Obserable from './static/libs/obserable.js';
+import $ from 'jquery';
 class App extends React.Component{
     constructor(args) {
       super(...args);
   }
-
- 
 	render(){
-        return (
-             <Router history={hashHistory} >
-					    <Route path="/" component={ZmitiHomeApp}/>
-					    <Route path="/richimglist/" component={ZmitiRichImgListApp}/>
-					    <Route path="/puzzle/" component={ZmitiPuzzleApp}/>
-					    <Route path="/userdepartment/" component={ZmitiUserDepartmentApp}/>
-					    <Route path="/personalAcc/" component={ZmitiPersonalAccApp}/>
-					    <Route path="/richimg/" component={ZmitiRichImgApp}/>
-					    <Route path="/qa/" component={ZmitiQaApp}/>
-					    <Route path="/project/" component={ZmitiProject}/>
-					  </Router>
-        )
+		var apps =  [
+				{path:'/',app:ZmitiHomeApp},
+				{path:'/richimglist/',app:ZmitiRichImgListApp},
+				{path:'/puzzle/',app:ZmitiPuzzleApp},
+				{path:'/userdepartment/',app:ZmitiUserDepartmentApp},
+				{path:'/personalAcc/',app:ZmitiPersonalAccApp},
+				{path:'/richimg/',app:ZmitiRichImgApp},
+				{path:'/qa/',app:ZmitiQaApp},
+				{path:'/project/',app:ZmitiProject},
+			];
+    return (
+         <Router history={hashHistory} >
+         	{apps.map((app,i) =>{
+         		return <Route key={i} path={app.path} component={app.app}/>
+         	})}
+			  </Router>
+    )
 	}
-
   
 	componentDidMount() {
+		   
+        window.obserable = new Obserable();
 	}
 
 }
 
-ReactDOM.render(<App isAdmin={true}></App>, document.getElementById('fly-main'));
+$.getJSON(window.menuConfigUrl,(data)=>{
+	window.globalMenus = data.routers;
+	ReactDOM.render(<App></App>, document.getElementById('fly-main'));
+});
+
+

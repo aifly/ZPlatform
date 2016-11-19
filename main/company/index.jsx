@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import $ from 'jquery';
+import message from 'antd/lib/message';
+import 'antd/lib/message/style/css';
 
 import MainUI from '../admin/components/main.jsx';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
@@ -53,11 +55,11 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 		var columns1 = columns.concat( { 
 				title: '操作', 
 				dataIndex: '', key: 'x',
-				render: () => <div><a href="#">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"> 转正</a></div> });
+				render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.regular.bind(this)}> 转正</a></div> });
 		var columns2 = columns.concat( { 
 				title: '操作', 
 				dataIndex: '', key: 'x',
-				render: () => <div><a href="#">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"> 设置权限</a></div> })
+				render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)"> 设置权限</a></div> })
 		let props={
 			userList:this.state.userList,
 			columns:columns1,
@@ -70,49 +72,72 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 		);
 	}
 
-	getQueryString(name){
-      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-      var r = window.location.search.substr(1).match(reg);
-      if (r != null) return unescape(r[2]);
-      return null;
+  regular(e){//转正
+  	var userid = e.target.parentNode.getAttribute('data-userid');
+		var params = {
+				 getusersigid:this.getusersigid,
+           	 userid:this.userid,
+           	 setuserid:userid,
+           	 setisover:0 //0:正式用户，1 试用用户，2禁用用户，3已删除。
+		}
+		var baseUrl = window.baseUrl || 'http://api.zmiti.com/v2';
+		let s = this;
+		
+		$.ajax({
+			type:"post",
+			url:baseUrl+'user/disable_user/',
+			data:params,
+			success(data){
+				if(data.getret === 0){
+					message.success('操作成功');
+					s.state.userList.forEach(user=>{
+						if(user.userid === userid){
+							user.isover = 0;
+						}
+					});
+					s.forceUpdate();
+				}else{
+					message.error('操作失败');
+				}
+			}
+		})
   }
 
 	componentDidMount() {
 
-		  var {userid,getusersigid} = this.props.params;
-		  this.getusersingid = this.getusersigid = getusersigid;
-      this.userid =userid;
-      this.baseUrl = window.baseUrl;
-      
+		var {userid, getusersigid} = this.props.params;
+		this.getusersingid = this.getusersigid = getusersigid;
+		this.userid = userid;
+		this.baseUrl = window.baseUrl;
 
-      let  {validateUser} = this.props;
-      var {userid,getusersigid,companyid}=validateUser();
-      this.userid = userid;
-      this.getusersigid = getusersigid;
-      this.companyid = companyid;
-			var params = {
-			  getusersigid:this.getusersingid,
-       	 userid:this.userid,
-       	 setusertypesign:2
-			}
+		let {validateUser} = this.props;
+		var {userid, getusersigid, companyid}=validateUser();
+		this.userid = userid;
+		this.getusersigid = getusersigid;
+		this.companyid = companyid;
+		var params = {
+			getusersigid: this.getusersigid,
+			userid: this.userid,
+			setusertypesign: 2
+		}
 
-		
+
 		let s = this;
 		$.ajax({
-			type:"POST",
-			url:window.baseUrl+"/user/get_userlist/",
-			data:params,
+			type: "POST",
+			url: window.baseUrl + "/user/get_userlist/",
+			data: params,
 			success(data){
-				if(data.getret === 0){
+				if (data.getret === 0) {
 					s.setState({
-						userList:data.userlist
+						userList: data.userlist
 					})
 				}
-				else if(data.getret === -3){
+				else if (data.getret === -3) {
 					message.error('您没有访问的权限,请重新登录');
-					window.location.href='/';
+					window.location.href = '/';
 				}
-				
+
 			}
 
 		})

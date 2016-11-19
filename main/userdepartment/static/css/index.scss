@@ -420,3 +420,11 @@ $btnColor:#d8271d;
 
 }
 
+
+.ant-table-row{
+  &.disable{
+    td{
+      color:#a0a0a0;
+    }
+  }
+}

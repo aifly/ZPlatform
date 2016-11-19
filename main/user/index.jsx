@@ -56,11 +56,11 @@ export default class ZmitiUserApp extends Component {
 		var columns1 = columns.concat( { 
 				title: '操作', 
 				dataIndex: '', key: 'x',
-				render:  (text, record)  => <div data-userid={record.userid}><a href="#" data-index='0' style={{color:record.isover === 2?'red':''}} onClick={this.disableUser}>{record.isover === 2?'启用':'禁用'}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">延长试用</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onClick={this.transFormal}>转为正式用户</a></div> });
+				render:  (text, record)  => <div data-userid={record.userid}><a href='javascript:void(0)' data-index='0' style={{color:record.isover === 2?'':'red'}} onClick={this.disableUser}>{record.isover === 2?'启用':'禁用'}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>延长试用</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onClick={this.transFormal}>转为正式用户</a></div> });
 		var columns2= columns.concat( { 
 				title: '操作', 
 				dataIndex: '', key: 'x',
-				render: (text, record) => <div data-userid={record.userid}><a href="#" data-index='0'  style={{color:record.isover === 2?'red':''}} onClick={this.disableUser}>{record.isover === 2?'启用':'禁用'}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">设置权限</a></div> });
+				render: (text, record) => <div data-userid={record.userid}><a href='javascript:void(0)' data-index='0'  style={{color:record.isover === 2?'':'red'}} onClick={this.disableUser}>{record.isover === 2?'启用':'禁用'}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>设置权限</a></div> });
 		
 		let props={
 			userList:this.state.userList,
@@ -81,7 +81,7 @@ export default class ZmitiUserApp extends Component {
   }
 	componentDidMount() {
 		/*  var {userid,getusersigid} = this.props.params;
-		  this.getusersingid = this.getusersigid = getusersigid;
+		  this.getusersigid = this.getusersigid = getusersigid;
       this.userid =userid;
       this.baseUrl = window.baseUrl;*/
       
@@ -93,12 +93,10 @@ export default class ZmitiUserApp extends Component {
       this.companyid = companyid;
       
 		var params = {
-			  getusersigid:this.getusersingid,
+			  getusersigid:this.getusersigid,
         userid:this.userid,
        	setusertypesign:1
 		}
-
-		
 		let s = this;
 		$.ajax({
 			type:"POST",
@@ -123,6 +121,7 @@ export default class ZmitiUserApp extends Component {
 		})
 	}
 	disableUser(e){
+		e.preventDefault();
 		var userid = e.target.parentNode.getAttribute('data-userid');
 		var isover = -1;
 		this.state.userList.forEach(user=>{
@@ -135,7 +134,7 @@ export default class ZmitiUserApp extends Component {
 		}
 
 		var params = {
-			 getusersigid:this.getusersingid,
+			 getusersigid:this.getusersigid,
            	 userid:this.userid,
            	 setuserid:userid,
            	 setisover:isover === 2 ? 0 : 2 //0:正式用户，1 试用用户，2禁用用户，3已删除。
@@ -165,12 +164,12 @@ export default class ZmitiUserApp extends Component {
 	transFormal(e){//转成正式用户
 		var userid = e.target.parentNode.getAttribute('data-userid');
 		var params = {
-				 getusersigid:this.getusersingid,
+				 getusersigid:this.getusersigid,
            	 userid:this.userid,
            	 setuserid:userid,
            	 setisover:0 //0:正式用户，1 试用用户，2禁用用户，3已删除。
 		}
-		var baseUrl = window.parent.baseUrl || 'http://api.zmiti.com/v2';
+		var baseUrl = window.baseUrl || 'http://api.zmiti.com/v2';
 		let s = this;
 		
 		$.ajax({

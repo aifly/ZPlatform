@@ -27,19 +27,22 @@ class App extends React.Component{
 
  
 	render(){
-        return (
-             <Router history={hashHistory} >
-					    <Route path="/" component={ZmitiUserApp}/>
-					    <Route path="/user/" component={ZmitiUserApp}/>
-					    <Route path="/company" component={ZmitiCompanyApp}/>
-					    <Route path="/system" component={ZmitiSystemApp}/>
-					  </Router>
-        )
+
+			var apps =  [
+				{path:'/',app:AdminIndex},
+				{path:'/user/',app:ZmitiUserApp},
+				{path:'/company/',app:ZmitiCompanyApp},
+				{path:'/system/',app:ZmitiSystemApp}
+			];
+    return (
+         <Router history={hashHistory} >
+         	{apps.map((app,i) =>{
+         		return <Route key={i} path={app.path} component={app.app}/>
+         	})}
+			  </Router>
+    );
 	}
-	navigateToPage (){
-    this.context.router.push('/user');
-  };
-  
+
 	componentDidMount() {
 	}
 

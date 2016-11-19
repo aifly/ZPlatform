@@ -9,12 +9,14 @@ import 'antd/lib/input/style/css';
 import 'antd/lib/badge/style/css';
 import message from 'antd/lib/message';
 import 'antd/lib/message/style/css';
-import { Link } from 'react-router'; 
+import { Link } from 'react-router';
 const SubMenu = Menu.SubMenu;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import {utilMethods,_$,$$} from '../utilMethod.es6';
+import $ from 'jquery';
 
- class MainUI extends React.Component {
+
+class MainUI extends React.Component {
     constructor(args) {
         super(...args);
 
@@ -28,9 +30,12 @@ import {utilMethods,_$,$$} from '../utilMethod.es6';
             rightWidth:0,
             getusersigid:'',
             userid:'',
+            usertypesign:-1,
             isover:-1,
             baseUrl:'http://api.zmiti.com/v2/',
-            companyId:''
+            companyId:'',
+            routers:[],
+            defaultOpenKeys:'sub1'
             
         }
     }
@@ -72,26 +77,60 @@ import {utilMethods,_$,$$} from '../utilMethod.es6';
 
         var params = this.state.userid+'/'+this.state.getusersigid;
 
+        var hash = window.location.hash;
+        var defaultOpenKeys = 'sub1';
+        if(hash.indexOf('userdepartment')>-1||hash.indexOf('project')>-1){
+            defaultOpenKeys = 'sub2';
+        }else if(hash.indexOf('personalAcc')>-1){
+            defaultOpenKeys = 'sub3';
+        }
+
         if(this.state.isCompany){
-            companyMenu = [1].map((item,i)=>{
+            this.userMenuConfig = [//用户中心下的菜单
+                {
+                    "linkTo":"/userdepartment/",
+                    "key":"userdepartment",
+                    "title":"用户和部门",
+                    "isIcon":true,
+                    "type":"team",
+                    "isShow":true
+                },{
+                    "linkTo":"/project/",
+                    "key":"project",
+                    "title":"项目管理",
+                    "isIcon":true,
+                    "type":"picture",
+                    "isShow":true
+                }
+            ];
+            companyMenu = [1].map((it,i)=>{
                 return <SubMenu key="sub2" title={<span><Icon type="user" style={{marginRight:'22px'}} /><span>用户中心</span></span>}>
-                <Menu.Item key="userdepartment"><Icon type="team" style={{marginRight:'32px'}}/><Link to={'/userdepartment/'}>用户和部门</Link></Menu.Item>
-                    <Menu.Item key="project"><Icon  type="picture" style={{marginRight:'32px'}}/><Link to={'/project/'}>项目管理</Link></Menu.Item>
-                    <Menu.Item key="7"><Icon type="user" style={{marginRight:'32px'}}/>办公管理</Menu.Item>
-                    <Menu.Item key="8"><Icon type="user" style={{marginRight:'32px'}}/>作品管理</Menu.Item>
-                    <Menu.Item key="9"><Icon type="picture" style={{marginRight:'32px'}}/>素材管理</Menu.Item>
-                    <Menu.Item key="10"><Icon type="user" style={{marginRight:'32px'}}/>系统日志</Menu.Item>
-                </SubMenu>;
+                            {this.userMenuConfig.map(item=>{
+                                return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                            })}
+                        </SubMenu>;
             });
         }
 
+        this.singleUserMenuConfig = [//个人中心下的菜单列表
+            {
+                "linkTo":"/personalAcc/",
+                "key":"personalAcc",
+                "title":"账号管理",
+                "isIcon":true,
+                "type":"user",
+                "isShow":true
+            }
+        ]
+
+        var configMenus =window.globalMenus;
         return (
-            <section className="main">
+            <section className={"main " + (this.props.className || '')}>
                 <header className="fly-header" onClick={this.menuClickHandler}>
                     <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    <div style={{display:this.state.isover === 0?'block':'none'}} className="fly-nav"><a href={window.adminUrl+"/admin/#/"}>系统管理</a></div>
+                    {(this.state.usertypesign === 4||this.state.usertypesign === 3) && <div className="fly-nav"><a href={window.adminUrl+"/admin/#/"}>系统管理</a></div>}
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
                     <div></div>
@@ -115,22 +154,21 @@ import {utilMethods,_$,$$} from '../utilMethod.es6';
                         <div className="fly-menu-c">
                             <Menu
                                   style={{ width: 180 }}
-                                  defaultOpenKeys={['sub1']}
+                                  defaultOpenKeys={[defaultOpenKeys]}
                                   selectedKeys={[this.state.current]}
                                   mode="inline">
                                 <SubMenu key="sub1"
                                          title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>产品与服务</span></span>}>
-                                         <Menu.Item key="zmiti" ><Icon  type='mobile' style={{marginRight:'32px'}}/><Link to={"/"}>微场景</Link></Menu.Item>
-                                    <Menu.Item key="qa"><Icon  type="question-circle-o" style={{marginRight:'32px'}}/><Link to={'/qa/'}>微问答</Link></Menu.Item>
-                                    <Menu.Item key='richimg'><Icon  type="picture" style={{marginRight:'32px'}}/><Link to={'/richimglist/'}>富图片</Link></Menu.Item>
-                                    <Menu.Item key="puzzle"><Icon  type="picture" style={{marginRight:'32px'}}/><Link to={'/puzzle/'}>拼图</Link></Menu.Item>
+                                     {configMenus.map(item=>{
+                                        return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                     })}
                                 </SubMenu>
                                 {companyMenu}
-                                <SubMenu key="sub4"
+                                <SubMenu key="sub3"
                                          title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>个人中心</span></span>}>
-                                         <Menu.Item key="personalAcc"><Icon type="user" style={{marginRight:'32px'}}/><Link to={'/personalAcc/'}>账号管理</Link></Menu.Item>
-                                    <Menu.Item key="10"><Icon type="customerservice" style={{marginRight:'32px'}}/>续费管理</Menu.Item>
-                                    <Menu.Item key="11"><Icon type="edit" style={{marginRight:'32px'}}/>办公系统</Menu.Item>
+                                    {this.singleUserMenuConfig.map(item=>{
+                                        return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                    })}
                                 </SubMenu>
                             </Menu>
                             <div className="fly-menu-bottom">
@@ -148,41 +186,47 @@ import {utilMethods,_$,$$} from '../utilMethod.es6';
     
     componentWillMount(){
       let  {validateUser} = this.props;
-      var {userid,getusersigid,companyid,isover}=validateUser();
+      var {userid,getusersigid,companyid,isover,usertypesign}=validateUser();
       this.userid = userid;
       this.getusersigid = getusersigid;
       this.companyid = companyid;
       this.isover = isover;
+      this.usertypesign = usertypesign;
     }
 
     componentDidMount() {
             
+       /* var s = this;
+        $.getJSON('../config/menuconfig.json',(data)=>{
+            s.setState({
+                routers:data.routers
+            });
+        });*/
 
-            var hash = window.location.hash;
-            var current = '';
-            if(hash.indexOf('puzzle')>-1){
-                current = 'puzzle';
-            }else if(hash.indexOf('richimg')>-1){
-                current='richimg';
-            }else if(hash.indexOf('qa')>-1){
-                current='qa';
-            }else if(hash.indexOf('userdepartment')>-1){
-                current='userdepartment';
-            }else if(hash.indexOf('personalAcc')>-1){
-                current='personalAcc';
+        var hash = window.location.hash;
+        var current = '';
+        var configMenus =window.globalMenus;
+        if(this.userMenuConfig){
+            configMenus = configMenus.concat(this.userMenuConfig);
+        }
+        configMenus = configMenus.concat(this.singleUserMenuConfig);
+        configMenus.forEach(item=>{
+            if(hash.indexOf(item.key)>-1){
+                current = item.key;
             }
-            else if(hash.indexOf('project')>-1){
-                current='project';
-            }
-            this.setState({
-                isCompany:this.companyid,
-                companyId:this.companyid,
-                userid:this.userid,
-                current:current,
-                isover:this.isover,
-                getusersigid:this.getusersigid,
-                rightWidth:document.documentElement.clientWidth - 180
-            })
+        });
+
+        this.setState({
+            isCompany:this.companyid,
+            companyId:this.companyid,
+            userid:this.userid,
+            current:current,
+            usertypesign:this.usertypesign,
+            isover:this.isover, 
+            getusersigid:this.getusersigid,
+            rightWidth:document.documentElement.clientWidth - 180
+        });
+
        /* window.addEventListener('message',function(event) {
             alert(1234)
             console.log('message received:  ' + event.data,event);

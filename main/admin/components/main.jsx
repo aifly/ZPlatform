@@ -57,7 +57,44 @@ class MainUI extends Component {
       }
   }
 	render() {
+
     let params = '';//this.state.userid+'/'+this.state.getusersigid;
+
+    this.userManagerMenuConfig = [
+       {
+          "linkTo":"/user/",
+          "key":"user",
+          "title":"个人账户管理",
+          "isIcon":true,
+          "type":"user",
+          "isShow":true
+      }, {
+          "linkTo":"/company/",
+          "key":"company",
+          "title":"公司账户管理",
+          "isIcon":true,
+          "type":"customerservice",
+          "isShow":true
+      }
+    ];
+    if(this.usertypesign===4){
+      this.userManagerMenuConfig.push( {
+          "linkTo":"/system/",
+          "key":"system",
+          "title":"系统账户管理",
+          "isIcon":true,
+          "type":"edit",
+          "isShow":true
+      })
+    }
+
+    var openKey = 'sub5';
+    this.userManagerMenuConfig.forEach(item=>{
+      if(item.key.indexOf('#/user/')>-1){
+
+      }
+    });
+
 		return (
 			 <section className="main">
                 <header className="fly-header">
@@ -88,14 +125,14 @@ class MainUI extends Component {
                         <div className="fly-menu-c">
                             <Menu
                                   style={{ width: 180 }}
-                                  defaultOpenKeys={['sub5']}
+                                  defaultOpenKeys={[openKey]}
                                   selectedKeys={[this.state.current]}
                                   mode="inline">
                                 <SubMenu key="sub5"
                                 title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>用户管理</span></span>}>
-                                    <Menu.Item key="user"><Icon type="user" style={{marginRight:'32px'}}/><Link to={"/user/"+params}>个人账户管理</Link></Menu.Item>
-                                    <Menu.Item key="company"><Icon type="customerservice" style={{marginRight:'32px'}}/><Link to={"/company/"+params}>公司账户管理</Link></Menu.Item>
-                                    <Menu.Item key="system"><Icon type="edit" style={{marginRight:'32px'}}/><Link to={"/system/"+params}>系统账户管理</Link></Menu.Item>
+                                     {this.userManagerMenuConfig.map(item=>{
+                                        return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                     })}
                                 </SubMenu>
                             </Menu>
                         </div>
@@ -108,46 +145,40 @@ class MainUI extends Component {
 		);
 	}
   componentWillMount() {
-     let  {validateUser,loginOut} = this.props;
+      let  {validateUser,loginOut} = this.props;
       var {userid,getusersigid,companyid,isover,usertypesign}=validateUser();
-      this.userid = userid;
-      this.getusersigid = getusersigid;
-      this.companyid = companyid;
-      this.isover = isover;
-      this.usertypesign = usertypesign;
+        this.userid = userid;
+        this.getusersigid = getusersigid;
+        this.companyid = companyid;
+        this.isover = isover;
+        this.usertypesign = usertypesign;
+        this.loginOut = loginOut;
      
       if(this.usertypesign !== 3 &&  this.usertypesign !== 4){
-        loginOut('您没有访问的权限');
+        loginOut('您没有访问的权限',window.mainUrl);
       }
 
   }
 	componentDidMount() {
         
+    
+		var hash = window.location.hash;
+    var configs = this.userManagerMenuConfig;
+    var current =  '';
+    configs.forEach(item=>{
+      if(hash.indexOf('#'+item.linkTo)>-1){
+        current = item.key;
+      }
+    });
     this.setState({
+        current: current,
+        rightWidth:document.documentElement.clientWidth - 180,
         userid:this.userid,
         isover:this.isover,
         getusersigid:this.getusersigid
-    })
-		var hash = window.location.hash;
-    if(hash.indexOf('#/user')>-1){
-		 this.setState({
-          current: 'user',
-      });
-		 
-    }
-    else if(hash.indexOf('#/company')>-1){
-    	 this.setState({
-          current: 'company',
-      });
-    }
-    else if(hash.indexOf('#/system')>-1){
-		 			this.setState({
-		          current: 'system',
-		      });
-    }
-		this.setState({
-			rightWidth:document.documentElement.clientWidth - 180
-		})
+    });
+   
+		
 	}
 }
 export default ZmitiValidateUser(MainUI);

@@ -21,7 +21,6 @@ import zM from './statices/images/z-m.png';
 import zPs from './statices/images/z-ps.png';
 import zT from './statices/images/z-t.png';
 
-
 //console.log(cCenter,pc,a,c,i,mobile,pad,t,v,v1,zAi,zE,zI,zM,zPs,zT);
 
 
@@ -835,7 +834,7 @@ window.addEventListener('load', ()=> {
                         console.log(e)
                     },
                     success(d){
-                     
+                        console.log(d)
                         if (d.getret === 0) {
                             data.loginMask.removeClass('show');
 
@@ -894,8 +893,12 @@ window.addEventListener('load', ()=> {
                             self.removeErrorInfo($(".login-error-info"), "fail");
                             $(e.target).removeClass("shadow").removeClass("hide").parent().find('.loading').removeClass("show");
                         }
-                        else if (d.getret === -101) {
-                            alert('系统错误！');
+                        else{
+                            $('#fly-msg').html(d.getmsg).addClass('active');
+                            setTimeout(()=>{
+                                $('#fly-msg').removeClass('active');
+                            },2000)
+                            $(e.target).removeClass("shadow").removeClass("hide").parent().find('.loading').removeClass("show");
                         }
                     }
                 });

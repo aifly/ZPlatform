@@ -104,12 +104,11 @@ export default class ZmitiUploadDialog extends React.Component {
 
 
             var params ={
-                    "setdatainfotype": data.type,
+                    "setdatainfotype": data.type || 0,
                     "getusersigid": self.props.getusersigid,
-                    "userid":self.props.userId,
+                    "userid":self.props.userid,
                     "setdatainfoclassid": self.state.defaultIds[self.state.current]
                 };
-
            
             $.ajax({//获取当前分类信息.
                 url: self.props.baseUrl + self.props.cateUrl + 'get_datainfo',
@@ -138,7 +137,6 @@ export default class ZmitiUploadDialog extends React.Component {
                         img.parentName.imgs[i] && ( img.parentName.imgs[i].index = i); // 记录全部分类下面的图片所属哪个分类.
                         self.state.allData[self.state.current].imgs = self.state.allData[self.state.current].imgs.concat(img.parentName.imgs);
                     });
-
                     self.forceUpdate();
 
                 },
@@ -419,6 +417,8 @@ export default class ZmitiUploadDialog extends React.Component {
             this.state.ajaxData[this.state.current][this.state.currentCate].parentName.imgs&&(  imgList = this.getImageFigcaption(this.state.ajaxData[this.state.current][this.state.currentCate].parentName.imgs));
         }
 
+
+
         return (
             <div className="zmiti-upload-C">
                 <Modal title="资料库" width={1000} className="zmiti-upload-C" visible={this.state.visible}
@@ -501,19 +501,17 @@ export default class ZmitiUploadDialog extends React.Component {
         //console.log( this.refs['upload-file'].files[0]);
 
         $.ajax({
-            url:s.props.baseUrl + s.props.uploadUrl,// 'http://192.168.23.2/v2/upload/upload_file/',//
+            url:window.baseUrl + s.props.uploadUrl,// 'http://192.168.23.2/v2/upload/upload_file/',//
             type: "POST",
             contentType: false,
             processData: false,
             data: formData,
             success(da){
-
-
                 if (da.gettips) {//
                     message.error(d.gettips[0]);
                     return;
                 }
-
+                console.log(da)
                 if (da.getret === 0) {
 
                     message.success(da.getmsg, 4);

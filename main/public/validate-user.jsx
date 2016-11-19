@@ -9,10 +9,10 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	  this.state = {};
 	}
 
-	loginOut(errorMsg='登录超时'){
+	loginOut(errorMsg='登录超时',url=window.loginUrl){
 			message.error(errorMsg);
       setTimeout(()=>{
-     	   window.location.href= window.loginUrl;    
+     	   window.location.href= url;    
       },1000);	
 	}
 

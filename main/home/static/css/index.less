@@ -141,7 +141,7 @@ body {
   font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
   font-size: 14px;
   height: 100%;
-  background:@bgColor !important;
+
 }
 @baseColor:#99071e;
 #fly-main{
@@ -586,6 +586,7 @@ body {
 
         .att-work-time{
           .position(r);
+
           &:before{
             height:100%;
             content: '';
@@ -598,7 +599,7 @@ body {
         }
 
         .att-month{
-
+          
           text-align: center;
 
           div.behavior{
@@ -623,8 +624,10 @@ body {
         .displayFlex(row);
         article{
           flex-grow: 2;
+          
           &:nth-of-type(2){
             flex-grow:1;
+            
           }
         }
 
@@ -635,8 +638,12 @@ body {
           margin-top:10px;
           aside{
             flex-grow: 1;
+             &:nth-of-type(1){
+               margin-top: 7px;
+            }
             &>div{
-              font-size:18px;
+              font-size:1vw;
+
             }
 
 

@@ -218,4 +218,7 @@ body {
     top: 100%;
     margin-top: -6px; }
 
+.ant-table-row.disable td {
+  color: #a0a0a0; }
+
 /*# sourceMappingURL=index.css.map */

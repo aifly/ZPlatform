@@ -16,15 +16,9 @@ import 'antd/lib/button/style/css';
 
 import MainUI from '../components/Main.jsx';
 import  createjs from './static/js/createjs.js';
+import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
-
-
-
-
-
-
-
-export default class ZmitiPuzzleApp extends React.Component{
+class ZmitiPuzzleApp extends React.Component{
     constructor(args){
         super(...args);
 
@@ -71,10 +65,17 @@ export default class ZmitiPuzzleApp extends React.Component{
         var style = {
             width:100
         }
+
+       let  {validateUser} = this.props;
+          var {userid,getusersigid,companyid}=validateUser();
+          this.userid = userid;
+          this.getusersigid = getusersigid;
+          this.companyid = companyid;
         let props = {
-            getusersigid:window.parent.getusersingid,
-            userId:window.parent.userId
+            getusersigid:getusersigid,
+            userid:userid
         }
+
         let component = <div className="p-main-ui" style={style}>
                 <ZmitiStage  {...this.props} {...props} ></ZmitiStage>
                 <ZmitiPannel></ZmitiPannel>
@@ -86,7 +87,7 @@ export default class ZmitiPuzzleApp extends React.Component{
     }
 
 }
-
+export default ZmitiValidateUser(ZmitiPuzzleApp);
 ZmitiPuzzleApp.defaultProps = {
     baseUrl: 'http://api.zmiti.com/v2/',//http://webapi.zmiti.com/v1/
     getusersigid: "09ab77c3-c14c-4882-9120-ac426f527071"

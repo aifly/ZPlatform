@@ -505,7 +505,30 @@
                 -webkit-transform: translate3d(0, 0, 0);
             }
         }
-
+        #fly-msg{
+            position: fixed;
+            z-index: 100;
+            left: 48%;
+            top: 100px;
+            font-size: 12px;
+            background: #e5e5e5;
+            display: inline-block;
+            border-radius: 4px;
+            padding: 4px 10px;
+            height: 20px;
+            line-height: 20px;
+            color:#f00;
+            transition: 500ms;
+            -webkit-transition: 500ms;
+            -webkit-transform: translate(0,-200px);
+            transform: translate(0,-200px);
+            opacity: 0;
+        }
+        #fly-msg.active{
+            -webkit-transform: translate(0,0);
+            transform: translate(0,0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -670,7 +693,7 @@
     </section>
 </div>
 
-
+    <span id='fly-msg'></span>
 
 <span id="keleyivisitorip" style="opacity: 0;z-index: -1;position:fixed;"></span>
 <script>
