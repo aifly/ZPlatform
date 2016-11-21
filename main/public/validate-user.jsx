@@ -20,12 +20,16 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		var s = this;
 		 try{
 		 	 var params = JSON.parse(document.cookie);
+		 	 
         return {
         	userid:params.userid,
         	getusersigid:params.getusersigid,
         	companyid:params.companyid,
         	isover:params.isover,
-        	usertypesign:params.usertypesign
+        	usertypesign:params.usertypesign,
+        	username:params.username,
+        	usermobile:params.usermobile,
+        	useremail:params.useremail,
         }
 		 }
 		 catch(e){
@@ -38,7 +42,10 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
         	getusersigid:-1,
         	companyid:-1,
         	isover:-1,
-        	usertypesign:-1
+        	usertypesign:-1,
+        	username:'',
+        	usermobile:'',
+        	useremail:''
         };
 		 }
 	}

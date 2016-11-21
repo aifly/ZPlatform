@@ -174,6 +174,7 @@ body {
     height:300px;
     .displayFlex(row);
 
+
     figure{
       flex-grow: 1;
       height:100%;
@@ -205,6 +206,7 @@ body {
         background: #ccc;
         padding:30px;
         margin:0;
+        padding-bottom: 10vw;
         li{
           height:30px;
           line-height:30px;
@@ -271,7 +273,7 @@ body {
           div{
             line-height:35px;
             .current-user{
-              font-size:30px;
+              font-size:1.2vw;
             }
           }
           div.account{
@@ -445,28 +447,41 @@ body {
     }
     .msg{
       .product-title{
-        width:90%;
+        width:24vw;
         margin:10px auto;
         font-weight: normal;
         color: @baseColor;
       }
+      @size:4vw;
       .product-item{
-        width:80%;
-        margin:20px auto;
-        .displayFlex(row);
+        width:24vw;
+        margin:.5vw auto;
+        overflow: hidden;
+        height: @size;
+        box-sizing: border-box;;
+        
         .product-thum{
-          width:60px;
-          height:60px;
+          
+          width:@size !important;
+          height:@size !important;
           border:1px solid #ccc;
-          margin-right:20px;
+          float: left;
         }
         .product-name{
+          width: 19vw;
+          margin-left: 1vw;
+          float: left;
+          height: @size;
+
           h4{
-            font-size:16px;
+            font-size:1vw;
             margin-top:2px;
           }
           p{
             margin-top:10px;
+            width: 20vw;
+            overflow: hidden;white-space:nowrap;  
+            text-overflow:ellipsis;
           }
         }
       }

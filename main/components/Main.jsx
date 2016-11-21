@@ -186,22 +186,20 @@ class MainUI extends React.Component {
     
     componentWillMount(){
       let  {validateUser} = this.props;
-      var {userid,getusersigid,companyid,isover,usertypesign}=validateUser();
+      var {userid,getusersigid,companyid,isover,usertypesign,username,usermobile,useremail}=validateUser();
       this.userid = userid;
       this.getusersigid = getusersigid;
       this.companyid = companyid;
       this.isover = isover;
       this.usertypesign = usertypesign;
+      this.username = username;
+      this.usermobile = usermobile;
+      this.useremail = useremail;
+
     }
 
     componentDidMount() {
-            
-       /* var s = this;
-        $.getJSON('../config/menuconfig.json',(data)=>{
-            s.setState({
-                routers:data.routers
-            });
-        });*/
+      
 
         var hash = window.location.hash;
         var current = '';
@@ -216,6 +214,8 @@ class MainUI extends React.Component {
             }
         });
 
+        
+
         this.setState({
             isCompany:this.companyid,
             companyId:this.companyid,
@@ -224,21 +224,11 @@ class MainUI extends React.Component {
             usertypesign:this.usertypesign,
             isover:this.isover, 
             getusersigid:this.getusersigid,
-            rightWidth:document.documentElement.clientWidth - 180
+            rightWidth:document.documentElement.clientWidth - 180,
+            currentAcc:this.usermobile || this.useremail,
+            username:this.username
         });
 
-       /* window.addEventListener('message',function(event) {
-            alert(1234)
-            console.log('message received:  ' + event.data,event);
-            alert('ok')
-
-        },false);*/
-
-       /* setTimeout(()=> {
-            $$('.fly-nav a').forEach((a)=> {
-                utilMethods.addClass(a, 'active');
-            });
-        }, 0)*/
     }
 }
 

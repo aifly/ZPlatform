@@ -41,8 +41,12 @@ import MainUI from '../components/Main.jsx';
     componentDidMount(){
 
         let  {validateUser} = this.props;
-        var {userid}=validateUser();
-        console.log(userid)
+        var {userid,username}=validateUser();
+        this.userid = userid;
+        this.username = username;
+        this.setState({
+            currentUser:this.username
+        })
     }
 
     render(){

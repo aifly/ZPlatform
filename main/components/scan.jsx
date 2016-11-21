@@ -9,11 +9,11 @@ export default class ZmitiScan extends React.Component {
         this.state = {
             scanW: 0,
             data: [
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"},
-                {src: "./static/images/user.png"}
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"}
             ],
             iNow: 0
         }
@@ -25,15 +25,15 @@ export default class ZmitiScan extends React.Component {
         s.setState({
             scanW: width / 5,
             data: [
-                {src: "./personalAcc/static/images/user.png"},
-                {src: "./personalAcc/static/images/user.png"},
-                {src: "./personalAcc/static/images/user.png"},
-                {src: "./personalAcc/static/images/user.png"},
-                {src: "./personalAcc/static/images/user.png"},
-                {src: "./personalAcc/static/images/user.png"},
-                {src: "./personalAcc/static/images/user.png"},
-                {src: "./personalAcc/static/images/user.png"},
-                {src: "./personalAcc/static/images/user.png"}
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"},
+                {src: "./personalAcc/static/images/user.jpg"}
             ]
         })
 

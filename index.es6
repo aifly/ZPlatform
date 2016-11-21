@@ -861,7 +861,10 @@ window.addEventListener('load', ()=> {
                                 userid:d.userid,
                                 companyid:d.companyid,
                                 isover:d.isover,
-                                usertypesign:d.usertypesign
+                                usertypesign:d.usertypesign,
+                                username:d.username || $("input[name='username']").val(),
+                                usermobile:d.usermobile || '',
+                                useremail:d.useremail||''
                             }
                          
                             var p = JSON.stringify(params);
@@ -966,7 +969,8 @@ window.addEventListener('load', ()=> {
                     username: $('input[name="reg-username"]').val(),
                     userpwd: $('input[name="reg-pass"]').val(),
                     usertypesign: company,
-                    companyname: $('input[name="reg-company"]').val()
+                    companyname: $('input[name="reg-company"]').val(),
+                    usertypesign:$('input[name="reg-company"]').val()?2:1
                 };
                 dd.useremail = email.val().indexOf('@') > -1 ? email.val() : '';
                 dd.usermobile = email.val().indexOf('@') > -1 ? '' : email.val();

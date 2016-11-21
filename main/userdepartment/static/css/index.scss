@@ -140,8 +140,8 @@ body {
 }
 
 
-$baseColor:#99071e;
-$btnColor:#d8271d;
+$baseColor:#4eafda;
+$btnColor:#2db7f5;
 
   .ant-tree li a{
       padding:0 10px !important;
@@ -163,7 +163,7 @@ $btnColor:#d8271d;
       color:$baseColor !important;
     }
     .ant-tabs-bar{
-      border-color:#be5841;
+      border-color:$baseColor;
       background:none !important;
       height: auto;
     }
@@ -178,6 +178,9 @@ $btnColor:#d8271d;
     }
 
 .ud-main-ui{
+  .ant-btn-primary,.ant-input{
+    @include br(3px);
+  }
   width: 100%;
   height:100vh;
   @include displayFlex(horizontal);
@@ -193,7 +196,7 @@ $btnColor:#d8271d;
       color:$baseColor !important;
     }
     .ant-tabs-bar{
-      border-color:#be5841;
+      border-color:$baseColor;
       background:none !important;
       height: auto;
     }
@@ -220,7 +223,7 @@ $btnColor:#d8271d;
     width: $leftSize;
     background:#EAEDF1;
     .ant-tabs-ink-bar{
-      background-color:#a30b17;
+      background-color:$baseColor;
     }
     
   }
@@ -254,7 +257,7 @@ $btnColor:#d8271d;
 
        .ant-btn{
           background:$btnColor !important;
-          border-color:#e2534a !important;
+          border-color:$btnColor !important;
           color:#fff !important;
         }
          .ant-btn-ghost{
@@ -263,7 +266,7 @@ $btnColor:#d8271d;
          }
           .ant-btn-clicked{
             &:after{
-              border: 0 solid #e2534a !important;
+              border: 0 solid $baseColor !important;
             }
       }
 
@@ -277,8 +280,7 @@ $btnColor:#d8271d;
           background-color: #fff !important;
           border-color: #bf1616 !important;
           box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1) !important;
-      }
-      $btnColor:#d8271d;
+      } 
       .ant-input,.ant-select-selection{
         border-color:$btnColor ;
       }

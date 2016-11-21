@@ -99,8 +99,8 @@ import 'antd/lib/spin/style/css';
 			 title: '状态',
 			 dataIndex: '', key: 'x',
 			 render: (text, record) => <div data-userid={record.key} data-isover={record.isover}><a
-				 href='javascript:void(0)' data-index='0' style={{color:record.isover === 2?'':'red'}}
-				 onClick={this.operatorSingleUser.bind(this)}>{record.isover === 2 ? '启用' : '禁用'}</a></div>
+				 href='javascript:void(0)' data-index='0' style={{color:record.isover === 2?'red':''}}
+				 onClick={this.operatorSingleUser.bind(this)}>{record.isover === 2 ? '禁用' : '正常'}</a></div>
 		 }
 		 ]
 
@@ -337,38 +337,54 @@ import 'antd/lib/spin/style/css';
 			 success(data){
 				 ///data = JSON.parse(data);
 
-				 var data = data.getdata;
+					console.log(data);
 
-				 var departmentData = [];
-				 data.treeData.forEach(dep=> {
+					
+				 if(data.getret === 0){
+				 		 var data = data.getdata;
 
-					 var str = JSON.stringify(dep);
-					 str = str.replace(/key/gi, 'value');
-					 str = str.replace(/title/gi, 'label');
-					 var d = JSON.parse(str)
-					 departmentData.push({
-						 value: d.value,
-						 label: d.label,
-						 children: d.children
-					 });
-				 });
+				 			 var departmentData = [];
+									 data.treeData.forEach(dep=> {
 
-				 s.parentId = data.treeData[0].key;
-				 s.defaultUserList = data.treeData[0];
-				 s.setState({
-					 treeData: data.treeData,
-					 totalUserNum: data.totalUserNum,
-					 disableUserNum: data.disableUserNum,
-					 spinning:false,
-					 departmentData: departmentData,
-					 currentDepartment: {
-						 title: data.treeData[0].title,
-						 key: data.treeData[0],
-						 userList: s.defaultUserList.userList
-					 },
+										 var str = JSON.stringify(dep);
+										 str = str.replace(/key/gi, 'value');
+										 str = str.replace(/title/gi, 'label');
+										 var d = JSON.parse(str)
+										 departmentData.push({
+											 value: d.value,
+											 label: d.label,
+											 children: d.children
+										 });
+									 });
 
-				 });
-			 }
+									 s.parentId = data.treeData[0].key;
+									 s.defaultUserList = data.treeData[0];
+									 s.setState({
+											 treeData: data.treeData,
+											 totalUserNum: data.totalUserNum,
+											 disableUserNum: data.disableUserNum,
+											 spinning:false,
+											 departmentData: departmentData,
+											 currentDepartment: {
+												 title: data.treeData[0].title,
+												 key: data.treeData[0],
+												 userList: s.defaultUserList.userList
+											 },
+
+									 });
+								 }
+					else{
+						s.setState({
+							spinning:false
+						})
+						message.error(data.getmsg);
+
+					}
+
+				}
+ 
+
+			
 		 });
 
 	 }
@@ -450,7 +466,28 @@ import 'antd/lib/spin/style/css';
 
 	 deleteDepartment() {//删除部门
 		 	var s = this;
-		 this.operatorDepartment(2);
+		 this.operatorDepartment(2,function(){
+		 		var loop = treeData =>{
+						treeData.forEach((item,i)=>{
+							if(item.key === s.parentId){
+								  treeData.splice(i,1);
+							}	
+							else{
+								 if(item.children){
+								 	 loop(item.children);
+								 }
+							}
+						});
+					}
+
+					loop(s.state.treeData);
+
+					s.state.currentDepartment.userList.forEach(dep=>{
+						dep.departmentname = departmentName;
+					})
+
+					s.forceUpdate();
+		 });
 	 }
 
  
@@ -520,20 +557,20 @@ import 'antd/lib/spin/style/css';
 				departmentname:departmentName
 			}
 
-		 if(s.parentId === s.companyid){ //修改公司的名称
-		 		url = window.baseUrl+'user/update_company/';
-		 		params ={
-					userid: s.userid,
-					getusersigid: s.getusersigid,
-					type:type,
-					companyid:s.parentId,
-					companyname:departmentName
-				}
-				if(type === 2){//删除公司
-						//
-						message.error('你不能删除公司');
-						return;
-				}
+		 if(s.parentId === s.companyid) { //修改公司的名称
+			 url = window.baseUrl + 'user/update_company/';
+			 params = {
+				 userid: s.userid,
+				 getusersigid: s.getusersigid,
+				 type: type,
+				 companyid: s.parentId,
+				 companyname: departmentName
+			 }
+			 if (type === 2) {//删除公司
+				 //
+				 message.error('你不能删除公司');
+				 return;
+			 }
 		 }
 		 
 		$.ajax({
@@ -786,6 +823,11 @@ import 'antd/lib/spin/style/css';
 	 			isover = 2;
 	 		}
 	 		var s = this;
+
+	 		if(userid === this.userid){
+	 			message.error('您不能禁用自己');
+	 			return;
+	 		}
 
 	 		this.operatorUser(isover,userid,()=>{
 	 				s.state.currentDepartment.userList.forEach(user=>{

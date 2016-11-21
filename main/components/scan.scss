@@ -137,44 +137,68 @@ $baseColor:#99071e;
   height:20vh;
   border:1px solid #ccc;
   margin:0 auto;
+  @include br(3px);
   @include displayFlex(row);
   .acc-ar-l{
     &:before{
-      content: '';
+      content: '<';
       @include pos(a);
-      width:0;
-      left: 10px;
+      left: 50%;
       cursor: not-allowed;
-      height:0;
+      
+     /*  height:0;
       border-top: 30px solid transparent;
       border-right: 40px solid #aaa;
       border-bottom: 30px solid transparent;
       top:50%;
-      @include transform(translate3d(0,-50%,0));
+      @include transform(translate3d(0,-50%,0)); */
+      @include transform(scale(1,3) translate3d(-50%,-18%,0)); 
+      font-size:40px;
+      top: 50%;
     }
   }
- $btnColor:#d8271d;
+ $btnColor:#2db7f5;
   .ar{
+    background:#fff;
+    -webkit-transition: .3s background,color .5s;
+    transition: .3s background,color .5s;
+     @include br(3px);
+     border-top-left-radius:0;
+     border-bottom-left-radius:0;
+    &:hover{
+      background: #a6d7ec;
+    }
+    &:hover{
+      &:after,&:before{
+        color:#fff !important;  
+      }
+    }
     @include pos(r);
     flex-grow: 1;
     width:50px;
     cursor: pointer;
     &.activeL{
+
       &:before{
         content: '';
         display: none;
       }
       &:after{
-        content: '';
+        content: '<';
         @include pos(a);
-        width:0;
+       
+        text-align: center;
+        /* width:0;
         left: 10px;
         height:0;
         border-top: 30px solid transparent;
         border-right: 40px solid  $btnColor;
-        border-bottom: 30px solid transparent;
-        top:50%;
-        @include transform(translate3d(0,-50%,0));
+        border-bottom: 30px solid transparent; */
+        @include transform(scale(1,3) translate3d(-50%,-18%,0)); 
+        font-size:40px;
+        height: 20vh / 3;
+        top: 50%;
+        left: 50%;
       }
     }
     &.activeR{
@@ -183,33 +207,25 @@ $baseColor:#99071e;
         display: none;
       }
       &:after{
-        content: '';
+        content: '>';
         @include pos(a);
-        width:0;
-        height:0;
-        right:10px;
-        border-top: 30px solid transparent;
-        border-left: 40px solid $btnColor;
-        border-bottom: 30px solid transparent;
-        top:50%;
-        @include transform(translate3d(0,-50%,0));
+         left: 50%;
+         @include transform(scale(1,3) translate3d(-50%,-18%,0)); 
+        font-size:40px;
+        top: 50%;
       }
     }
   }
 
   .acc-ar-r{
     &:before{
-      content: '';
+      content: '>';
       @include pos(a);
-      width:0;
-      height:0;
-      right:10px;
-      border-top: 30px solid transparent;
-      border-left: 40px solid #aaa;
-      border-bottom: 30px solid transparent;
-      cursor: not-allowed;
-      top:50%;
-      @include transform(translate3d(0,-50%,0));
+       left: 50%;
+       @include transform(scale(1,3) translate3d(-50%,-18%,0)); 
+      font-size:40px;
+      top: 50%;
+       cursor: not-allowed;
     }
 
   }

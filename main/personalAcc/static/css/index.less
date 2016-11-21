@@ -142,11 +142,10 @@ input, textarea {
 body {
   font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
   font-size: 14px;
-  height: 100%;
-  overflow: hidden;
+  height: 100%; 
 }
 
-@btnColor:#d8271d;
+@btnColor:#2db7f5;
 .acc-header{
 
   .position(r);
@@ -163,8 +162,7 @@ body {
 
   .displayFlex(row);
   article{
-    flex-grow: 1;
-    width:33%;
+    width: 50%;
     .position(r);
     &:not(:last-of-type):before{
       content: '';
@@ -176,15 +174,17 @@ body {
       .fly-v-gradient-line();
     }
   }
-  height:28vh;
+  height:300px;
   .acc-user{
     width:90%;
     margin:10px auto;
     .displayFlex(row);
     .acc-portrait{
+
       text-align: center;
       .position(r);
       padding-right:50px;
+      height: 280px;
       &:after{
         content:"";
         .position(a);
@@ -198,32 +198,38 @@ body {
         padding:10px;
         width:8vw;
         height:8vw;
-        border:1px solid red;
+        border:1px solid #ccc;
         border-radius: 50%;
         margin-bottom:10px;
       }
     }
 
     .acc-info{
+      width: 50%;
       .displayFlex();
       margin-left:20px;
-      margin-top:20px;
-
       section{
-
         flex-grow: 1;
-        width:10vw;
+        width:100%;
+        align-items:center;
+          justify-content:center;
         &.acc-user-name{
           .displayFlex(row);
+        
           &>div{
             flex-grow: 1;
-            a{
+            a,em{
+              font-style: normal;
+
               display: block;
-              color:#f90;
+              color:@btnColor;
               &:nth-of-type(2){
                 margin-top:1vh;
                 color:#000;
               }
+            }
+            em{
+              color:#666;
             }
           }
         }
@@ -364,27 +370,16 @@ body {
 }
 
 
-
-.ant-btn{
-    background:@btnColor !important;
-    border-color:#e2534a !important;
-    color:#fff !important;
-  }
    .ant-btn-ghost{
       color:#666!important;
       background:#fff !important;
    }
   .ant-btn-clicked{
       &:after{
-        border: 0 solid #e2534a !important;
+        border: 0 solid $baseColor !important;
       }
   }
 
-  .ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover,.ant-select-selection:hover {
-    background-color: #fff;
-    border-color: #bf1616;
-    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
-}
 
 .ant-input-group-addon{
   background: @btnColor;

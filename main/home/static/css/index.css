@@ -128,6 +128,7 @@ body {
   background: #ccc;
   padding: 30px;
   margin: 0;
+  padding-bottom: 10vw;
 }
 .home-main .fly-home-service .fly-home-service-C figure.fly-home-service-item li {
   height: 30px;
@@ -193,7 +194,7 @@ body {
   line-height: 35px;
 }
 .home-main .fly-home-user .user-info aside:nth-of-type(2) div .current-user {
-  font-size: 30px;
+  font-size: 1.2vw;
 }
 .home-main .fly-home-user .user-info aside:nth-of-type(2) div.account {
   color: #aaa;
@@ -371,30 +372,40 @@ body {
   top: 0;
 }
 .home-main .fly-home-user .msg .product-title {
-  width: 90%;
+  width: 24vw;
   margin: 10px auto;
   font-weight: normal;
   color: #99071e;
 }
 .home-main .fly-home-user .msg .product-item {
-  width: 80%;
-  margin: 20px auto;
-  display: flex;
-  display: -webkit-flex;
-  flex-flow: row;
+  width: 24vw;
+  margin: .5vw auto;
+  overflow: hidden;
+  height: 4vw;
+  box-sizing: border-box;
 }
 .home-main .fly-home-user .msg .product-item .product-thum {
-  width: 60px;
-  height: 60px;
+  width: 4vw !important;
+  height: 4vw !important;
   border: 1px solid #ccc;
-  margin-right: 20px;
+  float: left;
+}
+.home-main .fly-home-user .msg .product-item .product-name {
+  width: 19vw;
+  margin-left: 1vw;
+  float: left;
+  height: 4vw;
 }
 .home-main .fly-home-user .msg .product-item .product-name h4 {
-  font-size: 16px;
+  font-size: 1vw;
   margin-top: 2px;
 }
 .home-main .fly-home-user .msg .product-item .product-name p {
   margin-top: 10px;
+  width: 20vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .home-main .fly-home-office .office {
   flex-grow: 2;
