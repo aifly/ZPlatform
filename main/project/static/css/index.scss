@@ -107,10 +107,50 @@
 $baseColor:#99071e;
 $btnColor:#d8271d;
 
-.ant-tabs-left {
-  .ant-tabs-content{
-    .ant-tabs-tabpane{
-        opacity:1;
-    } 
+
+.project{
+  .ant-tabs-left {
+    .ant-tabs-content{
+      .ant-tabs-tabpane{
+          opacity:1;
+      } 
+    }
+  }
+  .ant-tabs-bar{
+    .ant-tabs-tab-inner{
+      width: 180px;
+      text-align: center!important;
+      color: #333!important;
+      height: 40px;
+    }  
+    background:#EAEDF1!important;
+    height: 100vh!important;
+  }
+  .pro-col-15{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .pro-row-15{
+    padding-top:15px;
+    padding-bottom:15px;
+  }
+  .ant-table-thead > tr > th{
+    font-weight: none;
+    color: #999;
+    text-align: center;
+  }
+  h5.pro-name{
+    border-left:2px solid #88B7E0;
+    font-size: 14px;
+    color: #666;
+    padding-left:10px;
+  }
+  .pro-line{
+    background:#ddd;
+    height: 1px;
+    overflow: hidden;
+  }
+  .ant-checkbox-wrapper{
+    top:10px;
   }
 }
