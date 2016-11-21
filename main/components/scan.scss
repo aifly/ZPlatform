@@ -166,7 +166,7 @@ $baseColor:#99071e;
      border-top-left-radius:0;
      border-bottom-left-radius:0;
     &:hover{
-      background: #a6d7ec;
+      background: #e5e5e5;
     }
     &:hover{
       &:after,&:before{
@@ -229,6 +229,39 @@ $baseColor:#99071e;
     }
 
   }
+
+  .acc-upload{
+      cursor: pointer;
+      $size:14vh;
+      line-height:$size;
+      height: $size;
+      margin-top: 2vh;
+      border:1px solid #e5e5e5;
+      @include pos(r);
+      &:before,&:after{
+        content:'';
+        @include pos(a);
+        width: $size - 2;
+        top: 50%;
+        left: 50%;
+        margin-left: - ($size - 2 ) / 2;
+        margin-top: -5px;
+        @include br(4px);
+        height: 10px;
+        background:#e5e5e5;
+      }
+      &:after{
+        content:'';
+        height:  $size - 2;
+        left: 50%;
+        @include br(4px);
+        top: 50%;
+        margin-top: - ($size - 2 ) / 2;
+        width: 10px;
+        margin-left: -5px;
+        background:#e5e5e5;
+      }
+    }
   .acc-scan-C{
     align-items:center;
     align-content:center;
@@ -237,6 +270,7 @@ $baseColor:#99071e;
     height:16vh;
     margin-top:2vh;
     overflow: hidden;
+
     ul{
       @include transition_transform(.2s);
       width:100%;
