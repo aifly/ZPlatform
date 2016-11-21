@@ -3,11 +3,8 @@ import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './static/css/index.css';
 import {utilMethods,_$,$$ } from '../utilMethod.es6';
-import Modal from 'antd/lib/modal';
-import 'antd/lib/modal/style/css';
-import Input from 'antd/lib/input';
-import 'antd/lib/input/style/css';
 
+/*
 
 import Tabs from 'antd/lib/tabs';
 import 'antd/lib/tabs/style/css';
@@ -17,7 +14,9 @@ import 'antd/lib/select/style/css';
 import Button from 'antd/lib/button';
 import 'antd/lib/button/style/css';
 import Form from 'antd/lib/form';
-import 'antd/lib/form/style/css';
+import 'antd/lib/form/style/css';*/
+
+import {Modal,Input,Tabs,Select,Button,Form} from 'antd';
 
 const FormItem = Form.Item;
 
@@ -39,7 +38,7 @@ class ZmitiPersonalAccApp extends React.Component{
             tabPosition:'left',
             userName:"iLinten",
             phone:"",
-            modifyUserPwdDialogVisible:true,
+            modifyUserPwdDialogVisible:false,
             email:'xuc@linten.cn',
             companyName :"麟腾传媒文化有限公司",
             department:"多媒体部"

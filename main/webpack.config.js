@@ -18,8 +18,12 @@ var config = {
         loaders: [{
             test: /\.jsx|\.js|\.es6$/,
             exclude: /node_modules/,
-            loaders: ['babel']
-        },
+            loaders: ['babel'],
+            plugins: [["import", {
+                  "libraryName": "antd",
+                  "style": true,   // or 'css'
+                }]]
+            },
             {
                 test: /\.(css)$/,
                 loader: 'style-loader!css-loader'
@@ -28,7 +32,8 @@ var config = {
                 test: /\.(png|jpg)$/,
                 loader: 'url-loader?limit=8192'
             }]
-    }
+    },
+
 }
 
 module.exports = config;

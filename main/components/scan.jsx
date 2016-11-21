@@ -1,6 +1,7 @@
 import './scan.css';
 import React  from 'react';
 import addons from 'react-addons';
+import IScroll from 'iscroll';
 
 
 export default class ZmitiScan extends React.Component {
@@ -22,6 +23,7 @@ export default class ZmitiScan extends React.Component {
     componentDidMount() {
         let s = this,
             width = s.refs['acc-scan-C'].offsetWidth;
+
         s.setState({
             scanW: width / 5,
             data: [
@@ -35,8 +37,16 @@ export default class ZmitiScan extends React.Component {
                 {src: "./personalAcc/static/images/user.jpg"},
                 {src: "./personalAcc/static/images/user.jpg"}
             ]
-        })
+        });
 
+      //this.renderScroll();
+    }
+
+    renderScroll(){
+        this.scroll = new IScroll(this.refs['acc-scan-C'],{
+            scrollX:true,
+            scrollY:false,
+        });
     }
 
     prev() {
@@ -50,7 +60,7 @@ export default class ZmitiScan extends React.Component {
     next() {
 
         let iNow = this.state.iNow + 1;
-        iNow > this.state.data.length - 5 && (iNow = this.state.data.length - 5);
+        iNow > this.state.data.length - 4 && (iNow = this.state.data.length - 4);
         this.setState({
             iNow: iNow
         });
@@ -80,7 +90,7 @@ export default class ZmitiScan extends React.Component {
         let classR = cx({
             'acc-ar-r': true,
             'ar': true,
-            'activeR': this.state.iNow < data.length-5
+            'activeR': this.state.iNow < data.length-4
         });
 
 
@@ -90,10 +100,16 @@ export default class ZmitiScan extends React.Component {
             transform: "translate3d(-" + (this.state.iNow * this.state.scanW) + "px,0,0)",
             WebkitTransform: "translate3d(-" + (this.state.iNow * this.state.scanW) + "px,0,0)"
         }
+        let uploadStyle={
+            width: this.state.scanW,
+            height:'16vh',
+            marginTop:'2vh',
+        }
 
         return (
             <section className="acc-scan">
                 <div className={classL} onClick={this.prev.bind(this)}></div>
+                <div style={uploadStyle} className='acc-upload'></div>
                 <div className="acc-scan-C" ref="acc-scan-C">
                     <ul style={ulStyle}>
                         {data}
