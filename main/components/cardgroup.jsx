@@ -13,22 +13,22 @@ export default class ZmitiCard extends React.Component{
             <div className="zmit-card-C">
                <div>
                    <Card  title="总计作品" style={style}>
-                        100个
+                       {this.props.projectnum}个
                     </Card>
                </div>
                 <div>
                    <Card  title="总登录次数"  style={style}>
-                        100次
+                       {this.props.loginnum}次
                     </Card>
                </div>
                 <div>
                    <Card  title="总消费数"  style={style}>
-                        100元
+                       {this.props.consume}元
                     </Card>
                </div>
                 <div>
                    <Card  title="空间使用量"  style={style}>
-                        100M
+                       {this.props.spaceuse}M
                     </Card>
                </div>
 

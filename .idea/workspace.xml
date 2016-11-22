@@ -23,13 +23,86 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="index.jsx" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/main/userdepartment/index.jsx">
+        <entry file="file://$PROJECT_DIR$/main/personalAcc/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="709" column="0" selection-start-line="709" selection-start-column="0" selection-end-line="709" selection-end-column="0" />
+            <state relative-caret-position="768">
+              <caret line="67" column="45" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="45" />
               <folding>
-                <element signature="e#1113#1157#0" expanded="true" />
-                <element signature="e#1307#1340#0" expanded="true" />
+                <element signature="e#0#27#0" expanded="true" />
+                <element signature="e#559#629#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="582">
+              <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="progress.less" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/components/progress.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="423">
+              <caret line="111" column="27" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cardgroup.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/components/cardgroup.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="15" column="45" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="45" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/puzzle/index.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="68" column="40" selection-start-line="68" selection-start-column="40" selection-end-line="68" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="zmiti-stage.jsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/puzzle/static/components/zmiti-stage.jsx">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2040">
+              <caret line="155" column="40" selection-start-line="155" selection-start-column="40" selection-end-line="155" selection-end-column="40" />
+              <folding>
+                <element signature="e#1295#2226#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.less" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/personalAcc/static/css/index.less">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="287">
+              <caret line="148" column="17" selection-start-line="148" selection-start-column="11" selection-end-line="148" selection-end-column="17" />
+              <folding>
+                <element signature="e#3227#5387#0" expanded="false" />
+                <element signature="e#5401#5475#0" expanded="false" />
+                <element signature="e#5490#5927#0" expanded="false" />
+                <element signature="e#5939#6378#0" expanded="false" />
+                <element signature="e#6474#6604#0" expanded="false" />
+                <element signature="e#6620#6727#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -38,36 +111,11 @@
       <file leaf-file-name="index.less" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main/home/static/css/index.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4290">
+            <state relative-caret-position="813">
               <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
               <folding>
-                <marker date="1479694875667" expanded="true" signature="141:169" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="174:197" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="210:229" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="235:308" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="326:346" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="361:386" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="527:580" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="607:674" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="809:892" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="1016:1071" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="1249:1302" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="1426:1479" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="1494:1621" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="1647:1711" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="1738:2142" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="2199:2687" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="2709:2823" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="2848:2905" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="2932:3043" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="3105:13962" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="3188:3335" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="3303:3331" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="3355:3377" ph="{...}" />
                 <marker date="1479694875667" expanded="true" signature="3429:3510" ph="{...}" />
                 <marker date="1479694875667" expanded="true" signature="9771:9784" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="9771:9794" ph="{...}" />
-                <marker date="1479694875667" expanded="true" signature="9771:9802" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -99,11 +147,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/main/richimg/index.jsx" />
-        <option value="$PROJECT_DIR$/main/richimg/list.html" />
-        <option value="$PROJECT_DIR$/main/webpack.dev.server.js" />
-        <option value="$PROJECT_DIR$/main/app.js" />
-        <option value="F:/视频教程/20160420/package.json" />
         <option value="F:/视频教程/20160420/react/index.jsx" />
         <option value="$PROJECT_DIR$/main/node_modules/createjs/index.js" />
         <option value="$PROJECT_DIR$/main/puzzle/server.js" />
@@ -138,11 +181,8 @@
         <option value="$PROJECT_DIR$/main/richimg/static/components/zmiti-btn-group.jsx" />
         <option value="$PROJECT_DIR$/main/richimg/list.jsx" />
         <option value="$PROJECT_DIR$/main/puzzle/index.html" />
-        <option value="$PROJECT_DIR$/main/components/zmiti-upload-dialog.jsx" />
-        <option value="$PROJECT_DIR$/main/index.jsx" />
         <option value="$PROJECT_DIR$/main/index.html" />
         <option value="$PROJECT_DIR$/main/components/Main.jsx" />
-        <option value="$PROJECT_DIR$/main/userdepartment/static/css/index.scss" />
         <option value="$PROJECT_DIR$/main/userdepartment/static/js/department.json" />
         <option value="$PROJECT_DIR$/index.es6" />
         <option value="$PROJECT_DIR$/statices/css/index.css" />
@@ -150,6 +190,14 @@
         <option value="$PROJECT_DIR$/main/company/index.jsx" />
         <option value="$PROJECT_DIR$/main/home/static/css/index.less" />
         <option value="$PROJECT_DIR$/main/userdepartment/index.jsx" />
+        <option value="$PROJECT_DIR$/main/personalAcc/static/css/index.css" />
+        <option value="$PROJECT_DIR$/main/personalAcc/static/css/index.less" />
+        <option value="$PROJECT_DIR$/main/userdepartment/static/css/index.scss" />
+        <option value="$PROJECT_DIR$/main/components/cardgroup.jsx" />
+        <option value="$PROJECT_DIR$/main/components/progress.less" />
+        <option value="$PROJECT_DIR$/main/index.jsx" />
+        <option value="$PROJECT_DIR$/main/components/zmiti-upload-dialog.jsx" />
+        <option value="$PROJECT_DIR$/main/personalAcc/index.jsx" />
       </list>
     </option>
   </component>
@@ -291,6 +339,98 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="userdepartment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZPlatform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZPlatform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userdepartment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZPlatform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZPlatform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="userdepartment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZPlatform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZPlatform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="puzzle" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZPlatform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ZPlatform" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="home" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -343,24 +483,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ZPlatform" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="company" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope">
@@ -369,7 +491,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Font" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -538,22 +660,25 @@
       <workItem from="1478422473595" duration="4840000" />
       <workItem from="1478483978312" duration="978000" />
       <workItem from="1479542545123" duration="10942000" />
-      <workItem from="1479716240905" duration="1637000" />
+      <workItem from="1479716240905" duration="2058000" />
+      <workItem from="1479799140135" duration="2919000" />
+      <workItem from="1479802468418" duration="6115000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="156598000" />
+    <option name="totallyTimeSpent" value="166053000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20547946" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15437302" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5021075" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.049608354" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.048754063" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.49404117" sideWeight="0.49789253" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -563,7 +688,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32827735" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -586,49 +710,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/main/webpack.home.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="18" column="34" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/components/scan.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="20" column="14" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/puzzle-server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="750">
-          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gulpFile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="17" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="22" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://F:/wamp/wamp/scripts/config.inc.php" />
-    <entry file="file://$PROJECT_DIR$/main/components/theme.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/components/zmiti-upload-dialog.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main/creater/army/static/js/jquery.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -715,13 +796,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/puzzle/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main/webpack.config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="864">
@@ -757,20 +831,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/components/cardgroup.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/components/zmiti-upload-dialog.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="834">
-          <caret line="472" column="0" selection-start-line="472" selection-start-column="0" selection-end-line="472" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main/home/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="564">
@@ -796,13 +856,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="27" column="9" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/components/Progress.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="12" selection-start-line="0" selection-start-column="7" selection-end-line="0" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -838,28 +891,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="416">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/userdepartment/static/js/department.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1950">
-          <caret line="65" column="1" selection-start-line="65" selection-start-column="1" selection-end-line="65" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/index.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="52">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/userdepartment/static/css/index.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7530">
-          <caret line="251" column="0" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -913,49 +944,156 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/home/static/css/index.less">
+    <entry file="file://$PROJECT_DIR$/main/userdepartment/static/js/department.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4290">
-          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
-          <folding>
-            <marker date="1479694875667" expanded="true" signature="141:169" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="174:197" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="210:229" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="235:308" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="326:346" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="361:386" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="527:580" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="607:674" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="809:892" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="1016:1071" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="1249:1302" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="1426:1479" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="1494:1621" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="1647:1711" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="1738:2142" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="2199:2687" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="2709:2823" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="2848:2905" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="2932:3043" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="3105:13962" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="3188:3335" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="3303:3331" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="3355:3377" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="3429:3510" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="9771:9784" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="9771:9794" ph="{...}" />
-            <marker date="1479694875667" expanded="true" signature="9771:9802" ph="{...}" />
-          </folding>
+        <state relative-caret-position="846">
+          <caret line="65" column="1" selection-start-line="65" selection-start-column="1" selection-end-line="65" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/userdepartment/static/css/test.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main/userdepartment/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="709" column="0" selection-start-line="709" selection-start-column="0" selection-end-line="709" selection-end-column="0" />
+        <state relative-caret-position="8568">
+          <caret line="491" column="6" selection-start-line="491" selection-start-column="6" selection-end-line="491" selection-end-column="6" />
           <folding>
-            <element signature="e#1113#1157#0" expanded="true" />
-            <element signature="e#1307#1340#0" expanded="true" />
+            <element signature="e#1113#1157#0" expanded="false" />
+            <element signature="e#1307#1340#0" expanded="false" />
+            <element signature="e#11607#12729#0" expanded="false" />
+            <element signature="n#!!block;n#createUserByDepartment#0;n#ZmitiUserDepartmentApp#0" expanded="false" />
+            <element signature="e#13722#13776#0" expanded="false" />
+            <element signature="n#!!block;n#deleteDepartment#0;n#ZmitiUserDepartmentApp#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/personalAcc/static/css/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="865">
+          <caret line="276" column="0" selection-start-line="276" selection-start-column="0" selection-end-line="276" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/userdepartment/static/css/index.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-168">
+          <caret line="277" column="0" selection-start-line="277" selection-start-column="0" selection-end-line="277" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/home/static/css/index.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="813">
+          <caret line="145" column="0" selection-start-line="145" selection-start-column="0" selection-end-line="145" selection-end-column="0" />
+          <folding>
+            <marker date="1479694875667" expanded="true" signature="3429:3510" ph="{...}" />
+            <marker date="1479694875667" expanded="true" signature="9771:9784" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/components/Progress.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-66">
+          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#26#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/personalAcc/static/css/index.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="148" column="17" selection-start-line="148" selection-start-column="11" selection-end-line="148" selection-end-column="17" />
+          <folding>
+            <element signature="e#3227#5387#0" expanded="false" />
+            <element signature="e#5401#5475#0" expanded="false" />
+            <element signature="e#5490#5927#0" expanded="false" />
+            <element signature="e#5939#6378#0" expanded="false" />
+            <element signature="e#6474#6604#0" expanded="false" />
+            <element signature="e#6620#6727#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/components/progress.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="111" column="27" selection-start-line="111" selection-start-column="27" selection-end-line="111" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/components/cardgroup.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="15" column="45" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/puzzle/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="68" column="40" selection-start-line="68" selection-start-column="40" selection-end-line="68" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/puzzle/static/components/zmiti-stage.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2040">
+          <caret line="155" column="40" selection-start-line="155" selection-start-column="40" selection-end-line="155" selection-end-column="40" />
+          <folding>
+            <element signature="e#1295#2226#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/static/libs/obserable.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="23" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/components/zmiti-upload-dialog.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="361" column="26" selection-start-line="361" selection-start-column="17" selection-end-line="361" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/personalAcc/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="768">
+          <caret line="67" column="45" selection-start-line="67" selection-start-column="12" selection-end-line="67" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+            <element signature="e#559#629#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -217,7 +217,7 @@ import 'antd/lib/spin/style/css';
 														 okText="Yes" cancelText="No">
 													<Button size='large' type="primary" icon='delete'>删除</Button>
 											 </Popconfirm>}
-										 
+
 									 </ButtonGroup>
 								 </section>
 								 <section className="ud-current-user-section">
@@ -307,7 +307,7 @@ import 'antd/lib/spin/style/css';
 	 rowClick(e) {
 		 console.log(e)
 		 //location.hash= '/personalAcc?userId='+ e.key;
-	 }
+    }
 
 	 componentDidMount() {
 
@@ -337,54 +337,55 @@ import 'antd/lib/spin/style/css';
 			 success(data){
 				 ///data = JSON.parse(data);
 
-					console.log(data);
+				 if (data.getret === 0) {
 
-					
-				 if(data.getret === 0){
-				 		 var data = data.getdata;
+					 var data = data.getdata;
 
-				 			 var departmentData = [];
-									 data.treeData.forEach(dep=> {
+					 var departmentData = [];
+					 if(!data.treeData){
+						 s.setState({
+							 spinning: false
+						 })
+						 return;
+					 }
+					 data.treeData.forEach(dep=> {
 
-										 var str = JSON.stringify(dep);
-										 str = str.replace(/key/gi, 'value');
-										 str = str.replace(/title/gi, 'label');
-										 var d = JSON.parse(str)
-										 departmentData.push({
-											 value: d.value,
-											 label: d.label,
-											 children: d.children
-										 });
-									 });
+						 var str = JSON.stringify(dep);
+						 str = str.replace(/key/gi, 'value');
+						 str = str.replace(/title/gi, 'label');
+						 var d = JSON.parse(str)
+						 departmentData.push({
+							 value: d.value,
+							 label: d.label,
+							 children: d.children
+						 });
+					 });
 
-									 s.parentId = data.treeData[0].key;
-									 s.defaultUserList = data.treeData[0];
-									 s.setState({
-											 treeData: data.treeData,
-											 totalUserNum: data.totalUserNum,
-											 disableUserNum: data.disableUserNum,
-											 spinning:false,
-											 departmentData: departmentData,
-											 currentDepartment: {
-												 title: data.treeData[0].title,
-												 key: data.treeData[0],
-												 userList: s.defaultUserList.userList
-											 },
+					 s.parentId = data.treeData[0].key;
+					 s.defaultUserList = data.treeData[0];
+					 s.setState({
+						 treeData: data.treeData,
+						 totalUserNum: data.totalUserNum,
+						 disableUserNum: data.disableUserNum,
+						 spinning: false,
+						 departmentData: departmentData,
+						 currentDepartment: {
+							 title: data.treeData[0].title,
+							 key: data.treeData[0],
+							 userList: s.defaultUserList.userList
+						 },
 
-									 });
-								 }
-					else{
-						s.setState({
-							spinning:false
-						})
-						message.error(data.getmsg);
+					 });
+				 }
+				 else {
+					 s.setState({
+						 spinning: false
+					 })
+					 message.error(data.getmsg);
 
-					}
+				 }
 
-				}
- 
-
-			
+			 }
 		 });
 
 	 }
@@ -471,7 +472,7 @@ import 'antd/lib/spin/style/css';
 						treeData.forEach((item,i)=>{
 							if(item.key === s.parentId){
 								  treeData.splice(i,1);
-							}	
+							}
 							else{
 								 if(item.children){
 								 	 loop(item.children);
@@ -489,9 +490,6 @@ import 'antd/lib/spin/style/css';
 					s.forceUpdate();
 		 });
 	 }
-
- 
-
 	 createDepartment() {//新建子部门
 		 var departmentName = this.refs['newDepartment'].refs['input'].value;
 		 if (!departmentName) {
@@ -500,11 +498,18 @@ import 'antd/lib/spin/style/css';
 		 }
 		 let s = this;
 
+		 console.log({
+			 getusersigid: s.getusersigid,
+			 userid: s.userid,
+			 departmenname: departmentName,
+			 fatherid: s.parentId
+		 })
+
 		 $.ajax({
 			 type: "post",
 			 url: window.baseUrl + '/user/create_department/',
 			 data: {
-				 getusersigid: s.getusersingid,
+				 getusersigid: s.getusersigid,
 				 userid: s.userid,
 				 departmenname: departmentName,
 				 fatherid: s.parentId
@@ -572,7 +577,7 @@ import 'antd/lib/spin/style/css';
 				 return;
 			 }
 		 }
-		 
+
 		$.ajax({
 			type:"POST",
 			url:url,
@@ -587,7 +592,7 @@ import 'antd/lib/spin/style/css';
 						treeData.forEach(item=>{
 							if(item.key === s.parentId){
 								  item.title= departmentName;
-							}	
+							}
 							else{
 								 if(item.children){
 								 	 loop(item.children);
@@ -665,7 +670,7 @@ import 'antd/lib/spin/style/css';
 		 }
 
 		 this.parentId = e[0];
-		
+
 		 this.setState({
 			 currentDepartmentNameForChoose: this.getDepartmentNameById(this.parentId).name
 		 })
@@ -730,7 +735,7 @@ import 'antd/lib/spin/style/css';
 	 				userids.forEach(userid=>{
 	 					if(user.key === userid){
 							user.isover = 2;
-						}	
+						}
 	 				})
 				});
 				s.forceUpdate();
@@ -750,7 +755,7 @@ import 'antd/lib/spin/style/css';
 	 				userids.forEach(userid=>{
 	 					if(user.key === userid){
 							user.isover = 0;
-						}	
+						}
 	 				})
 				});
 				s.forceUpdate();
@@ -771,9 +776,9 @@ import 'antd/lib/spin/style/css';
 				}
 			});
 			if(hasOwn){
-				return;	
+				return;
 			}
-			
+
 		 this.operatorUser(3,useridstr,function(){
 		 		s.state.currentDepartment.userList.forEach((dep,i)=>{
 		 			userids.forEach(userid=>{
@@ -787,7 +792,7 @@ import 'antd/lib/spin/style/css';
 	 }
 
 	 operatorUser(type,userids,fn){//操作用户
-		
+
 		 var params = {
 			 getusersigid: this.getusersigid,
 			 setuserid: userids,
@@ -818,7 +823,7 @@ import 'antd/lib/spin/style/css';
 	 operatorSingleUser(e){
 	 		var isover = 0;
 	 		var userid = e.target.parentNode.getAttribute('data-userid');
-	 		
+
 	 		if(e.target.parentNode.getAttribute('data-isover')*1 === 0){
 	 			isover = 2;
 	 		}
@@ -845,8 +850,8 @@ export default ZmitiValidateUser(ZmitiUserDepartmentApp);
 
 ZmitiUserDepartmentApp.defaultProps = {
 	keys: ['123', '0-0-1'],
- 
-  
+
+
 }
 
 

@@ -219,13 +219,13 @@ $btnColor:#2db7f5;
         color:#fff;
       }
     }
-  
+
     width: $leftSize;
     background:#EAEDF1;
     .ant-tabs-ink-bar{
       background-color:$baseColor;
     }
-    
+
   }
   .ud-right-side{
     $color:$btnColor;
@@ -259,6 +259,7 @@ $btnColor:#2db7f5;
           background:$btnColor !important;
           border-color:$btnColor !important;
           color:#fff !important;
+
         }
          .ant-btn-ghost{
             color:#666!important;
@@ -275,19 +276,18 @@ $btnColor:#2db7f5;
         border-color:$btnColor !important;
       }
 
-
       .ant-select-selection:hover {
           background-color: #fff !important;
           border-color: #bf1616 !important;
           box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1) !important;
-      } 
+      }
       .ant-input,.ant-select-selection{
         border-color:$btnColor ;
       }
 
       .ud-current-department{//当前部门样式
         padding-bottom:20px;
-     
+
         .ud-current-header{
           @include displayFlex(horizontal);
           align-items: center;
@@ -324,7 +324,7 @@ $btnColor:#2db7f5;
           }
          }
       }
-      
+
       /*---------------*/
 
       table {
@@ -373,7 +373,7 @@ $btnColor:#2db7f5;
         border-color:#2db7f5 !important;
       }
       .ant-input:hover{
-       border-color:#2db7f5 !important; 
+       border-color:#2db7f5 !important;
       }
   }
 
@@ -395,7 +395,6 @@ $btnColor:#2db7f5;
    padding:1px 4px;
    background: #e5e5e5;
    @include br(3px);
-
  }
 
 .user-error{
@@ -408,6 +407,7 @@ $btnColor:#2db7f5;
   color:#fff;
   padding:2px 10px;;
   @include br(10px);
+
   &:before{
      content:'';
      @include pos(a);
@@ -421,7 +421,7 @@ $btnColor:#2db7f5;
   }
 
 }
-
+///
 
 .ant-table-row{
   &.disable{

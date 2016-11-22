@@ -8,14 +8,7 @@ export default class ZmitiScan extends React.Component {
     constructor(args) {
         super(...args);
         this.state = {
-            scanW: 0,
-            data: [
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"}
-            ],
+            scanW: 2,
             iNow: 0
         }
     }
@@ -23,25 +16,10 @@ export default class ZmitiScan extends React.Component {
     componentDidMount() {
         let s = this,
             width = s.refs['acc-scan-C'].offsetWidth;
-
         s.setState({
             scanW: width / 5,
-            data: [
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"},
-                {src: "./personalAcc/static/images/user.jpg"}
-            ]
         });
-
-      //this.renderScroll();
     }
-
     renderScroll(){
         this.scroll = new IScroll(this.refs['acc-scan-C'],{
             scrollX:true,
@@ -51,6 +29,7 @@ export default class ZmitiScan extends React.Component {
 
     prev() {
         let iNow = this.state.iNow - 1;
+        iNow*=1;
         iNow < 0 && (iNow = 0);
         this.setState({
             iNow: iNow
@@ -60,7 +39,7 @@ export default class ZmitiScan extends React.Component {
     next() {
 
         let iNow = this.state.iNow + 1;
-        iNow > this.state.data.length - 4 && (iNow = this.state.data.length - 4);
+        iNow > this.props.credentials.length - 4 && (iNow = this.props.credentials.length - 4);
         this.setState({
             iNow: iNow
         });
@@ -70,7 +49,7 @@ export default class ZmitiScan extends React.Component {
 
     render() {
 
-        let data = this.state.data.map((item, i)=> {
+        let data = this.props.credentials.map((item, i)=> {
             let style = {
                 width: this.state.scanW,
                 background: 'url(' + item.src + ') no-repeat center center',

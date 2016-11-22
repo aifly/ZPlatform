@@ -357,6 +357,11 @@ export default class ZmitiUploadDialog extends React.Component {
             this.showModal(e);
         });
 
+        var obserable=window.obserable;
+        obserable.on('showModal',(data)=>{
+            this.showModal(data);
+        });
+
         window.showModal = this.showModal.bind(this);
 /*
         $$('li', this.refs['menu-C']).forEach((li, i)=> {

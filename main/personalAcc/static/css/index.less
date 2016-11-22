@@ -13,6 +13,7 @@ li {
 
 html, body {
   height: 100%;
+  
 }
 
 img {
@@ -142,10 +143,11 @@ input, textarea {
 body {
   font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
   font-size: 14px;
-  height: 100%; 
+  height: 100%;
 }
 
 @btnColor:#2db7f5;
+@baseColor:#2db7f5;
 .acc-header{
 
   .position(r);
@@ -212,10 +214,10 @@ body {
         flex-grow: 1;
         width:100%;
         align-items:center;
-          justify-content:center;
+        justify-content:center;
         &.acc-user-name{
           .displayFlex(row);
-        
+
           &>div{
             flex-grow: 1;
             a,em{
@@ -252,7 +254,7 @@ body {
     font-family: 宋体;
     .acc-company-name{
       font-family:inherit;
-        font-size:1.8vw;
+      font-size:1.8vw;
     }
     .acc-department{
       .position(a);
@@ -370,24 +372,31 @@ body {
 }
 
 
-   .ant-btn-ghost{
-      color:#666!important;
-      background:#fff !important;
-   }
-  .ant-btn-clicked{
-      &:after{
-        border: 0 solid $baseColor !important;
-      }
+.ant-btn{
+  &.little-br{
+    border-radius: 3px;
   }
+}
+.ant-btn-ghost{
+  color:#666!important;
+  background:#fff !important;
+}
+.ant-btn-clicked{
+  &:after{
+    border: 0 solid @baseColor !important;
+  }
+}
 
 
 .ant-input-group-addon{
   background: @btnColor;
   border-color:@btnColor;
   color:#fff;
+  border-radius: 3px;
 }
 
 
 .ant-input,.ant-select-selection{
   border-color:@btnColor;
+  border-radius: 3px;
 }

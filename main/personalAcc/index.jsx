@@ -20,6 +20,8 @@ import {Modal,Input,Tabs,Select,Button,Form} from 'antd';
 
 const FormItem = Form.Item;
 
+import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
+
 
 
 import ZmitiProgress from '../components/Progress.jsx';
@@ -34,14 +36,36 @@ const Option = Select.Option;
 class ZmitiPersonalAccApp extends React.Component{
     constructor(args){
         super(...args);
-        this.state = {
-            tabPosition:'left',
-            userName:"iLinten",
-            phone:"",
+        this.state =
+        {
+            userData:{
+                portrait:'./personalAcc/static/images/user.jpg',//用户头像
+                username:'',//用户名
+                useremail:'',
+                usermobile:'',
+                departmentname:'麟腾传媒文化有限公司',
+                departmentid:'',
+                companyid:'',
+                companyname:'',
+                userrealname:'用户真实姓名',//用户真实姓名
+                usersex:'',//用户性别
+                useremergencycontacter:'',//紧急联系人
+                useremergencycontactmobile:'',//紧急联系人电话/
+                credentials:[
+                    {src: "./personalAcc/static/images/user.jpg"},
+                    {src: "./personalAcc/static/images/user.jpg"},
+                    {src: "./personalAcc/static/images/user.jpg"}
+
+                ],//用户证件照片
+                projectnum:222,//作品总个数.
+                loginnum:24,//登录次数.
+                spaceuse:'123M',//空间使用量
+                consume:'100',
+                expiredate:'2016-12-13',//过期时间/
+                currentVal:50,//进度条当前值,用户试用期总时间
+                maxVal:100,//进度最大值,已使用的时间 (两个数据无关紧要,我最终要根据两个数据算出比例.)
+            },
             modifyUserPwdDialogVisible:false,
-            email:'xuc@linten.cn',
-            companyName :"麟腾传媒文化有限公司",
-            department:"多媒体部"
         }
     }
 
@@ -62,15 +86,6 @@ class ZmitiPersonalAccApp extends React.Component{
       this.setState({
         userName:this.username
       })
-
-     /*   classie.addClass($$('.ant-tabs-tabpane'),'show-tab');
-
-        var currentLoader = {
-            id:"loader5",
-            speedIn:300
-        };
-        this.loader = new SVGLoader( document.getElementById( currentLoader.id ), { speedIn : currentLoader.speedIn, easingIn : mina.easeinout } );*/
-        //console.log(this.props.params)
     }
 
     changeDate(){
@@ -86,11 +101,21 @@ class ZmitiPersonalAccApp extends React.Component{
 
     render(){
 
+        var s =this;
+
+        const props = {
+            baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+                s.state.userData.portrait = imgData.src;
+                s.forceUpdate();
+            }
+        };
+
         let zmitiProgressProps = {
-            currentVal:90,
             label:'',
             unit:1,
-            maxVal:100,
             isShowInfo:false
         }
 
@@ -103,23 +128,23 @@ class ZmitiPersonalAccApp extends React.Component{
                    <article>
                        <div className="acc-user">
                            <div className="acc-portrait">
-                               <img src="./personalAcc/static/images/user.jpg" alt=""/>
+                               <img draggable="false" src={this.state.userData.portrait} alt=""/>
                                <div>
-                                   <Button type="primary">更换头像</Button>
+                                   <Button className="little-br" onClick={this.changePortrait.bind(this)}  type="primary">更换头像</Button>
                                </div>
                            </div>
                            <div className="acc-info">
                                <section className="acc-user-name">
                                    <div>
-                                       <span>@{this.state.userName}</span>
+                                       <span>@{this.username}</span>
                                    </div>
                                    <div>
                                        <em href="javascript:void(0)">{this.isover === 1 ?"试用账号":"正式账号"}</em>
                                        <a href="javascript:void(0)" onClick={()=>{this.setState({modifyUserPwdDialogVisible:true})}}>重置密码</a>
                                    </div>
                                </section>
-                               {this.state.phone && <section><span>手机：</span>{this.state.phone}</section>}
-                               {this.state.email && <section><span>邮件：</span>{this.state.email}</section>}
+                               {this.state.userData.usermobile && <section><span>手机：</span>{this.state.userData.usermobile}</section>}
+                               {this.state.userData.useremail && <section><span>邮件：</span>{this.state.userData.useremail}</section>}
                            </div>
                        </div>
                    </article>
@@ -133,15 +158,15 @@ class ZmitiPersonalAccApp extends React.Component{
                    }
                    {!this.companyid && <article>
                        <div className="acc-consume">
-                           <div className="acc-msg"><span>你的账号将于2016年12月31号过期</span><span>点此续费</span><span><a href="#">消费记录</a></span></div>
-                           <ZmitiProgress {...zmitiProgressProps}></ZmitiProgress>
+                           <div className="acc-msg"><span>你的账号将于{this.state.userData.expiredate}号过期</span><span>点此续费</span><span><a href="#">消费记录</a></span></div>
+                           <ZmitiProgress currentVal={this.state.userData.currentVal} maxVal={this.state.userData.maxVal} {...zmitiProgressProps}></ZmitiProgress>
                        </div>
                    </article>}
                </div>
                <div className="acc-form">
                    <div className="acc-form-left">
                        <Input.Group className="acc-input-group">
-                           <Input addonBefore="姓名"/>
+                           <Input addonBefore="姓名" defaultValue={this.state.userData.userrealname} onChange={()=>{}}/>
                            <Select placeholder='性别' style={{width:300}} >
                                <Option value="0">男</Option>
                                <Option value="1">女</Option>
@@ -151,17 +176,17 @@ class ZmitiPersonalAccApp extends React.Component{
                    </div>
                    <div className="acc-form-right">
                        <Input.Group className="acc-input-group">
-                           <Input addonBefore="紧急联系人"/>
-                           <Input addonBefore="紧急联系人电话"/>
+                           <Input addonBefore="紧急联系人" defaultValue={this.state.userData.useremergencycontacter} onChange={()=>{}}/>
+                           <Input addonBefore="紧急联系人电话" defaultValue={this.state.userData.useremergencycontactmobile} onChange={()=>{}}/>
                        </Input.Group>
                    </div>
                </div>
-               <ZmitiScan></ZmitiScan>
+               <ZmitiScan {...this.state.userData}></ZmitiScan>
                <div className="acc-save-btn">
-                   <Button type="primary" ref="save-btn" size="large" onClick={this.save.bind(this)}>保存</Button>
+                   <Button type="primary" className="little-br" ref="save-btn" size="large" onClick={this.save.bind(this)}>保存</Button>
                </div>
 
-               <ZmitiCard></ZmitiCard>
+               <ZmitiCard {...this.state.userData}></ZmitiCard>
                <Modal title='修改密码' visible={this.state.modifyUserPwdDialogVisible}
                   onOk={this.modifyUserPwd.bind(this)}
                   onCancel={()=>{this.setState({modifyUserPwdDialogVisible:false})}}>
@@ -196,10 +221,19 @@ class ZmitiPersonalAccApp extends React.Component{
                 
                </Form>    
              </Modal>
+            <ZmitiUploadDialog id="personAcc" {...props}></ZmitiUploadDialog>
            </div>;
         return (
           <MainUI component={component}></MainUI>
         )
+    }
+    changePortrait(){//更换头像
+
+        var obserable=window.obserable;
+        obserable.trigger({
+            type:'showModal',
+            data:{type:0,id:'personAcc'}
+        })
     }
     modifyUserPwd(){//修改密码
 
