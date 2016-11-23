@@ -32,7 +32,7 @@ import MainUI from '../components/Main.jsx';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
-
+import $ from 'jquery';
 class ZmitiPersonalAccApp extends React.Component{
     constructor(args){
         super(...args);
@@ -70,14 +70,19 @@ class ZmitiPersonalAccApp extends React.Component{
     }
 
     componentWillMount() {
-       let {validateUser, loginOut} = this.props;
-       var {userid, getusersigid, companyid,username,isover}=validateUser();
+       let {validateUser, loginOut,resizeMaiHeight,getUserDetail} = this.props;
+       var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
+          loginOut();
+       },this);
+       resizeMaiHeight(this);
        this.userid = userid;
        this.getusersigid = getusersigid;
        this.companyid = companyid;
        this.loginOut = loginOut;
        this.username =username;
        this.isover = isover;
+       this.usertypesign = usertypesign;
+       this.getUserDetail = getUserDetail;
       
     }
 
@@ -85,7 +90,20 @@ class ZmitiPersonalAccApp extends React.Component{
 
       this.setState({
         userName:this.username
+      });
+
+      var s = this;
+
+      console.log({
+        $:$,
+        userid:s.userid,
+        getusersigid:s.getusersigid
       })
+      this.getUserDetail({
+        $:$,
+        userid:s.userid,
+        getusersigid:s.getusersigid
+      });
     }
 
     changeDate(){

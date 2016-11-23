@@ -25,7 +25,7 @@ export default class ZmitiUserList extends Component {
 			return item.isover === this.state.current ||  item.isover === 2;//isover : 0 正式账号，1为试用账户
 		});
 		return (
-			<section className='user-main-ui'>
+			<section className='user-main-ui' style={{height:this.props.mainHeight}}>
 				<div className='user-left-pannel'>
 					<ul onClick={this.changeAccount}>
 						<li data-index='1' className={this.state.current === 1 ?'active':''}>{this.props.tags[0]}</li>
@@ -40,13 +40,13 @@ export default class ZmitiUserList extends Component {
 					{
 						this.state.current === 1 &&
 						<section className='user-list-section'>
-							<Table dataSource={userList} columns={this.props.columns} />
+							<Table bordered={true} dataSource={userList} columns={this.props.columns} />
 						</section>
 					}
 					{
 						this.state.current === 0 &&
 						<section className='user-list-section'>
-							<Table dataSource={userList} columns={this.props.columns1} />
+							<Table bordered={true} dataSource={userList} columns={this.props.columns1} />
 						</section>
 					}
 				</div>

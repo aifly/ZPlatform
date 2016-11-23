@@ -866,6 +866,8 @@ window.addEventListener('load', ()=> {
                                 usermobile:d.usermobile || '',
                                 useremail:d.useremail||''
                             }
+
+
                          
                             var p = JSON.stringify(params);
                             document.cookie = p;
@@ -877,7 +879,7 @@ window.addEventListener('load', ()=> {
                             a.style.position = 'fixed';
                             a.style.zIndex = -1;
                             a.style.opacity = 0;
-                             a.click();
+                            a.click();
  
 
                             //console.log(params);
@@ -894,7 +896,7 @@ window.addEventListener('load', ()=> {
                         else if (d.getret === 1300) {
                             $(".login-error-info").addClass("fail");
                             self.removeErrorInfo($(".login-error-info"), "fail");
-                            $(e.target).removeClass("shadow").removeClass("hide").parent().find('.loading').removeClass("show");
+                            $(e.target).parent().find('span').removeClass("shadow").removeClass("hide").parents('.loaded').find('.loading').removeClass("show");
                         }
                         else{
                             $('#fly-msg').html(d.getmsg).addClass('active');

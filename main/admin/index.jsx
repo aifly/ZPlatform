@@ -10,6 +10,7 @@ import 'antd/lib/input/style/css';
 import 'antd/lib/badge/style/css';
 import '../static/css/index.css';
 import { Router, Route, hashHistory ,Link ,browserHistory } from 'react-router';
+import Obserable from '../static/libs/obserable.js';
 /*browserHistory.push('/user');
 browserHistory.push('./admin/company');*/
 
@@ -43,7 +44,16 @@ class App extends React.Component{
     );
 	}
 
+	componentWillMount() {
+		window.obserable = new Obserable();
+		window.addEventListener('resize', ()=>{
+				obserable.trigger({type:'setMainHeight'});
+				obserable.trigger({type:'setMenuWidth'});
+		});
+	}
+
 	componentDidMount() {
+
 	}
 
 }

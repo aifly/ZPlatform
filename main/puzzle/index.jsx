@@ -66,8 +66,10 @@ class ZmitiPuzzleApp extends React.Component{
             width:100
         }
 
-       let  {validateUser} = this.props;
-          var {userid,getusersigid,companyid}=validateUser();
+       let  {validateUser,loginOut} = this.props;
+          var {userid,getusersigid,companyid}=validateUser(()=>{
+              loginOut();
+          });
           this.userid = userid;
           this.getusersigid = getusersigid;
           this.companyid = companyid;

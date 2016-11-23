@@ -14,6 +14,7 @@ export default class ZmitiUserApp extends Component {
 	
 	  this.state = {
 	  	current:0,
+	  	mainHeight:document.documentElement.clientHeight - 50,
 	  	userList:[
 	  		
 	  	],
@@ -66,31 +67,29 @@ export default class ZmitiUserApp extends Component {
 			userList:this.state.userList,
 			columns:columns1,
 			columns1:columns2,
-			changeAccount:this.changeAccount
+			changeAccount:this.changeAccount,
+			mainHeight:this.state.mainHeight
+
 		}
 		return (
 			<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
 		);
 	}
 
-  getQueryString(name){
-      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-      var r = window.location.search.substr(1).match(reg);
-      if (r != null) return unescape(r[2]);
-      return null;
+  componentWillMount() {
+  	
+      let {resizeMaiHeight,validateUser,loginOut} = this.props;
+
+		 resizeMaiHeight(this);
+		 
+		 validateUser(()=>{loginOut();},this);
+      
   }
 	componentDidMount() {
 		/*  var {userid,getusersigid} = this.props.params;
 		  this.getusersigid = this.getusersigid = getusersigid;
       this.userid =userid;
       this.baseUrl = window.baseUrl;*/
-      
-
-      let  {validateUser} = this.props;
-      var {userid,getusersigid,companyid}=validateUser();
-      this.userid = userid;
-      this.getusersigid = getusersigid;
-      this.companyid = companyid;
       
 		var params = {
 			  getusersigid:this.getusersigid,

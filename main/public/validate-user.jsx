@@ -13,14 +13,29 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			message.error(errorMsg);
       setTimeout(()=>{
      	   window.location.href= url;    
-      },1000);	
+      },100);
+
+      return <div></div>;
 	}
 
-	validateUser(){
+	validateUser(fn,that){
 		var s = this;
 		 try{
 		 	 var params = JSON.parse(document.cookie);
-		 	 
+		 	 	
+		 	 	if(that){
+
+		 	 		 that.userid = params.userid;
+		 	 		 
+					 that.getusersigid = params.getusersigid;
+					 that.companyid = params.companyid;
+					 that.loginOut = params.loginOut;
+					 that.username = params.username;
+					 that.usermobile=  params.usermobile;
+					 that.useremail = params.useremail;
+					 that.usertypesign = params.usertypesign;	
+		 	 	}
+
         return {
         	userid:params.userid,
         	getusersigid:params.getusersigid,
@@ -33,9 +48,9 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
         }
 		 }
 		 catch(e){
-
 		 		if(!window.isDebug){
-		 				s.loginOut();
+		 				fn&&fn();
+		 				return <div></div>;
 		 		}
         return  {
         	userid:-1,
@@ -49,15 +64,50 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
         };
 		 }
 	}
-	render() {
 
+	resizeMaiHeight(that) {
+		window.obserable.on('setMainHeight', ()=> {
+			that.setState({
+				mainHeight: document.documentElement.clientHeight - 50
+			});
+		});
+
+	}
+	resizeLeftMenu(that) {
+		window.obserable.on('setMenuWidth', ()=> {
+			that.setState({
+				rightWidth: document.documentElement.clientWidth - 180
+			})
+		});
+	}
+
+
+	getUserDetail(options={}){//获取用户的详细信息
+		let {$,userid,getusersigid,curId} = options;
+		$.ajax({
+			url:window.baseUrl+'/user/get_userdetails',
+			data:{
+				userid:userid,
+				getusersigid:getusersigid
+			},
+			success(data){
+				console.log(data);
+			}
+		});
+	}
+ 
+
+	render() {
 		let methods = {
-			validateUser:this.validateUser,
-			loginOut:this.loginOut
+			validateUser: this.validateUser,
+			loginOut: this.loginOut,
+			resizeMaiHeight: this.resizeMaiHeight,
+			resizeLeftMenu: this.resizeLeftMenu,
+			getUserDetail: this.getUserDetail
+			//fillFeilds:this.fillFeilds
 		}
 
 		return <ComponsedComponent {...methods} {...this.props} {...this.state} />;
-
 	}
 }
 

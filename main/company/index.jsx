@@ -15,6 +15,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 	
 	  this.state = {
 	  	current:0,
+	  	mainHeight:document.documentElement.clientHeight - 50,
 	  	userList:[
 	  		
 	  	],
@@ -65,12 +66,23 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 			columns:columns1,
 			columns1:columns2,
 			changeAccount:this.changeAccount,
-			tags:['试用公司账户','正式公司账户']
+			tags:['试用公司账户','正式公司账户'],
+			mainHeight:this.state.mainHeight
 		}
 		return (
 			<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
 		);
 	}
+
+	 componentWillMount() {
+  	
+      let {resizeMaiHeight,validateUser,loginOut} = this.props;
+
+		 resizeMaiHeight(this);
+		 
+		 validateUser(()=>{loginOut();},this);
+      
+  }
 
   regular(e){//转正
   	var userid = e.target.parentNode.getAttribute('data-userid');
@@ -105,16 +117,18 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 	componentDidMount() {
 
-		var {userid, getusersigid} = this.props.params;
-		this.getusersingid = this.getusersigid = getusersigid;
-		this.userid = userid;
-		this.baseUrl = window.baseUrl;
 
-		let {validateUser} = this.props;
-		var {userid, getusersigid, companyid}=validateUser();
-		this.userid = userid;
-		this.getusersigid = getusersigid;
-		this.companyid = companyid;
+		this.baseUrl = window.baseUrl;
+ let  {validateUser,loginOut} = this.props;
+      var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
+          loginOut();
+      });
+      this.userid = userid;
+      this.getusersigid = getusersigid;
+      this.companyid = companyid;
+      this.isover = isover;
+      this.usertypesign = usertypesign;
+      this.loginOut = loginOut;
 		var params = {
 			getusersigid: this.getusersigid,
 			userid: this.userid,

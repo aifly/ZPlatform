@@ -33,23 +33,39 @@ import MainUI from '../components/Main.jsx';
             currentUser:"iLinten",
             lastTime:"2016.12.31",
             curUsersCount:5,
+            mainHeight:600,
             maxUsersCount:10,
             isCompany:true //当前登录用户是否是企业账号
         }
     }
 
-    componentDidMount(){
+    componentWillMount() {
+       return false;
+    }
 
-        let  {validateUser} = this.props;
-        var {userid,username}=validateUser();
-        this.userid = userid;
-        this.username = username;
+    componentDidMount(){
+        
         this.setState({
-            currentUser:this.username
-        })
+            currentUser:this.username,
+            mainHeight:document.documentElement.clientHeight - 50
+        });
+
+        
     }
 
     render(){
+
+        let  {validateUser,loginOut,resizeMaiHeight} = this.props;
+        var iNow = 0 ;
+        validateUser(()=>{
+            iNow++;
+            loginOut();
+        },this);
+        resizeMaiHeight(this);
+        if(iNow === 1){
+            return <div></div>;    
+        }
+    
 
         let zmitiProgressProps = {
             currentVal:700,
@@ -72,7 +88,7 @@ import MainUI from '../components/Main.jsx';
             height:248,
             margin:'0 auto'
         }
-        let component =  <div className="home-main">
+        let component =  <div className="home-main" style={{height:this.state.mainHeight}}>
                 <header className="header">
                     公告：智媒体新增新的交互工具"富图片"。<a href="#">点此查看</a>
                 </header>

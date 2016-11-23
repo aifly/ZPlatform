@@ -11,6 +11,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 	
 	  this.state = {
 	  	current:0,
+
 	  	userList:[
 	  		{
 	  			key:1,
@@ -94,11 +95,20 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 			columns:columns,
 			columns1:columns,
 			changeAccount:this.changeAccount,
-			tags:['账户管理','分配用户']
+			tags:['账户管理','分配用户'],
+			mainHeight:this.state.mainHeight
 		}
 		return (
 			<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
 		);
+	}
+
+	componentWillMount() {
+
+		  let {resizeMaiHeight,validateUser,loginOut} = this.props;
+			 resizeMaiHeight(this);
+		 
+		 validateUser(()=>{loginOut();},this);
 	}
 	componentDidMount() {
 		

@@ -62,6 +62,7 @@ import 'antd/lib/spin/style/css';
 			 currentDepartmentNameForChoose: '',
 			 selectedRows:[],
 			 spinning:true,
+			 mainHeight:document.documentElement.clientHeight - 50,
 			 departmentData: [] //
 
 		 };
@@ -104,11 +105,15 @@ import 'antd/lib/spin/style/css';
 		 }
 		 ]
 
-		 let {validateUser, loginOut} = this.props;
-		 var {userid, getusersigid, companyid}=validateUser();
-		 this.companyid = companyid;
-		 if (!companyid) {
-			 loginOut('您没有访问的权限1', window.mainUrl);
+		 let {resizeMaiHeight,validateUser,loginOut} = this.props;
+
+		 resizeMaiHeight(this);
+		 
+		 validateUser(()=>{loginOut();},this);
+		 
+
+		 if (!this.companyid || this.usertypesign !== 5) {
+			 loginOut('您没有访问的权限!', window.mainUrl);
 			 return <div></div>;
 		 }
 
@@ -155,11 +160,11 @@ import 'antd/lib/spin/style/css';
 			 wrapperCol: {span: 14},
 		 };
 
-		 var params = JSON.parse(document.cookie);
-		 var companyId = params.companyid;
+		 
+		 var companyId = this.companyid;
 
 		 let component = <Spin tip="Loading..." spinning={this.state.spinning}>
-				 <section className='ud-main-ui'>
+				 <section className='ud-main-ui' style={{height:this.state.mainHeight}}>
 					 <aside className='ud-left-side'>
 						 <Tabs defaultActiveKey="1">
 							 <TabPane tab="组织架构" key="1">
@@ -311,14 +316,8 @@ import 'antd/lib/spin/style/css';
 
 	 componentDidMount() {
 
-		 let {validateUser, loginOut} = this.props;
-		 var {userid, getusersigid, companyid}=validateUser();
-		 this.userid = userid;
-		 this.getusersigid = getusersigid;
-		 this.companyid = companyid;
-		 this.loginOut = loginOut;
-		 if (!companyid) {
-			 loginOut('您没有访问的权限', window.mainUrl);
+		 if (!this.companyid) {
+			 //loginOut('您没有访问的权限', window.mainUrl);
 			 return;
 		 }
 		 let s = this;

@@ -39,6 +39,10 @@ class App extends React.Component{
 
 	componentWillMount(){
 		window.obserable = new Obserable();
+		window.addEventListener('resize', ()=>{
+				obserable.trigger({type:'setMainHeight'});
+				obserable.trigger({type:'setMenuWidth'});
+		});
 	}
   
 	componentDidMount() {

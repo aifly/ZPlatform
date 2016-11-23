@@ -85,7 +85,7 @@ class MainUI extends React.Component {
             defaultOpenKeys = 'sub3';
         }
 
-        if(this.state.isCompany){
+        if(this.state.isCompany && this.usertypesign === 5){//this.usertypesign === 5的时候,才是公司管理员.
             this.userMenuConfig = [//用户中心下的菜单
                 {
                     "linkTo":"/userdepartment/",
@@ -185,8 +185,11 @@ class MainUI extends React.Component {
     }
     
     componentWillMount(){
-      let  {validateUser} = this.props;
-      var {userid,getusersigid,companyid,isover,usertypesign,username,usermobile,useremail}=validateUser();
+      let  {validateUser,loginOut,resizeLeftMenu} = this.props;
+      var {userid,getusersigid,companyid,isover,usertypesign,username,usermobile,useremail}=validateUser(()=>{
+          loginOut();
+      });
+      resizeLeftMenu(this);
       this.userid = userid;
       this.getusersigid = getusersigid;
       this.companyid = companyid;
@@ -195,6 +198,8 @@ class MainUI extends React.Component {
       this.username = username;
       this.usermobile = usermobile;
       this.useremail = useremail;
+
+
 
     }
 
@@ -213,8 +218,6 @@ class MainUI extends React.Component {
                 current = item.key;
             }
         });
-
-        
 
         this.setState({
             isCompany:this.companyid,

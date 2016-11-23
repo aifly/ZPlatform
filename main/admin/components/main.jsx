@@ -99,7 +99,7 @@ class MainUI extends Component {
 			 <section className="main">
                 <header className="fly-header">
                     <div className="fly-logo"><a href="/"><img src="../static/images/logo.png" alt=""/></a></div>
-                    <div className="fly-nav"><a href="#">控制平台</a></div>
+                    <div className="fly-nav"><a href={window.mainUrl}>控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
                     <div  className="fly-nav"><a href={"./#/"+params}>系统管理</a></div>
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
@@ -146,17 +146,19 @@ class MainUI extends Component {
 	}
   componentWillMount() {
       let  {validateUser,loginOut} = this.props;
-      var {userid,getusersigid,companyid,isover,usertypesign}=validateUser();
-        this.userid = userid;
-        this.getusersigid = getusersigid;
-        this.companyid = companyid;
-        this.isover = isover;
-        this.usertypesign = usertypesign;
-        this.loginOut = loginOut;
-     
-      if(this.usertypesign !== 3 &&  this.usertypesign !== 4){
-        loginOut('您没有访问的权限',window.mainUrl);
-      }
+      var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
+          loginOut();
+      });
+      this.userid = userid;
+      this.getusersigid = getusersigid;
+      this.companyid = companyid;
+      this.isover = isover;
+      this.usertypesign = usertypesign;
+      this.loginOut = loginOut;
+   
+    if(this.usertypesign !== 3 &&  this.usertypesign !== 4){
+      loginOut('您没有访问的权限',window.mainUrl);
+    }
 
   }
 	componentDidMount() {
