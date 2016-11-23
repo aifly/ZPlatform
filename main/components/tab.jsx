@@ -20,10 +20,12 @@ export default class ZmitiTab extends React.Component {
         },1)
 
         window.addEventListener('resize', ()=> {
-            this.setState({
-                moduleW: s.refs.moduleC.offsetWidth / 3,
-                iNow:0
-            });
+            if(s.refs.moduleC){
+                this.setState({
+                    moduleW: s.refs.moduleC.offsetWidth / 3,
+                    iNow:0
+                });
+            }
         });
     }
 

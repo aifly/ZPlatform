@@ -50,6 +50,7 @@ class App extends React.Component{
 				obserable.trigger({type:'setMainHeight'});
 				obserable.trigger({type:'setMenuWidth'});
 		});
+		
 	}
 
 	componentDidMount() {

@@ -40,7 +40,8 @@ import MainUI from '../components/Main.jsx';
     }
 
     componentWillMount() {
-       return false;
+       let  {resizeMaiHeight} = this.props;
+            resizeMaiHeight(this);
     }
 
     componentDidMount(){
@@ -62,6 +63,7 @@ import MainUI from '../components/Main.jsx';
             loginOut();
         },this);
         resizeMaiHeight(this);
+        
         if(iNow === 1){
             return <div></div>;    
         }

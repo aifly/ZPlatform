@@ -132,9 +132,6 @@ import 'antd/lib/spin/style/css';
 			 })
 		 };
 		 const treeNodes = loop(this.state.treeData);
-
-
-
 		 var s = this;
 
 

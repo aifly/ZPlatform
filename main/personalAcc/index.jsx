@@ -93,12 +93,7 @@ class ZmitiPersonalAccApp extends React.Component{
       });
 
       var s = this;
-
-      console.log({
-        $:$,
-        userid:s.userid,
-        getusersigid:s.getusersigid
-      })
+      
       this.getUserDetail({
         $:$,
         userid:s.userid,

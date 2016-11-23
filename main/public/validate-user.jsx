@@ -66,19 +66,21 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	}
 
 	resizeMaiHeight(that) {
-		window.obserable.on('setMainHeight', ()=> {
-			that.setState({
-				mainHeight: document.documentElement.clientHeight - 50
-			});
-		});
+		/*window.obserable.on('setMainHeight', ()=> {
+				that.setState({
+					mainHeight: document.documentElement.clientHeight - 50
+				});
+		});*/
+
 
 	}
-	resizeLeftMenu(that) {
-		window.obserable.on('setMenuWidth', ()=> {
-			that.setState({
-				rightWidth: document.documentElement.clientWidth - 180
-			})
-		});
+	resizeLeftMenu(that,name='setMenuWidth') {
+		window.obserable.on(name, ()=> {
+				that.setState({
+					rightWidth: document.documentElement.clientWidth - 180
+				})
+		});	
+
 	}
 
 
@@ -95,9 +97,15 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			}
 		});
 	}
+
+	componentDidMount() {
+		
+	}
  
 
 	render() {
+
+
 		let methods = {
 			validateUser: this.validateUser,
 			loginOut: this.loginOut,

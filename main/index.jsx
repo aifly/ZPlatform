@@ -39,10 +39,7 @@ class App extends React.Component{
 
 	componentWillMount(){
 		window.obserable = new Obserable();
-		window.addEventListener('resize', ()=>{
-				obserable.trigger({type:'setMainHeight'});
-				obserable.trigger({type:'setMenuWidth'});
-		});
+		
 	}
   
 	componentDidMount() {
@@ -54,6 +51,10 @@ class App extends React.Component{
 $.getJSON(window.menuConfigUrl,(data)=>{
 	window.globalMenus = data.routers;
 	ReactDOM.render(<App></App>, document.getElementById('fly-main'));
+	 window.onresize = function(){
+      window.obserable.trigger({type:'setMainHeight'});
+      window.obserable.trigger({type:'setMenuWidth'});
+  }
 });
 
 

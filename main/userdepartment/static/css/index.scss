@@ -225,10 +225,10 @@ $btnColor:#2db7f5;
     .ant-tabs-ink-bar{
       background-color:$baseColor;
     }
-
   }
   .ud-right-side{
     $color:$btnColor;
+
     width: 100 - $leftSize;
     .ud-main-section{
 
@@ -294,7 +294,7 @@ $btnColor:#2db7f5;
           margin-top: 20px;
           h2{
             font-family: '宋体';
-            width:20%;
+            width:40%;
             div{
               a,span{
                 font-weight: normal;
