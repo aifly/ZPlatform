@@ -2,10 +2,11 @@ import React,{Component} from 'react';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import MainUI from '../components/Main.jsx';
 import './static/css/index.css';
-import {Row,Col,Tabs,Table,Icon,Button,Checkbox,Modal,Form,Input,DatePicker,} from 'antd';
+import {Row,Col,Tabs,Table,Icon,Button,Checkbox,Modal,Form,Input,DatePicker,Select,} from 'antd';
 const TabPane = Tabs.TabPane;
 import ZmitiSearchInput from '../components/zmiti-search-input.jsx';
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 class  ZmitiProject extends Component{
 	constructor(props) {
@@ -15,6 +16,12 @@ class  ZmitiProject extends Component{
 		}
 	}
 render() {
+const children = [];
+for (let i = 10; i < 36; i++) {
+  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+}
+
+
 const columns = [{
   title: '编号',
   dataIndex: 'name',
@@ -119,7 +126,16 @@ const data = [{
 	         				validateStatus="validating"
 	         				help=""
 	         				>
-	         				<Input placeholder="请录入项目名称" id="validating" />
+	         				  <Select
+							    showSearch="false"
+							    placeholder="请选择项目负责人"
+							    optionFilterProp="children"
+							    notFoundContent=""
+							  >
+							    <Option value="邓彬">邓彬</Option>
+							    <Option value="郭慧颖">郭慧颖</Option>
+							    <Option value="徐畅">徐畅</Option>
+							  </Select>
 	         			</FormItem>
 	         			<FormItem
 	         				label="项目成员"
@@ -128,7 +144,14 @@ const data = [{
 	         				validateStatus="validating"
 	         				help=""
 	         				>
-	         				<Input placeholder="请录入项目名称" id="validating" />
+		         				<Select
+								    multiple
+								    style={{ width: '100%' }}
+								    placeholder="请选择项目的参与人"
+								    defaultValue={['a10', 'c12']}
+								  >
+								    {children}
+								</Select>
 	         			</FormItem>
 	         			<FormItem
 	         				label="所属客户"
@@ -137,7 +160,16 @@ const data = [{
 	         				validateStatus="validating"
 	         				help=""
 	         				>
-	         				<Input placeholder="请录入项目名称" id="validating" />
+	         				<Select
+							    showSearch="false"
+							    placeholder="请选择项目所属客户"
+							    optionFilterProp="children"
+							    notFoundContent=""
+							  >
+							    <Option value="邓彬">邓彬</Option>
+							    <Option value="郭慧颖">郭慧颖</Option>
+							    <Option value="徐畅">徐畅</Option>
+							  </Select>
 	         			</FormItem>
 	         			<FormItem
 	         				label="起止时间"
@@ -157,6 +189,15 @@ const data = [{
 						          <DatePicker />
 						        </FormItem>
 						    </Col>
+	         			</FormItem>
+	         			<FormItem
+	         				label="项目描述"
+	         				labelCol={{span:5}}
+	         				wrapperCol={{span:12}}	         				
+	         				validateStatus="validating"
+	         				help=""
+	         				>
+	         				 <Input type="textarea" placeholder="请简单描述下此项目情况" autosize={{ minRows: 2, maxRows: 6 }} />
 	         			</FormItem>
 	         		</Form>
 	         	</Col>
