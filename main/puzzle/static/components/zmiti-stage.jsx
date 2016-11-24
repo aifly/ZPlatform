@@ -26,8 +26,9 @@ export default class ZmitiStage extends React.Component {
             if (s.isDrag) { //用户按下空格键，则不能拖拽图片。
                 return;
             }
-            disX = e.stageX - bmp.x +  s.canvas.offsetLeft - s.canvas.width/2;
-            disY = e.stageY - bmp.y + s.canvas.offsetTop- s.canvas.height/2;
+            var L  = document.querySelector('.fly-right-aside').offsetLeft;
+            disX = e.stageX - bmp.x +  s.canvas.offsetLeft - s.canvas.width/2 + L;
+            disY = e.stageY - bmp.y + s.canvas.offsetTop- s.canvas.height/2 + 50;
             document.addEventListener("mousemove", moveHandler);
             document.addEventListener("mouseup", function () {
                 document.removeEventListener("mousemove", moveHandler);
@@ -99,15 +100,35 @@ export default class ZmitiStage extends React.Component {
         this.renderCanvas();
 
         PubSub.subscribe('renderCanvas', (e, method)=> {
+
             this.renderCanvas(method);
         });
+        var s = this;
+   /*     window.obserable.on("renderCanvas",(method)=>{
+          
+            s.renderCanvas(method);
+        });
 
+        window.obserable.on('setCanvasWidth',(width)=>{
+            s.setState({
+                width: width
+            })
+        })
+*/
         PubSub.subscribe('setCanvasWidth', (e, width)=> {
             this.setState({
                 width: width
             })
         });
-        PubSub.subscribe('setCanvasHeight', (e, height)=> {
+
+     /*   window.obserable.on('setCanvasHeight',(height)=>{
+
+            s.setState({
+                height: height
+            })
+        })*/
+
+       PubSub.subscribe('setCanvasHeight', (e, height)=> {
             this.setState({
                 height: height
             })
@@ -149,21 +170,23 @@ export default class ZmitiStage extends React.Component {
 
     renderCanvas(method = 'renderRectLeftRight',target= null) {
 
-        let canvas = this.refs['z-puzzle-canvas'];
+        this.canvas = this.canvas || this.refs['z-puzzle-canvas'];
+     
 
-        if (!canvas) return;
+        if (!this.canvas) return;
 
         let {width,height} = this.state;
 
-        this.canvas = canvas;
-        !this.stage && (this.stage = new createjs.Stage(canvas));
+        console.log(this.state)
+
+       
+        !this.stage && (this.stage = new createjs.Stage(this.canvas));
         this.stage.removeAllChildren();
 
         let colors = ['#ff99c1', '#ffdb71','#b6d172','#aaddff','#78c9ba'];
 
         let stage = this.stage,
             s = this;
-
 
         ShapeGenerater[method]({stage, colors, width, height}, function () {
             let arr = Array.from(arguments);

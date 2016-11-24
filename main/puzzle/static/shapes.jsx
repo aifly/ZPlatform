@@ -6,6 +6,7 @@ const ShapeGenerater = {
             rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / 2 - 1, height);
             rect.name= 'rect';
 
+        console.log(options)
         let rect1 = new createjs.Shape();
             rect1.graphics.beginFill(colors[1]).drawRect(width / 2 + 1, 0, width / 2 - 1, height);
             rect1.name= 'rect1';
@@ -30,9 +31,11 @@ const ShapeGenerater = {
 
         stage.addChild(rect, rect1, text1, text);
 
-        stage.update();
         fn && fn({rect: rect, text: text,x: 0, y: 0}, {rect: rect1, text: text1,x: width / 2, y: 0});
+
+        stage.update();
     },
+    
     renderRectUpDown(options, fn){
         let {stage,colors,width,height} = options,
             rect = new createjs.Shape();

@@ -29,6 +29,12 @@ class ZmitiPuzzleApp extends React.Component{
         }
     }
 
+    componentWillMount() {
+         let {resizeMainHeight,validateUser,loginOut} = this.props;
+         resizeMainHeight(this);    
+         validateUser(()=>{loginOut();},this);
+    }
+
     componentDidMount(){
 
         const key = `open${Date.now()}`;
@@ -63,7 +69,7 @@ class ZmitiPuzzleApp extends React.Component{
     render(){
 
         var style = {
-            width:100
+           // width:100
         }
 
        let  {validateUser,loginOut} = this.props;
@@ -83,7 +89,7 @@ class ZmitiPuzzleApp extends React.Component{
                 <ZmitiPannel></ZmitiPannel>
             </div>;
         return (
-            
+
             <MainUI component={component}></MainUI>
         )
     }
