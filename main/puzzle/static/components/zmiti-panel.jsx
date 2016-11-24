@@ -35,7 +35,18 @@ export default class ZmitiPanel extends React.Component {
     }
 
     changeHeight(value) {
-        PubSub.publish('setCanvasHeight', value);
+
+        /*window.obserable.trigger({
+            type:'setCanvasHeight',
+            data:value
+        })*/
+       PubSub.publish('setCanvasHeight', value);
+       /* var s = this;
+         window.obserable.trigger({
+            type:'renderCanvas',
+            data:s.state.currentMethod
+        });*/
+         
         PubSub.publish('renderCanvas', this.state.currentMethod);
         this.setState({
             height: value
@@ -43,9 +54,18 @@ export default class ZmitiPanel extends React.Component {
     }
 
     changeWidth(value) {
-        PubSub.publish('setCanvasWidth', value);
-        PubSub.publish('renderCanvas', this.state.currentMethod);
-        this.setState({
+        window.obserable.trigger({
+            type:'setCanvasWidth',
+            data:value
+        });
+        var s = this;
+        //PubSub.publish('setCanvasWidth', value);
+        window.obserable.trigger({
+            type:'renderCanvas',
+            data:s.state.currentMethod
+        })
+       // PubSub.publish('renderCanvas', this.state.currentMethod);
+        s.setState({
             width: value
         });
     }

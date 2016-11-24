@@ -70,11 +70,11 @@ class ZmitiPersonalAccApp extends React.Component{
     }
 
     componentWillMount() {
-       let {validateUser, loginOut,resizeMaiHeight,getUserDetail} = this.props;
+       let {validateUser, loginOut,resizeMainHeight,getUserDetail} = this.props;
        var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
           loginOut();
        },this);
-       resizeMaiHeight(this);
+       resizeMainHeight(this);
        this.userid = userid;
        this.getusersigid = getusersigid;
        this.companyid = companyid;

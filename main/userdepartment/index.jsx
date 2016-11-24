@@ -78,8 +78,6 @@ import 'antd/lib/spin/style/css';
 	 }
 
 	 render() {
-
-
 		 var columns = [{
 			 title: "用户名",
 			 dataIndex: 'username',
@@ -105,9 +103,9 @@ import 'antd/lib/spin/style/css';
 		 }
 		 ]
 
-		 let {resizeMaiHeight,validateUser,loginOut} = this.props;
+		 let {resizeMainHeight,validateUser,loginOut} = this.props;
 
-		 resizeMaiHeight(this);
+		 resizeMainHeight(this);	
 		 
 		 validateUser(()=>{loginOut();},this);
 		 

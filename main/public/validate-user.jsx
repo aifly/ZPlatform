@@ -65,7 +65,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		 }
 	}
 
-	resizeMaiHeight(that) {
+	resizeMainHeight(that) {
 		/*window.obserable.on('setMainHeight', ()=> {
 				that.setState({
 					mainHeight: document.documentElement.clientHeight - 50
@@ -75,14 +75,13 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 
 	}
 	resizeLeftMenu(that,name='setMenuWidth') {
+
 		window.obserable.on(name, ()=> {
 				that.setState({
 					rightWidth: document.documentElement.clientWidth - 180
 				})
 		});	
-
 	}
-
 
 	getUserDetail(options={}){//获取用户的详细信息
 		let {$,userid,getusersigid,curId} = options;
@@ -109,7 +108,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		let methods = {
 			validateUser: this.validateUser,
 			loginOut: this.loginOut,
-			resizeMaiHeight: this.resizeMaiHeight,
+			resizeMainHeight: this.resizeMainHeight,
 			resizeLeftMenu: this.resizeLeftMenu,
 			getUserDetail: this.getUserDetail
 			//fillFeilds:this.fillFeilds

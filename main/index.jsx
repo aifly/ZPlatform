@@ -14,34 +14,34 @@ import ZmitiProject from './project/index.jsx';
 import Obserable from './static/libs/obserable.js';
 import $ from 'jquery';
 class App extends React.Component{
-    constructor(args) {
-      super(...args);
-  }
+	constructor(args) {
+		super(...args);
+	}
 	render() {
 		var apps = [
-			{path: '/', app: ZmitiHomeApp},
-			{path: '/richimglist/', app: ZmitiRichImgListApp},
-			{path: '/puzzle/', app: ZmitiPuzzleApp},
-			{path: '/userdepartment/', app: ZmitiUserDepartmentApp},
-			{path: '/personalAcc/', app: ZmitiPersonalAccApp},
-			{path: '/richimg/', app: ZmitiRichImgApp},
-			{path: '/qa/', app: ZmitiQaApp},
-			{path: '/project/', app: ZmitiProject},
+		{path: '/', app: ZmitiHomeApp},
+		{path: '/richimglist/', app: ZmitiRichImgListApp},
+		{path: '/puzzle/', app: ZmitiPuzzleApp},
+		{path: '/userdepartment/', app: ZmitiUserDepartmentApp},
+		{path: '/personalAcc/', app: ZmitiPersonalAccApp},
+		{path: '/richimg/', app: ZmitiRichImgApp},
+		{path: '/qa/', app: ZmitiQaApp},
+		{path: '/project/', app: ZmitiProject},
 		];
 		return (
 			<Router history={hashHistory}>
-				{apps.map((app, i) => {
-					return <Route key={i} path={app.path} component={app.app}/>
-				})}
+			{apps.map((app, i) => {
+				return <Route key={i} path={app.path} component={app.app}/>
+			})}
 			</Router>
-		)
+			)
 	}
 
 	componentWillMount(){
 		window.obserable = new Obserable();
 		
 	}
-  
+	
 	componentDidMount() {
 
 	}
@@ -51,10 +51,10 @@ class App extends React.Component{
 $.getJSON(window.menuConfigUrl,(data)=>{
 	window.globalMenus = data.routers;
 	ReactDOM.render(<App></App>, document.getElementById('fly-main'));
-	 window.onresize = function(){
-      window.obserable.trigger({type:'setMainHeight'});
-      window.obserable.trigger({type:'setMenuWidth'});
-  }
+	window.onresize = function(){
+		window.obserable.trigger({type:'setMainHeight'});
+		window.obserable.trigger({type:'setMenuWidth'});
+	}
 });
 
 
