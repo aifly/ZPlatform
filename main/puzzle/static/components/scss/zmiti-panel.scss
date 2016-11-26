@@ -29,307 +29,408 @@ input, textarea {
 @mixin pos($v) {
   @if
   $v == a {
-  position: absolute;
-} @else if $v == r {
-  position: relative;
-} @else if $v == f {
-  position: fixed;
-}
-}
+    position: absolute;
+    } @else if $v == r {
+      position: relative;
+      } @else if $v == f {
+        position: fixed;
+      }
+    }
 
-@mixin br($v:50%) {
-  border-radius: $v;
-}
+    @mixin br($v:50%) {
+      border-radius: $v;
+    }
 
-@mixin opacity($v:0) {
-  opacity: $v;
-}
+    @mixin opacity($v:0) {
+      opacity: $v;
+    }
 
-@mixin transform($v) {
-  -webkit-transform: $v;
-  transform: $v;
-}
+    @mixin transform($v) {
+      -webkit-transform: $v;
+      transform: $v;
+    }
 
-@mixin transformOrigin($v) {
-  -webkit-transform-origin: $v;
-  transform-origin: $v;
-}
+    @mixin transformOrigin($v) {
+      -webkit-transform-origin: $v;
+      transform-origin: $v;
+    }
 
-@mixin backgroundSize($v:cover) {
-  background-size: $v;
-}
+    @mixin backgroundSize($v:cover) {
+      background-size: $v;
+    }
 
-@mixin transition_transform($v) {
-  -webkit-transition: -webkit-transform $v;
-  transition: transform $v;
-}
+    @mixin transition_transform($v) {
+      -webkit-transition: -webkit-transform $v;
+      transition: transform $v;
+    }
 
-@mixin transform_origin($v:center) {
-  -webkit-transform-origin: $v;
-  transform-origin: $v;
-}
+    @mixin transform_origin($v:center) {
+      -webkit-transform-origin: $v;
+      transform-origin: $v;
+    }
 
-@mixin transition($v) {
-  -webkit-transition: $v;
-  transition: $v;
-}
+    @mixin transition($v) {
+      -webkit-transition: $v;
+      transition: $v;
+    }
 
-@mixin transitionTimingFunction($v:cubic-bezier(1, -0.025, 1, 0.865)
+    @mixin transitionTimingFunction($v:cubic-bezier(1, -0.025, 1, 0.865)
 
-)
-{
-  -webkit-transition-timing-function: $v;
-  transition-timing-function: $v;
-}
+      )
+    {
+      -webkit-transition-timing-function: $v;
+      transition-timing-function: $v;
+    }
 
-@mixin transform($v) {
-  -webkit-transform: $v;
-  transform: $v;
-}
+    @mixin transform($v) {
+      -webkit-transform: $v;
+      transform: $v;
+    }
 
-@mixin background($bg) {
-  background: $bg;
-}
+    @mixin background($bg) {
+      background: $bg;
+    }
 
-@mixin backgroundSize($v:cover) {
-  background-size: $v;
-}
+    @mixin backgroundSize($v:cover) {
+      background-size: $v;
+    }
 
-@mixin animation($v) {
-  -webkit-animation: $v;
-  animation: $v;
-}
+    @mixin animation($v) {
+      -webkit-animation: $v;
+      animation: $v;
+    }
 
-@mixin transform3d {
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  perspective: 800px;
-  -webkit-perspective: 800px;
-}
+    @mixin transform3d {
+      -webkit-transform-style: preserve-3d;
+      transform-style: preserve-3d;
+      perspective: 800px;
+      -webkit-perspective: 800px;
+    }
 
-@mixin displayBox($v) {
-  display: -webkit-box;
-  -webkit-box-align: center;
-  -webkit-box-pack: center;
-  -webkit-box-orient: $v;
-}
+    @mixin displayBox($v) {
+      display: -webkit-box;
+      -webkit-box-align: center;
+      -webkit-box-pack: center;
+      -webkit-box-orient: $v;
+    }
 
-@mixin fly-h-gradient-line {
-  background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, .2)), color-stop(0.5, rgba(204, 204, 204, 1)), to(rgba(204, 204, 204, .2)));
-  background: -moz-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
-  background: -ms-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
-}
+    @mixin fly-h-gradient-line {
+      background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, .2)), color-stop(0.5, rgba(204, 204, 204, 1)), to(rgba(204, 204, 204, .2)));
+      background: -moz-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
+      background: -ms-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
+    }
 
-@mixin fly-v-gradient-line($minOpacity:.2,$maxOpacity:1) {
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, $minOpacity)), color-stop(0.5, rgba(204, 204, 204, $maxOpacity)), to(rgba(204, 204, 204, $minOpacity)));
-  background: -moz-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
-  background: -ms-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
-}
+    @mixin fly-v-gradient-line($minOpacity:.2,$maxOpacity:1) {
+      background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, $minOpacity)), color-stop(0.5, rgba(204, 204, 204, $maxOpacity)), to(rgba(204, 204, 204, $minOpacity)));
+      background: -moz-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
+      background: -ms-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
+    }
 
-@mixin displayFlex($v:column) {
-  display: flex;
-  display: -webkit-flex;
-  flex-flow: $v;
-}
+    @mixin displayFlex($v:column) {
+      display: flex;
+      display: -webkit-flex;
+      flex-flow: $v;
+    }
 
-body {
-  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  height: 100%;
-  overflow: hidden;
-}
+    body {
+      font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      height: 100%;
+      overflow: hidden;
+    }
 
-$baseColor:#99071e;
-.zmiti-panel-ui{
-  &.active{
-    @include transitionTimingFunction();
-    @include transition(.5s);
-  }
-  @include pos(a);
-  left:0;
-  top:0;
-  width:300px;
-  height:80vh;
+    $baseColor:#99071e;
 
-}
-.zmiti-panel-title{
-  width:300px;
-  height:6vh;
-
-  line-height:6vh;
-  font-weight: bold;
-  background: $baseColor;
-  cursor: move;
-
-  span{
-    color:#fff;
-    display: inline-block;
-    vertical-align: middle;
-  }
-  span:nth-of-type(1){
-      width:26px;
-      height:26px;
-      border:1px solid #fff;
-      margin:0 20px;
-    @include pos(r);
-    &:before,&:after{
-      content:'';
+    $activeColor:#d8271c;
+    .zmiti-panel-ui{
+      &.active{
+        @include transitionTimingFunction();
+        @include transition(.5s);
+      }
       @include pos(a);
-      width:1px;
-      height:100%;
-      background-color: #fff;
-      left:50%;
-      @include transform(rotate(10deg));
-    }
-    &:after{
-      height:1px;
-      width:50%;
-      top:50%;
       left:0;
+      top:0;
+      width:300px;
+      height:80vh;
+
+     .ant-tabs-nav .ant-tabs-tab-inner, .ant-tabs-tab-inner{
+      color:#333 !important;
+     }
+     .ant-tabs-tab-active{
+        .ant-tabs-tab-inner{
+          color:$baseColor !important;;
+        }
+     }
+
     }
-  }
+    .zmiti-panel-title{
+      width:300px;
+      height:6vh;
+      overflow:auto;
+      line-height:6vh;
+      font-weight: bold;
+      background: $baseColor;
+      cursor: move;
+
+      span{
+        color:#fff;
+        display: inline-block;
+        vertical-align: middle;
+      }
+      span:nth-of-type(1){
+        width:26px;
+        height:26px;
+        border:1px solid #fff;
+        margin:0 20px;
+        @include pos(r);
+        &:before,&:after{
+          content:'';
+          @include pos(a);
+          width:1px;
+          height:100%;
+          background-color: #fff;
+          left:50%;
+          @include transform(rotate(10deg));
+        }
+        &:after{
+          height:1px;
+          width:50%;
+          top:50%;
+          left:0;
+        }
+      }
 
 
-}
-
-.p-mould-C{
-  @include displayFlex(row);
-  flex-grow: 1;
-  flex-wrap: wrap;
-}
-$mouldColor1:#ff99c1;
-$mouldColor2:#ffdb71;
-$mouldColor3:yellowgreen;
-$mouldColor4:#f90;
-.p-mould{
-  width:54px;
-  height:54px;
-  border:1px solid #ccc;
-  margin:5px 10px ;
-  @include pos(r);
-  box-sizing: border-box;
-  cursor: pointer;
-
-  &.active{
-    border-color: $baseColor;
-  }
-}
-
-.p-mould-left-right{
-  aside{
-    @include pos(a);
-      &:nth-of-type(1){
-        left:1px;
-        top:1px;
-        bottom:1px;
-        right:50%;
-      background: $mouldColor1;
-      border-right:1px solid #fff;
     }
-    &:nth-of-type(2){
-      left:50%;
-      top:1px;
-      bottom:1px;
-      right:1px;
-      background: $mouldColor2;
+
+    .p-mould-C{
+      @include displayFlex(row);
+      flex-grow: 1;
+      flex-wrap: wrap;
     }
-  }
-}
-.p-mould-tilt{
+    $mouldColor1:#ff99c1;
+    $mouldColor2:#ffdb71;
+    $mouldColor3:yellowgreen;
+    $mouldColor4:#f90;
+    .p-mould{
+      width:54px;
+      height:54px;
+      border:1px solid #ccc;
+      margin:5px 10px ;
+      @include pos(r);
+      box-sizing: border-box;
+      cursor: pointer;
 
-  background:url("../../images/m.png") no-repeat center;
-}
-.p-mould-bessel{
-  background:url("../../images/m1.png") no-repeat center;
-}
-.p-mould-three1{
-  background:url("../../images/m2.png") no-repeat center;
-}
-.p-mould-three2{
-  background:url("../../images/m2-1.png") no-repeat center;
-}
-.p-mould-three3{
-  background:url("../../images/m2-2.png") no-repeat center;
-}
-.p-mould-four1{
-  background:url("../../images/m4.png") no-repeat center;
-}
-.p-mould-four2{
-  background:url("../../images/m3.png") no-repeat center;
-}
-.p-mould-four3{
-  background:url("../../images/m5.png") no-repeat center;
-}
-.p-mould-four4{
-  background:url("../../images/m6.png") no-repeat center;
-}
-
-.p-mould-top-bottom{
-  aside{
-    @include pos(a);
-    &:nth-of-type(1){
-      left:1px;
-      top:1px;
-      bottom:50%;
-      right:1px;
-      background: $mouldColor1;
-      border-bottom:1px solid #fff;
+      &.active{
+        border-color: $baseColor;
+      }
     }
-    &:nth-of-type(2){
-      left:1px;
-      top:50%;
-      bottom:1px;
-      right:1px;
-      background: $mouldColor2;
+
+    .p-mould-left-right{
+      aside{
+        @include pos(a);
+        &:nth-of-type(1){
+          left:1px;
+          top:1px;
+          bottom:1px;
+          right:50%;
+          background: $mouldColor1;
+          border-right:1px solid #fff;
+        }
+        &:nth-of-type(2){
+          left:50%;
+          top:1px;
+          bottom:1px;
+          right:1px;
+          background: $mouldColor2;
+        }
+      }
     }
-  }
-}
+    .p-mould-tilt{
 
-.zmiti-panel-type-C{
-  width:100%;
-  ul{
-    border-bottom: 1px dashed #ccc;
-    @include displayFlex(row);
-  }
+      background:url("../../images/m.png") no-repeat center;
+    }
+    .p-mould-bessel{
+      background:url("../../images/m1.png") no-repeat center;
+    }
+    .p-mould-three1{
+      background:url("../../images/m2.png") no-repeat center;
+    }
+    .p-mould-three2{
+      background:url("../../images/m2-1.png") no-repeat center;
+    }
+    .p-mould-three3{
+      background:url("../../images/m2-2.png") no-repeat center;
+    }
+    .p-mould-four1{
+      background:url("../../images/m4.png") no-repeat center;
+    }
+    .p-mould-four2{
+      background:url("../../images/m3.png") no-repeat center;
+    }
+    .p-mould-four3{
+      background:url("../../images/m5.png") no-repeat center;
+    }
+    .p-mould-four4{
+      background:url("../../images/m6.png") no-repeat center;
+    }
 
-  li{
-    width:40px;
-    line-height:30px;
-    margin:5px;
-    text-align: center;
-    cursor: pointer;
-    &.active{
-      background:#60c645;
-      color:#fff;
-      @include br(5px);
+    .p-mould-top-bottom{
+      aside{
+        @include pos(a);
+        &:nth-of-type(1){
+          left:1px;
+          top:1px;
+          bottom:50%;
+          right:1px;
+          background: $mouldColor1;
+          border-bottom:1px solid #fff;
+        }
+        &:nth-of-type(2){
+          left:1px;
+          top:50%;
+          bottom:1px;
+          right:1px;
+          background: $mouldColor2;
+        }
+      }
+    }
+
+    .zmiti-panel-type-C{
+      width:100%;
+      ul{
+        border-bottom: 1px solid #ccc;
+        @include displayFlex(row);
+      }
+
+      li{
+        width:40px;
+        line-height:30px;
+        margin:5px 5px 0 5px;
+        text-align: center;
+        cursor: pointer;
+        &.active{
+      //background:#60c645;
+      color:$activeColor;
+      border-bottom:1px solid $activeColor;
     }
   }
 }
 
 .z-puzzle-header{
   width:100%;
-  height:8vh;
+  height:10vh;
   background:#dfdfdf;
   text-align: center;
   article{
     @include displayFlex(row);
     justify-content: center;
     align-items: center;
+    padding-top: 1vw;
   }
   .z-puzzle-width{
-    margin-right:20px;
+    margin-right:10px;
   }
   .z-puzzle-height{
-    margin-left:20px;
+    margin-left:10px;
+  }
+  .z-puzzle-lock{
+    $size:30px;
+    width:$size;
+    height:$size;
+    background-color:#d2d2d2 !important;  
+    margin-left: 20px;
+    cursor:pointer;
+    @include br(5px);
+    @include pos(r);
+    span{
+      margin:6px auto;
+      display:block;
+      width:17px;
+      height:17px;
+    }
+    &:hover div{
+      @include transform(scale(1));
+    }
+    div{
+      @include transitionTimingFunction();
+      @include transition(.2s);
+      @include transformOrigin(bottom);
+      width:140px;
+      @include pos(a);
+      left:-60px;
+      bottom:110%;
+      background:#5c5c5c;
+      color:#fff;
+      padding:4px 6px;
+      @include br(4px);
+      @include transform(scale(0));
+      &:before{
+        content:'';
+        width:10px;
+        height:10px;
+        @include br(2px);
+        background:inherit;
+        @include transform(rotate(45deg));
+        @include pos(a);
+        top:80%;
+        left:50%;
+      }
+
+    }
+    
+
+  }
+
+  .z-puzzle-scale{//比例
+    width:90%;
+    margin:10px auto;
+    @include displayFlex(horizontal);
+    li{
+      flex-grow:1;
+      &:first-of-type{
+        text-align:left;
+      }
+      &:not(:first-of-type){
+        @include br(2px);
+        cursor:pointer;
+        margin:0 3px;
+        background:#FFF;
+        &.active{
+          background:$activeColor;
+          color:#fff;
+        }
+      }
+    }
   }
 }
 
 .zmiti-panel-body{
-
   border-top:1px dashed #fff;
   background: #dfdfdf;
-  height:100%;
+  height:99%;
+  @include pos(r);
+  .z-puzzle-download{
+    margin-top:6;
+    @include pos(a);
+    bottom:5px;
+    text-align:center;
+    height:40px;
+    line-height: 40px;
+    width:100%;
+    a{
+      display:block;
+      width:100%;
+      color:#fff;
+      height:100%;
+      background:#8a9395;
+    }
+  }
+
 }
+
+
+
 .zmiti-panel-ui.close{
   height:14vh;
   overflow: hidden;
@@ -359,23 +460,76 @@ $mouldColor4:#f90;
     margin:4px 0;
     @include transition_transform(.33s);
     &.scroll{
-       @include transform(translate3d(-50px,0,0));
-    }
-    &.close1{
-      @include transform(rotate(45deg) translate3d(0,12px,0))
-    }
-    &.close2{
-      @include transform(rotate(-45deg) translate3d(2px,-14px,0));
-    }
+     @include transform(translate3d(-50px,0,0));
+   }
+   &.close1{
+    @include transform(rotate(45deg) translate3d(0,12px,0))
   }
+  &.close2{
+    @include transform(rotate(-45deg) translate3d(2px,-14px,0));
+  }
+}
 }
 
 .zmiti-panel-C{
   width:100%;
-  height:100px;
+  height:190px;
   @include displayFlex(row);
   flex-wrap: wrap;
-  align-items: center;
+  items-align:center;
+}
+
+.z-puzzle-border-style{
+  width:100%;
+  height:50px;
+  line-height: 50px;
+  text-align:center;
+  background:#f5f5f5;
+  font-size:1vw;
+}
+.z-puzzle-pic-margin{
+  @include displayFlex(row);
+  width:90%;
+  margin:10px auto;
+  .z-puzzle-size{
+    width:70%;
+    @include displayFlex(row);
+    justify-content:center;
+    .active{
+      span{
+        color:#fff;
+        background:$activeColor;  
+      }
+    }
+    aside{
+      flex-grow:1;
+      text-align:center;
+      @include pos(r);
+      &:nth-of-type(2n){
+        &:before{
+          content:'';
+          width:43px;
+          @include pos(a);
+          left:-10px;
+          top:9px;
+          height:10px;
+          background:#c9c9c9;
+        }
+      }
+    }
+    span{
+      display:inline-block;
+      $size:28px;
+      width:$size;
+      height:$size;
+      line-height: $size ;
+      @include br(50%);
+      background:#c9c9c9;
+      cursor:pointer;
+     
+    }
+
+  }
 }
 
 

@@ -481,6 +481,8 @@ export default class ZmitiUploadDialog extends React.Component {
         )
     }
 
+   
+
     beginUploadFile() {//开始上传
 
         if (this.refs['upload-file'].files.length <= 0) {
@@ -497,13 +499,16 @@ export default class ZmitiUploadDialog extends React.Component {
         formData.append('setupfile', this.refs['upload-file'].files[0]);
         formData.append('setuploadtype', this.state.type);
         formData.append('getusersigid', s.props.getusersigid);
-        formData.append('datainfoclassid', s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "");
+        formData.append('userid', s.props.userid);
+        formData.append('setdatainfoclassid', s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "");
         formData.append('setisthum', 1);//是否是缩略图。
         formData.append('seturltype', 'material' /*s.state.defaultIds[s.state.current]*/);
 
         ///console.log( s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "")
 
         //console.log( this.refs['upload-file'].files[0]);
+
+        //console.log(s.state.currentCate === -1 ? s.state.defaultIds[s.state.current] + "" : s.state.ajaxData[s.state.current][s.state.currentCate].parentName.id + "");
 
         $.ajax({
             url:window.baseUrl + s.props.uploadUrl,// 'http://192.168.23.2/v2/upload/upload_file/',//
@@ -512,11 +517,14 @@ export default class ZmitiUploadDialog extends React.Component {
             processData: false,
             data: formData,
             success(da){
+
+    
+                console.log(da);
                 if (da.gettips) {//
                     message.error(d.gettips[0]);
                     return;
                 }
-                console.log(da)
+                
                 if (da.getret === 0) {
 
                     message.success(da.getmsg, 4);
@@ -721,7 +729,7 @@ export default class ZmitiUploadDialog extends React.Component {
             if (!img) {
                 return <div></div>;
             }
-            let [width,height] = img.size.split('x'),
+            let [width,height] = img.size.toLowerCase().split('x'),
                 style = {
                     width: width > height ? '100%' : 'auto',
                     height: width > height ? 'auto' : '100%',
@@ -730,6 +738,7 @@ export default class ZmitiUploadDialog extends React.Component {
                     marginLeft: width > height ? 0 : -140 / height * width / 2,
                     marginTop: width > height ? -140 / width * height / 2 : 0
                 };
+
 
 
             return (

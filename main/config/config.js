@@ -1,5 +1,5 @@
 //全局配置
-window.baseUrl = 'http://api.zmiti.com/v2/';//接口地址
+window.baseUrl = 'http://api.zmiti.com/v2/';//接口地址http://api.zmiti.com/v2/  || http://beta.zmiti.com:90/
 window.loginUrl='http://localhost:5000';//登录地址.
 window.mainUrl = 'http://localhost:3000'; //登录成功跳转的地址.
 window.isDebug = false; //是否为调试版本

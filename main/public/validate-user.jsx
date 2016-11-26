@@ -84,15 +84,16 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	}
 
 	getUserDetail(options={}){//获取用户的详细信息
-		let {$,userid,getusersigid,curId} = options;
+		let {$,userid,getusersigid,setuserid,sussess} = options;
 		$.ajax({
 			url:window.baseUrl+'/user/get_userdetails',
 			data:{
 				userid:userid,
-				getusersigid:getusersigid
+				getusersigid:getusersigid,
+				setuserid:setuserid
 			},
 			success(data){
-				console.log(data);
+				sussess(data);
 			}
 		});
 	}

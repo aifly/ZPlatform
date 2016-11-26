@@ -22,10 +22,12 @@ export default class ZmitiStage extends React.Component {
         var disX, disY;
 
         bmp.on("mousedown", function (e) {
-
             if (s.isDrag) { //用户按下空格键，则不能拖拽图片。
                 return;
             }
+            
+            e.preventDefault()
+            
             var L  = document.querySelector('.fly-right-aside').offsetLeft;
             disX = e.stageX - bmp.x +  s.canvas.offsetLeft - s.canvas.width/2 + L;
             disY = e.stageY - bmp.y + s.canvas.offsetTop- s.canvas.height/2 + 50;
@@ -36,7 +38,7 @@ export default class ZmitiStage extends React.Component {
         });
 
         function moveHandler(e) {
-
+            
             bmp.x = e.x - disX;
             bmp.y = e.y - disY;
             s.stage.update();
@@ -59,13 +61,10 @@ export default class ZmitiStage extends React.Component {
                 let img = new Image();
                 imgData.target.text.text = '        loading...';
 
-
-                s.stage.update();
-
-                img.crossOrigin = "Anonymous";
-
-
+                img.crossOrigin = "anonymous";
                 img.onload = function () {
+
+
                     let bmp = new createjs.Bitmap(img);
                     bmp.x =  imgData.target.x;
                     bmp.y =  imgData.target.y;
@@ -81,8 +80,8 @@ export default class ZmitiStage extends React.Component {
 
                     s.stage.update();
 
-
                 };
+                console.log(imgData.src);
                 img.src = imgData.src;
             }
         };
@@ -99,12 +98,11 @@ export default class ZmitiStage extends React.Component {
     componentDidMount() {
         this.renderCanvas();
 
-        PubSub.subscribe('renderCanvas', (e, method)=> {
-
-            this.renderCanvas(method);
+        PubSub.subscribe('renderCanvas', (e, data)=> {
+            this.renderCanvas(data.method);
         });
         var s = this;
-   /*     window.obserable.on("renderCanvas",(method)=>{
+        window.obserable.on("renderCanvas",(method)=>{
           
             s.renderCanvas(method);
         });
@@ -114,19 +112,19 @@ export default class ZmitiStage extends React.Component {
                 width: width
             })
         })
-*/
+
         PubSub.subscribe('setCanvasWidth', (e, width)=> {
             this.setState({
                 width: width
             })
         });
 
-     /*   window.obserable.on('setCanvasHeight',(height)=>{
+        window.obserable.on('setCanvasHeight',(height)=>{
 
             s.setState({
                 height: height
             })
-        })*/
+        })
 
        PubSub.subscribe('setCanvasHeight', (e, height)=> {
             this.setState({
@@ -167,18 +165,20 @@ export default class ZmitiStage extends React.Component {
         }
 
     }
-
-    renderCanvas(method = 'renderRectLeftRight',target= null) {
+    /**
+     * 重新渲染canvas画布
+     * @param  {String} method     [description]
+     * @param  {[type]} target     [description]
+     * @param  {Number} marginSize [description]
+     * @return {[type]}            [description]
+     */
+    renderCanvas(method = 'renderRectLeftRight',target= null,marginSize=0) {
 
         this.canvas = this.canvas || this.refs['z-puzzle-canvas'];
-     
 
         if (!this.canvas) return;
 
         let {width,height} = this.state;
-
-        console.log(this.state)
-
        
         !this.stage && (this.stage = new createjs.Stage(this.canvas));
         this.stage.removeAllChildren();
@@ -188,14 +188,14 @@ export default class ZmitiStage extends React.Component {
         let stage = this.stage,
             s = this;
 
-        ShapeGenerater[method]({stage, colors, width, height}, function () {
+        ShapeGenerater[method]({stage, colors, width, height,marginSize}, function () {
             let arr = Array.from(arguments);
 
             if(s.state.imgList.length){
                 if(s.state.imgList.length >= arr.length){
                     arr.forEach((img,i)=> {
                         let image = new Image();
-                        image.crossOrigin = "Anonymous";
+                        //image.crossOrigin = "Anonymous";
                         arr[i].text.alpha =1;//显示loading
                         stage.update();
                         image.onload = function(){

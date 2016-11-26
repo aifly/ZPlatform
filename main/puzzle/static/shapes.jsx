@@ -1,14 +1,14 @@
 import 'babel-polyfill';
 const ShapeGenerater = {
     renderRectLeftRight(options, fn,target){//左右两侧的长方形。
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape();
-            rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / 2 - 1, height);
+            rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / 2 - marginSize, height);
             rect.name= 'rect';
 
         console.log(options)
         let rect1 = new createjs.Shape();
-            rect1.graphics.beginFill(colors[1]).drawRect(width / 2 + 1, 0, width / 2 - 1, height);
+            rect1.graphics.beginFill(colors[1]).drawRect(width / 2 + marginSize, 0, width / 2 - marginSize, height);
             rect1.name= 'rect1';
 
         

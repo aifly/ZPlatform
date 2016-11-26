@@ -33,6 +33,8 @@ class ZmitiPuzzleApp extends React.Component{
          let {resizeMainHeight,validateUser,loginOut} = this.props;
          resizeMainHeight(this);    
          validateUser(()=>{loginOut();},this);
+
+         
     }
 
     componentDidMount(){

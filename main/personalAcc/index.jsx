@@ -16,11 +16,12 @@ import 'antd/lib/button/style/css';
 import Form from 'antd/lib/form';
 import 'antd/lib/form/style/css';*/
 
-import {Modal,Input,Tabs,Select,Button,Form} from 'antd';
+import {Modal,Input,Tabs,Select,Button,Form,message} from 'antd';
 
 const FormItem = Form.Item;
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
+
 
 
 
@@ -59,8 +60,8 @@ class ZmitiPersonalAccApp extends React.Component{
                 ],//用户证件照片
                 projectnum:222,//作品总个数.
                 loginnum:24,//登录次数.
-                spaceuse:'123M',//空间使用量
-                consume:'100',
+                spaceuse:'123',//空间使用量
+                consume:'101',//总消费数。
                 expiredate:'2016-12-13',//过期时间/
                 currentVal:50,//进度条当前值,用户试用期总时间
                 maxVal:100,//进度最大值,已使用的时间 (两个数据无关紧要,我最终要根据两个数据算出比例.)
@@ -93,11 +94,50 @@ class ZmitiPersonalAccApp extends React.Component{
       });
 
       var s = this;
+
+
+      var userid = this.props.params.userid?this.props.params.userid:this.userid;
       
       this.getUserDetail({
         $:$,
         userid:s.userid,
-        getusersigid:s.getusersigid
+        getusersigid:s.getusersigid,
+        setuserid : userid,
+        sussess:(data)=>{
+          console.log(data);
+          if(data.getret === 0){
+            /*
+            
+       userData:{
+                portrait:'./personalAcc/static/images/user.jpg',//用户头像
+                
+            },
+             */
+            var da = data.getuserinfo;
+            this.state.userData={
+                portrait:da.portrait||'./personalAcc/static/images/user.jpg',
+                username:da.username,//用户名
+                useremail:da.useremail,
+                usermobile:da.usermobile,
+                departmentname:da.departmentname,
+                departmentid:da.departmentid,
+                companyid:da.companyid,
+                companyname:da.companyname,
+                userrealname:da.userrealname,//用户真实姓名
+                usersex:da.usersex,//用户性别
+                useremergencycontacter:da.useremergencycontacter,//紧急联系人
+                useremergencycontactmobile:da.useremergencycontactmobile,//紧急联系人电话/
+                credentials:da.credentials,//用户证件照片
+                expiredate:da.expiredate,//过期时间/
+                currentVal:da.currentVal,//进度条当前值,用户试用期总时间
+                maxVal:da.maxVal,//进度最大值,已使用的时间 (两个数据无关紧要,我最终要根据两个数据算出比例.)
+            };
+            this.forceUpdate();
+          }
+          else{
+            message.error(data.getmsg);
+          }
+        }
       });
     }
 
