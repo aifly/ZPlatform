@@ -274,7 +274,7 @@ export default class ZmitiPanel extends React.Component {
         picMargin:size
     },()=>{
 
-        PubSub.publish('renderCanvas', {method:this.state.currentMethod});
+        PubSub.publish('renderCanvas', {method:this.state.currentMethod,marginSize:size});
     })
   }
 

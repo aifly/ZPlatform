@@ -99,7 +99,7 @@ export default class ZmitiStage extends React.Component {
         this.renderCanvas();
 
         PubSub.subscribe('renderCanvas', (e, data)=> {
-            this.renderCanvas(data.method);
+            this.renderCanvas(data.method,null,data.marginSize);
         });
         var s = this;
         window.obserable.on("renderCanvas",(method)=>{
@@ -179,6 +179,7 @@ export default class ZmitiStage extends React.Component {
         if (!this.canvas) return;
 
         let {width,height} = this.state;
+        console.log(this.state)
        
         !this.stage && (this.stage = new createjs.Stage(this.canvas));
         this.stage.removeAllChildren();
