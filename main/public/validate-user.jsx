@@ -66,11 +66,11 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	}
 
 	resizeMainHeight(that) {
-		/*window.obserable.on('setMainHeight', ()=> {
+		window.obserable.on('setMainHeight', ()=> {
 				that.setState({
 					mainHeight: document.documentElement.clientHeight - 50
 				});
-		});*/
+		});
 
 
 	}

@@ -39,6 +39,7 @@ class ZmitiPersonalAccApp extends React.Component{
         super(...args);
         this.state =
         {
+            mainHeight:document.documentElement.clientHeight-50,
             userData:{
                 portrait:'./personalAcc/static/images/user.jpg',//用户头像
                 username:'',//用户名
@@ -176,7 +177,7 @@ class ZmitiPersonalAccApp extends React.Component{
            labelCol: {span: 6},
            wrapperCol: {span: 14},
          };
-        let component =  <div>
+        let component =  <div style={{height:this.state.mainHeight,overflow:'auto'}}>
                <div className="acc-header">
                    <article>
                        <div className="acc-user">

@@ -206,7 +206,6 @@ body {
 }
 #fly-main .main .fly-content .fly-right-aside {
   position: relative;
-  overflow: hidden;
 }
 #fly-main .main .fly-content .fly-right-aside iframe {
   left: 0;

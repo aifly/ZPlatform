@@ -37,76 +37,76 @@ const ShapeGenerater = {
     },
     
     renderRectUpDown(options, fn){
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape();
-        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width, height / 2 - 1);
+        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width, height / 2 - marginSize);
         rect.name = 'left';
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).drawRect(0, height / 2 + 1, width, height / 2 - 1);
+        rect1.graphics.beginFill(colors[1]).drawRect(0, height / 2 + marginSize, width, height / 2 - marginSize);
         rect1.name = 'right';
 
         let {text,text1}  = this.addLoadingVerText(width, height);
 
-        this.bindDblClick({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height/2+1});
+        this.bindDblClick({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height/2+marginSize});
 
-        fn && fn({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height/2+1});
+        fn && fn({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height/2+marginSize});
 
         stage.addChild(rect, rect1, text, text1);
         stage.update();
     },
     renderRectTilt(options, fn){//
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape(),
             scale = 3 / 5;
-        rect.graphics.beginFill(colors[0]).moveTo(0, 0).lineTo(width * scale - 1, 0).lineTo(width * (1 - scale), height).lineTo(0, height).closePath();
+        rect.graphics.beginFill(colors[0]).moveTo(0, 0).lineTo(width * scale - marginSize, 0).lineTo(width * (1 - scale), height).lineTo(0, height).closePath();
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).moveTo(width * scale + 1, 0).lineTo(width, 0).lineTo(width, height).lineTo(width * (1 - scale) + 1, height).closePath();
+        rect1.graphics.beginFill(colors[1]).moveTo(width * scale + marginSize, 0).lineTo(width, 0).lineTo(width, height).lineTo(width * (1 - scale) + marginSize, height).closePath();
 
 
         let {text,text1} = this.addLoadingHorText(width, height);
 
-        this.bindDblClick({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:width * scale + 1,y:0});
+        this.bindDblClick({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:width * scale + marginSize,y:0});
 
 
         stage.addChild(rect, rect1, text1, text);
 
         stage.update();
-        fn && fn({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:width * scale + 1,y:0});
+        fn && fn({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:width * scale + marginSize,y:0});
     },
     renderRectBessel(options, fn){
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape(),
             scale = .5;
-        rect.graphics.beginFill(colors[0]).moveTo(0, 0).lineTo(0, height * scale - 1).quadraticCurveTo(width * scale, height * (scale + .2), width, height * scale - 1).lineTo(width, 0).endStroke();
+        rect.graphics.beginFill(colors[0]).moveTo(0, 0).lineTo(0, height * scale - marginSize).quadraticCurveTo(width * scale, height * (scale + .2), width, height * scale - marginSize).lineTo(width, 0).endStroke();
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).moveTo(0, height).lineTo(0, height * scale + 1).quadraticCurveTo(width * scale, height * (scale + .2), width, height * scale).lineTo(width, height).endStroke();
+        rect1.graphics.beginFill(colors[1]).moveTo(0, height).lineTo(0, height * scale + marginSize).quadraticCurveTo(width * scale, height * (scale + .2), width, height * scale).lineTo(width, height).endStroke();
 
 
         let {text,text1}  = this.addLoadingVerText(width, height);
 
-        this.bindDblClick({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height * scale + 1});
+        this.bindDblClick({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height * scale + marginSize});
 
 
         stage.addChild(rect, rect1, text1, text);
 
         stage.update();
-        fn && fn({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height * scale + 1});
+        fn && fn({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height * scale + marginSize});
     },
     renderRectThree1(options, fn){
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape(),
             len = 3;
 
-        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / len - 1, height);
+        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / len - marginSize, height);
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).drawRect(width / len + 1, 0, width / len - 1, height);
+        rect1.graphics.beginFill(colors[1]).drawRect(width / len + marginSize, 0, width / len - marginSize, height);
 
         let rect2 = new createjs.Shape();
-        rect2.graphics.beginFill(colors[2]).drawRect(width / len*2 + 2, 0, width / len - 2, height);
+        rect2.graphics.beginFill(colors[2]).drawRect(width / len*2 + marginSize+1, 0, width / len - marginSize+1, height);
 
         let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
 
@@ -136,17 +136,17 @@ const ShapeGenerater = {
     },
 
     renderRectThree2(options, fn){
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape(),
             len = 3;
 
-        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / 2 - 1, height/2-1);
+        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / 2 - marginSize, height/2-marginSize);
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).drawRect(0, height/2+1, width / 2 - 1, height/2);
+        rect1.graphics.beginFill(colors[1]).drawRect(0, height/2+marginSize, width / 2 - marginSize, height/2);
 
         let rect2 = new createjs.Shape();
-        rect2.graphics.beginFill(colors[2]).drawRect(width / 2 +1, 0, width / 2 , height);
+        rect2.graphics.beginFill(colors[2]).drawRect(width / 2 +marginSize, 0, width / 2 , height);
 
         let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
 
@@ -184,17 +184,17 @@ const ShapeGenerater = {
     },
 
     renderRectThree3(options, fn){
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape(),
             len = 3;
 
-        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / 2 - 1, height/2-1);
+        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / 2 - marginSize, height/2-marginSize);
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).drawRect(width / 2 + 1,0, width / 2, height/2-1);
+        rect1.graphics.beginFill(colors[1]).drawRect(width / 2 + marginSize,0, width / 2, height/2-marginSize);
 
         let rect2 = new createjs.Shape();
-        rect2.graphics.beginFill(colors[2]).drawRect(0 , height/2+1, width , height / 2);
+        rect2.graphics.beginFill(colors[2]).drawRect(0 , height/2+ marginSize, width , height / 2);
 
         let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
 
@@ -232,20 +232,20 @@ const ShapeGenerater = {
     },
 
     renderRectFour1(options,fn){
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape(),
             len = 4;
 
-        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / len - 1, height);
+        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / len - marginSize, height);
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).drawRect(width / len + 1, 0, width / len - 1, height);
+        rect1.graphics.beginFill(colors[1]).drawRect(width / len + marginSize, 0, width / len - marginSize, height);
 
         let rect2 = new createjs.Shape();
-        rect2.graphics.beginFill(colors[2]).drawRect(width / len*2 + 2, 0, width / len - 2, height);
+        rect2.graphics.beginFill(colors[2]).drawRect(width / len*2 + marginSize+1, 0, width / len - marginSize-1, height);
 
         let rect3 = new createjs.Shape();
-        rect3.graphics.beginFill(colors[3]).drawRect(width / len * 3 + 2, 0, width / len - 2, height);
+        rect3.graphics.beginFill(colors[3]).drawRect(width / len * 3 + marginSize+1, 0, width / len - marginSize-1, height);
 
         let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
 
@@ -290,20 +290,20 @@ const ShapeGenerater = {
         );
     },
     renderRectFour2(options,fn){//
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape(),
             len = 2;
 
-        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / len - 1, height/len-1);
+        rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / len - marginSize, height/len-marginSize);
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).drawRect(width / len + 1, 0, width / len - 1, height/len-1);
+        rect1.graphics.beginFill(colors[1]).drawRect(width / len + marginSize, 0, width / len - marginSize, height/len-marginSize);
 
         let rect2 = new createjs.Shape();
-        rect2.graphics.beginFill(colors[2]).drawRect(0, height/len +1, width / len - 1, height/2);
+        rect2.graphics.beginFill(colors[2]).drawRect(0, height/len +marginSize, width / len - marginSize, height/2);
 
         let rect3 = new createjs.Shape();
-        rect3.graphics.beginFill(colors[3]).drawRect(width / len + 1, height/len + 1, width / len - 2, height/2);
+        rect3.graphics.beginFill(colors[3]).drawRect(width / len + marginSize, height/len + marginSize, width / len - marginSize-1, height/2);
 
         let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
 
@@ -346,20 +346,20 @@ const ShapeGenerater = {
 
     renderRectFour3(options,fn){
 
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape(),
             len = 2;
 
-        rect.graphics.beginFill(colors[0]).drawRect(1, 0, width -1, height/len-1);
+        rect.graphics.beginFill(colors[0]).drawRect(marginSize, 0, width -marginSize, height/len-marginSize);
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).drawRect(1, height/len+1, width / len - 1, height/len-1);
+        rect1.graphics.beginFill(colors[1]).drawRect(marginSize, height/len+marginSize, width / len - marginSize, height/len-marginSize);
 
         let rect2 = new createjs.Shape();
-        rect2.graphics.beginFill(colors[2]).drawRect(width / len + 2, height/len +1, width / len - 1, height/2/2-2);
+        rect2.graphics.beginFill(colors[2]).drawRect(width / len + marginSize+1, height/len +marginSize, width / len - marginSize, height/2/2-marginSize-1);
 
         let rect3 = new createjs.Shape();
-        rect3.graphics.beginFill(colors[3]).drawRect(width / len + 2, height/len /2 *3 + 1, width / len - 2, height/2/2);
+        rect3.graphics.beginFill(colors[3]).drawRect(width / len + marginSize+1, height/len /2 *3 + marginSize, width / len - marginSize-1, height/2/2);
 
         let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
 
@@ -403,20 +403,20 @@ const ShapeGenerater = {
 
     renderRectFour4(options,fn){
 
-        let {stage,colors,width,height} = options,
+        let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape(),
             len = 2;
 
-        rect.graphics.beginFill(colors[0]).drawRect(1, 0, width/len -1, height/(len+1)-1);
+        rect.graphics.beginFill(colors[0]).drawRect(marginSize, 0, width/len -marginSize, height/(len+1)-marginSize);
 
         let rect1 = new createjs.Shape();
-        rect1.graphics.beginFill(colors[1]).drawRect(1,height/(len+1)+1, width / len - 1, height/(len+1)-1);
+        rect1.graphics.beginFill(colors[1]).drawRect(marginSize,height/(len+1)+marginSize, width / len - marginSize, height/(len+1)-marginSize);
 
         let rect2 = new createjs.Shape();
-        rect2.graphics.beginFill(colors[2]).drawRect(1, height/(len+1)*2 +1, width / len - 1, height/(len+1)-1);
+        rect2.graphics.beginFill(colors[2]).drawRect(marginSize, height/(len+1)*2 +marginSize, width / len - marginSize, height/(len+1)-marginSize);
 
         let rect3 = new createjs.Shape();
-        rect3.graphics.beginFill(colors[3]).drawRect(width / len + 2,0, width / len - 2, height);
+        rect3.graphics.beginFill(colors[3]).drawRect(width / len + marginSize+1,0, width / len - marginSize-1, height);
 
         let text = new createjs.Text('双击上传图片', "20px Arial", '#fff');
 

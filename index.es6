@@ -3,7 +3,7 @@
  */
 
 import $ from 'jquery';
-import './statices/css/index.min.css';
+import './statices/css/index.css';
 import cCenter from './statices/images/c-center.png';
 import pc from './statices/images/pc.png';
 import a from './statices/images/a.png';
