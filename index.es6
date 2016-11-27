@@ -855,7 +855,6 @@ window.addEventListener('load', ()=> {
 
                            // a.href = 'http://localhost:3000/index.html';
                            var url =window.mainUrl+'#';
-                           console.log(d)
                             var params = {
                                 getusersigid:d.getusersigid,
                                 userid:d.userid,
@@ -1426,3 +1425,11 @@ window.addEventListener('load', ()=> {
     utilMethods.init();
 });
 
+/*
+$.ajax({
+    url:'http://api.zmiti.com',
+    type:'jsonp',
+    success(data){
+        console.log(data);
+    }
+})*/

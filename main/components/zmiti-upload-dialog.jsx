@@ -118,8 +118,13 @@ export default class ZmitiUploadDialog extends React.Component {
 
                     let d = data;
                     if (d.getret === -101) {
-                        this.isShowModel = false;
+                        self.isShowModel = false;
                         return;
+                    }
+                    if(d.getret!==0){
+                        message.error(d.getmsg);
+                        self.props.S&&self.props.S.props.loginOut();
+                        return;                        
                     }
 
                     self.state.ajaxData[self.state.current] = d.dataInfo;

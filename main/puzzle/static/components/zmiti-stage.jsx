@@ -49,6 +49,7 @@ export default class ZmitiStage extends React.Component {
     render() {
         let s = this;
         const props = {
+            S:this,
             baseUrl: s.props.baseUrl,
             getusersigid: s.props.getusersigid,
             userid: s.props.userid,
@@ -62,27 +63,24 @@ export default class ZmitiStage extends React.Component {
                 imgData.target.text.text = '        loading...';
 
                 img.crossOrigin = "anonymous";
+                
                 img.onload = function () {
 
-
-                    let bmp = new createjs.Bitmap(img);
+                    let bmp = new createjs.Bitmap(this);
                     bmp.x =  imgData.target.x;
                     bmp.y =  imgData.target.y;
-
-
                     imgData.target.text.alpha = 0;
 
                     s.stage.addChild(bmp);
 
                     bmp.mask = imgData.target.rect;
 
-                    s.drag(bmp);
-
                     s.stage.update();
-
+                    s.drag(bmp);
                 };
                 console.log(imgData.src);
-                img.src = imgData.src;
+                img.src = imgData.src;//'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161127/9898db3eb0c472ac10d1eb39523622b2.jpg';
+                        //;
             }
         };
         return (

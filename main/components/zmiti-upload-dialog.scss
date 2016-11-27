@@ -259,6 +259,7 @@ $baseColor:#99071e;
 
   .zmmiti-asset-content{
     height:400px;
+    overflow:auto;
     .zmiti-img-figure-C{
 
 
@@ -273,8 +274,8 @@ $baseColor:#99071e;
       align-items: center;
 
       figcaption{
-        width:140px;
-        height:140px;
+        width:134px;
+        height:134px;
         border:1px solid #ccc;
         &.active{
           &:before{

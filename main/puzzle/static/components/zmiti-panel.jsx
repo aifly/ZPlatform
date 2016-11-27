@@ -61,7 +61,7 @@ export default class ZmitiPanel extends React.Component {
             PubSub.publish('setCanvasWidth', state.height);
         }
         this.setState(state,()=>{
-            PubSub.publish('renderCanvas', {method:this.state.currentMethod});    
+            PubSub.publish('renderCanvas', {method:this.state.currentMethod,marginSize:this.state.picMargin});    
         });
     }
 
@@ -80,7 +80,7 @@ export default class ZmitiPanel extends React.Component {
             PubSub.publish('setCanvasHeight', state.height);
         }
         s.setState(state,()=>{
-            PubSub.publish('renderCanvas', {method:this.state.currentMethod});
+            PubSub.publish('renderCanvas', {method:this.state.currentMethod,marginSize:this.state.picMargin});
         });
     }
 
@@ -314,7 +314,7 @@ export default class ZmitiPanel extends React.Component {
                     type:'setCanvasWidth',
                     data:this.state.width
                 });
-                PubSub.publish('renderCanvas',{method:this.state.currentMethod});
+                PubSub.publish('renderCanvas',{method:this.state.currentMethod,marginSize:this.state.picMargin});
             });
         }
     }
@@ -354,7 +354,7 @@ export default class ZmitiPanel extends React.Component {
             this.setState({
                 currentMethod: method
             });
-            PubSub.publish('renderCanvas', {method});
+            PubSub.publish('renderCanvas', {method,marginSize:this.state.picMargin});
 
             PubSub.publish('getMethod', method);
 
