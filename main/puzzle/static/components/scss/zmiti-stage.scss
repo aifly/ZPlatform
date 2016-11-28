@@ -130,3 +130,38 @@
   }
 }
 
+.z-puzzle-operator{
+  @include pos(f);
+  right:0;
+  top:30vh; 
+  cursor:pointer;
+  background-color:#919191;
+  border-top-left-radius:4px;
+  border-bottom-left-radius:4px;
+  li{
+    color:#fff;
+    padding:10px;
+    border-bottom:1px solid #bdbdbd;
+    width:90%;
+    margin:0 auto;
+    text-align:center;
+    font-size:30px;
+    &:not(:first-of-type){
+      span{
+        @include pos(r);
+      }
+      span:before{
+        content:'';
+        @include pos(a);
+        width:20px;
+        height:2px;
+        background:#fff;
+        $size:74%;
+        left:$size;
+        top:$size;
+        @include transformOrigin(left);
+        @include transform(rotate(55deg));
+      }
+    }
+  }
+}

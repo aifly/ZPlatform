@@ -3,7 +3,9 @@ import './scss/zmiti-stage.css';
 import PubSub from '../js/pubsub';
 import ShapeGenerater from '../shapes.jsx';
 import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css'
+import 'antd/lib/button/style/css';
+import Icon from 'antd/lib/icon';
+import 'antd/lib/icon/style/css';
 
 import  ZmitiUploadDialog from '../../../components/zmiti-upload-dialog.jsx';
 
@@ -13,7 +15,8 @@ export default class ZmitiStage extends React.Component {
         this.state = {
             imgList: [],
             width: 1000,
-            height: 500
+            height: 500,
+            scale:1 //当前舞台的缩放比例
         };
     }
 
@@ -83,18 +86,28 @@ export default class ZmitiStage extends React.Component {
                         //;
             }
         };
+        var stageStyle = {
+       /*     transform:'scale('+this.state.scale+')',
+            WebkitTransform:'scale('+this.state.scale+')'*/
+        }
         return (
             <article className="z-puzzle-stage">
                 <div className="z-puzzle-canvas-C">
-                    <canvas ref="z-puzzle-canvas" width={this.state.width} height={this.state.height}></canvas>
+                    <canvas ref="z-puzzle-canvas" style={stageStyle} width={this.state.width} height={this.state.height}></canvas>
                     <ZmitiUploadDialog id="puzzle" {...props}></ZmitiUploadDialog>
                 </div>
+                <ul className='z-puzzle-operator'>
+                    <li><span><Icon type='scan'></Icon></span></li>
+                    <li><span><Icon type='plus-circle-o'></Icon></span></li>
+                    <li><span><Icon type='minus-circle-o'></Icon></span></li>
+                </ul>
             </article>
         )
     }
 
     componentDidMount() {
-        this.renderCanvas();
+        var size = obserable.trigger({type:'getPicmMargin'});
+        this.renderCanvas('renderRectLeftRight',null,size);
 
         PubSub.subscribe('renderCanvas', (e, data)=> {
             this.renderCanvas(data.method,null,data.marginSize);

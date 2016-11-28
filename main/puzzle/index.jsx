@@ -25,6 +25,7 @@ class ZmitiPuzzleApp extends React.Component{
         this.state = {
             width:1000,
             height:800,
+            mainHeight:document.documentElement.clientHeight - 50,
             currentMethod :'renderRectLeftRight',
         }
     }
@@ -74,21 +75,21 @@ class ZmitiPuzzleApp extends React.Component{
            // width:100
         }
 
-       let  {validateUser,loginOut} = this.props;
-          var {userid,getusersigid,companyid}=validateUser(()=>{
-              loginOut();
-          });
-          this.userid = userid;
-          this.getusersigid = getusersigid;
-          this.companyid = companyid;
+         let {resizeMainHeight,validateUser,loginOut} = this.props;
+
+         resizeMainHeight(this);    
+         
+         validateUser(()=>{loginOut();},this);
+          resizeMainHeight(this);   
+        
         let props = {
-            getusersigid:getusersigid,
-            userid:userid
+            getusersigid:this.getusersigid,
+            userid:this.userid
         }
 
-        let component = <div className="p-main-ui" style={style}>
+        let component = <div className="p-main-ui" style={{height:this.state.mainHeight}}>
                 <ZmitiStage  {...this.props} {...props} ></ZmitiStage>
-                <ZmitiPannel></ZmitiPannel>
+                <ZmitiPannel {...this.state}></ZmitiPannel>
             </div>;
         return (
 

@@ -19,4 +19,35 @@
     left: 400px;
     top: 100px; }
 
+.z-puzzle-operator {
+  position: fixed;
+  right: 0;
+  top: 30vh;
+  cursor: pointer;
+  background-color: #919191;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px; }
+  .z-puzzle-operator li {
+    color: #fff;
+    padding: 10px;
+    border-bottom: 1px solid #bdbdbd;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 30px; }
+    .z-puzzle-operator li:not(:first-of-type) span {
+      position: relative; }
+    .z-puzzle-operator li:not(:first-of-type) span:before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background: #fff;
+      left: 74%;
+      top: 74%;
+      -webkit-transform-origin: left;
+      transform-origin: left;
+      -webkit-transform: rotate(55deg);
+      transform: rotate(55deg); }
+
 /*# sourceMappingURL=zmiti-stage.css.map */

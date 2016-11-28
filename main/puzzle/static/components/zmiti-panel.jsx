@@ -33,7 +33,7 @@ export default class ZmitiPanel extends React.Component {
             currentMethod: 'renderRectLeftRight',
             dataUrl:'#',
             isLocked:false,
-            picMargin:0,
+            picMargin:2,
             scale:-1,//当前图片缩放的比例
         }
     }
@@ -162,7 +162,7 @@ export default class ZmitiPanel extends React.Component {
         ];
 
         return (
-            <div className="zmiti-panel-ui" ref="panel">
+            <div className="zmiti-panel-ui" ref="panel" style={{height:this.props.mainHeight}}>
             <section className="zmiti-panel-title" onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove}
             onMouseUp={this.onMouseUp}
             >
@@ -247,8 +247,9 @@ export default class ZmitiPanel extends React.Component {
                 </div>
             </div>
             </section>
-            <div className='z-puzzle-download'><a target="_blank" download={this.state.dataUrl} onClick={this.downloadImg} href={this.state.dataUrl}>下载图片</a></div>
+            
             </section>
+            <div className='z-puzzle-download'><a target="_blank" download={this.state.dataUrl} onClick={this.downloadImg} href={this.state.dataUrl}>下载图片</a></div>
             </div>
             )
     }
@@ -276,6 +277,12 @@ export default class ZmitiPanel extends React.Component {
 
         PubSub.publish('renderCanvas', {method:this.state.currentMethod,marginSize:size});
     })
+  }
+
+  componentWillMount() {
+    window.obserable.on('getPicmMargin',()=>{
+        return this.state.picMargin;
+    });
   }
 
   componentDidMount() {

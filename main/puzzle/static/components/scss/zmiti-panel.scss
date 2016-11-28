@@ -151,7 +151,7 @@ input, textarea {
       left:0;
       top:0;
       width:300px;
-      height:80vh;
+      
 
      .ant-tabs-nav .ant-tabs-tab-inner, .ant-tabs-tab-inner{
       color:#333 !important;
@@ -166,8 +166,8 @@ input, textarea {
     .zmiti-panel-title{
       width:300px;
       height:50px;
-      overflow:auto;
-      line-height:6vh;
+      overflow:hidden;
+      line-height:50px;
       font-weight: bold;
       background: $baseColor;
       cursor: move;
@@ -403,17 +403,14 @@ input, textarea {
       }
     }
   }
+
+
 }
 
-.zmiti-panel-body{
-  border-top:1px dashed #fff;
-  background: #dfdfdf;
-  height:90%;
-  @include pos(r);
-  .z-puzzle-download{
+.z-puzzle-download{
     margin-top:6;
     @include pos(a);
-    bottom:5px;
+    bottom:0;
     text-align:center;
     height:40px;
     line-height: 40px;
@@ -426,6 +423,13 @@ input, textarea {
       background:#8a9395;
     }
   }
+
+.zmiti-panel-body{
+  border-top:1px dashed #fff;
+  background: #dfdfdf;
+  height:90%;
+  @include pos(r);
+  
 
 }
 
