@@ -27,6 +27,7 @@ body {
   overflow: hidden; }
 
 .zmiti-panel-ui {
+  overflow: hidden;
   position: absolute;
   left: 0;
   top: 0;
@@ -249,6 +250,8 @@ body {
 
 .z-puzzle-download {
   margin-top: 6;
+  -webkit-transition: -webkit-transform 0.2s;
+  transition: transform 0.2s;
   position: absolute;
   bottom: 0;
   text-align: center;
@@ -266,6 +269,9 @@ body {
   border-top: 1px dashed #fff;
   background: #dfdfdf;
   height: 90%;
+  overflow: hidden;
+  -webkit-transition: height 500ms;
+  transition: height 500ms;
   position: relative; }
 
 .zmiti-panel-ui.close {

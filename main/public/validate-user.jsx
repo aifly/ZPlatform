@@ -75,10 +75,11 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 
 	}
 	resizeLeftMenu(that,name='setMenuWidth') {
+	
 
 		window.obserable.on(name, ()=> {
 				that.setState({
-					rightWidth: document.documentElement.clientWidth - 180
+					rightWidth: document.documentElement.clientWidth - window.mainLeftSize
 				})
 		});	
 	}

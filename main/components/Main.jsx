@@ -59,16 +59,19 @@ class MainUI extends React.Component {
     toggleMenu() {
 
         if (this.state.defaultClass === "fly-left-aside") {
-            this.setState({defaultClass: "fly-left-aside unfold", isOpen: false,rightWidth:document.documentElement.clientWidth - 60});
+            window.mainLeftSize = 60;
+            this.setState({defaultClass: "fly-left-aside unfold", isOpen: false,rightWidth:document.documentElement.clientWidth - window.mainLeftSize});
 
         } else {
             this.setState({defaultClass: "fly-left-aside"});
+            window.mainLeftSize = 180;
             setTimeout(()=> {
               this.setState({
                 isOpen: true,
-                rightWidth:document.documentElement.clientWidth - 180
+                rightWidth:document.documentElement.clientWidth - window.mainLeftSize
               });
           }, 200);
+
         }
     }
 

@@ -33,6 +33,7 @@ export default class ZmitiPanel extends React.Component {
             currentMethod: 'renderRectLeftRight',
             dataUrl:'#',
             isLocked:false,
+            showDownload:true,//显示下载按钮
             picMargin:2,
             scale:-1,//当前图片缩放的比例
         }
@@ -249,7 +250,7 @@ export default class ZmitiPanel extends React.Component {
             </section>
             
             </section>
-            <div className='z-puzzle-download'><a target="_blank" download={this.state.dataUrl} onClick={this.downloadImg} href={this.state.dataUrl}>下载图片</a></div>
+            <div style={{transform:'translate3d('+(this.state.showDownload ? 0:'-100%')+',0,0)'}} className='z-puzzle-download'><a target="_blank" download={this.state.dataUrl} onClick={this.downloadImg} href={this.state.dataUrl}>下载图片</a></div>
             </div>
             )
     }
@@ -372,11 +373,20 @@ export default class ZmitiPanel extends React.Component {
 
     closePanel() {
 
+
+
         this.open = !this.open;
+
+        this.setState({
+            showDownload:!this.open
+        })
+
+        this.open && (this.bodyHeight = this.refs['panel-body'].offsetHeight);
         let panel = this.refs['panel'];
-        panel.classList[this.open ? 'add' : 'remove']('close');
+       // / panel.classList[this.open ? 'add' : 'remove']('close');
         panel.classList.add("active");
         this.closeTimer && clearTimeout(this.closeTimer);
+        $(this.refs['panel-body']).height(this.open ? 0 : this.bodyHeight );
         this.closeTimer = setTimeout(()=> {
             panel.classList.remove("active");
         }, 500);

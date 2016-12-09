@@ -87,9 +87,15 @@ export default class ZmitiStage extends React.Component {
             }
         };
         var stageStyle = {
-       /*     transform:'scale('+this.state.scale+')',
-            WebkitTransform:'scale('+this.state.scale+')'*/
+            transform:'scale('+this.state.scale+')',
+            WebkitTransform:'scale('+this.state.scale+')',
+            transformOrigin:'center',
+            WebkitTransformOrigin:'center',
+            top:(document.documentElement.clientHeight -  this.state.height) / 2 ,
+            left:(document.documentElement.clientWidth -  this.state.width) / 2 
+            
         }
+        
         return (
             <article className="z-puzzle-stage">
                 <div className="z-puzzle-canvas-C">
@@ -159,10 +165,12 @@ export default class ZmitiStage extends React.Component {
             }
         });
 
-        this.canvas.onmousedown = e=> {
+        this.canvas.onmousedown = e => {
             if (this.isDrag) {
-                let disX = e.pageX - this.canvas.offsetLeft,
+                let disX = e.pageX - this.canvas.offsetLeft ,//- window.mainLeftSize,
                     disY = e.pageY - this.canvas.offsetTop;
+
+                console.log(disX);
 
                 document.onmousemove = ev => {
                     this.canvas.style.left = ev.pageX - disX + 'px';

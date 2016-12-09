@@ -5,13 +5,13 @@
   .z-puzzle-stage .z-puzzle-canvas-C {
     width: 100%;
     height: 100%;
-    position: absolute; }
+    overflow: hidden;
+    -webkit-transition-timing-function: cubic-bezier(1, -0.025, 1, 0.865);
+    transition-timing-function: cubic-bezier(1, -0.025, 1, 0.865);
+    position: fixed; }
     .z-puzzle-stage .z-puzzle-canvas-C canvas {
       position: absolute;
-      left: 50%;
-      top: 50%;
-      -webkit-transform: translate3d(-50%, -50%, 0);
-      transform: translate3d(-50%, -50%, 0);
+      z-index: 1;
       padding: 1px;
       box-shadow: 0 0 1px 3px white, 0 0 7px 6px rgba(0, 0, 0, 0.5); }
   .z-puzzle-stage .z-puzzle-download {

@@ -143,6 +143,7 @@ input, textarea {
 
     $activeColor:#d8271c;
     .zmiti-panel-ui{
+      overflow:hidden;
       &.active{
         @include transitionTimingFunction();
         @include transition(.5s);
@@ -409,6 +410,7 @@ input, textarea {
 
 .z-puzzle-download{
     margin-top:6;
+    @include transition_transform(.2s);
     @include pos(a);
     bottom:0;
     text-align:center;
@@ -428,6 +430,8 @@ input, textarea {
   border-top:1px dashed #fff;
   background: #dfdfdf;
   height:90%;
+  overflow:hidden;
+  @include transition(height 500ms);
   @include pos(r);
   
 

@@ -51,9 +51,11 @@ class App extends React.Component{
 $.getJSON(window.menuConfigUrl,(data)=>{
 	window.globalMenus = data.routers;
 	ReactDOM.render(<App></App>, document.getElementById('fly-main'));
+	window.mainLeftSize = 180;
 	window.onresize = function(){
 		window.obserable.trigger({type:'setMainHeight'});
 		window.obserable.trigger({type:'setMenuWidth'});
+
 	}
 });
 
