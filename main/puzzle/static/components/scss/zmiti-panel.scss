@@ -143,10 +143,83 @@ input, textarea {
 
     $activeColor:#d8271c;
     .zmiti-panel-ui{
-      overflow:hidden;
+      @include transform3d();
+      
+      .zmiti-panel-bar,.zmiti-download-bar{
+         @include pos(a);
+         left:100%;
+         top:50px;
+         width:24px;
+         padding:10px 0;
+         background:#8a9395;
+         cursor:pointer;
+         text-align: center;
+         border-top-right-radius: 5px;
+         border-bottom-right-radius: 5px;
+         border-left: 1px solid #fff;
+         -webkit-user-select:none;
+         color:#fff;
+
+        span{
+
+          $size:6px;
+          width:$size;
+          height:$size;
+          @include br(50%);
+          border:1px solid #fff;
+          background:#fff;
+          display:inline-block;;
+          @include pos(a);
+          left:2px;
+          top:6px;
+          &:nth-of-type(2){
+            top:72px;
+          }
+        }
+        &:before,&:after{
+          content:'';
+          @include pos(a);
+          left:-3px;
+          top:8px;
+          @include br(2px);
+          width: 8px;
+          height:2px;
+          z-index: 1;
+          background:#8a9395;
+        }
+        &:after{
+          top:74px;
+        }
+      }
+      .zmiti-download-bar{
+        @include transformOrigin(left);
+        backface-visibility: hidden;
+        @include transition_transform(.5s .3s);
+        &.active{
+          @include transform(rotateY(80deg));
+        }
+        top:160px;
+        a{
+          color:#fff;
+        }
+        span{
+          &:nth-of-type(2){
+            top:114px;
+          }
+        }
+        &:after{
+          top:116px;
+        }
+          
+
+      }
+      @include transitionTimingFunction(cubic-bezier(0, 1.75, 0.48, 0.89));
+      @include transition(.5s);
       &.active{
-        @include transitionTimingFunction();
-        @include transition(.5s);
+       //  opacity:0;
+       //  z
+        z-index: 0;
+         @include transform(translate3d(-100%,0,0));
       }
       @include pos(a);
       left:0;
@@ -169,36 +242,35 @@ input, textarea {
       height:50px;
       overflow:hidden;
       line-height:50px;
-      font-weight: bold;
-      background: $baseColor;
-      cursor: move;
-
+      background: #f5f5f5;
+      text-align: center;
       span{
-        color:#fff;
+        color:#666;
+        font-size:1vw;
         display: inline-block;
         vertical-align: middle;
       }
       span:nth-of-type(1){
         width:26px;
         height:26px;
-        border:1px solid #fff;
-        margin:0 20px;
+        //border:1px solid #fff;
+        
         @include pos(r);
-        &:before,&:after{
-          content:'';
-          @include pos(a);
-          width:1px;
-          height:100%;
-          background-color: #fff;
-          left:50%;
-          @include transform(rotate(10deg));
-        }
-        &:after{
-          height:1px;
-          width:50%;
-          top:50%;
-          left:0;
-        }
+       /*  &:before,&:after{
+         content:'';
+         @include pos(a);
+         width:1px;
+         height:100%;
+         background-color: #fff;
+         left:50%;
+         @include transform(rotate(10deg));
+       }
+       &:after{
+         height:1px;
+         width:50%;
+         top:50%;
+         left:0;
+       } */
       }
 
 
@@ -356,14 +428,14 @@ input, textarea {
     div{
       @include transitionTimingFunction();
       @include transition(.2s);
-      @include transformOrigin(bottom);
-      width:140px;
+      @include transformOrigin(70% bottom);
+      width:80px;
       @include pos(a);
-      left:-60px;
-      bottom:110%;
+      left:-40px;
+      top:-190%;
       background:#5c5c5c;
       color:#fff;
-      padding:4px 6px;
+      padding:4px;
       @include br(4px);
       @include transform(scale(0));
       &:before{
@@ -374,8 +446,8 @@ input, textarea {
         background:inherit;
         @include transform(rotate(45deg));
         @include pos(a);
-        top:80%;
-        left:50%;
+        top:90%;
+        left:60%;
       }
 
     }
@@ -430,7 +502,6 @@ input, textarea {
   border-top:1px dashed #fff;
   background: #dfdfdf;
   height:90%;
-  overflow:hidden;
   @include transition(height 500ms);
   @include pos(r);
   
@@ -457,24 +528,24 @@ input, textarea {
   overflow: hidden;
   @include transition_transform(.2s);
   &.scroll{
-    @include transform(translate3d(5px,0,0));
+    @include transform(translate3d(-5px,0,0));
 
   }
   li{
-    width:34px;
+    width:20px;
     height:2px;
     @include br(2px);
-    background:#fff;
-    margin:4px 0;
+    background:#999;
+    margin:2px 0;
     @include transition_transform(.33s);
     &.scroll{
      @include transform(translate3d(-50px,0,0));
    }
    &.close1{
-    @include transform(rotate(45deg) translate3d(0,12px,0))
+    @include transform(rotate(45deg) translate3d(0,10px,0))
   }
   &.close2{
-    @include transform(rotate(-45deg) translate3d(2px,-14px,0));
+    @include transform(rotate(-45deg) translate3d(-1px,-9px,0));
   }
 }
 }

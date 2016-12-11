@@ -6,7 +6,6 @@ const ShapeGenerater = {
             rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / 2 - marginSize, height);
             rect.name= 'rect';
 
-        console.log(options)
         let rect1 = new createjs.Shape();
             rect1.graphics.beginFill(colors[1]).drawRect(width / 2 + marginSize, 0, width / 2 - marginSize, height);
             rect1.name= 'rect1';
@@ -27,9 +26,20 @@ const ShapeGenerater = {
 
         let {text,text1} = this.addLoadingHorText(width, height);
 
-        this.bindDblClick({rect: rect, text: text, x: 0, y: 0}, {rect: rect1, text: text1, x: width / 2, y: 0});
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
 
-        stage.addChild(rect, rect1, text1, text);
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2];
+        });
+
+        this.bindDblClick({rect: rect, text: text, x: 0, y: 0,container:container1}, {rect: rect1, text: text1, x: width / 2, y: 0,container:container2});
+
+        container1.addChild(rect, text);
+        container2.addChild(rect1, text1);
+
+        stage.addChild(container1);
+        stage.addChild(container2);
 
         fn && fn({rect: rect, text: text,x: 0, y: 0}, {rect: rect1, text: text1,x: width / 2, y: 0});
 
@@ -48,11 +58,23 @@ const ShapeGenerater = {
 
         let {text,text1}  = this.addLoadingVerText(width, height);
 
-        this.bindDblClick({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height/2+marginSize});
+  
+
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
+
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2];
+        });
+
+      this.bindDblClick({rect: rect, text: text,x:0,y:0,container:container1}, {rect: rect1, text: text1,x:0,y:height/2+marginSize,container:container2});
+
+        container1.addChild(rect, text);
+        container2.addChild(rect1, text1);
 
         fn && fn({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height/2+marginSize});
 
-        stage.addChild(rect, rect1, text, text1);
+        stage.addChild(container1,container2);
         stage.update();
     },
     renderRectTilt(options, fn){//
@@ -64,13 +86,20 @@ const ShapeGenerater = {
         let rect1 = new createjs.Shape();
         rect1.graphics.beginFill(colors[1]).moveTo(width * scale + marginSize, 0).lineTo(width, 0).lineTo(width, height).lineTo(width * (1 - scale) + marginSize, height).closePath();
 
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
+
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2];
+        });
 
         let {text,text1} = this.addLoadingHorText(width, height);
 
-        this.bindDblClick({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:width * scale + marginSize,y:0});
+        this.bindDblClick({rect: rect, text: text,x:0,y:0,container:container1}, {rect: rect1, text: text1,x:width * scale + marginSize,y:0,container:container2});
 
-
-        stage.addChild(rect, rect1, text1, text);
+        container1.addChild(rect,text);
+        container2.addChild(rect1,text1);
+        stage.addChild(container1,container2);
 
         stage.update();
         fn && fn({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:width * scale + marginSize,y:0});
@@ -87,10 +116,19 @@ const ShapeGenerater = {
 
         let {text,text1}  = this.addLoadingVerText(width, height);
 
-        this.bindDblClick({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height * scale + marginSize});
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
+
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2];
+        });
+        this.bindDblClick({rect: rect, text: text,x:0,y:0,container:container1}, {rect: rect1, text: text1,x:0,y:height * scale + marginSize,container:container2});
 
 
-        stage.addChild(rect, rect1, text1, text);
+        container1.addChild(rect,text);
+        container2.addChild(rect1,text1);
+
+        stage.addChild(container1,container2);
 
         stage.update();
         fn && fn({rect: rect, text: text,x:0,y:0}, {rect: rect1, text: text1,x:0,y:height * scale + marginSize});
@@ -101,6 +139,7 @@ const ShapeGenerater = {
             len = 3;
 
         rect.graphics.beginFill(colors[0]).drawRect(0, 0, width / len - marginSize, height);
+
 
         let rect1 = new createjs.Shape();
         rect1.graphics.beginFill(colors[1]).drawRect(width / len + marginSize, 0, width / len - marginSize, height);
@@ -126,10 +165,20 @@ const ShapeGenerater = {
         text2.y = height / 2;
         text2.name = 'text2';
 
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
+        var container3 = new createjs.Container();
 
-        this.bindDblClick({rect: rect, text: text, x: 0, y: 0}, {rect: rect1, text: text1, x: width / len, y: 0}, {rect: rect2, text: text2, x: width / len*2, y: 0});
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2,container3];
+        });
 
-        stage.addChild(rect, rect1,rect2, text1, text,text2);
+        this.bindDblClick({rect: rect, text: text, x: 0, y: 0,container:container1}, {rect: rect1, text: text1, x: width / len, y: 0,container:container2}, {rect: rect2, text: text2, x: width / len*2, y: 0,container:container3});
+
+        container1.addChild(rect,text);
+        container2.addChild(rect1,text1);
+        container3.addChild(rect2,text2);
+        stage.addChild(container1,container2,container3);
 
         stage.update();
         fn && fn({rect: rect, text: text, x: 0, y: 0}, {rect: rect1, text: text1, x: width / len, y: 0}, {rect: rect2, text: text2, x: width / len*2, y: 0});
@@ -166,15 +215,25 @@ const ShapeGenerater = {
         text2.y = height / 2;
         text2.name = 'text2';
 
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
+        var container3 = new createjs.Container();
+
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2,container3];
+        });
+
 
         this.bindDblClick(
-            {rect: rect, text: text, x: 0, y: 0},
-            {rect: rect1, text: text1, x: 0, y: height/2},
-            {rect: rect2, text: text2, x: width / 2, y: 0}
+            {rect: rect, text: text, x: 0, y: 0,container:container1},
+            {rect: rect1, text: text1, x: 0, y: height/2,container:container2},
+            {rect: rect2, text: text2, x: width / 2, y: 0,container:container3}
             );
 
-        stage.addChild(rect, rect1,rect2, text1, text,text2);
-
+        container1.addChild(rect,text);
+        container2.addChild(rect1,text1);
+        container3.addChild(rect2,text2);
+        stage.addChild(container1,container2,container3);
         stage.update();
         fn && fn(
             {rect: rect, text: text, x: 0, y: 0},
@@ -215,13 +274,25 @@ const ShapeGenerater = {
         text2.name = 'text2';
 
 
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
+        var container3 = new createjs.Container();
+
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2,container3];
+        });
+
+
         this.bindDblClick(
-            {rect: rect, text: text, x: 0, y: 0},
-            {rect: rect1, text: text1, x: width/2, y: 0},
-            {rect: rect2, text: text2, x:0, y: height/2}
+            {rect: rect, text: text, x: 0, y: -1,container:container1},
+            {rect: rect1, text: text1, x: width/2, y: 0,container:container2},
+            {rect: rect2, text: text2, x:0, y: height/2,container:container3}
         );
 
-        stage.addChild(rect, rect1,rect2, text1, text,text2);
+        container1.addChild(rect,text);
+        container2.addChild(rect1,text1);
+        container3.addChild(rect2,text2);
+        stage.addChild(container1,container2,container3);
 
         stage.update();
         fn && fn(
@@ -271,15 +342,27 @@ const ShapeGenerater = {
         text3.y = height / 2;
         text3.name = 'text2';
 
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
+        var container3 = new createjs.Container();
+        var container4 = new createjs.Container();
 
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2,container3,container4];
+        });
         this.bindDblClick(
-            {rect: rect, text: text, x: 0, y: 0},
-            {rect: rect1, text: text1, x: width / len, y: 0},
-            {rect: rect2, text: text2, x: width / len*2, y: 0},
-            {rect: rect3, text: text3, x: width / len*3, y: 0}
+            {rect: rect, text: text, x: 0, y: 0,container:container1},
+            {rect: rect1, text: text1, x: width / len, y: 0,container:container2},
+            {rect: rect2, text: text2, x: width / len*2, y: 0,container:container3},
+            {rect: rect3, text: text3, x: width / len*3, y: 0,container:container4}
         );
 
-        stage.addChild(rect, rect1,rect2, rect3,text1, text,text2,text3);
+        
+        container1.addChild(rect,text);
+        container2.addChild(rect1,text1);
+        container3.addChild(rect3,text2);
+        container3.addChild(rect2,text3);
+        stage.addChild(container1,container2,container3,container4);
 
         stage.update();
         fn && fn(
@@ -326,14 +409,31 @@ const ShapeGenerater = {
         text3.y = height / 4 *3 ;
 
 
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
+        var container3 = new createjs.Container();
+        var container4 = new createjs.Container();
+
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2,container3,container4];
+        });
+
         this.bindDblClick(
-            {rect: rect, text: text, x: 0, y: 0},
-            {rect: rect1, text: text1, x: width / len, y: 0},
-            {rect: rect2, text: text2, x: 0, y: height/len},
-            {rect: rect3, text: text3, x: width / len, y: height/len}
+            {rect: rect, text: text, x: 0, y: 0,container:container1},
+            {rect: rect1, text: text1, x: width / len, y: 0,container:container2},
+            {rect: rect2, text: text2, x: 0, y: height/len,container:container3},
+            {rect: rect3, text: text3, x: width / len, y: height/len,container:container4}
         );
 
-        stage.addChild(rect, rect1,rect2, rect3,text1, text,text2,text3);
+        
+        container1.addChild(rect,text);
+        container2.addChild(rect1,text1);
+        container3.addChild(rect2,text2);
+        container3.addChild(rect3,text3);
+        stage.addChild(container1,container2,container3,container4);
+
+
+
 
         stage.update();
         fn && fn(
@@ -383,14 +483,27 @@ const ShapeGenerater = {
         text3.y = height / 8 +height / 4*3 ;
 
 
-        this.bindDblClick(
-            {rect: rect, text: text, x: 0, y: 0},
-            {rect: rect1, text: text1, x:0, y: height/2},
-            {rect: rect2, text: text2, x: width/2, y: height/len},
-            {rect: rect3, text: text3, x: width / len, y: height/len+height/len/2}
-        );
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
+        var container3 = new createjs.Container();
+        var container4 = new createjs.Container();
 
-        stage.addChild(rect, rect1,rect2, rect3,text1, text,text2,text3);
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2,container3,container4];
+        });
+
+        this.bindDblClick(
+            {rect: rect, text: text, x: 0, y: -1,container:container1},
+            {rect: rect1, text: text1, x:0, y: height/2,container:container2},
+            {rect: rect2, text: text2, x: width/2, y: height/len,container:container3},
+            {rect: rect3, text: text3, x: width / len, y: height/len+height/len/2,container:container4}
+        );
+        
+        container1.addChild(rect,text);
+        container2.addChild(rect1,text1);
+        container3.addChild(rect2,text2);
+        container3.addChild(rect3,text3);
+        stage.addChild(container1,container2,container3,container4);
 
         stage.update();
         fn && fn(
@@ -439,15 +552,27 @@ const ShapeGenerater = {
         text3.x = width / len/ 2 * 3 - 60;
         text3.y = height / 2 ;
 
+        var container1 = new createjs.Container();
+        var container2 = new createjs.Container();
+        var container3 = new createjs.Container();
+        var container4 = new createjs.Container();
 
+        window.obserable.on('getContianers',()=>{
+            return [container1,container2,container3,container4];
+        });
+       
         this.bindDblClick(
-            {rect: rect, text: text, x: 0, y: 0},
-            {rect: rect1, text: text1, x:0, y: height/3},
-            {rect: rect2, text: text2, x: 0, y: height/3*len},
-            {rect: rect3, text: text3, x: width / len, y: 0}
+            {rect: rect, text: text, x: 0, y: 0,container:container1},
+            {rect: rect1, text: text1, x:0, y: height/3,container:container2},
+            {rect: rect2, text: text2, x: 0, y: height/3*len,container:container3},
+            {rect: rect3, text: text3, x: width / len, y: 0,container:container4}
         );
-
-        stage.addChild(rect, rect1,rect2, rect3,text1, text,text2,text3);
+        
+        container1.addChild(rect,text);
+        container2.addChild(rect1,text1);
+        container3.addChild(rect2,text2);
+        container3.addChild(rect3,text3);
+        stage.addChild(container1,container2,container3,container4);
 
         stage.update();
         fn && fn(
@@ -496,11 +621,10 @@ const ShapeGenerater = {
                 window.showModal({
                     type: 0,
                     id: 'puzzle',
-                    target: {rect: r.rect, text: r.text, x: r.x ||  0 , y: r.y ||  0}
+                    target: {rect: r.rect, text: r.text, x: r.x ||  0 , y: r.y ||  0,container:r.container}
                 });
             });
             r.rect.on('mousedown',e=>{
-
                 PubSub.publish('renderCanvas', 'renderRectLeftRight',r.rect);
             });
         });

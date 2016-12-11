@@ -8,6 +8,7 @@ import Icon from 'antd/lib/icon';
 import 'antd/lib/icon/style/css';
 
 import  ZmitiUploadDialog from '../../../components/zmiti-upload-dialog.jsx';
+import $ from 'jquery';
 
 export default class ZmitiStage extends React.Component {
     constructor(args) {
@@ -16,35 +17,74 @@ export default class ZmitiStage extends React.Component {
             imgList: [],
             width: 1000,
             height: 500,
+            
             scale:1 //当前舞台的缩放比例
         };
+        this.containerArr =[];
+        this.currentMask = null;
     }
 
-    drag(bmp){
+    drag(bmp,container){
         let s=  this;
         var disX, disY;
-
+        var dashShape =null;
+        
         bmp.on("mousedown", function (e) {
             if (s.isDrag) { //用户按下空格键，则不能拖拽图片。
                 return;
             }
+
+            s.currentMask = bmp;
+
+            s.containerArr.forEach((item,i)=>{
+                if(item && container && item.id === container.id){
+                    s.containerArr.splice(i,1);
+                }
+            });
             
+            container && s.containerArr.push(container);
+
+            var shape = new createjs.Shape();
+            s.dashCmd = shape.graphics.setStrokeDash([10,5]).command;
+            shape.graphics.setStrokeStyle(2).beginStroke("green").rect(0,0, bmp.image.width, bmp.image.height);
+            shape.x = bmp.x;
+            shape.y = bmp.y;
+            shape.name = 'shapes';
+            dashShape = shape;
+            var c = container|| s.stage;
+            
+            s.containerArr.forEach((item,i)=>{
+                item.removeChild(item.getChildByName('shapes'));
+                s.stage.setChildIndex(item,1+i);
+            });
+
+            s.stage.setChildIndex(c,0);
+
+            c.addChild(shape);
+
             e.preventDefault()
             
-            var L  = document.querySelector('.fly-right-aside').offsetLeft;
-            disX = e.stageX - bmp.x +  s.canvas.offsetLeft - s.canvas.width/2 + L;
-            disY = e.stageY - bmp.y + s.canvas.offsetTop- s.canvas.height/2 + 50;
+            var L  = window.mainLeftSize;
+            disX = e.stageX  - bmp.x + L +  s.canvas.offsetLeft; //- s.canvas.width/2 + L;
+            disY = e.stageY  - bmp.y + s.canvas.offsetTop + 50;//- s.canvas.height/2 + 50;
+           // document.title = bmp.x+','+s.canvas.offsetLeft;
             document.addEventListener("mousemove", moveHandler);
             document.addEventListener("mouseup", function () {
                 document.removeEventListener("mousemove", moveHandler);
             });
         });
 
+
+
         function moveHandler(e) {
-            
-            bmp.x = e.x - disX;
-            bmp.y = e.y - disY;
-            s.stage.update();
+           var x =e.x - disX,
+            y = e.y - disY;
+
+           // dashShape.x
+            bmp.x = dashShape.x = x;
+            bmp.y = dashShape.y =y;
+            //console.log(e.x*s.state.scale ,disX,s.state.scale);
+            //s.stage.update();
         }
 
     }
@@ -79,16 +119,16 @@ export default class ZmitiStage extends React.Component {
                     bmp.mask = imgData.target.rect;
 
                     s.stage.update();
-                    s.drag(bmp);
+                    s.drag(bmp,imgData.target.container);
                 };
-                console.log(imgData.src);
+                
                 img.src = imgData.src;//'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161127/9898db3eb0c472ac10d1eb39523622b2.jpg';
                         //;
             }
         };
         var stageStyle = {
-            transform:'scale('+this.state.scale+')',
-            WebkitTransform:'scale('+this.state.scale+')',
+           /* transform:'scale('+this.state.scale+')',
+            WebkitTransform:'scale('+this.state.scale+')',*/
             transformOrigin:'center',
             WebkitTransformOrigin:'center',
             top:(document.documentElement.clientHeight -  this.state.height) / 2 ,
@@ -102,16 +142,26 @@ export default class ZmitiStage extends React.Component {
                     <canvas ref="z-puzzle-canvas" style={stageStyle} width={this.state.width} height={this.state.height}></canvas>
                     <ZmitiUploadDialog id="puzzle" {...props}></ZmitiUploadDialog>
                 </div>
-                <ul className='z-puzzle-operator'>
-                    <li><span><Icon type='scan'></Icon></span></li>
-                    <li><span><Icon type='plus-circle-o'></Icon></span></li>
-                    <li><span><Icon type='minus-circle-o'></Icon></span></li>
+                <ul className='z-puzzle-operator' onClick={this.changeScale.bind(this)}>
+                    <li data-index={0}><span><Icon type='scan'></Icon></span></li>
+                    <li data-index={1}><span><Icon type='plus-circle-o'></Icon></span></li>
+                    <li data-index={2}><span><Icon type='minus-circle-o'></Icon></span></li>
                 </ul>
             </article>
         )
     }
 
     componentDidMount() {
+        var s= this;
+        createjs.Ticker.timingMode = createjs.Ticker.RAF;
+        createjs.Ticker.on("tick", function(){
+            if(s.dashCmd){
+                s.dashCmd.offset+=1;
+                s.stage.update();    
+            }
+            
+        });
+
         var size = obserable.trigger({type:'getPicmMargin'});
         this.renderCanvas('renderRectLeftRight',null,size);
 
@@ -184,6 +234,50 @@ export default class ZmitiStage extends React.Component {
         }
 
     }
+
+    changeScale(e){//
+        if(e.target.nodeName === 'UL'){
+            return;
+        }
+        var index = -1;
+        if(e.target.nodeName==="LI"){
+            index = e.target.getAttribute('data-index');
+        }
+        else {
+            index = $(e.target).parents('li').data('index');
+        }
+        switch(index*1) {
+            case 0:
+                this.setState({
+                    scale:1
+                });
+                break;
+            case 1:
+                if(this.state.scale+.1>2){
+                    this.setState({
+                        scale:2
+                    });
+                    return;
+                }
+                this.setState({
+                    scale:this.state.scale+.1
+                });
+
+                break;
+            case 2:
+                if(this.state.scale - .1 < .1){
+                    this.setState({
+                        scale:.1
+                    });
+                    return;
+                }
+                this.setState({
+                    scale:this.state.scale-.1
+                });
+                break;
+        }
+    }
+
     /**
      * 重新渲染canvas画布
      * @param  {String} method     [description]
@@ -198,7 +292,6 @@ export default class ZmitiStage extends React.Component {
         if (!this.canvas) return;
 
         let {width,height} = this.state;
-        console.log(this.state)
        
         !this.stage && (this.stage = new createjs.Stage(this.canvas));
         this.stage.removeAllChildren();
@@ -213,11 +306,13 @@ export default class ZmitiStage extends React.Component {
 
             if(s.state.imgList.length){
                 if(s.state.imgList.length >= arr.length){
+                    var containers = window.obserable.trigger({type:'getContianers'});
                     arr.forEach((img,i)=> {
                         let image = new Image();
-                        //image.crossOrigin = "Anonymous";
+                        image.crossOrigin = "Anonymous";
                         arr[i].text.alpha =1;//显示loading
                         stage.update();
+                        let index = i;
                         image.onload = function(){
                             let bmp = new createjs.Bitmap(this);
 
@@ -227,7 +322,7 @@ export default class ZmitiStage extends React.Component {
                             stage.addChild(bmp);
                             bmp.mask = arr[i].rect;
                             arr[i].text.alpha =0;//隐藏loading.
-                            s.drag(bmp);
+                            s.drag(bmp,containers[index]);
                             stage.update();
                         }
                         image.src = s.state.imgList[i];
@@ -235,7 +330,10 @@ export default class ZmitiStage extends React.Component {
                     });
                 }
                 else{
+                    var containers = window.obserable.trigger({type:'getContianers'});
+
                     s.state.imgList.forEach((img,i)=> {
+                        let index = i;
                         let image = new Image();
                         arr[i].text.alpha =1;//显示loading
                         stage.update();
@@ -246,7 +344,7 @@ export default class ZmitiStage extends React.Component {
                             stage.addChild(bmp);
                             bmp.mask = arr[i].rect;
                             arr[i].text.alpha =0;//隐藏loading.
-                            s.drag(bmp);
+                            s.drag(bmp,containers[index]);
                             stage.update();
                         }
                         image.src = img;

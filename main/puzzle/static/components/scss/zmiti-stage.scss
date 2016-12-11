@@ -132,7 +132,7 @@
 .z-puzzle-operator{
   @include pos(f);
   right:0;
-  top:30vh; 
+  top:60px; 
   cursor:pointer;
   background-color:#919191;
   border-top-left-radius:4px;
@@ -145,6 +145,11 @@
     margin:0 auto;
     text-align:center;
     font-size:30px;
+    &:first-of-type:hover i{
+      color:$baseColor;
+      @include transition(.3s);
+    }
+     
     &:not(:first-of-type){
       span{
         @include pos(r);

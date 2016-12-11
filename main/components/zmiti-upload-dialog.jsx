@@ -18,6 +18,8 @@ import 'antd/lib/icon/style/css'
 
 import Waterfall from '../richimg/static/js/waterfall';
 
+
+
 import './theme.css';
 
 import {utilMethods,_$,$$} from  '../utilMethod.es6';
@@ -38,6 +40,7 @@ const MenuItemGroup = Menu.ItemGroup;
 import $ from 'jquery';
 
 
+import IScroll from 'iscroll';
 
 export default class ZmitiUploadDialog extends React.Component {
     constructor(args) {
@@ -102,6 +105,10 @@ export default class ZmitiUploadDialog extends React.Component {
                 loading: true
             });
 
+            
+
+        
+
 
             var params ={
                     "setdatainfotype": data.type || 0,
@@ -129,8 +136,6 @@ export default class ZmitiUploadDialog extends React.Component {
 
                     self.state.ajaxData[self.state.current] = d.dataInfo;
 
-                    console.log('----------')
-                    console.log(d);
                     self.state.alreadyRequest.push(self.state.current);
                     self.state.loading = false;
                     self.state.allData[self.state.current].imgs.length = 0;
@@ -142,7 +147,12 @@ export default class ZmitiUploadDialog extends React.Component {
                         img.parentName.imgs[i] && ( img.parentName.imgs[i].index = i); // 记录全部分类下面的图片所属哪个分类.
                         self.state.allData[self.state.current].imgs = self.state.allData[self.state.current].imgs.concat(img.parentName.imgs);
                     });
-                    self.forceUpdate();
+                    self.forceUpdate(()=>{
+                        self.picScroll = new IScroll(self.refs['zmmiti-asset-content'],{
+                                    scrollbars:true,//显示滚动条
+                                    interactiveScrollbars:true,//允许用户拖动滚动条
+                                 });
+                    });
 
                 },
                 error(e){
@@ -430,10 +440,10 @@ export default class ZmitiUploadDialog extends React.Component {
 
 
         return (
-            <div className="zmiti-upload-C">
-                <Modal title="资料库" width={1000} className="zmiti-upload-C" visible={this.state.visible}
+            <div className="zmiti-upload-C" ref='zmiti-upload-C'>
+                <Modal title="资料库" width={800}  wrapClassName="vertical-center-modal" className="zmiti-upload-C" visible={this.state.visible}
                        onOk={this.handleOk.bind(this)} onCancel={this.handleCancel.bind(this)}>
-                    <div className="zmiti-upload-body">
+                    <div className="zmiti-upload-body" ref='zmiti-upload-body'>
                         <section className="zmiti-upload-body-L">
                             <ul className={'zmiti-sub-menu-'+this.state.current} ref="menu-C"
                                 onClick={this.onLeftMenuClick.bind(this)}>
@@ -456,7 +466,7 @@ export default class ZmitiUploadDialog extends React.Component {
                                         </Tabs>
                                     </Spin>
                                     <Spin tip="正在拼命上传,请稍后..." spinning={this.state.uploadLoading}>
-                                        <div className="zmmiti-asset-content">
+                                        <div className="zmmiti-asset-content" ref='zmmiti-asset-content'>
                                             <figure className="zmiti-img-figure-C">
                                                 <figcaption onClick={this.uploadBtnClick}
                                                             style={{display:this.state.current === 4 ?'block':'none'}}>
@@ -553,7 +563,9 @@ export default class ZmitiUploadDialog extends React.Component {
                     s.state.allData[s.state.current].imgs.push(option);
 
                     s.state.uploadLoading = false;
-                    s.forceUpdate();
+                    s.forceUpdate(()=>{
+                        s.picScroll.refresh();//上传成功后，重新刷新列表
+                    });
                 }
 
             },
