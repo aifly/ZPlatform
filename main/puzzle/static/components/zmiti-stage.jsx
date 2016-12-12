@@ -7,6 +7,7 @@ import 'antd/lib/button/style/css';
 import Icon from 'antd/lib/icon';
 import 'antd/lib/icon/style/css';
 
+import { Slider, InputNumber, Row, Col,Tooltip,message } from 'antd';
 import  ZmitiUploadDialog from '../../../components/zmiti-upload-dialog.jsx';
 import $ from 'jquery';
 
@@ -17,9 +18,12 @@ export default class ZmitiStage extends React.Component {
             imgList: [],
             width: 1000,
             height: 500,
-            
+            scaleValue:1,
+            showPanel:true,
             scale:1 //当前舞台的缩放比例
         };
+
+
         this.containerArr =[];
         this.currentMask = null;
     }
@@ -27,14 +31,20 @@ export default class ZmitiStage extends React.Component {
     drag(bmp,container){
         let s=  this;
         var disX, disY;
-        var dashShape =null;
-        
+       
         bmp.on("mousedown", function (e) {
             if (s.isDrag) { //用户按下空格键，则不能拖拽图片。
                 return;
             }
 
             s.currentMask = bmp;
+            s.currentMask.scale  = s.currentMask.scale || 1;
+
+            s.setState({
+              scaleValue: s.currentMask.scale,
+            });
+
+            s.currentMask.container = container;//删除虚线框的时候会用到。
 
             s.containerArr.forEach((item,i)=>{
                 if(item && container && item.id === container.id){
@@ -44,19 +54,20 @@ export default class ZmitiStage extends React.Component {
             
             container && s.containerArr.push(container);
 
-            var shape = new createjs.Shape();
-            s.dashCmd = shape.graphics.setStrokeDash([10,5]).command;
-            shape.graphics.setStrokeStyle(2).beginStroke("green").rect(0,0, bmp.image.width, bmp.image.height);
-            shape.x = bmp.x;
-            shape.y = bmp.y;
-            shape.name = 'shapes';
-            dashShape = shape;
+            
+            var shape = s.createDashShape(bmp);
+
             var c = container|| s.stage;
             
             s.containerArr.forEach((item,i)=>{
                 item.removeChild(item.getChildByName('shapes'));
                 s.stage.setChildIndex(item,1+i);
             });
+
+            shape.scaleX = s.currentMask.scale;
+            shape.scaleY = s.currentMask.scale;
+
+
 
             s.stage.setChildIndex(c,0);
 
@@ -66,7 +77,7 @@ export default class ZmitiStage extends React.Component {
             
             var L  = window.mainLeftSize;
             disX = e.stageX  - bmp.x + L +  s.canvas.offsetLeft; //- s.canvas.width/2 + L;
-            disY = e.stageY  - bmp.y + s.canvas.offsetTop + 50;//- s.canvas.height/2 + 50;
+            disY = e.stageY  - bmp.y + s.canvas.offsetTop + 52;//- s.canvas.height/2 + 50;
            // document.title = bmp.x+','+s.canvas.offsetLeft;
             document.addEventListener("mousemove", moveHandler);
             document.addEventListener("mouseup", function () {
@@ -74,20 +85,41 @@ export default class ZmitiStage extends React.Component {
             });
         });
 
-
-
         function moveHandler(e) {
            var x =e.x - disX,
             y = e.y - disY;
 
            // dashShape.x
-            bmp.x = dashShape.x = x;
-            bmp.y = dashShape.y =y;
+            bmp.x = s.dashShape.x = x;
+            bmp.y = s.dashShape.y =y;
             //console.log(e.x*s.state.scale ,disX,s.state.scale);
             //s.stage.update();
         }
 
     }
+
+    removeDashShape(){//移除虚线框
+        this.containerArr.forEach((item,i)=>{
+            item.removeChild(item.getChildByName('shapes'));
+        });
+        this.currentMask = null;
+        this.dashCmd = null;
+        this.stage.update();
+    }
+
+    createDashShape(bmp,scale){//创建虚线框
+        var shape = new createjs.Shape();
+        var s = this;
+        s.dashCmd = shape.graphics.setStrokeDash([10,5]).command;
+        shape.graphics.setStrokeStyle(3).beginStroke("#99071e").rect(0,0, bmp.image.width *( scale || 1), bmp.image.height * ( scale || 1));
+        shape.x = bmp.x;
+        shape.y = bmp.y;
+        shape.name = 'shapes';
+        s.dashShape = shape;
+
+        return shape;
+    }
+
 
     render() {
         let s = this;
@@ -147,15 +179,102 @@ export default class ZmitiStage extends React.Component {
                     <li data-index={1}><span><Icon type='plus-circle-o'></Icon></span></li>
                     <li data-index={2}><span><Icon type='minus-circle-o'></Icon></span></li>
                 </ul>
+                <section className={'z-puzzle-imgscale ' + (this.state.showPanel?'':'active')}>
+                    <h3>图片调整<span onClick={this.closeImgScale.bind(this)}>&times;</span></h3>
+                    <div>
+
+                        <div style={{marginLeft:10,marginTop:5}}> 
+                            <label>缩放</label>
+                        </div>
+                       <Row >
+                        <Col span={1}>
+                        </Col>
+                        <Col span={12}>
+                          <Slider min={.1} max={2} step={0.01} onChange={this.onScaleChange.bind(this)} value={this.state.scaleValue} />
+                        </Col>
+                        <Col span={4}>
+                          <InputNumber  min={.1} max={2} step={0.01}  style={{ marginLeft: 16 }}
+                            value={this.state.scaleValue} onChange={this.onScaleChange.bind(this)}
+                          />
+                        </Col>
+                      </Row>
+                    </div>
+                     <Tooltip placement="bottom" title={'删除图片'}>
+                        <div className='z-puzzle-delete' onClick={this.deleteMaksImg.bind(this)}>
+                            <div className='z-puzzle-line1'></div>
+                            <div className='z-puzzle-line2'></div>
+                            <div className='z-puzzle-line3'></div>
+                            <div className='z-puzzle-line4'></div>
+                            <div className='z-puzzle-vline1'></div>
+                            <div className='z-puzzle-vline2'></div>
+                            <div className='z-puzzle-vline3'></div>
+                            <div className='z-puzzle-vline4'></div>
+                        </div>
+                     </Tooltip>
+                     <div className='zmiti-imgscale-bar' onClick={this.closeImgScale.bind(this)}>
+                         <Icon type="menu-fold" style={{display:this.state.showPanel?'inline-block':'none'}}/>
+                        <Icon type="menu-unfold" style={{display:!this.state.showPanel?'inline-block':'none'}}/>
+                        <span></span>
+                        <span></span>
+                        {this.state.showPanel?'收起':'展开'}
+                     </div>
+                </section>
             </article>
         )
     }
 
+    closeImgScale(){//
+        this.setState({
+            showPanel:!this.state.showPanel
+        });
+    }
+
+    onScaleChange(value) {
+        this.setState({
+          scaleValue: value,
+        });
+
+        if(this.currentMask){
+            
+            this.currentMask.scale = value;    
+            this.currentMask.scaleX = value;
+            this.currentMask.scaleY = value;
+            this.dashShape.scaleX = value;
+            this.dashShape.scaleY = value;
+           /* this.removeDashShape();
+            this.currentMask.container.addChild(this.createDashShape(this.currentMask,value));*/
+            
+        }
+        
+
+    }
+
+    deleteMaksImg(){//删除当前选中的图片
+
+        if(!this.currentMask){//还没有选中图片。
+            message.error('还没有选中图片。');
+            return;
+        }
+
+        this.currentMask.container.removeChild(this.currentMask.container.getChildByName('shapes'));//移除虚线框。
+        this.stage.removeChild(this.currentMask);//移除图片
+        this.stage.update();
+        this.currentMask = null;
+        this.dashCmd = null;
+
+    }
+
     componentDidMount() {
+
+        window.obserable.on('removeDashShape',()=>{
+            this.removeDashShape();
+        });
+
         var s= this;
         createjs.Ticker.timingMode = createjs.Ticker.RAF;
         createjs.Ticker.on("tick", function(){
             if(s.dashCmd){
+
                 s.dashCmd.offset+=1;
                 s.stage.update();    
             }

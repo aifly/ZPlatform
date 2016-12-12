@@ -313,9 +313,11 @@ export default class ZmitiPanel extends React.Component {
 
     downloadImg() {
         ///  let imgPathURL = window.ZmitiState.toDataURL();
+        ///  
+        window.obserable.trigger({type:'removeDashShape'});//移除虚线框
         this.setState({
             dataUrl: document.getElementsByTagName('canvas')[0].toDataURL()
-        })
+        });
     }
 
     setMarginSize(e) {
@@ -345,6 +347,7 @@ export default class ZmitiPanel extends React.Component {
           var iScroll = new IScroll(this.refs['scroll'],{
                 scrollbars:true,//显示滚动条
                 interactiveScrollbars:true,//允许用户拖动滚动条
+                mouseWheel:true,//启用鼠标滚轮。
              });
 
     }

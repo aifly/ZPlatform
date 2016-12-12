@@ -151,6 +151,7 @@ export default class ZmitiUploadDialog extends React.Component {
                         self.picScroll = new IScroll(self.refs['zmmiti-asset-content'],{
                                     scrollbars:true,//显示滚动条
                                     interactiveScrollbars:true,//允许用户拖动滚动条
+                                    mouseWheel:true
                                  });
                     });
 
@@ -817,7 +818,8 @@ export default class ZmitiUploadDialog extends React.Component {
     }
 
     onCateNameChange(e) {
-        this.state.ajaxData[this.state.current][this.state.currentCate].parentName.name = e.target.value.replace(/<[^>]+>/g, "");
+        this.state.ajaxData[this.state.current][this.state.currentCate].parentName.name = 
+        e.target.value.replace(/<[^>]+>/g, "");
         //this.state.ajaxData[this.state.current][keys[1]*1].parentName.id = -1 && (this.state.ajaxData[this.state.current][keys[1]*1].parentName.id = -2);
         this.forceUpdate();
     }
@@ -840,28 +842,30 @@ export default class ZmitiUploadDialog extends React.Component {
                 });
 
                 $.ajax({
-                    url: self.props.baseUrl + self.props.cateUrl + 'class_info_del',
+                    url: window.baseUrl + self.props.cateUrl + 'class_info_del',
                     type: "POST",
                     data: {
-                        datainfoclassid: self.state.ajaxData[self.state.current][self.state.currentCate].parentName.id,
-                        "getusersigid": self.props.getusersigid
+                        setdatainfoclassid: self.state.ajaxData[self.state.current][self.state.currentCate].parentName.id,
+                        getusersigid: self.props.getusersigid,
+                        userid:self.props.userid
                     },
                     success(d){
-                        if (d.getret === -101) {
-                            message.error('服务器返回错误: ' + d.getmsg);
-                        }
-                        else {
-
+                        if(d.getret  === 0){
                             self.state.ajaxData[self.state.current].splice(self.state.currentCate, 1);
                             self.state.currentCate = -1;
                             self.state.loading = false;
                             self.forceUpdate();
                             message.success('删除成功');
-
                         }
+                        else{
+                            self.state.loading = false;
+                            self.forceUpdate();
+                            message.error(d.getmsg);
+                        }
+                        
                     },
                     error(){
-                        alert('error')
+                         message.error('request fail');
                     }
                 });
             }
@@ -875,7 +879,9 @@ export default class ZmitiUploadDialog extends React.Component {
 
         this.state.currentCate = keys[0] === 'all' ? -1 : keys[1] * 1;
 
-        this.forceUpdate();
+        this.forceUpdate(()=>{
+            this.picScroll.refresh();
+        });
 
     }
 
@@ -900,23 +906,34 @@ export default class ZmitiUploadDialog extends React.Component {
                 }
 
             });
+            var params= {
+                "getusersigid": self.props.getusersigid,
+                "userid":self.props.userid,
+                'setclassname':self.state.ajaxData[self.state.current][0].parentName.name,
+                "setparentid": self.state.defaultIds[self.state.current]
 
-            isRequest && $.ajax({
-                type: "POST",
-                url: self.props.baseUrl + self.props.cateUrl + 'add_class_info',
-                data: {
+            }
+            /**
+             * 
+             * {
                     "getusersigid": self.props.getusersigid,
                     "id": self.state.defaultIds[self.state.current],
                     "json": self.state.ajaxData[self.state.current]
-                },
+                }
+             * @param  {[type]} info [description]
+             * @return {[type]}      [description]
+             */
+            isRequest && $.ajax({
+                type: "POST",
+                url: window.baseUrl + self.props.cateUrl + 'add_class_info',
+                data: params,
                 success(d){
-
 
                     if (d.getret === 0) {
                         message.success('添加分类成功');
 
-                        self.state.ajaxData[self.state.current].length = 0;
-
+                        //self.state.ajaxData[self.state.current].length = 0;
+                        console.log(d)
                         d.datainfo.forEach(info=> {
 
                             //info.parentName.imgs = [];

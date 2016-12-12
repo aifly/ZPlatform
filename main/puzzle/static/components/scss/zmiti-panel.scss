@@ -151,14 +151,14 @@ input, textarea {
          top:50px;
          width:24px;
          padding:10px 0;
-         background:#8a9395;
+         background:#dfdfdf;
          cursor:pointer;
          text-align: center;
          border-top-right-radius: 5px;
          border-bottom-right-radius: 5px;
          border-left: 1px solid #fff;
          -webkit-user-select:none;
-         color:#fff;
+         color:#333;
 
         span{
 
@@ -200,7 +200,7 @@ input, textarea {
         }
         top:160px;
         a{
-          color:#fff;
+          color:#333;
         }
         span{
           &:nth-of-type(2){
@@ -214,12 +214,19 @@ input, textarea {
 
       }
       @include transitionTimingFunction(cubic-bezier(0, 1.75, 0.48, 0.89));
-      @include transition(.5s);
+      @include transition(.3s);
       &.active{
        //  opacity:0;
        //  z
         z-index: 0;
          @include transform(translate3d(-100%,0,0));
+
+         .zmiti-panel-bar,.zmiti-download-bar{
+            background:#404458;
+            color:#fff;
+            i,a{color:#fff !important;}
+
+         }
       }
       @include pos(a);
       left:0;
