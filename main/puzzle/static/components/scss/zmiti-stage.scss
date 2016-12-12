@@ -209,6 +209,13 @@
 
   &.active{
     @include transform(translate3d(100%,0,0));
+     .zmiti-imgscale-bar{
+        background:#404458;
+        color:#fff;
+        i,a{color:#fff !important;}
+     }
+
+
   }
   width:280px;;
   background:#dfdfdf;

@@ -24,7 +24,7 @@
       <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main/company/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
+            <state relative-caret-position="3090">
               <caret line="112" column="9" selection-start-line="112" selection-start-column="9" selection-end-line="112" selection-end-column="9" />
               <folding />
             </state>
@@ -34,7 +34,7 @@
       <file leaf-file-name="Main.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main/components/Main.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
+            <state relative-caret-position="5460">
               <caret line="195" column="10" selection-start-line="195" selection-start-column="10" selection-end-line="195" selection-end-column="10" />
               <folding />
             </state>
@@ -44,7 +44,7 @@
       <file leaf-file-name="index.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main/home/index.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
+            <state relative-caret-position="1110">
               <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
               <folding />
             </state>
@@ -54,7 +54,7 @@
       <file leaf-file-name="zmiti-panel.jsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main/puzzle/static/components/zmiti-panel.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="994">
+            <state relative-caret-position="7500">
               <caret line="264" column="0" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
@@ -67,7 +67,7 @@
       <file leaf-file-name="zmiti-panel.scss" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main/puzzle/static/components/scss/zmiti-panel.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1135">
+            <state relative-caret-position="6210">
               <caret line="207" column="11" selection-start-line="207" selection-start-column="11" selection-end-line="207" selection-end-column="11" />
               <folding />
             </state>
@@ -77,9 +77,21 @@
       <file leaf-file-name="shapes.jsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main/puzzle/static/shapes.jsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="589" column="20" selection-start-line="589" selection-start-column="20" selection-end-line="589" selection-end-column="20" />
-              <folding />
+            <state relative-caret-position="80">
+              <caret line="622" column="20" selection-start-line="622" selection-start-column="20" selection-end-line="622" selection-end-column="20" />
+              <folding>
+                <marker date="1481424750877" expanded="true" signature="48:23524" ph="{...}" />
+                <marker date="1481424750877" expanded="true" signature="93:1164" ph="{...}" />
+                <marker date="1481424750877" expanded="true" signature="545:983" ph="/*...*/" />
+                <marker date="1481424750877" expanded="true" signature="21912:22204" ph="{...}" />
+                <marker date="1481424750877" expanded="true" signature="22243:22614" ph="{...}" />
+                <marker date="1481424750877" expanded="true" signature="22652:23023" ph="{...}" />
+                <marker date="1481424750877" expanded="true" signature="23043:23522" ph="{...}" />
+                <marker date="1481424750877" expanded="true" signature="23087:23514" ph="{...}" />
+                <marker date="1481424750877" expanded="true" signature="23128:23369" ph="{...}" />
+                <marker date="1481424750877" expanded="true" signature="23163:23353" ph="{&quot;id&quot;: 'puzzle'...}" />
+                <marker date="1481424750877" expanded="true" signature="23409:23502" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -249,6 +261,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope">
+        <subPane subId="Project Files" />
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -259,10 +275,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files" />
-      </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -444,17 +456,18 @@
       <workItem from="1480661922649" duration="29000" />
       <workItem from="1480662119227" duration="7000" />
       <workItem from="1481337585049" duration="9417000" />
+      <workItem from="1481457662159" duration="477000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="179020000" />
+    <option name="totallyTimeSpent" value="179497000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15373352" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15300146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5021075" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -491,11 +504,93 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main/home/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1710">
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/puzzle/static/components/zmiti-panel.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7920">
+          <caret line="264" column="0" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+            <marker date="1481364012363" expanded="true" signature="14418:14424" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/puzzle/static/components/scss/zmiti-panel.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6210">
+          <caret line="207" column="11" selection-start-line="207" selection-start-column="11" selection-end-line="207" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/puzzle/static/shapes.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1481424750877" expanded="true" signature="48:23524" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="93:1164" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="545:983" ph="/*...*/" />
+            <marker date="1481424750877" expanded="true" signature="21912:22204" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="22243:22614" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="22652:23023" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="23043:23522" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="23087:23514" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="23128:23369" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="23163:23353" ph="{&quot;id&quot;: 'puzzle'...}" />
+            <marker date="1481424750877" expanded="true" signature="23409:23502" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/puzzle/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2190">
+          <caret line="73" column="21" selection-start-line="73" selection-start-column="21" selection-end-line="73" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/user/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2250">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/userdepartment/index.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4560">
+          <caret line="178" column="44" selection-start-line="178" selection-start-column="44" selection-end-line="178" selection-end-column="44" />
+          <folding>
+            <element signature="e#1307#1340#0" expanded="true" />
+            <element signature="n#!!block;n#createUserByDepartment#0;n#ZmitiUserDepartmentApp#0" expanded="false" />
+            <element signature="n#!!block;n#deleteDepartment#0;n#ZmitiUserDepartmentApp#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/public/validate-user.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2370">
+          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main/personalAcc/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2250">
           <caret line="75" column="10" selection-start-line="75" selection-start-column="10" selection-end-line="75" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -503,7 +598,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5340">
           <caret line="178" column="20" selection-start-line="178" selection-start-column="20" selection-end-line="178" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -511,7 +605,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5520">
           <caret line="184" column="1" selection-start-line="184" selection-start-column="1" selection-end-line="184" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -579,7 +672,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1464">
           <caret line="75" column="10" selection-start-line="75" selection-start-column="10" selection-end-line="75" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -587,7 +679,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4176">
           <caret line="178" column="20" selection-start-line="178" selection-start-column="20" selection-end-line="178" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -595,7 +686,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4152">
           <caret line="184" column="1" selection-start-line="184" selection-start-column="1" selection-end-line="184" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -663,7 +753,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1488">
           <caret line="75" column="10" selection-start-line="75" selection-start-column="10" selection-end-line="75" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -671,7 +760,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4176">
           <caret line="178" column="20" selection-start-line="178" selection-start-column="20" selection-end-line="178" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -679,7 +767,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4152">
           <caret line="184" column="1" selection-start-line="184" selection-start-column="1" selection-end-line="184" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -747,7 +834,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1830">
           <caret line="75" column="10" selection-start-line="75" selection-start-column="10" selection-end-line="75" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -755,7 +841,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5220">
           <caret line="178" column="20" selection-start-line="178" selection-start-column="20" selection-end-line="178" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -763,13 +848,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5190">
           <caret line="184" column="1" selection-start-line="184" selection-start-column="1" selection-end-line="184" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main/components/Main.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
+        <state relative-caret-position="5460">
           <caret line="195" column="10" selection-start-line="195" selection-start-column="10" selection-end-line="195" selection-end-column="10" />
           <folding />
         </state>
@@ -813,7 +897,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main/company/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
+        <state relative-caret-position="3090">
           <caret line="112" column="9" selection-start-line="112" selection-start-column="9" selection-end-line="112" selection-end-column="9" />
           <folding />
         </state>
@@ -821,7 +905,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main/home/index.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
+        <state relative-caret-position="1110">
           <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
           <folding />
         </state>
@@ -829,7 +913,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main/puzzle/static/components/zmiti-panel.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="994">
+        <state relative-caret-position="7500">
           <caret line="264" column="0" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
@@ -840,7 +924,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main/puzzle/static/components/scss/zmiti-panel.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1135">
+        <state relative-caret-position="6210">
           <caret line="207" column="11" selection-start-line="207" selection-start-column="11" selection-end-line="207" selection-end-column="11" />
           <folding />
         </state>
@@ -848,9 +932,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main/puzzle/static/shapes.jsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="589" column="20" selection-start-line="589" selection-start-column="20" selection-end-line="589" selection-end-column="20" />
-          <folding />
+        <state relative-caret-position="80">
+          <caret line="622" column="20" selection-start-line="622" selection-start-column="20" selection-end-line="622" selection-end-column="20" />
+          <folding>
+            <marker date="1481424750877" expanded="true" signature="48:23524" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="93:1164" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="545:983" ph="/*...*/" />
+            <marker date="1481424750877" expanded="true" signature="21912:22204" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="22243:22614" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="22652:23023" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="23043:23522" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="23087:23514" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="23128:23369" ph="{...}" />
+            <marker date="1481424750877" expanded="true" signature="23163:23353" ph="{&quot;id&quot;: 'puzzle'...}" />
+            <marker date="1481424750877" expanded="true" signature="23409:23502" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>
