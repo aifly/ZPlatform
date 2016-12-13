@@ -58,7 +58,7 @@ export default class ZmitiStage extends React.Component {
             var shape = s.createDashShape(bmp);
 
             var c = container|| s.stage;
-            
+            document.title =s.containerArr.length;
             s.containerArr.forEach((item,i)=>{
                 item.removeChild(item.getChildByName('shapes'));
                 s.stage.setChildIndex(item,1+i);
@@ -132,21 +132,21 @@ export default class ZmitiStage extends React.Component {
 
 
                 s.state.imgList.push(imgData.src);
-                s.forceUpdate();
-
+               
                 let img = new Image();
-                imgData.target.text.text = '        loading...';
+                imgData.target.text.text = 'loading...';
 
+                s.stage.update();
                 img.crossOrigin = "anonymous";
                 
                 img.onload = function () {
-
+                    
                     let bmp = new createjs.Bitmap(this);
                     bmp.x =  imgData.target.x;
                     bmp.y =  imgData.target.y;
                     imgData.target.text.alpha = 0;
 
-                    s.stage.addChild(bmp);
+                    imgData.target.container.addChild(bmp);
 
                     bmp.mask = imgData.target.rect;
 
@@ -200,7 +200,7 @@ export default class ZmitiStage extends React.Component {
                       </Row>
                     </div>
                      <Tooltip placement="bottom" title={'删除图片'}>
-                        <div className='z-puzzle-delete' onClick={this.deleteMaksImg.bind(this)}>
+                        <div className='z-puzzle-delete' onClick={this.deleteMaskImg.bind(this)}>
                             <div className='z-puzzle-line1'></div>
                             <div className='z-puzzle-line2'></div>
                             <div className='z-puzzle-line3'></div>
@@ -249,15 +249,20 @@ export default class ZmitiStage extends React.Component {
 
     }
 
-    deleteMaksImg(){//删除当前选中的图片
+    deleteMaskImg(){//删除当前选中的图片
 
         if(!this.currentMask){//还没有选中图片。
             message.error('还没有选中图片。');
             return;
         }
 
-        this.currentMask.container.removeChild(this.currentMask.container.getChildByName('shapes'));//移除虚线框。
-        this.stage.removeChild(this.currentMask);//移除图片
+        this.state.imgList.forEach((item,i)=>{
+            if(item === this.currentMask.image.src){
+                this.state.imgList.splice(i,1);
+            }
+        })
+
+        this.currentMask.container.removeChild(this.currentMask,this.currentMask.container.getChildByName('shapes'));//移除虚线框。
         this.stage.update();
         this.currentMask = null;
         this.dashCmd = null;
@@ -438,7 +443,7 @@ export default class ZmitiStage extends React.Component {
                             bmp.x =arr[i].x || 0;
                             bmp.y =arr[i].y || 0;
 
-                            stage.addChild(bmp);
+                            containers[index].addChild(bmp);
                             bmp.mask = arr[i].rect;
                             arr[i].text.alpha =0;//隐藏loading.
                             s.drag(bmp,containers[index]);
@@ -460,7 +465,7 @@ export default class ZmitiStage extends React.Component {
                         image.onload = function(){
                             let bmp = new createjs.Bitmap(this);
                             bmp.x =bmp.y =0;
-                            stage.addChild(bmp);
+                            containers[index].addChild(bmp);
                             bmp.mask = arr[i].rect;
                             arr[i].text.alpha =0;//隐藏loading.
                             s.drag(bmp,containers[index]);
