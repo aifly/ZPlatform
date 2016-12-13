@@ -361,7 +361,7 @@ const ShapeGenerater = {
         container1.addChild(rect,text);
         container2.addChild(rect1,text1);
         container3.addChild(rect3,text2);
-        container3.addChild(rect2,text3);
+        container4.addChild(rect2,text3);
         stage.addChild(container1,container2,container3,container4);
 
         stage.update();
@@ -429,7 +429,7 @@ const ShapeGenerater = {
         container1.addChild(rect,text);
         container2.addChild(rect1,text1);
         container3.addChild(rect2,text2);
-        container3.addChild(rect3,text3);
+        container4.addChild(rect3,text3);
         stage.addChild(container1,container2,container3,container4);
 
 
@@ -502,7 +502,7 @@ const ShapeGenerater = {
         container1.addChild(rect,text);
         container2.addChild(rect1,text1);
         container3.addChild(rect2,text2);
-        container3.addChild(rect3,text3);
+        container4.addChild(rect3,text3);
         stage.addChild(container1,container2,container3,container4);
 
         stage.update();
@@ -571,7 +571,7 @@ const ShapeGenerater = {
         container1.addChild(rect,text);
         container2.addChild(rect1,text1);
         container3.addChild(rect2,text2);
-        container3.addChild(rect3,text3);
+        container4.addChild(rect3,text3);
         stage.addChild(container1,container2,container3,container4);
 
         stage.update();

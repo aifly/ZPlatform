@@ -58,7 +58,13 @@ export default class ZmitiStage extends React.Component {
             var shape = s.createDashShape(bmp);
 
             var c = container|| s.stage;
-            document.title =s.containerArr.length;
+
+            container.children.forEach((item,i)=>{
+                container.setChildIndex(item,i);
+            });
+
+
+            
             s.containerArr.forEach((item,i)=>{
                 item.removeChild(item.getChildByName('shapes'));
                 s.stage.setChildIndex(item,1+i);
@@ -67,11 +73,16 @@ export default class ZmitiStage extends React.Component {
             shape.scaleX = s.currentMask.scale;
             shape.scaleY = s.currentMask.scale;
 
-
-
             s.stage.setChildIndex(c,0);
 
             c.addChild(shape);
+
+
+
+            container.setChildIndex(container.getChildByName('shapes'),1);
+            container.setChildIndex(bmp,2);
+
+
 
             e.preventDefault()
             
