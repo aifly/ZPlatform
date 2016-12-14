@@ -350,6 +350,10 @@ export default class ZmitiPanel extends React.Component {
                 mouseWheel:true,//启用鼠标滚轮。
              });
 
+          window.obserable.on('getCurrentMehtod',()=>{
+            return this.state.currentMethod;
+          })
+
     }
 
     lockedScale() {//解锁、锁定比例

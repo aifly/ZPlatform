@@ -182,10 +182,12 @@ body {
     margin:10px auto;
     .displayFlex(row);
     .acc-portrait{
-
-      text-align: center;
       .position(r);
+      .displayFlex();
+      justify-content:center;
+      align-items:center;
       padding-right:50px;
+    
       height: 280px;
       &:after{
         content:"";
@@ -202,7 +204,7 @@ body {
         height:8vw;
         border:1px solid #ccc;
         border-radius: 50%;
-        margin-bottom:10px;
+        margin-bottom:30px;
       }
     }
 
@@ -220,26 +222,9 @@ body {
 
           &>div{
             flex-grow: 1;
-            a,em{
-              font-style: normal;
-
-              display: block;
-              color:@btnColor;
-              &:nth-of-type(2){
-                margin-top:1vh;
-                color:#000;
-              }
-            }
-            em{
-              color:#666;
-            }
           }
         }
-        span{
-          font-size: 22px;
-          margin-top:1vh;
-          display: inline-block;
-        }
+        
       }
     }
   }

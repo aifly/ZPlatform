@@ -275,7 +275,6 @@
     background:#fff;
     margin-left: 10px;
     width:$deleteW;
-    margin-top:10px;
     height:$deleteH;
     //border:1px solid #fcc6c6;
     box-sizing:border-box;
@@ -385,6 +384,18 @@
         &:after{
           top:74px;
         }
+      }
+
+
+      .z-puzzle-reset{
+        $size:28px;
+        height:$size;
+        width:$size;
+        @include br(4px);
+        padding:2px;
+        cursor:pointer;
+        background:#fff;
+        @include pos(r);
       }
 
 }

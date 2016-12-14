@@ -79,8 +79,8 @@ export default class ZmitiStage extends React.Component {
 
 
 
-            container.setChildIndex(container.getChildByName('shapes'),1);
-            container.setChildIndex(bmp,2);
+           /* container.setChildIndex(container.getChildByName('shapes'),1);
+            container.setChildIndex(bmp,2);*/
 
 
 
@@ -210,18 +210,32 @@ export default class ZmitiStage extends React.Component {
                         </Col>
                       </Row>
                     </div>
-                     <Tooltip placement="bottom" title={'删除图片'}>
-                        <div className='z-puzzle-delete' onClick={this.deleteMaskImg.bind(this)}>
-                            <div className='z-puzzle-line1'></div>
-                            <div className='z-puzzle-line2'></div>
-                            <div className='z-puzzle-line3'></div>
-                            <div className='z-puzzle-line4'></div>
-                            <div className='z-puzzle-vline1'></div>
-                            <div className='z-puzzle-vline2'></div>
-                            <div className='z-puzzle-vline3'></div>
-                            <div className='z-puzzle-vline4'></div>
-                        </div>
-                     </Tooltip>
+                    <section>
+                        <Row style={{marginLeft:10,marginTop:10}}>
+                            <Col span={4}>
+                                <Tooltip placement="bottom" title={'删除图片'}>
+                                    <div className='z-puzzle-delete' onClick={this.deleteMaskImg.bind(this)}>
+                                        <div className='z-puzzle-line1'></div>
+                                        <div className='z-puzzle-line2'></div>
+                                        <div className='z-puzzle-line3'></div>
+                                        <div className='z-puzzle-line4'></div>
+                                        <div className='z-puzzle-vline1'></div>
+                                        <div className='z-puzzle-vline2'></div>
+                                        <div className='z-puzzle-vline3'></div>
+                                        <div className='z-puzzle-vline4'></div>
+                                    </div>
+                                 </Tooltip>
+                            </Col>
+                            <Col span={4}>
+                                 <Tooltip placement="bottom" title={'重置'}>
+                                    <div className='z-puzzle-reset' onClick={this.resetCanvas.bind(this)}>
+                                        <img src='../puzzle/static/images/reset.png'/>
+                                    </div>
+                                 </Tooltip>
+                               
+                            </Col>
+                        </Row>
+                    </section>
                      <div className='zmiti-imgscale-bar' onClick={this.closeImgScale.bind(this)}>
                          <Icon type="menu-fold" style={{display:this.state.showPanel?'inline-block':'none'}}/>
                         <Icon type="menu-unfold" style={{display:!this.state.showPanel?'inline-block':'none'}}/>
@@ -258,6 +272,15 @@ export default class ZmitiStage extends React.Component {
         }
         
 
+    }
+
+    resetCanvas(){//重置画布
+        
+        var size = obserable.trigger({type:'getPicmMargin'});
+        var method = window.obserable.trigger({type:'getCurrentMehtod'});//获取当前的渲染画布的方法。
+        this.state.imgList.length = 0;//清空当前的所有的图片列表。
+        this.renderCanvas(method,null,size);
+       
     }
 
     deleteMaskImg(){//删除当前选中的图片

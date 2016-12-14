@@ -78,12 +78,16 @@ export default class ZmitiUploadDialog extends React.Component {
             visible: false
         });
         this.props.onFinish && this.props.onFinish(this.imgData);
+        $('.zmiti-img-figure-C .figcaption').removeClass('active');
+        this.imgData = undefined;
     }
 
     handleCancel() {
         this.setState({
             visible: false
         });
+        $('.zmiti-img-figure-C .figcaption').removeClass('active');
+        this.imgData = undefined;
     }
 
     showModal(data) {
