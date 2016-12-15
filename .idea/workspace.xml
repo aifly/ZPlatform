@@ -58,7 +58,6 @@
               <caret line="264" column="0" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
-                <marker date="1481364012363" expanded="true" signature="14418:14424" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -79,19 +78,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="80">
               <caret line="622" column="20" selection-start-line="622" selection-start-column="20" selection-end-line="622" selection-end-column="20" />
-              <folding>
-                <marker date="1481424750877" expanded="true" signature="48:23524" ph="{...}" />
-                <marker date="1481424750877" expanded="true" signature="93:1164" ph="{...}" />
-                <marker date="1481424750877" expanded="true" signature="545:983" ph="/*...*/" />
-                <marker date="1481424750877" expanded="true" signature="21912:22204" ph="{...}" />
-                <marker date="1481424750877" expanded="true" signature="22243:22614" ph="{...}" />
-                <marker date="1481424750877" expanded="true" signature="22652:23023" ph="{...}" />
-                <marker date="1481424750877" expanded="true" signature="23043:23522" ph="{...}" />
-                <marker date="1481424750877" expanded="true" signature="23087:23514" ph="{...}" />
-                <marker date="1481424750877" expanded="true" signature="23128:23369" ph="{...}" />
-                <marker date="1481424750877" expanded="true" signature="23163:23353" ph="{&quot;id&quot;: 'puzzle'...}" />
-                <marker date="1481424750877" expanded="true" signature="23409:23502" ph="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -233,7 +220,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1382" />
+    <option name="width" value="1378" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -262,9 +249,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files" />
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -274,6 +258,9 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files" />
       </pane>
     </panes>
   </component>
@@ -457,17 +444,18 @@
       <workItem from="1480662119227" duration="7000" />
       <workItem from="1481337585049" duration="9417000" />
       <workItem from="1481457662159" duration="477000" />
+      <workItem from="1481807489820" duration="555000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="179497000" />
+    <option name="totallyTimeSpent" value="180052000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1378" height="744" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15300146" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15271659" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5021075" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -518,7 +506,6 @@
           <caret line="264" column="0" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <marker date="1481364012363" expanded="true" signature="14418:14424" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -535,19 +522,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1481424750877" expanded="true" signature="48:23524" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="93:1164" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="545:983" ph="/*...*/" />
-            <marker date="1481424750877" expanded="true" signature="21912:22204" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="22243:22614" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="22652:23023" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="23043:23522" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="23087:23514" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="23128:23369" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="23163:23353" ph="{&quot;id&quot;: 'puzzle'...}" />
-            <marker date="1481424750877" expanded="true" signature="23409:23502" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -917,7 +892,6 @@
           <caret line="264" column="0" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
           <folding>
             <element signature="e#0#26#0" expanded="true" />
-            <marker date="1481364012363" expanded="true" signature="14418:14424" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -934,19 +908,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="80">
           <caret line="622" column="20" selection-start-line="622" selection-start-column="20" selection-end-line="622" selection-end-column="20" />
-          <folding>
-            <marker date="1481424750877" expanded="true" signature="48:23524" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="93:1164" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="545:983" ph="/*...*/" />
-            <marker date="1481424750877" expanded="true" signature="21912:22204" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="22243:22614" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="22652:23023" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="23043:23522" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="23087:23514" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="23128:23369" ph="{...}" />
-            <marker date="1481424750877" expanded="true" signature="23163:23353" ph="{&quot;id&quot;: 'puzzle'...}" />
-            <marker date="1481424750877" expanded="true" signature="23409:23502" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
