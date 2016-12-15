@@ -229,7 +229,7 @@ export default class ZmitiStage extends React.Component {
                             <Col span={4}>
                                  <Tooltip placement="bottom" title={'重置'}>
                                     <div className='z-puzzle-reset' onClick={this.resetCanvas.bind(this)}>
-                                        <img src='../puzzle/static/images/reset.png'/>
+                                        <img src='./puzzle/static/images/reset.png'/>
                                     </div>
                                  </Tooltip>
                                

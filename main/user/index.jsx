@@ -123,7 +123,8 @@ export default class ZmitiUserApp extends Component {
   	e.preventDefault();
   	var userid = e.target.parentNode.getAttribute('data-userid');
   	var isover = -1;
-  	this.state.userList.forEach(user=>{
+
+  	this.state.userList.forEach((user,i)=>{
   		if(user.userid === userid){
   			isover = user.isover;
   		}
@@ -132,68 +133,74 @@ export default class ZmitiUserApp extends Component {
   		return;
   	}
 
+
+
   	var params = {
-  		getusersigid:this.getusersigid,
-  		userid:this.userid,
-  		setuserid:userid,
-           	 setisover:isover === 2 ? 0 : 2 //0:正式用户，1 试用用户，2禁用用户，3已删除。
-           	}
-           	var baseUrl = this.props.baseUrl || 'http://api.zmiti.com/v2';
-           	let s = this;
+      		getusersigid:this.getusersigid,
+      		userid:this.userid,
+      		setuserid:userid,
+       	 setisover:isover === 2 ? 0 : 2 //0:正式用户，1 试用用户，2禁用用户，3已删除。
+       	}
+       	var baseUrl = this.props.baseUrl || 'http://api.zmiti.com/v2';
+       	let s = this;
 
-           	$.ajax({
-           		type:"post",
-           		url:baseUrl+'user/disable_user/',
-           		data:params,
-           		success(data){
-           			if(data.getret === 0){
-           				message.success('操作成功');
-           				s.state.userList.forEach(user=>{
-           					if(user.userid === userid){
-           						user.isover = isover === 2 ? 0 : 2;
-           					}
-           				});
-           				s.forceUpdate();
-           			}else{
-           				message.error('操作失败');
+       	$.ajax({
+       		type:"post",
+       		url:baseUrl+'user/disable_user/',
+       		data:params,
+       		success(data){
+       			if(data.getret === 0){
+       				message.success('操作成功');
+       				s.state.userList.forEach(user=>{
+       					if(user.userid === userid){
+       						user.isover = isover === 2 ? 0 : 2;
+       					}
+       				});
+       				s.forceUpdate();
+       			}
+            else{
+       				message.error('操作失败');
+       			}
+          }
+        })
+    }
 
-           			}
-           		})
-           }
 	transFormal(e){//转成正式用户
+
 		var userid = e.target.parentNode.getAttribute('data-userid');
 		var params = {
-			getusersigid:this.getusersigid,	
-			userid:this.userid,
-			setuserid:userid,
-           		 setisover:0 //0:正式用户，1 试用用户，2禁用用户，3已删除。
-           	}
-           	var baseUrl = window.baseUrl || 'http://api.zmiti.com/v2';
-           	let s = this;
+    			getusersigid:this.getusersigid,	
+    			userid:this.userid,
+    			setuserid:userid,
+       		 setisover:0 //0:正式用户，1 试用用户，2禁用用户，3已删除。
+       	}
+       	var baseUrl = window.baseUrl || 'http://api.zmiti.com/v2';
+       	let s = this;
 
-           	$.ajax({
-           		type:"post",
-           		url:baseUrl+'user/disable_user/',
-           		data:params,
-           		success(data){
-           			console.log(data);	
-           			if(data.getret === 0){
-           				message.success('操作成功');
-           				s.state.userList.forEach(user=>{
-           					if(user.userid === userid){
-           						user.isover = 0;
-           					}
-           				});
-           				s.forceUpdate();
-           			}else{
-           				message.error('操作失败');
-           			}
-           		}
-           	})
-           }
-           changeAccount(e){
+       	$.ajax({
+       		type:"post",
+       		url:baseUrl+'user/disable_user/',
+       		data:params,
+       		success(data){
+       			console.log(data);	
+       			if(data.getret === 0){
+       				message.success('操作成功');
+       				s.state.userList.forEach(user=>{
+       					if(user.userid === userid){
+       						user.isover = 0;
+       					}
+       				});
+       				s.forceUpdate();
+       			}else{
+       				message.error('操作失败');
+       			}
+       		}
+       	});
+
+       }
+     changeAccount(e){
 		// e : 0  1;
-	}
+  	}
 }
 export default ZmitiValidateUser(ZmitiUserApp);
 ZmitiUserApp.defaultProps = {
