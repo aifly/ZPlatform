@@ -937,7 +937,7 @@ window.addEventListener('load', ()=> {
 
                 successArr[e.target.checked ? 'add' : 'remove']('green');
 
-                $('.btn-begin-reg')[successArr.length === (company === 1 ? 6 : 7) ? "removeClass" : "addClass"]('disabled')
+                $('.btn-begin-reg')[successArr.length === (company === 1 ? 5 : 6) ? "removeClass" : "addClass"]('disabled')
             });
 
             $('.get-code input').on('blur', e=> {
@@ -1026,7 +1026,7 @@ window.addEventListener('load', ()=> {
                 $(".reg-info").addClass('info').html('开始注册...');
 
                 ///data.baseUrl='http://localhost:23627/v1/'
-                console.log('------------------');
+               
                 console.log(dd);
                 $.ajax({
                     url: data.baseUrl + 'user/create_user/',

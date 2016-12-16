@@ -133,7 +133,7 @@ class MainUI extends React.Component {
                     <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    {(this.state.usertypesign === 4||this.state.usertypesign === 3) && <div className="fly-nav"><a href={window.adminUrl+"/admin/#/"}>系统管理</a></div>}
+                    {(this.state.usertypesign === 4||this.state.usertypesign === 3) && <div className="fly-nav"><a href={window.adminUrl+"/#/"}>系统管理</a></div>}
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
                     <div></div>
