@@ -1,7 +1,8 @@
 var webpack = require('webpack');
 var config = {
     entry: {
-        'index': "./index.jsx"
+        'index': "./index.jsx",
+        'admin':'./admin/index.jsx'
     },
     output: {
         publickPath: './static/js',
@@ -14,11 +15,17 @@ var config = {
         port: 3000,
         hot: true
     },
+/*    externals:{
+        'react':'React',
+        'react-dom':'ReactDOM',
+        'jquery':"$",
+        'iscroll':'IScroll'
+    },*/
     module: {
         loaders: [{
             test: /\.jsx|\.js|\.es6$/,
             exclude: /node_modules/,
-            loaders: ['babel'],
+            loaders: ['react-hot','babel'],
             plugins: [["import", {
                   "libraryName": "antd",
                   "style": true,   // or 'css'

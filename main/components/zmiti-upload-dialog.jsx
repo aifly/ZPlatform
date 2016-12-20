@@ -640,17 +640,18 @@ export default class ZmitiUploadDialog extends React.Component {
         switch (index) {
             case 'delete'://删除
                 $.ajax({
-                    url: self.props.baseUrl + self.props.deleteResUrl,
+                    url: window.baseUrl + self.props.deleteResUrl,
                     type: "POST",
                     data: {
-                        datainfoid: id,
+                        setdatainfoid:id,
+                        userid:self.props.userid,
                         "getusersigid": self.props.getusersigid
                     },
                     success(da){
                         if (da.getret === -101) {
                             message.error('服务器返回错误:' + da.getmsg)
                         }
-                        else {
+                        else if(da.getret === 0) {
                             message.success(da.getmsg);
 
                             if (self.state.currentCate >= 0) {//
@@ -675,7 +676,9 @@ export default class ZmitiUploadDialog extends React.Component {
                             self.state.allData[self.state.current].imgs.forEach((img, i)=> {
                                 if (img.id === id) {
                                     self.state.allData[self.state.current].imgs.splice(i, 1);
-                                    self.forceUpdate();
+                                    self.forceUpdate(()=>{
+                                        self.picScroll.refresh();//刷新滚动条
+                                    });
                                     return false;
                                 }
                             });
@@ -710,6 +713,7 @@ export default class ZmitiUploadDialog extends React.Component {
     }
 
     cateHandleOk(e) { //添加分类.
+        
 
         let value = this.refs['cate-name'].refs.input.value;
 
@@ -718,17 +722,13 @@ export default class ZmitiUploadDialog extends React.Component {
             return;
         }
 
-        this.setState({
-            cateVisible: false
-        });
-
-
+        this.state.cateVisible = false;
         this.state.ajaxData[this.state.current].unshift(
             {
                 parentName: {
                     name: value,
                     id: -1,
-                    editable: true,
+                    editable: false,
                     imgs: []
                 },
                 subNames: []
@@ -779,7 +779,7 @@ export default class ZmitiUploadDialog extends React.Component {
                             <Menu mode="vertical" className="zmiti-asset-menu" onClick={this.operatorRes} ref="menu">
                                 <Menu.Item key={'delete_'+img.id+'_'+(img.index === undefined?-101:img.index)}><Icon
                                     type="delete"/>删除</Menu.Item>
-                                <Menu.Item key={'clip_'+img.id+'_'+(img.index === undefined?-101:img.index)}><Icon
+                                {/*<Menu.Item key={'clip_'+img.id+'_'+(img.index === undefined?-101:img.index)}><Icon
                                     type="cross"/>裁剪</Menu.Item>
                                 <SubMenu key={'move_'+img.id+'_'+(img.index === undefined?-101:img.index)}
                                          title={<span><Icon type="swap" /><span>移动</span></span>}>
@@ -793,7 +793,7 @@ export default class ZmitiUploadDialog extends React.Component {
                                         key={'12_'+img.id+'_'+(img.index === undefined?-101:img.index)}>选项12</Menu.Item>
                                 </SubMenu>
                                 <Menu.Item key={'share_'+img.id+'_'+(img.index === undefined?-101:img.index)}><Icon
-                                    type="share-alt"/>分享</Menu.Item>
+                                    type="share-alt"/>分享</Menu.Item>*/}
                             </Menu>
                         </section>
                     </div>
@@ -936,7 +936,7 @@ export default class ZmitiUploadDialog extends React.Component {
                     if (d.getret === 0) {
                         message.success('添加分类成功');
 
-                        //self.state.ajaxData[self.state.current].length = 0;
+                        self.state.ajaxData[self.state.current].length = 0;
                         console.log(d)
                         d.datainfo.forEach(info=> {
 
