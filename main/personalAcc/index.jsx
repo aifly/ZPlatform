@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
 import './static/css/index.css';
 import {utilMethods,_$,$$ } from '../utilMethod.es6';
-
+import $ from 'jquery';
 /*
 
 import Tabs from 'antd/lib/tabs';
@@ -31,13 +31,13 @@ import MainUI from '../components/Main.jsx';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
-import $ from 'jquery';
 class ZmitiPersonalAccApp extends React.Component{
     constructor(args){
         super(...args);
         this.state =
         {
             mainHeight:document.documentElement.clientHeight-50,
+            showCredentialsDiolog:false,
             userData:{
                 portrait:'./personalAcc/static/images/user.jpg',//用户头像
                 username:'',//用户名
@@ -47,14 +47,11 @@ class ZmitiPersonalAccApp extends React.Component{
                 departmentid:'',
                 companyid:'',
                 companyname:'',
-                userrealname:'',//用户真实姓名
+                customername:'',//用户真实姓名
                 usersex:'',//用户性别
                 useremergencycontacter:'',//紧急联系人
                 useremergencycontactmobile:'',//紧急联系人电话/
                 credentials:[
-                    {src: "./personalAcc/static/images/user.jpg"},
-                    {src: "./personalAcc/static/images/user.jpg"},
-                    {src: "./personalAcc/static/images/user.jpg"}
 
                 ],//用户证件照片
               
@@ -92,6 +89,11 @@ class ZmitiPersonalAccApp extends React.Component{
       var s = this;
 
 
+      window.obserable.on('modifyUesrCredentials',()=>{
+        this.modifyUesrCredentials();
+      });
+
+
       var userid = this.props.params.userid?this.props.params.userid:this.userid;
       
       this.getUserDetail({
@@ -119,7 +121,7 @@ class ZmitiPersonalAccApp extends React.Component{
                 departmentid:da.departmentid,
                 companyid:da.companyid,
                 companyname:da.companyname,
-                userrealname:da.userrealname,//用户真实姓名
+                customername:da.customername,//用户真实姓名
                 usersex:da.usersex,//用户性别
                 useremergencycontacter:da.useremergencycontacter,//紧急联系人
                 useremergencycontactmobile:da.useremergencycontactmobile,//紧急联系人电话/
@@ -146,6 +148,31 @@ class ZmitiPersonalAccApp extends React.Component{
         setTimeout(()=>{
             this.refs['save-btn'].classList.remove('active');
         },150)*/
+        var s = this;
+        var params = {
+          userid : s.userid,
+          setuserid:s.userid,
+          getusersigid:s.getusersigid,
+          username: s.state.userData.username,
+          username: s.state.userData.username,
+          useremail: s.state.userData.useremail,
+          customername: s.state.userData.customername,
+          dateofbirth: s.state.userData.dateofbirth,
+          datesign: s.state.userData.datesign || '阳历',
+          emergencycontact: s.state.userData.useremergencycontacter,
+          contactmobile: s.state.userData.useremergencycontactmobile,
+          usericon: s.state.userData.portrait,
+          comment:'' //备注
+        }
+        console.log(params)
+        $.ajax({
+          url:window.baseUrl + 'user/edit_user/',
+          data:params,
+          success(data){
+            console.log(data);
+          }
+        })
+
     }
 
     render(){
@@ -161,6 +188,16 @@ class ZmitiPersonalAccApp extends React.Component{
                 s.forceUpdate();
             }
         };
+
+        const userProps ={
+            documentbaseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+                s.state.userData.credentials.push({src:imgData.src});
+                s.forceUpdate();
+            }
+        }
 
         let zmitiProgressProps = {
             label:'',
@@ -188,8 +225,8 @@ class ZmitiPersonalAccApp extends React.Component{
                                        <span>@{this.username}</span>
                                    </div>
                                    <div>
-                                       <Tag color="#f50">{this.isover === 1 ?"试用账号":"正式账号"}</Tag>
-                                       <Tag onClick={()=>{this.setState({modifyUserPwdDialogVisible:true})}} color="#108ee9">重置密码</Tag>
+                                       <Tag style={{lineHeight:'20px'}} color="#f50">{this.isover === 1 ?"试用账号":"正式账号"}</Tag>
+                                       <Tag onClick={()=>{this.setState({modifyUserPwdDialogVisible:true})}} style={{background:'#108ee9',color:'#fff',lineHeight:'20px'}} color="#108ee9">重置密码</Tag>
                                    </div>
                                </section>
                                {this.state.userData.usermobile && <section><span>手机：</span>{this.state.userData.usermobile}</section>}
@@ -215,7 +252,7 @@ class ZmitiPersonalAccApp extends React.Component{
                <div className="acc-form">
                    <div className="acc-form-left">
                        <Input.Group className="acc-input-group">
-                           <Input addonBefore="姓名" defaultValue={this.state.userData.userrealname} onChange={()=>{}}/>
+                           <Input addonBefore="姓名" defaultValue={this.state.userData.customername} onChange={()=>{}}/>
                            <Select placeholder='性别' style={{width:300}} >
                                <Option value="0">男</Option>
                                <Option value="1">女</Option>
@@ -270,7 +307,8 @@ class ZmitiPersonalAccApp extends React.Component{
                 
                </Form>    
              </Modal>
-            <ZmitiUploadDialog id="personAcc" {...props}></ZmitiUploadDialog>
+            {!this.state.showCredentialsDiolog && <ZmitiUploadDialog id="personAcc" {...props}></ZmitiUploadDialog>}
+            {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="userCredentials" {...userProps}></ZmitiUploadDialog>}
            </div>;
         return (
           <MainUI component={component}></MainUI>
@@ -279,11 +317,30 @@ class ZmitiPersonalAccApp extends React.Component{
     changePortrait(){//更换头像
 
         var obserable=window.obserable;
-        obserable.trigger({
-            type:'showModal',
-            data:{type:0,id:'personAcc'}
+        this.setState({
+          showCredentialsDiolog:false
+        },()=>{
+          obserable.trigger({
+              type:'showModal',
+              data:{type:0,id:'personAcc'}
+          })  
         })
+        
     }
+
+    modifyUesrCredentials(){
+      var obserable=window.obserable;
+         this.setState({
+            showCredentialsDiolog:true
+        },()=>{
+          obserable.trigger({
+              type:'showModal',
+              data:{type:0,id:'userCredentials'}
+          })  
+        }) 
+    }
+
+
     modifyUserPwd(){//修改密码
 
     }

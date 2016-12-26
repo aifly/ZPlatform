@@ -46,15 +46,21 @@ class App extends React.Component{
 
 	componentWillMount() {
 		window.obserable = new Obserable();
-		window.addEventListener('resize', ()=>{
-				obserable.trigger({type:'setMainHeight'});
-				obserable.trigger({type:'setMenuWidth'});
-		});
-		
+
+		 window.mainLeftSize = 180;
 	}
 
 	componentDidMount() {
 
+			window.addEventListener('resize', ()=>{
+					window.obserable.trigger({type:'setAdminMenu'});
+				//	window.obserable.trigger({type:'setAdminHeight'});
+				  
+			});
+/*
+			window.onresize = function(){
+					
+			}*/
 	}
 
 }

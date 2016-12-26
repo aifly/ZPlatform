@@ -108,12 +108,6 @@ export default class ZmitiUploadDialog extends React.Component {
             self.setState({
                 loading: true
             });
-
-            
-
-        
-
-
             var params ={
                     "setdatainfotype": data.type || 0,
                     "getusersigid": self.props.getusersigid,

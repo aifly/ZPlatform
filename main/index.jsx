@@ -10,6 +10,7 @@ import ZmitiPuzzleApp from './puzzle/index.jsx';
 import ZmitiQaApp from './qa/index.jsx';
 import ZmitiUserDepartmentApp from './userdepartment/index.jsx';
 import ZmitiPersonalAccApp from './personalAcc/index.jsx';
+import ZmitiRenewalApp from './renewal/index.jsx';
 import ZmitiProject from './project/index.jsx';
 import Obserable from './static/libs/obserable.js';
 import $ from 'jquery';
@@ -19,20 +20,21 @@ class App extends React.Component{
 	}
 	render() {
 		var apps = [
-		{path: '/', app: ZmitiHomeApp},
-		{path: '/richimglist/', app: ZmitiRichImgListApp},
-		{path: '/puzzle/', app: ZmitiPuzzleApp},
-		{path: '/userdepartment/', app: ZmitiUserDepartmentApp},
-		{path: '/personalAcc/', app: ZmitiPersonalAccApp},
-		{path: '/richimg/', app: ZmitiRichImgApp},
-		{path: '/qa/', app: ZmitiQaApp},
-		{path: '/project/', app: ZmitiProject},
+				{path: '/', app: ZmitiHomeApp},
+				{path: '/richimglist/', app: ZmitiRichImgListApp},
+				{path: '/puzzle/', app: ZmitiPuzzleApp},
+				{path: '/userdepartment/', app: ZmitiUserDepartmentApp},
+				{path: '/personalAcc/', app: ZmitiPersonalAccApp},
+				{path: '/richimg/', app: ZmitiRichImgApp},
+				{path: '/qa/', app: ZmitiQaApp},
+				{path: '/project/', app: ZmitiProject},
+				{path: '/renewal/', app: ZmitiRenewalApp}
 		];
 		return (
 			<Router history={hashHistory}>
-			{apps.map((app, i) => {
-				return <Route key={i} path={app.path} component={app.app}/>
-			})}
+				{apps.map((app, i) => {
+					return <Route key={i} path={app.path} component={app.app}/>
+				})}
 			</Router>
 			)
 	}
@@ -55,7 +57,6 @@ $.getJSON(window.menuConfigUrl,(data)=>{
 	window.onresize = function(){
 		window.obserable.trigger({type:'setMainHeight'});
 		window.obserable.trigger({type:'setMenuWidth'});
-
 	}
 });
 

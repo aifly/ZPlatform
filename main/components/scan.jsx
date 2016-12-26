@@ -88,7 +88,7 @@ export default class ZmitiScan extends React.Component {
         return (
             <section className="acc-scan">
                 <div className={classL} onClick={this.prev.bind(this)}></div>
-                <div style={uploadStyle} className='acc-upload'></div>
+                <div style={uploadStyle} className='acc-upload' onClick={this.addUesrCredentials.bind(this)}></div>
                 <div className="acc-scan-C" ref="acc-scan-C">
                     <ul style={ulStyle}>
                         {data}
@@ -97,5 +97,8 @@ export default class ZmitiScan extends React.Component {
                 <div className={classR} onClick={this.next.bind(this)}></div>
             </section>
         )
+    }
+    addUesrCredentials(){
+        window.obserable.trigger({type:'modifyUesrCredentials'})
     }
 }

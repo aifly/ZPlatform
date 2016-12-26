@@ -178,11 +178,12 @@ export default class ZmitiStage extends React.Component {
             left:(document.documentElement.clientWidth -  this.state.width) / 2 
             
         }
-        
+
         return (
             <article className="z-puzzle-stage">
                 <div className="z-puzzle-canvas-C">
                     <canvas ref="z-puzzle-canvas" style={stageStyle} width={this.state.width} height={this.state.height}></canvas>
+                    <div className='z-puzzle-drag' style={{left:this.state.width+stageStyle.left-(window.mainLeftSize||0),top:this.state.height+stageStyle.top}}></div>
                     <ZmitiUploadDialog id="puzzle" {...props}></ZmitiUploadDialog>
                 </div>
                 <ul className='z-puzzle-operator' onClick={this.changeScale.bind(this)}>
@@ -383,6 +384,7 @@ export default class ZmitiStage extends React.Component {
                 document.onmousemove = ev => {
                     this.canvas.style.left = ev.pageX - disX + 'px';
                     this.canvas.style.top = ev.pageY - disY + 'px';
+                    
                 }
                 document.onmouseup = ev=> {
                     document.onmousemove = null;

@@ -102,7 +102,7 @@ import MainUI from '../components/Main.jsx';
                                     <div className="head"><img draggable="false" src='./home/static/images/user.png' alt=""/></div>
                                 </aside>
                                 <aside className="user-content">
-                                    <div><span style={{color:'#f90'}}>早上好！</span><span className="current-user">@{this.state.currentUser}</span></div>
+                                    <div><span style={{color:'#f90'}}>{new Date().getHours()>=12?'下午':'上午'}好！</span><span className="current-user">{this.state.currentUser}</span></div>
                                     <div className="account">账号：<span>{this.state.currentAcc}</span></div>
                                     <div className="last-time"><span>{this.state.lastTime}</span>到期 <a href="#">现在续费>></a></div>
                                 </aside>

@@ -817,11 +817,17 @@ window.addEventListener('load', ()=> {
 
                 let self = this;
 
-                console.log({
+           /*     console.log({
                         username: $("input[name='username']").val(),
                         userpwd: $("input[name='pwd']").val(),
                         userlogip: $("#keleyivisitorip").html()
-                    })
+                    })*/
+
+                var timer = setTimeout(()=>{
+                    $(".login-error-info").addClass("fail");
+                    self.removeErrorInfo($(".login-error-info"), "fail");
+                    $(e.target).parent().find('span').removeClass("shadow").removeClass('hide').parents('.loaded').find('.loading').removeClass("show");
+                },5000);
                 $.ajax({
                     url: data.baseUrl + "user/login_user",
                     type: "POST",
@@ -830,19 +836,22 @@ window.addEventListener('load', ()=> {
                         userpwd: $("input[name='pwd']").val(),
                         userlogip: $("#keleyivisitorip").html()
                     },
-                    error(e){
-                        console.log(e)
+                    error(){
+                       /*
+                        clearTimeout(timer);
+                        console.log('登录失败，请重新登录', $(e.target).parent().find('span').length)
+                        $(".login-error-info").addClass("fail");
+                        self.removeErrorInfo($(".login-error-info"), "fail");
+                        $(e.target).parent().find('span').removeClass("shadow").removeClass('hide').parents('.loaded').find('.loading').removeClass("show");
+                        */
                     },
                     success(d){
-                        console.log(d)
+                        console.log(d);
+                        clearTimeout(timer);
                         if (d.getret === 0) {
                             data.loginMask.removeClass('show');
 
-                            
-
                            /*   var domain = './main/';
-
-
                               var myPopup = window.open(domain + '/','_self');
 
                              myPopup.postMessage('asd', domain);*/
@@ -1038,6 +1047,7 @@ window.addEventListener('load', ()=> {
                             //data.loginMask.removeClass('show');
                             data.goToLogin.trigger('click');
                             $(".reg-info").removeClass('info').addClass('success').html('恭喜你，注册成功~~~');
+                            $('.fly-input').val('');//
                         }
                         else if (d.getret === -2) {
                             if (d.username === 1) {
@@ -1097,6 +1107,7 @@ window.addEventListener('load', ()=> {
 
             $('.reg-input').on('focus', (e)=> {
                 let $Target = $(e.target);
+                this.removeChecked();
                 $Target.parents('.fly-reg-input').removeClass('error');
                 $Target.val().length <= 0 && $Target.siblings('.mark').addClass('blur')
 
@@ -1154,6 +1165,7 @@ window.addEventListener('load', ()=> {
             });
 
             $('input[name="reg-pass"]').on('focus', (e)=> {
+                this.removeChecked();
                 $(e.target).parents('.fly-reg-input').removeClass('error');
                 $(e.target).val().length <= 0 && $(e.target).siblings('.mark').addClass('blur');
             }).on('blur', (e)=> {
@@ -1171,6 +1183,7 @@ window.addEventListener('load', ()=> {
             });
 
             $('.sure-pass').on('focus', (e)=> {
+                this.removeChecked();
                 $(e.target).parents('.fly-reg-input').removeClass('error');
                 $(e.target).val().length <= 0 && $(e.target).siblings('.mark').addClass('blur');
             }).on("blur", (e)=> {
@@ -1187,6 +1200,7 @@ window.addEventListener('load', ()=> {
             let pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/,
                 reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
             $('input[name="reg-email"]').on('focus', (e)=> {
+                this.removeChecked();
                 $(e.target).parents('.fly-reg-input').removeClass('error');
                 $(e.target).val().length <= 0 && $(e.target).siblings('.mark').addClass('blur');
             }).on('blur', (e)=> {
@@ -1216,6 +1230,10 @@ window.addEventListener('load', ()=> {
                 e.keyCode === 27 && data.loginMask.removeClass('show');
             });
 
+        },
+
+        removeChecked(){
+            $('#green').removeAttr('checked');
         },
 
         checkReg(){
@@ -1311,7 +1329,7 @@ window.addEventListener('load', ()=> {
                 if (data.username.val().length <= 0) {
                     this.triggerSinLine(aSpan)
                 }
-
+                this.removeChecked();
             }).on('blur', ()=> {
                 if (data.username.val().length <= 0) {
                     aSpan.eq(0).css('transform', 'scale(1) translate(0,0)');
@@ -1335,7 +1353,8 @@ window.addEventListener('load', ()=> {
                 }
                 all.each((i, n)=> {
                     $(n).addClass("password")
-                })
+                });
+                this.removeChecked();
 
             }).on('blur', ()=> {
                 all.each((i, n)=> {

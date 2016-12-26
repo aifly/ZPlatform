@@ -8,7 +8,7 @@ import 'antd/lib/message/style/css';
 import MainUI from '../admin/components/main.jsx';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
-export default class ZmitiUserApp extends Component {
+ class ZmitiUserApp extends Component {
 	constructor(props) {
 		super(props);
 
@@ -78,9 +78,9 @@ export default class ZmitiUserApp extends Component {
 
 	componentWillMount() {
 
-		let {resizeMainHeight,validateUser,loginOut} = this.props;
+		let {resizeMainHeight,validateUser,loginOut,resizeLeftMenu} = this.props;
 
-		resizeMainHeight(this);
+
 
 		validateUser(()=>{loginOut();},this);
 
@@ -90,6 +90,10 @@ export default class ZmitiUserApp extends Component {
 		  this.getusersigid = this.getusersigid = getusersigid;
       this.userid =userid;
       this.baseUrl = window.baseUrl;*/
+
+       
+
+
       
       var params = {
       	getusersigid:this.getusersigid,
@@ -97,6 +101,7 @@ export default class ZmitiUserApp extends Component {
       	setusertypesign:1
       }
       let s = this;
+
       $.ajax({
       	type:"POST",
       	url:window.baseUrl+"/user/get_userlist/",
@@ -204,7 +209,7 @@ export default class ZmitiUserApp extends Component {
 }
 export default ZmitiValidateUser(ZmitiUserApp);
 ZmitiUserApp.defaultProps = {
-	baseUrl : window.parent.baseUrl || 'http://api.zmiti.com/v2/'
+	baseUrl : window.baseUrl || 'http://api.zmiti.com/v2/'
 }
 
 /*ReactDOM.render(<ZmitiUserApp></ZmitiUserApp>,document.getElementById('fly-main'));*/

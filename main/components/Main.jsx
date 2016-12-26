@@ -84,7 +84,7 @@ class MainUI extends React.Component {
         var defaultOpenKeys = 'sub1';
         if(hash.indexOf('userdepartment')>-1||hash.indexOf('project')>-1){
             defaultOpenKeys = 'sub2';
-        }else if(hash.indexOf('personalAcc')>-1){
+        }else if(hash.indexOf('personalAcc')>-1 || hash.indexOf('renewal')>-1){
             defaultOpenKeys = 'sub3';
         }
 
@@ -120,6 +120,14 @@ class MainUI extends React.Component {
                 "linkTo":"/personalAcc/",
                 "key":"personalAcc",
                 "title":"账号管理",
+                "isIcon":true,
+                "type":"user",
+                "isShow":true
+            },
+             {
+                "linkTo":"/renewal/",
+                "key":"renewal",
+                "title":"续费管理",
                 "isIcon":true,
                 "type":"user",
                 "isShow":true
@@ -188,11 +196,12 @@ class MainUI extends React.Component {
     }
     
     componentWillMount(){
-      let  {validateUser,loginOut,resizeLeftMenu} = this.props;
+      let  {validateUser,loginOut,resizeLeftMenu,resizeMainHeight} = this.props;
       var {userid,getusersigid,companyid,isover,usertypesign,username,usermobile,useremail}=validateUser(()=>{
           loginOut();
       });
       resizeLeftMenu(this);
+      resizeMainHeight(this);
       this.userid = userid;
       this.getusersigid = getusersigid;
       this.companyid = companyid;

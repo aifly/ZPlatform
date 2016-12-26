@@ -34,16 +34,16 @@ class ZmitiCompanyApp extends Component {
 			key: 'companyName',
 		}, {
 			title: '负责人账号',
-			dataIndex: 'chargePersonName',
-			key: 'chargePersonName',
+			dataIndex: 'username',
+			key: 'username',
 		}, {
 			title: '用户总数',
 			dataIndex: 'totalUserNum',
 			key: 'totalUserNum',
 		}, {
 			title: '到期时间',
-			dataIndex: 'expireDate',
-			key: 'expireDate',
+			dataIndex: 'expirDate',
+			key: 'expirDate',
 		}, {
 			title: '空间使用量',
 			dataIndex: 'userSpace',

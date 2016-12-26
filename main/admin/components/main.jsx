@@ -48,11 +48,13 @@ class MainUI extends Component {
   toggleMenu() {
 
       if (this.state.defaultClass === "fly-left-aside") {
-          this.setState({defaultClass: "fly-left-aside unfold", isOpen: false,rightWidth:document.documentElement.clientWidth - 60});
+          window.mainLeftSize = 60;
+          this.setState({defaultClass: "fly-left-aside unfold", isOpen: false,rightWidth:document.documentElement.clientWidth - window.mainLeftSize});
       } else {
           this.setState({defaultClass: "fly-left-aside"});
+          window.mainLeftSize = 180;
           setTimeout(()=> {
-              this.setState({isOpen: true,rightWidth:document.documentElement.clientWidth - 180});
+              this.setState({isOpen: true,rightWidth:document.documentElement.clientWidth - window.mainLeftSize});
           }, 200);
       }
   }
@@ -145,7 +147,10 @@ class MainUI extends Component {
 		);
 	}
   componentWillMount() {
-      let  {validateUser,loginOut} = this.props;
+      
+       let {resizeMainHeight,validateUser,loginOut,resizeLeftMenu} = this.props;
+        resizeMainHeight(this,'setAdminHeight');
+        resizeLeftMenu(this,'setAdminMenu');
       var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
           loginOut();
       });
