@@ -20,6 +20,9 @@ import AdminIndex from './components/index.jsx';
 import ZmitiUserApp from '../user/index.jsx';
 import ZmitiCompanyApp from '../company/index.jsx';
 import ZmitiSystemApp from '../system/index.jsx';
+import ZmitiProductApp from '../product/index.jsx';
+
+
 
 class App extends React.Component{
     constructor(args) {
@@ -33,14 +36,15 @@ class App extends React.Component{
 				{path:'/',app:AdminIndex},
 				{path:'/user/',app:ZmitiUserApp},
 				{path:'/company/',app:ZmitiCompanyApp},
-				{path:'/system/',app:ZmitiSystemApp}
+				{path:'/system/',app:ZmitiSystemApp},
+				{path:'/product/',app:ZmitiProductApp}
 			];
     return (
-         <Router history={hashHistory} >
+        <Router history={hashHistory} >
          	{apps.map((app,i) =>{
          		return <Route key={i} path={app.path} component={app.app}/>
          	})}
-			  </Router>
+		</Router>
     );
 	}
 
@@ -54,7 +58,7 @@ class App extends React.Component{
 
 			window.addEventListener('resize', ()=>{
 					window.obserable.trigger({type:'setAdminMenu'});
-				//	window.obserable.trigger({type:'setAdminHeight'});
+					window.obserable.trigger({type:'setAdminHeight'});
 				  
 			});
 /*

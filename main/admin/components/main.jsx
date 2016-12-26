@@ -12,6 +12,8 @@ import { Link } from 'react-router';
 import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 const SubMenu = Menu.SubMenu;
 
+
+
 class MainUI extends Component {
 	constructor(props) {
 	  super(props);
@@ -79,6 +81,17 @@ class MainUI extends Component {
           "isShow":true
       }
     ];
+
+    this.productServiceMenuConfig = [
+      {
+          "linkTo":"/product/",
+          "key":"product",
+          "title":"新增产品",
+          "isIcon":true,
+          "type":"edit",
+          "isShow":true
+      }
+    ]
     if(this.usertypesign===4){
       this.userManagerMenuConfig.push( {
           "linkTo":"/system/",
@@ -90,17 +103,17 @@ class MainUI extends Component {
       })
     }
 
+
+
+    var hash = window.location.hash;
     var openKey = 'sub5';
-    this.userManagerMenuConfig.forEach(item=>{
-      if(item.key.indexOf('#/user/')>-1){
-
-      }
-    });
-
+    if(hash.indexOf('product')>-1){
+        openKey = 'sub6';
+    }
 		return (
 			 <section className="main">
                 <header className="fly-header">
-                    <div className="fly-logo"><a href="/"><img src="../static/images/logo.png" alt=""/></a></div>
+                    <div className="fly-logo"><a href="/"><img src="../../static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href={window.mainUrl}>控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
                     <div  className="fly-nav"><a href={"./#/"+params}>系统管理</a></div>
@@ -133,6 +146,12 @@ class MainUI extends Component {
                                 <SubMenu key="sub5"
                                 title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>用户管理</span></span>}>
                                      {this.userManagerMenuConfig.map(item=>{
+                                        return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                     })}
+                                </SubMenu>
+                                 <SubMenu key="sub6"
+                                title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>操作管理</span></span>}>
+                                     {this.productServiceMenuConfig.map(item=>{
                                         return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
                                      })}
                                 </SubMenu>
@@ -170,7 +189,7 @@ class MainUI extends Component {
         
     
 		var hash = window.location.hash;
-    var configs = this.userManagerMenuConfig;
+    var configs = this.userManagerMenuConfig.concat(this.productServiceMenuConfig);
     var current =  '';
     configs.forEach(item=>{
       if(hash.indexOf('#'+item.linkTo)>-1){

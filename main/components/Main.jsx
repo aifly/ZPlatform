@@ -135,6 +135,7 @@ class MainUI extends React.Component {
         ]
 
         var configMenus =window.globalMenus;
+        
         return (
             <section className={"main " + (this.props.className || '')}>
                 <header className="fly-header" onClick={this.menuClickHandler}>
@@ -221,6 +222,8 @@ class MainUI extends React.Component {
         var hash = window.location.hash;
         var current = '';
         var configMenus =window.globalMenus;
+        
+
         if(this.userMenuConfig){
             configMenus = configMenus.concat(this.userMenuConfig);
         }
