@@ -823,7 +823,7 @@ window.addEventListener('load', ()=> {
                         userlogip: $("#keleyivisitorip").html()
                     })*/
 
-                var timer = setTimeout(()=>{
+                this.timer = setTimeout(()=>{
                     $(".login-error-info").addClass("fail");
                     self.removeErrorInfo($(".login-error-info"), "fail");
                     $(e.target).parent().find('span').removeClass("shadow").removeClass('hide').parents('.loaded').find('.loading').removeClass("show");
@@ -847,7 +847,8 @@ window.addEventListener('load', ()=> {
                     },
                     success(d){
                         console.log(d);
-                        clearTimeout(timer);
+                        clearTimeout( self.timer);
+                        self.timer = null;
                         if (d.getret === 0) {
                             data.loginMask.removeClass('show');
 
@@ -901,23 +902,25 @@ window.addEventListener('load', ()=> {
                                 }
                             });*/
                         }
-                        else if (d.getret === 1300) {
+                        else {
                             $(".login-error-info").addClass("fail");
                             self.removeErrorInfo($(".login-error-info"), "fail");
-                            $(e.target).parent().find('span').removeClass("shadow").removeClass("hide").parents('.loaded').find('.loading').removeClass("show");
+                            console.log($(e.target).parent().find('span').html())
+                            $(e.target).parent().find('span').removeClass('hide shadow').parents('.loaded').find('.loading').removeClass("show");
+                            console.log($(e.target).parent().find('span').attr('class'));
                         }
-                        else{
+                    /*    else{
                             $('#fly-msg').html(d.getmsg).addClass('active');
                             setTimeout(()=>{
                                 $('#fly-msg').removeClass('active');
                             },2000)
                             $(e.target).removeClass("shadow").removeClass("hide").parent().find('.loading').removeClass("show");
-                        }
+                        }*/
                     }
                 });
 
             }).on('mouseup', (e)=> {
-                if (data.username.val().length <= 0) {
+                if (data.username.val().length <= 0 || !self.timer) {
                     return false;
                 }
                 if (data.password.val().length <= 0) {

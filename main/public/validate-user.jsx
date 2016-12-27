@@ -79,7 +79,6 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	
 
 		window.obserable.on(name, ()=> {
-			console.log( document.documentElement.clientWidth - window.mainLeftSize)
 				that.setState({
 					rightWidth: document.documentElement.clientWidth - window.mainLeftSize
 				})
