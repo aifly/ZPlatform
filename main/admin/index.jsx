@@ -1,27 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Icon from  'antd/lib/icon/index';
-import Menu  from  'antd/lib/menu';
-import Input from  'antd/lib/input';
-import Badge from  'antd/lib/badge';
-import 'antd/lib/icon/style/css';
-import 'antd/lib/menu/style/css';
-import 'antd/lib/input/style/css';
-import 'antd/lib/badge/style/css';
-import '../static/css/index.css';
+
 import { Router, Route, hashHistory ,Link ,browserHistory } from 'react-router';
 import Obserable from '../static/libs/obserable.js';
 /*browserHistory.push('/user');
 browserHistory.push('./admin/company');*/
-
-
 
 import AdminIndex from './components/index.jsx';
 import ZmitiUserApp from '../user/index.jsx';
 import ZmitiCompanyApp from '../company/index.jsx';
 import ZmitiSystemApp from '../system/index.jsx';
 import ZmitiProductApp from '../product/index.jsx';
-
 
 
 class App extends React.Component{
@@ -31,7 +20,6 @@ class App extends React.Component{
 
  
 	render(){
-
 			var apps =  [
 				{path:'/',app:AdminIndex},
 				{path:'/user/',app:ZmitiUserApp},

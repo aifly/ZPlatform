@@ -2,20 +2,11 @@ import './static/css/index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import $ from 'jquery';
+///import $ from 'jquery';
 import   './static/js/jquery.longShadow';
 
-import Form from 'antd/lib/form';
-import Input from 'antd/lib/input';
-import Button  from 'antd/lib/button';
-import Spin from 'antd/lib/spin';
-import 'antd/lib/form/style/css';
-import 'antd/lib/input/style/css';
-import 'antd/lib/button/style/css';
-import 'antd/lib/spin/style/css';
+import { Spin,Form ,notification,Button,Input } from '../commoncomponent/common.jsx';
 const FormItem = Form.Item;
-import notification from 'antd/lib/notification';
-import 'antd/lib/notification/style/css';
 
 /*import 'babel-polyfill';
  import { Provider } from 'react-redux';*/

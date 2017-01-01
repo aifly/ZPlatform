@@ -2,7 +2,8 @@ import React,{Component} from 'react';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import MainUI from '../components/Main.jsx';
 import './static/css/index.css';
-import {Row,Col,Tabs,Table,Icon,Button,Checkbox,Modal,Form,Input,DatePicker,Select,} from 'antd';
+
+import {Row,Col,Tabs,Table,Icon,Button,Checkbox,Modal,Form,Input,DatePicker,Select} from '../commoncomponent/common.jsx';
 const TabPane = Tabs.TabPane;
 import ZmitiSearchInput from '../components/zmiti-search-input.jsx';
 const FormItem = Form.Item;
@@ -94,7 +95,7 @@ const data = [{
           	<Col span={24} offset={0} className="pro-col-15">
 	          	<Row>
 					<Col span={12} offset={0} className="pro-row-15"><ZmitiSearchInput></ZmitiSearchInput></Col>
-					<Col span={5}  className="pro-row-15 pro-col-15"><Checkbox defaultChecked="true" >只看正在进行的项目</Checkbox></Col>
+					<Col span={5}  className="pro-row-15 pro-col-15"><Checkbox defaultChecked={true} >只看正在进行的项目</Checkbox></Col>
 				</Row>
 				<Row>
 					<Col span={24} offset={0}>
@@ -127,7 +128,7 @@ const data = [{
 	         				help=""
 	         				>
 	         				  <Select
-							    showSearch="false"
+							    showSearch={false}
 							    placeholder="请选择项目负责人"
 							    optionFilterProp="children"
 							    notFoundContent=""
@@ -161,7 +162,7 @@ const data = [{
 	         				help=""
 	         				>
 	         				<Select
-							    showSearch="false"
+							    showSearch={false}
 							    placeholder="请选择项目所属客户"
 							    optionFilterProp="children"
 							    notFoundContent=""

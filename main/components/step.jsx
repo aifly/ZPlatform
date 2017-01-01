@@ -1,6 +1,6 @@
 import React from 'react';
-import Steps from 'antd/lib/steps';
-import 'antd/lib/steps/style/css';
+
+import { Steps  } from '../commoncomponent/common.jsx';
 const Step = Steps.Step;
 
 export default class ZmitiStep extends React.Component{

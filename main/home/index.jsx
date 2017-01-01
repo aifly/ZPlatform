@@ -1,22 +1,13 @@
 import './static/css/index.css';
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {utilMethods,_$,$$} from '../utilMethod.es6';
+import {Progress,Tabs,Card,Button,DatePicker,moment} from '../commoncomponent/common.jsx';
 
-import Progress from 'antd/lib/progress';
-import Tabs from 'antd/lib/tabs';
-import Card from 'antd/lib/card';
-import Button from 'antd/lib/button';
-import DatePicker from 'antd/lib/date-picker';
-import 'antd/lib/progress/style/css';
-import 'antd/lib/tabs/style/css';
-import 'antd/lib/card/style/css';
-import 'antd/lib/button/style/css';
-import 'antd/lib/date-picker/style/css';
 const MonthPicker = DatePicker.MonthPicker;
+
 import ZmitiStep from '../components/step.jsx';
 const TabPane = Tabs.TabPane;
 const ProgressLine = Progress.Line;
+
 import ZmitiTab from '../components/tab.jsx';
 
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
@@ -90,6 +81,7 @@ import MainUI from '../components/Main.jsx';
             height:248,
             margin:'0 auto'
         }
+        const monthFormat = 'YYYY/MM';
         let component =  <div className="home-main" style={{height:this.state.mainHeight}}>
                 <header className="header">
                     公告：智媒体新增新的交互工具"富图片"。<a href="#">点此查看</a>
@@ -159,10 +151,10 @@ import MainUI from '../components/Main.jsx';
                                    您还有 <span><a href="#">5条</a></span>任务没有完成  <span><a href="#">2条</a></span>需要审核 <span><a
                                    href="#">10条</a></span>到期未提交
                                </h2>
-                                <div><ZmitiStep current="1" name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
-                                <div><ZmitiStep current="2" name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
-                                <div><ZmitiStep current="3" name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
-                                <div><ZmitiStep current="4" name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
+                                <div><ZmitiStep current={1} name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
+                                <div><ZmitiStep current={2} name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
+                                <div><ZmitiStep current={3} name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
+                                <div><ZmitiStep current={4} name="智媒体研发" size="small" steps={steps}></ZmitiStep></div>
                            </div>
                         </figure>
                         <figure className="work">
@@ -196,7 +188,7 @@ import MainUI from '../components/Main.jsx';
                                     </div>
                                 </article>
                                 <article className="att-month">
-                                    <MonthPicker size="small" defaultValue="2016-6" />
+                                    <MonthPicker size="small" defaultValue={moment('2016/6',monthFormat)} />
                                     <div className="behavior"><span>迟到</span>: <span>12</span></div>
                                     <div className="behavior"><span>旷工</span>: <span>0</span></div>
                                     <div className="behavior"><span>请假</span>: <span>1</span></div>

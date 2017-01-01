@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './css/user-list.css';
 
-import Table from 'antd/lib/table';
-import 'antd/lib/table/style/css';
+import { Table } from '../commoncomponent/common.jsx';
+
 import  ZmitiSearchInput  from './zmiti-search-input.jsx';
 export default class ZmitiUserList extends Component {
 	constructor(props) {

@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import '../public/css/base.css';
-import Input from 'antd/lib/input';
+import './css/searchinput.css';
+import { Input ,Button } from '../commoncomponent/common.jsx';
 const InputGroup = Input.Group;
-import 'antd/lib/input/style/css';
-import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css';
 export default class ZmitiSearchInput extends Component {
 	render() {
 		return (
-			<div>
+			<div className='search-input-main-ui'>
 				<InputGroup>
 					<Input />
 					  <div className="ant-input-group-wrap">

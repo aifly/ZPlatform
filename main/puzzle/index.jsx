@@ -2,17 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
 
-import message from 'antd/lib/message';
-import 'antd/lib/message/style/css';
-
 import ZmitiPannel from './static/components/zmiti-panel.jsx';
 import ZmitiStage from './static/components/zmiti-stage.jsx';
 import PubSub from './static/js/pubsub';
 
-import notification from 'antd/lib/notification';
-import 'antd/lib/notification/style/css';
-import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css';
+
+import { message ,notification,Button } from '../commoncomponent/common.jsx';
 
 import MainUI from '../components/Main.jsx';
 import  createjs from './static/js/createjs.js';

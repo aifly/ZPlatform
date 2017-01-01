@@ -5,7 +5,7 @@ var config = {
         'admin':'./admin/index.jsx'
     },
     output: {
-        publickPath: './static/js',
+        //publicPath: './static/js',
         path: './static/js',
         filename: "[name].js",
         chunkFilename: "[name].js"
@@ -15,21 +15,17 @@ var config = {
         port: 3000,
         hot: true
     },
-/*    externals:{
-        'react':'React',
-        'react-dom':'ReactDOM',
-        'jquery':"$",
-        'iscroll':'IScroll'
-    },*/
+    externals:{
+        //'react':'React',
+        //'react-dom':'ReactDOM',
+        //'jquery':"$",
+       // 'iscroll':'IScroll'
+    },
     module: {
         loaders: [{
             test: /\.jsx|\.js|\.es6$/,
             exclude: /node_modules/,
-            loaders: ['react-hot','babel'],
-            plugins: [["import", {
-                  "libraryName": "antd",
-                  "style": true,   // or 'css'
-                }]]
+            loaders: ['react-hot','babel']
             },
             {
                 test: /\.(css)$/,

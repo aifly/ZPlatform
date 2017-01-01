@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card  } from 'antd';
+import { Card  } from '../commoncomponent/common.jsx';
 
 export default class ZmitiCard extends React.Component{
     constructor(args){

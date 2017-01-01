@@ -5,7 +5,9 @@ var path = require('path');
 module.exports = {
 
     entry:{
-        'index':'./index.es6'
+        'index':'./index.es6',
+        /*'./main/static/js/index':'./main/index.jsx',
+        './main/static/js/admin':'./main/admin/index.jsx'*/
     },
     output:{
         path:"./statices/js/",

@@ -1,22 +1,16 @@
 import React from 'react';
-import Modal from 'antd/lib/modal';
-import  'antd/lib/modal/style/css';
-import Tabs from 'antd/lib/tabs';
+
+import {Modal,Tabs,Spin,Button,Icon} from '../commoncomponent/common.jsx';
+
 const TabPane = Tabs.TabPane;
-import 'antd/lib/tabs/style/css';
+
 import './zmiti-upload-dialog.css';
-
-import Spin from 'antd/lib/spin';
-import 'antd/lib/spin/style/css';
-
+ 
 import PubSub from '../richimg/static/js/pubsub';
+ 
 
-import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css';
-import Icon from 'antd/lib/icon';
-import 'antd/lib/icon/style/css'
 
-import Waterfall from '../richimg/static/js/waterfall';
+//import Waterfall from '../richimg/static/js/waterfall';
 
 
 

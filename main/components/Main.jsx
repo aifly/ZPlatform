@@ -1,15 +1,8 @@
 import React from 'react';
-import Icon from  'antd/lib/icon/index';
-import Menu  from  'antd/lib/menu';
-import Input from  'antd/lib/input';
-import Badge from  'antd/lib/badge';
-import 'antd/lib/icon/style/css';
-import 'antd/lib/menu/style/css';
-import 'antd/lib/input/style/css';
-import 'antd/lib/badge/style/css';
-import message from 'antd/lib/message';
-import 'antd/lib/message/style/css';
+
 import { Link } from 'react-router';
+
+import {Icon,Menu,Input,Badge,message} from '../commoncomponent/common.jsx';
 const SubMenu = Menu.SubMenu;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import {utilMethods,_$,$$} from '../utilMethod.es6';

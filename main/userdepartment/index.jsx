@@ -1,32 +1,14 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import {Modal, message,Tabs,Tree,Button,Table,Input,Form,Popconfirm,Icon ,Spin } from '../commoncomponent/common.jsx';
 import './static/css/index.css';
-import Tabs from 'antd/lib/tabs';
-import 'antd/lib/tabs/style/css';
-import Tree from 'antd/lib/tree';
-import 'antd/lib/tree/style/css';
-import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css';
-import Table from 'antd/lib/table';
-import 'antd/lib/table/style/css';
-import Modal from 'antd/lib/modal';
-import 'antd/lib/modal/style/css';
-import Input from 'antd/lib/input';
-import 'antd/lib/input/style/css';
-import Form from 'antd/lib/form';
-import 'antd/lib/form/style/css';
+
 import ZmitiDialog from './static/components/zmiti-dialog.jsx';
 const ButtonGroup = Button.Group;
 const TreeNode = Tree.TreeNode;
 const TabPane = Tabs.TabPane;
-import Popconfirm from 'antd/lib/popconfirm';
-import 'antd/lib/popconfirm/style/css';
 import ZmitiSearchInput from '../components/zmiti-search-input.jsx';
 import $ from  'jquery';
-import message from 'antd/lib/message';
-import 'antd/lib/message/style/css';
-import Icon from 'antd/lib/icon';
-import 'antd/lib/icon/style/css';
+
 const FormItem = Form.Item;
 import MainUI from '../components/Main.jsx';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
@@ -34,8 +16,6 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 /*import Cascader from 'antd/lib/cascader';
 import 'antd/lib/cascader/style/css';*/
 
-import Spin from 'antd/lib/spin';
-import 'antd/lib/spin/style/css';
 
 
  class  ZmitiUserDepartmentApp extends Component {

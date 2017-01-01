@@ -1,9 +1,7 @@
 import React  from 'react';
 import ReactDOM from 'react-dom';
-import 'antd/dist/antd.css';
 import './static/css/index.css';
-import {utilMethods,_$,$$ } from '../utilMethod.es6';
-import $ from 'jquery';
+//import $ from 'jquery';
 /*
 
 import Tabs from 'antd/lib/tabs';
@@ -16,7 +14,7 @@ import 'antd/lib/button/style/css';
 import Form from 'antd/lib/form';
 import 'antd/lib/form/style/css';*/
 
-import {Modal,Input,Tabs,Select,Button,Form,message,Tag} from 'antd';
+import {Modal,Input,Tabs,Select,Button,Form,message,Tag} from '../commoncomponent/common.jsx';
 
 const FormItem = Form.Item;
 const CheckableTag = Tag.CheckableTag;

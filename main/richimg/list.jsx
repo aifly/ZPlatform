@@ -1,23 +1,20 @@
 import React from 'react';
 import './static/css/list.css';
-import Input from 'antd/lib/input';
-import 'antd/lib/input/style/css';
-import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css';
-import Tabs from 'antd/lib/tabs';
+
+import { Tabs,Spin,Form ,notification,Button,Input } from '../commoncomponent/common.jsx';
+
 const TabPane = Tabs.TabPane;
-import 'antd/lib/tabs/style/css';
+
 import Waterfall  from './static/js/waterfall';
+
 import 'babel-polyfill';
 import PubSub from './static/js/pubsub';
-import message from 'antd/lib/message';
-import 'antd/lib/message/style/css';
-import Spin from 'antd/lib/spin'
-import 'antd/lib/spin/style/css';
+
+
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
 import MainUI from '../components/Main.jsx';
-import $ from 'jquery';
+//import $ from 'jquery';
 
 
 import ZmitiRichImg from './static/components/zmiti-richimg.jsx';

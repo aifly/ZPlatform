@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
-import Icon from  'antd/lib/icon/index';
-import Menu  from  'antd/lib/menu';
-import Input from  'antd/lib/input';
-import Badge from  'antd/lib/badge';
-import 'antd/lib/icon/style/css';
-import 'antd/lib/menu/style/css';
-import 'antd/lib/input/style/css';
-import 'antd/lib/badge/style/css';
+
+import { message , Icon , Menu , Input , Badge } from '../../commoncomponent/common.jsx';
+
 import '../../static/css/index.css';
 import { Link } from 'react-router';
+
+
 import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 const SubMenu = Menu.SubMenu;
-
 
 
 class MainUI extends Component {
@@ -113,7 +109,7 @@ class MainUI extends Component {
 		return (
 			 <section className="main">
                 <header className="fly-header">
-                    <div className="fly-logo"><a href="/"><img src="../../static/images/logo.png" alt=""/></a></div>
+                    <div className="fly-logo"><a href="/"><img src="../static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href={window.mainUrl}>控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
                     <div  className="fly-nav"><a href={"./#/"+params}>系统管理</a></div>
