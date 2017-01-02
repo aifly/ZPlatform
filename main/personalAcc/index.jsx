@@ -1,7 +1,7 @@
 import React  from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
-//import $ from 'jquery';
+import $ from 'jquery';
 /*
 
 import Tabs from 'antd/lib/tabs';
@@ -100,7 +100,6 @@ class ZmitiPersonalAccApp extends React.Component{
         getusersigid:s.getusersigid,
         setuserid : userid,
         sussess:(data)=>{
-          console.log(data);
           if(data.getret === 0){
             /*
             
@@ -162,7 +161,6 @@ class ZmitiPersonalAccApp extends React.Component{
           usericon: s.state.userData.portrait,
           comment:'' //备注
         }
-        console.log(params)
         $.ajax({
           url:window.baseUrl + 'user/edit_user/',
           data:params,
@@ -207,6 +205,7 @@ class ZmitiPersonalAccApp extends React.Component{
            labelCol: {span: 6},
            wrapperCol: {span: 14},
          };
+
         let component =  <div style={{height:this.state.mainHeight,overflow:'auto'}}>
                <div className="acc-header">
                    <article>
@@ -235,8 +234,8 @@ class ZmitiPersonalAccApp extends React.Component{
                    {
                      this.companyid && <article>
                        <div className="acc-company">
-                           <h2 className="acc-company-name">{this.state.companyName}</h2>
-                           <h6 className="acc-department">{this.state.department}</h6>
+                           <h2 className="acc-company-name">{this.state.userData.companyname}</h2>
+                           <h6 className="acc-department">{this.state.userData.departmentname}</h6>
                        </div>
                    </article>
                    }

@@ -80,7 +80,7 @@ class ZmitiCompanyApp extends Component {
 
 		resizeMainHeight(this);	
 		
-		validateUser(()=>{loginOut();},this);
+		validateUser(()=>{loginOut(undefined,undefined,false);},this);
 		
 	}
 
@@ -121,8 +121,8 @@ class ZmitiCompanyApp extends Component {
            	this.baseUrl = window.baseUrl;
            	let  {validateUser,loginOut} = this.props;
            	var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
-           		loginOut();
-           	});
+           		loginOut(undefined,undefined,false);
+           	},this);
            	this.userid = userid;
            	this.getusersigid = getusersigid;
            	this.companyid = companyid;

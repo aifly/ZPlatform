@@ -44,11 +44,10 @@ class App extends React.Component{
 
 	componentDidMount() {
 
-			window.addEventListener('resize', ()=>{
-					window.obserable.trigger({type:'setAdminMenu'});
-					window.obserable.trigger({type:'setAdminHeight'});
-				  
-			});
+		window.addEventListener('resize', ()=>{
+			window.obserable.trigger({type:'setAdminMenu'});
+			window.obserable.trigger({type:'setAdminHeight'});
+		});
 /*
 			window.onresize = function(){
 					

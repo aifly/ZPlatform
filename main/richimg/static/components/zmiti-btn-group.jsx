@@ -1,8 +1,7 @@
 import React from 'react';
-import Button from 'antd/lib/button';
-import Icon from 'antd/lib/icon';
-import message from 'antd/lib/message';
-import 'antd/lib/message/style/css';
+
+import { Icon, Button,message } from '../../../commoncomponent/common.jsx';
+
 import $ from 'jquery';
 
 

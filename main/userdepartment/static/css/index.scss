@@ -276,11 +276,7 @@ $btnColor:#2db7f5;
         border-color:$btnColor !important;
       }
 
-      .ant-select-selection:hover {
-          background-color: #fff !important;
-          border-color: #bf1616 !important;
-          box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1) !important;
-      }
+
       .ant-input,.ant-select-selection{
         border-color:$btnColor ;
       }
@@ -294,7 +290,7 @@ $btnColor:#2db7f5;
           margin-top: 20px;
           h2{
             font-family: '宋体';
-            width:40%;
+            width:26%;
             div{
               a,span{
                 font-weight: normal;

@@ -1,16 +1,11 @@
 import React from 'react';
 import './zmiti-richimg.css';
-import Icon from 'antd/lib/icon';
-import 'antd/lib/icon/style/css';
-import message  from 'antd/lib/message';
-import 'antd/lib/message/style/css';
-import Modal from 'antd/lib/modal';
-import 'antd/lib/modal/style/css';
+import { Icon,message,Modal,Tag} from '../../../commoncomponent/common.jsx';
+
 const confirm = Modal.confirm;
 import $ from 'jquery';
-import Tag from 'antd/lib/tag';
-import 'antd/lib/tag/style/css';
 import {Link} from 'react-router';
+
 
 
 export default class ZmitiRichImg extends React.Component {

@@ -106,7 +106,7 @@ class ZmitiSystemApp extends Component {
 
 			let {resizeMainHeight,validateUser,loginOut} = this.props;
 			resizeMainHeight(this);
-			validateUser(()=>{loginOut();},this);
+			validateUser(()=>{loginOut(undefined,undefined,false);},this);
 		}
 		componentDidMount() {
 			

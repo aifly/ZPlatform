@@ -1,7 +1,8 @@
 
 import React from 'react';
-import Modal from 'antd/lib/modal';
-import 'antd/lib/modal/style/css';
+
+import { Modal } from '../../../commoncomponent/common.jsx';
+
 import '../js/pubsub';
 import './zmiti-modal.css';
 

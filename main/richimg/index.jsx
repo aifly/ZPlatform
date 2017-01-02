@@ -1,8 +1,7 @@
 import './static/css/index.css';
 
 import React from 'react';
-import ReactDOM from 'react-dom';
-///import $ from 'jquery';
+import $ from 'jquery';
 import   './static/js/jquery.longShadow';
 
 import { Spin,Form ,notification,Button,Input } from '../commoncomponent/common.jsx';

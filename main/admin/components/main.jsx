@@ -167,7 +167,7 @@ class MainUI extends Component {
         resizeMainHeight(this,'setAdminHeight');
         resizeLeftMenu(this,'setAdminMenu');
       var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
-          loginOut();
+          loginOut(undefined,undefined,false);
       });
       this.userid = userid;
       this.getusersigid = getusersigid;
@@ -176,13 +176,12 @@ class MainUI extends Component {
       this.usertypesign = usertypesign;
       this.loginOut = loginOut;
    
-    if(this.usertypesign !== 3 &&  this.usertypesign !== 4){
-      loginOut('您没有访问的权限',window.mainUrl);
+    if(this.usertypesign !== window.Role.NORMALADMINUSER &&  this.usertypesign !== window.Role.SUPERADMINUSER){
+      loginOut('您没有访问的权限',window.mainUrl,false);//不是hash跳转。location.href跳转
     }
 
   }
 	componentDidMount() {
-        
     
 		var hash = window.location.hash;
     var configs = this.userManagerMenuConfig.concat(this.productServiceMenuConfig);

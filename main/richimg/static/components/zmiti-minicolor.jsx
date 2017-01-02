@@ -2,7 +2,8 @@ import React from 'react';
 import $ from 'jquery';
 import a from  'jquery-minicolors';
 
-import Input from 'antd/lib/input';
+import { Input} from '../../../commoncomponent/common.jsx';
+
 import  'jquery-minicolors/jquery.minicolors.png';
 import 'jquery-minicolors/jquery.minicolors.css';
 

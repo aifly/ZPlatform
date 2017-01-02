@@ -1,7 +1,6 @@
 import React from 'react';
-import Form from 'antd/lib/form';
-import Input from 'antd/lib/input';
-import Button from 'antd/lib/button';
+
+import { Form,Input,Button} from '../../../commoncomponent/common.jsx';
 const FormItem = Form.Item;
 import './zmiti-textarea-btns.css';
 import '../js/pubsub';

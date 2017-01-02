@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import {Modal, message,Tabs,Tree,Button,Table,Input,Form,Popconfirm,Icon ,Spin } from '../commoncomponent/common.jsx';
+import {Modal, Select,message,Tabs,Tree,Button,Table,Input,Form,Popconfirm,Icon ,Spin } from '../commoncomponent/common.jsx';
 import './static/css/index.css';
+
+const Option = Select.Option;
 
 import ZmitiDialog from './static/components/zmiti-dialog.jsx';
 const ButtonGroup = Button.Group;
@@ -129,6 +131,29 @@ import 'antd/lib/cascader/style/css';*/
 			 }
 		 }
 
+		 let selectComponent = <Select placeholder='用户名' style={{width:120}} size='small' >
+                               <Option value="0">用户名</Option>
+                               {/*<Option value="1">邮箱</Option>
+                                                              <Option value="2">手机</Option>
+                                                              <Option value="3">部门</Option>*/}
+                           </Select>
+
+         let searchInputProps = {
+         	selectComponent,
+         	keyUpHandler:(e)=>{
+         		clearTimeout(this.keyupTimer);
+         		var value = e.target.value;
+         		this.defautlUserList === undefined && (this.defautlUserList = this.state.currentDepartment.userList.concat([]));
+         		this.keyupTimer = setTimeout(()=>{
+         			var userlist = this.defautlUserList;
+         			this.state.currentDepartment.userList = userlist.filter(user=>{
+ 						return user.username.indexOf(value)>-1;
+         			});
+         			this.forceUpdate();
+         		},350);
+         	}
+         }
+
 
 		 const formItemLayout = {
 			 labelCol: {span: 6},
@@ -175,7 +200,7 @@ import 'antd/lib/cascader/style/css';*/
 											 </Popconfirm>
 										 </div>
 									 </h2>
-									 <aside><ZmitiSearchInput></ZmitiSearchInput></aside>
+									 <aside><ZmitiSearchInput {...searchInputProps}></ZmitiSearchInput></aside>
 								 </div>
 								 <section className='ud-operator-btn-group'>
 									 <ButtonGroup>

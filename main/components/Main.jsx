@@ -81,7 +81,7 @@ class MainUI extends React.Component {
             defaultOpenKeys = 'sub3';
         }
 
-        if(this.state.isCompany && this.usertypesign === 5){//this.usertypesign === 5的时候,才是公司管理员.
+        if(this.state.isCompany && this.usertypesign === window.Role.COMPANYADMINUSER){//this.usertypesign === 5的时候,才是公司管理员.
             this.userMenuConfig = [//用户中心下的菜单
                 {
                     "linkTo":"/userdepartment/",
@@ -135,7 +135,7 @@ class MainUI extends React.Component {
                     <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    {(this.state.usertypesign === 4||this.state.usertypesign === 3) && <div className="fly-nav"><a href={window.adminUrl+"/#/"}>系统管理</a></div>}
+                    {(this.state.usertypesign === window.Role.SUPERADMINUSER||this.state.usertypesign === window.Role.NORMALADMINUSER) && <div className="fly-nav"><a href={window.adminUrl+"/#/"}>系统管理</a></div>}
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
                     <div></div>

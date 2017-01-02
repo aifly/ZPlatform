@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './static/css/index.css';
 
 import ZmitiPannel from './static/components/zmiti-panel.jsx';
@@ -26,11 +25,15 @@ class ZmitiPuzzleApp extends React.Component{
     }
 
     componentWillMount() {
-         let {resizeMainHeight,validateUser,loginOut} = this.props;
+         let {resizeMainHeight,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin} = this.props;
        //  resizeMainHeight(this);    
-         validateUser(()=>{loginOut();},this);
-
-         
+       //  
+         validateUser(()=>{loginOut(undefined,window.loginUrl,false);},this);
+         validateUserRole(this,(obj)=>{
+            if(!isSuperAdmin(this) && !isNormalAdmin(this)){//不是管理员，也不是超级管理员
+                loginOut(obj.msg,'',true);
+            }
+         });
     }
 
     componentDidMount(){

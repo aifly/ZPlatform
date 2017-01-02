@@ -24,6 +24,9 @@ import 'antd/lib/tree/style/css';
 import Tag from 'antd/lib/tag';
 import 'antd/lib/tag/style/css';
 
+import Slider from 'antd/lib/slider';
+import 'antd/lib/slider/style/css';
+
 
 import Form from 'antd/lib/form';
 import 'antd/lib/form/style/css';
@@ -73,8 +76,16 @@ import 'antd/lib/notification/style/css';
 import Spin  from 'antd/lib/spin';
 import 'antd/lib/spin/style/css';
 
+import InputNumber  from 'antd/lib/input-number';
+import 'antd/lib/input-number/style/css';
+
+import Tooltip  from 'antd/lib/tooltip';
+import 'antd/lib/tooltip/style/css';
+
+
+
 
 
 import moment  from 'moment';
 
-export default {Button,message,Input,Table,Modal,Form,Icon,Radio,Progress,Tabs,Card,DatePicker,moment,Select,Row,Col,Checkbox,Badge,Menu,Spin,Steps,notification,Tree,Popconfirm,Tag};
+export default {Button,message,Input,Table,Modal,Form,Icon,Radio,Progress,Tabs,Card,DatePicker,moment,Select,Row,Col,Checkbox,Badge,Menu,Spin,Steps,notification,Tree,Popconfirm,Tag,Slider,InputNumber,Tooltip};

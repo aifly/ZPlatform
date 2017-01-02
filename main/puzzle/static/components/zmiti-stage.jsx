@@ -2,12 +2,8 @@ import React from 'react';
 import './scss/zmiti-stage.css';
 import PubSub from '../js/pubsub';
 import ShapeGenerater from '../shapes.jsx';
-import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css';
-import Icon from 'antd/lib/icon';
-import 'antd/lib/icon/style/css';
 
-import { Slider, InputNumber, Row, Col,Tooltip,message } from 'antd';
+import { Slider, InputNumber,Icon, Row, Button,Col,Tooltip,message } from '../../../commoncomponent/common.jsx';
 import  ZmitiUploadDialog from '../../../components/zmiti-upload-dialog.jsx';
 import $ from 'jquery';
 

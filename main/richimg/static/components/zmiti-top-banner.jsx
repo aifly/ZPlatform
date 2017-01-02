@@ -1,14 +1,6 @@
 import React from 'react';
-import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css';
-import Input from 'antd/lib/input';
-import 'antd/lib/input/style/css';
-import Modal from 'antd/lib/modal';
-import 'antd/lib/modal/style/css';
 import '../../../components/theme.css';
-import Tag from 'antd/lib/tag';
-import 'antd/lib/tag/style/css';
-
+import { Tag,Modal,Input,Button} from '../../../commoncomponent/common.jsx';
 
 export default class ZmitiTopBanner extends React.Component {
     constructor(args) {

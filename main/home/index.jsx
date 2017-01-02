@@ -1,6 +1,6 @@
 import './static/css/index.css';
 import React from 'react';
-import {Progress,Tabs,Card,Button,DatePicker,moment} from '../commoncomponent/common.jsx';
+import {Progress,Tabs,Card,Button,DatePicker,moment,notification} from '../commoncomponent/common.jsx';
 
 const MonthPicker = DatePicker.MonthPicker;
 
@@ -31,16 +31,86 @@ import MainUI from '../components/Main.jsx';
     }
 
     componentWillMount() {
-       let  {resizeMainHeight} = this.props;
-            resizeMainHeight(this);
+        let {resizeMainHeight,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin} = this.props;
+        var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
+                loginOut('登录失效，请重新登录',window.loginUrl,false);
+            },this);
+            this.userid = userid;
+            this.getusersigid = getusersigid;
+            this.companyid = companyid;
+            this.isover = isover;
+            this.usertypesign = usertypesign;
+            this.loginOut = loginOut;
+            this.isSuperAdmin = isSuperAdmin;
+            this.isNormalAdmin = isNormalAdmin;
+            this.validateUserRole = validateUserRole;
+        
+        resizeMainHeight(this);
     }
 
     componentDidMount(){
         
         this.setState({
+            currentAcc:this.usermobile || this.useremail,
             currentUser:this.username,
             mainHeight:document.documentElement.clientHeight - 50
         });
+
+        const key = `open${Date.now()}`;
+
+        let btnClick = ()=> {
+            notification.close(key);
+           // close();
+        }
+        const close = () => {
+            //
+            //localStorage['expirDate'] = true;
+        }
+        
+
+        
+        var msg = '';
+        var type = 'warning';
+        this.validateUserRole(this,(obj)=>{
+            msg = obj.msg;
+            let btn = (
+                <Button type="primary" size="small" onClick={btnClick}>
+                    去续费/延长试用
+                </Button>
+            );
+            if(this.isSuperAdmin(this)){
+                msg = '欢迎你，智媒体超级管理员';
+                type = 'success';
+                btn = (
+                    <Button type="primary" size="small" onClick={btnClick}>
+                        确定
+                    </Button>
+                );
+            }
+            else if(this.isNormalAdmin(this)){
+                msg = '欢迎你，智媒体管理员';
+                type = 'success';
+                btn = (
+                    <Button type="primary" size="small" onClick={btnClick}>
+                        确定
+                    </Button>
+                );
+            }
+
+
+
+            notification.close(key);
+           !localStorage['notification'] && notification[type]({
+                message: '提醒',
+                description: msg,
+                btn,
+                key,
+                duration:10
+            });
+
+        });
+
+
 
         
     }
@@ -83,7 +153,7 @@ import MainUI from '../components/Main.jsx';
         }
         const monthFormat = 'YYYY/MM';
         let component =  <div className="home-main" style={{height:this.state.mainHeight}}>
-                <header className="header">
+                <header className="header" hidden>
                     公告：智媒体新增新的交互工具"富图片"。<a href="#">点此查看</a>
                 </header>
                 <article className="fly-home-content">
@@ -99,13 +169,13 @@ import MainUI from '../components/Main.jsx';
                                     <div className="last-time"><span>{this.state.lastTime}</span>到期 <a href="#">现在续费>></a></div>
                                 </aside>
                             </div>
-                            <div className="capacity">
+                            {!this.companyid && <div className="capacity">
                                 <ZmitiProgress {...zmitiProgressProps}></ZmitiProgress>
                                 <div className="dilatation">
                                     <a href="#">扩充&gt;&gt;</a>
                                 </div>
-                            </div>
-                            <div className="user-count">
+                            </div>}
+                            {this.companyid && <div className="user-count">
                                 <div className="u-info">
                                     <span><span style={{color:'#00ada7'}}>{this.state.curUsersCount}</span>/{this.state.maxUsersCount}</span>
                                     <span>最高上限为100人</span>
@@ -113,7 +183,7 @@ import MainUI from '../components/Main.jsx';
                                 <div className="u-info">
                                     <a href="#">扩充&gt;&gt;</a>
                                 </div>
-                            </div>
+                            </div>}
                         </figure>
                         <figure className="module">
                             <ZmitiTab></ZmitiTab>

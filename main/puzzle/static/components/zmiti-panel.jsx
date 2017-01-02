@@ -1,22 +1,13 @@
 import React from 'react';
 import './scss/zmiti-panel.css';
-import Tabs from 'antd/lib/tabs';
+
+import { Tabs, InputNumber,Icon,  Button} from '../../../commoncomponent/common.jsx';
 const TabPane = Tabs.TabPane;
-import 'antd/lib/tabs/style/css';
+
 import {utilMethods, _$, $$} from '../../../utilMethod.es6';
 import PubSub from '../js/pubsub';
-import Button from 'antd/lib/button';
-
-import InputNumber from 'antd/lib/input-number';
-import 'antd/lib/input-number/style/css';
-
 import  $ from 'jquery';
-import Icon from 'antd/lib/icon';
-import 'antd/lib/icon/style/css';
-
 import IScroll from 'iScroll';
-
-
 
 export default class ZmitiPanel extends React.Component {
     constructor(args) {

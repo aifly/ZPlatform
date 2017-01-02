@@ -1,17 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
-import Icon from 'antd/lib/icon';
-import 'antd/lib/icon/style/css';
-import message from 'antd/lib/message';
-import 'antd/lib/message/style/css';
-import Spin from 'antd/lib/spin';
-import 'antd/lib/spin/style/css';
 import ZmitiTag from './zmiti-tag.jsx';
-import Modal from 'antd/lib/modal';
-import 'antd/lib/modal/style/css';
-import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css';
-
+import { Icon, message ,Spin,Modal,Button} from '../../../commoncomponent/common.jsx';
 
 export default class ZmitiMainStage extends React.Component {
     constructor(args) {

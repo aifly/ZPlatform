@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
-import message from 'antd/lib/message';
-import 'antd/lib/message/style/css';
+
+import { browserHistory } from 'react-router'
+
+
+
+
+import { message  } from '../commoncomponent/common.jsx';
+
+import $ from 'jquery';
 
 export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	constructor(props) {
@@ -9,10 +16,15 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	  this.state = {};
 	}
 
-	loginOut(errorMsg='登录超时',url=window.loginUrl){
+	loginOut(errorMsg='登录超时',url= window.loginUrl,isHash){
 			message.error(errorMsg);
       setTimeout(()=>{
-     	   window.location.href= url;    
+      	   if(isHash){
+     	   		window.location.hash ='/';    
+      	   }
+      	   else{
+      	   	window.location.href= url;
+      	   }
       },100);
 
       return <div></div>;
@@ -65,11 +77,24 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		 }
 	}
 
+	isSuperAdmin(that){//是否是超级管理员。
+		return that['usertypesign']*1 === window.Role.SUPERADMINUSER;
+	}
+
+	isNormalAdmin(that){//是否是系统管理员。
+		return that['usertypesign']*1 === window.Role.NORMALADMINUSER;
+	}
+
+	isCompanyAdmin(that){//是否是公司管理员
+		return that['usertypesign']*1 === window.Role.COMPANYADMINUSER;
+	}
+
 	resizeMainHeight(that,name='setMainHeight') {
+
 		window.obserable.on(name, ()=> {
-				that.setState({
-					mainHeight: document.documentElement.clientHeight - 50
-				});
+			that.setState({
+				mainHeight: document.documentElement.clientHeight - 50
+			});
 
 		});
 
@@ -102,6 +127,61 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		});
 	}
 
+	componentWillMount() {
+		
+	}
+	validateUserRole(that,fn){
+		var s = that.props;
+		var self = that;
+
+		try{
+			var params = JSON.parse(document.cookie);
+			/*if(params.usertypesign === window.Role.SUPERADMINUSER|| params.usertypesign === window.Role.NORMALADMINUSER){
+				return;//超级管理员，普通管理员都不用验证用户是否过期。
+			}*/
+			$.ajax({
+				type:'post',
+				url:window.baseUrl+'user/user_auth',
+				data:{
+					userid:params.userid,
+					getusersigid:params.getusersigid
+				},
+				success(data){
+					if(data.getret === 0){//返回正常
+						self.isExpire =  data.userauth.isExpire;
+						self.isFullSpace = data.userauth.isFullSpace;
+						if(data.userauth.isExpire){//用户过期了
+							fn && fn({
+								msg:'此账号已过期，请及时去续费或延长试用',
+								isExpire:true
+							});
+							//s.loginOut('此账号已过期，请续费或延长试用',window.mainUrl,true);
+						}
+						else{
+							if(data.userauth.isFullSpace){//用户空间已使用完
+								fn && fn({
+									msg:'此账号空间已使用完，请及时续费',
+									isFullSpace:true
+								});
+								//s.loginOut('此账号空间已使用完，请续费',window.mainUrl,true);		
+							}else{
+								fn && fn({
+									msg:'欢迎您来到智媒体',
+									isFullSpace:false,
+									isExpire:false
+								});
+							}
+						}
+					}
+				}
+			})
+		}catch(e){
+
+		}
+
+		
+	}
+
 	componentDidMount() {
 		
 	}
@@ -115,7 +195,11 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			loginOut: this.loginOut,
 			resizeMainHeight: this.resizeMainHeight,
 			resizeLeftMenu: this.resizeLeftMenu,
-			getUserDetail: this.getUserDetail
+			getUserDetail: this.getUserDetail,
+			validateUserRole:this.validateUserRole,
+			isSuperAdmin:this.isSuperAdmin,
+			isNormalAdmin:this.isNormalAdmin,
+			isCompanyAdmin:this.isCompanyAdmin,
 			//fillFeilds:this.fillFeilds
 		}
 

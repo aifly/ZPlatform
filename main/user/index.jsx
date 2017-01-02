@@ -22,6 +22,9 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 		this.disableUser = this.disableUser.bind(this);
 	}
 	render() {
+
+    
+
 		const columns = [{
 			title: '序号',
 			dataIndex: 'key',
@@ -68,6 +71,8 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 			mainHeight:this.state.mainHeight
 
 		}
+
+    //console.log(this.state.mainHeight);
 		return (
 			<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
 			);
@@ -77,9 +82,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 		let {resizeMainHeight,validateUser,loginOut,resizeLeftMenu} = this.props;
 
-
-
-		validateUser(()=>{loginOut();},this);
+		validateUser(()=>{loginOut(undefined,undefined,false);},this);
 
 	}
 	componentDidMount() {
@@ -88,7 +91,8 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
       this.userid =userid;
       this.baseUrl = window.baseUrl;*/
 
-       
+       let {resizeMainHeight,validateUser,loginOut,resizeLeftMenu} = this.props;
+    resizeMainHeight(this,'setAdminHeight');
 
 
       

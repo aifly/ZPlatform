@@ -108,6 +108,7 @@ $baseColor:#d8271d;
 .user-main-ui{
   width:100%;
   height: 100vh;
+  overflow:auto;
   @include displayFlex(horizontal);
   $leftWidth:15vw;
   .user-left-pannel{
@@ -147,7 +148,7 @@ $baseColor:#d8271d;
         background: #EAEDF1;
     }
     .user-list-section{
-      width: 80%;
+      width: 100%;
       margin:20px auto;
       table{
         td,th{

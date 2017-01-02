@@ -14,7 +14,7 @@ import PubSub from './static/js/pubsub';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
 import MainUI from '../components/Main.jsx';
-//import $ from 'jquery';
+import $ from 'jquery';
 
 
 import ZmitiRichImg from './static/components/zmiti-richimg.jsx';

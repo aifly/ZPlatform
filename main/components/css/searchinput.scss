@@ -2,4 +2,23 @@
 .search-input-main-ui{
 	.ant-btn{
 	}
+	@include displayFlex(horizontal);
+	.ant-input-group-wrap{
+		@include displayFlex(horizontal);
+	}
+
+	.ant-input-group-wrap .ant-select-selection--single{
+		height:28px;
+		.ant-select-selection__rendered{
+			line-height: 28px;
+		}
+	}
+	.ant-input-group-addon, .ant-input-group-wrap{
+		width:auto !important;
+
+	}
+	.ant-input-group-addon{
+		width:30px !important;
+	}
+
 }

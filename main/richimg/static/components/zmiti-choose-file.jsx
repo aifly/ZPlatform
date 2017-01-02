@@ -1,7 +1,10 @@
 import React from 'react';
-import Form from 'antd/lib/form';
-import Input from 'antd/lib/input';
+
+import { Form, Input } from '../../../commoncomponent/common.jsx';
+
 const FormItem = Form.Item;
+
+
 import ZmitiTextAreaBtns from './zmiti-textarea-btns.jsx';
 import PubSub from '../js/pubsub';
 import ZmitiUploadDialog from '../../../components/zmiti-upload-dialog.jsx';
