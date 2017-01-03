@@ -135,13 +135,13 @@ class MainUI extends React.Component {
                     <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    {(this.state.usertypesign === window.Role.SUPERADMINUSER||this.state.usertypesign === window.Role.NORMALADMINUSER) && <div className="fly-nav"><a href={window.adminUrl+"/#/"}>系统管理</a></div>}
+                    {(this.state.usertypesign === window.Role.SUPERADMINUSER||this.state.usertypesign === window.Role.NORMALADMINUSER) && <div className="fly-nav"><a href={window.adminUrl}>系统管理</a></div>}
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
                     <div></div>
                     <div></div>
                     <div className="fly-search icon">
-                        <div><Icon type="search"/></div>
+                        <div onClick={this.logout.bind(this)}><Icon type="logout" /></div>
                     </div>
                     <div className="fly-msg icon">
                         <Badge count={1} overflowCount={9}>
@@ -198,15 +198,29 @@ class MainUI extends React.Component {
       resizeMainHeight(this);
       this.userid = userid;
       this.getusersigid = getusersigid;
-      this.companyid = companyid;
-      this.isover = isover;
-      this.usertypesign = usertypesign;
-      this.username = username;
-      this.usermobile = usermobile;
-      this.useremail = useremail;
+    }
 
+    logout(){//退出登录
+    	var s=  this;
 
-
+    	console.log({
+    				userid:s.userid,
+    				getusersigid:s.getusersigid
+    			})
+    		$.ajax({
+    			url:window.baseUrl+'user/user_loginout/',
+    			data:{
+    				userid:s.userid,
+    				getusersigid:s.getusersigid
+    			},
+    			success(data){
+    				if(data.getret === 0){
+    					document.cookie = null;
+    					message.success(data.getmsg);
+    					window.location.href= window.loginUrl;
+    				}
+    			}
+    		})
     }
 
     componentDidMount() {

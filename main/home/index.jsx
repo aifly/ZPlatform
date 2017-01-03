@@ -10,6 +10,8 @@ const ProgressLine = Progress.Line;
 
 import ZmitiTab from '../components/tab.jsx';
 
+import $ from 'jquery';
+
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import ZmitiProgress from '../components/Progress.jsx';
@@ -25,26 +27,23 @@ import MainUI from '../components/Main.jsx';
             lastTime:"2016.12.31",
             curUsersCount:5,
             mainHeight:600,
+            portrait:'',
             maxUsersCount:10,
             isCompany:true //当前登录用户是否是企业账号
         }
     }
 
     componentWillMount() {
-        let {resizeMainHeight,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin} = this.props;
+        let {resizeMainHeight,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail} = this.props;
         var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
             },this);
-            this.userid = userid;
-            this.getusersigid = getusersigid;
-            this.companyid = companyid;
-            this.isover = isover;
-            this.usertypesign = usertypesign;
+           
             this.loginOut = loginOut;
             this.isSuperAdmin = isSuperAdmin;
             this.isNormalAdmin = isNormalAdmin;
             this.validateUserRole = validateUserRole;
-        
+            this.getUserDetail = getUserDetail;
         resizeMainHeight(this);
     }
 
@@ -55,6 +54,23 @@ import MainUI from '../components/Main.jsx';
             currentUser:this.username,
             mainHeight:document.documentElement.clientHeight - 50
         });
+        var s=  this;
+
+        this.getUserDetail({
+            $:$,
+            userid:s.userid,
+            getusersigid:s.getusersigid,
+            setuserid : s.userid,
+            sussess:(data)=>{
+                if(data.getret === 0){
+                     
+                    s.setState({
+                        portrait:data.getuserinfo.portrait || './personalAcc/static/images/user.jpg'
+                    })
+                }
+            }
+        });
+
 
         const key = `open${Date.now()}`;
 
@@ -161,7 +177,7 @@ import MainUI from '../components/Main.jsx';
                         <figure className="user">
                             <div className="user-info">
                                 <aside className="user-head">
-                                    <div className="head"><img draggable="false" src='./home/static/images/user.png' alt=""/></div>
+                                    <div className="head">{this.state.portrait && <img draggable="false" src={this.state.portrait} alt=""/>}</div>
                                 </aside>
                                 <aside className="user-content">
                                     <div><span style={{color:'#f90'}}>{new Date().getHours()>=12?'下午':'上午'}好！</span><span className="current-user">{this.state.currentUser}</span></div>

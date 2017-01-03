@@ -112,7 +112,7 @@ $baseColor:#99071e;
 $hoverColor:#bf1616;
 
 
-.ant-tabs-ink-bar{
+/* .ant-tabs-ink-bar{
   background-color: $baseColor;
 }
 
@@ -138,7 +138,7 @@ $hoverColor:#bf1616;
   background-color: $hoverColor;
   border-color: $hoverColor;
 }
-
+ */
 .ant-modal-wrap{
   background: rgba(0, 0, 0, .5);
 }
@@ -148,12 +148,12 @@ $hoverColor:#bf1616;
 }
 
 .ant-input:focus {
-  border-color: $baseColor;
+ // border-color: $baseColor;
   outline: 0;
   box-shadow: 0 0 0 2px rgba(153, 74, 71, 0.2);
 }
 .ant-input:hover {
-  border-color: $baseColor;
+ // border-color: $baseColor;
 }
 
 .zmiti-asset-menu{

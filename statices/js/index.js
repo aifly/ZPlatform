@@ -954,12 +954,6 @@
 
 	                var self = _this4;
 
-	                /*     console.log({
-	                             username: $("input[name='username']").val(),
-	                             userpwd: $("input[name='pwd']").val(),
-	                             userlogip: $("#keleyivisitorip").html()
-	                         })*/
-
 	                _this4.timer = setTimeout(function () {
 	                    (0, _jquery2['default'])(".login-error-info").addClass("fail");
 	                    self.removeErrorInfo((0, _jquery2['default'])(".login-error-info"), "fail");
@@ -1008,9 +1002,12 @@
 	                                usertypesign: d.usertypesign,
 	                                username: d.username || (0, _jquery2['default'])("input[name='username']").val(),
 	                                usermobile: d.usermobile || '',
-	                                useremail: d.useremail || ''
-	                            };
+	                                useremail: d.useremail || '',
+	                                endDate: d.enddate, //过期时间
+	                                capacitied: d.capacitied, //空间使用量
+	                                capacity: d.capacity };
 
+	                            //最大空间使用量。
 	                            var p = JSON.stringify(params);
 	                            document.cookie = p;
 
@@ -11417,8 +11414,8 @@
 	if (false) {
 		// When the styles change, update the <style> tags
 		if (!content.locals) {
-			module.hot.accept("!!./../../node_modules/.0.23.1@css-loader/index.js!./index.css", function () {
-				var newContent = require("!!./../../node_modules/.0.23.1@css-loader/index.js!./index.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./index.css", function () {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./index.css");
 				if (typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});

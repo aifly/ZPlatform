@@ -92,7 +92,8 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
       this.baseUrl = window.baseUrl;*/
 
        let {resizeMainHeight,validateUser,loginOut,resizeLeftMenu} = this.props;
-    resizeMainHeight(this,'setAdminHeight');
+      resizeMainHeight(this,'setAdminHeight');
+
 
 
       
@@ -121,6 +122,9 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
       				location.href='/';
       			},2000)
       		}
+          else{
+              loginOut(data.getmsg,window.loginUrl,false);
+          }
       	}
 
       })

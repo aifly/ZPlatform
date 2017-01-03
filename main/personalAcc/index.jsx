@@ -2,17 +2,7 @@ import React  from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
 import $ from 'jquery';
-/*
 
-import Tabs from 'antd/lib/tabs';
-import 'antd/lib/tabs/style/css';
-import Select from 'antd/lib/select';
-import 'antd/lib/select/style/css';
-
-import Button from 'antd/lib/button';
-import 'antd/lib/button/style/css';
-import Form from 'antd/lib/form';
-import 'antd/lib/form/style/css';*/
 
 import {Modal,Input,Tabs,Select,Button,Form,message,Tag} from '../commoncomponent/common.jsx';
 
@@ -36,6 +26,11 @@ class ZmitiPersonalAccApp extends React.Component{
         {
             mainHeight:document.documentElement.clientHeight-50,
             showCredentialsDiolog:false,
+            isExpire:false,//是否过期
+            isFullSpace:false,//使用空间是否已满
+            oldPwd:'',
+            newPwd:'',
+            surePwd:'',
             userData:{
                 portrait:'./personalAcc/static/images/user.jpg',//用户头像
                 username:'',//用户名
@@ -62,20 +57,15 @@ class ZmitiPersonalAccApp extends React.Component{
     }
 
     componentWillMount() {
-       let {validateUser, loginOut,resizeMainHeight,getUserDetail} = this.props;
-       var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
+       let {validateUser, loginOut,resizeMainHeight,getUserDetail,validateUserRole} = this.props;
+       var {userid, getusersigid, companyid,username,isover,usertypesign,capacitied,capacity,endDate}=validateUser(()=>{
           loginOut();
        },this);
-       resizeMainHeight(this);
-       this.userid = userid;
-       this.getusersigid = getusersigid;
-       this.companyid = companyid;
-       this.loginOut = loginOut;
-       this.username =username;
-       this.isover = isover;
-       this.usertypesign = usertypesign;
+
        this.getUserDetail = getUserDetail;
-      
+       this.validateUserRole=  validateUserRole;
+       this.loginOut = loginOut;
+       resizeMainHeight(this);
     }
 
     componentDidMount(){
@@ -93,7 +83,12 @@ class ZmitiPersonalAccApp extends React.Component{
 
 
       var userid = this.props.params.userid?this.props.params.userid:this.userid;
-      
+      this.validateUserRole(this,()=>{
+         this.setState({
+          isExpire:this.isExpire,
+          isFullSpace:this.isFullSpace
+         })
+      });
       this.getUserDetail({
         $:$,
         userid:s.userid,
@@ -101,15 +96,18 @@ class ZmitiPersonalAccApp extends React.Component{
         setuserid : userid,
         sussess:(data)=>{
           if(data.getret === 0){
+
             /*
             
        userData:{
                 portrait:'./personalAcc/static/images/user.jpg',//用户头像
-                
             },
              */
             var da = data.getuserinfo;
-            this.state.userData={
+
+            console.log(data)
+
+            s.state.userData={
                 portrait:da.portrait||'./personalAcc/static/images/user.jpg',
                 username:da.username,//用户名
                 useremail:da.useremail,
@@ -123,11 +121,13 @@ class ZmitiPersonalAccApp extends React.Component{
                 useremergencycontacter:da.useremergencycontacter,//紧急联系人
                 useremergencycontactmobile:da.useremergencycontactmobile,//紧急联系人电话/
                 credentials:da.credentials,//用户证件照片
-                expiredate:da.expiredate,//过期时间/
-                currentVal:da.currentVal,//进度条当前值,用户试用期总时间
-                maxVal:da.maxVal,//进度最大值,已使用的时间 (两个数据无关紧要,我最终要根据两个数据算出比例.)
+                expiredate:s.endDate,//过期时间/
+                currentVal:parseFloat(s.capacitied),//进度条当前值,用户试用期总时间
+                maxVal:s.capacity,//进度最大值,已使用的时间 (两个数据无关紧要,我最终要根据两个数据算出比例.)
             };
-            this.forceUpdate();
+
+            
+            s.forceUpdate();
           }
           else{
             message.error(data.getmsg);
@@ -146,26 +146,39 @@ class ZmitiPersonalAccApp extends React.Component{
             this.refs['save-btn'].classList.remove('active');
         },150)*/
         var s = this;
+        var credentialsStr = '';
+        s.state.userData.credentials.map(data =>{
+            credentialsStr+= JSON.stringify(data);
+        });
+ 
         var params = {
           userid : s.userid,
           setuserid:s.userid,
           getusersigid:s.getusersigid,
-          username: s.state.userData.username,
-          username: s.state.userData.username,
+          usermobile: s.state.userData.usermobile,
           useremail: s.state.userData.useremail,
-          customername: s.state.userData.customername,
+          userrealname: s.state.userData.customername,
           dateofbirth: s.state.userData.dateofbirth,
           datesign: s.state.userData.datesign || '阳历',
           emergencycontact: s.state.userData.useremergencycontacter,
           contactmobile: s.state.userData.useremergencycontactmobile,
           usericon: s.state.userData.portrait,
+          credentials:credentialsStr,
           comment:'' //备注
         }
+
+        console.log(params);
         $.ajax({
           url:window.baseUrl + 'user/edit_user/',
           data:params,
           success(data){
             console.log(data);
+            if(data.getret === 0 ){
+              message.success(data.getmsg);
+            }
+            else{
+              message.error(data.getmsg);
+            }
           }
         })
 
@@ -206,6 +219,8 @@ class ZmitiPersonalAccApp extends React.Component{
            wrapperCol: {span: 14},
          };
 
+
+
         let component =  <div style={{height:this.state.mainHeight,overflow:'auto'}}>
                <div className="acc-header">
                    <article>
@@ -241,7 +256,7 @@ class ZmitiPersonalAccApp extends React.Component{
                    }
                    {!this.companyid && <article>
                        <div className="acc-consume">
-                           <div className="acc-msg"><span>你的账号将于{this.state.userData.expiredate}号过期</span><span>点此续费</span><span><a href="#">消费记录</a></span></div>
+                       <div className="acc-msg"><span>你的账号将于<span style={{color:'#f00'}}>{this.state.userData.expiredate}</span>日过期</span><span style={{cursor:'pointer',color:'#2db7f5'}}>点此续费</span>{(this.state.isExpire || this.state.isFullSpace )&&<span style={{cursor:'pointer',color:'#2db7f5'}}>申请延长试用</span>}<span><a href="#">消费记录</a></span></div>
                            <ZmitiProgress currentVal={this.state.userData.currentVal} maxVal={this.state.userData.maxVal} {...zmitiProgressProps}></ZmitiProgress>
                        </div>
                    </article>}
@@ -251,9 +266,8 @@ class ZmitiPersonalAccApp extends React.Component{
                        <Input.Group className="acc-input-group">
                            <Input addonBefore="姓名" defaultValue={this.state.userData.customername} onChange={()=>{}}/>
                            <Select placeholder='性别' style={{width:300}} >
-                               <Option value="0">男</Option>
-                               <Option value="1">女</Option>
-                               <Option value="2">我不想说</Option>
+                               <Option value={'0'}>男</Option>
+                               <Option value={"1"}>女</Option>
                            </Select>
                        </Input.Group>
                    </div>
@@ -280,26 +294,26 @@ class ZmitiPersonalAccApp extends React.Component{
                    label={<span><span style={{color:'red',marginRight:4,}}>*</span>原始密码</span>}
                    hasFeedback={true}
                  >
-                   <Input ref='old-pwd' placeholder='原始密码' onChange={()=>{}}/>
-                   {this.state.showUserNameError && <div className='user-error'>账号不合法(6位以上的数字字母)</div>}
+                   <Input type='password' ref='old-pwd' onFocus={()=>{this.setState({showOldPwdError:false})}} defaultValue={this.state.oldPwd} placeholder='原始密码' onChange={()=>{}}/>
+                   {this.state.showOldPwdError && <div className='user-error'>原始密码不能为空</div>}
                  </FormItem>
 
                   <FormItem
                    {...formItemLayout}
-                   label={<span><span style={{color:'red',marginRight:4,}}>*</span>原始密码</span>}
+                   label={<span><span style={{color:'red',marginRight:4,}}>*</span>新密码</span>}
                    hasFeedback={true}
                  >
-                     <Input ref='new-pwd' placeholder='新密码' onChange={()=>{}}/>
-                   {this.state.showUserNameError && <div className='user-error'>账号不合法(6位以上的数字字母)</div>}
+                     <Input type='password' ref='new-pwd' onFocus={()=>{this.setState({showNewPwdError:false})}} defaultValue={this.state.newPwd} placeholder='新密码' onChange={()=>{}}/>
+                   {this.state.showNewPwdError && <div className='user-error'>新密码不能为空</div>}
                  </FormItem>
 
                   <FormItem
                    {...formItemLayout}
-                   label={<span><span style={{color:'red',marginRight:4,}}>*</span>原始密码</span>}
+                   label={<span><span style={{color:'red',marginRight:4,}}>*</span>确认新密码</span>}
                    hasFeedback={true}
                  >
-                     <Input ref='sure-pwd' placeholder='确认密码' onChange={()=>{}}/>
-                   {this.state.showUserNameError && <div className='user-error'>账号不合法(6位以上的数字字母)</div>}
+                     <Input type='password' ref='sure-pwd' onFocus={()=>{this.setState({showSurePwdError:false})}}  defaultValue={this.state.surePwd} placeholder='确认密码' onChange={()=>{}}/>
+                   {this.state.showSurePwdError && <div className='user-error'>确认新密码不能为空 </div>}
                  </FormItem>
                 
                </Form>    
@@ -339,6 +353,55 @@ class ZmitiPersonalAccApp extends React.Component{
 
 
     modifyUserPwd(){//修改密码
+      var  oldPwd = this.refs['old-pwd'].refs.input.value;
+      var  newPwd = this.refs['new-pwd'].refs.input.value;
+      var  surePwd = this.refs['sure-pwd'].refs.input.value;
+    
+      if(oldPwd.length<=0){
+         this.setState({
+            showOldPwdError:true
+         });
+
+         return 0;
+      }
+      if(newPwd.length<=0){
+         this.setState({
+            showNewPwdError:true
+         })
+         return 0;
+      }
+      if(surePwd.length<=0){
+         this.setState({
+            showSurePwdError:true
+         })
+         return 0;
+      }
+
+      if(surePwd !== newPwd){
+          message.error('两次输入密码不一致');
+          return;
+      }
+
+      var s = this;
+
+      var userid = this.props.params.userid?this.props.params.userid:this.userid;
+      $.ajax({
+        url:window.baseUrl + 'user/edit_userpwd/',
+        data:{
+          setolduserpwd:oldPwd,
+          setnewuserpwd:newPwd,
+          setuserid:userid,
+          userid:s.userid,
+          getusersigid:s.getusersigid
+        },
+        success(data){
+            console.log(data)
+            message[data.getret === 0?'success':'error'](data.getmsg);
+            s.setState({
+              modifyUserPwdDialogVisible:false
+            });
+        }
+      })
 
     }
 }

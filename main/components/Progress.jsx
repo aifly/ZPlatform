@@ -25,7 +25,7 @@ export default class ZmitiProgress extends React.Component {
                 <span className="fly-progress-label">{this.props.label}</span>
                 <div className="fly-progress-bar">
                     <span style={{width:s.props.currentVal / s.props.maxVal / s.props.unit * 100+'%'}}></span>
-                    <div style={style}>{this.state.currentVal}M / {this.props.maxVal}G</div>
+                    <div style={style}>{this.props.currentVal}M / {this.props.maxVal}G</div>
                 </div>
             </div>
         )

@@ -45,7 +45,10 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 					 that.username = params.username;
 					 that.usermobile=  params.usermobile;
 					 that.useremail = params.useremail;
-					 that.usertypesign = params.usertypesign;	
+					 that.usertypesign = params.usertypesign;
+					 that.endDate = params.endDate;
+					 that.capacitied = params.capacitied;
+					 that.capacity = params.capacity;
 		 	 	}
 
         return {
@@ -57,6 +60,10 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
         	username:params.username,
         	usermobile:params.usermobile,
         	useremail:params.useremail,
+        	capacitied:params.capacitied,
+        	capacity:params.capacity,
+        	endDate:params.endDate
+
         }
 		 }
 		 catch(e){
@@ -152,7 +159,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 						self.isFullSpace = data.userauth.isFullSpace;
 						if(data.userauth.isExpire){//用户过期了
 							fn && fn({
-								msg:'此账号已过期，请及时去续费或延长试用',
+								msg:'您的账号已过期，请及时去续费或延长试用',
 								isExpire:true
 							});
 							//s.loginOut('此账号已过期，请续费或延长试用',window.mainUrl,true);
@@ -160,7 +167,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 						else{
 							if(data.userauth.isFullSpace){//用户空间已使用完
 								fn && fn({
-									msg:'此账号空间已使用完，请及时续费',
+									msg:'您的账号空间已使用完，请及时续费',
 									isFullSpace:true
 								});
 								//s.loginOut('此账号空间已使用完，请续费',window.mainUrl,true);		

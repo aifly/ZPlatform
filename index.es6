@@ -817,11 +817,7 @@ window.addEventListener('load', ()=> {
 
                 let self = this;
 
-           /*     console.log({
-                        username: $("input[name='username']").val(),
-                        userpwd: $("input[name='pwd']").val(),
-                        userlogip: $("#keleyivisitorip").html()
-                    })*/
+           
 
                 this.timer = setTimeout(()=>{
                     $(".login-error-info").addClass("fail");
@@ -859,7 +855,6 @@ window.addEventListener('load', ()=> {
                              
                              var companyid = d.companyid;
 
-
                             var a = document.createElement('a');
                             document.body.appendChild(a);
 
@@ -873,11 +868,12 @@ window.addEventListener('load', ()=> {
                                 usertypesign:d.usertypesign,
                                 username:d.username || $("input[name='username']").val(),
                                 usermobile:d.usermobile || '',
-                                useremail:d.useremail||''
+                                useremail:d.useremail||'',
+                                endDate:d.enddate,//过期时间
+                                capacitied:d.capacitied,//空间使用量
+                                capacity:d.capacity,//最大空间使用量。
                             }
 
-
-                         
                             var p = JSON.stringify(params);
                             document.cookie = p;
                             

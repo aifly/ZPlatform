@@ -15,10 +15,14 @@ const FormItem = Form.Item;
 import MainUI from '../components/Main.jsx';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
+import {searchCondition} from '../public/searchCondition.jsx';
+
+ 
+
+
+
 /*import Cascader from 'antd/lib/cascader';
 import 'antd/lib/cascader/style/css';*/
-
-
 
  class  ZmitiUserDepartmentApp extends Component {
 	 constructor(props) {
@@ -131,29 +135,32 @@ import 'antd/lib/cascader/style/css';*/
 			 }
 		 }
 
-		 let selectComponent = <Select placeholder='用户名' style={{width:120}} size='small' >
-                               <Option value="0">用户名</Option>
-                               {/*<Option value="1">邮箱</Option>
-                                                              <Option value="2">手机</Option>
-                                                              <Option value="3">部门</Option>*/}
-                           </Select>
 
-         let searchInputProps = {
-         	selectComponent,
-         	keyUpHandler:(e)=>{
-         		clearTimeout(this.keyupTimer);
-         		var value = e.target.value;
-         		this.defautlUserList === undefined && (this.defautlUserList = this.state.currentDepartment.userList.concat([]));
-         		this.keyupTimer = setTimeout(()=>{
-         			var userlist = this.defautlUserList;
-         			this.state.currentDepartment.userList = userlist.filter(user=>{
- 						return user.username.indexOf(value)>-1;
-         			});
-         			this.forceUpdate();
-         		},350);
-         	}
-         }
+     let selectComponent = <Select placeholder='用户名' style={{width:120}} size='small' >
+                         <Option value="0">用户名</Option>
+                         {/*<Option value="1">邮箱</Option>
+                                                        <Option value="2">手机</Option>
+                                                        <Option value="3">部门</Option>*/}
+                     </Select>
 
+     let searchInputProps = {
+        selectComponent,
+        keyUpHandler:(e)=>{
+          clearTimeout(that.keyupTimer);
+          var value = e.target.value;
+          console.log(value)
+          that.defautlUserList === undefined && (that.defautlUserList = that.state[stateName].concat([]));
+          that.keyupTimer = setTimeout(()=>{
+            var userlist = that.defautlUserList;
+            data = userlist.filter(user=>{
+                return user.username.indexOf(value)>-1;
+            });
+            that.forceUpdate();
+          },350);
+        }
+     }
+
+       
 
 		 const formItemLayout = {
 			 labelCol: {span: 6},

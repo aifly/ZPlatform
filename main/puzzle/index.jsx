@@ -32,39 +32,41 @@ class ZmitiPuzzleApp extends React.Component{
          validateUserRole(this,(obj)=>{
             if(!isSuperAdmin(this) && !isNormalAdmin(this)){//不是管理员，也不是超级管理员
                 loginOut(obj.msg,'',true);
+            }else{
+                const key = `open${Date.now()}`;
+        let btnClick = ()=> {
+                notification.close(key);
+                    close();
+                }
+                const close = () => {
+                    //
+                    localStorage['tipInfo'] = true;
+                }
+                const btn = (
+                    <Button type="primary" size="small" onClick={btnClick}>
+                        不再提示我~
+                    </Button>
+                );
+
+                !localStorage['tipInfo'] && notification['info']({
+                    message: '小提示',
+                    description: '按住空格键不松开,可以拖拽整张图片~',
+                    btn,
+                    key
+                });
+
+                PubSub.subscribe('getMethod',(e,method)=>{
+                    this.setState({
+                        currentMethod:method
+                    })
+                });
             }
          });
     }
 
     componentDidMount(){
 
-        const key = `open${Date.now()}`;
-        let btnClick = ()=> {
-            notification.close(key);
-            close();
-        }
-        const close = () => {
-            //
-            localStorage['tipInfo'] = true;
-        }
-        const btn = (
-            <Button type="primary" size="small" onClick={btnClick}>
-                不再提示我~
-            </Button>
-        );
-
-        !localStorage['tipInfo'] && notification['info']({
-            message: '小提示',
-            description: '按住空格键不松开,可以拖拽整张图片~',
-            btn,
-            key
-        });
-
-        PubSub.subscribe('getMethod',(e,method)=>{
-            this.setState({
-                currentMethod:method
-            })
-        });
+        
     }
 
     render(){
