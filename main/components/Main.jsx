@@ -135,7 +135,7 @@ class MainUI extends React.Component {
                     <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
                     <div className="fly-nav"><a href="#">控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    {(this.state.usertypesign === window.Role.SUPERADMINUSER||this.state.usertypesign === window.Role.NORMALADMINUSER) && <div className="fly-nav"><a href={window.adminUrl}>系统管理</a></div>}
+                    {(this.state.usertypesign*1 === window.Role.SUPERADMINUSER||this.state.usertypesign*1 === window.Role.NORMALADMINUSER) && <div className="fly-nav"><a href={window.adminUrl}>系统管理</a></div>}
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
                     <div></div>
@@ -198,6 +198,9 @@ class MainUI extends React.Component {
       resizeMainHeight(this);
       this.userid = userid;
       this.getusersigid = getusersigid;
+      this.usertypesign = usertypesign;
+      this.isover = isover;
+      this.username= username;
     }
 
     logout(){//退出登录
@@ -240,6 +243,8 @@ class MainUI extends React.Component {
                 current = item.key;
             }
         });
+
+
 
         this.setState({
             isCompany:this.companyid,
