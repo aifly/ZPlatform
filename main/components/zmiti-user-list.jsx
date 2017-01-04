@@ -21,6 +21,9 @@ export default class ZmitiUserList extends Component {
 	render() {
 
 
+		
+
+
 		var userList = this.props.userList.filter(item=>{
 			return item.isover === this.state.current ||  item.isover === 2;//isover : 0 正式账号，1为试用账户
 		});

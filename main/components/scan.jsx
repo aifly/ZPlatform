@@ -46,6 +46,10 @@ export default class ZmitiScan extends React.Component {
 
     }
 
+    removeCredentials(i){
+        window.obserable.trigger({type:'removeCredentials',data:i});
+    }
+
 
     render() {
 
@@ -56,7 +60,10 @@ export default class ZmitiScan extends React.Component {
                 backgroundSize: 'contain'
             };
             return (
-                <li style={style} key={i}><img hidden draggable="false" src={item.src} alt=""/></li>
+                <li style={style} key={i}>
+                    <span data-index={i} onClick={this.removeCredentials.bind(this,i)}>&times;</span>
+                    <img hidden draggable="false" src={item.src} alt=""/>
+                </li>
             )
         });
         var cx = addons.classSet;

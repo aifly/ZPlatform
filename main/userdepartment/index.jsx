@@ -143,22 +143,21 @@ import 'antd/lib/cascader/style/css';*/
                                                         <Option value="3">部门</Option>*/}
                      </Select>
 
-     let searchInputProps = {
-        selectComponent,
-        keyUpHandler:(e)=>{
-          clearTimeout(that.keyupTimer);
-          var value = e.target.value;
-          console.log(value)
-          that.defautlUserList === undefined && (that.defautlUserList = that.state[stateName].concat([]));
-          that.keyupTimer = setTimeout(()=>{
-            var userlist = that.defautlUserList;
-            data = userlist.filter(user=>{
-                return user.username.indexOf(value)>-1;
-            });
-            that.forceUpdate();
-          },350);
-        }
-     }
+  let searchInputProps = {
+          	selectComponent,
+          	keyUpHandler:(e)=>{
+          		clearTimeout(this.keyupTimer);
+          		var value = e.target.value;
+          		this.defautlUserList === undefined && (this.defautlUserList = this.state.currentDepartment.userList.concat([]));
+          		this.keyupTimer = setTimeout(()=>{
+          			var userlist = this.defautlUserList;
+          			this.state.currentDepartment.userList = userlist.filter(user=>{
+  						return user.username.indexOf(value)>-1;
+          			});
+          			this.forceUpdate();
+          		},350);
+          	}
+          }
 
        
 

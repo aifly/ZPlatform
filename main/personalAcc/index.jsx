@@ -81,6 +81,11 @@ class ZmitiPersonalAccApp extends React.Component{
         this.modifyUesrCredentials();
       });
 
+      window.obserable.on('removeCredentials',(data)=>{
+          this.state.userData.credentials.splice(data,1);
+          this.forceUpdate();
+      });
+
 
       var userid = this.props.params.userid?this.props.params.userid:this.userid;
       this.validateUserRole(this,()=>{
@@ -147,10 +152,11 @@ class ZmitiPersonalAccApp extends React.Component{
         },150)*/
         var s = this;
         var credentialsStr = '';
-        s.state.userData.credentials.map(data =>{
-            credentialsStr+= JSON.stringify(data);
+        s.state.userData.credentials.map((data,i) =>{
+            credentialsStr+= data.src+ (i>= s.state.userData.credentials.length-1 ? '':',');  
         });
- 
+
+
         var params = {
           userid : s.userid,
           setuserid:s.userid,

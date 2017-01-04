@@ -196,11 +196,14 @@ class MainUI extends React.Component {
       });
       resizeLeftMenu(this);
       resizeMainHeight(this);
-      this.userid = userid;
-      this.getusersigid = getusersigid;
-      this.usertypesign = usertypesign;
-      this.isover = isover;
-      this.username= username;
+       this.userid = userid;
+       this.getusersigid = getusersigid;
+       this.companyid = companyid;
+       this.isover = isover;
+       this.usertypesign = usertypesign;
+       this.username = username;
+       this.usermobile = usermobile;
+       this.useremail = useremail;
     }
 
     logout(){//退出登录
