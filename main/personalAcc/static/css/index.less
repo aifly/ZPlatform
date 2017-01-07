@@ -164,7 +164,13 @@ body {
 
   .displayFlex(row);
   article{
-    width: 50%;
+    span{
+      cursor:pointer;
+    }
+    width: 60%;
+    &:last-of-type{
+      width:40%;
+    }
     .position(r);
     &:not(:last-of-type):before{
       content: '';

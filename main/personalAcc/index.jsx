@@ -57,7 +57,7 @@ class ZmitiPersonalAccApp extends React.Component{
     }
 
     componentWillMount() {
-       let {validateUser, loginOut,resizeMainHeight,getUserDetail,validateUserRole} = this.props;
+       let {validateUser, loginOut,resizeMainHeight,getUserDetail,validateUserRole,isSuperAdmin,isNormalAdmin} = this.props;
        var {userid, getusersigid, companyid,username,isover,usertypesign,capacitied,capacity,endDate}=validateUser(()=>{
           loginOut();
        },this);
@@ -65,6 +65,8 @@ class ZmitiPersonalAccApp extends React.Component{
        this.getUserDetail = getUserDetail;
        this.validateUserRole=  validateUserRole;
        this.loginOut = loginOut;
+       this.isSuperAdmin = isSuperAdmin;
+       this.isNormalAdmin = isNormalAdmin;
        resizeMainHeight(this);
     }
 
@@ -75,6 +77,16 @@ class ZmitiPersonalAccApp extends React.Component{
       });
 
       var s = this;
+
+      this.validateUserRole(this,obj=>{
+          if(!s.isSuperAdmin(this) && !s.isNormalAdmin(this)){//不是管理员，也不是超级管理员
+                s.setState({
+                  isExpire:obj.isExpire,
+                  isFullSpace:obj.isFullSpace,
+                  msg:obj.msg
+                });
+            }
+      })
 
 
       window.obserable.on('modifyUesrCredentials',()=>{
@@ -247,6 +259,7 @@ class ZmitiPersonalAccApp extends React.Component{
                                        <Tag onClick={()=>{this.setState({modifyUserPwdDialogVisible:true})}} style={{background:'#108ee9',color:'#fff',lineHeight:'20px'}} color="#108ee9">重置密码</Tag>
                                    </div>
                                </section>
+                               {this.state.isExpire && <section>{this.state.msg},<br/>请<span style={{color:'green',fontSize:'16px'}}>续费</span>或<span style={{color:'red',fontSize:'16px'}}>申请延长试用</span></section> }
                                {this.state.userData.usermobile && <section><span>手机：</span>{this.state.userData.usermobile}</section>}
                                {this.state.userData.useremail && <section><span>邮件：</span>{this.state.userData.useremail}</section>}
                            </div>
