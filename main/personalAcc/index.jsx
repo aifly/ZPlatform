@@ -259,7 +259,7 @@ class ZmitiPersonalAccApp extends React.Component{
                                        <Tag onClick={()=>{this.setState({modifyUserPwdDialogVisible:true})}} style={{background:'#108ee9',color:'#fff',lineHeight:'20px'}} color="#108ee9">重置密码</Tag>
                                    </div>
                                </section>
-                               {this.state.isExpire && <section>{this.state.msg},<br/>请<span style={{color:'green',fontSize:'16px'}}>续费</span>或<span style={{color:'red',fontSize:'16px'}}>申请延长试用</span></section> }
+                               {this.state.isExpire && <section>{this.state.msg},<br/>请<span style={{color:'green',fontSize:'16px'}}>续费</span>或<span onClick={this.delayDay.bind(this)} style={{color:'red',fontSize:'16px'}}>申请延长试用</span></section> }
                                {this.state.userData.usermobile && <section><span>手机：</span>{this.state.userData.usermobile}</section>}
                                {this.state.userData.useremail && <section><span>邮件：</span>{this.state.userData.useremail}</section>}
                            </div>
@@ -356,6 +356,32 @@ class ZmitiPersonalAccApp extends React.Component{
           })  
         })
         
+    }
+
+    delayDay(){//延长试用。
+        var s = this;
+        this.ajaxStart = this.ajaxStart === undefined ? 1:0;
+        if(this.ajaxStart){
+           this.ajaxStart = 0;
+           $.ajax({
+              type:'post',
+              url:window.baseUrl + 'user/user_delayday',
+              data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid
+              },
+              success(data){
+                  if(data.getret === 0){
+                    message.success('您的申请已经提交到后台，我们将在1-2个工作日内审核！感谢您使用智媒体');
+                  }else{
+                    message.error(data.getmsg);
+                  }
+              }
+            });
+        }
+        else{
+          message.error('您的申请已经提交到后台，无须重复申请。');
+        }
     }
 
     modifyUesrCredentials(){
