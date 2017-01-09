@@ -52,18 +52,19 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 		var columns1 = columns.concat( { 
 			title: '操作', 
 			dataIndex: '', key: 'x',
-			render:  (text, record)  => <div data-userid={record.userid}><a href='javascript:void(0)' data-index='0' style={{color:record.isover === 2?'':'red'}} </a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>延长试用</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' >转为正式用户</a></div> });
+			render:  (text, record)  => <div data-userid={record.userid}><a href='javascript:void(0)'>审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>审核不通过</a></div> });
 		var columns2= columns.concat( { 
 			title: '操作', 
 			dataIndex: '', key: 'x',
-			render: (text, record) => <div data-userid={record.userid}><a href='javascript:void(0)' data-index='0'  style={{color:record.isover === 2?'':'red'}} </a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>设置权限</a></div> });
+			render: (text, record) => <div data-userid={record.userid}><a href='javascript:void(0)'>审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>审核不通过</a></div> });
 		
 		let props={
 			userList:this.state.userList,
 			columns:columns1,
 			columns1:columns2,
 			changeAccount:this.changeAccount,
-			mainHeight:this.state.mainHeight
+			mainHeight:this.state.mainHeight,
+			tags:['已审核的工单','未审核的工单'],
 
 		}
 
@@ -115,20 +116,14 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
       				location.href='/';
       			},2000)
       		}
-          else{
-              loginOut(data.getmsg,window.loginUrl,false);
-          }
+	        else{
+	              loginOut(data.getmsg,window.loginUrl,false);
+	        }
       	}
 
       })
   }
-
-
 	
 }
 export default ZmitiValidateUser(ZmitiWorkOrderApp);
-ZmitiUserApp.defaultProps = {
-	baseUrl : window.baseUrl || 'http://api.zmiti.com/v2/'
-}
-
 /*ReactDOM.render(<ZmitiUserApp></ZmitiUserApp>,document.getElementById('fly-main'));*/

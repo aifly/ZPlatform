@@ -86,9 +86,17 @@ class MainUI extends Component {
           "isIcon":true,
           "type":"edit",
           "isShow":true
+      },
+      {
+          "linkTo":"/workorder/",
+          "key":"workorder",
+          "title":"工单管理",
+          "isIcon":true,
+          "type":"edit",
+          "isShow":true
       }
     ]
-    if(this.usertypesign===4){
+    if(this.usertypesign===4){//超级管理员
       this.userManagerMenuConfig.push( {
           "linkTo":"/system/",
           "key":"system",
@@ -103,9 +111,12 @@ class MainUI extends Component {
 
     var hash = window.location.hash;
     var openKey = 'sub5';
-    if(hash.indexOf('product')>-1){
-        openKey = 'sub6';
-    }
+    this.productServiceMenuConfig.forEach((item,i)=>{
+        if(hash.indexOf(item.key)>-1){
+            openKey = 'sub6';
+        }    
+    });
+    
 		return (
 			 <section className="main">
                 <header className="fly-header">

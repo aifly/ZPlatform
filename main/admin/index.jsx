@@ -11,6 +11,7 @@ import ZmitiUserApp from '../user/index.jsx';
 import ZmitiCompanyApp from '../company/index.jsx';
 import ZmitiSystemApp from '../system/index.jsx';
 import ZmitiProductApp from '../product/index.jsx';
+import ZmitiWorkOrderApp from '../workorder/index.jsx';
 
 
 class App extends React.Component{
@@ -25,7 +26,8 @@ class App extends React.Component{
 				{path:'/user/',app:ZmitiUserApp},
 				{path:'/company/',app:ZmitiCompanyApp},
 				{path:'/system/',app:ZmitiSystemApp},
-				{path:'/product/',app:ZmitiProductApp}
+				{path:'/product/',app:ZmitiProductApp},
+				{path:'/workorder/',app:ZmitiWorkOrderApp}
 			];
     return (
         <Router history={hashHistory} >
