@@ -25,29 +25,42 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 			dataIndex: 'key',
 			key: 'xx',
 		},{
+			title:"工单号",
+			dataIndex:'workorderid',
+			key:'workorderid'
+		}
+		,{
 			title: '用户名',
 			dataIndex: 'username',
 			key: 'username',
 		}, {
-			title: '手机',
-			dataIndex: 'mobile',
-			key: 'mobile',
+			title: '工单标题',
+			dataIndex: 'title',
+			key: 'title',
 		}, {
-			title: '邮箱',
-			dataIndex: 'email',
-			key: 'email',
+			title: '工单内容',
+			dataIndex: 'content',
+			key: 'content',
 		}, {
-			title: '注册日期',
-			dataIndex: 'regDate',
-			key: 'regDate',
+			title: '处理人',
+			dataIndex: 'adminname',
+			key: 'adminname',
 		}, {
-			title: '剩余天数',
-			dataIndex: 'surplusDays',
-			key: 'surplusDays',
+			title: '工单类型',
+			dataIndex: 'workordertype',
+			key: 'workordertype',
 		}, {
-			title: '空间使用量',
-			dataIndex: 'userSpace',
-			key: 'userSpace',
+			title: '工单状态',
+			dataIndex: 'status',
+			key: 'status',
+		}, {
+			title: '创建时间',
+			dataIndex: 'createtime',
+			key: 'createtime',
+		}, {
+			title: '修改时间',
+			dataIndex: 'operatime',
+			key: 'operatime',
 		}];
 		var columns1 = columns.concat( { 
 			title: '操作', 
@@ -65,8 +78,11 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 			changeAccount:this.changeAccount,
 			mainHeight:this.state.mainHeight,
 			tags:['已审核的工单','未审核的工单'],
+			type:'workorder'
 
 		}
+
+		console.log(props.userList)
 
     //console.log(this.state.mainHeight);
 		return (
@@ -93,21 +109,21 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
       
       var params = {
       	getusersigid:this.getusersigid,
-      	userid:this.userid,
-      	setusertypesign:1
+      	userid:this.userid
       }
       let s = this;
 
       $.ajax({
       	type:"POST",
-      	url:window.baseUrl+"/user/get_userlist/",
+      	url:window.baseUrl+"/user/get_workorder/",
       	data:params,
       	success(data){
       		console.log(data);
+      		
       		if(data.getret === 0){
 
       			s.setState({
-      				userList:data.userlist
+      				userList:data.workorderinfo
       			});
       		}
       		else if(data.getret === -3){

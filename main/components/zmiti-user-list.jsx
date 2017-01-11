@@ -24,9 +24,20 @@ export default class ZmitiUserList extends Component {
 		
 
 
-		var userList = this.props.userList.filter(item=>{
-			return item.isover === this.state.current ||  item.isover === 2;//isover : 0 正式账号，1为试用账户
-		});
+		var userList =null;
+		switch(this.props.type) {
+			case "user":
+				userList = this.props.userList.filter(item=>{
+					return item.isover === this.state.current ||  item.isover === 2;//isover : 0 正式账号，1为试用账户
+				});		
+				break;
+			case 'workorder':
+				userList = this.props.userList
+				break;
+		}
+
+		 
+
 		return (
 			<section className='user-main-ui' style={{height:this.props.mainHeight}}>
 				<div className='user-left-pannel'>
@@ -71,6 +82,7 @@ export default class ZmitiUserList extends Component {
 }
 
 ZmitiUserList.defaultProps = {
-	tags:['试用人个账户','正式人个账户']
+	tags:['试用人个账户','正式人个账户'],
+	type:'user'
 }
 
