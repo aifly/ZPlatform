@@ -10,7 +10,7 @@ export default class ZmitiUserList extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	current:1,
+	  	current:0,
 	  	userList:[
 	  		
 	  	],
@@ -33,6 +33,9 @@ export default class ZmitiUserList extends Component {
 				break;
 			case 'workorder':
 				userList = this.props.userList
+	/*			userList = this.props.userList.filter(item=>{
+					//return item.isover === this.state.current ||  item.isover === 2;//isover : 0 正式账号，1为试用账户
+				});		*/
 				break;
 		}
 
@@ -42,8 +45,11 @@ export default class ZmitiUserList extends Component {
 			<section className='user-main-ui' style={{height:this.props.mainHeight}}>
 				<div className='user-left-pannel'>
 					<ul onClick={this.changeAccount}>
-						<li data-index='1' className={this.state.current === 1 ?'active':''}>{this.props.tags[0]}</li>
-						<li data-index='0' className={this.state.current === 0 ?'active':''}>{this.props.tags[1]}</li>
+						{
+							this.props.tags.map((tag,i)=>{
+								return <li data-index={i} key={i} className={this.state.current === i ?'active':''}><div>{tag}</div></li>
+							})
+						}
 					</ul>
 				</div>
 				<div className='user-right-pannel'>
@@ -52,23 +58,22 @@ export default class ZmitiUserList extends Component {
 					</header>
 					
 					{
-						this.state.current === 1 &&
-						<section className='user-list-section'>
-							<Table bordered={true} dataSource={userList} columns={this.props.columns} />
-						</section>
+						this.props.columns.map((col,i)=>{
+							if(this.state.current === i ){
+								return <section key={i} className='user-list-section'>
+											<Table bordered={true} dataSource={userList} columns={col} />
+										</section>	
+							}
+							
+						})
 					}
-					{
-						this.state.current === 0 &&
-						<section className='user-list-section'>
-							<Table bordered={true} dataSource={userList} columns={this.props.columns1} />
-						</section>
-					}
+					
 				</div>
 			</section>
 		);
 	}
 	componentDidMount() {
-	
+	 
 	}
 	changeAccount(e){
 		if(e.target.nodeName === "LI"){
@@ -76,7 +81,7 @@ export default class ZmitiUserList extends Component {
 			this.setState({
 				current:index*1
 			});
-			this.props.changeAccount(index);
+			this.props.changeAccount && this.props.changeAccount(index);
 		}
 	}
 }

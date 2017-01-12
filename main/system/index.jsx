@@ -91,8 +91,7 @@ class ZmitiSystemApp extends Component {
 			render: () => <div><a href="#">转用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">删除</a></div>}];
 			let props={
 				userList:this.state.userList,
-				columns:columns,
-				columns1:columns,
+				columns:[columns,columns],
 				changeAccount:this.changeAccount,
 				tags:['账户管理','分配用户'],
 				mainHeight:this.state.mainHeight

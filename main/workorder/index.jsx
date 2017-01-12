@@ -67,17 +67,21 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 			dataIndex: '', key: 'x',
 			render:  (text, record)  => <div data-userid={record.userid}><a href='javascript:void(0)'>审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>审核不通过</a></div> });
 		var columns2= columns.concat( { 
-			title: '操作', 
+			title: '状态', 
 			dataIndex: '', key: 'x',
-			render: (text, record) => <div data-userid={record.userid}><a href='javascript:void(0)'>审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>审核不通过</a></div> });
+			render: (text, record) => <div data-userid={record.userid}><a href='javascript:void(0)'>审核已通过</a></div> });
+
+		var columns3= columns.concat( { 
+			title: '状态', 
+			dataIndex: '', key: 'x',
+			render: (text, record) => <div data-userid={record.userid}><a href='javascript:void(0)'>审核未通过</a></div> });
 		
 		let props={
 			userList:this.state.userList,
-			columns:columns1,
-			columns1:columns2,
+			columns:[columns1,columns2,columns3],
 			changeAccount:this.changeAccount,
 			mainHeight:this.state.mainHeight,
-			tags:['已审核的工单','未审核的工单'],
+			tags:['待处理','已反馈','已处理','已关闭'],
 			type:'workorder'
 
 		}

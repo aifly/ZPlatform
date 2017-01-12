@@ -65,8 +65,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 		
 		let props={
 			userList:this.state.userList,
-			columns:columns1,
-			columns1:columns2,
+			columns:[columns1,columns2],
 			changeAccount:this.changeAccount,
 			mainHeight:this.state.mainHeight
 

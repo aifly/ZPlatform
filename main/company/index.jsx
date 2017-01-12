@@ -63,8 +63,7 @@ class ZmitiCompanyApp extends Component {
 			render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)"> 设置权限</a></div> })
 		let props={
 			userList:this.state.userList,
-			columns:columns1,
-			columns1:columns2,
+			columns:[columns1,columns2],
 			changeAccount:this.changeAccount,
 			tags:['试用公司账户','正式公司账户'],
 			mainHeight:this.state.mainHeight
