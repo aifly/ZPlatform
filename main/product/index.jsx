@@ -96,7 +96,23 @@ import MainUI from '../admin/components/main.jsx';
                         </section>
                         <section className='product-ico-list'>
                             <div>
-
+                                <ul>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                  <li><img src='../public/images/lt-company-ico.png'/></li>
+                                </ul>
                             </div>
                         </section>
                     </section>

@@ -47,7 +47,7 @@ export default class ZmitiUserList extends Component {
 					<ul onClick={this.changeAccount}>
 						{
 							this.props.tags.map((tag,i)=>{
-								return <li data-index={i} key={i} className={this.state.current === i ?'active':''}><div>{tag}</div></li>
+								return <li data-index={i} key={i} className={this.state.current === i ?'active':''}><div data-index={i}>{tag}</div></li>
 							})
 						}
 					</ul>
@@ -76,7 +76,8 @@ export default class ZmitiUserList extends Component {
 	 
 	}
 	changeAccount(e){
-		if(e.target.nodeName === "LI"){
+
+		if(e.target.parentNode.nodeName === 'LI' || e.target.nodeName === "LI"){
 			var index = e.target.getAttribute('data-index');
 			this.setState({
 				current:index*1

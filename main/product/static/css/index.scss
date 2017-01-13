@@ -48,4 +48,23 @@
 		}
 	}
 
+	.product-ico-list{
+		width:100%;
+		ul{
+			@include displayFlex(row);
+			flex-wrap:wrap;
+			margin:10px auto;
+			li{
+				width:30px;
+				margin:0 3px 0 4px;
+				text-align:center;
+				cursor:pointer;
+				box-sizing:border-box;
+				img{
+					width:20px;
+				}
+			}
+		}
+	}
+
 }
