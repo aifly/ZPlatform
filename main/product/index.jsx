@@ -17,6 +17,7 @@ import MainUI from '../admin/components/main.jsx';
         this.state = {
             visible:true,
             currentIconType:'',//当前产品的图标,默认用智媒体的图标
+            iconModalVisible:true,//图标对话框是否显示。
         }
     }
 
@@ -94,7 +95,7 @@ import MainUI from '../admin/components/main.jsx';
                             <div>添加产品图标</div>
                             <div><span>&times;</span></div>
                         </section>
-                        <section className='product-ico-list'>
+                        <section className='product-ico-list' >
                             <div>
                                 <ul>
                                   <li><img src='../public/images/lt-company-ico.png'/></li>
