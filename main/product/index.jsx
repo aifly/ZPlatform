@@ -16,8 +16,11 @@ import MainUI from '../admin/components/main.jsx';
         super(...args);
         this.state = {
             visible:true,
+            defaultZmitiIcon:'../public/images/lt-company-ico.png',
+            defaultAntdIcon:'pciture',
             currentIconType:'',//当前产品的图标,默认用智媒体的图标
-            iconModalVisible:true,//图标对话框是否显示。
+            iconModalVisible:false,//图标对话框是否显示。
+            currentIcon:"",//当前产品图标。默认为空的
         }
     }
 
@@ -85,36 +88,80 @@ import MainUI from '../admin/components/main.jsx';
                    hasFeedback={true}
                  >
 
+                   {this.state.currentIcon && this.state.currentIconType === 'zmiti' && <div className='product-menu-ico'><img src={this.state.currentIcon}/></div>}
+                   {this.state.currentIcon && this.state.currentIconType === 'antd' && <div className='product-menu-ico product-antd-ico'><Icon type={this.state.currentIcon} /></div>}
+
                     <RadioGroup onChange={this.onChangeIcon.bind(this)} value={this.state.currentIconType}>
                         <Radio value={'zmiti'}>智媒体图标</Radio>
                         <Radio value={'antd'}>组件库图标</Radio>
                     </RadioGroup>
 
-                    <section className='product-ico-C'>
+                    <section className='product-ico-C' style={{display:this.state.iconModalVisible?'block':'none'}}>
                         <section className='product-ico-header'>
                             <div>添加产品图标</div>
-                            <div><span>&times;</span></div>
+                            <div onClick={()=>{this.setState({iconModalVisible:false})}}><span>&times;</span></div>
                         </section>
                         <section className='product-ico-list' >
-                            <div>
-                                <ul>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                  <li><img src='../public/images/lt-company-ico.png'/></li>
-                                </ul>
-                            </div>
+                           {this.state.currentIconType === 'zmiti' && <div>
+                                                           <ul onClick={this.changeIcon.bind(this)}>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                           </ul>
+                                                       </div>}
+                            {this.state.currentIconType === 'antd' && 
+                               <div>
+                                  <ul onClick={this.changeIcon.bind(this)}>
+                                      <li><Icon type="lock"/></li>
+                                      <li><Icon type="unlock"/></li>
+                                      <li><Icon type="android"/></li>
+                                      <li><Icon type="apple"/></li>
+                                      <li><Icon type="apple-o"/></li>
+                                      <li><Icon type="area-chart"/></li>
+                                      <li><Icon type="pie-chart"/></li>
+                                      <li><Icon type="bar-chart"/></li>
+                                      <li><Icon type="dot-chart"/></li>
+                                      <li><Icon type="bars"/></li>
+                                      <li><Icon type="book"/></li>
+                                      <li><Icon type="calendar"/></li>
+                                      <li><Icon type="cloud"/></li>
+                                      <li><Icon type="cloud-download"/></li>
+                                      <li><Icon type="code"/></li>
+                                      <li><Icon type="code-o"/></li>
+                                      <li><Icon type="copy"/></li>
+                                      <li><Icon type="credit-card"/></li>
+                                      <li><Icon type="desktop"/></li>
+                                      <li><Icon type="edit"/></li>
+                                      <li><Icon type="ellipsis"/></li>
+                                      <li><Icon type="file"/></li>
+                                      <li><Icon type="appstore-o"/></li>
+                                      <li><Icon type="picture"/></li>
+                                      <li><Icon type="shopping-cart"/></li>
+                                      <li><Icon type="star-o"/></li>
+                                      <li><Icon type="star"/></li>
+                                      <li><Icon type="hearr-o"/></li>
+                                      <li><Icon type="camera"/></li>
+                                      <li><Icon type="camera-o"/></li>
+                                      <li><Icon type="team"/></li>
+                                      <li><Icon type="solution"/></li>
+                                      <li><Icon type="customer-service"/></li>
+                                      <li><Icon type="switcher"/></li>
+                                      <li><Icon type="rocket"/></li>
+                                  </ul>
+                               </div>
+                            }
                         </section>
                     </section>
                  </FormItem>
@@ -152,13 +199,54 @@ import MainUI from '../admin/components/main.jsx';
             <MainUI component={component}></MainUI>
         )
     }
+
+    changeIcon(e){//选择当前产品图标。
+      switch(this.state.currentIconType) {
+        case 'zmiti':
+           var src = e.target.src || e.target.children[0].src;
+            if(!src){
+              return;
+            }
+            this.setState({
+              currentIcon:src
+            });
+          break;
+        case 'antd':
+          if(e.target.nodeName === 'I'){
+            var icon = e.target.className.split(' ')[1].substring(8);
+           
+          }else{
+            var icon = e.target.children[0].className.split(' ')[1].substring(8);
+          }
+          this.setState({
+              currentIcon:icon
+            });
+         // console.log(e.target);
+          break;
+      }
+
+     
+    }
     addProduct(){//添加产品
 
     }
     onChangeIcon(e){//切换图标
+      switch(e.target.value) {
+        case 'zmiti':
+           this.setState({
+              currentIcon:this.state.defaultZmitiIcon
+            });
+          break;
+        case 'antd':
+          this.setState({
+              currentIcon:this.state.defaultAntdIcon
+            });
+          break;
+      }
         this.setState({
-            currentIconType:e.target.value
-        })
+            currentIconType:e.target.value,
+            iconModalVisible:true
+        });
     }
 }
 

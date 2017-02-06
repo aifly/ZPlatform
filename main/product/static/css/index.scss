@@ -68,3 +68,13 @@
 	}
 
 }
+
+.product-menu-ico{
+	@include pos(a);
+	left:200px;
+	top:8px;
+
+}
+.product-antd-ico{
+	top:0;
+}
