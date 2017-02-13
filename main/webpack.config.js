@@ -23,7 +23,7 @@ var config = {
     },
     module: {
         loaders: [{
-            test: /\.jsx|\.js|.es6$/,
+            test: /\.jsx|\.js|\.es6$/,
             exclude: /node_modules/,
             loaders: ['react-hot','babel']
             },

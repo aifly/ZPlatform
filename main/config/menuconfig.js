@@ -1,13 +1,6 @@
 {
 	"routers":[
 			{
-				"linkTo":"/",
-				"key":"zmiti",
-				"title":"微场景",
-				"isIcon":true,
-				"type":"mobile",
-				"isShow":true
-			},{
 				"linkTo":"/qa/",
 				"key":"qa",
 				"title":"微问答",

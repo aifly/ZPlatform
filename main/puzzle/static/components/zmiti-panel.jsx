@@ -1,8 +1,9 @@
 import React from 'react';
 import './scss/zmiti-panel.css';
 
-import { Tabs, InputNumber,Icon,  Button} from '../../../commoncomponent/common.jsx';
+import { Tabs, InputNumber,Icon,Modal,Select, Button} from '../../../commoncomponent/common.jsx';
 const TabPane = Tabs.TabPane;
+const Option = Select.Option;
 
 import {utilMethods, _$, $$} from '../../../utilMethod.es6';
 import PubSub from '../js/pubsub';
@@ -23,6 +24,8 @@ export default class ZmitiPanel extends React.Component {
             current: 0,
             width: 1000,
             height: 600,
+            visible:false,
+            imageType:"image/png",
             currentMethod: 'renderRectLeftRight',
             dataUrl: '#',
             isLocked: false,
@@ -295,19 +298,38 @@ export default class ZmitiPanel extends React.Component {
                 </section>
                 <div style={{transform: 'translate3d(' + (this.state.showDownload ? 0 : '-100%') + ',0,0)'}}
                      className='z-puzzle-download'><a target="_blank" download={this.state.dataUrl}
-                                                      onClick={this.downloadImg} href={this.state.dataUrl}><Icon
+                                                       onClick={this.downloadImg} href={this.state.dataUrl}><Icon
                     type="cloud-download"/>下载图片</a></div>
+
+                <Modal title='选择图片类型' visible={this.state.visible}
+                  onOk={this.downloadImg}
+                  onCancel={()=>{this.setState({visible:false})}}
+                  width={600}
+
+                  >
+                   <Select onChange={this.selectImageType.bind(this)} ref='img-type' placeholder='图片类型' style={{width:'100%'}} defaultValue='image/png' >
+                               <Option value={'image/png'}>PNG</Option>
+                               <Option value={'image/jpeg'}>JPG</Option>
+                           </Select>
+                </Modal>
             </div>
         )
+    }
+
+    selectImageType(e){
+        this.setState({
+            imageType:e
+        });
     }
 
 
     downloadImg() {
         ///  let imgPathURL = window.ZmitiState.toDataURL();
-        ///  
+        
         window.obserable.trigger({type:'removeDashShape'});//移除虚线框
+
         this.setState({
-            dataUrl: document.getElementsByTagName('canvas')[0].toDataURL()
+            dataUrl: document.getElementsByTagName('canvas')[0].toDataURL(this.state.imageType)
         });
     }
 

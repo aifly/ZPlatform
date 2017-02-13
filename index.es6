@@ -813,17 +813,19 @@ window.addEventListener('load', ()=> {
                     return false;
                 }
 
-                $(e.target).addClass("shadow");
+                $(e.target).addClass("shadow hide");
+
+                $('.loading').addClass('show');
 
                 let self = this;
-
            
 
                 this.timer = setTimeout(()=>{
                     $(".login-error-info").addClass("fail");
                     self.removeErrorInfo($(".login-error-info"), "fail");
                     $(e.target).parent().find('span').removeClass("shadow").removeClass('hide').parents('.loaded').find('.loading').removeClass("show");
-                },5000);
+                },10000);
+
                 $.ajax({
                     url: data.baseUrl + "user/login_user",
                     type: "POST",
@@ -874,9 +876,12 @@ window.addEventListener('load', ()=> {
                                 capacity:d.capacity,//最大空间使用量。
                             }
 
+							document.cookie = '';
                             var p = JSON.stringify(params);
+
                             document.cookie = p;
-                            
+
+
                            // url+='/'+d.userid+'/'+d.getusersigid;
 
                            // alert(url)
