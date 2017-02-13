@@ -21,6 +21,7 @@ import zM from './statices/images/z-m.png';
 import zPs from './statices/images/z-ps.png';
 import zT from './statices/images/z-t.png';
 
+
 //console.log(cCenter,pc,a,c,i,mobile,pad,t,v,v1,zAi,zE,zI,zM,zPs,zT);
 
 
@@ -876,7 +877,7 @@ window.addEventListener('load', ()=> {
                                 capacity:d.capacity,//最大空间使用量。
                             }
 
-							document.cookie = '';
+							clearCookie();
                             var p = JSON.stringify(params);
 
                             document.cookie = p;
@@ -929,6 +930,14 @@ window.addEventListener('load', ()=> {
                 }
                 $(e.target).removeClass("shadow").addClass("hide").parent().find('.loading').addClass("show");
             });
+
+            function clearCookie(){
+                var keys=document.cookie.match(/[^ =;]+(?=\=)/g);
+                if (keys) {
+                    for (var i =  keys.length; i--;)
+                        document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString()
+                }    
+            }
 
             data.loginBtn.on("click", ()=> {
                 data.loginMask.addClass('show');
