@@ -5,6 +5,7 @@ import { message , Icon , Menu , Input , Badge } from '../../commoncomponent/com
 import '../../static/css/index.css';
 import { Link } from 'react-router';
 
+import ZmitiHeader from '../../components/pub-header.jsx';
 
 import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 const SubMenu = Menu.SubMenu;
@@ -116,60 +117,49 @@ class MainUI extends Component {
             openKey = 'sub6';
         }    
     });
-    
+    var headerProps = {
+            usertypesign:this.usertypesign,
+            currentAcc:this.state.currentAcc,
+            userid:this.userid,
+            getusersigid:this.getusersigid,
+            logo:'../static/images/logo.png'
+        }
+        console.log(headerProps)
 		return (
 			 <section className="main">
-                <header className="fly-header">
-                    <div className="fly-logo"><a href="/"><img src="../static/images/logo.png" alt=""/></a></div>
-                    <div className="fly-nav"><a href={window.mainUrl}>控制平台</a></div>
-                    <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    <div  className="fly-nav"><a href={"./#/"+params}>系统管理</a></div>
-                    <div className="fly-nav"><a href="#">项目洽谈</a></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div className="fly-search icon">
-                        <div><Icon type="search"/></div>
+          <ZmitiHeader {...headerProps}></ZmitiHeader>
+            <article className="fly-content">
+                <section className={this.state.defaultClass}>
+                    <div className="fly-toggle-menu" onClick={this.toggleMenu.bind(this)}>
+                        <Icon type="menu-fold" style={{display:this.state.isOpen?'inline-block':'none'}}/>
+                        <Icon type="menu-unfold" style={{display:this.state.isOpen?'none':'inline-block'}}/>
                     </div>
-                    <div className="fly-msg icon">
-                        <Badge count={1} overflowCount={9}>
-                            <Icon type="mail"/>
-                        </Badge>
-                        </div>
-                    <div className="curAcc">{this.state.currentAcc}</div>
-                </header>
-                <article className="fly-content">
-                    <section className={this.state.defaultClass}>
-                        <div className="fly-toggle-menu" onClick={this.toggleMenu.bind(this)}>
-                            <Icon type="menu-fold" style={{display:this.state.isOpen?'inline-block':'none'}}/>
-                            <Icon type="menu-unfold" style={{display:this.state.isOpen?'none':'inline-block'}}/>
-                        </div>
-                        <div className="fly-menu-c">
-                            <Menu
-                                  style={{ width: 180 }}
-                                  defaultOpenKeys={[openKey]}
-                                  selectedKeys={[this.state.current]}
-                                  mode="inline">
-                                <SubMenu key="sub5"
-                                title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>用户管理</span></span>}>
-                                     {this.userManagerMenuConfig.map(item=>{
-                                        return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
-                                     })}
-                                </SubMenu>
-                                 <SubMenu key="sub6"
-                                title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>操作管理</span></span>}>
-                                     {this.productServiceMenuConfig.map(item=>{
-                                        return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
-                                     })}
-                                </SubMenu>
-                            </Menu>
-                        </div>
-                    </section>
-                    <section className="fly-right-aside" style={{width:this.state.rightWidth}}>
-                          {this.props.component}
-                    </section>
-                </article>
-            </section>
+                    <div className="fly-menu-c">
+                        <Menu
+                              style={{ width: 180 }}
+                              defaultOpenKeys={[openKey]}
+                              selectedKeys={[this.state.current]}
+                              mode="inline">
+                            <SubMenu key="sub5"
+                            title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>用户管理</span></span>}>
+                                 {this.userManagerMenuConfig.map(item=>{
+                                    return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                 })}
+                            </SubMenu>
+                             <SubMenu key="sub6"
+                            title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>操作管理</span></span>}>
+                                 {this.productServiceMenuConfig.map(item=>{
+                                    return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                 })}
+                            </SubMenu>
+                        </Menu>
+                    </div>
+                </section>
+                <section className="fly-right-aside" style={{width:this.state.rightWidth}}>
+                      {this.props.component}
+                </section>
+            </article>
+        </section>
 		);
 	}
   componentWillMount() {

@@ -5,8 +5,9 @@ import { Link } from 'react-router';
 import {Icon,Menu,Input,Badge,message} from '../commoncomponent/common.jsx';
 const SubMenu = Menu.SubMenu;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
-import {utilMethods,_$,$$} from '../utilMethod.es6';
 import $ from 'jquery';
+
+import ZmitiHeader from './pub-header.jsx';
 
 
 class MainUI extends React.Component {
@@ -128,28 +129,16 @@ class MainUI extends React.Component {
         ]
 
         var configMenus =window.globalMenus;
-        
+        var headerProps = {
+            usertypesign:this.state.usertypesign,
+            currentAcc:this.state.currentAcc,
+            userid:this.userid,
+            getusersigid:this.getusersigid
+        }
         return (
             <section className={"main " + (this.props.className || '')}>
-                <header className="fly-header" onClick={this.menuClickHandler}>
-                    <div className="fly-logo"><a href="/"><img src="./static/images/logo.png" alt=""/></a></div>
-                    <div className="fly-nav"><a href="#">控制平台</a></div>
-                    <div className="fly-nav"><a href="#">产品与服务</a></div>
-                    {(this.state.usertypesign*1 === window.Role.SUPERADMINUSER||this.state.usertypesign*1 === window.Role.NORMALADMINUSER) && <div className="fly-nav"><a href={window.adminUrl}>系统管理</a></div>}
-                    <div className="fly-nav"><a href="#">项目洽谈</a></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div className="fly-search icon">
-                        <div onClick={this.logout.bind(this)}><Icon type="logout" /></div>
-                    </div>
-                    <div className="fly-msg icon">
-                        <Badge count={1} overflowCount={9}>
-                            <Icon type="mail"/>
-                        </Badge>
-                        </div>
-                    <div className="curAcc">{this.state.currentAcc}</div>
-                </header>
+                <ZmitiHeader {...headerProps}></ZmitiHeader>
+                
                 <article className="fly-content">
                     <section className={this.state.defaultClass}>
                         <div className="fly-toggle-menu" onClick={this.toggleMenu.bind(this)}>

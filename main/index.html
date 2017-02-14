@@ -4,15 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
     <title>芸智媒平台</title>
+    <style>
+    		body{margin: 0;padding:0;}
+    		.fly-loading-C{
+    			margin: 0;
+    			width:100vw;
+    			height:100vh;
+    			position: fixed;
+    			background:#60b4b4 url('/static/images/loading-bg.png');
+    		}
+    		.fly-loading-center{
+    			width:220px;
+    			height: 220px;
+    			background: url('./static/images/path.png') no-repeat left top;
+					position: absolute;
+					left: 50%;
+					top:50%;
+					margin-left: -110px;
+					margin-top: -110px;
+					border-radius: 50%;
+					animation: loading 2s linear  infinite;
+					-webkit-animation: loading 2s linear  infinite;
+    		}
+    		.fly-loading-dog{
+    			position: absolute;
+    			left: 50%;
+    			top:50%;
+    			transform:translate(-50%,-50%);
+    			-webkit-transform:translate(-50%,-50%);
+    		}
+    		.fly-bone{
+    			position: absolute;
+    			top:178px;
+    			left: 146px;
+    			animation: loading 1s linear infinite;
+					-webkit-animation: loading 1s linear infinite;
+    		}
+				.fly-eyes{
+						width:6px;
+						height: 6px;
+						background: #000;
+						border-radius: 50%;
+						position: absolute;
+						top:43px;
+						left: 44px;
+						animation: loading 2s linear  infinite;
+						-webkit-animation: loading 2s linear  infinite;
+						transform-origin:1px 0;
+				}
+				.fly-eyes-right{
+						left: 84px;
+				}
+
+
+    		@-webkit-keyframes loading{
+    			 to{-webkit-transform:rotate(-360deg);}
+    		}
+    		@keyframes loading{
+    			 to{transform:rotate(-360deg);}
+    		}
+    </style>
 </head>
 <body>
 
-<div id="fly-main"></div>
+<div id="fly-main">
+	 <section class="fly-loading-C">
+			 <div class="fly-loading-dog">
+						<img src="./static/images/dog.png" />
+						<div class="fly-eyes"></div>
+						<div class="fly-eyes fly-eyes-right"></div>
+				</div>
+	 			<div class="fly-loading-center">
+	 						<div class="fly-bone">
+	 							<img src="./static/images/bone.png" alt="">
+	 						</div>
+	 			</div>
+	 </section>
+</div>
 <!--
 
 <script src="./static/js/index.js"></script>
 -->
  <script src='./config/config.js'></script>
-<script src="http://localhost:3000/index.js"></script> 
+<script src="http://localhost:3000/index.js"></script>
 </body>
 </html>

@@ -959,7 +959,7 @@ window.addEventListener('load', ()=> {
 
                 successArr[e.target.checked ? 'add' : 'remove']('green');
 
-                $('.btn-begin-reg')[successArr.length === (company === 1 ? 5 : 6) ? "removeClass" : "addClass"]('disabled')
+                $('.btn-begin-reg')[successArr.length === (company === 1 ? 6 : 7) ? "removeClass" : "addClass"]('disabled')
             });
 
             $('.get-code input').on('blur', e=> {
@@ -1106,6 +1106,7 @@ window.addEventListener('load', ()=> {
                 $('.company')[index === 1 ? 'removeClass' : 'addClass']('hide');
                 company = index === 1 ? 2 : 1;
                 $('div', data.regType).removeClass("active").eq(index).addClass('active');
+                 $('.fly-reg-C').addClass('active');
             });
 
             $('.fly-reg-next').on('click', (e)=> {

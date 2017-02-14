@@ -283,8 +283,8 @@ class ZmitiPersonalAccApp extends React.Component{
                <div className="acc-form">
                    <div className="acc-form-left">
                        <Input.Group className="acc-input-group">
-                           <Input addonBefore="姓名" defaultValue={this.state.userData.customername} onChange={()=>{}}/>
-                           <Select placeholder='性别' style={{width:300}} >
+                           <Input addonBefore="姓名" defaultValue={this.state.userData.customername} onChange={(e)=>{this.state.userData.customername=e.target.value;this.forceUpdate();}}/>
+                           <Select placeholder='性别'  style={{width:300}} onChange={(value)=>{this.state.userData.usersex=value;this.forceUpdate();}}>
                                <Option value={'0'}>男</Option>
                                <Option value={"1"}>女</Option>
                            </Select>
@@ -292,8 +292,8 @@ class ZmitiPersonalAccApp extends React.Component{
                    </div>
                    <div className="acc-form-right">
                        <Input.Group className="acc-input-group">
-                           <Input addonBefore="紧急联系人" defaultValue={this.state.userData.useremergencycontacter} onChange={()=>{}}/>
-                           <Input addonBefore="紧急联系人电话" defaultValue={this.state.userData.useremergencycontactmobile} onChange={()=>{}}/>
+                           <Input addonBefore="紧急联系人" defaultValue={this.state.userData.useremergencycontacter} onChange={(e)=>{this.state.userData.useremergencycontacter=e.target.value;this.forceUpdate();}}/>
+                           <Input addonBefore="紧急联系人电话" defaultValue={this.state.userData.useremergencycontactmobile} onChange={(e)=>{this.state.userData.useremergencycontactmobile=e.target.value;this.forceUpdate();}}/>
                        </Input.Group>
                    </div>
                </div>
