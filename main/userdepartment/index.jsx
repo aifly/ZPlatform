@@ -115,6 +115,7 @@ import 'antd/lib/cascader/style/css';*/
 				 return <TreeNode title={item.title} key={item.key} userList={item.userList}/>;
 			 })
 		 };
+		 
 		 const treeNodes = loop(this.state.treeData);
 		 var s = this;
 
@@ -346,6 +347,8 @@ import 'antd/lib/cascader/style/css';*/
 
 					 var data = data.getdata;
 
+					 console.log(data.treeData[0]);
+
 					 var departmentData = [];
 					 if(!data.treeData){
 						 s.setState({
@@ -353,7 +356,7 @@ import 'antd/lib/cascader/style/css';*/
 						 })
 						 return;
 					 }
-					 data.treeData.forEach(dep=> {
+					 data.treeData.concat([]).forEach(dep=> {
 
 						 var str = JSON.stringify(dep);
 						 str = str.replace(/key/gi, 'value');
@@ -466,6 +469,8 @@ import 'antd/lib/cascader/style/css';*/
 				 s.setState({
 					 addNewUserDialogVisible: false
 				 });
+
+				  s.getDepartmentUsersById(s.parentId);//重新拉取当前部门的所有员工
 			 }
 		 })
 	 }
@@ -486,11 +491,14 @@ import 'antd/lib/cascader/style/css';*/
 						});
 					}
 
-					loop(s.state.treeData);
 
-					s.state.currentDepartment.userList.forEach(dep=>{
+
+					loop(s.state.treeData);
+					console.log(s.state.currentDepartment);
+
+				/*	s.state.currentDepartment.userList.forEach(dep=>{
 						dep.departmentname = departmentName;
-					})
+					})*/
 
 					s.forceUpdate();
 		 });
