@@ -466,11 +466,14 @@ import 'antd/lib/cascader/style/css';*/
 			 },
 			 success(data){
 				 message[data.getret === 0 ? 'success' : 'error'](data.getmsg);
-				 s.setState({
-					 addNewUserDialogVisible: false
-				 });
+				 if(data.getret === 0){
+						 s.setState({
+							 addNewUserDialogVisible: false
+						 });
 
-				  s.getDepartmentUsersById(s.parentId);//重新拉取当前部门的所有员工
+						  s.getDepartmentUsersById(s.parentId);//重新拉取当前部门的所有员工	
+				 }
+				 
 			 }
 		 })
 	 }
@@ -490,11 +493,7 @@ import 'antd/lib/cascader/style/css';*/
 							}
 						});
 					}
-
-
-
 					loop(s.state.treeData);
-					console.log(s.state.currentDepartment);
 
 				/*	s.state.currentDepartment.userList.forEach(dep=>{
 						dep.departmentname = departmentName;
