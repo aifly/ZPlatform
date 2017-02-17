@@ -964,7 +964,6 @@ window.addEventListener('load', ()=> {
 
 
             let company = 1;
-
             $(".fly-get-code").on("click", ()=> {//发送验证码。
                 let reg = /^0?1[3|4|5|8][0-9]\d{8}$/,
                     emailReg=  /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
@@ -977,41 +976,67 @@ window.addEventListener('load', ()=> {
                     return false;
                 }
 
+                $.ajax({
+                	url:data.baseUrl+'user/verification/',
+                	data:{
+                		setstr:value,
+                		type:reg.test(value)?3:2
+                	},
+                	type:"POST",
+                	success(dt){
+                		if(dt[reg.test(value)?'usermobile':'useremail'] === 1){
+                			$(".reg-info").removeClass('info').addClass('fail').html(dt.getmsg);
+                		}
+                		else{
+                			$(".reg-info").addClass('info').html(dt.getmsg);
 
-                var codeBtn = $(".fly-get-code");
-                if(codeBtn.hasClass('fly-disabled')){
-                    return;    
-                }
-                codeBtn.addClass('fly-disabled');
-                var time =60;
-                var t = setInterval(function(){
-                    time--;
-                    codeBtn.html(time+'秒后重新获取');
-                    if(time<=0){
-                        codeBtn.removeClass('fly-disabled');
-                        clearInterval(t);
-                        codeBtn.html('获取验证码');
-                    }
-                },1000);
+                			 var codeBtn = $(".fly-get-code");
+			                if(codeBtn.hasClass('fly-disabled')){
+			                    return;    
+			                }
+			                codeBtn.addClass('fly-disabled');
+			                var time =60;
+			                var t = setInterval(function(){
+			                    time--;
+			                    codeBtn.html(time+'秒后重新获取');
+			                    if(time<=0){
+			                        codeBtn.removeClass('fly-disabled');
+			                        clearInterval(t);
+			                        codeBtn.html('获取验证码');
+			                    }
+			                },1000);
 
-                var params ={
-                    url:data.baseUrl+'user/send_registcode/',
-                    data:{},
-                    type:"post",
-                    success(data){
-                        console.log(data);
-                    }
-                };
-                if(reg.test(value)){
-                    params.data.setmobile = value;
-                }else{
-                    params.data.setemail = value;
-                }
+			                var params ={
+			                    url:data.baseUrl+'user/send_registcode/',
+			                    data:{},
+			                    type:"post",
+			                    success(data){
+			                        console.log(data);
+			                    }
+			                };
+			                if(reg.test(value)){
+			                    params.data.setmobile = value;
+			                }else{
+			                    params.data.setemail = value;
+			                }
 
-                console.log(params);
+			                console.log(params);
 
-                //开始获取验证码...
-                $.ajax(params)
+			                //开始获取验证码...
+			                
+			                $.ajax(params);
+
+
+                		}
+
+                		setTimeout(()=>{
+            				$(".reg-info").removeClass('info success fail');
+            			},2000)
+                	}
+                })
+
+
+               
 
             });
 
@@ -1032,6 +1057,7 @@ window.addEventListener('load', ()=> {
                 };
                 dd.useremail = email.val().indexOf('@') > -1 ? email.val() : '';
                 dd.usermobile = email.val().indexOf('@') > -1 ? '' : email.val();
+                dd.validcode = $('input[name="reg-tel"]').val();
 
                 let pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/,
                     reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
@@ -1200,6 +1226,7 @@ window.addEventListener('load', ()=> {
             };
 
             $('input[name="reg-username"]').on('blur', (e)=> {
+
                 if ($(e.target).val().trim().length < 6 || $(e.target).val().trim().length > 18) {
                     $(e.target).parents('.fly-reg-input').addClass("error");
                     this.removeErrorInfo($(e.target).parents('.fly-reg-input'))
@@ -1211,6 +1238,28 @@ window.addEventListener('load', ()=> {
                 }
 
                 $(e.target).val().length <= 0 && $(e.target).siblings('.mark').removeClass('blur');
+
+                $.ajax({
+                	url:data.baseUrl+'user/verification/',
+                	data:{
+                		setstr:$(e.target).val(),
+                		type:1
+                	},
+                	type:"POST",
+                	success(data){
+                		if(data.username === 1){
+                			$(".reg-info").removeClass('info').addClass('fail').html(data.getmsg);
+
+                		}
+                		else{
+                			$(".reg-info").addClass('info').html('恭喜，该账号可以注册');
+                		}
+
+                		setTimeout(()=>{
+            				$(".reg-info").removeClass('info success fail');
+            			},2000)
+                	}
+                })
             });
 
             $('input[name="reg-pass"]').on('focus', (e)=> {
