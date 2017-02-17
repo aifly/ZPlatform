@@ -61,16 +61,7 @@ class ZmitiMainContent extends React.Component {
 
         let s = this;
         
-        try{
-            var params = JSON.parse(document.cookie);
-            this.setState({
-                userid:params.userid,
-                getusersigid:params.getusersigid
-            });
-        }catch(e){
-            message.error('登录超时,请重新登录');
-            window.location.href = '/';
-        }
+       
         
         
 

@@ -179,12 +179,16 @@ class MainUI extends React.Component {
     }
     
     componentWillMount(){
+
       let  {validateUser,loginOut,resizeLeftMenu,resizeMainHeight} = this.props;
+       
       var {userid,getusersigid,companyid,isover,usertypesign,username,usermobile,useremail}=validateUser(()=>{
           loginOut();
       });
+
       resizeLeftMenu(this);
       resizeMainHeight(this);
+
        this.userid = userid;
        this.getusersigid = getusersigid;
        this.companyid = companyid;

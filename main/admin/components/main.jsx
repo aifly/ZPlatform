@@ -168,6 +168,7 @@ class MainUI extends Component {
         resizeMainHeight(this,'setAdminHeight');
         resizeLeftMenu(this,'setAdminMenu');
       var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
+        
           loginOut(undefined,undefined,false);
       });
       this.userid = userid;
@@ -178,6 +179,7 @@ class MainUI extends Component {
       this.loginOut = loginOut;
    
     if(this.usertypesign !== window.Role.NORMALADMINUSER &&  this.usertypesign !== window.Role.SUPERADMINUSER){
+
       loginOut('您没有访问的权限',window.mainUrl,false);//不是hash跳转。location.href跳转
     }
 

@@ -38,12 +38,12 @@ import MainUI from '../components/Main.jsx';
         var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
             },this);
-           
             this.loginOut = loginOut;
             this.isSuperAdmin = isSuperAdmin;
             this.isNormalAdmin = isNormalAdmin;
             this.validateUserRole = validateUserRole;
             this.getUserDetail = getUserDetail;
+
         resizeMainHeight(this);
     }
 

@@ -877,10 +877,12 @@ window.addEventListener('load', ()=> {
                                 capacity:d.capacity,//最大空间使用量。
                             }
 
-							clearCookie();
                             var p = JSON.stringify(params);
 
-                            document.cookie = p;
+
+                           // document.cookie = p;
+                            self.clearCookie('login');
+                            self.setCookie('login',p,1);
 
 
                            // url+='/'+d.userid+'/'+d.getusersigid;
@@ -931,13 +933,7 @@ window.addEventListener('load', ()=> {
                 $(e.target).removeClass("shadow").addClass("hide").parent().find('.loading').addClass("show");
             });
 
-            function clearCookie(){
-                var keys=document.cookie.match(/[^ =;]+(?=\=)/g);
-                if (keys) {
-                    for (var i =  keys.length; i--;)
-                        document.cookie=keys[i]+'=0;expires=' + new Date( 0).toUTCString()
-                }    
-            }
+           
 
             data.loginBtn.on("click", ()=> {
                 data.loginMask.addClass('show');
@@ -970,13 +966,52 @@ window.addEventListener('load', ()=> {
             let company = 1;
 
             $(".fly-get-code").on("click", ()=> {//发送验证码。
-                let reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
-                if (!reg.test($('input[name="reg-email"]').val())) {
+                let reg = /^0?1[3|4|5|8][0-9]\d{8}$/,
+                    emailReg=  /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+
+                var value = $('input[name="reg-email"]').val();
+                if (!reg.test(value) && !emailReg.test(value)) {
+                    //手机号和密码同时验证失败
                     $('.fly-reg-input').eq(4).addClass("error");
                     this.removeErrorInfo($('.fly-reg-input').eq(4));
                     return false;
                 }
+
+
+                var codeBtn = $(".fly-get-code");
+                if(codeBtn.hasClass('fly-disabled')){
+                    return;    
+                }
+                codeBtn.addClass('fly-disabled');
+                var time =60;
+                var t = setInterval(function(){
+                    time--;
+                    codeBtn.html(time+'秒后重新获取');
+                    if(time<=0){
+                        codeBtn.removeClass('fly-disabled');
+                        clearInterval(t);
+                        codeBtn.html('获取验证码');
+                    }
+                },1000);
+
+                var params ={
+                    url:data.baseUrl+'user/send_registcode/',
+                    data:{},
+                    type:"post",
+                    success(data){
+                        console.log(data);
+                    }
+                };
+                if(reg.test(value)){
+                    params.data.setmobile = value;
+                }else{
+                    params.data.setemail = value;
+                }
+
+                console.log(params);
+
                 //开始获取验证码...
+                $.ajax(params)
 
             });
 
@@ -1253,7 +1288,15 @@ window.addEventListener('load', ()=> {
         checkReg(){
 
         },
-
+        setCookie(cname, cvalue, exdays){
+           var d = new Date();  
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));  
+            var expires = "expires="+d.toUTCString();  
+            document.cookie = cname + "=" + cvalue + "; " + expires;  
+        },
+        clearCookie(name){
+            this.setCookie(name, "", -1);    
+        },
         comDanger(bmp, stage){
             bmp.show = bmp.show || 123;
             if (bmp.show === 123) {

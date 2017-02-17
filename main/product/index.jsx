@@ -104,21 +104,21 @@ import MainUI from '../admin/components/main.jsx';
                         <section className='product-ico-list' >
                            {this.state.currentIconType === 'zmiti' && <div>
                                                            <ul onClick={this.changeIcon.bind(this)}>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
-                                                             <li><img src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-money-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-msg-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-usergroup-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-user-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
+                                                             <li><img draggable='false' src='../public/images/lt-company-ico.png'/></li>
                                                            </ul>
                                                        </div>}
                             {this.state.currentIconType === 'antd' && 

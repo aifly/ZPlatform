@@ -30,15 +30,21 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
       return <div></div>;
 	}
 
+	componentWillMount() {
+	
+	}
+
+	 
+
 	validateUser(fn,that){
 		var s = this;
-		 try{
-		 	 var params = JSON.parse(document.cookie);
-		 	 	
+
+		try{
+
+			 var params = JSON.parse(window.getCookie('login'));
 		 	 	if(that){
 
 		 	 		 that.userid = params.userid;
-		 	 		 
 					 that.getusersigid = params.getusersigid;
 					 that.companyid = params.companyid;
 					 that.loginOut = params.loginOut;
@@ -50,24 +56,42 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 					 that.capacitied = params.capacitied;
 					 that.capacity = params.capacity;
 		 	 	}
+		 	 	
+		 	 	if(params.userid && params.getusersigid){
 
-        return {
-        	userid:params.userid,
-        	getusersigid:params.getusersigid,
-        	companyid:params.companyid,
-        	isover:params.isover,
-        	usertypesign:params.usertypesign,
-        	username:params.username,
-        	usermobile:params.usermobile,
-        	useremail:params.useremail,
-        	capacitied:params.capacitied,
-        	capacity:params.capacity,
-        	endDate:params.endDate
-
-        }
-		 }
-		 catch(e){
-		 		if(!window.isDebug){
+						return {
+			        	userid:params.userid,
+			        	getusersigid:params.getusersigid,
+			        	companyid:params.companyid,
+			        	isover:params.isover,
+			        	usertypesign:params.usertypesign,
+			        	username:params.username,
+			        	usermobile:params.usermobile,
+			        	useremail:params.useremail,
+			        	capacitied:params.capacitied,
+			        	capacity:params.capacity,
+			        	endDate:params.endDate
+			        }
+				}
+				else{
+					if(!window.isDebug){
+				 				fn&&fn();
+				 				return <div></div>;
+				 		}
+		        return  {
+		        	userid:-1,
+		        	getusersigid:-1,
+		        	companyid:-1,
+		        	isover:-1,
+		        	usertypesign:-1,
+		        	username:'',
+		        	usermobile:'',
+		        	useremail:''
+		        };		
+				}
+		}
+		catch(e){
+			if(!window.isDebug){
 		 				fn&&fn();
 		 				return <div></div>;
 		 		}
@@ -80,8 +104,10 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
         	username:'',
         	usermobile:'',
         	useremail:''
-        };
-		 }
+        };		
+		}
+
+		 	 
 	}
 
 	isSuperAdmin(that){//是否是超级管理员。
