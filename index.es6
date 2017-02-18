@@ -1238,7 +1238,9 @@ window.addEventListener('load', ()=> {
                 }
 
                 $(e.target).val().length <= 0 && $(e.target).siblings('.mark').removeClass('blur');
-
+                if($(e.target).val().length <= 0){
+                	return;
+                }
                 $.ajax({
                 	url:data.baseUrl+'user/verification/',
                 	data:{
