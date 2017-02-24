@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './css/user-list.css';
 
-import { Table } from '../commoncomponent/common.jsx';
-
+import { Table ,Select} from '../commoncomponent/common.jsx';
+let Option = Select.Option;
 import  ZmitiSearchInput  from './zmiti-search-input.jsx';
 export default class ZmitiUserList extends Component {
 	constructor(props) {
@@ -18,11 +18,11 @@ export default class ZmitiUserList extends Component {
 	  };
 	  this.changeAccount = this.changeAccount.bind(this);
 	}
+
+
 	render() {
 
-
-		
-
+ 
 
 		var userList =null;
 		switch(this.props.type) {
@@ -42,9 +42,14 @@ export default class ZmitiUserList extends Component {
 			break;
 		}
 
-		console.log(userList)
+		this.state.userList = userList.concat([]);
 
-		 
+		let searchInputProps = {
+          	selectComponent:this.props.selectComponent,
+          	keyUpHandler:(e)=>{
+          		this.props.keyDown(e.target.value)
+          	}
+          }
 
 		return (
 			<section className='user-main-ui' style={{height:this.props.mainHeight}}>
@@ -59,14 +64,16 @@ export default class ZmitiUserList extends Component {
 				</div>
 				<div className='user-right-pannel'>
 					<header>
-						<ZmitiSearchInput></ZmitiSearchInput>
+						<ZmitiSearchInput {...searchInputProps}></ZmitiSearchInput>
 					</header>
 					
 					{
 						this.props.columns.map((col,i)=>{
+							if(i===0){
+							}
 							if(this.state.current === i ){
 								return <section key={i} className='user-list-section'>
-											<Table bordered={true} dataSource={userList} columns={col} />
+											<Table bordered={true} dataSource={this.state.userList} columns={col} />
 										</section>	
 							}
 							
