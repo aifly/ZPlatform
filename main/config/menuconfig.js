@@ -3,16 +3,9 @@
 			{
 				"linkTo":"/qa/",
 				"key":"qa",
-				"title":"微问答",
+				"title":"两会",
 				"isIcon":true,
 				"type":"question-circle-o",
-				"isShow":true
-			},{
-				"linkTo":"/richimg/",
-				"key":"richimg",
-				"title":"富图片",
-				"isIcon":true,
-				"type":"picture",
 				"isShow":true
 			},{
 				"linkTo":"/puzzle/",
