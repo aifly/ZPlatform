@@ -3,11 +3,14 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Select } from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form , Input} from '../commoncomponent/common.jsx';
+let FormItem  = Form.Item;
 let Option = Select.Option;
 import MainUI from '../components/Main.jsx';
 
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
+
+import $ from 'jquery';
 
 class ZmitiQAApp extends Component {
 	constructor(props) {
@@ -15,6 +18,7 @@ class ZmitiQAApp extends Component {
 		
 		this.state = {
 			current:0,
+			questionDetailVisible:false,
 			mainHeight:document.documentElement.clientHeight - 50,
 			userList:[
 				{
@@ -23,7 +27,7 @@ class ZmitiQAApp extends Component {
 					content:'医疗还会再涨吗？',
 					hymn:100,
 					createtime:'2017-02-24',
-					className:'教育',
+					classname:'教育',
 					status:'未审核',
 					sort:1
 				}
@@ -37,7 +41,7 @@ class ZmitiQAApp extends Component {
 
 		const columns = [{
 			title: '编号',
-			dataIndex: 'key',
+			dataIndex: 'qid',
 			key: 'xx',
 		},{
 			title: '性别',
@@ -57,8 +61,8 @@ class ZmitiQAApp extends Component {
 			key: 'createtime',
 		}, {
 			title: '分类名称',
-			dataIndex: 'className',
-			key: 'className',
+			dataIndex: 'classname',
+			key: 'classname',
 		}, {
 			title: '审核状态',
 			dataIndex: 'status',
@@ -99,8 +103,7 @@ class ZmitiQAApp extends Component {
       						condition = 'className'
       					break;
       				}
-      				console.log(condition)
-							return user[condition].indexOf(value)>-1;
+					return user[condition].indexOf(value)>-1;
       			});
 
       			this.forceUpdate(()=>{
@@ -111,10 +114,58 @@ class ZmitiQAApp extends Component {
                          <Option value="0">提问内容</Option>
                          <Option value="1">类型</Option>
                      </Select>
+            
 		}
+
+		const formItemLayout = {
+           labelCol: {span: 6},
+           wrapperCol: {span: 14},
+         };
+
+		var mainComponent = <div>
+			<ZmitiUserList {...props}></ZmitiUserList>
+			 <Modal title='修改密码' visible={this.state.questionDetailVisible}
+                  onOk={this.modifyUserQuestion.bind(this)}
+                  onCancel={()=>{this.setState({questionDetailVisible:false})}}>
+
+                <Form >
+                 <FormItem
+                   {...formItemLayout}
+                   label={<span><span style={{color:'red',marginRight:4,}}>*</span>原始密码</span>}
+                   hasFeedback={true}
+                 >
+                   <Input type='password' ref='old-pwd' placeholder='原始密码' onChange={()=>{}}/>
+                   {this.state.showOldPwdError && <div className='user-error'>原始密码不能为空</div>}
+                 </FormItem>
+
+                  <FormItem
+                   {...formItemLayout}
+                   label={<span><span style={{color:'red',marginRight:4,}}>*</span>新密码</span>}
+                   hasFeedback={true}
+                 >
+                     <Input type='password' ref='new-pwd' placeholder='新密码' onChange={()=>{}}/>
+                   {this.state.showNewPwdError && <div className='user-error'>新密码不能为空</div>}
+                 </FormItem>
+
+                  <FormItem
+                   {...formItemLayout}
+                   label={<span><span style={{color:'red',marginRight:4,}}>*</span>确认新密码</span>}
+                   hasFeedback={true}
+                 >
+                     <Input type='password' ref='sure-pwd' onFocus={()=>{this.setState({showSurePwdError:false})}}  defaultValue={this.state.surePwd} placeholder='确认密码' onChange={()=>{}}/>
+                   {this.state.showSurePwdError && <div className='user-error'>确认新密码不能为空 </div>}
+                 </FormItem>
+                
+               </Form>    
+             </Modal>
+		</div>;
 		return (
-			<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
+			<MainUI component={mainComponent}></MainUI>
 			);
+	}
+
+	modifyUserQuestion(){//确定修改问题
+
 	}
 
 	changeCondition(value){
@@ -122,26 +173,25 @@ class ZmitiQAApp extends Component {
 	}
 
 	componentDidMount() {
-		for(var i = 0 ; i<100;i++){
-			var obj = {
-					key:i+2,
-					sex:'男',
-					content:'房价还会再涨吗？'+(i+1),
-					hymn:100,
-					createtime:'2017-02-24',
-					className:'房价',
-					status:'未审核',
-					sort:1
+		var s=  this;
+		$.ajax({
+			url:window.baseUrl+'h5/select_question/',
+			type:"POST",
+			data:{
+				classid:1
+			},
+			success(data){
+				console.log(data)
+				if(data.getret === 0){
+					s.state.userList = data.questionlist;
+					s.forceUpdate();
 				}
-			this.state.userList.push(obj);
-			this.forceUpdate();
-		}
+			}
+		});
 	}
 
 	componentWillMount() {
 
-
-		
 		let {resizeMainHeight,validateUser,loginOut} = this.props;
 
 		resizeMainHeight(this);	
