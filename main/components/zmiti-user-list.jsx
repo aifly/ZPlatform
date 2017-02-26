@@ -38,7 +38,10 @@ export default class ZmitiUserList extends Component {
 				});		*/
 				break;
 			case 'meeting':
-				userList = this.props.userList
+				userList = this.props.userList.filter(item=>{
+					return 1;
+				});
+
 			break;
 		}
 

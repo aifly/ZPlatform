@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input} from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form , Input,Button} from '../commoncomponent/common.jsx';
 let FormItem  = Form.Item;
 let Option = Select.Option;
 import MainUI from '../components/Main.jsx';
@@ -45,8 +45,8 @@ class ZmitiQAApp extends Component {
 			key: 'xx',
 		},{
 			title: '性别',
-			dataIndex: 'sex',
-			key: 'sex',
+			dataIndex: 'sexname',
+			key: 'sexname',
 		}, {
 			title: '提问内容',
 			dataIndex: 'content',
@@ -65,8 +65,8 @@ class ZmitiQAApp extends Component {
 			key: 'classname',
 		}, {
 			title: '审核状态',
-			dataIndex: 'status',
-			key: 'status',
+			dataIndex: 'statusname',
+			key: 'statusname',
 		}, {
 			title: '排序',
 			dataIndex: 'sort',
@@ -100,7 +100,7 @@ class ZmitiQAApp extends Component {
 
       					break;
       					case 1://类型
-      						condition = 'className'
+      						condition = 'classname'
       					break;
       				}
 					return user[condition].indexOf(value)>-1;
@@ -178,12 +178,71 @@ class ZmitiQAApp extends Component {
 			url:window.baseUrl+'h5/select_question/',
 			type:"POST",
 			data:{
-				classid:1
+				
 			},
 			success(data){
-				console.log(data)
+				
 				if(data.getret === 0){
 					s.state.userList = data.questionlist;
+					s.state.userList.forEach((item,i)=>{
+								switch(item.classid){
+									case 1:
+										item.classname = '房产';
+									break;
+									case 2:
+										item.classname = '就医';
+									break;
+									case 3:
+										item.classname = '养老';
+									break;
+									case 4:
+										item.classname = '钱包';
+									break;
+									case 5:
+										item.classname = '教育';
+									break;
+									case 6:
+										item.classname = '交通';
+									break;
+									case 7:
+										item.classname = '食品';
+									break;
+									case 8:
+										item.classname = '户口本';
+									break;
+									case 9:
+										item.classname = '办事效率';
+									break;
+									case 10:
+										item.classname = '反腐';
+									break;
+									case 11:
+										item.classname = '就业';
+									break;
+									case 12:
+										item.classname = '环保';
+									break;
+									case 13:
+										item.classname = '互联网+';
+									break;
+									case 14:
+										item.classname = '其他';
+									break;
+								} 
+								item.sexname =item.sex ?'女': '男';
+								switch(item.status){
+									case 0:
+									item.statusname = <span style={{color:'red',fontWeight:'bold'}}>未审核</span>;
+									break;
+									case 1:
+									item.statusname = <span style={{color:'green',fontWeight:'bold'}}>审核通过</span>;
+									break;
+									case 2:
+										item.statusname = <span style={{color:'#ccc',fontWeight:'bold'}}>审核不通过</span>;
+									break;
+								}
+					});
+					
 					s.forceUpdate();
 				}
 			}
