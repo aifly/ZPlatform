@@ -38,15 +38,29 @@ export default class ZmitiUserList extends Component {
 				});		*/
 				break;
 			case 'meeting':
+
 				userList = this.props.userList.filter(item=>{
-					return 1;
+					switch(this.state.current){
+						case 0:
+							return 1;
+						break;
+						case 1:
+							return item.status === 0;//未审核
+						break;
+						case 2:
+							return item.status === 1;
+						break;
+						case 3:
+							return item.status === 2;
+						break;
+					}
 				});
+
+					console.log(userList)
 
 			break;
 		}
-
-		this.state.userList = userList.concat([]);
-
+ 
 		let searchInputProps = {
           	selectComponent:this.props.selectComponent,
           	keyUpHandler:(e)=>{
@@ -73,10 +87,11 @@ export default class ZmitiUserList extends Component {
 					{
 						this.props.columns.map((col,i)=>{
 							if(i===0){
+								console.log(userList)
 							}
 							if(this.state.current === i ){
 								return <section key={i} className='user-list-section'>
-											<Table bordered={true} dataSource={this.state.userList} columns={col} />
+											<Table bordered={true} dataSource={userList} columns={col} />
 										</section>	
 							}
 							
