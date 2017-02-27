@@ -43,6 +43,9 @@ import 'antd/lib/progress/style/css';
 import Tabs  from 'antd/lib/tabs';
 import 'antd/lib/tabs/style/css';
 
+import Switch  from 'antd/lib/switch';
+import 'antd/lib/switch/style/css';
+
 import Card  from 'antd/lib/card';
 import 'antd/lib/card/style/css';
 
@@ -88,4 +91,4 @@ import 'antd/lib/tooltip/style/css';
 
 import moment  from 'moment';
 
-export default {Button,message,Input,Table,Modal,Form,Icon,Radio,Progress,Tabs,Card,DatePicker,moment,Select,Row,Col,Checkbox,Badge,Menu,Spin,Steps,notification,Tree,Popconfirm,Tag,Slider,InputNumber,Tooltip};
+export default {Button,message,Input,Table,Modal,Form,Icon,Radio,Progress,Tabs,Card,DatePicker,moment,Select,Row,Col,Checkbox,Badge,Menu,Spin,Steps,notification,Tree,Popconfirm,Tag,Slider,InputNumber,Tooltip,Switch};

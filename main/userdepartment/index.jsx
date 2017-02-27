@@ -47,6 +47,7 @@ import 'antd/lib/cascader/style/css';*/
 			 overflow: 'hidden',
 			 currentDepartmentNameForChoose: '',
 			 selectedRows:[],
+			 username:'',
 			 spinning:true,
 			 mainHeight:document.documentElement.clientHeight - 50,
 			 departmentData: [] //
@@ -262,7 +263,7 @@ import 'antd/lib/cascader/style/css';*/
 								 >
 									 <Input ref='username' onBlur={this.usernameBlur.bind(this)}
 											onFocus={()=>{this.setState({showUserNameError:false})}} placeholder='请输入账号'
-											onChange={()=>{}}/>
+											onChange={(e)=>{this.setState({username:e.target.value})}}/>
 									 {this.state.showUserNameError && <div className='user-error'>账号不合法(6位以上的数字字母)</div>}
 								 </FormItem>
 								 <FormItem
@@ -330,7 +331,6 @@ import 'antd/lib/cascader/style/css';*/
 		 let s = this;
 		 $.ajax({
 			 url: window.baseUrl + '/user/get_departmentlist/',//window.baseUrl+'/user/get_departmentlist/',//'http://localhost:90/12306/data.php',
-			 type: "POST",
 			 data: {
 				 userid: s.userid,
 				 getusersigid: s.getusersigid,
@@ -459,7 +459,7 @@ import 'antd/lib/cascader/style/css';*/
 				 userid: s.userid,
 				 getusersigid: s.getusersigid,
 				 departmentid: s.parentId,
-				 username: s.username,
+				 username: s.state.username,
 				 userpwd: '111111',
 				 useremail: s.userEmail,
 				 usermobile: s.userMobile

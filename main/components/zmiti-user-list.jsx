@@ -48,15 +48,14 @@ export default class ZmitiUserList extends Component {
 							return item.status === 0;//未审核
 						break;
 						case 2:
-							return item.status === 1;
+							return item.status === 1;//已审核
 						break;
 						case 3:
-							return item.status === 2;
+							return item.status === 2;//审核不通过。
 						break;
 					}
 				});
 
-					console.log(userList)
 
 			break;
 		}
@@ -83,12 +82,12 @@ export default class ZmitiUserList extends Component {
 					<header>
 						<ZmitiSearchInput {...searchInputProps}></ZmitiSearchInput>
 					</header>
+					{this.props.customerComponent}
 					
+
 					{
 						this.props.columns.map((col,i)=>{
-							if(i===0){
-								console.log(userList)
-							}
+							
 							if(this.state.current === i ){
 								return <section key={i} className='user-list-section'>
 											<Table bordered={true} dataSource={userList} columns={col} />
