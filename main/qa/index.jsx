@@ -66,10 +66,13 @@ class ZmitiQAApp extends Component {
 			title: '编号',
 			dataIndex: 'qid',
 			key: 'xx',
+			width:'8%'
+			
 		},{
 			title: '性别',
 			dataIndex: 'sexname',
 			key: 'sexname',
+			width:'5%',
 		}, {
 			title: '提问内容',
 			dataIndex: 'content',
@@ -78,33 +81,44 @@ class ZmitiQAApp extends Component {
 			title: '点赞数量',
 			dataIndex: 'hymn',
 			key: 'hymn',
+			width:'10%',
+			sorter: (a, b) => a.hymn - b.hymn
 		}, {
 			title: '提问时间',
 			dataIndex: 'createtime',
 			key: 'createtime',
+			width:'10%',
+			sorter: (a, b) => a.qid - b.qid
 		}, {
 			title: '分类名称',
 			dataIndex: 'classname',
 			key: 'classname',
+			width:'8%'
 		}, {
 			title: '审核状态',
 			dataIndex: 'statusname',
 			key: 'statusname',
+			width:'8%'
 		}, {
 			title: '排序',
 			dataIndex: 'sort',
 			key: 'sort',
+			width:'8%',
+			sorter: (a, b) => a.sort - b.sort
 		}];
 		var columns1 = columns.concat( { 
 			title: '操作', 
+			width:'13%',
 			dataIndex: '', key: 'x',
 			render: (text, record) => <div  data-userid={record.qid}><a href="javascrit:void(0)" onClick={this.editQuestion.bind(this,record.qid)}>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style={{display:record.status === 0?'block':'none'}} onClick={this.checkQuestion.bind(this,record.qid,1)} href="javascrit:void(0)">审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style={{display:record.status === 0?'block':'none'}} onClick={this.checkQuestion.bind(this,record.qid,2)} href="javascrit:void(0)">审核不通过</a>&nbsp;&nbsp;&nbsp;&nbsp; <Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,record.qid)} okText="确定" cancelText="取消"><a href='javascrit:void' style={{color:'red'}}>删除</a></Popconfirm></div> });
 		var columns2 = columns.concat( { 
 			title: '操作', 
+			width:'13%',
 			dataIndex: '', key: 'x',
 			render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)" onClick={this.editQuestion.bind(this,record.qid)}>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.checkQuestion.bind(this,record.qid,1)}>审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.checkQuestion.bind(this,record.qid,2)}>审核不通过</a>&nbsp;&nbsp;&nbsp;&nbsp; <Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,record.qid)} okText="确定" cancelText="取消"><a href='javascrit:void' style={{color:'red'}}>删除</a></Popconfirm></div> });
 		var columns3 = columns.concat( { 
 			title: '操作', 
+			width:'13%',
 			dataIndex: '', key: 'x',
 			render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)" onClick={this.editQuestion.bind(this,record.qid)}>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,record.qid)} okText="确定" cancelText="取消"><a href='javascrit:void' style={{color:'red'}}>删除</a></Popconfirm></div> });
 		
