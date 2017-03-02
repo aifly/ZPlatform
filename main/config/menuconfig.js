@@ -6,14 +6,12 @@
 				"title":"两会",
 				"isIcon":true,
 				"type":"question-circle-o",
-				"isShow":true
 			},{
 				"linkTo":"/puzzle/",
 				"key":"puzzle",
 				"title":"拼图",
 				"isIcon":true,
-				"type":"picture",
-				"isShow":true
+				"type":"picture"
 			}
 	]
 }

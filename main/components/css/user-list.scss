@@ -3,15 +3,61 @@ $baseColor:#d8271d;
 
 .user-main-ui{
   width:100%;
-  height: 100vh;
-  overflow:auto;
+  
+  overflow:hidden;
   @include displayFlex(horizontal);
   $leftWidth:15vw;
   .user-left-pannel{
     width:$leftWidth;
     height: 100vh;
     background:#EAEDF1;
+    @include pos(r);
+    .zmiti-pannel-bar{
+      @include pos(a);
+      left: 100%;
+      top: 50%;
+      z-index: 10;
+      width: 24px;
+      padding: 10px 0;
+      background: #dfdfdf;
+      cursor: pointer;
+      text-align: center;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      border-left: 1px solid #fff;
+      -webkit-user-select: none;
+      color: #333;
+      span{
 
+          $size:6px;
+          width:$size;
+          height:$size;
+          @include br(50%);
+          border:1px solid #fff;
+          background:#fff;
+          display:inline-block;;
+          @include pos(a);
+          left:2px;
+          top:6px;
+          &:nth-of-type(2){
+            top:30px;
+          }
+        }
+        &:before,&:after{
+          content:'';
+          @include pos(a);
+          left:-3px;
+          top:8px;
+          @include br(2px);
+          width: 8px;
+          height:2px;
+          z-index: 1;
+          background:#8a9395;
+        }
+        &:after{
+          top:32px;
+        }
+    }
     .user-title{
       height: 70px;
       width:100%;

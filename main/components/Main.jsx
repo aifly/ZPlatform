@@ -131,7 +131,7 @@ class MainUI extends React.Component {
         var configMenus =window.globalMenus;
         var headerProps = {
             usertypesign:this.state.usertypesign,
-            currentAcc:this.state.currentAcc,
+            currentAcc:this.state.username,
             userid:this.userid,
             getusersigid:this.getusersigid
         }

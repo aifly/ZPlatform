@@ -276,7 +276,7 @@ import MainUI from '../admin/components/main.jsx';
         url:window.baseUrl + '/product/add_product/',
         data:params,
         success(data){
-
+          console.log(data);
         }
       });
     }
