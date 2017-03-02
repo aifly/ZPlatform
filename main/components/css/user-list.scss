@@ -11,14 +11,21 @@ $baseColor:#d8271d;
     width:$leftWidth;
     height: 100vh;
     background:#EAEDF1;
+
+    .user-title{
+      height: 70px;
+      width:100%;
+      text-align: center;
+      line-height: 70px;
+      background: #D9DEE4;
+      font-weight: bold;
+    }
     ul{
-      margin-top: 20vh;
       li{
         width:100%;
-        height: 30px;
-        line-height: 30px;
+        height: 40px;
+        line-height: 40px;
         cursor:pointer;
-        
         &.active{
           @include transition(.5s background);
           background:#fff;

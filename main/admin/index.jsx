@@ -23,11 +23,11 @@ class App extends React.Component{
 	render(){
 			var apps =  [
 				{path:'/',app:AdminIndex},
-				{path:'/user/',app:ZmitiUserApp},
-				{path:'/company/',app:ZmitiCompanyApp},
-				{path:'/system/',app:ZmitiSystemApp},
+				{path:'/user/:title',app:ZmitiUserApp},
+				{path:'/company/:title',app:ZmitiCompanyApp},
+				{path:'/system/:title',app:ZmitiSystemApp},
 				{path:'/product/',app:ZmitiProductApp},
-				{path:'/workorder/',app:ZmitiWorkOrderApp}
+				{path:'/workorder/:title',app:ZmitiWorkOrderApp}
 			];
     return (
         <Router history={hashHistory} >

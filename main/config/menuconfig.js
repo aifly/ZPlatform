@@ -1,7 +1,7 @@
 {
 	"routers":[
 			{
-				"linkTo":"/qa/",
+				"linkTo":"/qa/两会",
 				"key":"qa",
 				"title":"两会",
 				"isIcon":true,

@@ -1,10 +1,10 @@
 import './static/css/index.css';
 import React from 'react';
-
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
-
-import {Button,message,Input,Table,Modal,Form,Icon,Radio} from '../commoncomponent/common.jsx';
-
+import moment from 'moment';
+import {Button,message,Input,Table,Modal,Form,Icon,Radio,DatePicker } from '../commoncomponent/common.jsx';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 const FormItem = Form.Item;
 
 const RadioGroup = Radio.Group;
@@ -16,8 +16,14 @@ import MainUI from '../admin/components/main.jsx';
         super(...args);
         this.state = {
             visible:true,
+            productName:'',//产品名称
+            productShortName:'',
+            productPrice:'0',
+            productLink:'',//产品地址
+            productRemark:'',
             defaultZmitiIcon:'../public/images/lt-company-ico.png',
-            defaultAntdIcon:'pciture',
+            defaultAntdIcon:'picture',
+            expireDate:'2099-12-31',//过期时间
             currentIconType:'',//当前产品的图标,默认用智媒体的图标
             iconModalVisible:false,//图标对话框是否显示。
             currentIcon:"",//当前产品图标。默认为空的
@@ -25,8 +31,14 @@ import MainUI from '../admin/components/main.jsx';
     }
 
     componentWillMount() {
-       let  {resizeMainHeight} = this.props;
-            //resizeMainHeight(this);
+       let {resizeMainHeight,validateUser,loginOut} = this.props;
+
+        resizeMainHeight(this); 
+        
+        let {username,userid,getusersigid} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
+        this.userid = userid;
+        this.getusersigid = getusersigid;
+       
     }
 
     componentDidMount(){
@@ -56,10 +68,11 @@ import MainUI from '../admin/components/main.jsx';
            labelCol: {span: 6},
            wrapperCol: {span: 14},
          };
+         const dateFormat = 'YYYY-MM-DD';
         let component =  <div className="product-main-ui" style={{height:this.state.mainHeight}}>
                 <header className='product-header'><Button onClick={()=>{this.setState({visible:true})}} type='primary'>新增产品服务</Button></header>
                 <Modal title='新增产品服务' visible={this.state.visible}
-                  onOk={()=>{this.addProduct.bind(this)}}
+                  onOk={this.addProduct.bind(this)}
                   onCancel={()=>{this.setState({visible:false})}}
                   width={600}
                   >
@@ -70,7 +83,7 @@ import MainUI from '../admin/components/main.jsx';
                    label={<span><span style={{color:'red',marginRight:4,}}>*</span>产品名称</span>}
                    hasFeedback={true}
                  >
-                   <Input ref='product-name' placeholder='要显示的菜单名' onChange={()=>{}}/>
+                   <Input ref='product-name' placeholder='要显示的菜单名' onChange={(e)=>{this.setState({productName:e.target.value})}}/>
                  </FormItem>
 
                   <FormItem
@@ -78,7 +91,19 @@ import MainUI from '../admin/components/main.jsx';
                    label={<span><span style={{color:'red',marginRight:4,}}>*</span>产品简称</span>}
                    hasFeedback={true}
                  >
-                     <Input ref='product-sort-name' placeholder='产品简称' onChange={()=>{}}/>
+                     <Input ref='product-sort-name' placeholder='产品简称'  onChange={(e)=>{this.setState({productShortName:e.target.value})}}/>
+                 </FormItem>
+
+                  <FormItem
+                   {...formItemLayout}
+                   label={<span><span style={{color:'red',marginRight:4,}}>*</span>到期时间</span>}
+                   hasFeedback={true}
+                 >
+                     <DatePicker
+                      format="YYYY-MM-DD"
+                      onChange={this.changeExpireDate.bind(this)}
+                      size={'default'} defaultValue={moment(this.state.expireDate,dateFormat)}/>
+
                  </FormItem>
 
 
@@ -171,7 +196,7 @@ import MainUI from '../admin/components/main.jsx';
                     label={<span><span style={{color:'red',marginRight:4,}}>*</span>产品费用</span>}
                    hasFeedback={true}
                  >
-                     <Input ref='product-cost' addonAfter="￥/月" defaultValue={0} onChange={()=>{}}/>
+                     <Input ref='product-cost' addonAfter="￥/月" defaultValue={0}  onChange={(e)=>{this.setState({productPrice:e.target.value})}}/>
                  </FormItem>
 
                   <FormItem
@@ -179,7 +204,7 @@ import MainUI from '../admin/components/main.jsx';
                     label={<span><span style={{color:'red',marginRight:4,}}>*</span>产品地址</span>}
                    hasFeedback={true}
                  >
-                     <Input ref='product-path' defaultValue={''} onChange={()=>{}} placeholder='产品存放的项目地址，由超级管理员填写'/>
+                     <Input ref='product-path' defaultValue={''}  onChange={(e)=>{this.setState({productLink:e.target.value})}} placeholder='产品存放的项目地址，由超级管理员填写'/>
 
                  </FormItem>
 
@@ -188,7 +213,7 @@ import MainUI from '../admin/components/main.jsx';
                     label={<span>产品说明</span>}
                    hasFeedback={true}
                  >
-                     <textarea ref='product-remark' style={{width:'100%'}} defaultValue={''} onChange={()=>{}} placeholder='产品说明'>
+                     <textarea ref='product-remark' style={{width:'100%'}} defaultValue={''} onChange={(e)=>{this.setState({productRemark:e.target.value})}}  placeholder='产品说明'>
                      </textarea>
                  </FormItem>
                 
@@ -198,6 +223,11 @@ import MainUI from '../admin/components/main.jsx';
         return(
             <MainUI component={component}></MainUI>
         )
+    }
+
+    changeExpireDate(value){
+        
+        this.setState({expireDate:value.format('YYYY-MM-DD')})
     }
 
     changeIcon(e){//选择当前产品图标。
@@ -228,7 +258,27 @@ import MainUI from '../admin/components/main.jsx';
      
     }
     addProduct(){//添加产品
+      var params = {
+        setlinkto:this.state.productLink,
+        setkey:'puzzle',
+        settitle:this.state.productName,
+        setpoutline:this.state.productShortName,
+        setisicon:this.state.currentIconType === 'antd',
+        settype:this.state.currentIcon,
+        setendtime:this.state.expireDate,
+        setprice:this.state.productPrice,
+        setmonthnum:1,//按月算。
+        setpdesc:this.state.productRemark,
+        userid:this.userid,
+        getusersigid:this.getusersigid
+      }
+      $.ajax({
+        url:window.baseUrl + '/product/add_product/',
+        data:params,
+        success(data){
 
+        }
+      });
     }
     onChangeIcon(e){//切换图标
       switch(e.target.value) {

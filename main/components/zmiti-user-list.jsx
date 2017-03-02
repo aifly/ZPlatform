@@ -70,6 +70,9 @@ export default class ZmitiUserList extends Component {
 		return (
 			<section className='user-main-ui' style={{height:this.props.mainHeight}}>
 				<div className='user-left-pannel'>
+					<div className='user-title'>
+						{this.props.title}
+					</div>
 					<ul onClick={this.changeAccount}>
 						{
 							this.props.tags.map((tag,i)=>{

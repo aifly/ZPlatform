@@ -26,7 +26,7 @@ class App extends React.Component{
 				{path: '/userdepartment/', app: ZmitiUserDepartmentApp},
 				{path: '/personalAcc/', app: ZmitiPersonalAccApp},
 				{path: '/richimg/', app: ZmitiRichImgApp},
-				{path: '/qa/', app: ZmitiQaApp},
+				{path: '/qa/:title', app: ZmitiQaApp},
 				{path: '/project/', app: ZmitiProject},
 				{path: '/renewal/', app: ZmitiRenewalApp}
 		];

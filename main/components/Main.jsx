@@ -147,7 +147,7 @@ class MainUI extends React.Component {
                         </div>
                         <div className="fly-menu-c">
                             <Menu
-                                  style={{ width: 180 }}
+                                  style={{ width: 182 }}
                                   defaultOpenKeys={[defaultOpenKeys]}
                                   selectedKeys={[this.state.current]}
                                   mode="inline">

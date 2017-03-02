@@ -7,7 +7,7 @@ export default class ZmitiHeader extends Component {
 	}
 	render() {
 		return (
-						<header className="fly-header" >
+				<header className="fly-header" >
                     <div className="fly-logo"><a href={window.mainUrl}><img src={this.props.logo} alt=""/></a></div>
                     <div className="fly-nav"><a href={window.mainUrl}>控制平台</a></div>
                     <div className="fly-nav"><a href="#">产品与服务</a></div>

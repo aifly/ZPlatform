@@ -63,14 +63,14 @@ class MainUI extends Component {
 
     this.userManagerMenuConfig = [
        {
-          "linkTo":"/user/",
+          "linkTo":"/user/个人账户管理",
           "key":"user",
           "title":"个人账户管理",
           "isIcon":true,
           "type":"user",
           "isShow":true
       }, {
-          "linkTo":"/company/",
+          "linkTo":"/company/公司账户管理",
           "key":"company",
           "title":"公司账户管理",
           "isIcon":true,
@@ -89,7 +89,7 @@ class MainUI extends Component {
           "isShow":true
       },
       {
-          "linkTo":"/workorder/",
+          "linkTo":"/workorder/工单管理",
           "key":"workorder",
           "title":"工单管理",
           "isIcon":true,
@@ -99,7 +99,7 @@ class MainUI extends Component {
     ]
     if(this.usertypesign===4){//超级管理员
       this.userManagerMenuConfig.push( {
-          "linkTo":"/system/",
+          "linkTo":"/system/系统账户管理",
           "key":"system",
           "title":"系统账户管理",
           "isIcon":true,
@@ -124,7 +124,7 @@ class MainUI extends Component {
             getusersigid:this.getusersigid,
             logo:'../static/images/logo.png'
         }
-        console.log(headerProps)
+
 		return (
 			 <section className="main">
           <ZmitiHeader {...headerProps}></ZmitiHeader>
@@ -136,7 +136,7 @@ class MainUI extends Component {
                     </div>
                     <div className="fly-menu-c">
                         <Menu
-                              style={{ width: 180 }}
+                              style={{ width: 182 }}
                               defaultOpenKeys={[openKey]}
                               selectedKeys={[this.state.current]}
                               mode="inline">

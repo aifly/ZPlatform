@@ -121,7 +121,7 @@ class ZmitiQAApp extends Component {
 			width:'13%',
 			dataIndex: '', key: 'x',
 			render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)" onClick={this.editQuestion.bind(this,record.qid)}>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,record.qid)} okText="确定" cancelText="取消"><a href='javascrit:void' style={{color:'red'}}>删除</a></Popconfirm></div> });
-		
+		  var title = this.props.params.title || '两会';
 		let props={
 			userList:this.state.userList,
 			columns:[columns1,columns2,columns3,columns3],
@@ -129,6 +129,7 @@ class ZmitiQAApp extends Component {
 			type:'meeting',
 			tags:['全部','未审核','审核通过','审核不通过'],
 			mainHeight:this.state.mainHeight,
+			title:title,
 			keyDown:(value)=>{
 					clearTimeout(this.keyupTimer);
       		this.defautlUserList === undefined && (this.defautlUserList = this.state.userList.concat([]));
@@ -170,6 +171,7 @@ class ZmitiQAApp extends Component {
            wrapperCol: {span: 14},
          };
 
+  
 		var mainComponent = <div>
 			<ZmitiUserList {...props}></ZmitiUserList>
 			 <Modal title='问题详情' visible={this.state.questionDetailVisible}
