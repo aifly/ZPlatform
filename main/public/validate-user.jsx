@@ -31,25 +31,35 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	}
 
 	componentWillMount() {
-		Date.prototype.format =function(format){
-				var o = {
-				"M+" : this.getMonth()+1, //month
-				"d+" : this.getDate(), //day
-				"h+" : this.getHours(), //hour
-				"m+" : this.getMinutes(), //minute
-				"s+" : this.getSeconds(), //second
-				"q+" : Math.floor((this.getMonth()+3)/3), //quarter
-				"S" : this.getMilliseconds() //millisecond
-				}
-				if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
-				(this.getFullYear()+"").substr(4- RegExp.$1.length));
-				for(var k in o)if(new RegExp("("+ k +")").test(format))
-				format = format.replace(RegExp.$1,
-				RegExp.$1.length==1? o[k] :
-				("00"+ o[k]).substr((""+ o[k]).length));
-				return format;
+	 
+	}	
+
+	popNotice(opt={},fnFail){//消息通知
+			window.Notification = window.Notification|| window.webkitNotification;
+			if (window.Notification) {
+		    if (Notification.permission == "granted") {
+	            var notification = new Notification(opt.title||"智媒体提醒您：", {
+	            	body:opt.body || '你有新的任务了，http://pm.zmiti.com请查看',
+	              icon:opt.icon || 'http://image.zhangxinxu.com/image/study/s/s128/mm1.jpg',
+	              sound:opt.sound || 'http://webapi.zmiti.com/public/corruption/assets/music/right.mp3'
+	            });
+	            
+	            notification.onclick = function() {
+	                //text.innerHTML = '张小姐已于' + new Date().toTimeString().split(' ')[0] + '加你为好友！';
+	                if(opt.href){
+	                	location.href= opt.href;
+	                }
+	                if(opt.hash){
+	                	location.hash = opt.hash;
+	                }
+	                notification.close();
+	            };
+	        }    
+		} else {
+				fnFail && fnFail();
+		    console.log('your browser did not support notification,plese update your browser');
 		}
-	}	 
+	}
 
 	validateUser(fn,that){
 		var s = this;
@@ -248,6 +258,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			isSuperAdmin:this.isSuperAdmin,
 			isNormalAdmin:this.isNormalAdmin,
 			isCompanyAdmin:this.isCompanyAdmin,
+			popNotice:this.popNotice
 			//fillFeilds:this.fillFeilds
 		}
 

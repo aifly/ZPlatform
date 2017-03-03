@@ -1,11 +1,11 @@
-{
+﻿{
 	"routers":[
 			{
-				"linkTo":"/qa/两会",
+				"linkTo":"/qa/两会/",
 				"key":"qa",
 				"title":"两会",
 				"isIcon":true,
-				"type":"question-circle-o",
+				"type":"question-circle-o"
 			},{
 				"linkTo":"/puzzle/",
 				"key":"puzzle",

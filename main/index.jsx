@@ -14,6 +14,7 @@ import ZmitiRenewalApp from './renewal/index.jsx';
 import ZmitiProject from './project/index.jsx';
 import Obserable from './static/libs/obserable.js';
 import $ from 'jquery';
+
 class App extends React.Component{
 	constructor(args) {
 		super(...args);
@@ -57,13 +58,10 @@ class App extends React.Component{
 	componentDidMount() {
 
 	}
-
 }
 
 
-$.getJSON(window.menuConfigUrl,(data)=>{
-
-	
+$.getJSON(window.menuConfigUrl,function(data){
 	window.globalMenus = data.routers;
 	ReactDOM.render(<App></App>, document.getElementById('fly-main'));
 	window.mainLeftSize = 180;
@@ -72,5 +70,4 @@ $.getJSON(window.menuConfigUrl,(data)=>{
 		window.obserable.trigger({type:'setMenuWidth'});
 	}
 });
-
 

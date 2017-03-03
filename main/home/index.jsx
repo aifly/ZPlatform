@@ -34,11 +34,12 @@ import MainUI from '../components/Main.jsx';
     }
 
     componentWillMount() {
-        let {resizeMainHeight,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail} = this.props;
+        let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail} = this.props;
         var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
             },this);
             this.loginOut = loginOut;
+            this.popNotice = popNotice;
             this.isSuperAdmin = isSuperAdmin;
             this.isNormalAdmin = isNormalAdmin;
             this.validateUserRole = validateUserRole;
@@ -125,11 +126,10 @@ import MainUI from '../components/Main.jsx';
             });
 
         });
-
-
-
-        
     }
+
+
+
 
     render(){
 
@@ -270,7 +270,7 @@ import MainUI from '../components/Main.jsx';
                                         </aside>
                                     </div>
                                     <div className="task-btns">
-                                        <Button  size="large">签退</Button>
+                                        <Button  size="large" onClick={this.notify.bind(this)}>签退</Button>
                                     </div>
                                 </article>
                                 <article className="att-month">
@@ -332,6 +332,16 @@ import MainUI from '../components/Main.jsx';
         return(
             <MainUI component={component}></MainUI>
         )
+    }
+
+    notify(){
+        if (Notification.permission == "granted") {
+            this.popNotice();
+        } else if (Notification.permission != "denied") {
+            Notification.requestPermission(function (permission) {
+              this.popNotice();
+            });
+        }
     }
 }
 
