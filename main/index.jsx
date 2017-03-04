@@ -13,6 +13,8 @@ import ZmitiPersonalAccApp from './personalAcc/index.jsx';
 import ZmitiRenewalApp from './renewal/index.jsx';
 import ZmitiProject from './project/index.jsx';
 import Obserable from './static/libs/obserable.js';
+
+import {notification } from './commoncomponent/common.jsx';
 import $ from 'jquery';
 
 class App extends React.Component{
@@ -40,7 +42,86 @@ class App extends React.Component{
 			)
 	}
 
+	listen(opt={}){
+		var socket = io('http://socket.zmiti.com:2120');
+
+    /*socket.on('connect', function(){
+    	socket.emit('login', opt.uid||'');
+    });*/
+    // 后端推送来消息时
+    var s = this;
+    socket.on('new_msg', function(msg){
+    		msg = msg.replace(/&quot;/g,"\"");
+	    	var data = JSON.parse(msg);
+	    	var uid = window.obserable.trigger({type:"getuserid"});
+	    	if(data.userids.length>0){
+	    		data.userids.forEach((userid)=>{
+	    				if(uid === userid){
+	    					//向当前用户发。
+	    					 if (Notification.permission == "granted") {
+					            s.popNotice({body:data.content});
+					        } else if (Notification.permission != "denied") {
+					            Notification.requestPermission(function (permission) {
+					              s.popNotice({body:data.content});
+					            });
+					        }else{
+					        		notification['info']({
+					        			message:data.content,
+					        			description:'智媒体提示您'
+					        		});
+					        }
+	    				}
+		    	});
+	    	}else{//向所有人推送消息。
+	    		if (Notification.permission == "granted") {
+		            s.popNotice();
+		        } else if (Notification.permission != "denied") {
+		            Notification.requestPermission(function (permission) {
+		              s.popNotice();
+		            });
+		        }
+		        else{
+									notification['info']({
+				        			message:data.content,
+				        			description:'智媒体提示您'
+				        		});
+		        }
+	    	}
+	    	
+    });
+	}
+
+	popNotice(opt={},fnFail){//消息通知
+			window.Notification = window.Notification|| window.webkitNotification;
+			if (window.Notification) {
+		    if (Notification.permission == "granted") {
+	            var notifications = new Notification(opt.title||"智媒体提醒您：", {
+	            	body:opt.body || '你有新的任务了，http://pm.zmiti.com请查看',
+	              icon:opt.icon || 'http://image.zhangxinxu.com/image/study/s/s128/mm1.jpg',
+	              sound:opt.sound || 'http://webapi.zmiti.com/public/corruption/assets/music/right.mp3',
+	            });
+	            
+	            notifications.onclick = function() {
+	                //text.innerHTML = '张小姐已于' + new Date().toTimeString().split(' ')[0] + '加你为好友！';
+	                if(opt.href){
+	                	location.href= opt.href;
+	                }
+	                if(opt.hash){
+	                	location.hash = opt.hash;
+	                }
+	                notifications.close();
+	            };
+	        }    
+		} else {
+				fnFail && fnFail();
+		    console.log('your browser did not support notification,plese update your browser');
+		}
+	}
+
 	componentWillMount(){
+
+		this.listen();
+
 		window.obserable = new Obserable();
 		window.getCookie = function(cname){
 		 var name = cname + "=";  

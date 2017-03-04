@@ -4,6 +4,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import moment from 'moment';
 import {Button,message,Input,Table,Modal,Form,Icon,Radio,DatePicker } from '../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
+
 moment.locale('zh-cn');
 const FormItem = Form.Item;
 
@@ -20,6 +21,7 @@ import MainUI from '../admin/components/main.jsx';
             productShortName:'',
             productPrice:'0',
             productLink:'',//产品地址
+            productType:0,//产品类型 0 基础产品 1付费产品
             productRemark:'',
             defaultZmitiIcon:'../public/images/lt-company-ico.png',
             defaultAntdIcon:'picture',
@@ -31,12 +33,14 @@ import MainUI from '../admin/components/main.jsx';
     }
 
     componentWillMount() {
-       let {resizeMainHeight,validateUser,loginOut} = this.props;
+       let {resizeMainHeight,validateUser,loginOut,listen,send} = this.props;
 
         resizeMainHeight(this); 
         
         let {username,userid,getusersigid} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
         this.userid = userid;
+        this.listen = listen;
+        this.send = send;
         this.getusersigid = getusersigid;
        
     }
@@ -105,7 +109,18 @@ import MainUI from '../admin/components/main.jsx';
                       size={'default'} defaultValue={moment(this.state.expireDate,dateFormat)}/>
 
                  </FormItem>
+                 <FormItem
+                   {...formItemLayout}
+                   label={<span><span style={{color:'red',marginRight:4,}}>*</span>产品类型</span>}
+                   hasFeedback={true}
+                 >
+                    <RadioGroup onChange={e=>{this.setState({productType:e.target.value})}} value={this.state.productType}>
+                        <Radio value={0}>基础产品</Radio>
+                        <Radio value={1}>付费产品</Radio>
+                    </RadioGroup>
 
+                
+                 </FormItem>
 
                  <FormItem
                    {...formItemLayout}
@@ -225,6 +240,20 @@ import MainUI from '../admin/components/main.jsx';
         )
     }
 
+    componentDidMount() {
+      var s=  this;
+      $.ajax({
+        url:window.baseUrl+'product/get_product/',
+        data:{
+          userid:s.userid,
+          getusersigid:s.getusersigid
+        },
+        success(data){
+            console.log(data);
+        }
+      })
+    }
+
     changeExpireDate(value){
         
         this.setState({expireDate:value.format('YYYY-MM-DD')})
@@ -257,14 +286,32 @@ import MainUI from '../admin/components/main.jsx';
 
      
     }
+
     addProduct(){//添加产品
+
+     
+      //this.state.currentIcon :localhost:3000/public/images/ic.png
+      var src = '';
+      if(this.state.currentIcon.split('//').length>1){
+          src= this.state.currentIcon.split('//')[1];
+      }
+      else{
+        src = this.state.currentIcon.split('//')[0];
+      }
+      src = src.split('/');
+      src.shift();
+      src ='/main/'+ src.join('/');
+ 
+
+      var s = this;
       var params = {
         setlinkto:this.state.productLink,
-        setkey:'puzzle',
+        setkey:'',
         settitle:this.state.productName,
         setpoutline:this.state.productShortName,
         setisicon:this.state.currentIconType === 'antd',
-        settype:this.state.currentIcon,
+        settype:src,
+        setproducttype:this.state.productType,
         setendtime:this.state.expireDate,
         setprice:this.state.productPrice,
         setmonthnum:1,//按月算。
@@ -276,7 +323,10 @@ import MainUI from '../admin/components/main.jsx';
         url:window.baseUrl + '/product/add_product/',
         data:params,
         success(data){
-          console.log(data);
+          message[data.getret === 0 ? 'success':'error'](data.getmsg);
+          s.setState({
+            visible:false
+          })
         }
       });
     }

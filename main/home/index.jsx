@@ -34,11 +34,13 @@ import MainUI from '../components/Main.jsx';
     }
 
     componentWillMount() {
-        let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail} = this.props;
+        let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail,listen,send} = this.props;
         var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
             },this);
             this.loginOut = loginOut;
+            this.listen = listen;
+            this.send = send;
             this.popNotice = popNotice;
             this.isSuperAdmin = isSuperAdmin;
             this.isNormalAdmin = isNormalAdmin;
@@ -335,24 +337,14 @@ import MainUI from '../components/Main.jsx';
     }
 
     notify(){
-        if (Notification.permission == "granted") {
-            this.popNotice();
-        } else if (Notification.permission != "denied") {
-            Notification.requestPermission(function (permission) {
-              this.popNotice();
-            });
-        }
+        var content = JSON.stringify({content:"签退了",userids:['45b8b818-95de-8e38-f1af-581fe4f5a3ac','c30182ee-f371-4c69-810c-1921aaae4bfa','4db789b2-3152-4d48-92f7-4a8a9becd0fe']});
+        this.send({
+            userid:this.userid,
+            getusersigid:this.getusersigid,
+            content:content
+         });
+        
     }
 }
 
 export default ZmitiValidateUser(ZmitiHomeApp);
-
-/*ReactDOM.render(<ZmitiHomeApp></ZmitiHomeApp>,_$("#fly-main"));*/
-
-/*
-((document,window)=>{
-    let zmitiTab = new ZmitiTab();
-    window.addEventListener('resize',()=>{
-
-    });
-})(document,window)*/
