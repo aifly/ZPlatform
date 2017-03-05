@@ -1,0 +1,14 @@
+@import '../../public/css/base.scss';
+$baseColor:#d8271d;
+
+.order-main-ui{
+	table{
+	    td,th{
+	      text-align: center !important;
+	    }
+	    a{
+	        color:#06C;
+	      }
+	      margin-top:20px;
+	 }	
+}

@@ -10,13 +10,18 @@ const FormItem = Form.Item;
 
 const RadioGroup = Radio.Group;
 
+import ZmitiOrderList from '../components/order.jsx';
+
 import MainUI from '../admin/components/main.jsx';
 
  class ZmitiProductApp extends React.Component{
     constructor(args){
         super(...args);
         this.state = {
-            visible:true,
+            visible:false,
+            productlist:[{
+              productid:-1
+            }],
             productName:'',//产品名称
             productShortName:'',
             productPrice:'0',
@@ -72,9 +77,49 @@ import MainUI from '../admin/components/main.jsx';
            labelCol: {span: 6},
            wrapperCol: {span: 14},
          };
+
+         const columns = [{
+            title:"序号",
+            dataIndex:'key',
+            key:'xx'
+            },{
+              title: '产品名称',
+              dataIndex: 'productname',
+              key: 'productname',
+            }, {
+              title: '产品简称',
+              dataIndex: 'productShortName',
+              key: 'productShortName',
+            }, {
+              title: '产品类型',
+              dataIndex: 'productType',
+              key: 'productType',
+            }, {
+              title: '到期时间',
+              dataIndex: 'expirDate',
+              key: 'expirDate',
+            }, {
+              title: '产品费用',
+              dataIndex: 'exprice',
+              key: 'exprice',
+            }, {
+              title: '产品地址',
+              dataIndex: 'linkTo',
+              key: 'linkTo',
+            }];
+
+
+         let orderProps ={
+            orderList:this.state.productlist,
+            columns:[columns],
+            detail:(record)=>{
+              return <p>{record.productid}</p>
+            }
+         }
          const dateFormat = 'YYYY-MM-DD';
         let component =  <div className="product-main-ui" style={{height:this.state.mainHeight}}>
                 <header className='product-header'><Button onClick={()=>{this.setState({visible:true})}} type='primary'>新增产品服务</Button></header>
+                <ZmitiOrderList {...orderProps}></ZmitiOrderList>
                 <Modal title='新增产品服务' visible={this.state.visible}
                   onOk={this.addProduct.bind(this)}
                   onCancel={()=>{this.setState({visible:false})}}
@@ -117,6 +162,7 @@ import MainUI from '../admin/components/main.jsx';
                     <RadioGroup onChange={e=>{this.setState({productType:e.target.value})}} value={this.state.productType}>
                         <Radio value={0}>基础产品</Radio>
                         <Radio value={1}>付费产品</Radio>
+                        <Radio value={2}>默认产品(不需要申请)</Radio>
                     </RadioGroup>
 
                 
@@ -249,6 +295,13 @@ import MainUI from '../admin/components/main.jsx';
           getusersigid:s.getusersigid
         },
         success(data){
+            if(data.getret === 0){
+              s.state.productlist = data.productlist;
+              s.state.productlist.forEach((item,i)=>{
+                item.key = item.productid;
+              })
+              s.forceUpdate();
+            }
             console.log(data);
         }
       })
@@ -279,7 +332,7 @@ import MainUI from '../admin/components/main.jsx';
           }
           this.setState({
               currentIcon:icon
-            });
+          });
          // console.log(e.target);
           break;
       }
@@ -305,17 +358,16 @@ import MainUI from '../admin/components/main.jsx';
 
       var s = this;
       var params = {
-        setlinkto:this.state.productLink,
-        setkey:'',
-        settitle:this.state.productName,
-        setpoutline:this.state.productShortName,
-        setisicon:this.state.currentIconType === 'antd',
-        settype:src,
-        setproducttype:this.state.productType,
-        setendtime:this.state.expireDate,
-        setprice:this.state.productPrice,
-        setmonthnum:1,//按月算。
-        setpdesc:this.state.productRemark,
+        producturl:this.state.productLink,
+        productname:this.state.productName,
+        outline:this.state.productShortName,
+        icontype:this.state.currentIconType === 'antd',
+        producticon:src,
+        producttype:this.state.productType,
+        endtime:this.state.expireDate,
+        price:this.state.productPrice,
+        bookingmonthnum:1,//按月算。
+        description:this.state.productRemark,
         userid:this.userid,
         getusersigid:this.getusersigid
       }

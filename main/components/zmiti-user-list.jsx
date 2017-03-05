@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import './css/user-list.css';
 
 import { Table ,Select ,Icon} from '../commoncomponent/common.jsx';
