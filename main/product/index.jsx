@@ -88,12 +88,12 @@ import MainUI from '../admin/components/main.jsx';
               key: 'productname',
             }, {
               title: '产品简称',
-              dataIndex: 'productShortName',
-              key: 'productShortName',
+              dataIndex: 'outline',
+              key: 'outline',
             }, {
               title: '产品类型',
-              dataIndex: 'productType',
-              key: 'productType',
+              dataIndex: 'producttype',
+              key: 'producttype',
             }, {
               title: '到期时间',
               dataIndex: 'expirDate',
@@ -104,8 +104,8 @@ import MainUI from '../admin/components/main.jsx';
               key: 'exprice',
             }, {
               title: '产品地址',
-              dataIndex: 'linkTo',
-              key: 'linkTo',
+              dataIndex: 'producturl',
+              key: 'producturl',
             }];
 
 
@@ -296,10 +296,12 @@ import MainUI from '../admin/components/main.jsx';
         },
         success(data){
             if(data.getret === 0){
+              var productType = ['基础产品','收费产品','默认产品']
               s.state.productlist = data.productlist;
               s.state.productlist.forEach((item,i)=>{
-                item.key = item.productid;
-              })
+                item.key = i+1;
+                item.producttype = productType[item.producttype];
+              });
               s.forceUpdate();
             }
             console.log(data);
