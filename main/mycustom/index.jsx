@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 
-import { message,Select } from '../commoncomponent/common.jsx';
+import { message,Select,Tabs } from '../commoncomponent/common.jsx';
+const TabPane = Tabs.TabPane;
 var Option = Select.Option;
 
 import MainUI from '../components/Main.jsx';
+
+import $ from 'jquery';
 
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
@@ -13,13 +16,22 @@ class ZmitiMycustomApp extends Component {
 		
 		this.state = {
 			current:0,
+
 			mainHeight:document.documentElement.clientHeight - 50,
+			customList:[]
 		}; 
 	}
 	render() {
 
+		var component = <div className='mycustom-main-ui'>
+			 <Tabs tabPosition={'left'}>
+	          <TabPane tab="Tab 1" key="1">Content of Tab 1</TabPane>
+	          <TabPane tab="Tab 2" key="2">Content of Tab 2</TabPane>
+	          <TabPane tab="Tab 3" key="3">Content of Tab 3</TabPane>
+	        </Tabs>
+		</div>
 		return (
-			<MainUI component={<div>我的订制</div>}></MainUI>
+			<MainUI component={component}></MainUI>
 			);
 	}
 
@@ -31,6 +43,20 @@ class ZmitiMycustomApp extends Component {
 		
 		validateUser(()=>{loginOut(undefined,undefined,false);},this);
 		
+	}
+
+	componentDidMount() {
+		var s = this;
+		$.ajax({
+			url:'./mycustom/data.json',
+			data:{},
+			success(data){
+				s.setState({
+					customList:data.customList
+				});
+				console.log(s.state.customList)
+			}
+		})	
 	}
  
 }
