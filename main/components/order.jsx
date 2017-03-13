@@ -24,8 +24,10 @@ export default class ZmitiOrderList extends Component {
 						if(i===0){
 							return <section key={i} className='user-list-section'>
 								<Table bordered={true}
-								  expandedRowRender={record => <div>{this.props.detail(record)}</div>}
+								 onRowClick={(record,index,i)=>{this.props.getProductDetail(record,index,i)}}
 								 dataSource={this.props.orderList} columns={col} />
+								}
+
 							</section>	
 						}
 					})

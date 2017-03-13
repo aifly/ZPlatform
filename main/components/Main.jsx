@@ -80,6 +80,8 @@ class MainUI extends React.Component {
             defaultOpenKeys = 'sub2';
         }else if(hash.indexOf('personalAcc')>-1 || hash.indexOf('renewal')>-1){
             defaultOpenKeys = 'sub3';
+        }else if(hash.indexOf('custom')>-1 || hash.indexOf('mycustom')>-1){
+            defaultOpenKeys = 'sub4';
         }
 
         if(this.state.isCompany && this.usertypesign === window.Role.COMPANYADMINUSER){//this.usertypesign === 5的时候,才是公司管理员.
@@ -128,6 +130,22 @@ class MainUI extends React.Component {
             }
         ]
 
+         this.customMenuConfig = [//订制服务 的菜单列表
+            {
+                "linkTo":"/mycustom/",
+                "key":"mycustom",
+                "title":"我的订制",
+                "isIcon":true,
+                "type":"user"
+            },{
+                "linkTo":"/custom/",
+                "key":"custom",
+                "title":"我要订制",
+                "isIcon":true,
+                "type":"edit"
+            }
+        ]
+
         var configMenus =window.globalMenus;
         var headerProps = {
             usertypesign:this.state.usertypesign,
@@ -161,6 +179,12 @@ class MainUI extends React.Component {
                                 <SubMenu key="sub3"
                                          title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>个人中心</span></span>}>
                                     {this.singleUserMenuConfig.map(item=>{
+                                        return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                    })}
+                                </SubMenu>
+                                 <SubMenu key="sub4"
+                                         title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>订制服务</span></span>}>
+                                    {this.customMenuConfig.map(item=>{
                                         return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
                                     })}
                                 </SubMenu>
@@ -202,10 +226,7 @@ class MainUI extends React.Component {
     logout(){//退出登录
     	var s=  this;
 
-    	console.log({
-    				userid:s.userid,
-    				getusersigid:s.getusersigid
-    			})
+    	 
     		$.ajax({
     			url:window.baseUrl+'user/user_loginout/',
     			data:{
@@ -234,13 +255,13 @@ class MainUI extends React.Component {
             configMenus = configMenus.concat(this.userMenuConfig);
         }
         configMenus = configMenus.concat(this.singleUserMenuConfig);
+        configMenus = configMenus.concat(this.customMenuConfig);
+        console.log(hash)
         configMenus.forEach(item=>{
-            if(hash.indexOf(item.key)>-1){
+            if(hash.split('/')[1] === item.key){
                 current = item.key;
             }
         });
-
-
 
         this.setState({
             isCompany:this.companyid,

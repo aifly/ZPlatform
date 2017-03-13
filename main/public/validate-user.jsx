@@ -34,6 +34,34 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	  
 	}
 
+	getProductList(opt){ //获取产品列表 
+			var s=  opt.s;
+			 s.setState({
+	        loading:true,
+	        tip:'正在拉取数据...'
+      });
+      $.ajax({
+        url:window.baseUrl+'product/get_product/',
+        data:{
+          userid:s.userid,
+          getusersigid:s.getusersigid
+        },
+        success(data){
+            if(data.getret === 0){
+              var productType = ['基础产品','收费产品','默认产品']
+              s.state.productlist = data.productlist;
+              s.state.productlist.forEach((item,i)=>{
+                item.key = i+1;
+                item.endtime = item.endtime.substring(0,10);
+                item.producttypeName = productType[item.producttype];
+              });
+              s.state.loading = false;
+              s.forceUpdate();
+            }
+        }
+      })
+	}
+
 	listen(opt){
 		var socket = io('http://socket.zmiti.com:2120');
 
@@ -75,7 +103,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		    if (Notification.permission == "granted") {
 	            var notification = new Notification(opt.title||"智媒体提醒您：", {
 	            	body:opt.body || '你有新的任务了，http://pm.zmiti.com请查看',
-	              icon:opt.icon || 'http://image.zhangxinxu.com/image/study/s/s128/mm1.jpg',
+	              icon:opt.icon || 'http://www.zmiti.com/main/static/images/notify.jpg',
 	              sound:opt.sound || 'http://webapi.zmiti.com/public/corruption/assets/music/right.mp3'
 	            });
 	            
@@ -298,7 +326,8 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			isCompanyAdmin:this.isCompanyAdmin,
 			popNotice:this.popNotice,
 			send:this.send,
-			listen:this.listen
+			listen:this.listen,
+			getProductList:this.getProductList
 			//fillFeilds:this.fillFeilds
 		}
 

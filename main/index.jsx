@@ -12,6 +12,9 @@ import ZmitiUserDepartmentApp from './userdepartment/index.jsx';
 import ZmitiPersonalAccApp from './personalAcc/index.jsx';
 import ZmitiRenewalApp from './renewal/index.jsx';
 import ZmitiProject from './project/index.jsx';
+import ZmitiCustom from './custom/index.jsx';
+import ZmitiMycustom from './mycustom/index.jsx';
+
 import Obserable from './static/libs/obserable.js';
 
 import {notification } from './commoncomponent/common.jsx';
@@ -31,7 +34,9 @@ class App extends React.Component{
 				{path: '/richimg/', app: ZmitiRichImgApp},
 				{path: '/qa/:title', app: ZmitiQaApp},
 				{path: '/project/', app: ZmitiProject},
-				{path: '/renewal/', app: ZmitiRenewalApp}
+				{path: '/renewal/', app: ZmitiRenewalApp},
+				{path: '/custom/', app: ZmitiCustom},
+				{path: '/mycustom/', app: ZmitiMycustom}
 		];
 		return (
 			<Router history={hashHistory}>

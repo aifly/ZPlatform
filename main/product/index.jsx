@@ -2,7 +2,7 @@ import './static/css/index.css';
 import React from 'react';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import moment from 'moment';
-import {Button,message,Input,Table,Modal,Form,Icon,Radio,DatePicker } from '../commoncomponent/common.jsx';
+import {Button,message,Input,Table,Modal,Form,Icon,Radio,DatePicker,Popconfirm,Spin } from '../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');
@@ -22,6 +22,8 @@ import MainUI from '../admin/components/main.jsx';
             productlist:[{
               productid:-1
             }],
+            loading:false,
+            tip:'数据拉取中...',
             productName:'',//产品名称
             productShortName:'',
             productPrice:'0',
@@ -35,10 +37,11 @@ import MainUI from '../admin/components/main.jsx';
             iconModalVisible:false,//图标对话框是否显示。
             currentIcon:"",//当前产品图标。默认为空的
         }
+        this.currentId = -1;
     }
 
     componentWillMount() {
-       let {resizeMainHeight,validateUser,loginOut,listen,send} = this.props;
+       let {resizeMainHeight,validateUser,loginOut,listen,send,getProductList} = this.props;
 
         resizeMainHeight(this); 
         
@@ -46,6 +49,7 @@ import MainUI from '../admin/components/main.jsx';
         this.userid = userid;
         this.listen = listen;
         this.send = send;
+        this.getProductList = getProductList;
         this.getusersigid = getusersigid;
        
     }
@@ -92,33 +96,59 @@ import MainUI from '../admin/components/main.jsx';
               key: 'outline',
             }, {
               title: '产品类型',
-              dataIndex: 'producttype',
-              key: 'producttype',
+              dataIndex: 'producttypeName',
+              key: 'producttypeName',
             }, {
               title: '到期时间',
-              dataIndex: 'expirDate',
-              key: 'expirDate',
+              dataIndex: 'endtime',
+              key: 'endtime',
             }, {
               title: '产品费用',
-              dataIndex: 'exprice',
-              key: 'exprice',
+              dataIndex: 'price',
+              key: 'price',
             }, {
               title: '产品地址',
               dataIndex: 'producturl',
               key: 'producturl',
-            }];
+            },{ 
+              title: '操作', 
+              dataIndex: '', key: 'x',
+              width:'10%',
+              render: (text, record) => <div>
+                                <Popconfirm placement="left" title={'确定要删除吗?'} onConfirm={this.delProduct.bind(this,record.productid)} okText="确定" cancelText="取消">
+                                    <Button className='lt-del' type='primary'>删除</Button>
+                                </Popconfirm></div> }
+            ];
 
 
          let orderProps ={
             orderList:this.state.productlist,
             columns:[columns],
-            detail:(record)=>{
-              return <p>{record.productid}</p>
+            getProductDetail:(record,index,e)=>{
+              
+              this.currentId = record.productid;
+              if(e.target.nodeName === "SPAN" || e.target.nodeName === 'BUTTON'){
+                return;//如果点击的是删除按钮，则不用弹出产品详情。
+              }
+              this.setState({
+                visible:true,
+                productName:record.productname,//产品名称
+                productShortName:record.outline,
+                productPrice:record.price,
+                productLink:record.producturl,//产品地址
+                productType:record.producttype,//产品类型 0 基础产品 1付费产品
+                productRemark:record.description,
+                expireDate:'2099-12-31',//过期时间
+                currentIconType:record.isicon ? 'zmiti':'antd',//当前产品的图标,默认用智媒体的图标
+                currentIcon:record.producticon,//当前产品图标。默认为空的
+              });
+              
+              return false;
             }
          }
          const dateFormat = 'YYYY-MM-DD';
-        let component =  <div className="product-main-ui" style={{height:this.state.mainHeight}}>
-                <header className='product-header'><Button onClick={()=>{this.setState({visible:true})}} type='primary'>新增产品服务</Button></header>
+        let component =  <Spin tip={this.state.tip} spinning={this.state.loading}><div className="product-main-ui" style={{height:this.state.mainHeight}}>
+                <header className='product-header'><Button onClick={()=>{this.setState({visible:true});this.productId = -1;}} type='primary'>新增产品服务</Button></header>
                 <ZmitiOrderList {...orderProps}></ZmitiOrderList>
                 <Modal title='新增产品服务' visible={this.state.visible}
                   onOk={this.addProduct.bind(this)}
@@ -132,7 +162,7 @@ import MainUI from '../admin/components/main.jsx';
                    label={<span><span style={{color:'red',marginRight:4,}}>*</span>产品名称</span>}
                    hasFeedback={true}
                  >
-                   <Input ref='product-name' placeholder='要显示的菜单名' onChange={(e)=>{this.setState({productName:e.target.value})}}/>
+                   <Input ref='product-name' value={this.state.productName} placeholder='要显示的菜单名' onChange={(e)=>{this.setState({productName:e.target.value})}}/>
                  </FormItem>
 
                   <FormItem
@@ -140,7 +170,7 @@ import MainUI from '../admin/components/main.jsx';
                    label={<span><span style={{color:'red',marginRight:4,}}>*</span>产品简称</span>}
                    hasFeedback={true}
                  >
-                     <Input ref='product-sort-name' placeholder='产品简称'  onChange={(e)=>{this.setState({productShortName:e.target.value})}}/>
+                     <Input ref='product-sort-name' value={this.state.productShortName} placeholder='产品简称'  onChange={(e)=>{this.setState({productShortName:e.target.value})}}/>
                  </FormItem>
 
                   <FormItem
@@ -151,7 +181,8 @@ import MainUI from '../admin/components/main.jsx';
                      <DatePicker
                       format="YYYY-MM-DD"
                       onChange={this.changeExpireDate.bind(this)}
-                      size={'default'} defaultValue={moment(this.state.expireDate,dateFormat)}/>
+                      value={moment(this.state.expireDate,dateFormat)}
+                      size={'default'} />
 
                  </FormItem>
                  <FormItem
@@ -257,7 +288,7 @@ import MainUI from '../admin/components/main.jsx';
                     label={<span><span style={{color:'red',marginRight:4,}}>*</span>产品费用</span>}
                    hasFeedback={true}
                  >
-                     <Input ref='product-cost' addonAfter="￥/月" defaultValue={0}  onChange={(e)=>{this.setState({productPrice:e.target.value})}}/>
+                     <Input ref='product-cost' addonAfter="￥/月" value={this.state.productPrice}  onChange={(e)=>{this.setState({productPrice:e.target.value})}}/>
                  </FormItem>
 
                   <FormItem
@@ -265,7 +296,7 @@ import MainUI from '../admin/components/main.jsx';
                     label={<span><span style={{color:'red',marginRight:4,}}>*</span>产品地址</span>}
                    hasFeedback={true}
                  >
-                     <Input ref='product-path' defaultValue={''}  onChange={(e)=>{this.setState({productLink:e.target.value})}} placeholder='产品存放的项目地址，由超级管理员填写'/>
+                     <Input ref='product-path' value={this.state.productLink} onChange={(e)=>{this.setState({productLink:e.target.value})}} placeholder='产品存放的项目地址，由超级管理员填写'/>
 
                  </FormItem>
 
@@ -274,39 +305,51 @@ import MainUI from '../admin/components/main.jsx';
                     label={<span>产品说明</span>}
                    hasFeedback={true}
                  >
-                     <textarea ref='product-remark' style={{width:'100%'}} defaultValue={''} onChange={(e)=>{this.setState({productRemark:e.target.value})}}  placeholder='产品说明'>
+                     <textarea ref='product-remark' value={this.state.productRemark} style={{width:'100%'}}  onChange={(e)=>{this.setState({productRemark:e.target.value})}}  placeholder='产品说明'>
                      </textarea>
                  </FormItem>
                 
                </Form>    
              </Modal>
             </div>
+            </Spin>
         return(
             <MainUI component={component}></MainUI>
         )
     }
+    delProduct(id){///删除产品
+
+       var s=  this;
+
+       this.setState({
+            loading:true,
+            tip:'正在删除数据...'
+        });
+        $.ajax({
+          url:window.baseUrl+'product/del_product/',
+          data:{
+            userid:s.userid,
+            getusersigid:s.getusersigid,
+            productids:id
+          },
+          success(data){
+              message[data.getret === 0 ? 'success':'error'](data.getmsg);
+              if(data.getret === 0){
+                s.loadData();
+              }
+               s.setState({
+                  loading:false,
+              });
+          }
+      })
+    }
+
+    loadData(){
+       this.getProductList({s:this});
+    }
 
     componentDidMount() {
-      var s=  this;
-      $.ajax({
-        url:window.baseUrl+'product/get_product/',
-        data:{
-          userid:s.userid,
-          getusersigid:s.getusersigid
-        },
-        success(data){
-            if(data.getret === 0){
-              var productType = ['基础产品','收费产品','默认产品']
-              s.state.productlist = data.productlist;
-              s.state.productlist.forEach((item,i)=>{
-                item.key = i+1;
-                item.producttype = productType[item.producttype];
-              });
-              s.forceUpdate();
-            }
-            console.log(data);
-        }
-      })
+      this.loadData();
     }
 
     changeExpireDate(value){
@@ -373,16 +416,44 @@ import MainUI from '../admin/components/main.jsx';
         userid:this.userid,
         getusersigid:this.getusersigid
       }
-      $.ajax({
-        url:window.baseUrl + '/product/add_product/',
-        data:params,
-        success(data){
-          message[data.getret === 0 ? 'success':'error'](data.getmsg);
-          s.setState({
-            visible:false
+
+      if(this.currentId!==-1){//编辑
+          this.setState({
+            loading:true,
+            tip:'正在修改数据...'
           })
-        }
-      });
+          params.productid = this.currentId;
+          $.ajax({
+            url:window.baseUrl + '/product/edit_product/',
+            data:params,
+            success(data){
+              message[data.getret === 0 ? 'success':'error'](data.getmsg);
+              s.setState({
+                visible:false,
+                loading:false
+              });
+              s.loadData();
+            }
+          });
+      }else{
+        s.setState({
+          loading:true,
+          tip:'正在添加数据...'
+        })
+        $.ajax({
+          url:window.baseUrl + '/product/add_product/',
+          data:params,
+          success(data){
+              message[data.getret === 0 ? 'success':'error'](data.getmsg);
+              s.setState({
+                visible:false,
+                loading:false
+              });
+              s.loadData();
+          }
+        });
+      }
+      
     }
     onChangeIcon(e){//切换图标
       switch(e.target.value) {
