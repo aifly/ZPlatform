@@ -128,16 +128,7 @@ class App extends React.Component{
 		this.listen();
 
 		window.obserable = new Obserable();
-		window.getCookie = function(cname){
-		 var name = cname + "=";  
-    var ca = document.cookie.split(';');  
-    for(var i=0; i<ca.length; i++) {  
-        var c = ca[i];  
-        while (c.charAt(0)==' ') c = c.substring(1);  
-        if (c.indexOf(name) != -1) return c.substring(name.length, c.length);  
-    }  
-    return "";  
-	}
+		
 		
 	}
 	
@@ -146,14 +137,48 @@ class App extends React.Component{
 	}
 }
 
+window.getCookie = function(cname){
+ var name = cname + "=";  
+    var ca = document.cookie.split(';');  
+    for(var i=0; i<ca.length; i++) {  
+        var c = ca[i];  
+        while (c.charAt(0)==' ') c = c.substring(1);  
+        if (c.indexOf(name) != -1) return c.substring(name.length, c.length);  
+    }  
+    return "";  
+};
 
-$.getJSON(window.menuConfigUrl,function(data){
-	window.globalMenus = data.routers;
-	ReactDOM.render(<App></App>, document.getElementById('fly-main'));
-	window.mainLeftSize = 180;
-	window.onresize = function(){
-		window.obserable.trigger({type:'setMainHeight'});
-		window.obserable.trigger({type:'setMenuWidth'});
-	}
-});
+var s = JSON.parse(window.getCookie('login'));
+
+$.ajax({
+	url:window.baseUrl+'product/get_product/',
+    data:{
+      userid:s.userid,
+      getusersigid:s.getusersigid
+    },
+    success(data){
+    	if(data.getret === 0){
+    		var arr = [];
+    		data.productlist.map((item,i)=>{
+    			arr.push({
+    				"linkTo":item.producturl,
+					"key":item.producturl.split('/')[1],
+					"title":item.productname,
+					"isIcon":item.isicon,
+					"type":item.producticon
+    			})
+    		});
+    		window.globalMenus = arr;
+			ReactDOM.render(<App></App>, document.getElementById('fly-main'));
+			window.mainLeftSize = 180;
+			window.onresize = function(){
+				window.obserable.trigger({type:'setMainHeight'});
+				window.obserable.trigger({type:'setMenuWidth'});
+			}
+
+
+    	}
+    }
+})
+ 
 

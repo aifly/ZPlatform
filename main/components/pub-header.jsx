@@ -1,16 +1,22 @@
 import React, { Component } from 'react';
-import {Icon,Menu,Input,Badge,message} from '../commoncomponent/common.jsx';
+import {Icon,Menu,Input,Badge,message,Row,Col} from '../commoncomponent/common.jsx';
 import $ from 'jquery';
 export default class ZmitiHeader extends Component {
 	constructor(props) {
 		super(props);
+        this.state ={
+            serviceShow:false,
+            serviceCate:0
+        }
 	}
 	render() {
 		return (
 				<header className="fly-header" >
                     <div className="fly-logo"><a href={window.mainUrl}><img src={this.props.logo} alt=""/></a></div>
                     <div className="fly-nav"><a href={window.mainUrl}>控制平台</a></div>
-                    <div className="fly-nav"><a href="#">产品与服务</a></div>
+                    <div className="fly-nav">
+                        <a href="javascript:void(0)" onClick={()=>{this.setState({serviceShow:true})}} style={{background:this.state.serviceShow?'#fff':'transparent',color:this.state.serviceShow?'#000':'#fff'}}>产品与服务</a>
+                    </div>
                     {(this.props.usertypesign*1 === window.Role.SUPERADMINUSER||this.props.usertypesign*1 === window.Role.NORMALADMINUSER) && <div className="fly-nav"><a href={window.adminUrl}>系统管理</a></div>}
                     <div className="fly-nav"><a href="#">项目洽谈</a></div>
                     <div></div>
@@ -25,6 +31,21 @@ export default class ZmitiHeader extends Component {
                         </Badge>
                         </div>
                     <div className="curAcc">{this.props.currentAcc}</div>
+
+                    <div onClick={()=>{this.setState({serviceShow:false})}} style={{display:this.state.serviceShow?'block':'none'}} className='fly-main-product-service-C'>
+                         <Row>
+                          <Col span={3} style={{width:180}}>
+                            <div className='fly-cate-C'>
+                                <ul>
+                                    <li className={'fly-service-item ' +(this.state.serviceCate===0?'active':'')}>全部</li>
+                                </ul>
+                            </div>
+                          </Col>
+                          <Col span={21}>
+                              
+                          </Col>
+                        </Row>
+                    </div>
             </header>
 		);
 	}

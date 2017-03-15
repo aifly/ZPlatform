@@ -375,6 +375,7 @@ import MainUI from '../admin/components/main.jsx';
           }else{
             var icon = e.target.children[0].className.split(' ')[1].substring(8);
           }
+          console.log(icon)
           this.setState({
               currentIcon:icon
           });
@@ -390,17 +391,20 @@ import MainUI from '../admin/components/main.jsx';
      
       //this.state.currentIcon :localhost:3000/public/images/ic.png
       var src = '';
-      if(this.state.currentIcon.split('//').length>1){
-          src= this.state.currentIcon.split('//')[1];
+      if(this.state.currentIconType === 'zmiti'){
+          if(this.state.currentIcon.split('//').length>1){
+              src= this.state.currentIcon.split('//')[1];
+          }
+          else{
+            src = this.state.currentIcon.split('//')[0];
+          }
+          src = src.split('/');
+          src.shift();
+          src ='/main/'+ src.join('/');
       }
-      else{
-        src = this.state.currentIcon.split('//')[0];
+      else {
+        src = this.state.currentIcon;
       }
-      src = src.split('/');
-      src.shift();
-      src ='/main/'+ src.join('/');
- 
-
       var s = this;
       var params = {
         producturl:this.state.productLink,
