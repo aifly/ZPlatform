@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Icon,Menu,Input,Badge,message,Row,Col} from '../commoncomponent/common.jsx';
 import $ from 'jquery';
+import { Link } from 'react-router';
 export default class ZmitiHeader extends Component {
 	constructor(props) {
 		super(props);
@@ -42,7 +43,13 @@ export default class ZmitiHeader extends Component {
                             </div>
                           </Col>
                           <Col span={21}>
-                              
+                              <ul  className='fly-service-list'>
+                                  {window.globalMenus.map((item,i)=>{
+                                    return <li key={i}>
+                                        <Link to={item.linkTo}>{item.title}</Link>
+                                    </li>
+                                  })}
+                              </ul>
                           </Col>
                         </Row>
                     </div>
