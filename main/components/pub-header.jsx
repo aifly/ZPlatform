@@ -44,7 +44,7 @@ export default class ZmitiHeader extends Component {
                           </Col>
                           <Col span={21}>
                               <ul  className='fly-service-list'>
-                                  {window.globalMenus.map((item,i)=>{
+                                  {window.globalMenus && window.globalMenus.map((item,i)=>{
                                     return <li key={i}>
                                         <Link to={item.linkTo}>{item.title}</Link>
                                     </li>
