@@ -428,6 +428,7 @@ import MainUI from '../admin/components/main.jsx';
           })
           params.productid = this.currentId;
           $.ajax({
+            type:'POST',
             url:window.baseUrl + '/product/edit_product/',
             data:params,
             success(data){
@@ -445,6 +446,7 @@ import MainUI from '../admin/components/main.jsx';
           tip:'正在添加数据...'
         })
         $.ajax({
+          type:'POST',
           url:window.baseUrl + '/product/add_product/',
           data:params,
           success(data){
