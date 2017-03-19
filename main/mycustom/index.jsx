@@ -41,7 +41,18 @@ class ZmitiMycustomApp extends Component {
 
 		resizeMainHeight(this);	
 		
-		validateUser(()=>{loginOut(undefined,undefined,false);},this);
+		let {userid,getusersigid} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
+
+		$.ajax({
+			url:window.baseUrl+'custom/get_custom_list',
+			data:{
+				userid,
+				getusersigid
+			},
+			success(data){
+				console.log(data);
+			}
+		})
 		
 	}
 
