@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router';
 
-import {Icon,Menu,Input,Badge,message} from '../commoncomponent/common.jsx';
+import {Icon,Menu,Input,Badge,message,Modal,Col,Row} from '../commoncomponent/common.jsx';
 const SubMenu = Menu.SubMenu;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import $ from 'jquery';
@@ -16,6 +16,7 @@ class MainUI extends React.Component {
 
         this.menuClickHandler=this.menuClickHandler.bind(this);
         this.state = {
+            visible:false,
             defaultClass: "fly-left-aside",
             isOpen: true,
             current: '3',
@@ -170,7 +171,7 @@ class MainUI extends React.Component {
                                   selectedKeys={[this.state.current]}
                                   mode="inline">
                                 <SubMenu key="sub1"
-                                         title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>产品与服务</span></span>}>
+                                         title={<span><Icon onClick={()=>{this.setState({visible:true})}} type="setting" style={{marginRight:'22px'}} /><span>产品与服务</span></span>}>
                                      {configMenus.map(item=>{
                                         return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
                                      })}
@@ -198,6 +199,23 @@ class MainUI extends React.Component {
                          {this.props.component}
                     </section>
                 </article>
+
+
+                <Modal className='fly-nav-custom-modal' title="个人左侧导航订制" visible={this.state.visible}
+                  onOk={()=>{}} onCancel={()=>{this.setState({visible:false})}}
+                  width={800}>
+                    <Row>
+                        <Col span={6}>
+                            <section className='fly-nav-left-C'>
+                                <div className='fly-nav-title-bar'>已选中的左侧导航</div>
+                                <div className='fly-nav-content-C'>
+                                    aaa
+                                </div>
+                            </section>
+                        </Col>
+                        <Col span={18}>2</Col>
+                    </Row>
+                </Modal>
             </section>
         )
     }
