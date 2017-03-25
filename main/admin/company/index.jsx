@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 import './static/css/index.css';
-import ZmitiUserList  from '../components/zmiti-user-list.jsx';
+import ZmitiUserList  from '../../components/zmiti-user-list.jsx';
 
-import { message,Select } from '../commoncomponent/common.jsx';
+import { message,Select } from '../../commoncomponent/common.jsx';
 var Option = Select.Option;
 
-import MainUI from '../admin/components/main.jsx';
+import MainUI from '../components/main.jsx';
 
-import {ZmitiValidateUser} from '../public/validate-user.jsx';
+import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 
 class ZmitiCompanyApp extends Component {
 	constructor(props) {

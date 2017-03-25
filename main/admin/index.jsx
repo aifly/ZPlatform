@@ -6,12 +6,12 @@ import Obserable from '../static/libs/obserable.js';
 /*browserHistory.push('/user');
 browserHistory.push('./admin/company');*/
 
-import AdminIndex from './components/index.jsx';
-import ZmitiUserApp from '../user/index.jsx';
-import ZmitiCompanyApp from '../company/index.jsx';
-import ZmitiSystemApp from '../system/index.jsx';
-import ZmitiProductApp from '../product/index.jsx';
-import ZmitiWorkOrderApp from '../workorder/index.jsx';
+import AdminIndex from './home/index.jsx';
+import ZmitiUserApp from './user/index.jsx';
+import ZmitiCompanyApp from './company/index.jsx';
+import ZmitiSystemApp from './system/index.jsx';
+import ZmitiProductApp from './product/index.jsx';
+import ZmitiWorkOrderApp from './workorder/index.jsx';
 
 
 class App extends React.Component{

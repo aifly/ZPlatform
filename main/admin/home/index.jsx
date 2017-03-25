@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MainUI from './main.jsx';
+import MainUI from '../components/main.jsx';
 export default class AdminIndex extends Component {
 	render() {
 		var component = <div>后台首页</div>;

@@ -1,8 +1,8 @@
 import './static/css/index.css';
 import React from 'react';
-import {ZmitiValidateUser} from '../public/validate-user.jsx';
+import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 import moment from 'moment';
-import {Button,message,Input,Table,Modal,Form,Icon,Radio,DatePicker,Popconfirm,Spin } from '../commoncomponent/common.jsx';
+import {Button,message,Input,Table,Modal,Form,Icon,Radio,DatePicker,Popconfirm,Spin } from '../../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');
@@ -12,7 +12,7 @@ const RadioGroup = Radio.Group;
 
 import ZmitiOrderList from '../components/order.jsx';
 
-import MainUI from '../admin/components/main.jsx';
+import MainUI from '../components/main.jsx';
 
  class ZmitiProductApp extends React.Component{
     constructor(args){

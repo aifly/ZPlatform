@@ -25,6 +25,7 @@ class MainUI extends Component {
       getusersigid:''
 
 	  };
+    
 	}
 
   menuClickHandler(e){

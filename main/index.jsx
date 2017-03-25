@@ -14,6 +14,7 @@ import ZmitiRenewalApp from './renewal/index.jsx';
 import ZmitiProject from './project/index.jsx';
 import ZmitiCustom from './custom/index.jsx';
 import ZmitiMycustom from './mycustom/index.jsx';
+import ZmitiWxChatApp from './wxchat/index.jsx';
 
 import Obserable from './static/libs/obserable.js';
 
@@ -36,7 +37,8 @@ class App extends React.Component{
 				{path: '/project/', app: ZmitiProject},
 				{path: '/renewal/', app: ZmitiRenewalApp},
 				{path: '/custom/', app: ZmitiCustom},
-				{path: '/mycustom/', app: ZmitiMycustom}
+				{path: '/mycustom/', app: ZmitiMycustom},
+				{path: '/wxchat/', app: ZmitiWxChatApp}
 		];
 		return (
 			<Router history={hashHistory}>

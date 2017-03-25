@@ -545,8 +545,9 @@ class ZmitiQAApp extends Component {
 
 		var index = -1;
 		window.MEETINGUSERLIST.forEach((item,i)=>{
+			console.log(item , username)
 				if(item === username){
-						index = i;
+					index = i;
 				}
 		});
 

@@ -135,13 +135,13 @@ class MainUI extends React.Component {
             {
                 "linkTo":"/mycustom/",
                 "key":"mycustom",
-                "title":"我的订制",
+                "title":"我要订制",
                 "isIcon":true,
                 "type":"user"
             },{
                 "linkTo":"/custom/",
                 "key":"custom",
-                "title":"我要订制",
+                "title":"订制作品",
                 "isIcon":true,
                 "type":"edit"
             }

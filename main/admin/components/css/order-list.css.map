@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAIC,oBAAK,CAOC,UAAU,CAAC,IAAI,CANjB,+CAAK,CACH,UAAU,CAAE,iBAAiB,CAE/B,sBAAC,CACG,KAAK,CAAC,IAAI",
+"sources": ["order-list.scss"],
+"names": [],
+"file": "order-list.css"
+}

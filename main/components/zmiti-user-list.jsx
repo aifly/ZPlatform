@@ -56,6 +56,19 @@ export default class ZmitiUserList extends Component {
 					}
 				});
 
+			break;
+			case 'custom':
+
+				userList = this.props.userList.filter(item=>{
+					switch(this.state.current){
+						case 0:
+							return item.isshare !== 0;
+						break;
+						case 1:
+							return this.props.userid === item.userid;//未审核
+						break;
+					}
+				});
 
 			break;
 		}
