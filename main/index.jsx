@@ -166,7 +166,7 @@ $.ajax({
     				"linkTo":item.producturl,
 					"key":item.producturl.split('/')[1],
 					"title":item.productname,
-					"isIcon":item.isicon,
+					"iconType":item.icontype,
 					"type":item.producticon
     			})
     		});

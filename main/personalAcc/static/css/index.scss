@@ -1,0 +1,38 @@
+﻿@import '../../../public/css/base.scss';
+
+
+.acc-center{
+	margin:0 auto;
+	width:96%;
+	font-size: 14px;
+}
+
+.acc-baseinfo{
+	h3{
+		font-weight: normal;
+		@include pos(r);
+		&:before{
+			content:'';
+			width:2px;
+			height:60%;
+			top:20%;
+			background: #88B7E0;
+			@include pos(a);
+			left:0;
+		}
+		padding-left: 20px;
+	}
+	margin-top: 20px;
+	
+	.acc-info{
+		padding:6px 12px;
+		background:#F9F9F9;
+		border:1px solid #ddd;
+		border-top-width: 2px;
+
+	}
+	
+}
+.acc-portrait{
+	img{width:100px;}
+}

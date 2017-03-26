@@ -116,7 +116,7 @@ class MainUI extends React.Component {
             {
                 "linkTo":"/personalAcc/",
                 "key":"personalAcc",
-                "title":"账号管理",
+                "title":"基本资料",
                 "isIcon":true,
                 "type":"user",
                 "isShow":true
@@ -133,17 +133,18 @@ class MainUI extends React.Component {
 
          this.customMenuConfig = [//订制服务 的菜单列表
             {
-                "linkTo":"/mycustom/",
-                "key":"mycustom",
-                "title":"我要订制",
-                "isIcon":true,
-                "type":"user"
-            },{
                 "linkTo":"/custom/",
                 "key":"custom",
                 "title":"订制作品",
                 "isIcon":true,
                 "type":"edit"
+            },
+            {
+                "linkTo":"/mycustom/",
+                "key":"mycustom",
+                "title":"我要订制",
+                "isIcon":true,
+                "type":"user"
             }
         ]
 
@@ -173,7 +174,11 @@ class MainUI extends React.Component {
                                 <SubMenu key="sub1"
                                          title={<span><Icon onClick={()=>{this.setState({visible:true})}} type="setting" style={{marginRight:'22px'}} /><span>产品与服务</span></span>}>
                                      {configMenus.map(item=>{
-                                        return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                        if(item.iconType === 'true'){
+                                            return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                        }else{
+                                            return <Menu.Item key={item.key} ><img src={'http://www.zmiti.com/'+item.type} style={{marginRight:32}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                        }
                                      })}
                                 </SubMenu>
                                 {companyMenu}
