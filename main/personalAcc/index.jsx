@@ -240,30 +240,34 @@ class ZmitiPersonalAccApp extends React.Component{
 
 
         let component =  <div style={{height:this.state.mainHeight,overflow:'auto'}}>
-               <div  className='acc-baseinfo acc-center'>
+               {/*<div  className='acc-baseinfo acc-center'>
                   <h3>基本资料</h3>
                   <div className='acc-info'>请完善以下信息,方便我们更好的为您服务</div>
                </div>
                <div className="acc-portrait acc-center">
-                  <Row>
-                    <Col span={6}>
-                       <div>我的头像</div>
-                    </Col>
-                    <Col span={18}>
-                        <div>
-                           <img draggable="false" src={this.state.userData.portrait} alt=""/>
-                           <div>
-                               <Button className="little-br" onClick={this.changePortrait.bind(this)}  type="primary">更换头像</Button>
-                           </div>
-                         </div>
-                    </Col>
-                  </Row>
-                  
-               </div>
+                                 <div className='acc-portrait-C'>
+                                     <Row align='middle' type='flex'>
+                                     <Col span={6}>
+                                        <div>我的头像</div>
+                                     </Col>
+                                     <Col span={18}>
+                                         <div style={{textAlign:'center'}}>
+                                            <img draggable="false" src={this.state.userData.portrait} alt=""/>
+                                            <div>
+                                                <Button className="little-br" onClick={this.changePortrait.bind(this)}  type="primary">更换头像</Button>
+                                            </div>
+                                          </div>
+                                     </Col>
+                                   </Row>
+                                 </div>
+                              </div>*/}
                <div className="acc-header">
                    <article>
                        <div className="acc-user">
-                           
+                            <div  style={{textAlign:'center',width:100}}>
+                               <img draggable="false" src={this.state.userData.portrait} alt=""/>
+                                <Button className="little-br" onClick={this.changePortrait.bind(this)}  type="primary">更换头像</Button>
+                            </div>
                            <div className="acc-info">
                                <section className="acc-user-name">
                                    <div>
