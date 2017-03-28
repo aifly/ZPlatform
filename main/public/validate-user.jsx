@@ -17,7 +17,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	}
 
 	loginOut(errorMsg='登录超时',url= window.loginUrl,isHash){
-			message.error(errorMsg);
+		message.error(errorMsg);
       setTimeout(()=>{
       	   if(isHash){
      	   		window.location.hash ='/';    
@@ -130,6 +130,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		try{
 
 			 var params = JSON.parse(window.getCookie('login'));
+
 		 	 	if(that){
 
 		 	 		 that.userid = params.userid;
@@ -182,10 +183,11 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 				}
 		}
 		catch(e){
+
 			if(!window.isDebug){
-		 				fn&&fn();
-		 				return <div></div>;
-		 		}
+ 				fn&&fn();
+ 				return <div></div>;
+		 	}
         return  {
         	userid:-1,
         	getusersigid:-1,

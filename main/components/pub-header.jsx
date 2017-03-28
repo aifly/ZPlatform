@@ -26,6 +26,9 @@ export default class ZmitiHeader extends Component {
                     <div className="fly-search icon">
                         <div onClick={this.logout.bind(this)}><Icon type="logout" /></div>
                     </div>
+                    <div className="fly-search icon fly-workorder">
+                        <div><Link to='/workorder/'>工单</Link></div>
+                    </div>
                     <div className="fly-msg icon">
                         <Badge count={2} overflowCount={9}>
                             <Icon type="mail"/>

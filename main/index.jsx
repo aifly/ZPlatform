@@ -4,8 +4,6 @@ import './static/css/index.css';
 
 import { Router, Route, hashHistory ,Link ,browserHistory } from 'react-router';
 import ZmitiHomeApp from './home/index.jsx';
-import ZmitiRichImgListApp from './richimg/list.jsx';
-import ZmitiRichImgApp from './richimg/list.jsx';
 import ZmitiPuzzleApp from './puzzle/index.jsx';
 import ZmitiQaApp from './qa/index.jsx';
 import ZmitiUserDepartmentApp from './userdepartment/index.jsx';
@@ -15,6 +13,7 @@ import ZmitiProject from './project/index.jsx';
 import ZmitiCustom from './custom/index.jsx';
 import ZmitiMycustom from './mycustom/index.jsx';
 import ZmitiWxChatApp from './wxchat/index.jsx';
+import ZmitiWorkOrderApp from './workorder/index.jsx';
 
 import Obserable from './static/libs/obserable.js';
 
@@ -28,17 +27,16 @@ class App extends React.Component{
 	render() {
 		var apps = [
 				{path: '/', app: ZmitiHomeApp},
-				{path: '/richimglist/', app: ZmitiRichImgListApp},
 				{path: '/puzzle/', app: ZmitiPuzzleApp},
 				{path: '/userdepartment/', app: ZmitiUserDepartmentApp},
 				{path: '/personalAcc/', app: ZmitiPersonalAccApp},
-				{path: '/richimg/', app: ZmitiRichImgApp},
 				{path: '/qa/:title', app: ZmitiQaApp},
 				{path: '/project/', app: ZmitiProject},
 				{path: '/renewal/', app: ZmitiRenewalApp},
 				{path: '/custom/', app: ZmitiCustom},
 				{path: '/mycustom/', app: ZmitiMycustom},
-				{path: '/wxchat/', app: ZmitiWxChatApp}
+				{path: '/wxchat/', app: ZmitiWxChatApp},
+				{path: '/workorder/', app: ZmitiWorkOrderApp}
 		];
 		return (
 			<Router history={hashHistory}>
