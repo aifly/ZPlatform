@@ -1,29 +1,46 @@
-html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
-  padding: 0;
-  margin: 0; }
-
-a {
-  text-decoration: none; }
-
-li {
-  list-style: none; }
-
-html, body {
-  height: 100%; }
-
-img {
-  border: none;
-  vertical-align: top;
-  width: 100%;
-  height: auto; }
-
-input, textarea {
-  outline: none; }
-
-body {
-  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  height: 100%;
-  overflow: hidden; }
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.padding-10 {
+  padding: 10px; }
+.lef {
+  text-align: left; }
+.rig {
+  text-align: right; }
+.cen {
+  text-align: center; }
+.zmiti-workorder-main-ui .zmiti-workorder-header-inner {
+  padding-left: 8px;
+  margin-top: 10px;
+  position: relative; }
+  .zmiti-workorder-main-ui .zmiti-workorder-header-inner:before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: #88B7E0;
+    left: 0;
+    -webkit-transform: scale(1, 0.7);
+    transform: scale(1, 0.7); }
+.zmiti-workorder-main-ui .zmiti-workorder-line {
+  height: 15px;
+  overflow: hidden;
+  border-bottom: 1px solid #dddddd; }
+.zmiti-workorder-main-ui .workorder-search {
+  margin-top: 15px; }
+  .zmiti-workorder-main-ui .workorder-search .workorder-heigth45 {
+    height: 45px;
+    line-height: 45px;
+    overflow: hidden; }
+  .zmiti-workorder-main-ui .workorder-search .zmiti-workorder-with100 {
+    width: 80px; }
+  .zmiti-workorder-main-ui .workorder-search .zmiti-workorder-with130 {
+    width: 130px; }
+  .zmiti-workorder-main-ui .workorder-search .zmiti-workorder-with30 {
+    width: 30px; }
+  .zmiti-workorder-main-ui .workorder-search .zmiti-workorder-with60 {
+    width: 60px; }
 
 /*# sourceMappingURL=index.css.map */

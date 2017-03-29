@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ProjectTasksOptions">
-    <TaskOptions isEnabled="false">
+    <TaskOptions isEnabled="true">
       <option name="arguments" value="--no-color $FileName$" />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" value="Compiles .less files into .css files" />
@@ -27,63 +27,6 @@
       <envs />
     </TaskOptions>
     <TaskOptions isEnabled="false">
-      <option name="arguments" value="$FileName$ -o $FileNameWithoutExtension$.min.css" />
-      <option name="checkSyntaxErrors" value="true" />
-      <option name="description" value="Compresses .css files" />
-      <option name="exitCodeBehavior" value="ERROR" />
-      <option name="fileExtension" value="css" />
-      <option name="immediateSync" value="true" />
-      <option name="name" value="YUI Compressor CSS" />
-      <option name="output" value="$FileNameWithoutExtension$.min.css" />
-      <option name="outputFilters">
-        <array />
-      </option>
-      <option name="outputFromStdout" value="false" />
-      <option name="program" value="E:/yuicompressor-2.4.8.jar" />
-      <option name="scopeName" value="Project Files" />
-      <option name="trackOnlyRoot" value="true" />
-      <option name="workingDir" value="$FileDir$" />
-      <envs />
-    </TaskOptions>
-    <TaskOptions isEnabled="false">
-      <option name="arguments" value="--no-cache --update $FileName$:$FileNameWithoutExtension$.css" />
-      <option name="checkSyntaxErrors" value="true" />
-      <option name="description" value="Compiles .scss files into .css files" />
-      <option name="exitCodeBehavior" value="ERROR" />
-      <option name="fileExtension" value="scss" />
-      <option name="immediateSync" value="true" />
-      <option name="name" value="SCSS" />
-      <option name="output" value="$FileNameWithoutExtension$.css" />
-      <option name="outputFilters">
-        <array />
-      </option>
-      <option name="outputFromStdout" value="false" />
-      <option name="program" value="C:/Ruby23-x64/bin/scss.bat" />
-      <option name="scopeName" value="Project Files" />
-      <option name="trackOnlyRoot" value="true" />
-      <option name="workingDir" value="$FileDir$" />
-      <envs />
-    </TaskOptions>
-    <TaskOptions isEnabled="true">
-      <option name="arguments" value="--no-cache --update $FileName$:$FileNameWithoutExtension$.css" />
-      <option name="checkSyntaxErrors" value="true" />
-      <option name="description" value="Compiles .sass files into .css files" />
-      <option name="exitCodeBehavior" value="ERROR" />
-      <option name="fileExtension" value="sass" />
-      <option name="immediateSync" value="true" />
-      <option name="name" value="Sass" />
-      <option name="output" value="$FileNameWithoutExtension$.css" />
-      <option name="outputFilters">
-        <array />
-      </option>
-      <option name="outputFromStdout" value="false" />
-      <option name="program" value="C:/Ruby23-x64/bin/sass.bat" />
-      <option name="scopeName" value="Project Files" />
-      <option name="trackOnlyRoot" value="true" />
-      <option name="workingDir" value="$FileDir$" />
-      <envs />
-    </TaskOptions>
-    <TaskOptions isEnabled="false">
       <option name="arguments" value="--source-maps --out-file $FileNameWithoutExtension$-compiled.js --presets es2015 $FilePath$" />
       <option name="checkSyntaxErrors" value="true" />
       <option name="description" value="Transpiles ECMAScript 6 code to ECMAScript 5" />
@@ -97,6 +40,44 @@
       </option>
       <option name="outputFromStdout" value="false" />
       <option name="program" value="$USER_HOME$/AppData/Roaming/npm/babel.cmd" />
+      <option name="scopeName" value="Project Files" />
+      <option name="trackOnlyRoot" value="true" />
+      <option name="workingDir" value="$FileDir$" />
+      <envs />
+    </TaskOptions>
+    <TaskOptions isEnabled="true">
+      <option name="arguments" value="--no-cache --update $FileName$:$FileNameWithoutExtension$.css" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="scss" />
+      <option name="immediateSync" value="true" />
+      <option name="name" value="SCSS" />
+      <option name="output" value="$FileNameWithoutExtension$.css:$FileNameWithoutExtension$.css.map" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="program" value="/usr/local/bin/scss" />
+      <option name="scopeName" value="Project Files" />
+      <option name="trackOnlyRoot" value="true" />
+      <option name="workingDir" value="$FileDir$" />
+      <envs />
+    </TaskOptions>
+    <TaskOptions isEnabled="true">
+      <option name="arguments" value="$FileName$ -o $FileNameWithoutExtension$.min.css" />
+      <option name="checkSyntaxErrors" value="true" />
+      <option name="description" />
+      <option name="exitCodeBehavior" value="ERROR" />
+      <option name="fileExtension" value="css" />
+      <option name="immediateSync" value="true" />
+      <option name="name" value="YUI Compressor CSS" />
+      <option name="output" value="$FileNameWithoutExtension$.min.css" />
+      <option name="outputFilters">
+        <array />
+      </option>
+      <option name="outputFromStdout" value="false" />
+      <option name="program" value="$PROJECT_DIR$/../../../tools/yuicompressor-2.4.8.jar" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$FileDir$" />
