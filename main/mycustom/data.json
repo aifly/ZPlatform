@@ -1,0 +1,15 @@
+{
+	"customList":[
+		{
+			"key":1,
+			"customid":1,
+			"userid":"1c96d810-52b7-cf54-4d3e-58b3d0ec6ba1",
+			"customname":"为基层代表点赞",
+			"customtype":1,
+			"qrCode":"",
+			"previewurl":"http://webapi.zmiti.com/public/dianzan/index.html",
+			"thumbnail":"http://webapi.zmiti.com/public/dianzan/assets/images/300.jpg",
+			"totaldz":1856580
+		}
+	]
+}

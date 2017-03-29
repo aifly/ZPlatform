@@ -57,6 +57,14 @@ body {
   font-size: 14px;
   height: 100%;
 }
+.acc-wx-C {
+  width: 80%;
+  margin: 0 auto;
+}
+.acc-wx-C .acc-appid,
+.acc-wx-C .acc-appsecret {
+  margin: 10px 0;
+}
 .acc-header {
   position: relative;
   display: flex;

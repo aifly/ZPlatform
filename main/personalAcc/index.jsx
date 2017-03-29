@@ -4,7 +4,7 @@ import './static/css/index.css';
 import $ from 'jquery';
 
 
-import {Modal,Input,Tabs,Select,Button,Form,message,Tag} from '../commoncomponent/common.jsx';
+import {Modal,Input,Tabs,Select,Button,Form,message,Tag,Row,Col} from '../commoncomponent/common.jsx';
 
 const FormItem = Form.Item;
 const CheckableTag = Tag.CheckableTag;
@@ -240,15 +240,34 @@ class ZmitiPersonalAccApp extends React.Component{
 
 
         let component =  <div style={{height:this.state.mainHeight,overflow:'auto'}}>
+               {/*<div  className='acc-baseinfo acc-center'>
+                  <h3>基本资料</h3>
+                  <div className='acc-info'>请完善以下信息,方便我们更好的为您服务</div>
+               </div>
+               <div className="acc-portrait acc-center">
+                                 <div className='acc-portrait-C'>
+                                     <Row align='middle' type='flex'>
+                                     <Col span={6}>
+                                        <div>我的头像</div>
+                                     </Col>
+                                     <Col span={18}>
+                                         <div style={{textAlign:'center'}}>
+                                            <img draggable="false" src={this.state.userData.portrait} alt=""/>
+                                            <div>
+                                                <Button className="little-br" onClick={this.changePortrait.bind(this)}  type="primary">更换头像</Button>
+                                            </div>
+                                          </div>
+                                     </Col>
+                                   </Row>
+                                 </div>
+                              </div>*/}
                <div className="acc-header">
                    <article>
                        <div className="acc-user">
-                           <div className="acc-portrait">
+                            <div  style={{textAlign:'center',width:100}}>
                                <img draggable="false" src={this.state.userData.portrait} alt=""/>
-                               <div>
-                                   <Button className="little-br" onClick={this.changePortrait.bind(this)}  type="primary">更换头像</Button>
-                               </div>
-                           </div>
+                                <Button className="little-br" onClick={this.changePortrait.bind(this)}  type="primary">更换头像</Button>
+                            </div>
                            <div className="acc-info">
                                <section className="acc-user-name">
                                    <div>
@@ -271,6 +290,11 @@ class ZmitiPersonalAccApp extends React.Component{
                            <h2 className="acc-company-name">{this.state.userData.companyname}</h2>
                            <h6 className="acc-department">{this.state.userData.departmentname}</h6>
                        </div>
+                       {this.usertypesign !== window.Role.COMPANYUSER && <div className='acc-wx-C'>
+                            <div>微信公众号设置</div>
+                           <div className='acc-appid'><Input addonBefore='AppId' type='text' placeholder='appid'/></div>
+                           <div className='acc-appsecret'><Input addonBefore='appsecret' type='text' placeholder='appsecret'/></div>
+                       </div>}
                    </article>
                    }
                    {!this.companyid && <article>
@@ -278,6 +302,11 @@ class ZmitiPersonalAccApp extends React.Component{
                        <div className="acc-msg"><span>你的账号将于<span style={{color:'#f00'}}>{this.state.userData.expiredate}</span>日过期</span><span style={{cursor:'pointer',color:'#2db7f5'}}>点此续费</span>{(this.state.isExpire || this.state.isFullSpace )&&<span style={{cursor:'pointer',color:'#2db7f5'}}>申请延长试用</span>}<span><a href="#">消费记录</a></span></div>
                            <ZmitiProgress currentVal={this.state.userData.currentVal} maxVal={this.state.userData.maxVal} {...zmitiProgressProps}></ZmitiProgress>
                        </div>
+                       {this.usertypesign !== window.Role.COMPANYUSER && <div className='acc-wx-C'>
+                            <div>微信公众号设置</div>
+                           <div className='acc-appid'><Input addonBefore='AppId' type='text' placeholder='appid'/></div>
+                           <div className='acc-appsecret'><Input addonBefore='appsecret' type='text' placeholder='appsecret'/></div>
+                       </div>}
                    </article>}
                </div>
                <div className="acc-form">

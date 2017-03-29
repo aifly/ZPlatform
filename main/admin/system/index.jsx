@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import './static/css/index.css';
-import ZmitiUserList  from '../components/zmiti-user-list.jsx';
-import MainUI from '../admin/components/main.jsx';
-import {ZmitiValidateUser} from '../public/validate-user.jsx';
+import ZmitiUserList  from '../../components/zmiti-user-list.jsx';
+import { message,Select  } from '../../commoncomponent/common.jsx';
+let Option = Select.Option;
+import MainUI from '../components/main.jsx';
+import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 
 class ZmitiSystemApp extends Component {
 	constructor(props) {
@@ -89,12 +91,41 @@ class ZmitiSystemApp extends Component {
 			title: '操作', 
 			dataIndex: '', key: 'x',
 			render: () => <div><a href="#">转用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">删除</a></div>}];
+
+			var title = this.props.params.title;
 			let props={
 				userList:this.state.userList,
 				columns:[columns,columns],
 				changeAccount:this.changeAccount,
 				tags:['账户管理','分配用户'],
-				mainHeight:this.state.mainHeight
+				mainHeight:this.state.mainHeight,
+				title,
+				keyDown:(value)=>{
+        clearTimeout(this.keyupTimer);
+        this.defautlUserList === undefined && (this.defautlUserList = this.state.userList.concat([]));
+        this.keyupTimer = setTimeout(()=>{
+          var userlists = this.defautlUserList;
+          var condition = 'username';
+          this.state.userList  = userlists.filter(user=>{
+            switch(this.condition*1){
+              case 0://提问内容
+                condition = 'username';
+              break;
+              case 1://类型
+                condition = 'username'
+              break;
+            }
+
+           return user[condition].indexOf(value)>-1;
+          });
+
+          this.forceUpdate(()=>{
+          });
+        },350);
+    },
+    selectComponent:<Select placeholder='用户名' onChange={(e)=>{this.condition = e}}  style={{width:120}} size='small' >
+                       <Option value="0">用户名</Option>
+                   </Select>
 			}
 			return (
 				<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>

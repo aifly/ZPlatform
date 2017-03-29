@@ -7,6 +7,7 @@ window.adminUrl = './admin/index.html';//后台首面的地址 线上应该用 .
 window.menuConfigUrl = './config/menuconfig.js';
 
 window.Role = {
+	COMPANYUSER:2,//公司员工
 	SUPERADMINUSER:4,//超级管理员
 	NORMALADMINUSER:3,//系统管理员
 	COMPANYADMINUSER:5,//公司管理员

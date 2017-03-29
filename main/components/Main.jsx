@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router';
 
-import {Icon,Menu,Input,Badge,message} from '../commoncomponent/common.jsx';
+import {Icon,Menu,Input,Badge,message,Modal,Col,Row} from '../commoncomponent/common.jsx';
 const SubMenu = Menu.SubMenu;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import $ from 'jquery';
@@ -16,6 +16,7 @@ class MainUI extends React.Component {
 
         this.menuClickHandler=this.menuClickHandler.bind(this);
         this.state = {
+            visible:false,
             defaultClass: "fly-left-aside",
             isOpen: true,
             current: '3',
@@ -80,6 +81,8 @@ class MainUI extends React.Component {
             defaultOpenKeys = 'sub2';
         }else if(hash.indexOf('personalAcc')>-1 || hash.indexOf('renewal')>-1){
             defaultOpenKeys = 'sub3';
+        }else if(hash.indexOf('custom')>-1 || hash.indexOf('mycustom')>-1){
+            defaultOpenKeys = 'sub4';
         }
 
         if(this.state.isCompany && this.usertypesign === window.Role.COMPANYADMINUSER){//this.usertypesign === 5的时候,才是公司管理员.
@@ -113,7 +116,7 @@ class MainUI extends React.Component {
             {
                 "linkTo":"/personalAcc/",
                 "key":"personalAcc",
-                "title":"账号管理",
+                "title":"基本资料",
                 "isIcon":true,
                 "type":"user",
                 "isShow":true
@@ -128,10 +131,27 @@ class MainUI extends React.Component {
             }
         ]
 
+         this.customMenuConfig = [//订制服务 的菜单列表
+            {
+                "linkTo":"/custom/",
+                "key":"custom",
+                "title":"订制作品",
+                "isIcon":true,
+                "type":"edit"
+            },
+            {
+                "linkTo":"/mycustom/",
+                "key":"mycustom",
+                "title":"我要订制",
+                "isIcon":true,
+                "type":"user"
+            }
+        ]
+
         var configMenus =window.globalMenus;
         var headerProps = {
             usertypesign:this.state.usertypesign,
-            currentAcc:this.state.currentAcc,
+            currentAcc:this.state.username,
             userid:this.userid,
             getusersigid:this.getusersigid
         }
@@ -147,20 +167,30 @@ class MainUI extends React.Component {
                         </div>
                         <div className="fly-menu-c">
                             <Menu
-                                  style={{ width: 180 }}
+                                  style={{ width: 182 }}
                                   defaultOpenKeys={[defaultOpenKeys]}
                                   selectedKeys={[this.state.current]}
                                   mode="inline">
                                 <SubMenu key="sub1"
-                                         title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>产品与服务</span></span>}>
+                                         title={<span><Icon onClick={()=>{this.setState({visible:true})}} type="setting" style={{marginRight:'22px'}} /><span>产品与服务</span></span>}>
                                      {configMenus.map(item=>{
-                                        return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                        if(item.iconType === 'true'){
+                                            return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                        }else{
+                                            return <Menu.Item key={item.key} ><img src={'http://www.zmiti.com/'+item.type} style={{marginRight:32}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                        }
                                      })}
                                 </SubMenu>
                                 {companyMenu}
                                 <SubMenu key="sub3"
                                          title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>个人中心</span></span>}>
                                     {this.singleUserMenuConfig.map(item=>{
+                                        return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                    })}
+                                </SubMenu>
+                                 <SubMenu key="sub4"
+                                         title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>订制服务</span></span>}>
+                                    {this.customMenuConfig.map(item=>{
                                         return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
                                     })}
                                 </SubMenu>
@@ -174,6 +204,23 @@ class MainUI extends React.Component {
                          {this.props.component}
                     </section>
                 </article>
+
+
+                <Modal className='fly-nav-custom-modal' title="个人左侧导航订制" visible={this.state.visible}
+                  onOk={()=>{}} onCancel={()=>{this.setState({visible:false})}}
+                  width={800}>
+                    <Row>
+                        <Col span={6}>
+                            <section className='fly-nav-left-C'>
+                                <div className='fly-nav-title-bar'>已选中的左侧导航</div>
+                                <div className='fly-nav-content-C'>
+                                    aaa
+                                </div>
+                            </section>
+                        </Col>
+                        <Col span={18}>2</Col>
+                    </Row>
+                </Modal>
             </section>
         )
     }
@@ -202,10 +249,7 @@ class MainUI extends React.Component {
     logout(){//退出登录
     	var s=  this;
 
-    	console.log({
-    				userid:s.userid,
-    				getusersigid:s.getusersigid
-    			})
+    	 
     		$.ajax({
     			url:window.baseUrl+'user/user_loginout/',
     			data:{
@@ -234,13 +278,13 @@ class MainUI extends React.Component {
             configMenus = configMenus.concat(this.userMenuConfig);
         }
         configMenus = configMenus.concat(this.singleUserMenuConfig);
+        configMenus = configMenus.concat(this.customMenuConfig);
+        console.log(hash)
         configMenus.forEach(item=>{
-            if(hash.indexOf(item.key)>-1){
+            if(hash.split('/')[1] === item.key){
                 current = item.key;
             }
         });
-
-
 
         this.setState({
             isCompany:this.companyid,

@@ -17,7 +17,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	}
 
 	loginOut(errorMsg='登录超时',url= window.loginUrl,isHash){
-			message.error(errorMsg);
+		message.error(errorMsg);
       setTimeout(()=>{
       	   if(isHash){
      	   		window.location.hash ='/';    
@@ -31,10 +31,98 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	}
 
 	componentWillMount() {
-	
+	  
 	}
 
-	 
+	getProductList(opt){ //获取产品列表 
+			var s=  opt.s;
+			 s.setState({
+	        loading:true,
+	        tip:'正在拉取数据...'
+      });
+      $.ajax({
+        url:window.baseUrl+'product/get_product/',
+        data:{
+          userid:s.userid,
+          getusersigid:s.getusersigid
+        },
+        success(data){
+            if(data.getret === 0){
+              var productType = ['基础产品','收费产品','默认产品']
+              s.state.productlist = data.productlist;
+              s.state.productlist.forEach((item,i)=>{
+                item.key = i+1;
+                item.endtime = item.endtime.substring(0,10);
+                item.producttypeName = productType[item.producttype];
+              });
+              s.state.loading = false;
+              s.forceUpdate();
+            }
+        }
+      })
+	}
+
+	listen(opt){
+		var socket = io('http://socket.zmiti.com:2120');
+
+    socket.on('connect', function(){
+    	socket.emit('login', opt.uid||'');
+    });
+    // 后端推送来消息时
+    socket.on('new_msg', function(msg){
+	    	opt.fn && opt.fn(msg);
+    });
+    // 后端推送来在线数据时
+    /*socket.on('update_online_count', function(online_stat){
+        $('#online_box').html(online_stat);
+    });*/
+	}
+
+	send(opt={}){
+		$.ajax({
+			url:window.baseUrl+'msg/send_msg',
+			data:{
+				userid:opt.userid,
+				getusersigid:opt.getusersigid,
+				type:'publish',
+				content:opt.content,
+				to:opt.to||''
+			},
+			success(data){
+					if(data.getret === 1300){
+						//登录超时
+						window.location.href= window.loginUrl;
+					}
+			}
+		})
+	}
+
+	popNotice(opt={},fnFail){//消息通知
+			window.Notification = window.Notification|| window.webkitNotification;
+			if (window.Notification) {
+		    if (Notification.permission == "granted") {
+	            var notification = new Notification(opt.title||"智媒体提醒您：", {
+	            	body:opt.body || '你有新的任务了，http://pm.zmiti.com请查看',
+	              icon:opt.icon || 'http://www.zmiti.com/main/static/images/notify.jpg',
+	              sound:opt.sound || 'http://webapi.zmiti.com/public/corruption/assets/music/right.mp3'
+	            });
+	            
+	            notification.onclick = function() {
+	                //text.innerHTML = '张小姐已于' + new Date().toTimeString().split(' ')[0] + '加你为好友！';
+	                if(opt.href){
+	                	location.href= opt.href;
+	                }
+	                if(opt.hash){
+	                	location.hash = opt.hash;
+	                }
+	                notification.close();
+	            };
+	        }    
+		} else {
+				fnFail && fnFail();
+		    console.log('your browser did not support notification,plese update your browser');
+		}
+	}
 
 	validateUser(fn,that){
 		var s = this;
@@ -42,6 +130,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		try{
 
 			 var params = JSON.parse(window.getCookie('login'));
+
 		 	 	if(that){
 
 		 	 		 that.userid = params.userid;
@@ -58,7 +147,10 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		 	 	}
 		 	 	
 		 	 	if(params.userid && params.getusersigid){
-
+		 	 			window.obserable.off('getuserid');
+		 	 			window.obserable.on('getuserid',()=>{
+		 	 				return params.userid;//获取用户的id
+		 	 			})
 						return {
 			        	userid:params.userid,
 			        	getusersigid:params.getusersigid,
@@ -91,10 +183,11 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 				}
 		}
 		catch(e){
+
 			if(!window.isDebug){
-		 				fn&&fn();
-		 				return <div></div>;
-		 		}
+ 				fn&&fn();
+ 				return <div></div>;
+		 	}
         return  {
         	userid:-1,
         	getusersigid:-1,
@@ -233,6 +326,10 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			isSuperAdmin:this.isSuperAdmin,
 			isNormalAdmin:this.isNormalAdmin,
 			isCompanyAdmin:this.isCompanyAdmin,
+			popNotice:this.popNotice,
+			send:this.send,
+			listen:this.listen,
+			getProductList:this.getProductList
 			//fillFeilds:this.fillFeilds
 		}
 

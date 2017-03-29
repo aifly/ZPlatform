@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import './css/user-list.css';
 
-import { Table ,Select} from '../commoncomponent/common.jsx';
+import { Table ,Select ,Icon} from '../commoncomponent/common.jsx';
 let Option = Select.Option;
 import  ZmitiSearchInput  from './zmiti-search-input.jsx';
 export default class ZmitiUserList extends Component {
@@ -11,6 +10,7 @@ export default class ZmitiUserList extends Component {
 	
 	  this.state = {
 	  	current:0,
+	  	showPanel:true,
 	  	userList:[
 	  		
 	  	],
@@ -56,6 +56,19 @@ export default class ZmitiUserList extends Component {
 					}
 				});
 
+			break;
+			case 'custom':
+
+				userList = this.props.userList.filter(item=>{
+					switch(this.state.current){
+						case 0:
+							return item.isshare !== 0;
+						break;
+						case 1:
+							return this.props.userid === item.userid;//未审核
+						break;
+					}
+				});
 
 			break;
 		}
@@ -69,16 +82,27 @@ export default class ZmitiUserList extends Component {
 
 		return (
 			<section className='user-main-ui' style={{height:this.props.mainHeight}}>
-				<div className='user-left-pannel'>
-					<ul onClick={this.changeAccount}>
-						{
-							this.props.tags.map((tag,i)=>{
-								return <li data-index={i} key={i} className={this.state.current === i ?'active':''}><div data-index={i}>{tag}</div></li>
-							})
-						}
-					</ul>
+				<div className='user-left-pannel' style={{height:this.props.mainHeight,marginLeft:!this.state.showPanel?-window.mainLeftSize-20:0}}>
+					<div className='zmiti-pannel-bar' onClick={this.togglePanel.bind(this)}>
+						<Icon type="menu-fold" style={{display:this.state.showPanel?'inline-block':'none'}}/>
+		                <Icon type="menu-unfold" style={{display:!this.state.showPanel?'inline-block':'none'}}/>
+		                <span></span>
+		                <span></span>
+					</div>
+					<div style={{width:'100%',overflow:'hidden'}}>
+						<div className='user-title'>
+							{this.props.title}
+						</div>
+						<ul onClick={this.changeAccount}>
+							{
+								this.props.tags.map((tag,i)=>{
+									return <li data-index={i} key={i} className={this.state.current === i ?'active':''}><div data-index={i}>{tag}</div></li>
+								})
+							}
+						</ul>
+					</div>
 				</div>
-				<div className='user-right-pannel'>
+				<div className='user-right-pannel' style={{height:this.props.mainHeight,overflow:'auto',width:'100%'}}>
 					<header>
 						<ZmitiSearchInput {...searchInputProps}></ZmitiSearchInput>
 					</header>
@@ -100,6 +124,12 @@ export default class ZmitiUserList extends Component {
 				</div>
 			</section>
 		);
+	}
+
+	togglePanel(){
+		this.setState({
+            showPanel:!this.state.showPanel
+        })
 	}
 	componentDidMount() {
 	 
