@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 
 import { browserHistory } from 'react-router'
 
-
-
-
 import { message  } from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';

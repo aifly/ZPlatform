@@ -1,29 +1,10 @@
-html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
-  padding: 0;
-  margin: 0; }
-
-a {
-  text-decoration: none; }
-
-li {
-  list-style: none; }
-
-html, body {
-  height: 100%; }
-
-img {
-  border: none;
-  vertical-align: top;
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.wxchat-main-ui {
   width: 100%;
-  height: auto; }
-
-input, textarea {
-  outline: none; }
-
-body {
-  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  height: 100%;
-  overflow: hidden; }
+  height: 100%; }
 
 /*# sourceMappingURL=index.css.map */

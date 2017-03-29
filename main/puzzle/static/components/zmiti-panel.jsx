@@ -22,11 +22,11 @@ export default class ZmitiPanel extends React.Component {
         this.downloadImg = this.downloadImg.bind(this);
         this.state = {
             current: 0,
-            width: 1000,
-            height: 600,
+            width: 500,
+            height: 500,
             visible:false,
             imageType:"image/png",
-            currentMethod: 'renderRectLeftRight',
+            currentMethod: 'renderRect',
             dataUrl: '#',
             isLocked: false,
             showDownload: true,//显示下载按钮
@@ -84,7 +84,17 @@ export default class ZmitiPanel extends React.Component {
 
     render() {
 
-        let moulds = [
+        let moulds = [{
+                type: 1,
+                html: <div style={{boxSizing:'border-box',background:'#ff99c1','border':'1px solid #ccc',padding:2}}
+                    className={"p-mould p-mould-single " + (this.state.currentMethod === 'renderRect' ? 'active' : '')}
+                    data-size="500*500"
+                    data-method="renderRect"
+                    key='renderRect'>
+                    <aside></aside>
+                    <aside></aside>
+                </div>
+            },
             {
                 type: 2,
                 html: <div
@@ -243,12 +253,11 @@ export default class ZmitiPanel extends React.Component {
                 <section className="zmiti-panel-body " ref="panel-body">
                     <section className="zmiti-panel-type-C">
 
-                        <Tabs defaultActiveKey="1">
-                            <TabPane tab="全部" key="1">
+                        <Tabs defaultActiveKey="all1">
+                            <TabPane tab="全部" key="all1">
                                 <div style={{height: 190,overflow:'hidden'}} ref='scroll'>
                                     <article className="zmiti-panel-C" ref="zmiti-panel-C" onClick={this.chooseMould}>
                                         {
-
                                             moulds.filter((item)=> {
                                                 return 1;
                                             }).map((it=> {
@@ -259,9 +268,8 @@ export default class ZmitiPanel extends React.Component {
                                 </div>
 
                             </TabPane>
-
                             {
-                                [2, 3, 4, 5, 6].map(num=> {
+                                [1,2, 3, 4, 5].map(num=> {
                                     return <TabPane tab={num} key={num}>
                                         <article className="zmiti-panel-C" ref="zmiti-panel-C"
                                                  onClick={this.chooseMould}>

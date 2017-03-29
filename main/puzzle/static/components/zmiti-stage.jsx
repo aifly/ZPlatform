@@ -12,13 +12,13 @@ export default class ZmitiStage extends React.Component {
         super(...args);
         this.state = {
             imgList: [],
-            width: 1000,
+            width: 500,
             height: 500,
             scaleValue:1,
             showPanel:true,
             scale:1 //当前舞台的缩放比例
         };
-
+ 
 
         this.containerArr =[];
         this.currentMask = null;
@@ -318,7 +318,7 @@ export default class ZmitiStage extends React.Component {
         });
 
         var size = obserable.trigger({type:'getPicmMargin'});
-        this.renderCanvas('renderRectLeftRight',null,size);
+        this.renderCanvas('renderRect',null,size);
 
         PubSub.subscribe('renderCanvas', (e, data)=> {
             this.renderCanvas(data.method,null,data.marginSize);
@@ -441,7 +441,7 @@ export default class ZmitiStage extends React.Component {
      * @param  {Number} marginSize [description]
      * @return {[type]}            [description]
      */
-    renderCanvas(method = 'renderRectLeftRight',target= null,marginSize=0) {
+    renderCanvas(method = 'renderRect',target= null,marginSize=0) {
 
         this.canvas = this.canvas || this.refs['z-puzzle-canvas'];
 

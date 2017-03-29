@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { message,Select } from '../commoncomponent/common.jsx';
 var Option = Select.Option;
 
+import './static/css/index.css';
+
 import MainUI from '../components/Main.jsx';
 
 import $ from 'jquery';
@@ -19,9 +21,11 @@ class ZmitiWxChatApp extends Component {
 		}; 
 	}
 	render() {
-
-		var component = <div className='wxchat-main-ui'>
-			 aaaa
+		var mainStyle = {
+			background:'url(./static/images/wxtalk-bg.png) repeat center'
+		}
+		var component = <div className='wxchat-main-ui' style={mainStyle}>
+			 aaaaaa
 		</div>
 		return (
 			<MainUI component={component}></MainUI>

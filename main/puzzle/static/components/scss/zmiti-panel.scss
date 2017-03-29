@@ -302,7 +302,7 @@ input, textarea {
       cursor: pointer;
 
       &.active{
-        border-color: $baseColor;
+        border-color: $baseColor !important;;
       }
     }
 

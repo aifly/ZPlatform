@@ -1,5 +1,31 @@
 import 'babel-polyfill';
 const ShapeGenerater = {
+
+    renderRect(options, fn,target){
+        let {stage,colors,width,height,marginSize} = options,
+            rect = new createjs.Shape();
+            rect.graphics.beginFill(colors[0]).drawRect(0, 0, width, height);
+            rect.name= 'rect';
+
+        let {text} = this.addLoadingHorText(width, height);
+        text.x = width/2-60;
+
+        var container1 = new createjs.Container();
+
+        window.obserable.on('getContianers',()=>{
+            return [container1];
+        });
+
+        this.bindDblClick({rect: rect, text: text, x: 0, y: 0,container:container1});
+
+        container1.addChild(rect, text);
+
+        stage.addChild(container1);
+
+        fn && fn({rect: rect, text: text,x: 0, y: 0});
+
+        stage.update();
+    },
     renderRectLeftRight(options, fn,target){//左右两侧的长方形。
         let {stage,colors,width,height,marginSize} = options,
             rect = new createjs.Shape();

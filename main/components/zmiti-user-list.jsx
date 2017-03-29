@@ -103,24 +103,22 @@ export default class ZmitiUserList extends Component {
 					</div>
 				</div>
 				<div className='user-right-pannel' style={{height:this.props.mainHeight,overflow:'auto',width:'100%'}}>
-					<header>
-						<ZmitiSearchInput {...searchInputProps}></ZmitiSearchInput>
-					</header>
-					{this.props.customerComponent}
-					
-
-					{
-						this.props.columns.map((col,i)=>{
-							
-							if(this.state.current === i ){
-								return <section key={i} className='user-list-section'>
-											<Table bordered={true} dataSource={userList} columns={col} />
-										</section>	
-							}
-							
-						})
-					}
-					
+					{this.props.rightType ==='list'&& <div>
+						<header>
+							<ZmitiSearchInput {...searchInputProps}></ZmitiSearchInput>
+						</header>
+						{this.props.customerComponent}
+						{
+							this.props.columns.map((col,i)=>{
+								if(this.state.current === i ){
+									return <section key={i} className='user-list-section'>
+												<Table bordered={true} dataSource={userList} columns={col} />
+											</section>	
+								}
+							})
+						}
+					</div>}
+					{this.props.rightType === 'custom' && this.props.customRightComponent}
 				</div>
 			</section>
 		);
@@ -148,6 +146,8 @@ export default class ZmitiUserList extends Component {
 
 ZmitiUserList.defaultProps = {
 	tags:['试用人个账户','正式人个账户'],
-	type:'user'
+	type:'user',
+	rightType:'list',
+
 }
 
