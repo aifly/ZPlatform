@@ -34,10 +34,10 @@ class ZmitiWorkOrderApp extends Component {
             tags:['我的工单','提交工单'],
             mainHeight:this.state.mainHeight,
             title:title,
+            type:'workorder-1',
             rightType:"custom",
             customRightComponent:<div>
-				hhhhhh
-
+			
 			</div>
         }
   
