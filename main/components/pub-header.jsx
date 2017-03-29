@@ -33,7 +33,7 @@ export default class ZmitiHeader extends Component {
                         <Badge count={2} overflowCount={9}>
                             <Icon type="mail"/>
                         </Badge>
-                        </div>
+                    </div>
                     <div className="curAcc">{this.props.currentAcc}</div>
 
                     <div onClick={()=>{this.setState({serviceShow:false})}} style={{display:this.state.serviceShow?'block':'none'}} className='fly-main-product-service-C'>

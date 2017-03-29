@@ -3,4 +3,14 @@
 .wxchat-main-ui{
   width: 100%;
   height: 100%;
+  .wxchat-main-content{
+    width:1000px;
+    height: 85vh;
+    border:1px solid red;
+    margin: 0 auto;
+    img{
+      height: 100%;
+      width:auto;;
+    }
+  }
 }

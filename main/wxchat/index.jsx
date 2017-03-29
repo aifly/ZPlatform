@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import { message,Select } from '../commoncomponent/common.jsx';
-var Option = Select.Option;
+import { message,Row,Col } from '../commoncomponent/common.jsx';
+
 
 import './static/css/index.css';
 
@@ -25,7 +25,17 @@ class ZmitiWxChatApp extends Component {
 			background:'url(./static/images/wxtalk-bg.png) repeat center'
 		}
 		var component = <div className='wxchat-main-ui' style={mainStyle}>
-			 aaaaaa
+			<h4 style={{height:'5vh'}}></h4>
+			 <div className="wxchat-main-content">
+			 	<Row>
+			 		<Col span={12}>
+			 			<img src='./static/images/iphone.png'/>
+			 		</Col>
+			 		<Col span={12}>
+			 			<h4 style={{height:'10vh'}}></h4>
+			 		</Col>
+			 	</Row>
+			 </div>
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
