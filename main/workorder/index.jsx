@@ -13,6 +13,7 @@ import MainUI from '../components/Main.jsx';
 
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
+
 import $ from 'jquery';
 
 class ZmitiWorkOrderApp extends Component {
@@ -20,14 +21,28 @@ class ZmitiWorkOrderApp extends Component {
 		super(props);
 		
 		this.state = {
-			
+
+            mainHeight:document.documentElement.clientHeight - 50,
 
 		};
 	}
 	render() {
+        var title = this.props.params.title || '服务支持中心';
+        let props={
+            userid:this.userid,
+            changeAccount:this.changeAccount,
+            tags:['我的工单','提交工单'],
+            mainHeight:this.state.mainHeight,
+            title:title,
+            rightType:"custom",
+            customRightComponent:<div>
+				hhhhhh
+
+			</div>
+        }
   
 		var mainComponent = <div>
-				工单
+			<ZmitiUserList {...props}></ZmitiUserList>
 		</div>;
 		return (
 			<MainUI component={mainComponent}></MainUI>
