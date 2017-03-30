@@ -4,6 +4,8 @@ import { message,Row,Col,Input,Button } from '../commoncomponent/common.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
+
+
 import './static/css/index.css';
 
 import MainUI from '../components/Main.jsx';
@@ -11,6 +13,8 @@ import MainUI from '../components/Main.jsx';
 import $ from 'jquery';
 
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
+
+import WXEntryApp from './entry/index.jsx';
 
 class ZmitiWxChatApp extends Component {
 	constructor(props) {
@@ -20,7 +24,7 @@ class ZmitiWxChatApp extends Component {
 			current:0,
 			mainHeight:document.documentElement.clientHeight - 50,
 			currentDialogName:'wxchat-members-head',
-			isEntry:true,//是否进入编辑状态
+			isEntry:false,//是否进入编辑状态
 			data:{
 				title:'2017两会',
 				memberList:[
@@ -53,50 +57,16 @@ class ZmitiWxChatApp extends Component {
         };
 
 
+        var data ={
+        	modifyTitle:this.modifyTitle.bind(this),
+        	uploadHead:this.uploadHead.bind(this),
+        	modifyUserName:this.modifyUserName.bind(this),
+        	entryEdit:this.entryEdit.bind(this)
+        }
+
+
 		var component = <div className='wxchat-main-ui' style={mainStyle}>
-			<div className={this.state.isEntry?'hide':''}>
-				<h4 style={{height:'5vh'}}></h4>
-			 <div className="wxchat-main-content">
-			 	<aside>
-			 		<img draggable='false' src='./static/images/iphone.png'/>
-			 	</aside>
-			 	<aside>
-				 	<h4 style={{height:'8vh'}}></h4>
-		 			<section>
-		 				<div className='wxchat-title'>
-		 					<h2>输入H5名称</h2>
-		 					<Input onChange={e=>{this.state.data.title= e.target.value;this.forceUpdate();}} value={this.state.data.title}/>
-		 				</div>
-		 				<div className='wxchat-members'>
-		 					<h2>添加群成员头像和昵称<span>(最多可上传20位成员)</span></h2>
-		 					<section className='wxchat-members-scroll'>
-		 						<ul>
-		 							{this.state.data.memberList.map((item,i)=>{
-		 								return <li key={i}>
-		 									{i===0 && <img title='群主' src='./static/images/king.png' className='wxchat-king'/>}
-		 									<div>
-		 										<section  style={{background:'url('+item.head+') no-repeat center center / cover'}}></section>
-		 									</div>
-		 									<div>
-		 										<Input placeholder='请输入名称' type='text' onChange={(e)=>{this.state.data.memberList[i].name = e.target.value;this.forceUpdate()}} value={item.name}/>
-		 									</div>
-		 								</li>
-		 							})}
-		 							<li onClick={this.uploadHead.bind(this)}>
-	 									<div  style={{background:'url(./static/images/upload.jpg) no-repeat center center / cover',cursor:'pointer'}}>
-	 									</div>
-	 									<div>
-	 									</div>
-		 							</li>
-		 						</ul>
-		 					</section>
-		 					<button className='wxchat-sure-btn'>确定</button>
-		 				</div>
-		 			</section>
-			 	</aside>
-			 </div>
-			 <ZmitiUploadDialog id={this.state.currentDialogName} {...userHeadProps}></ZmitiUploadDialog>
-			</div>
+			<WXEntryApp {...this.state} {...data}></WXEntryApp>			
 			<div className={'wxchat-main-stage '+(this.state.isEntry?'show':'')}>
 				<aside>
 					<div className='wxchat-phone-container' style={{background:'rgba(255,255,255,.7) url(./static/images/phone-bg.png) no-repeat  center / contain'}}>
@@ -111,10 +81,23 @@ class ZmitiWxChatApp extends Component {
 				</aside>
 				<aside>2</aside>
 			</div>
+
+			<ZmitiUploadDialog id={this.state.currentDialogName} {...userHeadProps}></ZmitiUploadDialog>
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
 		);
+	}
+
+	modifyUserName(e,i){
+		this.state.data.memberList[i].name = e.target.value;
+		this.forceUpdate();
+	}
+
+	entryEdit(){
+		this.setState({
+			isEntry:true
+		})
 	}
 
 	uploadHead(){
@@ -123,6 +106,12 @@ class ZmitiWxChatApp extends Component {
 		  type:'showModal',
 		  data:{type:0,id:'wxchat-members-head'}
 		})  
+	}
+
+
+	modifyTitle(e){
+		this.state.data.title = e.target.value;
+		this.forceUpdate();
 	}
 
 	componentWillMount() {
