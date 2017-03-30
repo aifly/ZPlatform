@@ -122,6 +122,7 @@ class MainUI extends Component {
             usertypesign:this.usertypesign,
             currentAcc:this.state.currentAcc,
             userid:this.userid,
+            type:'admin',
             getusersigid:this.getusersigid,
             logo:'../static/images/logo.png'
         }

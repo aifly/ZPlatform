@@ -3,16 +3,160 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
+h2, h3, h4, h5 {
+  font-weight: normal; }
+
 .wxchat-main-ui {
   width: 100%;
   height: 100%; }
+  .wxchat-main-ui > .hide {
+    opacity: 0;
+    -webkit-transition: 0.5s;
+    transition: 0.5s; }
+  .wxchat-main-ui .wxchat-main-stage {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 90vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -ms-flex-flow: row;
+        flex-flow: row; }
+    .wxchat-main-ui .wxchat-main-stage > aside:first-of-type {
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      position: relative; }
+      .wxchat-main-ui .wxchat-main-stage > aside:first-of-type .wxchat-phone-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 320px;
+        height: 671px;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%); }
+        .wxchat-main-ui .wxchat-main-stage > aside:first-of-type .wxchat-phone-container .wxchat-talk-main {
+          width: 300px;
+          margin: 85px auto;
+          border: 5px solid #858b9d;
+          border-radius: 3px;
+          box-sizing: border-box;
+          height: 500px;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          display: -webkit-flex;
+          -ms-flex-flow: column;
+              flex-flow: column; }
+          .wxchat-main-ui .wxchat-main-stage > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-header {
+            width: 100%;
+            height: 60px; }
+            .wxchat-main-ui .wxchat-main-stage > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-header > div {
+              font-size: 16px;
+              color: #fff;
+              text-align: center;
+              margin-top: 25px; }
+              .wxchat-main-ui .wxchat-main-stage > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-header > div span:first-of-type {
+                background: #333;
+                display: inline-block;
+                padding: 0 4px 3px 4px;
+                border-radius: 3px; }
+          .wxchat-main-ui .wxchat-main-stage > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-body {
+            -webkit-box-flex: 1;
+                -ms-flex: 1;
+                    flex: 1;
+            border: 1px solid red;
+            overflow: hidden; }
+          .wxchat-main-ui .wxchat-main-stage > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-footer {
+            width: 100%;
+            height: 40px; }
+    .wxchat-main-ui .wxchat-main-stage > aside:last-of-type {
+      width: 600px; }
+  .wxchat-main-ui > .show {
+    opacity: 1;
+    -webkit-transition: 0.5s;
+    transition: 0.5s; }
   .wxchat-main-ui .wxchat-main-content {
     width: 1000px;
     height: 85vh;
-    border: 1px solid red;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -ms-flex-flow: row;
+        flex-flow: row;
     margin: 0 auto; }
+    .wxchat-main-ui .wxchat-main-content aside:last-of-type {
+      margin-left: 40px; }
     .wxchat-main-ui .wxchat-main-content img {
       height: 100%;
       width: auto; }
+  .wxchat-main-ui .wxchat-members h2, .wxchat-main-ui .wxchat-title h2 {
+    font-size: 20px;
+    color: #000; }
+    .wxchat-main-ui .wxchat-members h2 span, .wxchat-main-ui .wxchat-title h2 span {
+      font-size: 14px;
+      color: #ccc; }
+  .wxchat-main-ui .wxchat-title h2 {
+    margin-bottom: 10px; }
+  .wxchat-main-ui .wxchat-members {
+    margin-top: 40px; }
+  .wxchat-main-ui .wxchat-members-scroll {
+    max-width: 448px;
+    margin-top: 10px;
+    max-height: 420px;
+    margin-left: -10px;
+    overflow: auto; }
+    .wxchat-main-ui .wxchat-members-scroll ul {
+      width: 100%;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      display: -webkit-flex;
+      -ms-flex-flow: row;
+          flex-flow: row;
+      -webkit-flex-wrap: wrap; }
+      .wxchat-main-ui .wxchat-members-scroll ul li {
+        position: relative;
+        width: 100px;
+        margin: 5px 5px 5px 6px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        display: -webkit-flex;
+        -ms-flex-flow: column;
+            flex-flow: column; }
+        .wxchat-main-ui .wxchat-members-scroll ul li .wxchat-king {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 24px;
+          height: 24px; }
+        .wxchat-main-ui .wxchat-members-scroll ul li div {
+          width: 100%;
+          height: 100px; }
+          .wxchat-main-ui .wxchat-members-scroll ul li div:first-of-type {
+            border: 1px solid #ccc; }
+            .wxchat-main-ui .wxchat-members-scroll ul li div:first-of-type section {
+              width: 80%;
+              height: 80%;
+              margin: 10%; }
+          .wxchat-main-ui .wxchat-members-scroll ul li div:last-of-type {
+            height: auto;
+            margin-top: 5px; }
+  .wxchat-main-ui .wxchat-sure-btn {
+    margin-top: 60px;
+    width: 180px;
+    height: 60px;
+    background: #d8271c;
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer; }
 
 /*# sourceMappingURL=index.css.map */
