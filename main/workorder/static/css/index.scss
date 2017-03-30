@@ -33,7 +33,7 @@
     border-bottom: 1px solid #dddddd;
   }
   .workorder-search {
-    margin-top: 15px;
+    margin: 15px 0px;
     .workorder-heigth45{
       height: 45px;
       line-height: 45px;
@@ -55,6 +55,12 @@
       width: 60px;
     }
 
+  }
+  .red{
+    color: #ff0000;
+  }
+  .green{
+    color:#00ada7;
   }
 
 }
