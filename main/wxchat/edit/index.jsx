@@ -40,6 +40,38 @@ export default class WXEditApp extends React.Component {
 								</section>
 								{!this.props.data.groupName&&<section onClick={()=>{this.setState({currentShowArea:'modifyGroupName'})}} className='wxchat-group-name'>点击修改群名称</section>}
 								{this.props.data.groupName&&<section onClick={()=>{this.setState({currentShowArea:'modifyGroupName'})}} className='wxchat-group-name'>{this.props.data.memberList[0].name}修改群名称为{this.props.data.groupName}</section>}
+								
+								<ul className='wxchat-edit-talk-list'>
+									{this.props.data.talk.map((item,i)=>{
+										if(item.isMe){
+											return <li key={i} className={'wxchat-edit-talk-user'}>
+														<div className={'wxchat-edit-talk-content ' + (item.text?'':'wxchat-edit-talk-img')}>
+															<aside>
+																<div></div>
+															</aside>
+															<aside>
+																<div>
+																	{item.text || <img  src={item.img}/>}
+																</div>
+															</aside>
+														</div>
+														<div className='wxchat-edit-talk-head'><img src={item.head}/></div>
+													</li>
+										}
+										return <li key={i} className={item.isMe?'wxchat-edit-talk-user':''}>
+											<div className='wxchat-edit-talk-head'><img src={item.head}/></div>
+											<div className={'wxchat-edit-talk-content ' + (item.text?'':'wxchat-edit-talk-img')}>
+												<aside>{item.name}</aside>
+												<aside>
+													<div>
+														{item.text || <img  src={item.img}/>}
+													</div>
+												</aside>
+											</div>
+										</li>
+									})}
+								</ul>
+
 								<section className='wxchat-add-talk-btn'>
 									<img src='./static/images/add-talk.png'/>
 								</section>

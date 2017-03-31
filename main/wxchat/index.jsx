@@ -68,6 +68,21 @@ class ZmitiWxChatApp extends Component {
 						name:'杨凡1',
 						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
 					}
+				],
+				talk:[{
+						isMe:false,
+						id:1,
+						head:'./static/images/zmiti.jpg',
+						name:'徐畅',
+						text:'国大家好大家好大家好大家好大家好大家好',
+						href:'http://h5.zmiti.com/public/xwords/'
+					},{
+						isMe:true,
+						id:2,
+						head:'./static/images/zmiti.jpg',
+						name:'邓彬',
+						text:'大家好，新人求罩',
+					}
 				]
 			}
 		}; 

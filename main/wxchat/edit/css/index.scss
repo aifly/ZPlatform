@@ -74,22 +74,115 @@
                  }
                 
                  .wxchat-edit-member-list{
+                     	width:$size;
+          				    margin: 12px auto;
+          				    background: #ccc; 
+          				    @include br(5px);
+          				    color:#fff;
+          				    padding: 7px 10px;
+          				    line-height: 16px;
+          				    box-sizing:border-box;
+          				    font-size: 12px;
+          				    @include  pos(r);
+          				    -webkit-text-size-adjust: none;
+          				    div{
+          				      height: 100%;
+          				      width:100%;
+          				    }
+                 }
 
-                 	width:$size;
-				    margin: 12px auto;
-				    background: #ccc; 
-				    @include br(5px);
-				    color:#fff;
-				    padding: 7px 10px;
-				    line-height: 16px;
-				    box-sizing:border-box;
-				    font-size: 12px;
-				    @include  pos(r);
-				    -webkit-text-size-adjust: none;
-				    div{
-				      height: 100%;
-				      width:100%;
-				    }
+                 .wxchat-edit-talk-list{
+                    width:$size;
+                    margin:12px auto;
+                    li{
+                        font-size: 12px;
+                        @include displayFlex(row);
+                        margin:10px 0;
+                        .wxchat-edit-talk-head{
+                          width:40px;
+                        }
+                        .wxchat-edit-talk-content{
+                          max-width: 160px;
+                          margin-left: 12px;
+                          &.wxchat-edit-talk-img{
+                            aside:last-of-type{
+                              &:before{
+                                display:none;
+                              }
+                              div{
+                                background:transparent;
+                                border:none;
+                                padding:0;
+                              }
+                            }  
+                          }
+                          aside:last-of-type{
+                            div{
+                              background:#fff;
+                              border:1px solid #bbbbbb; 
+                              @include br(3px);
+                              padding:5px 5px;
+                              a{
+                                color:inherit;    
+                              }
+                            }
+                            box-sizing:border-box;
+                            @include pos(r);
+                            &:before{
+                              content:'';
+                              @include pos(a);
+                              left:-5px;
+                              @include br(1px);
+                              width:10px;
+                              height: 10px;
+                              background: #fff;
+                              border:1px solid #bbb;
+                              border-right: none;
+                              border-top:none; 
+                              top: 10px;
+                              @include transform(rotate(45deg));
+                            }
+                          }
+
+
+                        }
+                    }
+
+                    .wxchat-edit-talk-user{
+                       justify-content:flex-end;
+                        .wxchat-edit-talk-content{
+                         margin-right: 12px;
+                         display: inline-block;
+                          &.wxchat-edit-talk-img{
+                            aside:last-of-type{
+                              &:before{
+                                display:none;
+                              }
+                              div{
+                                background:transparent;
+                                border:none;
+                                padding:0;
+                              }
+                            }  
+                          }          
+                          aside:last-of-type{
+
+                              @include pos(r);
+                              div{
+                                background: #a7e753;
+
+                              }
+                              &:before{
+                                content:'';
+                                right:-5px;
+                                left: auto;
+                                background: #a7e753;
+                                border-left: none;
+                                border-bottom:none; 
+                              }
+                            }
+                      }        
+                    }
                  }
 
                  .wxchat-group-name{
