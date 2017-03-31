@@ -3,7 +3,9 @@ import { message,Row,Col,Input,Button } from '../../commoncomponent/common.jsx';
 
 import './css/index.css';
 
-import  WXMemberApp from '../member/index.jsx'
+import  WXMemberApp from '../member/index.jsx';
+
+import IScroll from 'iscroll';
 
 export default class WXEditApp extends React.Component {
 
@@ -38,6 +40,9 @@ export default class WXEditApp extends React.Component {
 								</section>
 								{!this.props.data.groupName&&<section onClick={()=>{this.setState({currentShowArea:'modifyGroupName'})}} className='wxchat-group-name'>点击修改群名称</section>}
 								{this.props.data.groupName&&<section onClick={()=>{this.setState({currentShowArea:'modifyGroupName'})}} className='wxchat-group-name'>{this.props.data.memberList[0].name}修改群名称为{this.props.data.groupName}</section>}
+								<section className='wxchat-add-talk-btn'>
+									<img src='./static/images/add-talk.png'/>
+								</section>
 								
 							</aside>
 							<aside className='wxchat-talk-footer'  style={{background:'url(./static/images/wxtalk.png) no-repeat center / contain'}}></aside>
@@ -67,12 +72,51 @@ export default class WXEditApp extends React.Component {
 						</Row>
 						
 					</section>}
-					{this.state.currentShowArea === 'addTalkContent' && <section className='wxchat-modify-talk-content'>
+					{ <section className='wxchat-modify-talk-content' style={{display:this.state.currentShowArea === 'addTalkContent'?'block':'none'}}>
 						<h2>选择聊天人员</h2>
-						
+						<Row type='flex' gutter={20}>
+							<Col>
+								<div className='wxchat-edit-me'>
+									<div style={{background:'url(./static/images/me.png) no-repeat center / cover'}}></div>
+									<section>我</section>
+								</div>
+							</Col>
+							<Col>
+								<div style={{width:200,lineHeight:'26px'}}>注：默认头像会在真实环境中替换为读取的微信头像</div>
+							</Col>
+						</Row>
+						<div className='wxchat-edit-line'></div>
+						<h3 className='wxchat-edit-count'>
+							<img src='./static/images/user.png'/><span>共{this.props.data.memberList.length}人</span>
+						</h3>
+						<section className='wxchat-edit-scroll' ref='wxchat-edit-scroll'>
+							<ul style={{width:this.props.data.memberList.length*62}}>
+								{this.props.data.memberList.map((item,i)=>{
+									return <li key={i}>
+										{i===0 && <img className='wxchat-king' src='./static/images/king.png'/>}
+										<div>
+											<section  style={{background:'url('+item.head+') no-repeat center center / cover'}}></section>
+										</div>
+										<div>
+											<span>{item.name}</span>
+										</div>
+									</li>
+								})}
+							</ul>
+						</section>
 					</section>}
 				</aside>
 			</div>
     );
+  }
+
+  componentDidMount() {
+  	this.scroll = new IScroll(this.refs['wxchat-edit-scroll'],{
+  		scrollX:true,
+  		scrollY:false,
+  		scrollbars:true,//显示滚动条
+        interactiveScrollbars:true,//允许用户拖动滚动条
+        mouseWheel:true
+  	})
   }
 }

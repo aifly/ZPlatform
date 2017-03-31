@@ -70,7 +70,7 @@ h2, h3, h4, h5 {
         display: -webkit-flex;
         -ms-flex-flow: column;
             flex-flow: column; }
-        .wxchat-main-ui .wxchat-members-scroll ul li .wxchat-king {
+        .wxchat-king {
           position: absolute;
           left: 0;
           top: 0;

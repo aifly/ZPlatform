@@ -66,14 +66,18 @@
                  flex:1;
                  overflow: hidden;
                  background-color:#ebebeb;
-
-
-                 $size:240px;
+                  $size:240px;
+                 .wxchat-add-talk-btn{
+                 	width:$size;
+                 	cursor: pointer;
+                 	margin:10px auto;
+                 }
+                
                  .wxchat-edit-member-list{
 
                  	width:$size;
 				    margin: 12px auto;
-				    background: #ccc;
+				    background: #ccc; 
 				    @include br(5px);
 				    color:#fff;
 				    padding: 7px 10px;
@@ -173,6 +177,85 @@
     		color:#7b9099;
     		margin-top: 30px;
     		height: 50px;
+    	}
+    	$size:52px;
+    	.wxchat-edit-me{
+    		width:$size;
+    		height:$size;
+    		box-sizing:border-box;
+    		border:1px solid #cccccc;
+    		background-color: #fff;
+    		@include br(2px);
+    		text-align: center;
+    		padding: 4px;
+    		cursor: pointer;
+    		div{
+    			background-color: red;
+    			height: 100%;
+    		}
+    		section{
+    			margin-top: 6px;
+    		}
+    	}
+    	.wxchat-edit-line{
+    		width:100%;
+    		height: 1px;
+    		background-color: #ccc;
+    		margin: 30px auto 10px;
+    	}
+    	.wxchat-edit-count{
+    		img{
+    			width:20px;
+    			vertical-align: middle;
+    			margin-right: 10px;
+    		}
+    		color:#b4b8c2;
+    		font-size: 14px;
+
+
+    	}
+
+    	.wxchat-edit-scroll{
+    		height: $size + 30;
+    		width:100%;
+    		overflow: hidden;
+    		@include pos(r);
+    		&:after{
+    			content:'';
+    			@include pos(a);
+    			height: 1px;
+    			width:100%;
+    			background-color: #ccc;
+    			bottom: 0;
+    		}
+    		margin-top: 10px;
+    		ul{
+    			@include displayFlex(row);
+    			li{
+    				cursor: pointer;
+    				@include pos(r);
+    				width:$size;
+    				height: $size;
+    				margin: 0 5px;
+    				text-align: center;
+    				&>div{
+    					&:first-of-type{
+    						width:100%;
+    						height: 100%;
+    						padding: 4px;
+    						border:1px solid #ccc;
+    						section{
+    							width:100%;
+    							height: 100%;
+    						}
+    					}
+    					&:last-of-type{
+    						max-width: $size;
+    						overflow: hidden;
+    					}
+    				}
+    			}
+    		}
     	}
      }
   }

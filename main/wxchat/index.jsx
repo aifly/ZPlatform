@@ -52,6 +52,21 @@ class ZmitiWxChatApp extends Component {
 					},{
 						name:'杨凡',
 						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},{
+						name:'杨凡',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},{
+						name:'杨凡',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},{
+						name:'杨凡',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},{
+						name:'杨凡',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},{
+						name:'杨凡1',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
 					}
 				]
 			}

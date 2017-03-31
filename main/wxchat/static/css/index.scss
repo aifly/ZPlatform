@@ -66,7 +66,7 @@ h2,h3,h4,h5{
        -webkit-flex-wrap:wrap;
       li{
         @include pos(r);
-        .wxchat-king{
+        @at-root.wxchat-king{
           @include pos(a);
           left: 0;
           top:0;
