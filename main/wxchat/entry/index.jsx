@@ -1,5 +1,6 @@
 import React from 'react';
 import { message,Row,Col,Input,Button } from '../../commoncomponent/common.jsx';
+import  WXMemberApp from '../member/index.jsx'
 export default class WXEntryApp extends React.Component {
 
   constructor(props) {
@@ -23,27 +24,7 @@ export default class WXEntryApp extends React.Component {
 		 				</div>
 		 				<div className='wxchat-members'>
 		 					<h2>添加群成员头像和昵称<span>(最多可上传20位成员)</span></h2>
-		 					<section className='wxchat-members-scroll'>
-		 						<ul>
-		 							{this.props.data.memberList.map((item,i)=>{
-		 								return <li key={i}>
-		 									{i===0 && <img title='群主' src='./static/images/king.png' className='wxchat-king'/>}
-		 									<div>
-		 										<section  style={{background:'url('+item.head+') no-repeat center center / cover'}}></section>
-		 									</div>
-		 									<div>
-		 										<Input placeholder='请输入名称' type='text' onChange={(e)=>{this.props.modifyUserName(e,i)}} value={item.name}/>
-		 									</div>
-		 								</li>
-		 							})}
-		 							<li onClick={()=>{this.props.uploadHead()}}>
-	 									<div  style={{background:'url(./static/images/upload.jpg) no-repeat center center / cover',cursor:'pointer'}}>
-	 									</div>
-	 									<div>
-	 									</div>
-		 							</li>
-		 						</ul>
-		 					</section>
+		 					<WXMemberApp {...this.props}></WXMemberApp>
 		 					<button className='wxchat-sure-btn' onClick={()=>{this.props.entryEdit()}}>确定</button>
 		 				</div>
 		 			</section>

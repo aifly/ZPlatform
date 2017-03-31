@@ -96,7 +96,12 @@ export default class ZmitiUserList extends Component {
 						<ul onClick={this.changeAccount}>
 							{
 								this.props.tags.map((tag,i)=>{
-									return <li data-index={i} key={i} className={this.state.current === i ?'active':''}><div data-index={i}>{tag}</div></li>
+									if(this.props.rightType === 'custom'){
+										return <li data-index={i} key={i} className={(this.props.selectedIndex === i) ?'active':''}><div data-index={i}>{tag}</div></li>
+									}
+									else{
+										return <li data-index={i} key={i} className={(this.state.current === i) ?'active':''}><div data-index={i}>{tag}</div></li>
+									}
 								})
 							}
 						</ul>

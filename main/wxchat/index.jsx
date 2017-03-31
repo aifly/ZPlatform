@@ -15,20 +15,44 @@ import $ from 'jquery';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import WXEntryApp from './entry/index.jsx';
+import WXEditApp from './edit/index.jsx';
 
 class ZmitiWxChatApp extends Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
-			current:0,
+			currentEditIndex:-1,
 			mainHeight:document.documentElement.clientHeight - 50,
 			currentDialogName:'wxchat-members-head',
-			isEntry:false,//是否进入编辑状态
+			isEntry:1,//是否进入编辑状态
 			data:{
+				groupName:'',//群名称
 				title:'2017两会',
 				memberList:[
-					
+					{
+						name:'徐畅',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},
+					{
+						name:'邓彬',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},{
+						name:'张雷',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},{
+						name:'赵申杉',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},{
+						name:'小郭',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},{
+						name:'师兄',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					},{
+						name:'杨凡',
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
+					}
 				]
 			}
 		}; 
@@ -38,7 +62,6 @@ class ZmitiWxChatApp extends Component {
 	render() {
 		var mainStyle = {
 			background:'url(./static/images/wxtalk-bg.png) repeat center',
-
 		}
 
 		var s = this;
@@ -52,37 +75,48 @@ class ZmitiWxChatApp extends Component {
                 	head:imgData.src,
                 	name:''
                 });
-                s.forceUpdate();
+
+                s.forceUpdate(()=>{
+                	 window.obserable.trigger({
+	                	type:'refreshMemberList'
+	                })
+                });
             }
         };
+
+        const editHeadProps = {
+        	baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+            	if(s.state.currentEditIndex === -1){
+            		return;
+            	}
+            	s.state.data.memberList[s.state.currentEditIndex].head = imgData.src;
+                s.forceUpdate();
+            }
+        }
 
 
         var data ={
         	modifyTitle:this.modifyTitle.bind(this),
         	uploadHead:this.uploadHead.bind(this),
         	modifyUserName:this.modifyUserName.bind(this),
-        	entryEdit:this.entryEdit.bind(this)
+        	entryEdit:this.entryEdit.bind(this),
+        	modifyGroupName:this.modifyGroupName.bind(this),
+        	
+
         }
 
 
 		var component = <div className='wxchat-main-ui' style={mainStyle}>
-			<WXEntryApp {...this.state} {...data}></WXEntryApp>			
-			<div className={'wxchat-main-stage '+(this.state.isEntry?'show':'')}>
-				<aside>
-					<div className='wxchat-phone-container' style={{background:'rgba(255,255,255,.7) url(./static/images/phone-bg.png) no-repeat  center / contain'}}>
-						<section className='wxchat-talk-main'>
-							<aside className='wxchat-talk-header' style={{background:'url(./static/images/wx-header.png) no-repeat center / contain'}}>
-								<div><span>{this.state.data.title}</span><span></span></div>
-							</aside>
-							<aside className='wxchat-talk-body'></aside>
-							<aside className='wxchat-talk-footer'  style={{background:'url(./static/images/wxtalk.png) no-repeat center / contain'}}></aside>
-						</section>
-					</div>					
-				</aside>
-				<aside>2</aside>
-			</div>
 
+			<WXEntryApp {...this.state} {...data}></WXEntryApp>			
+			<WXEditApp {...this.state} {...data}></WXEditApp>
 			<ZmitiUploadDialog id={this.state.currentDialogName} {...userHeadProps}></ZmitiUploadDialog>
+
+			{this.state.currentEditIndex !== -1 && <ZmitiUploadDialog id={'memberList-'+ this.state.currentEditIndex} {...editHeadProps}></ZmitiUploadDialog>}
+
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
@@ -105,12 +139,17 @@ class ZmitiWxChatApp extends Component {
 		obserable.trigger({
 		  type:'showModal',
 		  data:{type:0,id:'wxchat-members-head'}
-		})  
+		});
 	}
 
 
 	modifyTitle(e){
 		this.state.data.title = e.target.value;
+		this.forceUpdate();
+	}
+
+	modifyGroupName(val){
+		this.state.data.groupName = val;
 		this.forceUpdate();
 	}
 
@@ -127,6 +166,38 @@ class ZmitiWxChatApp extends Component {
 
 	componentDidMount() {
 		var s = this;
+		window.obserable.on('setMainMember',(i)=>{//设置群主
+			if(i===0){
+				return;
+			}
+			var mainMember = this.state.data.memberList[0];
+			this.state.data.memberList[0] = this.state.data.memberList.splice(i,1)[0];
+			this.state.data.memberList.splice(i,0,mainMember)
+			
+			this.forceUpdate();
+		});
+
+		window.obserable.on('replaceHead',(i)=>{//替换头像
+
+			this.setState({currentEditIndex:i},()=>{
+				
+				window.obserable.trigger({
+				  type:'showModal',
+				  data:{type:0,id:'memberList-'+i}
+				});
+			});
+
+
+		});
+
+		window.obserable.on('deleteMember',(i)=>{//删除成员
+			if(this.state.data.memberList.length<=2){
+				message.error('聊天成员最少为2个');
+				return;
+			}
+			this.state.data.memberList.splice(i,1);
+			this.forceUpdate();
+		});
 	
 	}
  

@@ -11,73 +11,7 @@ h2,h3,h4,h5{
     opacity:0;
     @include transition(.5s);
   }
-  .wxchat-main-stage{//main - stage
-    opacity:0;
-    z-index: -1;
-    @include pos(a);
-    top:0;
-    width:100%;
-    height: 90vh;
-    @include displayFlex(row);
-    &>aside{
-      &:first-of-type{
-        flex:1;
-        @include pos(r);
-        .wxchat-phone-container{
-            @include pos(a);
-            left: 50%;
-            top:50%;
-            width:286px;
-            height:600px;
-            @include transform(translate(-50%,-50%));
-
-            .wxchat-talk-main{
-              width:260px;
-              margin:85px auto;
-              border:5px solid #858b9d;
-              @include br(3px);
-              box-sizing:border-box;
-              height: 440px;
-              @include displayFlex();
-              .wxchat-talk-header{
-                width:100%;
-                height: 50px;
-                overflow:hidden;
-                &>div{
-                  color:#fff;
-                  text-align: center;
-                  margin-top: 25px;
-
-                  span{
-                    &:first-of-type{
-                      background:#333;
-                      display: inline-block;
-                      padding: 0 4px 3px 4px;
-                      @include br(3px);
-                      overflow:hidden;
-                      max-width: 120px;
-                    }
-                  }
-                }
-              }
-              .wxchat-talk-body{
-                 flex:1;
-                 overflow: hidden;
-                 background-color:#ccc;
-              }
-              .wxchat-talk-footer{
-                width:100%;
-                height: 34px;
-              }
-            }
-        }
-      }
-      &:last-of-type{
-         width:600px;
-      }
-    }
-
-  }
+  
   &>.show{
     opacity:1;
     z-index: 10;
@@ -86,6 +20,7 @@ h2,h3,h4,h5{
   .wxchat-main-content{
     width:1000px;
     height: 85vh;
+
     @include displayFlex(row);
     aside:last-of-type{
       margin-left: 40px;
@@ -122,8 +57,9 @@ h2,h3,h4,h5{
     margin-top:10px;
     max-height: 420px;
     margin-left: -10px;
-
-    overflow: auto;
+    @include pos(r);
+    overflow: hidden;
+    
     ul{
       width:100%;
        @include displayFlex(row);
@@ -136,9 +72,73 @@ h2,h3,h4,h5{
           top:0;
           width:24px;
           height: 24px;
+
         }
+
+        &:hover{
+            .wxchat-member-bar{
+              display: block;
+            }
+            &>div{
+               &:first-of-type{
+                  border-color:rgba(0, 140, 237,1);
+               }
+            }
+          }
+
+
+        .wxchat-member-bar{
+
+          &.active{
+            right: -76px;  
+            left: auto;
+            z-index: 100;
+            padding-left: 3px;
+            aside{
+            }
+          }
+          @include pos(a);
+          left: -73px;
+          display: none;
+          padding-right: 3px;
+          aside{
+            margin-right: 3px;
+            border:1px solid rgba(0, 140, 237,1);
+            background: #fff;
+            color:rgba(0, 140, 237,1);
+            width:70px;
+            text-align: center;
+            margin: 5px 0;
+            height: 26px;
+            line-height: 26px;
+            @include br(3px);
+            cursor: pointer;
+            @include transition(.2s);
+            &:hover{
+              background: rgba(0, 140, 237,1);
+              color:#fff;
+            }
+            &:first-of-type{
+              margin: 6px 0;
+            }
+
+          }
+        }
+
+        input{
+          background: transparent;
+          border:none;
+          text-align: center;
+        }
+
+        .ant-input:focus {
+            outline: 0;
+            box-shadow: 0 0 0 1px rgba(0, 140, 237, 0);
+            border:1px dashed rgba(0, 140, 237, .6);
+        }
+
         width:100px;
-        margin:5px 5px 5px 6px;
+        margin:5px 5px 5px 5px;
         @include displayFlex();
         div{
           &:first-of-type{

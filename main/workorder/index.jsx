@@ -144,6 +144,7 @@ class ZmitiWorkOrderApp extends Component {
             mainHeight:this.state.mainHeight,
             title:title,
             type:'workorder-1',
+            selectedIndex:0,
             rightType:"custom",
             customRightComponent:<div className="zmiti-workorder-main-ui padding-10">
 				<Row className='zmiti-workorder-header'>
@@ -238,7 +239,9 @@ class ZmitiWorkOrderApp extends Component {
     }
 
 	changeAccount(i){
-
+        if(i*1===1){
+            window.location.hash='commitworkorder/';
+        }
 
 	}
 
