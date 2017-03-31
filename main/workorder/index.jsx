@@ -27,7 +27,11 @@ class ZmitiWorkOrderApp extends Component {
 
             mainHeight:document.documentElement.clientHeight - 50,
             dataSource:[],
-			workorderid:''
+			workorderid:'',
+            keyword:'',
+            startDate:null,
+            endDate:moment(new Date(),'YYYY-MM-DD'),
+
 
 		};
 	}
@@ -126,7 +130,7 @@ class ZmitiWorkOrderApp extends Component {
             key: 'operation',
             width:100,
 			render:(text,recoder)=>(
-				<span><span className="workorder-gotodetail"> 查看</span><span className="workorder-del"> 删除</span>
+                <span><span className="workorder-gotodetail"><a href="javascript:void(0);">查看</a></span><span className="workorder-del"><a href="javascript:void(0);"> 删除</a></span>
 				</span>
 			)
 
@@ -149,13 +153,13 @@ class ZmitiWorkOrderApp extends Component {
 				<Row gutter={10} type='flex' className='workorder-search '>
 					<Col  className='zmiti-workorder-with100 workorder-heigth45'>工单编号：</Col>
 					<Col  className={'workorder-heigth45'}><Input value={this.state.workorderid} onChange={this.searchByWorkorderid.bind(this)}  placeholder="工单编号录入" /></Col>
-					<Col  className={'zmiti-workorder-with60 workorder-heigth45 rig'}>时间:</Col>
-					<Col  className={'workorder-heigth45 zmiti-workorder-with130 '}><DatePicker /></Col>
-					<Col  className={'zmiti-workorder-with30 workorder-heigth45 cen'}>至:</Col>
-					<Col  className={'workorder-heigth45 zmiti-workorder-with130 '}><DatePicker defaultValue={moment(new Date(), 'YYYY-MM-DD')}/></Col>
+					<Col  className={'zmiti-workorder-with60 workorder-heigth45 rig'} >时间:</Col>
+					<Col  className={'workorder-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.startDate} onChange={(e)=>{this.setState({startDate:e})}} /></Col>
+					<Col  className={'zmiti-workorder-with30 workorder-heigth45 cen'} value={this.state.endDate}>至:</Col>
+					<Col  className={'workorder-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.endDate} onChange={e=>{this.setState({endDate:e})}} /></Col>
 					<Col  className={'zmiti-workorder-with60 workorder-heigth45 rig'}>关键词:</Col>
-					<Col  className={'workorder-heigth45'}><Input  defaultValue={''} placeholder="关键词"/></Col>
-					<Col  className={'workorder-heigth45 lef'}><Button onClick={this.search.bind(this)}>查询</Button></Col>
+					<Col  className={'workorder-heigth45'}><Input value={this.state.keyword} placeholder="关键词" onChange={this.searchByKeyword.bind(this)}/></Col>
+					<Col  className={'workorder-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
 				</Row>
 				<Table dataSource={this.state.dataSource} columns={columns} bordered/>
 
@@ -170,21 +174,38 @@ class ZmitiWorkOrderApp extends Component {
 			);
 	}
 
-    search(){
-		var workorderid = this.state.workorderid;
-		if(workorderid === ''){
-			return;
-		}
-		var arr = [];
-		this.state.dataSource.forEach((item,i)=>{
-			if(item.workorderid.indexOf(workorderid)>-1){
-				arr.push(item);
-			}
-		});
-
-		this.setState({
-			dataSource:arr
-		})
+    searchBybutton(){
+        var workorderid = this.state.workorderid;
+        var startDate=this.state.startDate;
+        var endDate=this.state.endDate;
+        var keyWord=this.state.keyword;
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'user/get_workorder',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                workorderid,
+                startDate,
+                endDate,
+                keyWord
+            },
+            success(data){
+                if(data.getret === 0){
+                    s.state.dataSource = data.workorderinfo;
+                    s.forceUpdate();
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    loginOut(data.getmsg,window.loginUrl,false);
+                }
+            }
+        })
 
 	}
 
@@ -196,10 +217,24 @@ class ZmitiWorkOrderApp extends Component {
             this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
 
             this.state.dataSource = this.dataSource.filter((item)=>{
+
                 return  item.workorderid.indexOf(this.state.workorderid)>-1;
             });
             this.forceUpdate();
         });
+
+    }
+    searchByKeyword(e){
+        this.setState({
+            keyword:e.target.value
+        },()=>{
+            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+
+            this.state.dataSource = this.dataSource.filter((item)=>{
+                return  item.content.indexOf(this.state.keyword)>-1;
+            });
+            this.forceUpdate();
+        })
     }
 
 	changeAccount(i){
