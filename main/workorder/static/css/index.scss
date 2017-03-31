@@ -67,5 +67,58 @@
   .green{
     color:#00ada7;
   }
+  .workorder-table{
+    border: 1px solid #e1e6eb;
+    margin-top: 15px;
+    background:#FFffff;
+    .ant-layout-header{
+      background: #F5f6FA;
+      border-left: 4px solid #6d7781;
+      padding-left: 16px;
+      height: 38px;
+      line-height: 38px;
+      overflow: hidden;
+      border-bottom: 1px solid #e1e6eb;
+
+    }
+    .zmiti-workorder-table-row{
+      padding: 30px;
+      .workorder-table-col-title{
+        float: left;
+        width: 75%;
+      }
+      .workorder-table-col-button{
+        float: right;
+        width: 25%;
+        text-align: center;
+        padding: 3px 0px;
+
+      }
+      .workorder-table-col-content{
+        padding-top: 5px;
+        width: 100%;
+        clear: both;
+        font-size: 12px;
+        color: #999999;
+        line-height: 24px;
+        font-family: "宋体";
+
+      }
+      .workorder-table-box{
+        height: 50px;
+        line-height: 50px;
+        padding-left:25px;
+        padding-right: 15px;
+        background: #F5f6FA;
+        margin-bottom: 10px;
+        .workorder-table-col-button{
+          margin-top: 10px;
+        }
+      }
+
+
+    }
+
+  }
 
 }

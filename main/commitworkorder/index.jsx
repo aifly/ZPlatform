@@ -3,7 +3,9 @@ import React, { Component } from 'react';
 import './static/css/index.min.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table   } from '../commoncomponent/common.jsx';
+
+import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table,Layout } from '../commoncomponent/common.jsx';
+const { Header, Footer, Sider, Content } = Layout;
 import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
@@ -44,7 +46,85 @@ class ZmitiCommitWorkOrderApp extends Component {
             rightType:"custom",
             selectedIndex:1,
             customRightComponent:<div className="zmiti-workorder-main-ui padding-10">
-                 提交工单
+				<Row className='zmiti-workorder-header'>
+					<Col span={8}  className='zmiti-workorder-header-inner' >提交工单</Col>
+				</Row>
+				<div className="zmiti-workorder-line"></div>
+				<Layout className="workorder-table">
+					<Header>咨询类工单问题</Header>
+					<Content>
+						<Row gutter={30} className="zmiti-workorder-table-row">
+							<Col span={5}>
+								<div className="workorder-table-col-title">财务类</div>
+								<Button className="workorder-table-col-button">提问</Button>
+								<div className="workorder-table-col-content">订单，合同，充值，发票，汇款，等与资金相关问题</div>
+							</Col>
+							<Col span={5}>
+								<div className="workorder-table-col-title">会员帐号类</div>
+								<Button className="workorder-table-col-button">提问</Button>
+								<div className="workorder-table-col-content">更换用户信息，找回密码，空间，到期时间，用户数等相关</div>
+							</Col>
+							<Col span={5}>
+								<div className="workorder-table-col-title">定制服务类</div>
+								<Button className="workorder-table-col-button">提问</Button>
+								<div className="workorder-table-col-content">个性化定制，设计，规划及相关服务类问题</div>
+							</Col>
+							<Col span={5}>
+								<div className="workorder-table-col-title">产品技术类</div>
+								<Button className="workorder-table-col-button">提问</Button>
+								<div className="workorder-table-col-content">现有产品的所有技术相关问题及接口类问题</div>
+							</Col>
+							<Col span={4}>
+								<div className="workorder-table-col-title">其它类</div>
+								<Button className="workorder-table-col-button">提问</Button>
+								<div className="workorder-table-col-content">您无法判断的所有问题都可以此选择提问</div>
+							</Col>
+						</Row>
+					</Content>
+				</Layout>
+				<Layout className="workorder-table">
+					<Header>产品类工单问题</Header>
+					<Content>
+						<Row gutter={20} className="zmiti-workorder-table-row ">
+							<Col span={8}>
+								<div className="workorder-table-box">
+									<div className="workorder-table-col-title">财务类</div>
+									<Button className="workorder-table-col-button">提问</Button>
+								</div>
+							</Col>
+							<Col span={8}>
+								<div className="workorder-table-box">
+									<div className="workorder-table-col-title">财务类</div>
+									<Button className="workorder-table-col-button">提问</Button>
+								</div>
+							</Col>
+							<Col span={8}>
+								<div className="workorder-table-box">
+									财务类
+									<Button className="workorder-table-col-button">提问</Button>
+								</div>
+							</Col>
+							<Col span={8}>
+								<div className="workorder-table-box">
+									<div className="workorder-table-col-title">财务类</div>
+									<Button className="workorder-table-col-button">提问</Button>
+								</div>
+							</Col>
+							<Col span={8}>
+								<div className="workorder-table-box">
+									<div className="workorder-table-col-title">财务类</div>
+									<Button className="workorder-table-col-button">提问</Button>
+								</div>
+							</Col>
+							<Col span={8}>
+								<div className="workorder-table-box">
+									财务类
+									<Button className="workorder-table-col-button">提问</Button>
+								</div>
+							</Col>
+						</Row>
+					</Content>
+				</Layout>
 		</div>
         }
   
