@@ -149,7 +149,7 @@ class ZmitiWorkOrderApp extends Component {
             customRightComponent:<div className="zmiti-workorder-main-ui padding-10">
 				<Row className='zmiti-workorder-header'>
 					<Col span={8}  className='zmiti-workorder-header-inner' >我的工单</Col>
-                    <Col span={8} offset={8} className='zmiti-workorder-button-right'><Button type='primary'>提交工单</Button></Col>
+                    <Col span={8} offset={8} className='zmiti-workorder-button-right'><Button type='primary' onClick={this.changeAccount.bind(this,1)}>提交工单</Button></Col>
 				</Row>
 				<div className="zmiti-workorder-line"></div>
 				<Row gutter={10} type='flex' className='workorder-search '>
