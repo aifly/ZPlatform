@@ -26,6 +26,11 @@
       left:0;
       @include transform(scale(1,.7));
     }
+
+  }
+  .zmiti-workorder-button-right button{
+    float:right;
+    margin-top: 5px;
   }
   .zmiti-workorder-line{
     height:15px;

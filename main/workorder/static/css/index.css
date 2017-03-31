@@ -24,6 +24,9 @@
     left: 0;
     -webkit-transform: scale(1, 0.7);
     transform: scale(1, 0.7); }
+.zmiti-workorder-main-ui .zmiti-workorder-button-right button {
+  float: right;
+  margin-top: 5px; }
 .zmiti-workorder-main-ui .zmiti-workorder-line {
   height: 15px;
   overflow: hidden;
