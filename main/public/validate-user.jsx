@@ -45,15 +45,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
         },
         success(data){
             if(data.getret === 0){
-              var productType = ['基础产品','收费产品','默认产品']
-              s.state.productlist = data.productlist;
-              s.state.productlist.forEach((item,i)=>{
-                item.key = i+1;
-                item.endtime = item.endtime.substring(0,10);
-                item.producttypeName = productType[item.producttype];
-              });
-              s.state.loading = false;
-              s.forceUpdate();
+             	opt.fn&&opt.fn(data);
             }
         }
       })

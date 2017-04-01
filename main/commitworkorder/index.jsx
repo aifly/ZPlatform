@@ -28,8 +28,9 @@ class ZmitiCommitWorkOrderApp extends Component {
 		this.state = {
 
             mainHeight:document.documentElement.clientHeight - 50,
-            dataSource:[],
+			productlist:[
 
+			]
 		};
 	}
 	render() {
@@ -86,42 +87,19 @@ class ZmitiCommitWorkOrderApp extends Component {
 					<Header>产品类工单问题</Header>
 					<Content>
 						<Row gutter={20} className="zmiti-workorder-table-row ">
-							<Col span={8}>
-								<div className="workorder-table-box">
-									<div className="workorder-table-col-title">财务类</div>
-									<Button className="workorder-table-col-button">提问</Button>
-								</div>
-							</Col>
-							<Col span={8}>
-								<div className="workorder-table-box">
-									<div className="workorder-table-col-title">财务类</div>
-									<Button className="workorder-table-col-button">提问</Button>
-								</div>
-							</Col>
-							<Col span={8}>
-								<div className="workorder-table-box">
-									财务类
-									<Button className="workorder-table-col-button">提问</Button>
-								</div>
-							</Col>
-							<Col span={8}>
-								<div className="workorder-table-box">
-									<div className="workorder-table-col-title">财务类</div>
-									<Button className="workorder-table-col-button">提问</Button>
-								</div>
-							</Col>
-							<Col span={8}>
-								<div className="workorder-table-box">
-									<div className="workorder-table-col-title">财务类</div>
-									<Button className="workorder-table-col-button">提问</Button>
-								</div>
-							</Col>
-							<Col span={8}>
-								<div className="workorder-table-box">
-									财务类
-									<Button className="workorder-table-col-button">提问</Button>
-								</div>
-							</Col>
+
+
+							{
+								this.state.productlist.map((item,i)=>{
+									return <Col span={8} key={i}>
+										<div className="workorder-table-box">
+											<div className="workorder-table-col-title">{item.productname}</div>
+											<Button className="workorder-table-col-button">提问</Button>
+										</div>
+									</Col>
+								})
+							}
+
 						</Row>
 					</Content>
 				</Layout>
@@ -146,6 +124,16 @@ class ZmitiCommitWorkOrderApp extends Component {
 
 	componentDidMount() {
 
+		var s = this;
+        this.getProductList({
+        	s:s,
+			fn:(data)=>{
+        		//console.log();
+				s.setState({
+                    productlist:data.productlist
+				})
+			}
+        });
 		 
 
 	}
@@ -156,14 +144,15 @@ class ZmitiCommitWorkOrderApp extends Component {
 	componentWillMount() {
 
 
-		let {resizeMainHeight,validateUser,loginOut} = this.props;
+		let {resizeMainHeight,validateUser,loginOut,getProductList} = this.props;
 
 		resizeMainHeight(this);
 		
 		let {username,userid,getusersigid} = validateUser(()=>{},this);
 		this.userid = userid;
 		this.getusersigid = getusersigid;
-		
+		this.getProductList=getProductList;
+
 	}
 
 }
