@@ -174,6 +174,7 @@ export default class WXEditApp extends React.Component {
   		type:'modifyCurrentIndex',
   		data:index
   	})
+  	this.setState({currentShowArea:'addTalkContent'});
   }
 
   setTalkIsMe(){

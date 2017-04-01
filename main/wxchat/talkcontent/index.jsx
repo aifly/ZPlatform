@@ -11,7 +11,7 @@ export default class WXTalkContentApp extends React.Component {
   constructor(props) {
     super(props);
     this.state =　{
-    	current:1,
+    	current:0,
     	
     };
 
@@ -53,10 +53,10 @@ export default class WXTalkContentApp extends React.Component {
 				<div className='wxchat-talk-line'></div>
 				{this.state.current === 0 && <div className='wxchat-talk-text-input-C'>
 				    				<div className='wxchat-talk-text-input-area'>
-				    					<textarea value={this.props.data.talk[this.props.currentTalkIndex].text}  onChange={this.modifyCurrentTalk.bind(this)}></textarea>
+				    					<textarea value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].text}  onChange={this.modifyCurrentTalk.bind(this)}></textarea>
 				    					<div className='wxchat-talk-face'><img src='./static/images/face.png'/></div>
 				    				</div>
-				    				<Input addonBefore='添加URL' value={this.props.data.talk[this.props.currentTalkIndex].href} onChange={this.modifyCurrentTalkHref.bind(this)} type='text' placeholder='http://www.'/>
+				    				<Input addonBefore='添加URL' value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].href} onChange={this.modifyCurrentTalkHref.bind(this)} type='text' placeholder='http://www.'/>
 				
 				    			</div>}
 				{this.state.current === 1 && <div>
@@ -65,28 +65,38 @@ export default class WXTalkContentApp extends React.Component {
 							<img onClick={this.modifyTalkImg.bind(this)} style={{cursor:'pointer'}} src='./static/images/uploadimg.jpg'/>
 						</Col>
 						<Col span={12}>
-							{console.log(this.props.data.talk[this.props.currentTalkIndex],this.props.currentTalkIndex)}
 							{this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].img && <div className='wxchat-talk-img-C'><img src={this.props.data.talk[this.props.currentTalkIndex].img}/><div className='wxchat-talk-mask'><Icon onClick={this.deleteTalkImg.bind(this)} type='delete'/></div></div>}
 						</Col>
 					
 					</Row>
 					<div style={{height:20}}></div>
-					<Input addonBefore='添加URL' value={this.props.data.talk[this.props.currentTalkIndex].href} onChange={this.modifyCurrentTalkHref.bind(this)} type='text' placeholder='http://www.'/>
+					<Input addonBefore='添加URL' value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].href} onChange={this.modifyCurrentTalkHref.bind(this)} type='text' placeholder='http://www.'/>
 					<div style={{height:40}}></div>
 				</div>}
-				{this.state.current === 2 && <div>敬请期待</div>}
-				{this.state.current === 3 && <div>敬请期待</div>}
+				{this.state.current === 2 && <div>
+					<Input addonBefore='添加音频URL' value={this.props.data.talk[this.props.currentTalkIndex].audioSrc} onChange={this.modifyCurrentTalkAudio.bind(this)} type='text' placeholder='http://www.'/>
+				</div>}
+				{this.state.current === 3 && <div>
+					<Input addonBefore='添加视频URL' value={this.props.data.talk[this.props.currentTalkIndex].videoSrc} onChange={this.modifyCurrentTalkVideo.bind(this)} type='text' placeholder='http://www.'/>
+				</div>}
 			</section>
 			
 		</div>
     );
   }
 
+  modifyCurrentTalkVideo(){
+
+  }
   modifyCurrentTalk(e){
   	window.obserable.trigger({
   		type:'modifyCurrentTalk',
   		data:e.target.value
   	}) 
+  }
+
+  modifyCurrentTalkAudio(){
+
   }
 
   changeType(current){

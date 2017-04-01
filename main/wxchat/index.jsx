@@ -26,7 +26,7 @@ class ZmitiWxChatApp extends Component {
 			mainHeight:document.documentElement.clientHeight - 50,
 			currentDialogName:'wxchat-members-head',
 			isShowReplaceMyHeadImg:false,
-			isEntry:1,//是否进入编辑状态
+			isEntry:0,//是否进入编辑状态
 			currentTalkIndex:0,
 			data:{
 				myHeadImg:'',
@@ -263,6 +263,8 @@ class ZmitiWxChatApp extends Component {
 
 	componentDidMount() {
 		var s = this;
+
+		window.s = this;
 		window.obserable.on('setMainMember',(i)=>{//设置群主
 			if(i===0){
 				return;

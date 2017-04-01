@@ -75,8 +75,8 @@ h2, h3, h4, h5 {
           position: absolute;
           left: 0;
           top: 0;
-          width: 24px;
-          height: 24px; }
+          width: 24px !important;
+          height: 24px !important; }
         .wxchat-main-ui .wxchat-members-scroll ul li:hover .wxchat-member-bar {
           display: block; }
         .wxchat-main-ui .wxchat-members-scroll ul li:hover > div:first-of-type {
