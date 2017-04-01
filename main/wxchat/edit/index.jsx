@@ -5,6 +5,8 @@ import './css/index.css';
 
 import  WXMemberApp from '../member/index.jsx';
 
+import WXTalkContentApp from '../talkcontent/index.jsx';
+
 import IScroll from 'iscroll';
 
 export default class WXEditApp extends React.Component {
@@ -18,6 +20,7 @@ export default class WXEditApp extends React.Component {
   }
 
   render() {
+
     return (
       <div className={'wxchat-main-stage '+(this.props.isEntry?'show':'')} style={{height:this.props.mainHeight}}>
 				<aside>
@@ -55,11 +58,11 @@ export default class WXEditApp extends React.Component {
 																</div>
 															</aside>
 														</div>
-														<div className='wxchat-edit-talk-head'><img src={item.head}/></div>
+														<div className='wxchat-edit-talk-head'  style={{background:'url('+(item.head || './static/images/me.png')+') no-repeat center / cover'}}></div>
 													</li>
 										}
 										return <li key={i} className={item.isMe?'wxchat-edit-talk-user':''}>
-											<div className='wxchat-edit-talk-head'><img src={item.head}/></div>
+											<div className='wxchat-edit-talk-head' style={{background:'url('+(item.head || './static/images/me.png')+') no-repeat center / cover'}}></div>
 											<div className={'wxchat-edit-talk-content ' + (item.text?'':'wxchat-edit-talk-img')}>
 												<aside>{item.name}</aside>
 												<aside>
@@ -72,7 +75,7 @@ export default class WXEditApp extends React.Component {
 									})}
 								</ul>
 
-								<section className='wxchat-add-talk-btn'>
+								<section className='wxchat-add-talk-btn' onClick={this.addTalk.bind(this)}>
 									<img src='./static/images/add-talk.png'/>
 								</section>
 								
@@ -109,8 +112,12 @@ export default class WXEditApp extends React.Component {
 						<Row type='flex' gutter={20}>
 							<Col>
 								<div className='wxchat-edit-me'>
-									<div style={{background:'url(./static/images/me.png) no-repeat center / cover'}}></div>
+									<div style={{background:'url('+(this.props.data.myHeadImg||'./static/images/me.png')+') no-repeat center / cover'}}></div>
 									<section>我</section>
+									<section className={'wxchat-member-bar'}>
+											<aside>添加聊天</aside>
+											<aside onClick={this.repalceMyHeadImg.bind(this)}>替换头像</aside>
+									</section>
 								</div>
 							</Col>
 							<Col>
@@ -136,10 +143,23 @@ export default class WXEditApp extends React.Component {
 								})}
 							</ul>
 						</section>
+						<h2>输入聊天内容</h2>
+						<WXTalkContentApp {...this.props}></WXTalkContentApp>
 					</section>}
 				</aside>
 			</div>
     );
+  }
+
+  repalceMyHeadImg(){
+  	window.obserable.trigger({
+  		type:'repalceMyHeadImg'
+  	});
+  }
+
+
+  addTalk(){
+	this.setState({currentShowArea:'addTalkContent'});
   }
 
   componentDidMount() {

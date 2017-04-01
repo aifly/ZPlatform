@@ -100,10 +100,12 @@
                         margin:10px 0;
                         .wxchat-edit-talk-head{
                           width:40px;
+                          height: 40px;
                         }
                         .wxchat-edit-talk-content{
                           max-width: 160px;
                           margin-left: 12px;
+
                           &.wxchat-edit-talk-img{
                             aside:last-of-type{
                               &:before{
@@ -116,12 +118,17 @@
                               }
                             }  
                           }
+                          aside:first-of-type{
+                          	@include transformOrigin(left top);
+                          	@include transform(scale(.9));
+                          }
                           aside:last-of-type{
                             div{
                               background:#fff;
                               border:1px solid #bbbbbb; 
                               @include br(3px);
                               padding:5px 5px;
+                              color:#333;
                               a{
                                 color:inherit;    
                               }
@@ -206,6 +213,7 @@
       }
       &:last-of-type{
          width:500px;
+         overflow: auto;
       }
     }
 
@@ -282,6 +290,7 @@
     		text-align: center;
     		padding: 4px;
     		cursor: pointer;
+    		@include pos(r);
     		div{
     			background-color: red;
     			height: 100%;
@@ -289,6 +298,41 @@
     		section{
     			margin-top: 6px;
     		}
+    		&:hover{
+    			.wxchat-member-bar{
+    				display: block;
+    			}
+    		}
+    		.wxchat-member-bar{
+		          @include pos(a);
+		          padding-right: 3px;
+		          top:0;
+		          margin: 0;
+		          display: none;
+		          left: -70px;
+		          aside{
+		            
+		            border:1px solid rgba(0, 140, 237,1);
+		            background: #fff;
+		            color:rgba(0, 140, 237,1);
+		            width:70px;
+		            text-align: center;
+		            margin: 1px 0;
+		            height: 26px;
+		            line-height: 26px;
+		            @include br(3px);
+		            cursor: pointer;
+		            @include transition(.2s);
+		            &:hover{
+		              background: rgba(0, 140, 237,1);
+		              color:#fff;
+		            }
+		            &:first-of-type{
+		              
+		            }
+		          }
+		        }
+
     	}
     	.wxchat-edit-line{
     		width:100%;
@@ -307,6 +351,7 @@
 
 
     	}
+
 
     	.wxchat-edit-scroll{
     		height: $size + 30;

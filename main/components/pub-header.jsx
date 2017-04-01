@@ -30,7 +30,7 @@ export default class ZmitiHeader extends Component {
                         <div>{this.props.type==='admin'?<a href={window.mainUrl+'/#/workorder/'}>工单</a>:<Link to={'/workorder/'}>工单</Link>}</div>
                     </div>
                     <div className="fly-msg icon">
-                        <Badge count={2} overflowCount={9}>
+                        <Badge count={0} overflowCount={9}>
                             <Icon type="mail"/>
                         </Badge>
                     </div>

@@ -15,6 +15,7 @@ import ZmitiMycustom from './mycustom/index.jsx';
 import ZmitiWxChatApp from './wxchat/index.jsx';
 import ZmitiWorkOrderApp from './workorder/index.jsx';
 import ZmitiCommitWorkOrderApp from './commitworkorder/index.jsx';
+import ZmitiWorkOrderQuestionApp from './workorderquestion/index.jsx';
 
 import Obserable from './static/libs/obserable.js';
 
@@ -38,7 +39,8 @@ class App extends React.Component{
 				{path: '/mycustom/', app: ZmitiMycustom},
 				{path: '/wxchat/', app: ZmitiWxChatApp},
 				{path: '/commitworkorder/', app: ZmitiCommitWorkOrderApp},
-				{path: '/workorder/', app: ZmitiWorkOrderApp}
+				{path: '/workorder/', app: ZmitiWorkOrderApp},
+				{path: '/workorderquestion/', app: ZmitiWorkOrderQuestionApp}
 		];
 		return (
 			<Router history={hashHistory}>

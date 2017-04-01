@@ -1,0 +1,77 @@
+@import "../../../public/css/base.scss";
+
+
+.wxchat-talk-C{
+	width:100%;
+	height: 300px;
+	.wxchat-talk-type-scroll{
+		width:100%;
+		height: 90px;
+	}
+
+	.wxchat-talk-line{
+		width: 100%;
+		height: 4px;
+		background-color: #fff;
+		margin: 20px 0;
+	}
+	.wxchat-talk-type-list{
+
+		@include displayFlex(row);
+		li{
+			flex:1;
+			height: 90px;
+			text-align: center;
+			@include transition(.2s);
+			cursor: pointer;
+			border-right: 1px solid #dfe2e8;
+			&:last-of-type{
+				border-right: 1px solid transparent;
+			}
+			&.active{
+				background-color: #ccc;
+				box-shadow: 0 0 10px rgba(0,0,0,.5) inset;
+			}
+			&:hover{
+				background-color: #ccc;
+				box-shadow: 0 0 10px rgba(0,0,0,.5) inset;
+			}
+			div{
+				@include pos(r);
+				top:15px;
+				img{
+					width:40px;
+					vertical-align: middle;
+				}
+			}
+		}
+	}
+
+	.wxchat-talk-text-input-C{
+		width:100%;
+		height: 100px;
+		.wxchat-talk-text-input-area{
+			margin: 0 0 20px 0;
+			textarea{
+				width:100%;
+				border:none;
+				outline: none;
+				resize:none;
+				padding: 10px;
+				background-color: transparent;
+			}
+			border:1px solid #2db7f5;
+			@include br(4px);
+
+			.wxchat-talk-face{
+				text-align: right;
+				width: 100%;
+				img{
+					width:30px;
+				}
+
+			}
+			background-color: #fff;
+		}
+	}
+}
