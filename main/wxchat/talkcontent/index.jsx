@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input } from '../../commoncomponent/common.jsx';
+import { Input,Row,Col,Icon } from '../../commoncomponent/common.jsx';
 
 import './css/index.css';
 
@@ -11,7 +11,7 @@ export default class WXTalkContentApp extends React.Component {
   constructor(props) {
     super(props);
     this.state =　{
-    	current:0,
+    	current:1,
     	
     };
 
@@ -29,14 +29,11 @@ export default class WXTalkContentApp extends React.Component {
     		},
     		{
     			background:'./static/images/image.png',
-    			component:<div>图片</div>
     		},
     		{
-    			background:'./static/images/text.png',
-    			component:<div>链接</div>
+    			background:'./static/images/audio.png',
     		},{
-    			background:'./static/images/image.png',
-    			component:<div>链接</div>
+    			background:'./static/images/video.png',
     		}
     	]
 
@@ -49,12 +46,36 @@ export default class WXTalkContentApp extends React.Component {
 				<ul className='wxchat-talk-type-list'>
 					{this.typeList.map((item,i)=>{
 						return <li className={i === this.state.current ?'active':''} key={i} onClick={this.changeType.bind(this,i)}>
-							<div><img src={item.background} /></div>
+							<div><img  style={{width:i===3?52:40}} src={item.background} /></div>
 						</li>
 					})}
 				</ul>
 				<div className='wxchat-talk-line'></div>
-				{this.typeList[this.state.current].component}
+				{this.state.current === 0 && <div className='wxchat-talk-text-input-C'>
+				    				<div className='wxchat-talk-text-input-area'>
+				    					<textarea value={this.props.data.talk[this.props.currentTalkIndex].text}  onChange={this.modifyCurrentTalk.bind(this)}></textarea>
+				    					<div className='wxchat-talk-face'><img src='./static/images/face.png'/></div>
+				    				</div>
+				    				<Input addonBefore='添加URL' value={this.props.data.talk[this.props.currentTalkIndex].href} onChange={this.modifyCurrentTalkHref.bind(this)} type='text' placeholder='http://www.'/>
+				
+				    			</div>}
+				{this.state.current === 1 && <div>
+					<Row type='flex' gutter={12}>
+						<Col  span={12}>
+							<img onClick={this.modifyTalkImg.bind(this)} style={{cursor:'pointer'}} src='./static/images/uploadimg.jpg'/>
+						</Col>
+						<Col span={12}>
+							{console.log(this.props.data.talk[this.props.currentTalkIndex],this.props.currentTalkIndex)}
+							{this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].img && <div className='wxchat-talk-img-C'><img src={this.props.data.talk[this.props.currentTalkIndex].img}/><div className='wxchat-talk-mask'><Icon onClick={this.deleteTalkImg.bind(this)} type='delete'/></div></div>}
+						</Col>
+					
+					</Row>
+					<div style={{height:20}}></div>
+					<Input addonBefore='添加URL' value={this.props.data.talk[this.props.currentTalkIndex].href} onChange={this.modifyCurrentTalkHref.bind(this)} type='text' placeholder='http://www.'/>
+					<div style={{height:40}}></div>
+				</div>}
+				{this.state.current === 2 && <div>敬请期待</div>}
+				{this.state.current === 3 && <div>敬请期待</div>}
 			</section>
 			
 		</div>
@@ -65,12 +86,34 @@ export default class WXTalkContentApp extends React.Component {
   	window.obserable.trigger({
   		type:'modifyCurrentTalk',
   		data:e.target.value
-  	});
+  	}) 
   }
 
   changeType(current){
   	this.setState({
   		current
+  	})
+  }
+
+
+  modifyCurrentTalkHref(e){
+  	window.obserable.trigger({
+  		type:'modifyCurrentTalkHref',
+  		data:e.target.value
+  	})
+  }
+
+
+  deleteTalkImg(){
+  	window.obserable.trigger({
+  		type:'deleteTalkImg'
+  	})
+  }
+
+
+  modifyTalkImg(){
+  	window.obserable.trigger({
+  		type:'modifyTalkImg'
   	})
   }
 

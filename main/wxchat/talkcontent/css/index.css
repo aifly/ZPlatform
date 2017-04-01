@@ -35,10 +35,12 @@
         border-right: 1px solid transparent; }
       .wxchat-talk-C .wxchat-talk-type-list li.active {
         background-color: #ccc;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) inset; }
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) inset;
+        border-radius: 5px; }
       .wxchat-talk-C .wxchat-talk-type-list li:hover {
         background-color: #ccc;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) inset; }
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4) inset;
+        border-radius: 5px; }
       .wxchat-talk-C .wxchat-talk-type-list li div {
         position: relative;
         top: 15px; }
@@ -65,5 +67,28 @@
         width: 100%; }
         .wxchat-talk-C .wxchat-talk-text-input-C .wxchat-talk-text-input-area .wxchat-talk-face img {
           width: 30px; }
+  .wxchat-talk-C .wxchat-talk-img-C {
+    position: relative; }
+    .wxchat-talk-C .wxchat-talk-img-C:hover .wxchat-talk-mask {
+      opacity: 1; }
+    .wxchat-talk-C .wxchat-talk-img-C .wxchat-talk-mask {
+      opacity: 0;
+      -webkit-transition: 0.5s;
+      transition: 0.5s;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      left: 0;
+      top: 0;
+      font-size: 40px;
+      color: #fff;
+      text-align: center; }
+      .wxchat-talk-C .wxchat-talk-img-C .wxchat-talk-mask i {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        -webkit-transform: translate3d(-50%, -50%, 0);
+        transform: translate3d(-50%, -50%, 0); }
 
 /*# sourceMappingURL=index.css.map */

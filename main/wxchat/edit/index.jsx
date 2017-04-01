@@ -1,5 +1,5 @@
 import React from 'react';
-import { message,Row,Col,Input,Button } from '../../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Checkbox } from '../../commoncomponent/common.jsx';
 
 import './css/index.css';
 
@@ -29,8 +29,9 @@ export default class WXEditApp extends React.Component {
 							<aside className='wxchat-talk-header' style={{background:'url(./static/images/wx-header.png) no-repeat center / contain'}}>
 								<div onClick={()=>{this.setState({currentShowArea:'modifyTitle'})}}><span>{this.props.data.title}</span><span style={{background:'url(./static/images/wx-header-edit.png) no-repeat left bottom'}}></span></div>
 							</aside>
-							<aside className='wxchat-talk-body'>
-								<section className='wxchat-edit-member-list'>
+							<aside className='wxchat-talk-body' ref='wxchat-talk-body'>
+								<div ref='wxchat-talk-body-scroller' style={{paddingBottom:20}}>
+									<section className='wxchat-edit-member-list'>
 									<div>
 										{this.props.data.memberList[0].name+'邀请你和'+this.props.data.memberList[1].name+' 、'}
 										{this.props.data.memberList.filter((item,i)=>{
@@ -47,7 +48,7 @@ export default class WXEditApp extends React.Component {
 								<ul className='wxchat-edit-talk-list'>
 									{this.props.data.talk.map((item,i)=>{
 										if(item.isMe){
-											return <li key={i} className={'wxchat-edit-talk-user'}>
+											return <li onClick={this.modifyCurrentIndex.bind(this,i)} key={i} className={'wxchat-edit-talk-user '+(i===this.props.currentTalkIndex  ? 'active':'')}>
 														<div className={'wxchat-edit-talk-content ' + (item.text?'':'wxchat-edit-talk-img')}>
 															<aside>
 																<div></div>
@@ -58,11 +59,12 @@ export default class WXEditApp extends React.Component {
 																</div>
 															</aside>
 														</div>
-														<div className='wxchat-edit-talk-head'  style={{background:'url('+(item.head || './static/images/me.png')+') no-repeat center / cover'}}></div>
+														<div className='wxchat-edit-talk-head'  style={{background:'url('+(item.head || './static/images/me.png')+' ) no-repeat center / cover'}}></div>
+														{i===this.props.currentTalkIndex && <img src='./static/images/delete.png' onClick={this.deleteTalk.bind(this,i)} style={{position:'absolute',left:0,bottom:0,width:20,cursor:'pointer'}}/>}
 													</li>
 										}
-										return <li key={i} className={item.isMe?'wxchat-edit-talk-user':''}>
-											<div className='wxchat-edit-talk-head' style={{background:'url('+(item.head || './static/images/me.png')+') no-repeat center / cover'}}></div>
+										return <li key={i} className={(i===this.props.currentTalkIndex  ? 'active':'')}  onClick={this.modifyCurrentIndex.bind(this,i)}>
+											<div className='wxchat-edit-talk-head' style={{background:'url('+(item.head || './static/images/zmiti.jpg')+') no-repeat center / cover'}}></div>
 											<div className={'wxchat-edit-talk-content ' + (item.text?'':'wxchat-edit-talk-img')}>
 												<aside>{item.name}</aside>
 												<aside>
@@ -71,6 +73,7 @@ export default class WXEditApp extends React.Component {
 													</div>
 												</aside>
 											</div>
+											{i===this.props.currentTalkIndex && <img src='./static/images/delete.png' onClick={this.deleteTalk.bind(this,i)} style={{position:'absolute',right:0,bottom:0,width:20,cursor:'pointer'}}/>}
 										</li>
 									})}
 								</ul>
@@ -78,6 +81,7 @@ export default class WXEditApp extends React.Component {
 								<section className='wxchat-add-talk-btn' onClick={this.addTalk.bind(this)}>
 									<img src='./static/images/add-talk.png'/>
 								</section>
+								</div>
 								
 							</aside>
 							<aside className='wxchat-talk-footer'  style={{background:'url(./static/images/wxtalk.png) no-repeat center / contain'}}></aside>
@@ -87,7 +91,7 @@ export default class WXEditApp extends React.Component {
 				<aside style={{backgroundColor:'#edf2f5'}}>
 					<header className='wxchat-edit-header'>
 						<aside>
-							<div style={{background:'url(./static/images/eye.png) no-repeat 60px 20px / 10%',paddingLeft:20}}>保存关预览</div>
+							<div style={{background:'url(./static/images/eye.png) no-repeat 60px 20px / 10%',paddingLeft:20}}>保存并预览</div>
 						</aside>
 						<aside>
 							<div  style={{background:'url(./static/images/publish.png) no-repeat 90px /  8%',paddingLeft:20}}>发布</div>
@@ -115,7 +119,7 @@ export default class WXEditApp extends React.Component {
 									<div style={{background:'url('+(this.props.data.myHeadImg||'./static/images/me.png')+') no-repeat center / cover'}}></div>
 									<section>我</section>
 									<section className={'wxchat-member-bar'}>
-											<aside>添加聊天</aside>
+											<aside onClick={this.setTalkIsMe.bind(this)}>设置聊天</aside>
 											<aside onClick={this.repalceMyHeadImg.bind(this)}>替换头像</aside>
 									</section>
 								</div>
@@ -131,7 +135,7 @@ export default class WXEditApp extends React.Component {
 						<section className='wxchat-edit-scroll' ref='wxchat-edit-scroll'>
 							<ul style={{width:this.props.data.memberList.length*62}}>
 								{this.props.data.memberList.map((item,i)=>{
-									return <li key={i}>
+									return <li className={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].id === item.id? 'active':''} key={i} onClick={this.setCurrentTalk.bind(this,i)}>
 										{i===0 && <img className='wxchat-king' src='./static/images/king.png'/>}
 										<div>
 											<section  style={{background:'url('+item.head+') no-repeat center center / cover'}}></section>
@@ -139,6 +143,7 @@ export default class WXEditApp extends React.Component {
 										<div>
 											<span>{item.name}</span>
 										</div>
+										{this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].id === item.id && <Checkbox style={{position:'absolute',bottom:0,right:0}} checked={true}></Checkbox>}
 									</li>
 								})}
 							</ul>
@@ -151,15 +156,47 @@ export default class WXEditApp extends React.Component {
     );
   }
 
+  setCurrentTalk(i){
+  	 window.obserable.trigger({
+  	 	type:'setCurrentTalk',
+  	 	data:i
+  	 })
+  }
+
   repalceMyHeadImg(){
   	window.obserable.trigger({
   		type:'repalceMyHeadImg'
   	});
   }
 
+  modifyCurrentIndex(index){
+  	window.obserable.trigger({
+  		type:'modifyCurrentIndex',
+  		data:index
+  	})
+  }
+
+  setTalkIsMe(){
+  	
+
+  	window.obserable.trigger({
+  		type:'setTalkIsMe'
+  	})
+  }
+
+  deleteTalk(i){
+  	window.obserable.trigger({
+  		type:'deleteTalk',
+  		data:i
+  	});
+  }
+
 
   addTalk(){
 	this.setState({currentShowArea:'addTalkContent'});
+	window.obserable.trigger({
+  		type:'addTalk'
+  	});
   }
 
   componentDidMount() {
@@ -169,6 +206,21 @@ export default class WXEditApp extends React.Component {
   		scrollbars:true,//显示滚动条
         interactiveScrollbars:true,//允许用户拖动滚动条
         mouseWheel:true
+  	});
+
+  	this.talkBodyScroll = new IScroll(this.refs['wxchat-talk-body'],{
+        interactiveScrollbars:true,//允许用户拖动滚动条
+        mouseWheel:true
+  	});
+
+  	
+  	var scrollHeight = this.refs['wxchat-talk-body'].offsetHeight;
+
+  	window.obserable.on('refreshTalkBodyScroll',()=>{
+  		var top = scrollHeight - this.refs['wxchat-talk-body-scroller'].offsetHeight;
+  		top>0 && (top = 0);
+  		this.talkBodyScroll.scrollTo(0,top,100);
+  		this.talkBodyScroll.refresh();
   	})
   }
 }

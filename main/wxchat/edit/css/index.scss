@@ -64,6 +64,7 @@
               }
               .wxchat-talk-body{
                  flex:1;
+                 @include pos(r);
                  overflow: hidden;
                  background-color:#ebebeb;
                   $size:240px;
@@ -95,6 +96,13 @@
                     width:$size;
                     margin:12px auto;
                     li{
+                        &.active{
+                          border:1px solid #ed4949;
+                         /// box-shadow: 0 0 30px rgba(45,183,245,.5) ;
+                          box-sizing:border-box;
+                        }
+                        @include pos(r);
+                        cursor: pointer;
                         font-size: 12px;
                         @include displayFlex(row);
                         margin:10px 0;
@@ -121,6 +129,7 @@
                           aside:first-of-type{
                           	@include transformOrigin(left top);
                           	@include transform(scale(.9));
+                            margin-top: -3px
                           }
                           aside:last-of-type{
                             div{
@@ -172,6 +181,9 @@
                               }
                             }  
                           }          
+                          aside:first-of-type{
+                            margin: 0;
+                          }
                           aside:last-of-type{
 
                               @include pos(r);
@@ -305,11 +317,11 @@
     		}
     		.wxchat-member-bar{
 		          @include pos(a);
-		          padding-right: 3px;
+		          padding-left: 3px;
 		          top:0;
+              display: none;
 		          margin: 0;
-		          display: none;
-		          left: -70px;
+		          right: -70px;
 		          aside{
 		            
 		            border:1px solid rgba(0, 140, 237,1);
@@ -370,6 +382,10 @@
     		ul{
     			@include displayFlex(row);
     			li{
+            &.active{
+              border:1px solid #2db7f5;
+            }
+            border:1px transparent;
     				cursor: pointer;
     				@include pos(r);
     				width:$size;

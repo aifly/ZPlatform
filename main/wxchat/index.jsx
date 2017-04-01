@@ -84,7 +84,16 @@ class ZmitiWxChatApp extends Component {
 						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
 					}
 				],
-				talk:[{
+				talk:[
+					{
+						isMe:false,
+						head:'',
+						name:'xxx',
+						img:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg',
+						text:''
+
+					}
+					/*{
 						isMe:false,
 						id:1,
 						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg',
@@ -96,7 +105,7 @@ class ZmitiWxChatApp extends Component {
 						head:'',
 						name:'邓彬',
 						text:'大家好，新人求罩',
-					}
+					}*/
 				]
 			}
 		}; 
@@ -116,6 +125,7 @@ class ZmitiWxChatApp extends Component {
             userid: s.userid,
             onFinish(imgData){
                 s.state.data.memberList.push({
+                	id:s.state.data.memberList.length-1,
                 	head:imgData.src,
                 	name:''
                 });
@@ -141,6 +151,24 @@ class ZmitiWxChatApp extends Component {
             	s.forceUpdate()
             }
         }
+
+        const  replaceTalkImgProps = {//替换聊天中的图片
+        	baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+            	
+            	s.state.data.talk[s.state.currentTalkIndex].img = imgData.src;
+            	
+            	s.state.data.talk[s.state.currentTalkIndex].text = '';
+
+            	s.state.isShowReplaceTalkImg= false;
+
+            	s.forceUpdate(()=>{
+            		window.obserable.trigger({type:'refreshTalkBodyScroll'});
+            	})
+            }
+        } 
 
         const editHeadProps = {
         	baseUrl: window.baseUrl,
@@ -183,6 +211,7 @@ class ZmitiWxChatApp extends Component {
 
 
 			{this.state.isShowReplaceMyHeadImg && <ZmitiUploadDialog id={'repalcemyheadimg'} {...repalcemyheadimgProps}></ZmitiUploadDialog>}
+			{this.state.isShowReplaceTalkImg && <ZmitiUploadDialog id={'isShowReplaceTalkImg'} {...replaceTalkImgProps}></ZmitiUploadDialog>}
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
@@ -265,7 +294,11 @@ class ZmitiWxChatApp extends Component {
 				return;
 			}
 			this.state.data.memberList.splice(i,1);
-			this.forceUpdate();
+			this.forceUpdate(()=>{
+				window.obserable.trigger({
+					type:'refreshMemberList'
+				})
+			});
 		});
 		
 		window.obserable.on('repalceMyHeadImg',()=>{
@@ -277,10 +310,87 @@ class ZmitiWxChatApp extends Component {
 			});
 		});
 
-		window.obserable.on('modifyCurrentTalk',data=>{
+		window.obserable.on('modifyCurrentTalk',data=>{//输入框改变时。
 			this.state.data.talk[this.state.currentTalkIndex].text = data;
+			this.state.data.talk[this.state.currentTalkIndex].img = '';//清空聊天图片
+			window.obserable.trigger({type:'refreshTalkBodyScroll'});
 			this.forceUpdate();
 		});
+
+		window.obserable.on('modifyCurrentIndex',data=>{ //设置当前的聊天记录。
+			this.setState({
+				currentTalkIndex:data
+			})
+		});
+
+		window.obserable.on('setCurrentTalk',data=>{//设置聊天的内容和头像
+
+			this.state.data.talk[this.state.currentTalkIndex].head = this.state.data.memberList[data].head;
+			this.state.data.talk[this.state.currentTalkIndex].name = this.state.data.memberList[data].name;
+			this.state.data.talk[this.state.currentTalkIndex].id = this.state.data.memberList[data].id;
+			this.state.data.talk[this.state.currentTalkIndex].isMe = false;
+			this.forceUpdate();
+
+		});
+
+		window.obserable.on('addTalk',()=>{//
+			var talk = {
+				isMe:false,
+				id:-1,
+				head:'',
+				name:'xxx',
+				text:'点击录入聊天内容'
+			}
+			this.state.data.talk.push(talk);
+			this.state.currentTalkIndex = this.state.data.talk.length -1;
+			this.forceUpdate(()=>{
+				window.obserable.trigger({type:'refreshTalkBodyScroll'});
+			});
+		});
+
+
+		window.obserable.on("setTalkIsMe",()=>{//设置当前的聊天内容为我。
+			this.state.data.talk[this.state.currentTalkIndex].id = -1;
+			this.state.data.talk[this.state.currentTalkIndex].isMe = true;
+			this.state.data.talk[this.state.currentTalkIndex].head = this.state.data.myHeadImg;
+			this.forceUpdate();
+  		});
+
+  		window.obserable.on('modifyCurrentTalkHref',(data)=>{//更新当前聊天的链接。
+  			this.state.data.talk[this.state.currentTalkIndex].href = data;
+  			this.forceUpdate();
+  		});
+
+  		window.obserable.on('modifyTalkImg',()=>{//替换图片。
+  			this.setState({
+  				isShowReplaceTalkImg:true
+  			},()=>{
+  				window.obserable.trigger({
+  					type:'showModal',
+					data:{type:0,id:'isShowReplaceTalkImg'}
+  				})
+  			})
+  		});
+
+  		window.obserable.on('deleteTalkImg',()=>{
+  			var s = this;
+  			s.state.data.talk[s.state.currentTalkIndex].img = null;
+        	s.forceUpdate()
+  		});
+
+  		window.obserable.on('deleteTalk',(i)=>{
+  			if(this.state.data.talk.length<=1){
+  				message.error('至少得有一个聊天记录');
+  				return;
+  			}
+
+  			this.state.currentTalkIndex = this.state.data.talk.length - 2;
+  			this.forceUpdate();
+
+  			this.state.data.talk.splice(i,1);
+
+  			this.forceUpdate();
+  		});
 	}
  
 }

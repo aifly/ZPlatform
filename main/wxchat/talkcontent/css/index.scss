@@ -30,11 +30,13 @@
 			}
 			&.active{
 				background-color: #ccc;
-				box-shadow: 0 0 10px rgba(0,0,0,.5) inset;
+				box-shadow: 0 0 10px rgba(0,0,0,.4) inset;
+				@include br(5px);
 			}
 			&:hover{
 				background-color: #ccc;
-				box-shadow: 0 0 10px rgba(0,0,0,.5) inset;
+				box-shadow: 0 0 10px rgba(0,0,0,.4) inset;
+				@include br(5px);
 			}
 			div{
 				@include pos(r);
@@ -72,6 +74,37 @@
 
 			}
 			background-color: #fff;
+		}
+	}
+
+
+	.wxchat-talk-img-C{
+		@include pos(r);
+
+		&:hover{
+			.wxchat-talk-mask{
+				opacity:1;
+			}	
+		}
+		.wxchat-talk-mask{
+			opacity:0;
+			@include transition(.5s);
+			@include pos(a);
+			width:100%;
+			height: 100%;
+			background-color: rgba(0,0,0,.5);
+			left: 0;
+			top:0;
+			font-size: 40px;
+			color:#fff;
+			text-align: center;
+			i{
+				cursor: pointer;
+				@include pos(a);
+				top:50%;
+				@include transform(translate3d(-50%,-50%,0));
+			}
+
 		}
 	}
 }
