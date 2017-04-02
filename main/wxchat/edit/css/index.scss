@@ -24,6 +24,23 @@
               margin:85px auto;
               border:5px solid #858b9d;
               @include br(3px);
+              @include pos(r);
+              .wxchat-talk-bg-C{
+                @include pos(a);
+                right:-50px;
+                z-index: 100;
+                top:0px;
+                cursor:pointer;
+
+                &>aside{
+                  margin:5px 0;
+                  section{
+                    @include pos(a);
+                    top:5px;
+                    right:100%;
+                  }
+                }
+              }
               box-sizing:border-box;
               height: 440px;
               @include displayFlex();
@@ -46,6 +63,10 @@
                     &:first-of-type{
                       background:#333;
                       display: inline-block;
+                       white-space:nowrap;
+                        word-break:break-all;
+                        text-overflow:ellipsis;
+                        -webkit-text-overflow:ellipsis;
                       padding: 0 4px 3px 4px;
                       @include br(3px);
                       overflow:hidden;
@@ -304,7 +325,7 @@
     		cursor: pointer;
     		@include pos(r);
     		div{
-    			background-color: red;
+    			
     			height: 100%;
     		}
     		section{
@@ -319,6 +340,7 @@
 		          @include pos(a);
 		          padding-left: 3px;
 		          top:0;
+              z-index: 100;
               display: none;
 		          margin: 0;
 		          right: -70px;

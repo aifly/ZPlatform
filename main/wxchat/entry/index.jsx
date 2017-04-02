@@ -9,7 +9,7 @@ export default class WXEntryApp extends React.Component {
 
   render() {
     return (
-      <div className={this.props.isEntry?'hide':''}>
+      <div className={this.props.isEntry !== 0?'hide':''}>
 				<h4 style={{height:'5vh'}}></h4>
 			 <div className="wxchat-main-content">
 			 	<aside>

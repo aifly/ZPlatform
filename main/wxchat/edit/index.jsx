@@ -1,5 +1,5 @@
 import React from 'react';
-import { message,Row,Col,Input,Button,Checkbox } from '../../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Checkbox,Modal } from '../../commoncomponent/common.jsx';
 
 import './css/index.css';
 
@@ -16,20 +16,43 @@ export default class WXEditApp extends React.Component {
 
     this.state = {
     	currentShowArea:'addTalkContent',
+    	showDetail:false,
+    	visible:false,
+    	showBgSoundDetail:false,
     };
   }
 
   render() {
 
+  	var bodyStyle ={};
+  	if(this.props.data.background){
+  		bodyStyle.background = 'url('+this.props.data.background+') no-repeat center / cover'
+  	}
     return (
-      <div className={'wxchat-main-stage '+(this.props.isEntry?'show':'')} style={{height:this.props.mainHeight}}>
+      <div className={'wxchat-main-stage '+(this.props.isEntry === 1?'show':'')} style={{height:this.props.mainHeight}}>
 				<aside>
 					<div className='wxchat-phone-container' style={{background:'rgba(255,255,255,.7) url(./static/images/phone-bg.png) no-repeat  center / contain'}}>
 						<section className='wxchat-talk-main'>
+							<section className='wxchat-talk-bg-C'>
+								<aside>
+									<img src='./static/images/bg-ico.png' title='设置聊天背景' onClick={this.operatBackground.bind(this)}/>
+									<section style={{display:this.state.showDetail?'block':'none'}}>
+										<Button type='primary' icon='reload' onClick={this.modifyBackground.bind(this)}>替换背景</Button>
+										<Button  type='primary'  icon='delete' onClick={this.deleteBackground.bind(this)}>删除背景</Button>
+									</section>
+								</aside>
+								<aside>
+									<img src='./static/images/music-ico.png' title='设置背景音乐' onClick={this.operatBgSound.bind(this)}/>
+									<section style={{display:this.state.showBgSoundDetail?'block':'none',top:44}}>
+										<Button type='primary' icon='reload' onClick={()=>{this.setState({visible:true})}}>替换音乐</Button>
+										<Button  type='primary'  icon='delete' onClick={this.deleteBgSound.bind(this)}>删除音乐</Button>
+									</section>
+								</aside>
+							</section>
 							<aside className='wxchat-talk-header' style={{background:'url(./static/images/wx-header.png) no-repeat center / contain'}}>
 								<div onClick={()=>{this.setState({currentShowArea:'modifyTitle'})}}><span>{this.props.data.title}</span><span style={{background:'url(./static/images/wx-header-edit.png) no-repeat left bottom'}}></span></div>
 							</aside>
-							<aside className='wxchat-talk-body' ref='wxchat-talk-body'>
+							<aside className='wxchat-talk-body' ref='wxchat-talk-body' style={bodyStyle}>
 								<div ref='wxchat-talk-body-scroller' style={{paddingBottom:20}}>
 									<section className='wxchat-edit-member-list'>
 									<div>
@@ -113,7 +136,7 @@ export default class WXEditApp extends React.Component {
 					</section>}
 					{ <section className='wxchat-modify-talk-content' style={{display:this.state.currentShowArea === 'addTalkContent'?'block':'none'}}>
 						<h2>选择聊天人员</h2>
-						<Row type='flex' gutter={20}>
+						<Row type='flex' gutter={20} align='middle'>
 							<Col>
 								<div className='wxchat-edit-me'>
 									<div style={{background:'url('+(this.props.data.myHeadImg||'./static/images/me.png')+') no-repeat center / cover'}}></div>
@@ -124,8 +147,11 @@ export default class WXEditApp extends React.Component {
 									</section>
 								</div>
 							</Col>
+							<Col span={8}>
+								<Input placeholder='显示我的默认名称' value={this.props.data.username} onChange={this.modifyUserName.bind(this)}/>
+							</Col>
 							<Col>
-								<div style={{width:200,lineHeight:'26px'}}>注：默认头像会在真实环境中替换为读取的微信头像</div>
+								<div style={{width:170,lineHeight:'26px'}}>注：默认头像会在真实环境中替换为读取的微信头像</div>
 							</Col>
 						</Row>
 						<div className='wxchat-edit-line'></div>
@@ -145,15 +171,75 @@ export default class WXEditApp extends React.Component {
 										</div>
 										{this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].id === item.id && <Checkbox style={{position:'absolute',bottom:0,right:0}} checked={true}></Checkbox>}
 									</li>
-								})}
+									})}
 							</ul>
 						</section>
 						<h2>输入聊天内容</h2>
 						<WXTalkContentApp {...this.props}></WXTalkContentApp>
 					</section>}
 				</aside>
+
+				 <Modal
+			      visible={this.state.visible}
+			      title="添加背景音乐"
+			      onOk={()=>{this.setState({visible:false})}}
+			      onCancel={()=>{this.setState({visible:false})}}
+			    >
+			      <Input value={this.props.data.bgSound} onChange={this.modifyBgSound.bind(this)} placeholder='http://www.'/>
+    			</Modal>	
 			</div>
     );
+  }
+
+  modifyBgSound(e){
+  	window.obserable.trigger({type:'modifyBgSound',data:e.target.value});
+  }
+
+  deleteBgSound(){
+  	window.obserable.trigger({type:'deleteBgSound'});//删除背景音乐
+  	this.setState({
+		showBgSoundDetail:false,
+		visible:false
+	});
+  }
+
+  modifyBackground(){
+  	window.obserable.trigger({type:'modifyBackground'})
+  }
+
+  operatBgSound(){
+  	if(this.props.data.bgSound){
+  		this.setState({
+  			showBgSoundDetail:true,
+  			visible:false
+  		});
+  	}else{
+  		this.setState({
+  			showBgSoundDetail:false,
+  			visible:true
+  		});
+  		window.obserable.trigger({type:'modifyBgSound'});		
+  	}
+  }
+
+  operatBackground(){
+  	if(this.props.data.background){
+  		this.setState({
+  			showDetail:true
+  		});
+  	}else{
+  		this.setState({
+  			showDetail:false
+  		});
+  		window.obserable.trigger({type:'modifyBackground'});		
+  	}
+  }
+
+  deleteBackground(){
+  	window.obserable.trigger({type:'deleteBackground'});
+  	this.setState({
+		showDetail:false
+	});
   }
 
   setCurrentTalk(i){
@@ -161,6 +247,13 @@ export default class WXEditApp extends React.Component {
   	 	type:'setCurrentTalk',
   	 	data:i
   	 })
+  }
+
+  modifyUserName(e){
+  	window.obserable.trigger({
+  		type:'modifyUserName',
+  		data:e.target.value
+  	})
   }
 
   repalceMyHeadImg(){

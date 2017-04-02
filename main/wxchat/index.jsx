@@ -16,6 +16,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import WXEntryApp from './entry/index.jsx';
 import WXEditApp from './edit/index.jsx';
+import WXSaveApp from './save/index.jsx';
 
 class ZmitiWxChatApp extends Component {
 	constructor(props) {
@@ -26,9 +27,13 @@ class ZmitiWxChatApp extends Component {
 			mainHeight:document.documentElement.clientHeight - 50,
 			currentDialogName:'wxchat-members-head',
 			isShowReplaceMyHeadImg:false,
+			isShowBackgroundDialog:false,
 			isEntry:0,//是否进入编辑状态
 			currentTalkIndex:0,
 			data:{
+				background:'',//聊天背景图片
+				bgSound:'',//背景音乐
+				username:'',
 				myHeadImg:'',
 				groupName:'',//群名称
 				title:'2017两会',
@@ -61,26 +66,6 @@ class ZmitiWxChatApp extends Component {
 					},{
 						id:7,
 						name:'杨凡',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},{
-						id:8,
-						name:'杨凡',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},{
-						id:9,
-						name:'杨凡',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},{
-						id:10,
-						name:'杨凡',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},{
-						id:11,
-						name:'杨凡',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},{
-						id:12,
-						name:'杨凡1',
 						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
 					}
 				],
@@ -137,6 +122,17 @@ class ZmitiWxChatApp extends Component {
                 });
             }
         };
+
+        const backgroundProps = {
+        	baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+
+                s.state.data.background = imgData.src;
+                s.forceUpdate();
+            }	
+        }
 
         const repalcemyheadimgProps ={
         	baseUrl: window.baseUrl,
@@ -196,15 +192,14 @@ class ZmitiWxChatApp extends Component {
         	modifyUserName:this.modifyUserName.bind(this),
         	entryEdit:this.entryEdit.bind(this),
         	modifyGroupName:this.modifyGroupName.bind(this),
-        	
-
         }
 
 
 		var component = <div className='wxchat-main-ui' style={mainStyle}>
-
+			{this.state.data.bgSound && <audio src={this.state.data.bgSound} autoPlay loop></audio>}
 			<WXEntryApp {...this.state} {...data}></WXEntryApp>			
 			<WXEditApp {...this.state} {...data}></WXEditApp>
+			<WXSaveApp {...this.state} {...data}></WXSaveApp>
 			<ZmitiUploadDialog id={this.state.currentDialogName} {...userHeadProps}></ZmitiUploadDialog>
 
 			{this.state.currentEditIndex !== -1 && <ZmitiUploadDialog id={'memberList-'+ this.state.currentEditIndex} {...editHeadProps}></ZmitiUploadDialog>}
@@ -212,6 +207,7 @@ class ZmitiWxChatApp extends Component {
 
 			{this.state.isShowReplaceMyHeadImg && <ZmitiUploadDialog id={'repalcemyheadimg'} {...repalcemyheadimgProps}></ZmitiUploadDialog>}
 			{this.state.isShowReplaceTalkImg && <ZmitiUploadDialog id={'isShowReplaceTalkImg'} {...replaceTalkImgProps}></ZmitiUploadDialog>}
+			{this.state.isShowBackgroundDialog && <ZmitiUploadDialog id={'showBackgroundDialog'} {...backgroundProps}></ZmitiUploadDialog>}
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
@@ -224,9 +220,67 @@ class ZmitiWxChatApp extends Component {
 	}
 
 	entryEdit(){
+
+		//创建or更新作品
+		//
+		//
+		window.globalMenus.map((item,i)=>{
+			
+			 if(item.linkTo === '/wxchat/'){
+			 	this.productid = item.productid;//获取当前产品的id;
+			 }
+		});
+		
+		var s = this;
+		console.log({
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				worksname:s.state.data.title,
+				productid:s.productid,
+				worksdesc:'',
+				workico:'',
+				workstag:'',
+				workstate:0,
+				imgurl:'',
+				worktypesign:0,
+				datajson:JSON.stringify(s.state.data)
+			});
+		var type = 0;
+		
+		switch(s.usertypesign) {
+			case window.Role.COMPANYUSER://公司员工
+			case window.Role.COMPANYADMINUSER://公司管理员。
+				type = 1;//对应的是公司的作品。
+				break;
+		}
+		$.ajax({
+			url:window.baseUrl+'/works/create_works/',
+
+			data:{
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				worksname:s.state.data.title,
+				productid:s.productid,
+				worksdesc:'',
+				workico:'',
+				workstag:'',
+				workstate:0,//作品状态, 0，草稿,1，正常 ,2，已删除
+				imgurl:'',
+				worktypesign:type,//作品类型0:我的作品;1:公司作品;2,平台作品
+				datajson:JSON.stringify(s.state.data)
+			},
+			success(data){
+				if(data.getret === 0){
+					message.success(data.getmsg);
+				}
+				console.log(data);
+			}
+		})
+
+
 		this.setState({
 			isEntry:true
-		})
+		});
 	}
 
 	 
@@ -256,9 +310,10 @@ class ZmitiWxChatApp extends Component {
 
 		resizeMainHeight(this);	
 		
-		let {userid,getusersigid} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
+		let {userid,getusersigid,usertypesign} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
 		this.userid = userid;
 		this.getusersigid = getusersigid;
+		this.usertypesign = usertypesign;
 	}
 
 	componentDidMount() {
@@ -391,6 +446,40 @@ class ZmitiWxChatApp extends Component {
 
   			this.state.data.talk.splice(i,1);
 
+  			this.forceUpdate();
+  		});
+
+  		window.obserable.on('modifyUserName',data=>{
+  			this.state.data.username = data;
+  			this.forceUpdate();
+  		});
+
+  		window.obserable.on('modifyBackground',(data)=>{
+  			this.setState({
+  				isShowBackgroundDialog:true
+  			},()=>{
+  				window.obserable.trigger({
+  					type:"showModal",
+  					data:{
+  						type:0,
+  						id:'showBackgroundDialog'
+  					}
+  				})
+  			});
+  		});
+
+  		window.obserable.on('deleteBackground',()=>{
+  			this.state.data.background = '';//清除背景图片
+  			this.forceUpdate();
+  		});
+
+  		window.obserable.on('modifyBgSound',(e)=>{
+  			this.state.data.bgSound = e;//添加背景音乐
+  			this.forceUpdate();
+  		});
+
+  		window.obserable.on('deleteBgSound',(e)=>{
+  			this.state.data.bgSound = '';//添加背景音乐
   			this.forceUpdate();
   		});
 	}

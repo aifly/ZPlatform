@@ -20,7 +20,7 @@ h2,h3,h4,h5{
   }
   .wxchat-main-content{
     width:1000px;
-    height: 85vh;
+    height: 86vh;
 
     @include displayFlex(row);
     aside:last-of-type{
@@ -173,4 +173,31 @@ h2,h3,h4,h5{
     outline: none;
     cursor:pointer;
   }
+}
+
+
+
+@media all and (max-height: 670px) {
+  .wxchat-main-ui{
+    .wxchat-members{
+      margin-top:10px;
+    }
+    &>div>h4{
+      height:1vh !important;
+    }
+    .wxchat-sure-btn{
+      margin-top: 10px;
+      height:40px;
+      line-height: 40px;
+    }
+    .wxchat-main-content {
+      margin-top: 0;
+      height:90vh;
+      &>aside:last-of-type{
+        h4{
+          height:0 !important;
+        }
+      }
+    }
+  } 
 }

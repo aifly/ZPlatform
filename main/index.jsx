@@ -25,6 +25,9 @@ import $ from 'jquery';
 class App extends React.Component{
 	constructor(args) {
 		super(...args);
+		this.state = {
+			wxProductId:'wxchat',
+		}
 	}
 	render() {
 		var apps = [
@@ -37,7 +40,7 @@ class App extends React.Component{
 				{path: '/renewal/', app: ZmitiRenewalApp},
 				{path: '/custom/', app: ZmitiCustom},
 				{path: '/mycustom/', app: ZmitiMycustom},
-				{path: '/wxchat/', app: ZmitiWxChatApp},
+				{path: '/'+this.state.wxProductId+'/', app: ZmitiWxChatApp},
 				{path: '/commitworkorder/', app: ZmitiCommitWorkOrderApp},
 				{path: '/workorder/', app: ZmitiWorkOrderApp},
 				{path: '/workorderquestion/', app: ZmitiWorkOrderQuestionApp}
@@ -164,7 +167,9 @@ $.ajax({
     	if(data.getret === 0){
     		var arr = [];
     		data.productlist.map((item,i)=>{
+
     			arr.push({
+    				"productid":item.productid,
     				"linkTo":item.producturl,
 					"key":item.producturl.split('/')[1],
 					"title":item.productname,
