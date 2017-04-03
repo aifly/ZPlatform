@@ -65,6 +65,7 @@ h2,h3,h4,h5{
       width:100%;
        @include displayFlex(row);
        -webkit-flex-wrap:wrap;
+       flex-wrap:wrap;
       li{
         @include pos(r);
         @at-root.wxchat-king{

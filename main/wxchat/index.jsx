@@ -28,9 +28,12 @@ class ZmitiWxChatApp extends Component {
 			currentDialogName:'wxchat-members-head',
 			isShowReplaceMyHeadImg:false,
 			isShowBackgroundDialog:false,
-			isEntry:0,//是否进入编辑状态
+			isEntry:1,//是否进入编辑状态
 			currentTalkIndex:0,
 			data:{
+				shareTitle:'',//分享标题
+				shareDesc:'',//分享描述
+				shareImg:'',//分享图片300.jpg;
 				background:'',//聊天背景图片
 				bgSound:'',//背景音乐
 				username:'',
@@ -199,7 +202,7 @@ class ZmitiWxChatApp extends Component {
 			{this.state.data.bgSound && <audio src={this.state.data.bgSound} autoPlay loop></audio>}
 			<WXEntryApp {...this.state} {...data}></WXEntryApp>			
 			<WXEditApp {...this.state} {...data}></WXEditApp>
-			<WXSaveApp {...this.state} {...data}></WXSaveApp>
+			<WXSaveApp {...this.state} {...data} userid={this.userid} getusersigid={this.getusersigid}></WXSaveApp>
 			<ZmitiUploadDialog id={this.state.currentDialogName} {...userHeadProps}></ZmitiUploadDialog>
 
 			{this.state.currentEditIndex !== -1 && <ZmitiUploadDialog id={'memberList-'+ this.state.currentEditIndex} {...editHeadProps}></ZmitiUploadDialog>}
@@ -482,6 +485,18 @@ class ZmitiWxChatApp extends Component {
   			this.state.data.bgSound = '';//添加背景音乐
   			this.forceUpdate();
   		});
+
+  		window.obserable.on('backtoedit',()=>{//返回编辑
+  			this.setState({
+  				isEntry:1
+  			});
+  		});
+
+  		window.obserable.on('modifyShareInfo',(data)=>{//分享标题,描述
+  			this.state.data[data.name] = data.title;
+  			this.forceUpdate();
+  		});
+
 	}
  
 }

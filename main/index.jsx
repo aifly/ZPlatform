@@ -16,6 +16,7 @@ import ZmitiWxChatApp from './wxchat/index.jsx';
 import ZmitiWorkOrderApp from './workorder/index.jsx';
 import ZmitiCommitWorkOrderApp from './commitworkorder/index.jsx';
 import ZmitiWorkOrderQuestionApp from './workorderquestion/index.jsx';
+import ZmitiWxChatListApp from './wxchat/list.jsx';
 
 import Obserable from './static/libs/obserable.js';
 
@@ -40,7 +41,8 @@ class App extends React.Component{
 				{path: '/renewal/', app: ZmitiRenewalApp},
 				{path: '/custom/', app: ZmitiCustom},
 				{path: '/mycustom/', app: ZmitiMycustom},
-				{path: '/'+this.state.wxProductId+'/', app: ZmitiWxChatApp},
+				{path: '/wxchat/:id', app: ZmitiWxChatApp},
+				{path: '/wxchatlist/', app: ZmitiWxChatListApp},
 				{path: '/commitworkorder/', app: ZmitiCommitWorkOrderApp},
 				{path: '/workorder/', app: ZmitiWorkOrderApp},
 				{path: '/workorderquestion/', app: ZmitiWorkOrderQuestionApp}
