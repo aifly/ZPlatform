@@ -44,7 +44,7 @@ export default class WXSaveApp extends React.Component {
 							<div><span>{this.props.data.title}</span><span style={{position:'absolute'}}></span></div>
 						</aside>
 						<aside className='wxchat-talk-body' ref='wxchat-talk-body'>
-							
+							{this.props.viewpath && <iframe src={this.props.viewpath} frameBorder={0}></iframe>}
 						</aside>
 					</section>
 				</div>	
@@ -70,16 +70,16 @@ export default class WXSaveApp extends React.Component {
 					</section>
 					<section>
 						<Row type='flex' align='bottom'>
-							<Col span={6}>
-								<img src='./static/images/qrcode.png'/>
+							<Col span={12}>
+								<img src={this.props.data.qrcode||'./static/images/qrcode.png'}/>
 							</Col>
-							<Col span={18}>
+							<Col span={12}>
 								<div>扫二维码</div>
 								<div>分享给好友</div>
 							</Col>
 						</Row>				
 					</section>
-					<section>
+					<section style={{marginTop:20}}>
 						<Row type='flex' gutter={20}>
 							<Col span={12}>
 								<div className='wxchat-publish-btn'>确定发布</div>

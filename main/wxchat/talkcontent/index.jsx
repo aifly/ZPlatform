@@ -95,8 +95,18 @@ export default class WXTalkContentApp extends React.Component {
   	}) 
   }
 
-  modifyCurrentTalkAudio(){
+  modifyCurrentTalkAudio(e){
+  	window.obserable.trigger({
+  		type:'modifyCurrentTalkAudio',
+  		data:e.target.value
+  	})
+  }
 
+  modifyCurrentTalkVideo(e){
+  	window.obserable.trigger({
+  		type:'modifyCurrentTalkVideo',
+  		data:e.target.value
+  	})
   }
 
   changeType(current){

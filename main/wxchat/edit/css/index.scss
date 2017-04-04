@@ -135,6 +135,38 @@
                           max-width: 160px;
                           margin-left: 12px;
 
+                          .wxchat-audia{
+                            width:100px;
+                            height: 22px;
+                            background-color: #fff;
+                            @include br(4px);
+                            @include pos(r);
+                            img{
+                              width:10px;
+                              margin: 6px;
+                            }
+                            &:before{
+                              content:'';
+                              @include pos(a);
+                              $size1:6px;
+                              width:$size1;
+                              height: $size1;
+                              background-color:#fff;
+                              left: -$size1 / 2;
+                              top:8px;
+                              @include transform(rotate(45deg));
+                            }
+                            &:after{
+                              content:'';
+                              @include pos(a);
+                              width:5px;
+                              height: 5px;
+                              background-color: #f00;
+                              @include br(50%);
+                              right: -8px;
+                            }
+                          }
+
                           &.wxchat-edit-talk-img{
                             aside:last-of-type{
                               &:before{
@@ -263,7 +295,7 @@
     	&:before{
     		content:'';
     		width:1px;
-    		background: #dbe3e8;
+    		//background: #dbe3e8;
     		height: $size - 2;
     		top:1px;
     		left: 50%;

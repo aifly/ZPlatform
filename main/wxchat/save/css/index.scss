@@ -7,9 +7,11 @@
 	left:50%;
 	margin-left: -500px;
 	height:100%;
-	top:0;
+	top:50%;
+	margin-top: -300px;
 	
 	@include displayFlex(row);
+
 
 	&>aside{
 		width:400px;

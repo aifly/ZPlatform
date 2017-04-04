@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { message,Row,Col,Input,Button } from '../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Popconfirm } from '../commoncomponent/common.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
@@ -26,55 +26,7 @@ class ZmitiWxChatListApp extends Component {
 			currentTalkIndex:0,
 			isEntry:1,
 			wxchatList:[
-				{
-					worksid:'123456',
-					worksname:'民法你知道多少民法你知道多少民法你知道多少',
-					worksdesc:'',
-					workstag:'',
-					workico:'./static/images/300.jpg',
-					viewpath:'http://h5.zmiti.com/public/civil-law3/index.html',
-					datajsonpath:''
-				},{
-					worksid:'123456',
-					worksname:'民法你知道多少',
-					worksdesc:'',
-					workstag:'',
-					workico:'./static/images/300.jpg',
-					viewpath:'http://h5.zmiti.com/public/civil-law3/index.html',
-					datajsonpath:''
-				},{
-					worksid:'123456',
-					worksname:'民法你知道多少',
-					worksdesc:'',
-					workstag:'',
-					workico:'./static/images/300.jpg',
-					viewpath:'http://h5.zmiti.com/public/civil-law3/index.html',
-					datajsonpath:''
-				},{
-					worksid:'123456',
-					worksname:'民法你知道多少',
-					worksdesc:'',
-					workstag:'',
-					workico:'./static/images/300.jpg',
-					viewpath:'http://h5.zmiti.com/public/civil-law3/index.html',
-					datajsonpath:''
-				},{
-					worksid:'123456',
-					worksname:'民法你知道多少',
-					worksdesc:'',
-					workstag:'',
-					workico:'./static/images/300.jpg',
-					viewpath:'http://h5.zmiti.com/public/civil-law3/index.html',
-					datajsonpath:''
-				},{
-					worksid:'123456',
-					worksname:'民法你知道多少',
-					worksdesc:'',
-					workstag:'',
-					workico:'./static/images/300.jpg',
-					viewpath:'http://h5.zmiti.com/public/civil-law3/index.html',
-					datajsonpath:''
-				}
+				  
 			],//聊天作品列表
 			data:{
 				shareTitle:'',//分享标题
@@ -102,7 +54,10 @@ class ZmitiWxChatListApp extends Component {
 
 		var s = this;
         var data ={
-        	uploadHead:this.uploadHead.bind(this)
+        	uploadHead:this.uploadHead.bind(this),
+        	entryEdit:this.entryEdit.bind(this),
+        	modifyUserName:this.modifyUserName.bind(this),
+        	modifyTitle:this.modifyTitle.bind(this),
         }
 
         const userHeadProps = {
@@ -136,9 +91,11 @@ class ZmitiWxChatListApp extends Component {
 										<div className='wxchat-item-shareimg' style={{background:'url('+item.workico+') no-repeat center / cover'}}></div>
 										<div className='wxchat-item-name'>{item.worksname}</div>
 										<div className='wxchat-item-operator'>
-											<div>预览</div>
+											<div><a href={item.viewpath} target='_blank'>预览</a></div>
 											<div><Link to={'/wxchat/'+item.worksid}>编辑</Link></div>
-											<div onClick={this.deleteWXChat.bind(this,item.worksid)}>删除</div>
+											<Popconfirm placement="top" title={'确定要删除吗？'} onConfirm={this.deleteWXChat.bind(this,item.worksid,i)}>
+												<div>删除</div>
+											</Popconfirm>
 										</div>
 									</li>
 								})}
@@ -152,8 +109,109 @@ class ZmitiWxChatListApp extends Component {
 		);
 	}
 
-	deleteWXChat(){//删除作品
+	deleteWXChat(worksid,i){//删除作品
+		var s = this;
+		$.ajax({
+			url:window.baseUrl+'works/del_works/',
+			data:{
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				worksid:worksid
+			},success(data){
+				if(data.getret === 0){
+					message.success(data.getmsg);
+					s.state.wxchatList.splice(i,1);
+					s.forceUpdate();
+				}
+				else{
+					message.error(data.getmsg);
+				}
+			}
+		})
+		window.obserable.trigger({
+			type:'deleteWork',
+			data:{
+				worksid,
+				index:i
+			}
+		})
+	}
 
+	modifyTitle(e){
+		this.state.data.title = e.target.value;
+		this.forceUpdate();
+	}
+
+	entryEdit (){
+		window.globalMenus.map((item,i)=>{
+			
+			 if(item.linkTo === '/wxchatlist/'){
+			 	this.productid = item.productid;//获取当前产品的id;
+			 }
+		});
+		
+		var s = this;
+		console.log({
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				worksname:s.state.data.title,
+				productid:s.productid,
+				worksdesc:'',
+				workico:'',
+				workstag:'',
+				workstate:0,
+				imgurl:'',
+				worktypesign:0,
+				datajson:JSON.stringify(s.state.data)
+			});
+		var type = 0;
+		
+		switch(s.usertypesign) {
+			case window.Role.COMPANYUSER://公司员工
+			case window.Role.COMPANYADMINUSER://公司管理员。
+				type = 1;//对应的是公司的作品。
+				break;
+		}
+		$.ajax({
+			url:window.baseUrl+'/works/create_works/',
+			data:{
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				worksname:s.state.data.title,
+				productid:s.productid,
+				worksdesc:'',
+				workico:'',
+				workstag:'',
+				workstate:0,//作品状态, 0，草稿,1，正常 ,2，已删除
+				imgurl:'',
+				worktypesign:type,//作品类型0:我的作品;1:公司作品;2,平台作品
+				datajson:JSON.stringify(s.state.data)
+			},
+			success(data){
+				if(data.getret === 0){
+
+					message.success(data.getmsg);
+					$.ajax({
+						url:window.baseUrl + '/weixin/getoauthurl/',
+						data:{
+							userid:s.userid,
+							getusersigid:s.getusersigid,
+							redirect_uri:data.viewpath,
+							scope:'snsapi_userinfo',
+							worksid:data.worksid,
+							state:new Date().getTime()+''
+						},
+						success(dt){
+							message[dt.getret === 0?'success':'error'](data.getmsg);
+							if(dt.getret === 0){
+								window.location.hash =  '/wxchat/'+ data.worksid+'/'
+							}
+						}
+					})
+				}
+				
+			}
+		})
 	}
 
 	uploadHead(){
@@ -162,6 +220,11 @@ class ZmitiWxChatListApp extends Component {
 		  type:'showModal',
 		  data:{type:0,id:'wxchat-members-head'}
 		});
+	}
+
+	modifyUserName(e,i){
+		this.state.data.memberList[i].name = e.target.value;
+		this.forceUpdate();
 	}
 
 
@@ -183,6 +246,21 @@ class ZmitiWxChatListApp extends Component {
 
 		window.s = this;
 
+		$.ajax({
+			url:window.baseUrl + 'works/get_worksinfo/',
+			data:{
+				type:1000,
+				userid:s.userid,
+				getusersigid:s.getusersigid
+			},
+			success(data){
+				if(data.getret === 0){
+					console.log(data.getworksInfo);
+					s.state.wxchatList = data.getworksInfo;
+					s.forceUpdate();
+				}
+			}
+		})
 		
 
 	}

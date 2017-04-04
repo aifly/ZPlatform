@@ -55,15 +55,15 @@ export default class WXEditApp extends React.Component {
 							<aside className='wxchat-talk-body' ref='wxchat-talk-body' style={bodyStyle}>
 								<div ref='wxchat-talk-body-scroller' style={{paddingBottom:20}}>
 									<section className='wxchat-edit-member-list'>
-									<div>
-										{this.props.data.memberList[0].name+'邀请你和'+this.props.data.memberList[1].name+' 、'}
-										{this.props.data.memberList.filter((item,i)=>{
-											return i > 1;
-										}).map((item,i)=>{
-											return <span key={i}>{i>= this.props.data.memberList.length - 3 ? item.name: item.name+' 、'}</span>
-										})}
-										<span>等加入群聊</span>
-									</div>
+									{this.props.data.memberList.length>1 && <div>
+																			{this.props.data.memberList[0].name+'邀请你和'+this.props.data.memberList[1].name+' 、'}
+																			{this.props.data.memberList.filter((item,i)=>{
+																				return i > 1;
+																			}).map((item,i)=>{
+																				return <span key={i}>{i>= this.props.data.memberList.length - 3 ? item.name: item.name+' 、'}</span>
+																			})}
+																			<span>等加入群聊</span>
+																		</div>}
 								</section>
 								{!this.props.data.groupName&&<section onClick={()=>{this.setState({currentShowArea:'modifyGroupName'})}} className='wxchat-group-name'>点击修改群名称</section>}
 								{this.props.data.groupName&&<section onClick={()=>{this.setState({currentShowArea:'modifyGroupName'})}} className='wxchat-group-name'>{this.props.data.memberList[0].name}修改群名称为{this.props.data.groupName}</section>}
@@ -92,7 +92,9 @@ export default class WXEditApp extends React.Component {
 												<aside>{item.name}</aside>
 												<aside>
 													<div>
-														{item.text || <img  src={item.img}/>}
+															{item.text && item.text}
+															{item.img && <img  src={item.img}/>}
+															{item.audioSrc && <section className='wxchat-audia'><img src='./static/images/audio-ico.png' /></section>}
 													</div>
 												</aside>
 											</div>
@@ -114,11 +116,11 @@ export default class WXEditApp extends React.Component {
 				<aside style={{backgroundColor:'#edf2f5'}}>
 					<header className='wxchat-edit-header'>
 						<aside>
-							<div style={{background:'url(./static/images/eye.png) no-repeat 60px 20px / 10%',paddingLeft:20}}>保存并预览</div>
+							<div style={{background:'url(./static/images/eye.png) no-repeat 180px 20px / 5%',paddingLeft:20}} onClick={this.save.bind(this)}>保存并预览</div>
 						</aside>
-						<aside>
+						{/*<aside>
 							<div  style={{background:'url(./static/images/publish.png) no-repeat 90px /  8%',paddingLeft:20}}>发布</div>
-						</aside>
+						</aside>*/}
 					</header>
 					{this.state.currentShowArea === 'modifyTitle' && <section className='wxchat-modify-memebers'>
 						<h2>修改h5名称</h2>
@@ -189,6 +191,12 @@ export default class WXEditApp extends React.Component {
     			</Modal>	
 			</div>
     );
+  }
+
+  save(){
+  	window.obserable.trigger({
+  		type:'save'
+  	})
   }
 
   modifyBgSound(e){

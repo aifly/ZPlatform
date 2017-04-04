@@ -37,7 +37,7 @@ class ZmitiCommitWorkOrderApp extends Component {
 
 
         var title = this.props.params.title || '服务支持中心';
-        let props={
+        let props1={
             userid:this.userid,
             changeAccount:this.changeAccount,
             tags:['我的工单','提交工单'],
@@ -57,27 +57,27 @@ class ZmitiCommitWorkOrderApp extends Component {
 						<Row gutter={30} className="zmiti-workorder-table-row">
 							<Col span={5}>
 								<div className="workorder-table-col-title">财务类</div>
-								<Button className="workorder-table-col-button">提问</Button>
+								<Button className="workorder-table-col-button" onClick={this.gotoQuestion.bind(this,"0")}>提问</Button>
 								<div className="workorder-table-col-content">订单，合同，充值，发票，汇款，等与资金相关问题</div>
 							</Col>
 							<Col span={5}>
 								<div className="workorder-table-col-title">会员帐号类</div>
-								<Button className="workorder-table-col-button">提问</Button>
+								<Button className="workorder-table-col-button" onClick={this.gotoQuestion.bind(this,"1")}>提问</Button>
 								<div className="workorder-table-col-content">更换用户信息，找回密码，空间，到期时间，用户数等相关</div>
 							</Col>
 							<Col span={5}>
 								<div className="workorder-table-col-title">定制服务类</div>
-								<Button className="workorder-table-col-button">提问</Button>
+								<Button className="workorder-table-col-button" onClick={this.gotoQuestion.bind(this,"2")}>提问</Button>
 								<div className="workorder-table-col-content">个性化定制，设计，规划及相关服务类问题</div>
 							</Col>
 							<Col span={5}>
 								<div className="workorder-table-col-title">产品技术类</div>
-								<Button className="workorder-table-col-button">提问</Button>
+								<Button className="workorder-table-col-button" onClick={this.gotoQuestion.bind(this,"3")}>提问</Button>
 								<div className="workorder-table-col-content">现有产品的所有技术相关问题及接口类问题</div>
 							</Col>
 							<Col span={4}>
 								<div className="workorder-table-col-title">其它类</div>
-								<Button className="workorder-table-col-button">提问</Button>
+								<Button className="workorder-table-col-button" onClick={this.gotoQuestion.bind(this,"4")}>提问</Button>
 								<div className="workorder-table-col-content">您无法判断的所有问题都可以此选择提问</div>
 							</Col>
 						</Row>
@@ -94,7 +94,7 @@ class ZmitiCommitWorkOrderApp extends Component {
 									return <Col span={8} key={i}>
 										<div className="workorder-table-box">
 											<div className="workorder-table-col-title">{item.productname}</div>
-											<Button className="workorder-table-col-button">提问</Button>
+											<Button className="workorder-table-col-button"  onClick={this.gotoQuestion.bind(this,item.productid)}>提问</Button>
 										</div>
 									</Col>
 								})
@@ -107,13 +107,20 @@ class ZmitiCommitWorkOrderApp extends Component {
         }
   
 		var mainComponent = <div>
-			<ZmitiUserList {...props}></ZmitiUserList>
+			<ZmitiUserList {...props1}></ZmitiUserList>
 		</div>;
 		return (
 			<MainUI component={mainComponent}></MainUI>
 			);
+
+
 	}
- 
+
+    gotoQuestion(questiontsign){
+        window.location.hash='workorderquestion/'+questiontsign;
+
+    }
+
 	changeAccount(i){
 
         if(i*1===0){

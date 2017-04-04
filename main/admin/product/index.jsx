@@ -400,7 +400,12 @@ import MainUI from '../components/main.jsx';
           }
           src = src.split('/');
           src.shift();
-          src ='/main/'+ src.join('/');
+          if(src.indexOf('/main/')<=-1){
+            src ='/main/'+ src.join('/');
+          }
+          else{
+           src = src.join('/'); 
+          }
       }
       else {
         src = this.state.currentIcon;

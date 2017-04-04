@@ -39,9 +39,11 @@ class ZmitiPersonalAccApp extends React.Component{
                 departmentname:'麟腾传媒文化有限公司',
                 departmentid:'',
                 companyid:'',
+                appid:'',
+                appsecret:'',
                 companyname:'',
-                customername:'',//用户真实姓名
-                usersex:'',//用户性别
+                userrealname:'',//用户真实姓名
+                usersex:'1',//用户性别
                 useremergencycontacter:'',//紧急联系人
                 useremergencycontactmobile:'',//紧急联系人电话/
                 credentials:[
@@ -113,7 +115,7 @@ class ZmitiPersonalAccApp extends React.Component{
         setuserid : userid,
         sussess:(data)=>{
           if(data.getret === 0){
-
+            console.log(data)
             /*
             
        userData:{
@@ -122,7 +124,7 @@ class ZmitiPersonalAccApp extends React.Component{
              */
             var da = data.getuserinfo;
 
-            console.log(data)
+            console.log(da)
 
             s.state.userData={
                 portrait:da.portrait||'./personalAcc/static/images/user.jpg',
@@ -133,8 +135,10 @@ class ZmitiPersonalAccApp extends React.Component{
                 departmentid:da.departmentid,
                 companyid:da.companyid,
                 companyname:da.companyname,
-                customername:da.customername,//用户真实姓名
-                usersex:da.usersex,//用户性别
+                appid:da.wxappid,
+                appsecret :da.wxappsecret,
+                userrealname:da.userrealname,//用户真实姓名
+                usersex:da.usersex+'',//用户性别
                 useremergencycontacter:da.useremergencycontacter,//紧急联系人
                 useremergencycontactmobile:da.useremergencycontactmobile,//紧急联系人电话/
                 credentials:da.credentials,//用户证件照片
@@ -175,13 +179,15 @@ class ZmitiPersonalAccApp extends React.Component{
           getusersigid:s.getusersigid,
           usermobile: s.state.userData.usermobile,
           useremail: s.state.userData.useremail,
-          userrealname: s.state.userData.customername,
+          userrealname: s.state.userData.userrealname,
           dateofbirth: s.state.userData.dateofbirth,
           datesign: s.state.userData.datesign || '阳历',
           emergencycontact: s.state.userData.useremergencycontacter,
           contactmobile: s.state.userData.useremergencycontactmobile,
           usericon: s.state.userData.portrait,
           credentials:credentialsStr,
+          wxappid:s.state.userData.appid,
+          wxappsecret:s.state.userData.appsecret,
           comment:'' //备注
         }
 
@@ -292,8 +298,8 @@ class ZmitiPersonalAccApp extends React.Component{
                        </div>
                        {this.usertypesign !== window.Role.COMPANYUSER && <div className='acc-wx-C'>
                             <div>微信公众号设置</div>
-                           <div className='acc-appid'><Input addonBefore='AppId' type='text' placeholder='appid'/></div>
-                           <div className='acc-appsecret'><Input addonBefore='appsecret' type='text' placeholder='appsecret'/></div>
+                           <div className='acc-appid'><Input addonBefore='AppId' type='text' value={this.state.userData.appid} onChange={(e)=>{this.state.userData.appid=e.target.value;this.forceUpdate()}} placeholder='appid'/></div>
+                           <div className='acc-appsecret'><Input addonBefore='appsecret' type='text' placeholder='appsecret' value={this.state.userData.appsecret} onChange={(e)=>{this.state.userData.appsecret=e.target.value;this.forceUpdate()}}/></div>
                        </div>}
                    </article>
                    }
@@ -312,8 +318,8 @@ class ZmitiPersonalAccApp extends React.Component{
                <div className="acc-form">
                    <div className="acc-form-left">
                        <Input.Group className="acc-input-group">
-                           <Input addonBefore="姓名" defaultValue={this.state.userData.customername} onChange={(e)=>{this.state.userData.customername=e.target.value;this.forceUpdate();}}/>
-                           <Select placeholder='性别'  style={{width:300}} onChange={(value)=>{this.state.userData.usersex=value;this.forceUpdate();}}>
+                           <Input addonBefore="姓名" value={this.state.userData.userrealname} onChange={(e)=>{this.state.userData.userrealname=e.target.value;this.forceUpdate();}}/>
+                           <Select placeholder='性别'  style={{width:300}} onChange={(value)=>{this.state.userData.usersex=value;this.forceUpdate();}} value={this.state.userData.usersex}>
                                <Option value={'0'}>男</Option>
                                <Option value={"1"}>女</Option>
                            </Select>
@@ -321,8 +327,8 @@ class ZmitiPersonalAccApp extends React.Component{
                    </div>
                    <div className="acc-form-right">
                        <Input.Group className="acc-input-group">
-                           <Input addonBefore="紧急联系人" defaultValue={this.state.userData.useremergencycontacter} onChange={(e)=>{this.state.userData.useremergencycontacter=e.target.value;this.forceUpdate();}}/>
-                           <Input addonBefore="紧急联系人电话" defaultValue={this.state.userData.useremergencycontactmobile} onChange={(e)=>{this.state.userData.useremergencycontactmobile=e.target.value;this.forceUpdate();}}/>
+                           <Input addonBefore="紧急联系人" value={this.state.userData.useremergencycontacter} onChange={(e)=>{this.state.userData.useremergencycontacter=e.target.value;this.forceUpdate();}}/>
+                           <Input addonBefore="紧急联系人电话" value={this.state.userData.useremergencycontactmobile} onChange={(e)=>{this.state.userData.useremergencycontactmobile=e.target.value;this.forceUpdate();}}/>
                        </Input.Group>
                    </div>
                </div>

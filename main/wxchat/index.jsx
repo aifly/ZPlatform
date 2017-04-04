@@ -40,6 +40,7 @@ class ZmitiWxChatApp extends Component {
 				myHeadImg:'',
 				groupName:'',//群名称
 				title:'2017两会',
+				viewpath:'',//预览地址
 				memberList:[
 					{
 						id:1,
@@ -227,58 +228,7 @@ class ZmitiWxChatApp extends Component {
 		//创建or更新作品
 		//
 		//
-		window.globalMenus.map((item,i)=>{
-			
-			 if(item.linkTo === '/wxchat/'){
-			 	this.productid = item.productid;//获取当前产品的id;
-			 }
-		});
 		
-		var s = this;
-		console.log({
-				userid:s.userid,
-				getusersigid:s.getusersigid,
-				worksname:s.state.data.title,
-				productid:s.productid,
-				worksdesc:'',
-				workico:'',
-				workstag:'',
-				workstate:0,
-				imgurl:'',
-				worktypesign:0,
-				datajson:JSON.stringify(s.state.data)
-			});
-		var type = 0;
-		
-		switch(s.usertypesign) {
-			case window.Role.COMPANYUSER://公司员工
-			case window.Role.COMPANYADMINUSER://公司管理员。
-				type = 1;//对应的是公司的作品。
-				break;
-		}
-		$.ajax({
-			url:window.baseUrl+'/works/create_works/',
-
-			data:{
-				userid:s.userid,
-				getusersigid:s.getusersigid,
-				worksname:s.state.data.title,
-				productid:s.productid,
-				worksdesc:'',
-				workico:'',
-				workstag:'',
-				workstate:0,//作品状态, 0，草稿,1，正常 ,2，已删除
-				imgurl:'',
-				worktypesign:type,//作品类型0:我的作品;1:公司作品;2,平台作品
-				datajson:JSON.stringify(s.state.data)
-			},
-			success(data){
-				if(data.getret === 0){
-					message.success(data.getmsg);
-				}
-				console.log(data);
-			}
-		})
 
 
 		this.setState({
@@ -320,7 +270,27 @@ class ZmitiWxChatApp extends Component {
 	}
 
 	componentDidMount() {
+
 		var s = this;
+		this.worksid = s.props.params.id;
+		$.ajax({
+			url:window.baseUrl + '/works/get_filecontent/',
+			data:{
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				worksid:s.worksid,
+			},
+			success(data){
+				console.log(data)
+				if(data.getret === 0){
+					s.state.data = JSON.parse(data.filecontent);
+					s.state.viewpath = data.path.viewpath;
+					s.forceUpdate();
+				}
+			}
+		})
+
+		
 
 		window.s = this;
 		window.obserable.on('setMainMember',(i)=>{//设置群主
@@ -384,7 +354,9 @@ class ZmitiWxChatApp extends Component {
 		});
 
 		window.obserable.on('setCurrentTalk',data=>{//设置聊天的内容和头像
-
+			if(!this.state.data.talk[this.state.currentTalkIndex]){
+				return;
+			}
 			this.state.data.talk[this.state.currentTalkIndex].head = this.state.data.memberList[data].head;
 			this.state.data.talk[this.state.currentTalkIndex].name = this.state.data.memberList[data].name;
 			this.state.data.talk[this.state.currentTalkIndex].id = this.state.data.memberList[data].id;
@@ -490,12 +462,57 @@ class ZmitiWxChatApp extends Component {
   			this.setState({
   				isEntry:1
   			});
+
+  			window.obserable.trigger({
+  				type:'save'
+  			})
   		});
 
   		window.obserable.on('modifyShareInfo',(data)=>{//分享标题,描述
   			this.state.data[data.name] = data.title;
   			this.forceUpdate();
   		});
+
+  		window.obserable.on("save",()=>{
+  			this.state.isEntry = 2;
+  			var s = this;
+  			$.ajax({
+  				url:window.baseUrl+'/works/update_works/',
+  				data:{
+  					worksid:s.worksid,
+  					userid:s.userid,
+  					getusersigid:s.getusersigid,
+  					datajson:JSON.stringify(s.state.data),
+  					worksname:s.state.data.title,
+  					workstag:'',
+  					workico:s.state.data.shareImg
+  				},
+  				success(data){
+  					console.log(data)
+  					message[data.getret === 0?'success':'error'](data.getmsg);
+  				}
+
+  			})
+  			this.forceUpdate();
+  		});
+
+  		window.obserable.on('modifyCurrentTalkAudio',(data)=>{
+  			this.state.data.talk[this.state.currentTalkIndex].audioSrc = data;
+  			this.state.data.talk[this.state.currentTalkIndex].text = '';
+  			this.state.data.talk[this.state.currentTalkIndex].img = '';
+  			this.state.data.talk[this.state.currentTalkIndex].videoSrc ='';
+  			this.forceUpdate();
+  		});
+
+
+  		window.obserable.on('modifyCurrentTalkVideo',(data)=>{
+  			this.state.data.talk[this.state.currentTalkIndex].videoSrc = data;
+  			this.state.data.talk[this.state.currentTalkIndex].text = '';
+  			this.state.data.talk[this.state.currentTalkIndex].img = '';
+  			this.state.data.talk[this.state.currentTalkIndex].audioSrc ='';
+  			this.forceUpdate();
+  		});
+
 
 	}
  

@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import './static/css/index.min.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table   } from '../commoncomponent/common.jsx';
-import moment from 'moment';
+import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const RadioGroup = Radio.Group;
@@ -27,7 +26,7 @@ class ZmitiWorkOrderApp extends Component {
 
             mainHeight:document.documentElement.clientHeight - 50,
             dataSource:[],
-			workorderid:'',
+            workorderid:'',
             keyword:'',
             startDate:null,
             endDate:moment(new Date(),'YYYY-MM-DD'),
@@ -129,8 +128,8 @@ class ZmitiWorkOrderApp extends Component {
             dataIndex: 'operation',
             key: 'operation',
             width:100,
-			render:(text,recoder)=>(
-                <span><span className="workorder-gotodetail"><a href="javascript:void(0);">查看</a></span><span className="workorder-del"><a href="javascript:void(0);"> 删除</a></span>
+			render:(text,recoder,index)=>(
+                <span><span className="workorder-gotodetail"><a href="javascript:void(0);">查看</a></span><span className="workorder-del"><a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.workorderid)}> 删除</a></span>
 				</span>
 			)
 
@@ -178,8 +177,8 @@ class ZmitiWorkOrderApp extends Component {
 
     searchBybutton(){
         var workorderid = this.state.workorderid;
-        var startDate=this.state.startDate;
-        var endDate=this.state.endDate;
+        var startDate = this.state.startDate.format("YYYY-MM-DD");
+        var endDate=this.state.endDate.format("YYYY-MM-DD");
         var keyWord=this.state.keyword;
         var s = this;
         $.ajax({
@@ -187,10 +186,10 @@ class ZmitiWorkOrderApp extends Component {
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                workorderid,
-                startDate,
-                endDate,
-                keyWord
+                setworkorderid:workorderid,
+                setstarttime:startDate,
+                setendtime:endDate,
+                setkeyword:keyWord,
             },
             success(data){
                 if(data.getret === 0){
@@ -238,10 +237,45 @@ class ZmitiWorkOrderApp extends Component {
             this.forceUpdate();
         })
     }
+    delData(workorderid){
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'user/del_workorder/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                setworkorderid:workorderid,
+
+            },
+            success(data){
+                console.log(data)
+                if(data.getret === 0){
+                    message.success("删除成功");
+                    setTimeout(()=>{
+                        s.state.dataSource = data.workorderinfo;
+                        s.forceUpdate();
+                    },2000)
+
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data.getmsg);
+                }
+            }
+        })
+    }
+
 
 	changeAccount(i){
         if(i*1===1){
             window.location.hash='commitworkorder/';
+        }else if(i*1===0){
+
         }
 
 	}
@@ -256,6 +290,7 @@ class ZmitiWorkOrderApp extends Component {
                 getusersigid:s.getusersigid
 			},
 			success(data){
+
 				if(data.getret === 0){
 					s.state.dataSource = data.workorderinfo;
 					s.forceUpdate();

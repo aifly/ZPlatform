@@ -11,7 +11,7 @@ export default class WXMemberApp extends Component {
 					{this.props.data.memberList.map((item,i)=>{
 						return <li key={i}>
 							{i===0 && <img title='群主' src='./static/images/king.png' className='wxchat-king'/>}
-							{this.props.data.memberList.length>2 && <section className={'wxchat-member-bar ' +(i%4===0?'active':'')}>
+							{this.props.data.memberList.length>=2 && <section className={'wxchat-member-bar ' +(i%4===0?'active':'')}>
 									<aside onClick={this.setMainMember.bind(this,i)}>设为群主</aside>
 									<aside onClick={this.replaceHead.bind(this,i)}>替换</aside>
 									<aside onClick={this.deleteMember.bind(this,i)}>删除</aside>

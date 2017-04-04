@@ -12,7 +12,8 @@
 @at-root .cen{
   text-align: center;
 }
-.zmiti-workorder-main-ui{
+.workorderquestion-main-ui{
+
   .zmiti-workorder-header-inner{
     padding-left: 8px;
     margin-top: 10px;
@@ -37,29 +38,17 @@
     overflow: hidden;
     border-bottom: 1px solid #dddddd;
   }
-  .workorder-search {
-    margin: 15px 0px;
-    .workorder-heigth45{
-      height: 45px;
-      line-height: 45px;
-      overflow: hidden;
-    }
-    .zmiti-workorder-with100{
-      width: 80px;
-
-    }
-    .zmiti-workorder-with130{
-      width: 130px;
-
-    }
-    .zmiti-workorder-with30{
-      width: 30px;
-
-    }
-    .zmiti-workorder-with60{
-      width: 60px;
-    }
-
+  .workorderquestion-row-magin20{
+    margin: 20px 0;
+  }
+  .workorderquestion-inputTitle{
+    text-align: right;
+  }
+  .workorderquestion-inputContent{
+    height: 100px;
+  }
+  .workorderquestion-width30{
+    width: 30px;
   }
   .red{
     color: #ff0000;
