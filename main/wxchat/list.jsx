@@ -174,6 +174,7 @@ class ZmitiWxChatListApp extends Component {
 		}
 		$.ajax({
 			url:window.baseUrl+'/works/create_works/',
+			type:'post',
 			data:{
 				userid:s.userid,
 				getusersigid:s.getusersigid,

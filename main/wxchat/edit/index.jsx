@@ -78,7 +78,10 @@ export default class WXEditApp extends React.Component {
 															</aside>
 															<aside>
 																<div>
-																	{item.text || <img  src={item.img}/>}
+																	{item.text && item.text}
+																	{item.img && <img  src={item.img}/>}
+																	{item.audioSrc && <section className='wxchat-audia'><img src='./static/images/audio-ico.png' /></section>}
+																	{item.videoSrc && <img  src={'./static/images/video-ico.jpg'}/>}
 																</div>
 															</aside>
 														</div>
@@ -95,6 +98,7 @@ export default class WXEditApp extends React.Component {
 															{item.text && item.text}
 															{item.img && <img  src={item.img}/>}
 															{item.audioSrc && <section className='wxchat-audia'><img src='./static/images/audio-ico.png' /></section>}
+															{item.videoSrc && <img  src={'./static/images/video-ico.jpg'}/>}
 													</div>
 												</aside>
 											</div>

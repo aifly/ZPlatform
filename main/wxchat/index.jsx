@@ -510,7 +510,9 @@ class ZmitiWxChatApp extends Component {
   			this.state.data.talk[this.state.currentTalkIndex].text = '';
   			this.state.data.talk[this.state.currentTalkIndex].img = '';
   			this.state.data.talk[this.state.currentTalkIndex].audioSrc ='';
-  			this.forceUpdate();
+  			this.forceUpdate(()=>{
+  				window.obserable.trigger({type:'refreshTalkBodyScroll'});
+  			});
   		});
 
 

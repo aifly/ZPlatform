@@ -219,10 +219,37 @@
 
                     .wxchat-edit-talk-user{
                        justify-content:flex-end;
+
+
                         .wxchat-edit-talk-content{
                          margin-right: 12px;
                          display: inline-block;
                           &.wxchat-edit-talk-img{
+
+
+                           .wxchat-audia{
+                             background:#a7e753;
+                             height:26px;
+                             text-align: right;
+                             img{
+                              @include transform(rotate(180deg));
+                             }
+                             &:after{
+                              display:none;
+                             }
+                             &:before{
+                              content:'';
+                              @include pos(a);
+                              $size1:6px;
+                              width:$size1;
+                              height: $size1;
+                              background-color:inherit;
+                              right: -$size1 / 2;
+                              left:auto;
+                              top:8px;
+                              @include transform(rotate(45deg));
+                            }
+                           }
                             aside:last-of-type{
                               &:before{
                                 display:none;

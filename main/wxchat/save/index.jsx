@@ -44,7 +44,7 @@ export default class WXSaveApp extends React.Component {
 							<div><span>{this.props.data.title}</span><span style={{position:'absolute'}}></span></div>
 						</aside>
 						<aside className='wxchat-talk-body' ref='wxchat-talk-body'>
-							{this.props.viewpath && <iframe src={this.props.viewpath} frameBorder={0}></iframe>}
+							{this.props.viewpath && false && <iframe src={this.props.viewpath} frameBorder={0}></iframe>}
 						</aside>
 					</section>
 				</div>	
