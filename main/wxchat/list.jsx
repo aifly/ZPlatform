@@ -195,14 +195,15 @@ class ZmitiWxChatListApp extends Component {
 					$.ajax({
 						url:window.baseUrl + '/weixin/getoauthurl/',
 						data:{
-							userid:s.userid,
-							getusersigid:s.getusersigid,
+
+							userid:s.userid,//不需要传公共参数。
 							redirect_uri:data.viewpath,
 							scope:'snsapi_userinfo',
 							worksid:data.worksid,
 							state:new Date().getTime()+''
 						},
 						success(dt){
+
 							message[dt.getret === 0?'success':'error'](data.getmsg);
 							if(dt.getret === 0){
 								window.location.hash =  '/wxchat/'+ data.worksid+'/'

@@ -282,6 +282,7 @@ class ZmitiWxChatApp extends Component {
 			},
 			success(data){
 				if(data.getret === 0){
+					console.log(JSON.parse(data.filecontent));
 					s.state.data = JSON.parse(data.filecontent);
 					s.state.viewpath = data.path.viewpath;
 					s.forceUpdate();
@@ -478,6 +479,7 @@ class ZmitiWxChatApp extends Component {
 
   			s.filterLoadingImg(s.state.data);
   			s.state.data.loadingImg = s.loadingImg;//把所有的资源图片统一加到页面上。
+
   			$.ajax({
   				url:window.baseUrl+'/works/update_works/',
   				data:{
