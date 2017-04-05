@@ -23,7 +23,6 @@ class ZmitiWorkOrderApp extends Component {
 		super(props);
 		
 		this.state = {
-
             mainHeight:document.documentElement.clientHeight - 50,
             dataSource:[],
             workorderid:'',
@@ -138,7 +137,7 @@ class ZmitiWorkOrderApp extends Component {
         var title = this.props.params.title || '服务支持中心';
         let props={
             userid:this.userid,
-            changeAccount:this.changeAccount,
+            changeAccount:this.changeAccount.bind(this),
             tags:['我的工单','提交工单'],
             mainHeight:this.state.mainHeight,
             title:title,
@@ -250,10 +249,9 @@ class ZmitiWorkOrderApp extends Component {
             success(data){
                 console.log(data)
                 if(data.getret === 0){
-                    message.success("删除成功");
                     setTimeout(()=>{
-                        s.state.dataSource = data.workorderinfo;
-                        s.forceUpdate();
+                        s.bindNewdata();
+
                     },2000)
 
                 }
@@ -269,32 +267,20 @@ class ZmitiWorkOrderApp extends Component {
             }
         })
     }
-
-
-	changeAccount(i){
-        if(i*1===1){
-            window.location.hash='commitworkorder/';
-        }else if(i*1===0){
-
-        }
-
-	}
-
-	componentDidMount() {
-
-		var s = this;
-		$.ajax({
-			url:window.baseUrl+'user/get_workorder',
-			data:{
-				userid:s.userid,
+    bindNewdata(){
+        var s=this
+        $.ajax({
+            url:window.baseUrl+'user/get_workorder',
+            data:{
+                userid:s.userid,
                 getusersigid:s.getusersigid
-			},
-			success(data){
+            },
+            success(data){
 
-				if(data.getret === 0){
-					s.state.dataSource = data.workorderinfo;
-					s.forceUpdate();
-				}
+                if(data.getret === 0){
+                    s.state.dataSource = data.workorderinfo;
+                    s.forceUpdate();
+                }
                 else if(data.getret === -3){
                     message.error('您没有访问的权限,2秒后跳转到首页');
                     setTimeout(()=>{
@@ -304,8 +290,24 @@ class ZmitiWorkOrderApp extends Component {
                 else{
                     loginOut(data.getmsg,window.loginUrl,false);
                 }
-			}
-		})
+            }
+        })
+    }
+
+
+	changeAccount(i){
+        if(i*1===1){
+            window.location.hash='commitworkorder/';
+        }else if(i*1===0){
+            this.bindNewdata();
+        }
+
+	}
+
+	componentDidMount() {
+
+		var s = this;
+		s.bindNewdata();
 
 	}
 
