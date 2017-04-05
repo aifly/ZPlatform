@@ -4,9 +4,8 @@ import './static/css/index.min.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table,Layout } from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table,Layout,moment } from '../commoncomponent/common.jsx';
 const { Header, Footer, Sider, Content } = Layout;
-import moment from 'moment';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const RadioGroup = Radio.Group;

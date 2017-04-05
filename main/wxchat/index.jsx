@@ -281,7 +281,6 @@ class ZmitiWxChatApp extends Component {
 				worksid:s.worksid,
 			},
 			success(data){
-				console.log(data)
 				if(data.getret === 0){
 					s.state.data = JSON.parse(data.filecontent);
 					s.state.viewpath = data.path.viewpath;
@@ -476,6 +475,9 @@ class ZmitiWxChatApp extends Component {
   		window.obserable.on("save",()=>{
   			this.state.isEntry = 2;
   			var s = this;
+
+  			s.filterLoadingImg(s.state.data);
+  			s.state.data.loadingImg = s.loadingImg;//把所有的资源图片统一加到页面上。
   			$.ajax({
   				url:window.baseUrl+'/works/update_works/',
   				data:{
@@ -488,7 +490,7 @@ class ZmitiWxChatApp extends Component {
   					workico:s.state.data.shareImg
   				},
   				success(data){
-  					console.log(data)
+  					
   					message[data.getret === 0?'success':'error'](data.getmsg);
   				}
 
@@ -504,7 +506,6 @@ class ZmitiWxChatApp extends Component {
   			this.forceUpdate();
   		});
 
-
   		window.obserable.on('modifyCurrentTalkVideo',(data)=>{
   			this.state.data.talk[this.state.currentTalkIndex].videoSrc = data;
   			this.state.data.talk[this.state.currentTalkIndex].text = '';
@@ -516,6 +517,23 @@ class ZmitiWxChatApp extends Component {
   		});
 
 
+	}
+
+	filterLoadingImg(data){
+		this.loadingImg = this.loadingImg || [];
+		for(var attr in data){
+			if(typeof data[attr] === 'object'){
+				this.filterLoadingImg(data[attr]);
+			}else{
+				if(typeof data[attr] === 'string' && data[attr].split('.').length>1){
+					var suffix = data[attr].split('.')[data[attr].split('.').length-1];
+					
+					if(suffix === 'jpg'||suffix === 'png'||suffix === 'gif'||suffix === 'jpeg'){
+						this.loadingImg.push(data[attr]);
+					}
+				}
+			}
+		}
 	}
  
 }

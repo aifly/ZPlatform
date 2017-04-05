@@ -81,7 +81,7 @@ export default class WXEditApp extends React.Component {
 																	{item.text && item.text}
 																	{item.img && <img  src={item.img}/>}
 																	{item.audioSrc && <section className='wxchat-audia'><img src='./static/images/audio-ico.png' /></section>}
-																	{item.videoSrc && <img  src={'./static/images/video-ico.jpg'}/>}
+																	{item.videoSrc && <img  src={'./static/images/video-ico1.jpg'}/>}
 																</div>
 															</aside>
 														</div>
@@ -327,6 +327,10 @@ export default class WXEditApp extends React.Component {
   		top>0 && (top = 0);
   		this.talkBodyScroll.scrollTo(0,top,100);
   		this.talkBodyScroll.refresh();
-  	})
+  	});
+
+  	setTimeout(()=>{
+  		window.obserable.trigger({type:'refreshTalkBodyScroll'});
+  	},1000)
   }
 }

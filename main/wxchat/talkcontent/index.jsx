@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input,Row,Col,Icon } from '../../commoncomponent/common.jsx';
+import { Input,Row,Col,Icon ,message} from '../../commoncomponent/common.jsx';
 
 import './css/index.css';
 
@@ -74,10 +74,10 @@ export default class WXTalkContentApp extends React.Component {
 					<div style={{height:40}}></div>
 				</div>}
 				{this.state.current === 2 && <div>
-					<Input addonBefore='添加音频URL' value={this.props.data.talk[this.props.currentTalkIndex].audioSrc} onChange={this.modifyCurrentTalkAudio.bind(this)} type='text' placeholder='http://www.'/>
+					<Input addonBefore='添加音频URL' value={this.props.data.talk[this.props.currentTalkIndex]&& this.props.data.talk[this.props.currentTalkIndex].audioSrc} onChange={this.modifyCurrentTalkAudio.bind(this)} type='text' placeholder='http://www.'/>
 				</div>}
 				{this.state.current === 3 && <div>
-					<Input addonBefore='添加视频URL' value={this.props.data.talk[this.props.currentTalkIndex].videoSrc} onChange={this.modifyCurrentTalkVideo.bind(this)} type='text' placeholder='http://www.'/>
+					<Input addonBefore='添加视频URL' value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].videoSrc} onChange={this.modifyCurrentTalkVideo.bind(this)} type='text' placeholder='http://www.'/>
 				</div>}
 			</section>
 			
@@ -110,6 +110,10 @@ export default class WXTalkContentApp extends React.Component {
   }
 
   changeType(current){
+  	if(!this.props.data.talk[this.props.currentTalkIndex]){
+  		message.warning('请选择一条聊天对话');
+  		return;
+  	}
   	this.setState({
   		current
   	})

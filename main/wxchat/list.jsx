@@ -88,7 +88,7 @@ class ZmitiWxChatListApp extends Component {
 								</li>
 								{this.state.wxchatList.map((item,i)=>{
 									return <li key={i}>
-										<div className='wxchat-item-shareimg' style={{background:'url('+item.workico+') no-repeat center / cover'}}></div>
+										<div className='wxchat-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 										<div className='wxchat-item-name'>{item.worksname}</div>
 										<div className='wxchat-item-operator'>
 											<div><a href={item.viewpath} target='_blank'>预览</a></div>

@@ -74,10 +74,6 @@ export default class ZmitiHeader extends Component {
 	 logout(){//退出登录
     	var s=  this;
 
-    	console.log({
-    				userid:s.props.userid,
-    				getusersigid:s.props.getusersigid
-    			})
     		$.ajax({
     			url:window.baseUrl+'user/user_loginout/',
     			data:{
@@ -85,7 +81,6 @@ export default class ZmitiHeader extends Component {
     				getusersigid:s.props.getusersigid
     			},
     			success(data){
-    				console.log(data);
     				s.clearCookie('login');
     				if(data.getret === 0){
     					
