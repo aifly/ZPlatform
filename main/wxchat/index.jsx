@@ -42,46 +42,10 @@ class ZmitiWxChatApp extends Component {
 				title:'2017两会',
 				viewpath:'',//预览地址
 				memberList:[
-					{
-						id:1,
-						name:'徐畅',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},
-					{
-						id:2,
-						name:'邓彬',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},{
-						id:3,
-						name:'张雷',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},{
-						id:4,
-						name:'赵申杉',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},{
-						id:5,
-						name:'小郭',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},{
-						id:6,
-						name:'师兄',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					},{
-						id:7,
-						name:'杨凡',
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg'
-					}
+					
 				],
 				talk:[
-					{
-						isMe:false,
-						head:'',
-						name:'xxx',
-						img:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg',
-						text:''
 
-					}
 					/*{
 						isMe:false,
 						id:1,
@@ -123,6 +87,7 @@ class ZmitiWxChatApp extends Component {
                 	 window.obserable.trigger({
 	                	type:'refreshMemberList'
 	                })
+                	
                 });
             }
         };
@@ -285,7 +250,11 @@ class ZmitiWxChatApp extends Component {
 					console.log(JSON.parse(data.filecontent));
 					s.state.data = JSON.parse(data.filecontent);
 					s.state.viewpath = data.path.viewpath;
-					s.forceUpdate();
+					s.forceUpdate(()=>{
+						window.obserable.trigger({
+							type:'refreshMemberScroll'
+						})
+					});
 				}
 			}
 		})
@@ -327,7 +296,8 @@ class ZmitiWxChatApp extends Component {
 			this.forceUpdate(()=>{
 				window.obserable.trigger({
 					type:'refreshMemberList'
-				})
+				});
+
 			});
 		});
 		
@@ -343,8 +313,12 @@ class ZmitiWxChatApp extends Component {
 		window.obserable.on('modifyCurrentTalk',data=>{//输入框改变时。
 			this.state.data.talk[this.state.currentTalkIndex].text = data;
 			this.state.data.talk[this.state.currentTalkIndex].img = '';//清空聊天图片
-			window.obserable.trigger({type:'refreshTalkBodyScroll'});
+			
 			this.forceUpdate();
+			this.timer && clearTimeout(this.timer);
+			this.timer = setTimeout(()=>{
+				window.obserable.trigger({type:'refreshTalkBodyScroll'});
+			},370);
 		});
 
 		window.obserable.on('modifyCurrentIndex',data=>{ //设置当前的聊天记录。
@@ -371,12 +345,15 @@ class ZmitiWxChatApp extends Component {
 				id:-1,
 				head:'',
 				name:'xxx',
-				text:'点击录入聊天内容'
+				text:''
 			}
 			this.state.data.talk.push(talk);
 			this.state.currentTalkIndex = this.state.data.talk.length -1;
 			this.forceUpdate(()=>{
-				window.obserable.trigger({type:'refreshTalkBodyScroll'});
+				this.timer && clearTimeout(this.timer);
+				this.timer = setTimeout(()=>{
+					window.obserable.trigger({type:'refreshTalkBodyScroll'});
+				},370);
 			});
 		});
 
@@ -482,6 +459,7 @@ class ZmitiWxChatApp extends Component {
 
   			$.ajax({
   				url:window.baseUrl+'/works/update_works/',
+  				type:'post',
   				data:{
   					worksid:s.worksid,
   					userid:s.userid,
@@ -514,7 +492,10 @@ class ZmitiWxChatApp extends Component {
   			this.state.data.talk[this.state.currentTalkIndex].img = '';
   			this.state.data.talk[this.state.currentTalkIndex].audioSrc ='';
   			this.forceUpdate(()=>{
-  				window.obserable.trigger({type:'refreshTalkBodyScroll'});
+  				this.timer && clearTimeout(this.timer);
+				this.timer = setTimeout(()=>{
+					window.obserable.trigger({type:'refreshTalkBodyScroll'});
+				},370);
   			});
   		});
 
@@ -531,7 +512,13 @@ class ZmitiWxChatApp extends Component {
 					var suffix = data[attr].split('.')[data[attr].split('.').length-1];
 					
 					if(suffix === 'jpg'||suffix === 'png'||suffix === 'gif'||suffix === 'jpeg'){
-						this.loadingImg.push(data[attr]);
+						var add =true;
+						this.loadingImg.forEach((item,i)=>{
+							if(item === data[attr]){
+								add = false;
+							}
+						});
+						add && this.loadingImg.push(data[attr]);
 					}
 				}
 			}

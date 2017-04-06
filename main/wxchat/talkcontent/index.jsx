@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input,Row,Col,Icon ,message} from '../../commoncomponent/common.jsx';
+import { Input,Row,Col,Icon ,message,Button} from '../../commoncomponent/common.jsx';
 
 import './css/index.css';
 
@@ -20,7 +20,7 @@ export default class WXTalkContentApp extends React.Component {
     			background:'./static/images/text.png',
     			component:<div className='wxchat-talk-text-input-C'>
     				<div className='wxchat-talk-text-input-area'>
-    					<textarea value={this.props.data.talk[this.props.currentTalkIndex].text}  onChange={this.modifyCurrentTalk.bind(this)}></textarea>
+    					<textarea value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].text}  onChange={this.modifyCurrentTalk.bind(this)}></textarea>
     					<div className='wxchat-talk-face'><img src='./static/images/face.png'/></div>
     				</div>
     				<Input type='text' placeholder='请输入超链接'/>
@@ -52,8 +52,10 @@ export default class WXTalkContentApp extends React.Component {
 				</ul>
 				<div className='wxchat-talk-line'></div>
 				{this.state.current === 0 && <div className='wxchat-talk-text-input-C'>
+									<Button type='primary' onClick={this.addToMe.bind(this)}>@我</Button>
+									<div style={{height:10}}></div>
 				    				<div className='wxchat-talk-text-input-area'>
-				    					<textarea value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].text}  onChange={this.modifyCurrentTalk.bind(this)}></textarea>
+				    					<textarea value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].text}  onChange={this.modifyCurrentTalk.bind(this)}  onKeyUp={this.modifyCurrentTalk.bind(this)}></textarea>
 				    					<div className='wxchat-talk-face'><img src='./static/images/face.png'/></div>
 				    				</div>
 				    				<Input addonBefore='添加URL' value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].href} onChange={this.modifyCurrentTalkHref.bind(this)} type='text' placeholder='http://www.'/>
@@ -85,14 +87,24 @@ export default class WXTalkContentApp extends React.Component {
     );
   }
 
-  modifyCurrentTalkVideo(){
 
+  addToMe(){
+  	if(this.props.data.talk[this.props.currentTalkIndex]){
+  		window.obserable.trigger({
+	  		type:'modifyCurrentTalk',
+	  		data:this.props.data.talk[this.props.currentTalkIndex].text + '@{username}'
+	  	});
+  	}else{
+  		message.error('请选择一条对话');
+  	}
+	
   }
+ 
   modifyCurrentTalk(e){
   	window.obserable.trigger({
   		type:'modifyCurrentTalk',
   		data:e.target.value
-  	}) 
+  	});
   }
 
   modifyCurrentTalkAudio(e){

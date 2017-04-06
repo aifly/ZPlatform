@@ -60,14 +60,17 @@ export default class WXMemberApp extends Component {
 	
 
 	componentDidMount() {
-		this.scroll = new IScroll(this.refs['wxchat-members-scroll'],{
+		this.scroll1 = new IScroll(this.refs['wxchat-members-scroll'],{
 	        scrollbars:true,//显示滚动条
 	        interactiveScrollbars:true,//允许用户拖动滚动条
 	        mouseWheel:true
 	     });
 
     	window.obserable.on('refreshMemberList',()=>{
-    		this.scroll.refresh();
+    		this.scroll1.refresh();
+    		window.obserable.trigger({
+        		type:'refreshMemberScroll'
+        	})
     	})
 	}
 }

@@ -28,6 +28,9 @@ export default class WXEditApp extends React.Component {
   	if(this.props.data.background){
   		bodyStyle.background = 'url('+this.props.data.background+') no-repeat center / cover'
   	}
+
+
+
     return (
       <div className={'wxchat-main-stage '+(this.props.isEntry === 1?'show':'')} style={{height:this.props.mainHeight}}>
 				<aside>
@@ -65,8 +68,7 @@ export default class WXEditApp extends React.Component {
 																			<span>等加入群聊</span>
 																		</div>}
 								</section>
-								{!this.props.data.groupName&&<section onClick={()=>{this.setState({currentShowArea:'modifyGroupName'})}} className='wxchat-group-name'>点击修改群名称</section>}
-								{this.props.data.groupName&&<section onClick={()=>{this.setState({currentShowArea:'modifyGroupName'})}} className='wxchat-group-name'>{this.props.data.memberList[0].name}修改群名称为{this.props.data.groupName}</section>}
+								{this.props.data.title&& this.props.data.memberList[0] && <section className='wxchat-group-name'>{this.props.data.memberList[0].name}修改群名称为{this.props.data.title}</section>}
 								
 								<ul className='wxchat-edit-talk-list'>
 									{this.props.data.talk.map((item,i)=>{
@@ -172,12 +174,14 @@ export default class WXEditApp extends React.Component {
 										<div>
 											<section  style={{background:'url('+item.head+') no-repeat center center / cover'}}></section>
 										</div>
-										<div>
+										<div title={item.name} className='wxchat-user-name'>
 											<span>{item.name}</span>
 										</div>
 										{this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].id === item.id && <Checkbox style={{position:'absolute',bottom:0,right:0}} checked={true}></Checkbox>}
 									</li>
-									})}
+
+									})
+							}
 							</ul>
 						</section>
 						<h2>输入聊天内容</h2>
@@ -279,7 +283,11 @@ export default class WXEditApp extends React.Component {
   		type:'modifyCurrentIndex',
   		data:index
   	})
-  	this.setState({currentShowArea:'addTalkContent'});
+  	this.setState({currentShowArea:'addTalkContent'},()=>{
+  		window.obserable.trigger({
+			type:'refreshMemberScroll'
+		})
+  	});
   }
 
   setTalkIsMe(){
@@ -306,13 +314,20 @@ export default class WXEditApp extends React.Component {
   }
 
   componentDidMount() {
-  	this.scroll = new IScroll(this.refs['wxchat-edit-scroll'],{
-  		scrollX:true,
-  		scrollY:false,
-  		scrollbars:true,//显示滚动条
-        interactiveScrollbars:true,//允许用户拖动滚动条
-        mouseWheel:true
-  	});
+
+
+
+
+  	window.obserable.on('refreshMemberScroll',()=>{
+		this.scroll = this.scroll || new IScroll(this.refs['wxchat-edit-scroll'],{
+	  		scrollX:true,
+	  		scrollY:false,
+	  		scrollbars:true,//显示滚动条
+	        interactiveScrollbars:true,//允许用户拖动滚动条
+	        mouseWheel:true
+	  	});
+  		this.scroll.refresh();
+  	})
 
   	this.talkBodyScroll = new IScroll(this.refs['wxchat-talk-body'],{
         interactiveScrollbars:true,//允许用户拖动滚动条

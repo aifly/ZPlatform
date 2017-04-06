@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { message,Row,Col,Input,Button,Popconfirm } from '../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Popconfirm,Tooltip } from '../commoncomponent/common.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
@@ -48,7 +48,16 @@ class ZmitiWxChatListApp extends Component {
 		}; 
 	}
 
-
+	randomString(len) {
+	　　var len = len || 8;
+	　　var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+	　　var maxPos = $chars.length;
+	　　var pwd = '';
+	　　for (var i = 0; i < len; i++) {
+	　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+	　　}
+	　　return pwd;
+	}
 	render() {
 
 
@@ -66,7 +75,7 @@ class ZmitiWxChatListApp extends Component {
             userid: s.userid,
             onFinish(imgData){
                 s.state.data.memberList.push({
-                	id:s.state.data.memberList.length-1,
+                	id:s.randomString(),
                 	head:imgData.src,
                 	name:''
                 });
@@ -90,6 +99,10 @@ class ZmitiWxChatListApp extends Component {
 									return <li key={i}>
 										<div className='wxchat-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 										<div className='wxchat-item-name'>{item.worksname}</div>
+										<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
+											<div className='wxchat-item-view'><a href={item.viewpath} target='_blank'><img src='./static/images/eye.png'/></a></div>
+										</Tooltip>
+										
 										<div className='wxchat-item-operator'>
 											<div><a href={item.viewpath} target='_blank'>预览</a></div>
 											<div><Link to={'/wxchat/'+item.worksid}>编辑</Link></div>

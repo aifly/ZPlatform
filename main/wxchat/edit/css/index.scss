@@ -135,6 +135,9 @@
                           max-width: 160px;
                           margin-left: 12px;
 
+                          word-wrap:break-word;
+                          word-break:break-all;
+
                           .wxchat-audia{
                             width:100px;
                             height: 22px;
@@ -182,9 +185,16 @@
                           aside:first-of-type{
                           	@include transformOrigin(left top);
                           	@include transform(scale(.9));
-                            margin-top: -3px
+                            margin-top: -3px;
+
+                             overflow: hidden;
+                            white-space:nowrap;
+                            word-break:break-all;
+                            text-overflow:ellipsis;
+                            -webkit-text-overflow:ellipsis;
                           }
                           aside:last-of-type{
+
                             div{
                               background:#fff;
                               border:1px solid #bbbbbb; 
@@ -263,6 +273,11 @@
                           }          
                           aside:first-of-type{
                             margin: 0;
+                            overflow: hidden;
+                            white-space:nowrap;
+                            word-break:break-all;
+                            text-overflow:ellipsis;
+                            -webkit-text-overflow:ellipsis;
                           }
                           aside:last-of-type{
 
@@ -287,12 +302,12 @@
                  .wxchat-group-name{
                  	font-size: 12px;
                  	color:#fff;
+                  padding: 2px;
                  	background: #ccc;
                  	width:$size;
                  	margin:0 auto;
                  	text-align: center;
                  	@include br(2px);
-                 	cursor: pointer;
                  }
 
               }
@@ -484,9 +499,13 @@
     							height: 100%;
     						}
     					}
-    					&:last-of-type{
+    					&.wxchat-user-name{
     						max-width: $size;
     						overflow: hidden;
+                white-space:nowrap;
+                word-break:break-all;
+                text-overflow:ellipsis;
+                -webkit-text-overflow:ellipsis;
     					}
     				}
     			}
