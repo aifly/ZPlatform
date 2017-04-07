@@ -39,12 +39,22 @@ class ZmitiWorkOrderApp extends Component {
             title: '工单编号',
             dataIndex: 'workorderid',
             key: 'workorderid',
-			width:200,
+			width:100,
 
         }, {
             title: '问题内容',
             dataIndex: 'content',
             key: 'content',
+           render:(value,record)=>{
+                var getLength=value.length;
+                if(getLength>=40)
+                {
+                    return value.substring(0,40);
+                }
+                else
+                    return value;
+            }
+
         }, {
             title: '工单类型',
             dataIndex: 'workordertype',
@@ -105,6 +115,9 @@ class ZmitiWorkOrderApp extends Component {
             },{
                 text:'已评价',
                 value:'3',
+            },{
+                text:'已关闭',
+                value:'4',
             }
             ],
 			onFilter:(value,record)=>value*1===record.status,
@@ -119,6 +132,10 @@ class ZmitiWorkOrderApp extends Component {
 						return "已确认";
 					case 3:
 						return "已评价";
+                    case 4:
+                        return "已关闭";
+                    case 5:
+                        return <div className='red'>请您确认</div>;
 				}
 			}
 

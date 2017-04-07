@@ -3,11 +3,10 @@ import React, { Component } from 'react';
 import './static/css/index.min.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table,Layout} from '../commoncomponent/common.jsx';
-const { Header, Footer, Sider, Content } = Layout;
+import {Input,Button, Row, Col,Radio,Layout,Icon,message} from '../commoncomponent/common.jsx';
+const { Header, Content } = Layout;
 const RadioGroup = Radio.Group;
-let FormItem  = Form.Item;
-let Option = Select.Option;
+
 
 import { Link } from 'react-router';
 import MainUI from '../components/Main.jsx';
@@ -18,6 +17,11 @@ import $ from 'jquery';
 
 class ZmitiWorkOrderQuestionApp extends Component {
 	constructor(props) {
+		/*action:window.baseUrl + 'v2/upload/upload_file/',
+			onChange({ file, fileList }){
+            if (file.status !== 'uploading') {
+                console.log(file, fileList);
+            }}*/
 		super(props);
 		
 		this.state = {
@@ -26,16 +30,22 @@ class ZmitiWorkOrderQuestionApp extends Component {
             dataSource:[],
 			massagedefaultValue:0,
 			questionContent:"",
-            mobileNumble:"",
+            mobile:"",
 			email:"",
             workordertype:"",
             workordername:"",
+            questionError:false,
+            mobileError:false
 
 
 
 		};
 	}
 	render() {
+
+
+
+
         var title = this.props.params.title || '服务支持中心';
         let props={
             userid:this.userid,
@@ -57,12 +67,14 @@ class ZmitiWorkOrderQuestionApp extends Component {
 					<Content>
 						<Row gutter={30} className="workorderquestion-row-magin20">
 							<Col span={6} className="workorderquestion-inputTitle"><span className="red">*</span> 问题描述:</Col>
-							<Col span={17}><Input type="textarea" placeholder="请在此输入您要提交的问题内容，我们将尽快答复" className="workorderquestion-inputContent" value={this.state.questionContent} onChange={e=>{this.setState({questionContent:e.target.value})}}/></Col>
+							<Col span={17}>
+									<Input type="textarea" placeholder="请在此输入您要提交的问题内容，我们将尽快答复" onFocus={()=>{this.setState({questionError:false})}} className={"workorderquestion-inputContent "+ (this.state.questionError?'error-table':'')} value={this.state.questionContent} onChange={e=>{this.setState({questionContent:e.target.value})}}/>
+							</Col>
 							<Col span={1} className="workorderquestion-width30"></Col>
 						</Row>
 						<Row gutter={30} className="workorderquestion-row-magin20">
 							<Col span={6} className="workorderquestion-inputTitle"><span className="red">*</span> 手机号:</Col>
-							<Col span={17}><Input placeholder="请录入您的手机号" className="workorderquestion-inputContent2" defaultValue="13910904709"  onChange={e=>{this.setState({mobileNumble:e})}}/></Col>
+							<Col span={17}><Input placeholder="请录入您的手机号" className={"workorderquestion-inputContent2 " + (this.state.mobileError?'error-table':'')}  onFocus={()=>{this.setState({mobileError:false})}} value={this.state.mobile} onChange={e=>{this.setState({mobile:e.target.value})}}/></Col>
 							<Col span={1} className="workorderquestion-width30"></Col>
 						</Row>
 						<Row gutter={30} className="workorderquestion-row-magin20">
@@ -77,13 +89,18 @@ class ZmitiWorkOrderQuestionApp extends Component {
 							<Col span={1} className="workorderquestion-width30"></Col>
 						</Row>
 						<Row gutter={30} className="workorderquestion-row-magin20">
-							<Col span={6} className="workorderquestion-inputTitle"><span className="red">*</span> 邮箱:</Col>
-							<Col span={17}><Input placeholder="请录入您的邮箱" className="workorderquestion-inputContent2" onChange={e=>{this.setState({email:e})}}/></Col>
+							<Col span={6} className="workorderquestion-inputTitle"> 邮箱:</Col>
+							<Col span={17}><Input placeholder="请录入您的邮箱" className="workorderquestion-inputContent2" value={this.state.email} onChange={e=>{this.setState({email:e.target.value})}}/></Col>
 							<Col span={1} className="workorderquestion-width30"></Col>
 						</Row>
 						<Row gutter={30} className="workorderquestion-row-magin20">
 							<Col span={6} className="workorderquestion-inputTitle">上传附件:</Col>
-							<Col span={17}></Col>
+							<Col span={17} style={{position:'relative'}}>
+								<Button>
+									<Icon type="upload"  /> 附件上传
+								</Button>
+								<input ref="upload-file" onChange={this.uploadFile.bind(this)} type="file"  style={{position:'absolute',left:0,top:0,opacity:0,cursor:'pointer'}}/>
+							</Col>
 							<Col span={1} className="workorderquestion-width30"></Col>
 						</Row>
 						<Row gutter={30} className="workorderquestion-row-magin20">
@@ -110,43 +127,98 @@ class ZmitiWorkOrderQuestionApp extends Component {
             massagedefaultValue: e.target.value,
         });
 	}
-    submitWorkorder(){
-    	var setworkordertype=3;
-    	if(!isNaN(this.props.params.id*1)){//数字
-            setworkordertype=this.props.params.id*1;
-		}
-		else{//字符串
 
-		}
-    	var s=this;
-    	$.ajax({
-            url:window.baseUrl+'user/post_workorder',
-			data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                setcontent:s.state.questionContent,
-               	setworkordertype:setworkordertype,
-			},
-            success(data){
-                if(data.getret === 0){
-                    message.success("您已成功提交工单，我们会尽快处理");
-                    setTimeout(()=>{
-                        s.state.dataSource = data.workorderinfo;
-                        s.forceUpdate();
-                    },2000)
+    uploadFile(){//上传附件
 
-                }
-                else if(data.getret === -3){
-                    message.error('您没有访问的权限,2秒后跳转到首页');
-                    setTimeout(()=>{
-                        location.href='/';
-                    },2000)
-                }
-                else{
-                    message.error(data.getmsg);
-                }
-            }
+        let formData = new FormData(),
+            s = this;
+
+
+        formData.append('setupfile', this.refs['upload-file'].files[0]);
+        formData.append('setuploadtype', 4);
+        formData.append('getusersigid', s.getusersigid);
+        formData.append('userid', s.userid);
+        formData.append('setdatainfoclassid','1465285201');
+        formData.append('setisthum', 0);//是否是缩略图。
+        formData.append('seturltype', 'material' /*s.state.defaultIds[s.state.current]*/);
+
+        $.ajax({
+    		url:window.baseUrl+ 'upload/upload_file',
+			type:'post',
+			data:formData,
+            contentType: false,
+            processData: false,
+			success(data){
+    			console.log(data);
+			}
 		})
+	}
+
+    submitWorkorder(){
+        var s=this;
+    	var isOk=0;
+    	if(s.state.questionContent=="") {
+			s.setState({
+                questionError:true
+			})
+            isOk=1
+        }
+    	if(s.state.mobile==""){
+            s.setState({
+                mobileError:true
+            })
+            isOk=1
+		}
+        if(!(/^1[34578]\d{9}$/.test(s.state.mobile))){
+            s.setState({
+                mobileError:true
+            })
+            isOk=1
+        }
+		if(isOk!=0){
+    		return;
+		}
+		else {
+            var setworkordertype = 3;
+            if (!isNaN(this.props.params.id * 1)) {//数字
+                setworkordertype = this.props.params.id * 1;
+            }
+            else {//字符串
+
+            }
+
+            $.ajax({
+                url: window.baseUrl + 'user/post_workorder',
+                data: {
+                    userid: s.userid,
+                    getusersigid: s.getusersigid,
+                    setcontent: s.state.questionContent,
+                    setworkordertype: setworkordertype,
+                    setusermobile: s.state.mobile,
+                    setsmstime: s.state.massagedefaultValue,
+                    setuseremail: s.state.email,
+
+                },
+                success(data){
+                    if (data.getret === 0) {
+                        message.success("您已成功提交工单，我们会尽快处理");
+                        setTimeout(() => {
+                            location.hash = '/commitworkorder/';
+                        }, 2000)
+
+                    }
+                    else if (data.getret === -3) {
+                        message.error('您没有访问的权限,2秒后跳转到首页');
+                        setTimeout(() => {
+                            location.href = '/';
+                        }, 2000)
+                    }
+                    else {
+                        message.error(data.getmsg);
+                    }
+                }
+            })
+        }
 
 	}
 
@@ -180,12 +252,13 @@ class ZmitiWorkOrderQuestionApp extends Component {
                 break;
             default://带具体产品的提问
                 this.state.workordertype=3;
-            	$.ajax({
-
-				})
-                workordername="";
+                this.state.workordername="技术类问题";
                 break;
         }
+        this.setState({
+            mobile:this.usermobile,
+            email:this.useremail,
+		})
 		
 
 	}
@@ -200,11 +273,11 @@ class ZmitiWorkOrderQuestionApp extends Component {
 
 		resizeMainHeight(this);
 		
-		let {username,userid,getusersigid} = validateUser(()=>{},this);
+		let {userid,getusersigid,usermobile,useremail} = validateUser(()=>{},this);
 		this.userid = userid;
 		this.getusersigid = getusersigid;
-
-		
+		this.useremail = useremail;
+		this.usermobile = usermobile;
 	}
 
 }
