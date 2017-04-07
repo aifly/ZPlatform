@@ -107,4 +107,16 @@
 
 		}
 	}
+
+	.wxchat-talk-lik-C{
+		textarea{
+			width:100%;
+			resize:none;
+			padding: 6px;
+			margin-top: 10px;
+			border-color:#2db7f5;
+			@include br(4px);
+			height: 96px;
+		}
+	}
 }

@@ -34,7 +34,12 @@ export default class WXTalkContentApp extends React.Component {
     			background:'./static/images/audio.png',
     		},{
     			background:'./static/images/video.png',
+    			width:52
+    		},{
+    			background:'./static/images/link.png',
+    			width:48
     		}
+
     	]
 
   }
@@ -46,7 +51,7 @@ export default class WXTalkContentApp extends React.Component {
 				<ul className='wxchat-talk-type-list'>
 					{this.typeList.map((item,i)=>{
 						return <li className={i === this.state.current ?'active':''} key={i} onClick={this.changeType.bind(this,i)}>
-							<div><img  style={{width:i===3?52:40}} src={item.background} /></div>
+							<div><img  style={{width:item.width || 40}} src={item.background} /></div>
 						</li>
 					})}
 				</ul>
@@ -63,10 +68,10 @@ export default class WXTalkContentApp extends React.Component {
 				    			</div>}
 				{this.state.current === 1 && <div>
 					<Row type='flex' gutter={12}>
-						<Col  span={12}>
+						<Col  span={8}>
 							<img onClick={this.modifyTalkImg.bind(this)} style={{cursor:'pointer'}} src='./static/images/uploadimg.jpg'/>
 						</Col>
-						<Col span={12}>
+						<Col span={16}>
 							{this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].img && <div className='wxchat-talk-img-C'><img src={this.props.data.talk[this.props.currentTalkIndex].img}/><div className='wxchat-talk-mask'><Icon onClick={this.deleteTalkImg.bind(this)} type='delete'/></div></div>}
 						</Col>
 					
@@ -81,10 +86,27 @@ export default class WXTalkContentApp extends React.Component {
 				{this.state.current === 3 && <div>
 					<Input addonBefore='添加视频URL' value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].videoSrc} onChange={this.modifyCurrentTalkVideo.bind(this)} type='text' placeholder='http://www.'/>
 				</div>}
+				{this.state.current === 4 && <div>
+					<Row type='flex' gutter={12}>
+						<Col span={8}>
+							<img style={{cursor:'pointer'}} src='./static/images/uploadimg.jpg'/>
+						</Col>
+						<Col span={16} className='wxchat-talk-lik-C'>
+							<Input type='text' placeholder='请输入标题'/>
+							<textarea></textarea>
+						</Col>
+					</Row>
+					<div style={{height:10}}></div>
+					<Input addonBefore='添加链接URL' value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].link} onChange={this.modifyLink.bind(this)} type='text' placeholder='http://www.'/>
+				</div>}
 			</section>
 			
 		</div>
     );
+  }
+
+  modifyLink(){
+
   }
 
 

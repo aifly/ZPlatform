@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './css/order-list.css';
-
 import { Table ,Select ,Icon} from '../../commoncomponent/common.jsx';
 let Option = Select.Option;
 export default class ZmitiOrderList extends Component {

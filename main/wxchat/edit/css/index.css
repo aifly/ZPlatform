@@ -424,5 +424,36 @@
             word-break: break-all;
             text-overflow: ellipsis;
             -webkit-text-overflow: ellipsis; }
+  .wxchat-main-stage .wxchat-linkobj-C {
+    width: 160px;
+    height: 70px;
+    background-color: #fff !important;
+    box-sizing: border-box;
+    padding: 5px 10px !important;
+    position: relative; }
+    .wxchat-main-stage .wxchat-linkobj-C section:nth-of-type(1) {
+      overflow: hidden;
+      white-space: nowrap;
+      word-break: break-all;
+      text-overflow: ellipsis;
+      -webkit-text-overflow: ellipsis; }
+    .wxchat-main-stage .wxchat-linkobj-C section:nth-of-type(2) {
+      font-size: 12px;
+      -webkit-transform: scale(0.8);
+      transform: scale(0.8);
+      -webkit-transform-origin: left;
+      transform-origin: left;
+      overflow: hidden;
+      max-height: 38px;
+      word-wrap: break-word;
+      word-break: break-all;
+      color: #999; }
+    .wxchat-main-stage .wxchat-linkobj-C section:nth-of-type(3) {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 4px; }
 
 /*# sourceMappingURL=index.css.map */

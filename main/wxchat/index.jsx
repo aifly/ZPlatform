@@ -46,6 +46,21 @@ class ZmitiWxChatApp extends Component {
 				],
 				talk:[
 
+					{
+						isMe:false,
+						id:1,
+						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg',
+						name:'徐畅',
+						text:'',
+						linkObj:{
+							img:'./static/images/zmiti.jpg',
+							title:'智媒体智媒体智媒体智媒体智媒体智媒体',
+							desc:'国大家好大家好大家好大家好大家好大家好国大家好大家好大家好大家好大家好大家好',
+							href:'http://h5.zmiti.com/public/xwords'
+						}
+						
+					}
+
 					/*{
 						isMe:false,
 						id:1,
@@ -248,8 +263,8 @@ class ZmitiWxChatApp extends Component {
 			success(data){
 				if(data.getret === 0){
 					console.log(JSON.parse(data.filecontent));
-					s.state.data = JSON.parse(data.filecontent);
-					s.state.viewpath = data.path.viewpath;
+				//	s.state.data = JSON.parse(data.filecontent);
+					//s.state.viewpath = data.path.viewpath;
 					s.forceUpdate(()=>{
 						window.obserable.trigger({
 							type:'refreshMemberScroll'

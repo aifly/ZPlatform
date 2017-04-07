@@ -101,6 +101,12 @@ export default class WXEditApp extends React.Component {
 															{item.img && <img  src={item.img}/>}
 															{item.audioSrc && <section className='wxchat-audia'><img src='./static/images/audio-ico.png' /></section>}
 															{item.videoSrc && <img  src={'./static/images/video-ico.jpg'}/>}
+															{item.linkObj && <div className='wxchat-linkobj-C'>
+																<section>{item.linkObj.title}</section>
+																<section>{item.linkObj.desc}</section>
+																<section style={{background:'url('+(item.linkObj.img || './static/images/zmiti.jpg')+') no-repeat center / cover'}}></section>
+															</div>}
+
 													</div>
 												</aside>
 											</div>

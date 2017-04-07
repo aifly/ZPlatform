@@ -1,8 +1,8 @@
 import './static/css/index.css';
 import React from 'react';
 import {ZmitiValidateUser} from '../../public/validate-user.jsx';
-import moment from 'moment';
-import {Button,message,Input,Table,Modal,Form,Icon,Radio,DatePicker,Popconfirm,Spin } from '../../commoncomponent/common.jsx';
+
+import {Button,message,Input,Table,Modal,Form,Icon,Radio,DatePicker,Popconfirm,Spin,moment } from '../../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 
 moment.locale('zh-cn');

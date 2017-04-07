@@ -512,4 +512,40 @@
     		}
     	}
      }
+
+
+
+     .wxchat-linkobj-C{
+        width: 160px;
+        height:70px;
+        background-color: #fff !important;
+        box-sizing:border-box;
+        padding:5px 10px !important;
+        @include pos(r);
+        section:nth-of-type(1){
+            overflow: hidden;
+            white-space:nowrap;
+            word-break:break-all;
+            text-overflow:ellipsis;
+            -webkit-text-overflow:ellipsis;
+        }
+        section:nth-of-type(2){
+          font-size: 12px;
+          @include transform(scale(.8));
+          @include transformOrigin(left);
+          overflow: hidden;
+          max-height: 38px;
+          word-wrap:break-word;
+          word-break:break-all;
+          color:#999;
+        }
+        section:nth-of-type(3){
+          @include pos(a);
+          right:10px;
+          bottom: 10px;
+          width:30px;
+          height: 30px;
+          @include br(4px);
+        }
+     }
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Modal,Tabs,Spin,Button,Icon} from '../commoncomponent/common.jsx';
+import {Modal,Tabs,Spin,Button,Icon,message,Input,Menu} from '../commoncomponent/common.jsx';
 
 const TabPane = Tabs.TabPane;
 
@@ -9,25 +9,10 @@ import './zmiti-upload-dialog.css';
 import PubSub from '../richimg/static/js/pubsub';
  
 
-
-//import Waterfall from '../richimg/static/js/waterfall';
-
-
-
-import './theme.css';
-
 import {utilMethods,_$,$$} from  '../utilMethod.es6';
 
 import ContentEditable from 'react-contenteditable';
 
-import message from 'antd/lib/message';
-import 'antd/lib/message/style/css';
-
-import Input from 'antd/lib/input';
-import 'antd/lib/input/style/css';
-
-import Menu from 'antd/lib/menu';
-import 'antd/lib/menu/style/css';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
@@ -108,10 +93,12 @@ export default class ZmitiUploadDialog extends React.Component {
                     "userid":self.props.userid,
                     "setdatainfoclassid": self.state.defaultIds[self.state.current]
                 };
+
+                console.log(params)
            
             $.ajax({//获取当前分类信息.
                 url: self.props.baseUrl + self.props.cateUrl + 'get_datainfo',
-                type: "POST",
+                type: "get",
                 data: params,
                 success(data){
 

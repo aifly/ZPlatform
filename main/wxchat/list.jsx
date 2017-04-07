@@ -116,6 +116,7 @@ class ZmitiWxChatListApp extends Component {
 						</section>}
 			<WXEntryApp {...this.state} {...data}></WXEntryApp>	
 			<ZmitiUploadDialog id={'wxchat-members-head'} {...userHeadProps}></ZmitiUploadDialog>		
+			<ZmitiUploadDialog id={'test'} {...userHeadProps}></ZmitiUploadDialog>		
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
@@ -164,19 +165,7 @@ class ZmitiWxChatListApp extends Component {
 		});
 		
 		var s = this;
-		console.log({
-				userid:s.userid,
-				getusersigid:s.getusersigid,
-				worksname:s.state.data.title,
-				productid:s.productid,
-				worksdesc:'',
-				workico:'',
-				workstag:'',
-				workstate:0,
-				imgurl:'',
-				worktypesign:0,
-				datajson:JSON.stringify(s.state.data)
-			});
+	 
 		var type = 0;
 		
 		switch(s.usertypesign) {
@@ -257,6 +246,14 @@ class ZmitiWxChatListApp extends Component {
 	}
 
 	componentDidMount() {
+
+
+	/*	window.obserable.trigger({
+		  type:'showModal',
+		  data:{type:1,id:'test'}//0，图片1，音频2，视频 3，VR视频
+		});
+*/
+
 		var s = this;
 
 		window.s = this;
