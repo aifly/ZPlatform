@@ -145,7 +145,7 @@ class ZmitiWorkOrderApp extends Component {
             key: 'operation',
             width:100,
 			render:(text,recoder,index)=>(
-                <span><span className="workorder-gotodetail"><a href="javascript:void(0);">查看</a></span><span className="workorder-del"><a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.workorderid)}> 删除</a></span>
+                <span><span className="workorder-gotodetail"><Link to={'/viewquestion/'+recoder.workorderid}>查看</Link></span><span className="workorder-del"><a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.workorderid)}> 删除</a></span>
 				</span>
 			)
 
@@ -190,6 +190,10 @@ class ZmitiWorkOrderApp extends Component {
 			<MainUI component={mainComponent}></MainUI>
 			);
 	}
+    gotoView(workorderid){
+        location.href='/viewquestion/'+workorderid;
+
+    }
 
     searchBybutton(){
         var workorderid = this.state.workorderid;

@@ -135,15 +135,10 @@ class ZmitiWorkOrderQuestionApp extends Component {
 
 
         formData.append('setupfile', this.refs['upload-file'].files[0]);
-        formData.append('setuploadtype', 4);
-        formData.append('getusersigid', s.getusersigid);
-        formData.append('userid', s.userid);
-        formData.append('setdatainfoclassid','1465285201');
-        formData.append('setisthum', 0);//是否是缩略图。
-        formData.append('seturltype', 'material' /*s.state.defaultIds[s.state.current]*/);
+        formData.append('uploadtype', 0);
 
         $.ajax({
-    		url:window.baseUrl+ 'upload/upload_file',
+    		url:window.baseUrl+ 'share/upload_file',
 			type:'post',
 			data:formData,
             contentType: false,
@@ -186,13 +181,19 @@ class ZmitiWorkOrderQuestionApp extends Component {
             else {//字符串
 
             }
+            var questionContent=s.state.questionContent;
 
+            if(s.state.workordername!=""){
+                questionContent=s.state.workordername+"问题 : "+questionContent;
+            }
             $.ajax({
+
                 url: window.baseUrl + 'user/post_workorder',
+
                 data: {
                     userid: s.userid,
                     getusersigid: s.getusersigid,
-                    setcontent: s.state.questionContent,
+                    setcontent: questionContent,
                     setworkordertype: setworkordertype,
                     setusermobile: s.state.mobile,
                     setsmstime: s.state.massagedefaultValue,
@@ -252,7 +253,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
                 break;
             default://带具体产品的提问
                 this.state.workordertype=3;
-                this.state.workordername="技术类问题";
+                this.state.workordername=this.props.params.id;
                 break;
         }
         this.setState({
