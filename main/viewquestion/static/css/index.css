@@ -1,3 +1,8 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
 body {
   font-family: Microsoft Yahei;
   font-size: 12px; }
@@ -21,14 +26,48 @@ ul {
 .pad-5 {
   padding: 5px; }
 
-.pad-10 {
-  padding: 10px; }
-
 .pad-15 {
   padding: 15px; }
 
 .pad-20 {
   padding: 20px; }
+
+.view-qestion-main-ui {
+  overflow: auto; }
+  .view-qestion-main-ui .zmiti-workorder-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .view-qestion-main-ui .zmiti-workorder-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .view-qestion-main-ui .zmiti-workorder-button-right button {
+    float: right;
+    margin-top: 5px; }
+  .view-qestion-main-ui .zmiti-workorder-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .view-qestion-main-ui .workorder-table {
+    border: 1px solid #e1e6eb;
+    margin-top: 15px;
+    background: #FFffff; }
+    .view-qestion-main-ui .workorder-table .ant-layout-header {
+      background: #F5f6FA;
+      border-left: 4px solid #6d7781;
+      padding-left: 16px;
+      height: 38px;
+      line-height: 38px;
+      overflow: hidden;
+      border-bottom: 1px solid #e1e6eb; }
+  .view-qestion-main-ui .questionTitle {
+    color: #999; }
 
 .text-right {
   text-align: right; }
@@ -42,9 +81,6 @@ ul {
   line-height: 2; }
   .gutter-example span {
     color: #666; }
-
-.view-qestion-main-ui {
-  overflow: auto; }
 
 .view-titPane {
   background-color: #efefef;

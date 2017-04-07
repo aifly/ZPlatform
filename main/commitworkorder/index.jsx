@@ -93,7 +93,7 @@ class ZmitiCommitWorkOrderApp extends Component {
 									return <Col span={8} key={i}>
 										<div className="workorder-table-box">
 											<div className="workorder-table-col-title">{item.productname}</div>
-											<Button className="workorder-table-col-button"  onClick={this.gotoQuestion.bind(this,item.productid)}>提问</Button>
+											<Button className="workorder-table-col-button"  onClick={this.gotoQuestion.bind(this,item.productname)}>提问</Button>
 										</div>
 									</Col>
 								})

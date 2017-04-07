@@ -45,7 +45,8 @@ class App extends React.Component{
 				{path: '/wxchatlist/', app: ZmitiWxChatListApp},
 				{path: '/commitworkorder/', app: ZmitiCommitWorkOrderApp},
 				{path: '/workorder/', app: ZmitiWorkOrderApp},
-				{path: '/workorderquestion/(:id)', app: ZmitiWorkOrderQuestionApp}
+				{path: '/workorderquestion/(:id)', app: ZmitiWorkOrderQuestionApp},
+				{path: '/viewquestion/(:id)', app: ZmitiViewQuestionApp}
 		];
 		return (
 			<Router history={hashHistory}>
