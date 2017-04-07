@@ -172,6 +172,8 @@ class ZmitiWxChatApp extends Component {
         	modifyUserName:this.modifyUserName.bind(this),
         	entryEdit:this.entryEdit.bind(this),
         	modifyGroupName:this.modifyGroupName.bind(this),
+        	loading:this.props.loading,
+
         }
 
 
@@ -274,7 +276,16 @@ class ZmitiWxChatApp extends Component {
 						window.obserable.trigger({
 							type:'refreshMemberScroll'
 						})
+
+						s.props.loading(s.state.data.loadingImg,null,()=>{
+							
+		  					window.obserable.trigger({
+					  			type:'refreshTalkBodyScroll'
+					  		})
+		  				})
 					});
+
+					
 				}
 			}
 		})
@@ -515,7 +526,7 @@ class ZmitiWxChatApp extends Component {
   				}
 
   			})
-  			this.forceUpdate();
+
   		});
 
   		window.obserable.on('modifyCurrentTalkAudio',(data)=>{

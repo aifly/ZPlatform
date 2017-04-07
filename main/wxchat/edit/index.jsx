@@ -355,8 +355,9 @@ export default class WXEditApp extends React.Component {
   		this.talkBodyScroll.refresh();
   	});
 
-  	setTimeout(()=>{
-  		window.obserable.trigger({type:'refreshTalkBodyScroll'});
-  	},1000)
+   
+   
+  	
   }
+
 }
