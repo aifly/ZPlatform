@@ -83,5 +83,8 @@
       margin-bottom: 10px; }
       .workorderquestion-main-ui .workorder-table .zmiti-workorder-table-row .workorder-table-box .workorder-table-col-button {
         margin-top: 10px; }
+  .workorderquestion-main-ui .workorder-table .error-table {
+    border: 1px solid red;
+    color: red; }
 
 /*# sourceMappingURL=index.css.map */
