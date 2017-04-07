@@ -46,20 +46,7 @@ class ZmitiWxChatApp extends Component {
 				],
 				talk:[
 
-					{
-						isMe:false,
-						id:1,
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg',
-						name:'徐畅',
-						text:'',
-						linkObj:{
-							img:'./static/images/zmiti.jpg',
-							title:'智媒体智媒体智媒体智媒体智媒体智媒体',
-							desc:'国大家好大家好大家好大家好大家好大家好国大家好大家好大家好大家好大家好大家好',
-							href:'http://h5.zmiti.com/public/xwords'
-						}
-						
-					}
+					
 
 					/*{
 						isMe:false,
@@ -93,7 +80,7 @@ class ZmitiWxChatApp extends Component {
             userid: s.userid,
             onFinish(imgData){
                 s.state.data.memberList.push({
-                	id:s.state.data.memberList.length-1,
+                	id:s.props.randomString(8),
                 	head:imgData.src,
                 	name:''
                 });
@@ -104,6 +91,15 @@ class ZmitiWxChatApp extends Component {
 	                })
                 	
                 });
+            }
+        };
+        const linkProps = {
+            baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+                s.state.data.talk[s.state.currentTalkIndex].linkObj.img = imgData.src;
+                s.forceUpdate();
             }
         };
 
@@ -192,6 +188,7 @@ class ZmitiWxChatApp extends Component {
 			{this.state.isShowReplaceMyHeadImg && <ZmitiUploadDialog id={'repalcemyheadimg'} {...repalcemyheadimgProps}></ZmitiUploadDialog>}
 			{this.state.isShowReplaceTalkImg && <ZmitiUploadDialog id={'isShowReplaceTalkImg'} {...replaceTalkImgProps}></ZmitiUploadDialog>}
 			{this.state.isShowBackgroundDialog && <ZmitiUploadDialog id={'showBackgroundDialog'} {...backgroundProps}></ZmitiUploadDialog>}
+			{this.state.isShowLinkDialog && <ZmitiUploadDialog id={'showLinkDialog'} {...linkProps}></ZmitiUploadDialog>}
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
@@ -199,6 +196,9 @@ class ZmitiWxChatApp extends Component {
 	}
 
 	modifyUserName(e,i){
+
+
+
 		this.state.data.memberList[i].name = e.target.value;
 		this.forceUpdate();
 	}
@@ -262,9 +262,14 @@ class ZmitiWxChatApp extends Component {
 			},
 			success(data){
 				if(data.getret === 0){
-					console.log(JSON.parse(data.filecontent));
-				//	s.state.data = JSON.parse(data.filecontent);
-					//s.state.viewpath = data.path.viewpath;
+					
+					s.state.data = JSON.parse(data.filecontent);
+					s.state.data.talk.forEach((item,i)=>{
+						if(!item.linkObj){
+							item.linkObj = {};
+						}
+					});
+					s.state.viewpath = data.path.viewpath;
 					s.forceUpdate(()=>{
 						window.obserable.trigger({
 							type:'refreshMemberScroll'
@@ -328,7 +333,7 @@ class ZmitiWxChatApp extends Component {
 		window.obserable.on('modifyCurrentTalk',data=>{//输入框改变时。
 			this.state.data.talk[this.state.currentTalkIndex].text = data;
 			this.state.data.talk[this.state.currentTalkIndex].img = '';//清空聊天图片
-			
+			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};//清空聊天图片
 			this.forceUpdate();
 			this.timer && clearTimeout(this.timer);
 			this.timer = setTimeout(()=>{
@@ -339,6 +344,25 @@ class ZmitiWxChatApp extends Component {
 		window.obserable.on('modifyCurrentIndex',data=>{ //设置当前的聊天记录。
 			this.setState({
 				currentTalkIndex:data
+			});
+
+			var type= 0;
+			if(this.state.data.talk[data].img){
+				type= 1;
+			}else if(this.state.data.talk[data].audioSrc){
+				type= 2;
+			}
+			else if(this.state.data.talk[data].videoSrc){
+				type= 3;
+			}
+			else if(this.state.data.talk[data].linkObj.img || this.state.data.talk[data].linkObj.title || this.state.data.talk[data].linkObj.href ||this.state.data.talk[data].linkObj.desc){
+				type= 4;
+			}
+
+
+			window.obserable.trigger({
+				type:'changeTalkType',
+				data:type
 			})
 		});
 
@@ -360,7 +384,8 @@ class ZmitiWxChatApp extends Component {
 				id:-1,
 				head:'',
 				name:'xxx',
-				text:''
+				text:'',
+				linkObj:{}
 			}
 			this.state.data.talk.push(talk);
 			this.state.currentTalkIndex = this.state.data.talk.length -1;
@@ -498,6 +523,7 @@ class ZmitiWxChatApp extends Component {
   			this.state.data.talk[this.state.currentTalkIndex].text = '';
   			this.state.data.talk[this.state.currentTalkIndex].img = '';
   			this.state.data.talk[this.state.currentTalkIndex].videoSrc ='';
+  			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};
   			this.forceUpdate();
   		});
 
@@ -506,6 +532,7 @@ class ZmitiWxChatApp extends Component {
   			this.state.data.talk[this.state.currentTalkIndex].text = '';
   			this.state.data.talk[this.state.currentTalkIndex].img = '';
   			this.state.data.talk[this.state.currentTalkIndex].audioSrc ='';
+  			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};
   			this.forceUpdate(()=>{
   				this.timer && clearTimeout(this.timer);
 				this.timer = setTimeout(()=>{
@@ -513,6 +540,29 @@ class ZmitiWxChatApp extends Component {
 				},370);
   			});
   		});
+
+  		window.obserable.on('modifyLink',(data)=>{
+  			this.state.data.talk[this.state.currentTalkIndex].videoSrc = '';
+  			this.state.data.talk[this.state.currentTalkIndex].text = '';
+  			this.state.data.talk[this.state.currentTalkIndex].img = '';
+  			this.state.data.talk[this.state.currentTalkIndex].audioSrc ='';
+  			this.state.data.talk[this.state.currentTalkIndex].linkObj[data.name] = data.value;
+  			this.forceUpdate();
+  		});
+
+  		window.obserable.on('modifyLinkImg',()=>{
+			this.setState({
+				isShowLinkDialog:true
+			},()=>{
+				window.obserable.trigger({
+					type:'showModal',
+					data:{
+						type:0,
+						id:'showLinkDialog'
+					}
+				})
+			})
+		});
 
 
 	}

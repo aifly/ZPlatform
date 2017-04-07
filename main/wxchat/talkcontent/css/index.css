@@ -98,5 +98,27 @@
     border-color: #2db7f5;
     border-radius: 4px;
     height: 96px; }
+  .wxchat-talk-C .wxchat-link-img-C:hover:before {
+    content: '';
+    position: absolute;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); }
+  .wxchat-talk-C .wxchat-link-img-C:hover .wxchat-delete-link-img {
+    display: block; }
+  .wxchat-talk-C .wxchat-delete-link-img {
+    font-size: 30px;
+    color: #fff;
+    display: none;
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -15px;
+    margin-top: -15px; }
 
 /*# sourceMappingURL=index.css.map */

@@ -84,6 +84,11 @@ export default class WXEditApp extends React.Component {
 																	{item.img && <img  src={item.img}/>}
 																	{item.audioSrc && <section className='wxchat-audia'><img src='./static/images/audio-ico.png' /></section>}
 																	{item.videoSrc && <img  src={'./static/images/video-ico1.jpg'}/>}
+																	{item.linkObj && (item.linkObj.img || item.linkObj.title||item.linkObj.href ||item.linkObj.desc) && <div className='wxchat-linkobj-C wxchat-linkobj-isMe'>
+																				<section>{item.linkObj.title}</section>
+																				<section>{item.linkObj.desc}</section>
+																				<section style={{background:'url('+(item.linkObj.img || './static/images/zmiti.jpg')+') no-repeat center / cover'}}></section>
+																			</div>}
 																</div>
 															</aside>
 														</div>
@@ -101,7 +106,7 @@ export default class WXEditApp extends React.Component {
 															{item.img && <img  src={item.img}/>}
 															{item.audioSrc && <section className='wxchat-audia'><img src='./static/images/audio-ico.png' /></section>}
 															{item.videoSrc && <img  src={'./static/images/video-ico.jpg'}/>}
-															{item.linkObj && <div className='wxchat-linkobj-C'>
+															{item.linkObj && (item.linkObj.img || item.linkObj.title||item.linkObj.href ||item.linkObj.desc) && <div className='wxchat-linkobj-C'>
 																<section>{item.linkObj.title}</section>
 																<section>{item.linkObj.desc}</section>
 																<section style={{background:'url('+(item.linkObj.img || './static/images/zmiti.jpg')+') no-repeat center / cover'}}></section>
@@ -134,7 +139,7 @@ export default class WXEditApp extends React.Component {
 							<div  style={{background:'url(./static/images/publish.png) no-repeat 90px /  8%',paddingLeft:20}}>发布</div>
 						</aside>*/}
 					</header>
-					{this.state.currentShowArea === 'modifyTitle' && <section className='wxchat-modify-memebers'>
+					{ <section className='wxchat-modify-memebers' style={{display:this.state.currentShowArea === 'modifyTitle'?'block':'none'}}>
 						<h2>修改h5名称</h2>
 						<Input style={{marginTop:18}} onChange={(e)=>{this.props.modifyTitle(e)}} value={this.props.data.title}/>
 						<h2>修改群成员头像和昵称</h2>

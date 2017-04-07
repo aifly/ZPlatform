@@ -431,6 +431,28 @@
     box-sizing: border-box;
     padding: 5px 10px !important;
     position: relative; }
+    .wxchat-main-stage .wxchat-linkobj-C:before {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+      background: #fff;
+      left: -5px;
+      top: 8px; }
+    .wxchat-main-stage .wxchat-linkobj-C.wxchat-linkobj-isMe:before {
+      display: none; }
+    .wxchat-main-stage .wxchat-linkobj-C.wxchat-linkobj-isMe:after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+      background: #fff;
+      right: -5px;
+      top: 8px; }
     .wxchat-main-stage .wxchat-linkobj-C section:nth-of-type(1) {
       overflow: hidden;
       white-space: nowrap;
@@ -455,5 +477,4 @@
       width: 30px;
       height: 30px;
       border-radius: 4px; }
-
 /*# sourceMappingURL=index.css.map */

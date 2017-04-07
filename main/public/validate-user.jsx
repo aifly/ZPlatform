@@ -31,6 +31,18 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	  
 	}
 
+
+	randomString(len){
+		　var len = len || 8;
+		　　var $chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+		　　var maxPos = $chars.length;
+		　　var pwd = '';
+		　　for (var i = 0; i < len; i++) {
+		　　　　pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+		　　}
+		　　return pwd;
+	}
+
 	getProductList(opt){ //获取产品列表 
 			var s=  opt.s;
 			 s.setState({
@@ -318,7 +330,8 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			popNotice:this.popNotice,
 			send:this.send,
 			listen:this.listen,
-			getProductList:this.getProductList
+			getProductList:this.getProductList,
+			randomString:this.randomString
 			//fillFeilds:this.fillFeilds
 		}
 

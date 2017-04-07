@@ -516,6 +516,35 @@
 
 
      .wxchat-linkobj-C{
+
+        &:before{
+          content:'';
+          @include pos(a);
+          width:10px;
+          height: 10px;
+          @include transform(rotate(45deg));
+          background: #fff;
+          left: -5px;
+          top:8px;
+
+        }
+
+        &.wxchat-linkobj-isMe{
+
+            &:before{display: none;}
+            &:after{
+              content:'';
+              @include pos(a);
+              width:10px;
+              height: 10px;
+              @include transform(rotate(45deg));
+              background: #fff;
+              right: -5px;
+              top:8px;
+
+            }  
+
+        }
         width: 160px;
         height:70px;
         background-color: #fff !important;
