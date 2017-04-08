@@ -126,16 +126,22 @@ class ZmitiWorkOrderApp extends Component {
             	switch(value){
 					case 0:
 						return <div className='red'>已受理</div>;
+						break;
 					case 1:
 						return <div className='green'>已处理</div>;
+						break;
 					case 2:
 						return "已确认";
+						break;
 					case 3:
 						return "已评价";
+						break;
                     case 4:
                         return "已关闭";
+                        break;
                     case 5:
                         return <div className='red'>请您确认</div>;
+                        break;
 				}
 			}
 

@@ -26,6 +26,18 @@ class ZmitiViewQuestionApp extends Component {
 		
 		this.state = {
             mainHeight:document.documentElement.clientHeight - 50,
+			workorderid:"",
+			content:"",
+			createtime:"",
+			status:"",
+            workordertype:"",
+            totalminu:"",
+			statusName:"",
+            getTimestr:"",
+
+
+
+
 
 		};
 	}
@@ -52,28 +64,28 @@ class ZmitiViewQuestionApp extends Component {
 					<div className="zmiti-workorder-line"></div>
 					<div className="hr10"></div>
 					<div className="hr10"></div>
-						<Steps >
-							<Step title="已受理"  status="finish" icon={<Icon type="user"/>} />
-							<Step title="已处理"  status="finish" icon={<Icon type="solution"/>}/>
-							<Step title="已确认"  status="process" description="总计使用时间为2分钟" icon={<Icon type="save"/>}/>
-							<Step title="已评价"  status="wait" icon={<Icon type="smile-o" />}/>
+						<Steps current={this.state.status}>
+							<Step title="已受理"  icon={<Icon type="user"/>} />
+							<Step title="已处理"  icon={<Icon type="solution"/>}/>
+							<Step title="已确认"  description={this.state.getTimestr} icon={<Icon type="save"/>}/>
+							<Step title="已评价"  icon={<Icon type="smile-o" />}/>
 						</Steps>
 						<div className="hr10"></div>
 
 						<div className="view-questionInfo">
 							<div className="gutter-example">
 								<Row>
-									<Col span={24}><span className="questionTitle">问题标题：</span>如何变更发票信息</Col>
+									<Col span={24}><span className="questionTitle">问题标题：</span>{this.state.content}</Col>
 								</Row>
 								<Row>
 									<Col span={6}>
-										<span className="questionTitle">工单编号：</span>2175809
+										<span className="questionTitle">工单编号：</span>{this.state.workorderid}
 									</Col>
 									<Col span={6}>
-										<span className="questionTitle">提交时间：</span>2017-01-03 12:07:33
+										<span className="questionTitle">提交时间：</span>{this.state.createtime}
 									</Col>
 									<Col span={6}>
-										<span className="questionTitle"> 状态：</span>工单已关闭
+										<span className="questionTitle"> 状态：</span>{this.state.statusName}
 									</Col>
 									<Col span={6}>
 											<div className="text-right"><a href="#">删除工单</a></div>
@@ -144,7 +156,6 @@ class ZmitiViewQuestionApp extends Component {
 			);
 	}
 
-
     changeAccount(i){
         if(i*1===1){
             window.location.hash='commitworkorder/';
@@ -158,6 +169,7 @@ class ZmitiViewQuestionApp extends Component {
 	componentDidMount() {
     	//*获取指定工单的所有信息
         var workorderid=this.props.params.id;
+        var s=this
 		$.ajax({
             url:window.baseUrl+'user/view_workorder',
             data:{
@@ -166,7 +178,46 @@ class ZmitiViewQuestionApp extends Component {
                 setworkorderid:workorderid,
 			},
             success(data){
-            	console.log(data);
+                if(data.getret === 0){
+                	console.log(data);
+                	s.state.workorderid=data.workinfo.workorderid;
+                	s.state.content=data.workinfo.content;
+                	s.state.createtime=data.workinfo.createtime;
+                	s.state.status=data.workinfo.status;
+                    s.state.totalminu=data.workinfo.totalminu;
+                    if(s.state.status=="0"){
+                        s.state.statusName="已受理";
+					}
+                    if(s.state.status=="1"){
+                        s.state.statusName="已处理";
+                    }
+                    if(s.state.status=="2"){
+						s.state.statusName="已确认";
+                        s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!"
+                    }
+                    if(s.state.status=="3"){
+                        s.state.statusName="已评价";
+                        s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!"
+                    }
+                    if(s.state.status=="4"){
+						s.state.statusName=<span className="red">请您反馈</span>;
+                        s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!"
+                    }
+                    console.log("状态名" + s.state.statusName);
+                	s.state.workordertype=data.workinfo.workordertype;
+
+                    s.forceUpdate();
+
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    loginOut(data.getmsg,window.loginUrl,false);
+                }
 			}
 
 		})

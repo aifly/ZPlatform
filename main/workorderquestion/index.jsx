@@ -55,12 +55,17 @@ class ZmitiWorkOrderQuestionApp extends Component {
             dataIndex: 'datainfourl',
             key: 'datainfourl',
             className:'hidden',
-        },{
+        }, {
+            title: '文件密码',
+            dataIndex: 'setpwd',
+            key: 'setpwd',
+            className:'hidden',
+    },{
             title: '操作',
             dataIndex: 'operation',
             key: 'operation',
             render:(text,recoder,index)=>(
-                <span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,index)}> 删除</a></span>
+                <span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,recoder)}> 删除</a></span>
             )
         },
         ];
@@ -259,8 +264,27 @@ class ZmitiWorkOrderQuestionApp extends Component {
 
 	}
 
-    delUploadfile(index){
+    delUploadfile(){
+
         var s=this;
+        console.log(s.filename)
+        $.ajax({
+
+            url: window.baseUrl + 'user/del_workorderfile/',
+
+            data: {
+                userid: s.userid,
+                getusersigid: s.getusersigid,
+                setpwd: s.setpwd,
+                filename: s.filename,
+
+
+            },
+            success(data){
+                console.log(data)
+
+            }
+        })
     }
     changeAccount(i){
         if(i*1===1){

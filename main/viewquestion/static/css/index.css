@@ -68,6 +68,8 @@ ul {
       border-bottom: 1px solid #e1e6eb; }
   .view-qestion-main-ui .questionTitle {
     color: #999; }
+  .view-qestion-main-ui .red {
+    color: red; }
 
 .text-right {
   text-align: right; }
