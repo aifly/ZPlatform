@@ -74,6 +74,8 @@ export default class ZmitiUploadDialog extends React.Component {
         if (this.props.id !== data.id) {
             return;
         }
+
+        this.type = data.type;
         this.target = data.target;
         this.setState({
             visible: true,
@@ -112,7 +114,7 @@ export default class ZmitiUploadDialog extends React.Component {
                         self.props.S&&self.props.S.props.loginOut();
                         return;                        
                     }
-
+                   
                     self.state.ajaxData[self.state.current] = d.dataInfo;
 
                     self.state.alreadyRequest.push(self.state.current);
@@ -120,6 +122,14 @@ export default class ZmitiUploadDialog extends React.Component {
                     self.state.allData[self.state.current].imgs.length = 0;
 
                     self.state.allData[self.state.current].imgs = self.state.allData[self.state.current].imgs.concat(d.allImgs);
+
+                    console.log('-----------')
+                    if(self.state.type === 1){//音频
+                        self.state.allData[self.state.current].imgs.forEach((item,i)=>{
+                            item.imgSrc = './static/images/music.png';
+                        });
+                    }
+                    
 
                     self.state.ajaxData[self.state.current].forEach((img, i)=> {
 
@@ -513,18 +523,20 @@ export default class ZmitiUploadDialog extends React.Component {
             data: formData,
             success(da){
 
-    
-                console.log(da);
                 if (da.gettips) {//
                     message.error(d.gettips[0]);
                     return;
                 }
+
+                message[da.getret === 0?'success':'error'](da.getmsg, 4);
                 
                 if (da.getret === 0) {
 
-                    message.success(da.getmsg, 4);
-
                     da = da.getfileurlArr[0];
+
+                    console.log(da);
+
+                    return;
 
                     let option = {
                         src: da.datainfourl,
@@ -537,16 +549,21 @@ export default class ZmitiUploadDialog extends React.Component {
                     }
                     else {
                         option.index = s.state.currentCate;
+                        if(self.state.type === 1){//非图片
+                            option.src = './static/images/music.png';
+                        }
                         s.state.ajaxData[s.state.current][s.state.currentCate].parentName.imgs.push(option);
                     }
 
-                    s.state.allData[s.state.current].imgs.push(option);
 
-                    s.state.uploadLoading = false;
-                    s.forceUpdate(()=>{
-                        s.picScroll.refresh();//上传成功后，重新刷新列表
-                    });
+
+                    s.state.allData[s.state.current].imgs.push(option);
                 }
+
+                s.state.uploadLoading = false;
+                s.forceUpdate(()=>{
+                    s.picScroll.refresh();//上传成功后，重新刷新列表
+                });
 
             },
             error(){
@@ -722,11 +739,13 @@ export default class ZmitiUploadDialog extends React.Component {
 
     getImageFigcaption(obj) {
 
+        var type = this.state.type;
+
         return obj.map((img, i)=> {
             if (!img) {
                 return <div></div>;
             }
-            let [width,height] = img.size.toLowerCase().split('x'),
+            let [width,height] =img.size? img.size.toLowerCase().split('x'):[1,1],
                 style = {
                     width: width > height ? '100%' : 'auto',
                     height: width > height ? 'auto' : '100%',
@@ -737,16 +756,17 @@ export default class ZmitiUploadDialog extends React.Component {
                 };
 
 
+            var imgType = type === 0 ? 'src':'imgSrc';
 
             return (
                 <figcaption key={i} onClick={this.chooseImg}
                             data-id={img.id+(img.index === undefined?'_none':'_'+img.index)} className="figcaption"
                             style={{position:'relative',zIndex:100-i}}>
-                    <div className="zmiti-img-C"><img src={img.src} style={style} draggable="false" alt=""/></div>
+                    <div className="zmiti-img-C"><img src={img[imgType]} style={style} draggable="false" alt=""/></div>
                     <div className="zmiti-img-info">
                         <section className="zmiti-img-i">
                             <span>{img.storageSize}</span>
-                            <span>{img.size}</span>
+                            <span>{img.size || <em style={{opacity:0}}>200X200</em>}</span>
                         </section>
                         <section ref="menu" onMouseOver={this.figcaptionMouse.bind(this)}
                                  onMouseOut={this.figcaptionMouse.bind(this)}>
@@ -889,8 +909,8 @@ export default class ZmitiUploadDialog extends React.Component {
                 "getusersigid": self.props.getusersigid,
                 "userid":self.props.userid,
                 'setclassname':self.state.ajaxData[self.state.current][0].parentName.name,
-                "setparentid": self.state.defaultIds[self.state.current]
-
+                "setparentid": self.state.defaultIds[self.state.current],
+                "setdataclasstype":self.type
             }
             /**
              * 
@@ -911,7 +931,7 @@ export default class ZmitiUploadDialog extends React.Component {
                     if (d.getret === 0) {
                         message.success('添加分类成功');
 
-                        self.state.ajaxData[self.state.current].length = 0;
+                        self.state.ajaxData[self.state.current]= [];
                         console.log(d)
                         d.datainfo.forEach(info=> {
 

@@ -18,6 +18,7 @@ import ZmitiCommitWorkOrderApp from './commitworkorder/index.jsx';
 import ZmitiWorkOrderQuestionApp from './workorderquestion/index.jsx';
 import ZmitiWxChatListApp from './wxchat/list.jsx';
 import ZmitiViewQuestionApp  from './viewquestion/index.jsx';
+import ZmitiStatisticsListApp  from './statistics/index.jsx';
 import Obserable from './static/libs/obserable.js';
 
 import {notification } from './commoncomponent/common.jsx';

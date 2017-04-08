@@ -23,7 +23,7 @@ export default class ZmitiOrderList extends Component {
 					this.props.columns.map((col,i)=>{
 						if(i===0){
 							return <section key={i} className='user-list-section'>
-								<Table bordered={true}
+								<Table bordered={true} rowKey={i*111} key={i*111}
 								 onRowClick={(record,index,i)=>{this.props.getProductDetail(record,index,i)}}
 								 dataSource={this.props.orderList} columns={col} />
 								}

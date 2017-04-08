@@ -248,11 +248,11 @@ class ZmitiWxChatListApp extends Component {
 	componentDidMount() {
 
 
-	/*	window.obserable.trigger({
+		window.obserable.trigger({
 		  type:'showModal',
 		  data:{type:1,id:'test'}//0，图片1，音频2，视频 3，VR视频
 		});
-*/
+
 
 		var s = this;
 

@@ -503,11 +503,13 @@ class ZmitiWxChatApp extends Component {
 
   		window.obserable.on("save",()=>{
   			this.state.isEntry = 2;
+
+
   			var s = this;
 
   			s.filterLoadingImg(s.state.data);
   			s.state.data.loadingImg = s.loadingImg;//把所有的资源图片统一加到页面上。
-
+			this.forceUpdate();
   			$.ajax({
   				url:window.baseUrl+'/works/update_works/',
   				type:'post',

@@ -19,9 +19,7 @@ import MainUI from '../components/main.jsx';
         super(...args);
         this.state = {
             visible:false,
-            productlist:[{
-              productid:-1
-            }],
+            productlist:[],
             loading:false,
             tip:'数据拉取中...',
             productName:'',//产品名称
@@ -345,7 +343,15 @@ import MainUI from '../components/main.jsx';
     }
 
     loadData(){
-       this.getProductList({s:this});
+       this.getProductList({s:this,fn:(data)=>{
+
+          this.state.productlist = data.productlist;
+          this.state.productlist.forEach((item,i)=>{
+             item.key = i +1;
+          });
+          this.state.loading = false;
+          this.forceUpdate();
+       }});
     }
 
     componentDidMount() {
