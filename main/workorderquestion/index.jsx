@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './static/css/index.min.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import {Input,Button, Row, Col,Radio,Layout,Icon,message} from '../commoncomponent/common.jsx';
+import {Input,Button, Row, Col,Radio,Layout,Icon,message,Table} from '../commoncomponent/common.jsx';
 const { Header, Content } = Layout;
 const RadioGroup = Radio.Group;
 
@@ -27,7 +27,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
 		this.state = {
 
             mainHeight:document.documentElement.clientHeight - 50,
-            dataSource:[],
+            uploadData:[],
 			massagedefaultValue:0,
 			questionContent:"",
             mobile:"",
@@ -35,13 +35,35 @@ class ZmitiWorkOrderQuestionApp extends Component {
             workordertype:"",
             workordername:"",
             questionError:false,
-            mobileError:false
+            mobileError:false,
 
 
 
 		};
 	}
 	render() {
+        const uploadColumns=[{
+            title: '上传名称',
+            dataIndex: 'filename',
+            key: 'filename',
+        },{
+                title: '文件大小',
+                dataIndex: 'datainfosize',
+                key: 'datainfosize',
+            },{
+            title: '文件路径',
+            dataIndex: 'datainfourl',
+            key: 'datainfourl',
+            className:'hidden',
+        },{
+            title: '操作',
+            dataIndex: 'operation',
+            key: 'operation',
+            render:(text,recoder,index)=>(
+                <span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,index)}> 删除</a></span>
+            )
+        },
+        ];
 
 
 
@@ -100,6 +122,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
 									<Icon type="upload"  /> 附件上传
 								</Button>
 								<input ref="upload-file" onChange={this.uploadFile.bind(this)} type="file"  style={{position:'absolute',left:0,top:0,opacity:0,cursor:'pointer'}}/>
+                                <Table columns={uploadColumns} dataSource={this.state.uploadData} showHeader={false} />
 							</Col>
 							<Col span={1} className="workorderquestion-width30"></Col>
 						</Row>
@@ -135,7 +158,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
 
 
         formData.append('setupfile', this.refs['upload-file'].files[0]);
-        formData.append('uploadtype', 0);
+        formData.append('uploadtype', 2);
 
         $.ajax({
     		url:window.baseUrl+ 'share/upload_file',
@@ -144,7 +167,8 @@ class ZmitiWorkOrderQuestionApp extends Component {
             contentType: false,
             processData: false,
 			success(data){
-    			console.log(data);
+    		    s.state.uploadData.push(data.getfileurl[0]);
+                s.forceUpdate();
 			}
 		})
 	}
@@ -174,6 +198,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
     		return;
 		}
 		else {
+
             var setworkordertype = 3;
             if (!isNaN(this.props.params.id * 1)) {//数字
                 setworkordertype = this.props.params.id * 1;
@@ -186,6 +211,16 @@ class ZmitiWorkOrderQuestionApp extends Component {
             if(s.state.workordername!=""){
                 questionContent=s.state.workordername+"问题 : "+questionContent;
             }
+            //判断是否有附件
+            var attachment:"";
+            if(s.state.uploadData.length>0) {
+                attachment=s.state.uploadData[0].datainfourl;
+                for(var i=1;i<s.state.uploadData.length;i++){
+                        attachment=attachment + "," +s.state.uploadData[i].datainfourl;
+                }
+            }
+
+            //附件结束
             $.ajax({
 
                 url: window.baseUrl + 'user/post_workorder',
@@ -198,6 +233,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
                     setusermobile: s.state.mobile,
                     setsmstime: s.state.massagedefaultValue,
                     setuseremail: s.state.email,
+                    setattachment:attachment,
 
                 },
                 success(data){
@@ -223,6 +259,9 @@ class ZmitiWorkOrderQuestionApp extends Component {
 
 	}
 
+    delUploadfile(index){
+        var s=this;
+    }
     changeAccount(i){
         if(i*1===1){
             window.location.hash='commitworkorder/';

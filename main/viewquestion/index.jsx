@@ -33,6 +33,7 @@ class ZmitiViewQuestionApp extends Component {
 	render() {
 
         var title = this.props.params.title || '服务支持中心';
+
         let props= {
             userid: this.userid,
             changeAccount: this.changeAccount.bind(this),
@@ -155,7 +156,20 @@ class ZmitiViewQuestionApp extends Component {
    
 
 	componentDidMount() {
+    	//*获取指定工单的所有信息
+        var workorderid=this.props.params.id;
+		$.ajax({
+            url:window.baseUrl+'user/view_workorder',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                setworkorderid:workorderid,
+			},
+            success(data){
+            	console.log(data);
+			}
 
+		})
 		
 
 	}

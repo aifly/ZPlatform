@@ -12,6 +12,8 @@
   text-align: right; }
 .cen {
   text-align: center; }
+.hidden {
+  display: none; }
 .zmiti-workorder-main-ui .zmiti-workorder-header-inner {
   padding-left: 8px;
   margin-top: 10px;

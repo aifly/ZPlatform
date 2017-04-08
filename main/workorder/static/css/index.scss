@@ -12,6 +12,9 @@
 @at-root .cen{
   text-align: center;
 }
+@at-root .hidden{
+  display: none;
+}
 .zmiti-workorder-main-ui{
   .zmiti-workorder-header-inner{
     padding-left: 8px;
