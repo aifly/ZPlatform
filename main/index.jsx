@@ -19,7 +19,9 @@ import ZmitiWorkOrderQuestionApp from './workorderquestion/index.jsx';
 import ZmitiWxChatListApp from './wxchat/list.jsx';
 import ZmitiViewQuestionApp  from './viewquestion/index.jsx';
 import ZmitiStatisticsListApp  from './statistics/index.jsx';
+
 import Obserable from './static/libs/obserable.js';
+
 
 import {notification } from './commoncomponent/common.jsx';
 import $ from 'jquery';
@@ -47,6 +49,7 @@ class App extends React.Component{
 				{path: '/commitworkorder/', app: ZmitiCommitWorkOrderApp},
 				{path: '/workorder/', app: ZmitiWorkOrderApp},
 				{path: '/workorderquestion/(:id)', app: ZmitiWorkOrderQuestionApp},
+				{path: '/statistics/', app: ZmitiStatisticsListApp},
 				{path: '/viewquestion/(:id)', app: ZmitiViewQuestionApp}
 		];
 		return (
