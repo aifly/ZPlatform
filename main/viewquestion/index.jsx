@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import {Icon,Steps,Form , Input,Button, Row, Col,Layout ,Tooltip  } from '../commoncomponent/common.jsx';
+import {Icon,Steps,Form , Input,Button, Row, Col,Layout ,Tooltip,Table,message  } from '../commoncomponent/common.jsx';
 
 
 
@@ -23,27 +23,56 @@ function hasErrors(fieldsError) {
 class ZmitiViewQuestionApp extends Component {
 	constructor(props) {
 		super(props);
-		
 		this.state = {
             mainHeight:document.documentElement.clientHeight - 50,
+            uploadData:[],
 			workorderid:"",
 			content:"",
 			createtime:"",
 			status:"",
             workordertype:"",
+            workordername:"",
             totalminu:"",
 			statusName:"",
             getTimestr:"",
 			usericon:"",
-
-
-
+            questionContent:"",
+            questionError:false,
+			orderoperation:"",
 
 
 		};
 	}
 
 	render() {
+
+        const uploadColumns=[{
+            title: '上传名称',
+            dataIndex: 'filename',
+            key: 'filename',
+        },{
+            title: '文件大小',
+            dataIndex: 'datainfosize',
+            key: 'datainfosize',
+        },{
+            title: '文件路径',
+            dataIndex: 'datainfourl',
+            key: 'datainfourl',
+            className:'hidden',
+        }, {
+            title: '文件密码',
+            dataIndex: 'setpwd',
+            key: 'setpwd',
+            className:'hidden',
+        },{
+            title: '操作',
+            dataIndex: 'operation',
+            key: 'operation',
+            render:(text,recoder,index)=>(
+				<span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,recoder,index)}> 删除</a></span>
+            )
+        },
+        ];
 
         var title = this.props.params.title || '服务支持中心';
 
@@ -89,14 +118,14 @@ class ZmitiViewQuestionApp extends Component {
 										<span className="questionTitle"> 状态：</span>{this.state.statusName}
 									</Col>
 									<Col span={6}>
-											<div className="text-right"><a href="#">删除工单</a></div>
+											<div className="text-right"><a href="javasctip:void(0);" onClick={this.getorderoperation.bind(this)} >{this.state.orderoperation}</a></div>
 									</Col>
 								</Row>
 							</div>
 						</div>
 					<div className="hr10"></div>
 					<Layout className="workorder-table">
-						<Header>咨询类工单问题</Header>
+						<Header>{this.state.getworkordername}</Header>
 						<Content>
 							<div className="view-questionPane">
 								<div className="view-questionLists">
@@ -106,12 +135,22 @@ class ZmitiViewQuestionApp extends Component {
 												<img src={this.state.usericon}/>
 											</div>
 											<div className="view-Infor">
-												<p>song***@163.com&nbsp;&nbsp;&nbsp;&nbsp;备案域名：www.youwebsite.com</p>
-												<p>问题描述：如何变更发票信息</p>
-												<p>2017-01-03 12:07:33</p>
+												<p>{this.username}</p>
+												<p>问题描述：{this.state.content}</p>
+												<p>{this.state.createtime}</p>
 											</div>
 										</li>
 
+										<li>
+											<div className="view-faceIco">
+												<img src={this.state.usericon}/>
+											</div>
+											<div className="view-Infor">
+												<p>{this.username}</p>
+												<p>问题描述：{this.state.content}</p>
+												<p>{this.state.createtime}</p>
+											</div>
+										</li>
 									</ul>
 								</div>
 							</div>
@@ -119,24 +158,26 @@ class ZmitiViewQuestionApp extends Component {
 					</Layout>
 					<div className="hr10"></div>
 					<Layout className="workorder-table">
-						<Header>咨询类工单问题</Header>
+						<Header>{this.state.getworkordername}</Header>
 						<Content>
 						<div className="view-questionPane">
 							<div className="view-questionForm">
 								<Form>
 									<div className="view-tit-label">留言</div>
-									<Input type="textarea" rows={5} placeholder="此处限定5000字符" />
+									<Input type="textarea" placeholder="此处限定5000字符" onFocus={()=>{this.setState({questionError:false})}} className={"workorderquestion-inputContent "+ (this.state.questionError?'error-table':'')} value={this.state.questionContent} onChange={e=>{this.setState({questionContent:e.target.value})}}/>
 									<div className="hr10"></div>
-									<p>
+									<div style={{position:'relative'}}>
 										<Button>
-											<Icon type="upload" /> 上传文件
+											<Icon type="upload"  /> 附件上传
 										</Button>
-									</p>
+										<input ref="upload-file" onChange={this.uploadFile.bind(this)} type="file"  style={{position:'absolute',left:0,top:0,opacity:0,cursor:'pointer'}}/>
+										<Table columns={uploadColumns} dataSource={this.state.uploadData} showHeader={false} />
+									</div>
 									<p>
 										<Button
 											type="primary"
 											htmlType="submit"
-											size="small"
+											onClick={this.submitWorkorder.bind(this)}
 										>提交</Button>
 									</p>
 								</Form>
@@ -188,6 +229,8 @@ class ZmitiViewQuestionApp extends Component {
                     s.filterStatus();
                 	s.state.workordertype=data.workinfo.workordertype;
                     s.getuserinfo();
+                    s.getworkorderlist();
+                    s.getworkordername();
                     s.forceUpdate();
 
                 }
@@ -233,35 +276,258 @@ class ZmitiViewQuestionApp extends Component {
 		})
 
 	}
+	//获取工单详细列表（本次工单的所有对话）
+	getworkorderlist(){
+		var s = this;
+		$.ajax({
+            url:window.baseUrl+'user/view_workorder',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                setworkorderid:s.state.workorderid,
+            },
+			success(data){
+                if(data.getret === 0){
+					console.log(data);
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    loginOut(data.getmsg,window.loginUrl,false);
+                }
+            }
 
+		})
+
+	}
+	//上传附件
+    uploadFile(){//上传附件
+
+        let formData = new FormData(),
+            s = this;
+        formData.append('setupfile', this.refs['upload-file'].files[0]);
+        formData.append('uploadtype', 2);
+
+        $.ajax({
+            url:window.baseUrl+ 'share/upload_file',
+            type:'post',
+            data:formData,
+            contentType: false,
+            processData: false,
+            success(data){
+                data.getfileurl[0].key = s.props.randomString(8);
+                s.state.uploadData.push(data.getfileurl[0]);
+                s.forceUpdate();
+            }
+        })
+    }
+    //删除附件
+    delUploadfile(recoder,index){
+
+        var s=this;
+
+        $.ajax({
+
+            url: window.baseUrl + 'user/del_workorderfile/',
+
+            data: {
+                userid: s.userid,
+                getusersigid: s.getusersigid,
+                setpwd: recoder.setpwd,
+                filename: recoder.filename,
+            },
+            success(data){
+                s.state.uploadData.splice(index,1);
+                s.forceUpdate();
+
+            }
+        })
+    }
+	//获取工单类型名称
+    getworkordername(){
+		var s=this;
+        switch (s.state.workordertype) {
+            case 0:
+                s.state.getworkordername="财务类工单问题";
+                break;
+            case 1:
+                s.state.getworkordername="会员帐号类工单问题";
+                break;
+            case 2:
+                s.state.getworkordername="定制服务类工单帐号问题";
+                break;
+            case 3:
+                s.state.getworkordername="产品技术类工单问题";
+
+                break;
+            case 4:
+                s.state.getworkordername="其它类工单问题";
+
+                break;
+        }
+	}
 //获取工单状态
 	filterStatus(){
     	var s = this;
         switch (s.state.status) {
             case 0:
                 s.state.statusName="已受理";
+                s.state.orderoperation="关闭工单";
                 break;
             case 1:
                 s.state.statusName="已处理";
+                s.state.orderoperation="关闭工单";
                 break;
             case 2:
                 s.state.statusName="已确认";
                 s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
+                s.state.orderoperation="删除工单";
                 break;
             case 3:
                 s.state.statusName="已评价";
                 s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
+                s.state.orderoperation="删除工单";
                 break;
             case 4:
                 s.state.statusName=<span className="red">请您反馈</span>;
                 s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
+                s.state.orderoperation="关闭工单";
                 break;
         }
 
        // s.forceUpdate();
 	}
+//操作工单状态
+    getorderoperation(){
+		var s=this;
+		var setoperatype=1;
+		if(s.state.orderoperation=="关闭工单"){
+            $.ajax({
 
+                url: window.baseUrl + 'user/opera_workorder',
 
+                data: {
+                    userid: s.userid,
+                    getusersigid: s.getusersigid,
+                    setworkorderid:s.state.workorderid,
+                    setcontent: "关闭工单",
+                    setoperatype:2,
+
+                },
+                success(data){
+                    if (data.getret === 0) {
+                        message.success("关闭工单成功");
+                        s.state.orderoperation=="删除工单";
+                        s.forceUpdate();
+
+                    }
+                    else if (data.getret === -3) {
+                        message.error('您没有访问的权限,2秒后跳转到首页');
+                        setTimeout(() => {
+                            location.href = '/';
+                        }, 2000)
+                    }
+                    else {
+                        message.error(data.getmsg);
+                    }
+                }
+            })
+		}
+		if(s.state.orderoperation=="删除工单"){
+            $.ajax({
+
+                url: window.baseUrl + 'user/del_workorder/',
+
+                data: {
+                    userid: s.userid,
+                    getusersigid: s.getusersigid,
+                    setworkorderid: s.state.workorderid,
+
+                },
+                success(data){
+                    if (data.getret === 0) {
+                        message.success("删除工单成功");
+                        setTimeout(() => {
+                            window.location.hash='workorder/';
+                        }, 2000)
+
+                    }
+                    else if (data.getret === -3) {
+                        message.error('您没有访问的权限,2秒后跳转到首页');
+                        setTimeout(() => {
+                            location.href = '/';
+                        }, 2000)
+                    }
+                    else {
+                        message.error(data.getmsg);
+                    }
+                }
+            })
+		}
+
+	}
+//追加工单问题
+    submitWorkorder(){
+        var s=this;
+        var isOk=0;
+        if(s.state.questionContent=="") {
+            s.setState({
+                questionError:true
+            })
+            isOk=1
+        }
+        if(isOk!=0){
+            return;
+        }
+        else {
+            var questionContent=s.state.questionContent;
+            //判断是否有附件
+            var attachment:"";
+            if(s.state.uploadData.length>0) {
+                attachment=s.state.uploadData[0].datainfourl;
+                for(var i=1;i<s.state.uploadData.length;i++){
+                    attachment=attachment + "," +s.state.uploadData[i].datainfourl;
+                }
+            }
+
+            //附件结束
+            $.ajax({
+
+                url: window.baseUrl + 'user/opera_workorder',
+
+                data: {
+                    userid: s.userid,
+                    getusersigid: s.getusersigid,
+                    setcontent: questionContent,
+                    setattachment:attachment,
+                    setoperatype:1,
+
+                },
+                success(data){
+                    if (data.getret === 0) {
+                        message.success("您已成功提交工单，我们会尽快处理");
+                        setTimeout(() => {
+                            location.hash = '/commitworkorder/';
+                        }, 2000)
+
+                    }
+                    else if (data.getret === -3) {
+                        message.error('您没有访问的权限,2秒后跳转到首页');
+                        setTimeout(() => {
+                            location.href = '/';
+                        }, 2000)
+                    }
+                    else {
+                        message.error(data.getmsg);
+                    }
+                }
+            })
+        }
+	}
 	
 
 	componentWillMount() {
@@ -274,6 +540,7 @@ class ZmitiViewQuestionApp extends Component {
 		let {username,userid,getusersigid} = validateUser(()=>{},this);
 		this.userid = userid;
 		this.getusersigid = getusersigid;
+		this.username=username;
 
 		
 	}

@@ -33,6 +33,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
             mobile:"",
 			email:"",
             workordertype:"",
+
             workordername:"",
             questionError:false,
             mobileError:false,
@@ -215,7 +216,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
             var questionContent=s.state.questionContent;
 
             if(s.state.workordername!=""){
-                questionContent=s.state.workordername+"问题 : "+questionContent;
+                questionContent=s.state.workordername+"问题 ，"+questionContent;
             }
             //判断是否有附件
             var attachment:"";

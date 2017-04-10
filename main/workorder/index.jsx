@@ -274,8 +274,8 @@ class ZmitiWorkOrderApp extends Component {
 
             },
             success(data){
-                console.log(data)
                 if(data.getret === 0){
+                    message.success('删除成功！');
                     setTimeout(()=>{
                         s.bindNewdata();
 
