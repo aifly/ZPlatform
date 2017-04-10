@@ -65,7 +65,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
             dataIndex: 'operation',
             key: 'operation',
             render:(text,recoder,index)=>(
-                <span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,recoder)}> 删除</a></span>
+                <span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,recoder,index)}> 删除</a></span>
             )
         },
         ];
@@ -172,6 +172,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
             contentType: false,
             processData: false,
 			success(data){
+                data.getfileurl[0].key = s.props.randomString(8);
     		    s.state.uploadData.push(data.getfileurl[0]);
                 s.forceUpdate();
 			}
@@ -264,10 +265,10 @@ class ZmitiWorkOrderQuestionApp extends Component {
 
 	}
 
-    delUploadfile(){
+    delUploadfile(recoder,index){
 
         var s=this;
-        console.log(s.filename)
+
         $.ajax({
 
             url: window.baseUrl + 'user/del_workorderfile/',
@@ -275,13 +276,12 @@ class ZmitiWorkOrderQuestionApp extends Component {
             data: {
                 userid: s.userid,
                 getusersigid: s.getusersigid,
-                setpwd: s.setpwd,
-                filename: s.filename,
-
-
+                setpwd: recoder.setpwd,
+                filename: recoder.filename,
             },
             success(data){
-                console.log(data)
+                s.state.uploadData.splice(index,1);
+                s.forceUpdate();
 
             }
         })

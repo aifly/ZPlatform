@@ -34,6 +34,7 @@ class ZmitiViewQuestionApp extends Component {
             totalminu:"",
 			statusName:"",
             getTimestr:"",
+			usericon:"",
 
 
 
@@ -64,7 +65,7 @@ class ZmitiViewQuestionApp extends Component {
 					<div className="zmiti-workorder-line"></div>
 					<div className="hr10"></div>
 					<div className="hr10"></div>
-						<Steps current={this.state.status}>
+						<Steps current={this.state.status*1}>
 							<Step title="已受理"  icon={<Icon type="user"/>} />
 							<Step title="已处理"  icon={<Icon type="solution"/>}/>
 							<Step title="已确认"  description={this.state.getTimestr} icon={<Icon type="save"/>}/>
@@ -102,7 +103,7 @@ class ZmitiViewQuestionApp extends Component {
 									<ul>
 										<li>
 											<div className="view-faceIco">
-												<img src='./static/images/header.png'/>
+												<img src={this.state.usericon}/>
 											</div>
 											<div className="view-Infor">
 												<p>song***@163.com&nbsp;&nbsp;&nbsp;&nbsp;备案域名：www.youwebsite.com</p>
@@ -179,33 +180,14 @@ class ZmitiViewQuestionApp extends Component {
 			},
             success(data){
                 if(data.getret === 0){
-                	console.log(data);
                 	s.state.workorderid=data.workinfo.workorderid;
                 	s.state.content=data.workinfo.content;
                 	s.state.createtime=data.workinfo.createtime;
                 	s.state.status=data.workinfo.status;
                     s.state.totalminu=data.workinfo.totalminu;
-                    if(s.state.status=="0"){
-                        s.state.statusName="已受理";
-					}
-                    if(s.state.status=="1"){
-                        s.state.statusName="已处理";
-                    }
-                    if(s.state.status=="2"){
-						s.state.statusName="已确认";
-                        s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!"
-                    }
-                    if(s.state.status=="3"){
-                        s.state.statusName="已评价";
-                        s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!"
-                    }
-                    if(s.state.status=="4"){
-						s.state.statusName=<span className="red">请您反馈</span>;
-                        s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!"
-                    }
-                    console.log("状态名" + s.state.statusName);
+                    s.filterStatus();
                 	s.state.workordertype=data.workinfo.workordertype;
-
+                    s.getuserinfo();
                     s.forceUpdate();
 
                 }
@@ -223,6 +205,60 @@ class ZmitiViewQuestionApp extends Component {
 		})
 		
 
+	}
+//获取用户信息
+	getuserinfo(){
+    	var s=this;
+    	$.ajax({
+            url:window.baseUrl+'user/get_userdetails/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                setuserid:s.userid,
+            },
+            success(data){
+                if(data.getret === 0){
+                	s.state.usericon=data.getuserinfo.portrait;
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    loginOut(data.getmsg,window.loginUrl,false);
+                }
+			}
+		})
+
+	}
+
+//获取工单状态
+	filterStatus(){
+    	var s = this;
+        switch (s.state.status) {
+            case 0:
+                s.state.statusName="已受理";
+                break;
+            case 1:
+                s.state.statusName="已处理";
+                break;
+            case 2:
+                s.state.statusName="已确认";
+                s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
+                break;
+            case 3:
+                s.state.statusName="已评价";
+                s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
+                break;
+            case 4:
+                s.state.statusName=<span className="red">请您反馈</span>;
+                s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
+                break;
+        }
+
+       // s.forceUpdate();
 	}
 
 
