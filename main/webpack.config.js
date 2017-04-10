@@ -2,8 +2,7 @@ var webpack = require('webpack');
 var config = {
     entry: {
         'index': "./index.jsx",
-        'admin':'./admin/index.jsx',
-        'product':'./product.jsx'
+        'admin':'./admin/index.jsx'
     },
     output: {
         //publicPath: './static/js',
