@@ -37,7 +37,7 @@ class ZmitiViewQuestionApp extends Component {
             getTimestr:"",
 			usericon:"",
             questionContent:"",
-            questionError:false,
+            isHidden:false,
 			orderoperation:"",
 
 
@@ -124,7 +124,7 @@ class ZmitiViewQuestionApp extends Component {
 							</div>
 						</div>
 					<div className="hr10"></div>
-					<Layout className="workorder-table">
+                    <Layout className="workorder-table">
 						<Header>{this.state.getworkordername}</Header>
 						<Content>
 							<div className="view-questionPane">
@@ -157,7 +157,8 @@ class ZmitiViewQuestionApp extends Component {
 						</Content>
 					</Layout>
 					<div className="hr10"></div>
-					<Layout className="workorder-table">
+                    <Layout className={"workorder-table "+ (this.state.isHidden?'hidden':'')}>
+
 						<Header>{this.state.getworkordername}</Header>
 						<Content>
 						<div className="view-questionPane">
@@ -376,16 +377,25 @@ class ZmitiViewQuestionApp extends Component {
             case 2:
                 s.state.statusName="已确认";
                 s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
+                s.setState({
+                    isHidden:true
+                });
                 s.state.orderoperation="删除工单";
                 break;
             case 3:
                 s.state.statusName="已评价";
                 s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
+                s.setState({
+                    isHidden:true
+                });
                 s.state.orderoperation="删除工单";
                 break;
             case 4:
                 s.state.statusName=<span className="red">请您反馈</span>;
                 s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
+                s.setState({
+                    isHidden:true
+                });
                 s.state.orderoperation="关闭工单";
                 break;
         }
@@ -395,8 +405,6 @@ class ZmitiViewQuestionApp extends Component {
 //操作工单状态
     getorderoperation(){
 		var s = this;
-        console.log(s.userid);
-        return;
 		if(s.state.orderoperation=="关闭工单"){
             $.ajax({
                 url: window.baseUrl + 'user/close_workorder/',
@@ -408,7 +416,10 @@ class ZmitiViewQuestionApp extends Component {
                 success(data){
                     if (data.getret === 0) {
                         message.success("关闭工单成功");
-                        s.state.orderoperation=="删除工单";
+                        s.state.orderoperation="删除工单";
+                        s.setState({
+                            isHidden:true
+                        });
                         s.forceUpdate();
                     }
                     else if (data.getret === -3) {
@@ -470,8 +481,8 @@ class ZmitiViewQuestionApp extends Component {
             return;
         }
         else {
-            var questionContent=s.state.questionContent;
             //判断是否有附件
+
             var attachment:"";
             if(s.state.uploadData.length>0) {
                 attachment=s.state.uploadData[0].datainfourl;
@@ -479,7 +490,6 @@ class ZmitiViewQuestionApp extends Component {
                     attachment=attachment + "," +s.state.uploadData[i].datainfourl;
                 }
             }
-
             //附件结束
             $.ajax({
 
@@ -488,7 +498,8 @@ class ZmitiViewQuestionApp extends Component {
                 data: {
                     userid: s.userid,
                     getusersigid: s.getusersigid,
-                    setcontent: questionContent,
+                    setworkorderid:s.state.workorderid,
+                    setcontent: s.state.questionContent,
                     setattachment:attachment,
                     setoperatype:1,
 
@@ -508,6 +519,7 @@ class ZmitiViewQuestionApp extends Component {
                         }, 2000)
                     }
                     else {
+
                         message.error(data.getmsg);
                     }
                 }
