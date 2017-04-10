@@ -403,27 +403,22 @@ class ZmitiViewQuestionApp extends Component {
 	}
 //操作工单状态
     getorderoperation(){
-		var s=this;
-		var setoperatype=1;
+		var s = this;
+        console.log(s.userid);
+        return;
 		if(s.state.orderoperation=="关闭工单"){
             $.ajax({
-
-                url: window.baseUrl + 'user/opera_workorder',
-
+                url: window.baseUrl + 'user/close_workorder/',
                 data: {
                     userid: s.userid,
                     getusersigid: s.getusersigid,
                     setworkorderid:s.state.workorderid,
-                    setcontent: "关闭工单",
-                    setoperatype:2,
-
                 },
                 success(data){
                     if (data.getret === 0) {
                         message.success("关闭工单成功");
                         s.state.orderoperation=="删除工单";
                         s.forceUpdate();
-
                     }
                     else if (data.getret === -3) {
                         message.error('您没有访问的权限,2秒后跳转到首页');

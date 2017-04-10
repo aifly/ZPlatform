@@ -216,6 +216,7 @@ class ZmitiWorkOrderApp extends Component {
                 setstarttime:startDate,
                 setendtime:endDate,
                 setkeyword:keyWord,
+                setisadmin:0,
             },
             success(data){
                 if(data.getret === 0){
@@ -229,7 +230,7 @@ class ZmitiWorkOrderApp extends Component {
                     },2000)
                 }
                 else{
-                    loginOut(data.getmsg,window.loginUrl,false);
+                    message.error(data);
                 }
             }
         })
@@ -300,7 +301,9 @@ class ZmitiWorkOrderApp extends Component {
             url:window.baseUrl+'user/get_workorder',
             data:{
                 userid:s.userid,
-                getusersigid:s.getusersigid
+                getusersigid:s.getusersigid,
+                setisadmin:0,
+
             },
             success(data){
 
@@ -315,7 +318,8 @@ class ZmitiWorkOrderApp extends Component {
                     },2000)
                 }
                 else{
-                    loginOut(data.getmsg,window.loginUrl,false);
+                    message.error(data);
+
                 }
             }
         })
