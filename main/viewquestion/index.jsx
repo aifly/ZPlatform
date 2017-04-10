@@ -234,15 +234,6 @@ class ZmitiViewQuestionApp extends Component {
                     s.forceUpdate();
 
                 }
-                else if(data.getret === -3){
-                    message.error('您没有访问的权限,2秒后跳转到首页');
-                    setTimeout(()=>{
-                        location.href='/';
-                    },2000)
-                }
-                else{
-                    loginOut(data.getmsg,window.loginUrl,false);
-                }
 			}
 
 		})
