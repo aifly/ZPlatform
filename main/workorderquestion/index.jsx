@@ -33,7 +33,6 @@ class ZmitiWorkOrderQuestionApp extends Component {
             mobile:"",
 			email:"",
             workordertype:"",
-
             workordername:"",
             questionError:false,
             mobileError:false,

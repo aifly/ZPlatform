@@ -28,6 +28,9 @@ ul{
 .pad-20{
 	padding:20px;
 }
+.user-right-pannel{
+	background: #ffffff!important;
+}
 .view-qestion-main-ui{
 	overflow:auto;
 	.zmiti-workorder-header-inner{
@@ -77,6 +80,9 @@ ul{
 	.error-table{
 		border: 1px solid red;
 		color: red;
+	}
+	.workorderquestion-inputContent{
+		height: 100px;
 	}
 }
 

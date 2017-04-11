@@ -39,6 +39,7 @@ class ZmitiViewQuestionApp extends Component {
             questionContent:"",
             isHidden:false,
 			orderoperation:"",
+            workeorderinfo:[],
 
 
 		};
@@ -130,16 +131,26 @@ class ZmitiViewQuestionApp extends Component {
 							<div className="view-questionPane">
 								<div className="view-questionLists">
 									<ul>
-										<li>
-											<div className="view-faceIco">
-												<img src={this.state.usericon}/>
-											</div>
-											<div className="view-Infor">
-												<p>{this.username}</p>
-												<p>问题描述：{this.state.content}</p>
-												<p>{this.state.createtime}</p>
-											</div>
-										</li>
+                                        {
+
+                                            this.state.workeorderinfo.map((item,i)=> {
+
+                                            return(
+                                                <li key={i}>
+                                                    <div className="view-faceIco">
+                                                        <img src=""/>
+                                                    </div>
+                                                    <div className="view-Infor">
+                                                        <p>{i}</p>
+                                                        <p>问题描述：{item.content}</p>
+                                                        <p>{item.operatime}</p>
+                                                        <p><a href={item.attachment}> {item.attachment}</a></p>
+                                                    </div>
+                                                </li>
+                                            )
+                                            })
+                                        }
+
 
 										<li>
 											<div className="view-faceIco">
@@ -212,6 +223,7 @@ class ZmitiViewQuestionApp extends Component {
 	componentDidMount() {
     	//*获取指定工单的所有信息
         var workorderid=this.props.params.id;
+
         var s=this
 		$.ajax({
             url:window.baseUrl+'user/view_workorder',
@@ -230,7 +242,7 @@ class ZmitiViewQuestionApp extends Component {
                     s.filterStatus();
                 	s.state.workordertype=data.workinfo.workordertype;
                     s.getuserinfo();
-                    s.getworkorderlist();
+
                     s.getworkordername();
                     s.forceUpdate();
 
@@ -238,6 +250,7 @@ class ZmitiViewQuestionApp extends Component {
 			}
 
 		})
+        s.getworkorderlist();
 		
 
 	}
@@ -254,6 +267,8 @@ class ZmitiViewQuestionApp extends Component {
             success(data){
                 if(data.getret === 0){
                 	s.state.usericon=data.getuserinfo.portrait;
+                    s.forceUpdate();
+
                 }
                 else if(data.getret === -3){
                     message.error('您没有访问的权限,2秒后跳转到首页');
@@ -276,11 +291,12 @@ class ZmitiViewQuestionApp extends Component {
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                setworkorderid:s.state.workorderid,
+                setworkorderid:s.props.params.id,
             },
 			success(data){
                 if(data.getret === 0){
-					console.log(data);
+                    //data.workinfo.operainfo[0].key = s.props.randomString(8);
+                    s.state.workeorderinfo=data.workinfo.operainfo;
                 }
                 else if(data.getret === -3){
                     message.error('您没有访问的权限,2秒后跳转到首页');
@@ -333,8 +349,21 @@ class ZmitiViewQuestionApp extends Component {
                 filename: recoder.filename,
             },
             success(data){
-                s.state.uploadData.splice(index,1);
-                s.forceUpdate();
+                if (data.getret === 0) {
+                    message.success("成功删除！");
+                    s.state.uploadData.splice(index,1);
+                    s.forceUpdate();
+                }
+                else if (data.getret === -3) {
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(() => {
+                        location.href = '/';
+                    }, 2000)
+                }
+                else {
+                    message.error(data.getmsg);
+                }
+
 
             }
         })
@@ -471,6 +500,7 @@ class ZmitiViewQuestionApp extends Component {
     submitWorkorder(){
         var s=this;
         var isOk=0;
+
         if(s.state.questionContent=="") {
             s.setState({
                 questionError:true
@@ -483,6 +513,7 @@ class ZmitiViewQuestionApp extends Component {
         else {
             //判断是否有附件
 
+            //判断是否有附件
             var attachment:"";
             if(s.state.uploadData.length>0) {
                 attachment=s.state.uploadData[0].datainfourl;
@@ -490,11 +521,19 @@ class ZmitiViewQuestionApp extends Component {
                     attachment=attachment + "," +s.state.uploadData[i].datainfourl;
                 }
             }
+
+            //以下是存数组方式
+
+
+            /*if(s.state.uploadData.length>0) {
+                for(var i=0;i<s.state.uploadData.length;i++){
+                    s.state.attachmentarr.push(s.state.uploadData[i].datainfourl);
+                }
+            }
+            console.log(s.state.attachmentarr);*/
             //附件结束
             $.ajax({
-
                 url: window.baseUrl + 'user/opera_workorder',
-
                 data: {
                     userid: s.userid,
                     getusersigid: s.getusersigid,
@@ -502,15 +541,13 @@ class ZmitiViewQuestionApp extends Component {
                     setcontent: s.state.questionContent,
                     setattachment:attachment,
                     setoperatype:1,
-
                 },
                 success(data){
                     if (data.getret === 0) {
                         message.success("您已成功提交工单，我们会尽快处理");
                         setTimeout(() => {
-                            location.hash = '/commitworkorder/';
+                            location.hash = 'workorder/';
                         }, 2000)
-
                     }
                     else if (data.getret === -3) {
                         message.error('您没有访问的权限,2秒后跳转到首页');
@@ -519,7 +556,6 @@ class ZmitiViewQuestionApp extends Component {
                         }, 2000)
                     }
                     else {
-
                         message.error(data.getmsg);
                     }
                 }
