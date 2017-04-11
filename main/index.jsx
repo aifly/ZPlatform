@@ -18,6 +18,7 @@ import ZmitiCommitWorkOrderApp from './commitworkorder/index.jsx';
 import ZmitiWorkOrderQuestionApp from './workorderquestion/index.jsx';
 import ZmitiWxChatListApp from './wxchat/list.jsx';
 import ZmitiViewQuestionApp  from './viewquestion/index.jsx';
+import ZmitiViewUserInforApp  from './viewuserinfor/index.jsx';
 import ZmitiStatisticsListApp  from './statistics/index.jsx';
 
 import Obserable from './static/libs/obserable.js';
@@ -50,7 +51,8 @@ class App extends React.Component{
 				{path: '/workorder/', app: ZmitiWorkOrderApp},
 				{path: '/workorderquestion/(:id)', app: ZmitiWorkOrderQuestionApp},
 				{path: '/statistics/', app: ZmitiStatisticsListApp},
-				{path: '/viewquestion/(:id)', app: ZmitiViewQuestionApp}
+				{path: '/viewquestion/(:id)', app: ZmitiViewQuestionApp},
+				{path: '/viewuserinfor/(:id)', app: ZmitiViewUserInforApp}
 		];
 		return (
 			<Router history={hashHistory}>
