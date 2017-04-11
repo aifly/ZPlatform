@@ -138,10 +138,12 @@ class ZmitiViewQuestionApp extends Component {
                                             return(
                                                 <li key={i}>
                                                     <div className="view-faceIco">
-                                                        <img src=""/>
+                                                    	{item.workordertype === 0 && <img src={'./static/images/notify.jpg'}/>}
+                                                        {item.workordertype === 1 && <img src={this.state.usericon}/>}
                                                     </div>
                                                     <div className="view-Infor">
-                                                        <p>{i}</p>
+                                                        {item.workordertype === 0 && '管理员回复'}
+														{item.workordertype === 1 && this.username}
                                                         <p>问题描述：{item.content}</p>
                                                         <p>{item.operatime}</p>
                                                         <p><a href={item.attachment}> {item.attachment}</a></p>
@@ -154,7 +156,7 @@ class ZmitiViewQuestionApp extends Component {
 
 										<li>
 											<div className="view-faceIco">
-												<img src={this.state.usericon}/>
+												{this.state.usericon &&<img src={this.state.usericon}/>}
 											</div>
 											<div className="view-Infor">
 												<p>{this.username}</p>
@@ -268,7 +270,6 @@ class ZmitiViewQuestionApp extends Component {
                 if(data.getret === 0){
                 	s.state.usericon=data.getuserinfo.portrait;
                     s.forceUpdate();
-
                 }
                 else if(data.getret === -3){
                     message.error('您没有访问的权限,2秒后跳转到首页');
@@ -297,8 +298,10 @@ class ZmitiViewQuestionApp extends Component {
                 if(data.getret === 0){
                     //data.workinfo.operainfo[0].key = s.props.randomString(8);
                     s.state.workeorderinfo=data.workinfo.operainfo;
+                    console.log(s.state.workeorderinfo);
+                    s.forceUpdate();
                 }
-                else if(data.getret === -3){
+               /* else if(data.getret === -3){
                     message.error('您没有访问的权限,2秒后跳转到首页');
                     setTimeout(()=>{
                         location.href='/';
@@ -306,7 +309,7 @@ class ZmitiViewQuestionApp extends Component {
                 }
                 else{
                     loginOut(data.getmsg,window.loginUrl,false);
-                }
+                }*/
             }
 
 		})
@@ -534,6 +537,7 @@ class ZmitiViewQuestionApp extends Component {
             //附件结束
             $.ajax({
                 url: window.baseUrl + 'user/opera_workorder',
+                type:'post',
                 data: {
                     userid: s.userid,
                     getusersigid: s.getusersigid,
