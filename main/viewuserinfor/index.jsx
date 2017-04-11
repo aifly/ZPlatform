@@ -20,7 +20,7 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-class ZmitiViewQuestionApp extends Component {
+class ZmitiViewUserInforApp extends Component {
 	constructor(props) {
 		super(props);
 		
@@ -249,45 +249,7 @@ class ZmitiViewQuestionApp extends Component {
 
    
 
-	componentDidMount() {
-    	//*获取指定工单的所有信息
-        var workorderid=this.props.params.id;
-        var s=this
-		$.ajax({
-            url:window.baseUrl+'user/view_workorder',
-            data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                setworkorderid:workorderid,
-			},
-            success(data){
-                if(data.getret === 0){
-                	s.state.workorderid=data.workinfo.workorderid;
-                	s.state.content=data.workinfo.content;
-                	s.state.createtime=data.workinfo.createtime;
-                	s.state.status=data.workinfo.status;
-                    s.state.totalminu=data.workinfo.totalminu;
-                    s.filterStatus();
-                	s.state.workordertype=data.workinfo.workordertype;
-                    s.getuserinfo();
-                    s.forceUpdate();
 
-                }
-                else if(data.getret === -3){
-                    message.error('您没有访问的权限,2秒后跳转到首页');
-                    setTimeout(()=>{
-                        location.href='/';
-                    },2000)
-                }
-                else{
-                    loginOut(data.getmsg,window.loginUrl,false);
-                }
-			}
-
-		})
-		
-
-	}
 //获取用户信息
 	getuserinfo(){
     	var s=this;
@@ -316,32 +278,7 @@ class ZmitiViewQuestionApp extends Component {
 
 	}
 
-//获取工单状态
-	filterStatus(){
-    	var s = this;
-        switch (s.state.status) {
-            case 0:
-                s.state.statusName="已受理";
-                break;
-            case 1:
-                s.state.statusName="已处理";
-                break;
-            case 2:
-                s.state.statusName="已确认";
-                s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
-                break;
-            case 3:
-                s.state.statusName="已评价";
-                s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
-                break;
-            case 4:
-                s.state.statusName=<span className="red">请您反馈</span>;
-                s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
-                break;
-        }
 
-       // s.forceUpdate();
-	}
 
 
 	
@@ -362,5 +299,5 @@ class ZmitiViewQuestionApp extends Component {
 
 }
 
-export default ZmitiValidateUser(ZmitiViewQuestionApp);
+export default ZmitiValidateUser(ZmitiViewUserInforApp);
 /*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/
