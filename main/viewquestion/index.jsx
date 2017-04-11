@@ -146,7 +146,12 @@ class ZmitiViewQuestionApp extends Component {
 														{item.workordertype === 1 && this.username}
                                                         <p>问题描述：{item.content}</p>
                                                         <p>{item.operatime}</p>
-                                                        <p><a href={item.attachment}> {item.attachment}</a></p>
+                                                        <p>
+                                                        {item.attachment && item.attachment.split(',').map((atta,i)=>{
+                                                        	return <a href={atta} title={atta}> {/*atta.split('/').pop()*/}点击下载</a>
+                                                        })}
+                                                        
+                                                        </p>
                                                     </div>
                                                 </li>
                                             )
