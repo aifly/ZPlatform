@@ -46,34 +46,37 @@ ul {
   text-align: right; }
 
 .user-right-pannel {
-  background-color: #f1f1f1; }
+  background-color: #f1f1f1 !important; }
 
 .viewuserinfor-main {
-  padding: 50px; }
+  padding: 50px;
+  min-width: 1130px; }
 
 .viewuserinfor-nums {
   color: #6e7a90;
   width: 100%; }
   .viewuserinfor-nums ul {
-    width: 100%; }
-  .viewuserinfor-nums li {
-    width: 18%;
-    float: left;
-    margin-right: 2.2%; }
-  .viewuserinfor-nums li:last-child {
-    margin-right: 0;
-    float: right; }
+    width: 100%;
+    -moz-column-count: 5;
+    -webkit-column-count: 5;
+    column-count: 5;
+    -moz-column-gap: 30px;
+    -webkit-column-gap: 30px;
+    column-gap: 30px; }
   .viewuserinfor-nums .viewuserinfor-col {
     padding: 20px;
     box-sizing: border-box;
-    background-color: #ffffff; }
+    background-color: #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-webkit-border-radius: 5px;
+    border-radius: 5px; }
   .viewuserinfor-nums h5 {
     font-size: 18px;
     text-align: center;
     border-bottom: 1px #e4e6ea solid;
     padding: 0 0 15px 0;
     position: relative;
-    margin-bottom: 10px; }
+    margin-bottom: 20px; }
     .viewuserinfor-nums h5 div {
       position: absolute;
       left: 0;
@@ -90,7 +93,9 @@ ul {
     font-size: 14px;
     text-align: center; }
     .viewuserinfor-nums .viewnums span {
-      font-size: 36px; }
+      font-size: 36px;
+      margin-right: 5px;
+      font-family: "Hiragino Sans GB", Arial; }
     .viewuserinfor-nums .viewnums span.a1 {
       color: #b888e8; }
     .viewuserinfor-nums .viewnums span.a2 {
@@ -111,9 +116,9 @@ ul {
   .userFace img {
     width: 120px;
     height: 120px;
-    border-radius: 50%;
     -webkit-border-radius: 50%;
-    -ms-webkit-border-radius: 50%; }
+    -moz-webkit-border-radius: 50%;
+    border-radius: 50%; }
   .userFace .editUserIco {
     position: absolute;
     bottom: 0;
@@ -132,10 +137,20 @@ ul {
   color: #6e7a90;
   font-size: 18px; }
 .information .c2 {
-  color: #1eb6f8; }
+  color: #1eb6f8;
+  font-size: 12px;
+  background: url(../images/ico-write.png) no-repeat;
+  padding: 0 0 0 20px; }
 
 .size18 {
   font-size: 18px; }
+
+.icoEdit {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background: url(../images/ico-edit.png) no-repeat;
+  text-indent: -9999em; }
 
 .viewuserinfor-all {
   margin: 0 5% 0 0;
@@ -170,9 +185,9 @@ ul {
   line-height: 32px;
   font-size: 18px;
   text-align: center;
-  border-radius: 50%;
   -webkit-border-radius: 50%;
-  -ms-webkit-border-radius: 50%; }
+  -moz-webkit-border-radius: 50%;
+  border-radius: 50%; }
 
 .placeNum {
   position: relative;
@@ -192,6 +207,8 @@ ul {
     width: 70px;
     font-size: 12px;
     color: #94a1bb; }
+  .placeNum .ant-progress-inner {
+    background-color: #ffffff; }
 
 .icoA .placeIco {
   background-color: #5bb4d8; }
@@ -205,34 +222,39 @@ ul {
 
 .viewuserinfor-weixin ul li {
   margin: 10px 0 0 0; }
-  .viewuserinfor-weixin ul li input.ant-input {
-    border-color: #d9d9d9; }
+  .viewuserinfor-weixin ul li input.ipt-w1 {
+    border-color: #d9d9d9;
+    height: 32px; }
 
 .viewuserinfo-works {
   background-color: #ffffff;
-  padding: 15px 15px 20px 20px; }
+  padding: 15px 15px 20px 20px;
+  -webkit-border-radius: 5px;
+  -moz-webkit-border-radius: 5px;
+  border-radius: 5px; }
   .viewuserinfo-works .ant-col-6 {
     border-right: 1px #d6d6d6 solid; }
   .viewuserinfo-works .ant-col-6:last-child {
     border-right: none; }
   .viewuserinfo-works ul li {
-    padding-left: 20px;
-    line-height: 50px; }
+    padding: 15px 0 15px 20px;
+    line-height: 20px;
+    font-size: 16px; }
     .viewuserinfo-works ul li a {
       color: #000; }
     .viewuserinfo-works ul li .fontC3 {
       color: #37bd9c; }
       .viewuserinfo-works ul li .fontC3 a {
         color: #37bd9c; }
-    .viewuserinfo-works ul li .fontC1 {
-      color: #e9573e;
-      font-size: 16px; }
-      .viewuserinfo-works ul li .fontC1 a {
-        color: #e9573e; }
-    .viewuserinfo-works ul li .fontC2 {
-      color: #557cad; }
-      .viewuserinfo-works ul li .fontC2 a {
-        color: #557cad; }
+    .viewuserinfo-works ul li .tit-c1 {
+      color: #b8b8b8; }
+    .viewuserinfo-works ul li .tit-c2 {
+      visibility: hidden;
+      margin-left: 5px;
+      color: #37bd9c;
+      font-size: 12px; }
+      .viewuserinfo-works ul li .tit-c2 a {
+        color: #37bd9c; }
     .viewuserinfo-works ul li .rad {
       width: 10px;
       height: 10px;
@@ -243,6 +265,20 @@ ul {
       border-radius: 50%; }
   .viewuserinfo-works ul li:hover {
     background-color: #f1f4f7; }
+    .viewuserinfo-works ul li:hover .tit-c1 {
+      color: #e9573e; }
+    .viewuserinfo-works ul li:hover .tit-c2 {
+      visibility: visible; }
+  .viewuserinfo-works ul li.stateA .tit-c1 {
+    color: #000; }
+  .viewuserinfo-works ul li.stateA .tit-c2 {
+    font-size: 12px;
+    font-style: normal; }
+  .viewuserinfo-works ul li.stateA:hover .tit-c2 {
+    color: #557cad;
+    font-style: italic; }
+    .viewuserinfo-works ul li.stateA:hover .tit-c2 a {
+      color: #557cad; }
 
 .b1 {
   border-color: #e9573e; }

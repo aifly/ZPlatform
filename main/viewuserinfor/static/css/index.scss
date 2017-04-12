@@ -2,15 +2,23 @@ body{
   font-family:Microsoft Yahei;
   font-size:12px;
 }
-@mixin radius($v:3px){
-	border-radius: $v;
+@mixin radius($v:3px){	
 	-webkit-border-radius:$v;
-	-ms-webkit-border-radius:$v;
+	-moz-webkit-border-radius:$v;
+	border-radius: $v;
 }
-@mixin radius50(){
-	border-radius: 50%;
+@mixin radius50(){	
 	-webkit-border-radius:50%;
-	-ms-webkit-border-radius:50%;
+	-moz-webkit-border-radius:50%;
+	border-radius: 50%;
+}
+@mixin column($v:3,$k:20px){
+	-moz-column-count:$v; 
+	-webkit-column-count:$v; 
+	column-count:$v;
+	-moz-column-gap:$k;
+	-webkit-column-gap:$k;
+	column-gap:$k;
 }
 ul{
   list-style: none;
@@ -56,30 +64,24 @@ ul{
 	text-align:right;
 }
 .user-right-pannel{
-	background-color: #f1f1f1;
+	background-color: #f1f1f1!important;
 }
 .viewuserinfor-main{
 	padding:50px;
+	min-width:1130px;
 }
 .viewuserinfor-nums{
 	color:#6e7a90;
 	width:100%;
 	ul{
 		width:100%;
-	}
-	li{		
-		width:18%;
-		float:left;
-		margin-right:2.2%;		
-	}	
-	li:last-child{
-		margin-right:0;
-		float:right;
+		@include column(5,30px);
 	}
 	.viewuserinfor-col{
 		padding:20px;
 		box-sizing:border-box;
 		background-color: #ffffff;
+		@include radius(5px);
 	}
 	h5{		
 		font-size:18px;
@@ -87,7 +89,7 @@ ul{
 		border-bottom:1px #e4e6ea solid;
 		padding:0 0 15px 0;
 		position: relative;
-		margin-bottom:10px;
+		margin-bottom:20px;
 		div{
 			position: absolute;
 			left:0;
@@ -108,6 +110,8 @@ ul{
 		text-align: center;
 		span{			
 			font-size:36px;
+			margin-right:5px;
+			font-family: "Hiragino Sans GB", Arial;
 		}
 		span.a1{
 			color:#b888e8;
@@ -160,13 +164,20 @@ ul{
 	}
 	.c2{
 		color:#1eb6f8;
+		font-size:12px;
+		background:url(../images/ico-write.png) no-repeat;
+		padding:0 0 0 20px;
 	}
 }
 .size18{
 	font-size:18px;
 }
-.ant-col-14{
-	
+.icoEdit{
+	display:block;
+	width:20px;
+	height:20px;
+	background:url(../images/ico-edit.png) no-repeat;
+	text-indent: -9999em;
 }
 .viewuserinfor-all{
 	margin:0 5% 0 0;
@@ -225,6 +236,9 @@ ul{
 		font-size:12px;
 		color:#94a1bb;
 	}
+	.ant-progress-inner{
+		background-color: #ffffff;
+	}
 }
 .icoA {
 	.placeIco{
@@ -246,8 +260,9 @@ ul{
 	ul{
 		li{
 			margin:10px 0 0 0;
-			input.ant-input{
+			input.ipt-w1{
 				border-color:#d9d9d9;
+				height:32px;
 			}
 		}
 	}
@@ -255,6 +270,7 @@ ul{
 .viewuserinfo-works{
 	background-color: #ffffff;
 	padding:15px 15px 20px 20px;
+	@include radius(5px);
 	.ant-col-6{
 		border-right: 1px #d6d6d6 solid;
 	}
@@ -263,8 +279,9 @@ ul{
 	}
 	ul{
 		li{
-			padding-left: 20px;
-			line-height: 50px;
+			padding:15px 0 15px 20px;
+			line-height: 20px;
+			font-size:16px;
 			a{
 				color:#000;
 			}
@@ -274,17 +291,16 @@ ul{
 					color:#37bd9c;
 				}
 			}
-			.fontC1{
-				color:#e9573e;
-				font-size:16px;
-				a{
-					color:#e9573e;
-				}
+			.tit-c1{
+				color:#b8b8b8;
 			}
-			.fontC2{
-				color:#557cad;
+			.tit-c2{
+				visibility:hidden;
+				margin-left:5px;
+				color:#37bd9c;
+				font-size:12px;				
 				a{
-					color:#557cad;
+					color:#37bd9c;
 				}
 			}
 			.rad{
@@ -299,6 +315,31 @@ ul{
 		}
 		li:hover{
 			background-color: #f1f4f7;
+			.tit-c1{
+				color:#e9573e;
+			}
+			.tit-c2{
+				visibility:visible;
+			}
+		}
+		li.stateA{
+			.tit-c1{
+				color:#000;
+			}
+			.tit-c2{
+				font-size:12px;
+				font-style:normal;
+			}
+		}
+		li.stateA:hover{
+			
+			.tit-c2{
+				color:#557cad;
+				font-style:italic;								
+				a{
+					color:#557cad;
+				}
+			}
 		}
 	}
 }
