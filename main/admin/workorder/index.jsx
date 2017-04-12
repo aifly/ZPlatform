@@ -146,7 +146,8 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
       
       var params = {
       	getusersigid:this.getusersigid,
-      	userid:this.userid
+      	userid:this.userid,
+      	setisadmin:1
       }
       let s = this;
 
