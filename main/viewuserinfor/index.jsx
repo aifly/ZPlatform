@@ -65,7 +65,7 @@ class ZmitiViewUserInforApp extends Component {
 							  	<div className="userFace">
 							  		<img src='./static/images/userinfor-face.jpg'/>
 							  		<div className="editUserIco">
-							  			<Icon type="edit" />
+							  			<a href="#" className="icoEdit">修改</a>
 							  		</div>
 							  	</div>
 							  	<div className="companyName">麟腾传媒文化有限公司</div>
@@ -73,13 +73,13 @@ class ZmitiViewUserInforApp extends Component {
 							  	<div className="information">
 								  	<ul>
 								  		<li>
-								  			<label>公司负责人：</label>bmyuan&nbsp;&nbsp;<a className="c2" href="#"><Icon type="edit" />修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<label>负责人电话：</label>13910904709
+								  			<label>公司负责人：</label>bmyuan&nbsp;&nbsp;&nbsp;&nbsp;<a className="c2" href="#">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<label>负责人电话：</label>13910904709
 								  		</li>
 								  		<li>
 								  			<label>营业注册号：</label>12334567&nbsp;&nbsp;&nbsp;&nbsp;<Button className="btn-c1">查看扫描件</Button>&nbsp;<Button className="btn-c1">查看合同</Button>
 								  		</li>
 								  		<li>
-								  			<label>公司地址：</label>北京市宣武门西大街129号金隅大厦&nbsp;&nbsp;<a className="c2" href="#"><Icon type="edit" />修改</a>
+								  			<label>公司地址：</label>北京市宣武门西大街129号金隅大厦&nbsp;&nbsp;&nbsp;&nbsp;<a className="c2" href="#">修改</a>
 								  		</li>
 								  	</ul>
 							  	</div>
@@ -112,8 +112,8 @@ class ZmitiViewUserInforApp extends Component {
 						  	<div className="size18">微信公众号设置</div>
 						  	<div className="viewuserinfor-weixin">
 						  		<ul>
-						  			<li><Input type='text' placeholder='appid'/></li>
-						  			<li><Input type='text' placeholder='appsecret'/></li>
+						  			<li><Input type='text' className="ipt-w1" placeholder='appid'/></li>
+						  			<li><Input type='text' className="ipt-w1" placeholder='appsecret'/></li>
 						  		</ul>
 						  	</div>
 						  </Col>
@@ -163,16 +163,18 @@ class ZmitiViewUserInforApp extends Component {
 								<ul>
 									<li>
 										<span className="rad b1"></span>
-										<span className="fontC1"><a href="#">移动微场景</a></span>
-										<a className="fontC2" href="#">申请使用</a>
+										<span className="tit-c1">移动微场景</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
 									<li>
-										<span className="rad b2"></span>
-										<a href="#">微信问答</a>
+										<span className="rad b2"></span>		
+										<span className="tit-c1">微信问答</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
 									<li>
 										<span className="rad b3"></span>
-										<a href="#">交互式富图片</a>
+										<span className="tit-c1">交互式富图片</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
 								</ul>
 							</Col>
@@ -180,15 +182,18 @@ class ZmitiViewUserInforApp extends Component {
 								<ul>
 									<li>
 										<span className="rad b4"></span>
-										<span><a href="#">企业项目管理</a></span>
+										<span className="tit-c1">企业项目管理</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
 									<li>
 										<span className="rad b5"></span>
-										<a href="#">设计图讨论工具</a>
+										<span className="tit-c1">设计图讨论工具</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
 									<li>
 										<span className="rad b6"></span>
-										<a href="#">页面服务</a>
+										<span className="tit-c1">页面服务</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
 								</ul>
 							</Col>
@@ -196,15 +201,18 @@ class ZmitiViewUserInforApp extends Component {
 								<ul>
 									<li>
 										<span className="rad b7"></span>
-										<span><a href="#">互联网整体方案服务</a></span>
+										<span className="tit-c1">互联网整体方案服务</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
-									<li>
-										<span className="rad b8"></span>
-										<a href="#">设计类服务</a><em><a className="fontC3" href="#">已使用   134个作品</a></em>
+									<li className="stateA">
+										<span className="rad b8"></span>										
+										<span className="tit-c1">设计类服务</span>
+										<span className="tit-c2"><a href="#">已使用134个作品</a></span>
 									</li>
 									<li>
 										<span className="rad b9"></span>
-										<a href="#">交互方案服务</a>
+										<span className="tit-c1">交互方案服务</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
 								</ul>
 							</Col>
@@ -212,15 +220,18 @@ class ZmitiViewUserInforApp extends Component {
 								<ul>
 									<li>
 										<span className="rad b10"></span>
-										<a href="#">会员服务问答</a>
+										<span className="tit-c1">会员服务问答</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
 									<li>
 										<span className="rad b11"></span>
-										<a href="#">非会员服务问答</a>
+										<span className="tit-c1">非会员服务问答</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
 									<li>
 										<span className="rad b12"></span>
-										<a href="#">方案书服务</a>
+										<span className="tit-c1">方案书服务</span>
+										<span className="tit-c2"><a href="#">申请使用</a></span>
 									</li>
 								</ul>
 							</Col>
