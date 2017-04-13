@@ -111,7 +111,7 @@ class MainUI extends React.Component {
                 }
             ];
             companyMenu = [1].map((it,i)=>{
-                return <SubMenu key="sub2" title={<span><Icon type="user" style={{marginRight:'22px'}} /><span>用户中心</span></span>}>
+                return <SubMenu key="sub2" title={<span><Icon type="user" style={{marginRight:'22px'}} /><span>企业中心</span></span>}>
                             {this.userMenuConfig.map(item=>{
                                 return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
                             })}
