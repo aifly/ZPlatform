@@ -142,8 +142,8 @@ class ZmitiViewUserInforApp extends Component {
 							<div className="size18">微信公众号设置</div>
 							<div className="viewuserinfor-weixin">
 								<ul>
-									<li><Input type='text' className="ipt-w1" placeholder='appid'/></li>
-									<li><Input type='text' className="ipt-w1" placeholder='appsecret'/></li>
+									<li><Input addonBefore='AppId' type='text' value={this.state.userData.appid} onChange={(e)=>{this.state.userData.appid=e.target.value;this.forceUpdate()}} placeholder='appid'/></li>
+									<li><Input addonBefore='appsecret' type='text' placeholder='appsecret' value={this.state.userData.appsecret} onChange={(e)=>{this.state.userData.appsecret=e.target.value;this.forceUpdate()}}/></li>
 								</ul>
 							</div>
 						</Col>
