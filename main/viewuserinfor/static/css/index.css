@@ -45,12 +45,10 @@ ul {
 .text-right {
   text-align: right; }
 
-.user-right-pannel {
-  background-color: #f1f1f1 !important; }
-
 .viewuserinfor-main {
   padding: 50px;
-  min-width: 1130px; }
+  min-width: 1130px;
+  overflow: auto; }
 
 .viewuserinfor-nums {
   color: #6e7a90;
