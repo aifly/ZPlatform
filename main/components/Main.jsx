@@ -77,7 +77,7 @@ class MainUI extends React.Component {
 
         var hash = window.location.hash;
         var defaultOpenKeys = 'sub1';
-        if(hash.indexOf('userdepartment')>-1||hash.indexOf('project')>-1){
+        if(hash.indexOf('userdepartment')>-1||hash.indexOf('project')>-1||hash.indexOf('viewuserinfor')>-1){
             defaultOpenKeys = 'sub2';
         }else if(hash.indexOf('personalAcc')>-1 || hash.indexOf('renewal')>-1){
             defaultOpenKeys = 'sub3';
@@ -87,6 +87,13 @@ class MainUI extends React.Component {
 
         if(this.state.isCompany && this.usertypesign === window.Role.COMPANYADMINUSER){//this.usertypesign === 5的时候,才是公司管理员.
             this.userMenuConfig = [//用户中心下的菜单
+                {
+                    "linkTo":"/viewuserinfor/",
+                    "key":"viewuserinfor",
+                    "title":"企业信息",
+                    "isIcon":true,
+                    "type":"team",
+                },
                 {
                     "linkTo":"/userdepartment/",
                     "key":"userdepartment",
