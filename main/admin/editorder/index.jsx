@@ -7,7 +7,7 @@ import MainUI from '../components/main.jsx';
 import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 const Step = Steps.Step;
 const { Header, Content } = Layout;
- class ZmitiViewOrderApp extends Component {
+ class ZmitiEditOrderApp extends Component {
 	constructor(props) {
 		super(props);
 
@@ -43,7 +43,7 @@ const { Header, Content } = Layout;
 			tags:['处理中','已处理'],
 			type:'vieworder',
 			title:title,
-			selectedIndex:1,
+			selectedIndex:0,
 			rightType:"custom",
             customRightComponent:<div className="zmiti-vieworder-main-ui">
             	<div className="pad-10">
@@ -54,7 +54,7 @@ const { Header, Content } = Layout;
 					<div className="zmiti-workorder-line"></div>
 					<div className="hr10"></div>
 					<div className="hr10"></div>
-					<Steps current={3}>
+					<Steps current={this.state.status*1}>
 						<Step title="已受理"  icon={<Icon type="user"/>} />
 						<Step title="已处理"  icon={<Icon type="solution"/>}/>
 						<Step title="已确认"  icon={<Icon type="save"/>}/>
@@ -89,6 +89,19 @@ const { Header, Content } = Layout;
 							<div className="view-questionPane">
 								<div className="view-questionLists">
 									<ul>
+                                        <li>
+                                            <div className="view-faceIco">
+                                                <img src='./static/images/header.png' />
+                                            </div>
+                                            <div className="view-Infor">
+                                                <div>******</div>
+                                                <div>问题描述：{this.state.content}</div>
+                                                <div>                                                
+                                                    
+                                                </div>
+                                                <div>{this.state.createtime}</div>
+                                            </div>
+                                        </li>
 										{
 
                                             this.state.workeorderinfo.map((item,i)=> {
@@ -101,12 +114,12 @@ const { Header, Content } = Layout;
                                                     </div>
                                                     <div className="view-Infor">
                                                         {item.workordertype === 0 && '管理员回复'}
-														{item.workordertype === 1 && this.username}
+														{item.workordertype === 1 && this.userid}
                                                         <p>问题描述：{item.content}</p>
                                                         <p>{item.operatime}</p>
                                                         <p>
                                                         {item.attachment && item.attachment.split(',').map((atta,i)=>{
-                                                        	return <a href={atta} title={atta}> {/*atta.split('/').pop()*/}点击下载</a>
+                                                        	return <a key={i} href={atta} title={atta}> {/*atta.split('/').pop()*/}点击下载</a>
                                                         })}
                                                         
                                                         </p>
@@ -115,48 +128,35 @@ const { Header, Content } = Layout;
                                             )
                                             })
                                         }
-										<li>
-                                            <div className="view-faceIco">
-                                            	<img src='./static/images/header.png' />
-                                            </div>
-                                            <div className="view-Infor">
-                                                <div>{this.username}</div>
-                                                <div>问题描述：{this.state.content}</div>
-                                                <div>                                                
-                                                	
-                                                </div>
-                                                <div>{this.state.createtime}</div>
-                                            </div>
-                                        </li>
+										
                                         
-                                        <li>
-                                            <div className="view-faceIco">
-                                            	<img src='./static/images/header.png' />
-                                            </div>
-                                            <div className="view-Infor">
-                                                songxian
-                                                <div>用户确认工单已解决! </div>
-                                                <div>2017-04-06 10:54:31</div>
-                                            </div>
-                                        </li>
-                                        <li className="questionFinish">
-                                            <div className="view-faceIco">
-                                            	<img src='./static/images/header.png' />
-                                            </div>
-                                            <div className="view-Infor">
-                                                songxian
-                                                <div>问题是否解决 : 已解决</div>                                                
-												<div>评价内容 : 虽然不是自己想要的结果，但是回复很及时。</div>
-												<div>2017-04-06 10:54:36</div>
-                                            </div>
-                                        </li>
+                                        
 									</ul>
 								</div>
 							</div>
 						</Content>
 					</Layout>
+					<div className="hr10"></div>
+					<Layout className="workorder-table ">
+						<Header>回复</Header>
+						<Content>
+							<div className="view-questionPane">
+								<div className="view-questionForm">
+									<Form>										
+										<Input type="textarea" placeholder="此处限定5000字符" className="workorderquestion-inputContent" />
+										<div className="hr10"></div>
 
-
+										<div>
+											<Button
+												type="primary"
+												htmlType="submit"
+											>提交</Button>
+										</div>
+									</Form>
+								</div>
+							</div>
+						</Content>
+					</Layout>
 				</div>
 		</div>
 			
@@ -228,8 +228,7 @@ const { Header, Content } = Layout;
                 getusersigid:s.getusersigid,
                 setuserid:s.userid,
             },
-            success(data){
-            	console.log(data,"userinfor");
+            success(data){            	
                 if(data.getret === 0){
                 	s.state.usericon=data.getuserinfo.portrait;
                     s.forceUpdate();
@@ -254,11 +253,12 @@ const { Header, Content } = Layout;
             url:window.baseUrl+'user/view_workorder',
             data:{
                 userid:s.userid,
+                userusername:s.userusername,
                 getusersigid:s.getusersigid,
                 setworkorderid:s.props.params.id,
             },
 			success(data){
-				console.log(data)
+				console.log(data,"123")
                 if(data.getret === 0){
                     //data.workinfo.operainfo[0].key = s.props.randomString(8);
                     s.state.workeorderinfo=data.workinfo.operainfo;
@@ -409,5 +409,5 @@ const { Header, Content } = Layout;
 	}
 	
 }
-export default ZmitiValidateUser(ZmitiViewOrderApp);
+export default ZmitiValidateUser(ZmitiEditOrderApp);
 /*ReactDOM.render(<ZmitiUserApp></ZmitiUserApp>,document.getElementById('fly-main'));*/

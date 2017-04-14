@@ -12,8 +12,9 @@ import ZmitiCompanyApp from './company/index.jsx';
 import ZmitiSystemApp from './system/index.jsx';
 import ZmitiProductApp from './product/index.jsx';
 import ZmitiWorkOrderApp from './workorder/index.jsx';
+import ZmitiEditOrderApp from './editorder/index.jsx';
 import ZmitiViewOrderApp from './vieworder/index.jsx';
-
+import ZmitiListOrderApp from './listorder/index.jsx';
 class App extends React.Component{
     constructor(args) {
       super(...args);
@@ -28,7 +29,9 @@ class App extends React.Component{
 				{path:'/system/:title',app:ZmitiSystemApp},
 				{path:'/product/',app:ZmitiProductApp},
 				{path:'/workorder/:title',app:ZmitiWorkOrderApp},
-				{path:'/vieworder/:title',app:ZmitiViewOrderApp}
+				{path:'/editorder/(:id)',app:ZmitiEditOrderApp},
+				{path:'/vieworder/(:id)',app:ZmitiViewOrderApp},
+				{path:'/listorder/:title',app:ZmitiListOrderApp}
 			];
     return (
         <Router history={hashHistory} >
