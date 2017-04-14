@@ -188,8 +188,7 @@ class ZmitiViewUserInforApp extends Component {
 				<div className="hr40"></div>
 				<div className="viewuserinfo-works">
 					<div className="tit-a1">产品与服务</div>
-					<Row gutter={16}>
-						<Col span={6} >
+					
 							<ul>
 								<li>
 									<span className="rad b1"></span>
@@ -206,10 +205,7 @@ class ZmitiViewUserInforApp extends Component {
 									<span className="tit-c1">交互式富图片</span>
 									<span className="tit-c2"><a href="#">申请使用</a></span>
 								</li>
-							</ul>
-						</Col>
-						<Col span={6} >
-							<ul>
+							
 								<li>
 									<span className="rad b4"></span>
 									<span className="tit-c1">企业项目管理</span>
@@ -225,10 +221,7 @@ class ZmitiViewUserInforApp extends Component {
 									<span className="tit-c1">页面服务</span>
 									<span className="tit-c2"><a href="#">申请使用</a></span>
 								</li>
-							</ul>
-						</Col>
-						<Col span={6} >
-							<ul>
+							
 								<li>
 									<span className="rad b7"></span>
 									<span className="tit-c1">互联网整体方案服务</span>
@@ -244,10 +237,7 @@ class ZmitiViewUserInforApp extends Component {
 									<span className="tit-c1">交互方案服务</span>
 									<span className="tit-c2"><a href="#">申请使用</a></span>
 								</li>
-							</ul>
-						</Col>
-						<Col span={6} >
-							<ul>
+							
 								<li>
 									<span className="rad b10"></span>
 									<span className="tit-c1">会员服务问答</span>
@@ -264,8 +254,7 @@ class ZmitiViewUserInforApp extends Component {
 									<span className="tit-c2"><a href="#">申请使用</a></span>
 								</li>
 							</ul>
-						</Col>
-					</Row>
+						
 				</div>
 			</div>
 

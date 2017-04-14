@@ -48,7 +48,8 @@ ul {
 .viewuserinfor-main {
   padding: 50px;
   min-width: 1130px;
-  overflow: auto; }
+  overflow: auto;
+  background-color: #f1f1f1; }
 
 .viewuserinfor-nums {
   color: #6e7a90;
@@ -230,53 +231,56 @@ ul {
   -webkit-border-radius: 5px;
   -moz-webkit-border-radius: 5px;
   border-radius: 5px; }
-  .viewuserinfo-works .ant-col-6 {
-    border-right: 1px #d6d6d6 solid; }
-  .viewuserinfo-works .ant-col-6:last-child {
-    border-right: none; }
-  .viewuserinfo-works ul li {
-    padding: 15px 0 15px 20px;
-    line-height: 20px;
-    font-size: 16px; }
-    .viewuserinfo-works ul li a {
+  .viewuserinfo-works ul {
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
+    -moz-column-gap: 30px;
+    -webkit-column-gap: 30px;
+    column-gap: 30px; }
+    .viewuserinfo-works ul li {
+      padding: 15px 0 15px 20px;
+      line-height: 20px;
+      font-size: 16px; }
+      .viewuserinfo-works ul li a {
+        color: #000; }
+      .viewuserinfo-works ul li .fontC3 {
+        color: #37bd9c; }
+        .viewuserinfo-works ul li .fontC3 a {
+          color: #37bd9c; }
+      .viewuserinfo-works ul li .tit-c1 {
+        color: #b8b8b8; }
+      .viewuserinfo-works ul li .tit-c2 {
+        visibility: hidden;
+        margin-left: 5px;
+        color: #37bd9c;
+        font-size: 12px; }
+        .viewuserinfo-works ul li .tit-c2 a {
+          color: #37bd9c; }
+      .viewuserinfo-works ul li .rad {
+        width: 10px;
+        height: 10px;
+        display: inline-block;
+        margin-right: 5px;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 50%; }
+    .viewuserinfo-works ul li:hover {
+      background-color: #f1f4f7; }
+      .viewuserinfo-works ul li:hover .tit-c1 {
+        color: #e9573e; }
+      .viewuserinfo-works ul li:hover .tit-c2 {
+        visibility: visible; }
+    .viewuserinfo-works ul li.stateA .tit-c1 {
       color: #000; }
-    .viewuserinfo-works ul li .fontC3 {
-      color: #37bd9c; }
-      .viewuserinfo-works ul li .fontC3 a {
-        color: #37bd9c; }
-    .viewuserinfo-works ul li .tit-c1 {
-      color: #b8b8b8; }
-    .viewuserinfo-works ul li .tit-c2 {
-      visibility: hidden;
-      margin-left: 5px;
-      color: #37bd9c;
-      font-size: 12px; }
-      .viewuserinfo-works ul li .tit-c2 a {
-        color: #37bd9c; }
-    .viewuserinfo-works ul li .rad {
-      width: 10px;
-      height: 10px;
-      display: inline-block;
-      margin-right: 5px;
-      border-width: 1px;
-      border-style: solid;
-      border-radius: 50%; }
-  .viewuserinfo-works ul li:hover {
-    background-color: #f1f4f7; }
-    .viewuserinfo-works ul li:hover .tit-c1 {
-      color: #e9573e; }
-    .viewuserinfo-works ul li:hover .tit-c2 {
-      visibility: visible; }
-  .viewuserinfo-works ul li.stateA .tit-c1 {
-    color: #000; }
-  .viewuserinfo-works ul li.stateA .tit-c2 {
-    font-size: 12px;
-    font-style: normal; }
-  .viewuserinfo-works ul li.stateA:hover .tit-c2 {
-    color: #557cad;
-    font-style: italic; }
-    .viewuserinfo-works ul li.stateA:hover .tit-c2 a {
-      color: #557cad; }
+    .viewuserinfo-works ul li.stateA .tit-c2 {
+      font-size: 12px;
+      font-style: normal; }
+    .viewuserinfo-works ul li.stateA:hover .tit-c2 {
+      color: #557cad;
+      font-style: italic; }
+      .viewuserinfo-works ul li.stateA:hover .tit-c2 a {
+        color: #557cad; }
 
 .b1 {
   border-color: #e9573e; }

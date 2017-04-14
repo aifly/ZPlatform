@@ -68,6 +68,7 @@ ul{
 	padding:50px;
 	min-width:1130px;
 	overflow: auto;
+	background-color: #f1f1f1;
 }
 .viewuserinfor-nums{
 	color:#6e7a90;
@@ -270,13 +271,8 @@ ul{
 	background-color: #ffffff;
 	padding:15px 15px 20px 20px;
 	@include radius(5px);
-	.ant-col-6{
-		border-right: 1px #d6d6d6 solid;
-	}
-	.ant-col-6:last-child{
-		border-right: none;
-	}
 	ul{
+		@include column(4,30px);
 		li{
 			padding:15px 0 15px 20px;
 			line-height: 20px;
