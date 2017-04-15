@@ -33,7 +33,7 @@ export default class ZmitiUserList extends Component {
 				break;
 			case "listorder":
 				userList = this.props.userList.filter(item=>{
-					return item.status === this.state.current;//isover : 0 正式账号，1为试用账户
+					return item.status === this.state.current;//status : 0 处理中，1已处理
 				});	
 				break;
 			case 'workorder':
