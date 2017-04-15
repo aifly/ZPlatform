@@ -135,6 +135,14 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 		validateUser(()=>{loginOut(undefined,undefined,false);},this);
 
 	}
+	changeAccount(i){
+        if(i*1===0){
+            window.location.hash='#/listorder/工单管理';
+        }else if(i*1===1){
+            window.location.hash='#/listorder/工单管理';
+        }
+
+    }
 	componentDidMount() {
 		/*  var {userid,getusersigid} = this.props.params;
 		  this.getusersigid = this.getusersigid = getusersigid;
