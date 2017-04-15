@@ -54,8 +54,8 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 			key: 'workordertype',
 		}, {
 			title: '工单状态',
-			dataIndex: 'status',
-			key: 'status',
+			dataIndex: 'statusName',
+			key: 'statusName',
 		}, {
 			title: '创建时间',
 			dataIndex: 'createtime',
@@ -83,7 +83,7 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 			changeAccount:this.changeAccount,
 			mainHeight:this.state.mainHeight,
 			tags:['处理中','已处理'],
-			type:'workorder',
+			type:'listorder',
 			selectedIndex:0,
 			title,
 			keyDown:(value)=>{
@@ -161,9 +161,28 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
       		
       		if(data.getret === 0){
       			console.log(data.workorderinfo);
+      			data.workorderinfo.map((item,i)=>{
+				 	if(item.status === 0){
+				 		item.status=0;
+				 	}else{
+				 		item.status=1;
+				 	}
+				 	s.state.userList.push(item);
+				 });
+      			s.state.userList.forEach((item,i)=>{
+      				switch(item.status){
+      					case 0:
+      					item.statusName = '处理中';
+      					break;
+      					case 1:
+      					item.statusName = '已处理';
+      					break;
+      				}
+      			})
       			s.setState({
-      				userList:data.workorderinfo
+      				userList:s.state.userList
       			});
+      			s.forceUpdate();
       		}
       		else if(data.getret === -3){
       			message.error('您没有访问的权限,2秒后跳转到首页');
