@@ -77,7 +77,7 @@ const { Header, Content } = Layout;
 									<span className="questionTitle"> 状态：</span>{this.state.statusName}
 								</Col>
 								<Col span={6}>
-										<div className="text-right"><a href="javasctip:void(0);" onClick={this.getorderoperation.bind(this)} >{this.state.orderoperation}</a></div>
+										<div className="text-right"><a href="javasctip:void(0);" onClick={this.getorderoperation.bind(this)} >删除工单</a></div>
 								</Col>
 							</Row>
 						</div>
@@ -89,6 +89,19 @@ const { Header, Content } = Layout;
 							<div className="view-questionPane">
 								<div className="view-questionLists">
 									<ul>
+										<li>
+                                            <div className="view-faceIco">
+                                            	<img src='./static/images/header.png' />
+                                            </div>
+                                            <div className="view-Infor">
+                                                <div>{this.username}</div>
+                                                <div>问题描述：{this.state.content}</div>
+                                                <div>                                                
+                                                	
+                                                </div>
+                                                <div>{this.state.createtime}</div>
+                                            </div>
+                                        </li>
 										{
 
                                             this.state.workeorderinfo.map((item,i)=> {
@@ -115,41 +128,9 @@ const { Header, Content } = Layout;
                                             )
                                             })
                                         }
-										<li>
-                                            <div className="view-faceIco">
-                                            	<img src='./static/images/header.png' />
-                                            </div>
-                                            <div className="view-Infor">
-                                                <div>{this.username}</div>
-                                                <div>问题描述：{this.state.content}</div>
-                                                <div>                                                
-                                                	
-                                                </div>
-                                                <div>{this.state.createtime}</div>
-                                            </div>
-                                        </li>
+										
                                         
-                                        <li>
-                                            <div className="view-faceIco">
-                                            	<img src='./static/images/header.png' />
-                                            </div>
-                                            <div className="view-Infor">
-                                                songxian
-                                                <div>用户确认工单已解决! </div>
-                                                <div>2017-04-06 10:54:31</div>
-                                            </div>
-                                        </li>
-                                        <li className="questionFinish">
-                                            <div className="view-faceIco">
-                                            	<img src='./static/images/header.png' />
-                                            </div>
-                                            <div className="view-Infor">
-                                                songxian
-                                                <div>问题是否解决 : 已解决</div>                                                
-												<div>评价内容 : 虽然不是自己想要的结果，但是回复很及时。</div>
-												<div>2017-04-06 10:54:36</div>
-                                            </div>
-                                        </li>
+                                        
 									</ul>
 								</div>
 							</div>
@@ -329,15 +310,7 @@ const { Header, Content } = Layout;
                     isHidden:true
                 });
                 s.state.orderoperation="删除工单";
-                break;
-            case 4:
-                s.state.statusName=<span className="red">请您反馈</span>;
-                s.state.getTimestr="总计花时：" + s.state.totalminu + "分钟!";
-                s.setState({
-                    isHidden:true
-                });
-                s.state.orderoperation="关闭工单";
-                break;
+                break;            
         }
 
        // s.forceUpdate();

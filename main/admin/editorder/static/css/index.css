@@ -135,6 +135,8 @@ ul, ol, li {
   .view-questionLists li.messageDiv {
     color: #000;
     padding-left: 10px; }
+    .view-questionLists li.messageDiv .view-faceIco {
+      display: none; }
   .view-questionLists li.questionFinish {
     background-color: #eafbff; }
 

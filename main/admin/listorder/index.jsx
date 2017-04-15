@@ -87,12 +87,14 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 			selectedIndex:0,
 			title,
 			keyDown:(value)=>{
+
           clearTimeout(this.keyupTimer);
           this.defautlUserList === undefined && (this.defautlUserList = this.state.userList.concat([]));
           this.keyupTimer = setTimeout(()=>{
             var userlists = this.defautlUserList;
             var condition = 'workorderid';
             this.state.userList  = userlists.filter(user=>{
+
               switch(this.condition*1){
                 case 0://提问内容
                   condition = 'workorderid';
@@ -116,7 +118,8 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 
 		}
 
-		console.log(props.userList)
+		//console.log(props.userList)
+		
 
     //console.log(this.state.mainHeight);
 		return (
@@ -150,14 +153,14 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
       let s = this;
 
       $.ajax({
-      	type:"POST",
+      	type:"GET",
       	url:window.baseUrl+"/user/get_workorder/",
       	data:params,
       	success(data){
-      		console.log(data);
+      		
       		
       		if(data.getret === 0){
-
+      			console.log(data.workorderinfo);
       			s.setState({
       				userList:data.workorderinfo
       			});

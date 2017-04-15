@@ -261,6 +261,9 @@ ul,ol,li{
 	li.messageDiv{
 		color:#000;
 		padding-left:10px;
+		.view-faceIco{
+			display: none;
+		}
 	}
 	li.questionFinish{
 		background-color: #eafbff;
