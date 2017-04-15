@@ -37,17 +37,9 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 			dataIndex: 'username',
 			key: 'username',
 		}, {
-			title: '工单标题',
-			dataIndex: 'title',
-			key: 'title',
-		}, {
 			title: '工单内容',
 			dataIndex: 'content',
 			key: 'content',
-		}, {
-			title: '处理人',
-			dataIndex: 'adminname',
-			key: 'adminname',
 		}, {
 			title: '工单类型',
 			dataIndex: 'workordertype',
@@ -61,10 +53,6 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 			dataIndex: 'createtime',
 			key: 'createtime',
 			sorter: (a, b) => a.key - b.key
-		}, {
-			title: '修改时间',
-			dataIndex: 'operatime',
-			key: 'operatime',
 		}];
 		var columns1 = columns.concat( { 
 			title: '操作', 
@@ -186,6 +174,24 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
       					item.statusName = '已处理';
       					break;
       				}
+      				switch(item.workordertype){
+      					case 0:
+      					item.workordertype = '财务类';
+      					break;
+      					case 1:
+      					item.workordertype = '会员帐号类';
+      					break;
+      					case 2:
+      					item.workordertype = '定制服务类';
+      					break;
+      					case 3:
+      					item.workordertype = '产品技术类';
+      					break;
+      					case 4:
+      					item.workordertype = '其它类';
+      					break;
+      				}
+
       			})
       			s.setState({
       				userList:s.state.userList
