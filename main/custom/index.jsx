@@ -3,10 +3,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm   } from '../commoncomponent/common.jsx';
-const RadioGroup = Radio.Group;
-let FormItem  = Form.Item;
-let Option = Select.Option;
+import { message,Tooltip , Row, Col  } from '../commoncomponent/common.jsx';
 
 import { Link } from 'react-router';
 import MainUI from '../components/Main.jsx';
@@ -65,10 +62,26 @@ class ZmitiCustomApp extends Component {
 			columns:[columns1,columns2],
 			userid:this.userid,
 			changeAccount:this.changeAccount,
-			type:'custom',
+			type:'custom-1',
 			tags:['共享作品','我的作品'],
 			mainHeight:this.state.mainHeight,
 			title:title,
+			selectedIndex: 0,
+			rightType: "custom",
+			customRightComponent:<section className='custom-list-C'>
+				<ul className='custom-list'>
+					
+					{this.state.userList.map((item,i)=>{
+						return <li key={i}>
+							<div className='custom-item-shareimg' style={{background:'url('+(item.thumbnail|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
+							<div className='custom-item-name'>{item.customname}</div>
+							<Tooltip placement="top" title={'当前作品浏览量： '+item.totalpv}>
+								<div className='custom-item-view'><a href={item.viewpath} target='_blank'><img src='./static/images/eye.png'/></a></div>
+							</Tooltip>
+						</li>
+					})}
+				</ul>
+			</section>
 		}
 
 		const formItemLayout = {
@@ -77,7 +90,7 @@ class ZmitiCustomApp extends Component {
          };
 
   
-		var mainComponent = <div>
+		var mainComponent = <div className='custom-main-ui'>
 			<ZmitiUserList {...props}></ZmitiUserList>
 			
 		</div>;
