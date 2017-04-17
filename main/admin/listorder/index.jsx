@@ -166,7 +166,7 @@ class ZmitiListOrderApp extends Component {
 
         }];
 
-        var title = this.props.params.title || '工单管理';
+        var title = this.props.params.title || '工单管理2';
         let props={
             userid:this.userid,
             changeAccount:this.changeAccount.bind(this),
