@@ -1,3 +1,4 @@
+@import "../../../public/css/base.scss";
 body{
   font-family:Microsoft Yahei;
   font-size:12px;
@@ -69,6 +70,20 @@ ul{
 	min-width:1130px;
 	overflow: auto;
 	background-color: #f1f1f1;
+	.companyupdatestyle{
+		position: relative;
+	}
+	.companyupdatestyle-inner{
+		position: absolute;
+		left: 105px;
+		width: 1px;
+		opacity:0;
+		&.active{
+			@include transition(.2s);
+			width: 150px;
+			opacity:1;
+		}
+	}
 }
 .viewuserinfor-nums{
 	color:#6e7a90;

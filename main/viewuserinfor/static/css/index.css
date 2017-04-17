@@ -1,3 +1,8 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
 body {
   font-family: Microsoft Yahei;
   font-size: 12px; }
@@ -50,6 +55,18 @@ ul {
   min-width: 1130px;
   overflow: auto;
   background-color: #f1f1f1; }
+  .viewuserinfor-main .companyupdatestyle {
+    position: relative; }
+  .viewuserinfor-main .companyupdatestyle-inner {
+    position: absolute;
+    left: 105px;
+    width: 1px;
+    opacity: 0; }
+    .viewuserinfor-main .companyupdatestyle-inner.active {
+      -webkit-transition: 0.2s;
+      transition: 0.2s;
+      width: 150px;
+      opacity: 1; }
 
 .viewuserinfor-nums {
   color: #6e7a90;
