@@ -49,7 +49,7 @@ const { Header, Content } = Layout;
             	<div className="pad-10">
 					<Row className='zmiti-vieworder-header'>
 						<Col span={8}  className='zmiti-vieworder-header-inner' >工单详情</Col>
-						<Col span={8} offset={8} className='zmiti-workorder-button-right'><Button type='primary' onClick={this.changeAccount.bind(this,0)}>返回列表</Button></Col>
+						<Col span={8} offset={8} className='zmiti-workorder-button-right'><Button type='primary' onClick={this.changeAccount.bind(this,1)}>返回列表</Button></Col>
 					</Row>
 					<div className="zmiti-workorder-line"></div>
 					<div className="hr10"></div>
@@ -77,8 +77,8 @@ const { Header, Content } = Layout;
 									<span className="questionTitle"> 状态：</span>{this.state.statusName}
 								</Col>
 								<Col span={6}>
-										<div className="text-right"><a href="javasctip:void(0);" onClick={this.getorderoperation.bind(this)} >删除工单</a></div>
-								</Col>
+                                        <div className="text-right"><a href="javasctip:void(0);" onClick={this.getorderoperation.bind(this)} >{this.state.orderoperation}</a></div>
+                                </Col>
 							</Row>
 						</div>
 					</div>
@@ -94,7 +94,7 @@ const { Header, Content } = Layout;
                                             	<img src='./static/images/header.png' />
                                             </div>
                                             <div className="view-Infor">
-                                                <div>{this.username}</div>
+                                                <div>******</div>
                                                 <div>问题描述：{this.state.content}</div>
                                                 <div>                                                
                                                 	
@@ -151,11 +151,14 @@ const { Header, Content } = Layout;
 			<MainUI component={mainComponent}></MainUI>
 		);
 	}
-	changeAccount(i){
 
+    changeAccount(i){
+        if(i*1===0){
             window.location.hash='#/listorder/工单管理';
-
-	}
+        }else if(i*1===1){
+            window.location.hash='#/listorder/工单管理';
+        }
+    }
 
 	componentWillMount() {
 

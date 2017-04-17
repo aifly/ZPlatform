@@ -42,7 +42,11 @@ class ZmitiListOrderApp extends Component {
             key: 'workorderid',
 			width:100,
 
-        }, {
+        },{
+			title: '用户名',
+			dataIndex: 'username',
+			key: 'username',
+		}, {
             title: '问题内容',
             dataIndex: 'content',
             key: 'content',
@@ -106,22 +110,41 @@ class ZmitiListOrderApp extends Component {
             key: 'status',
 			width:100,
             filters:[{
-                text:'处理中',
+                text:'已受理',
                 value:'0',
             },{
                 text:'已处理',
                 value:'1',
+            },{
+                text:'已确认',
+                value:'2',
+            },{
+                text:'已评价',
+                value:'3',
+            },{
+                text:'已关闭',
+                value:'4',
             }
             ],
 			onFilter:(value,record)=>value*1===record.status,
 			sorter:(a,b)=>a.status-b.status,
 			render:(value,record)=>{
+				console.log(value);
             	switch(value){
 					case 0:
-						return <div className='red'>处理中</div>;
+						return <div className='red'>已受理</div>;
 						break;
 					case 1:
 						return <div className='green'>已处理</div>;
+						break;
+					case 2:
+						return <div className='green'>已确认</div>;
+						break;
+					case 3:
+						return <div className='green'>已评价</div>;
+						break;
+					case 4:
+						return <div className='green'>已关闭</div>;
 						break;
 				}
 			}
@@ -289,10 +312,19 @@ class ZmitiListOrderApp extends Component {
 
 	      				switch(item.status){
 	      					case 0:
-	      					item.statusName = '处理中';
+	      					item.statusName = '已受理';
 	      					break;
 	      					case 1:
 	      					item.statusName = '已处理';
+	      					break;
+	      					case 2:
+	      					item.statusName = '已确认';
+	      					break;
+	      					case 3:
+	      					item.statusName = '已评价';
+	      					break;
+	      					case 4:
+	      					item.statusName = '已关闭';
 	      					break;
 	      				}
 	      				switch(item.workordertype){
