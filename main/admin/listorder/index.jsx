@@ -301,8 +301,14 @@ class ZmitiListOrderApp extends Component {
                     data.workorderinfo.map((item,i)=>{
 	    				 	if(item.status === 0){
 	    				 		item.status=0;
-	    				 	}else{
+	    				 	}else if(item.status === 1){
 	    				 		item.status=1;
+	    				 	}else if(item.status === 2){
+	    				 		item.status=2;
+	    				 	}else if(item.status === 3){
+	    				 		item.status=3;
+	    				 	}else if(item.status === 4){
+	    				 		item.status=4;
 	    				 	}
 	    				 	s.state.dataSource.push(item);
 	    				 });
