@@ -24,7 +24,7 @@ class ZmitiMycustomApp extends Component {
 	render() {
 
 		var component = <div className='mycustom-main-ui'>
-			 
+			 <h1 style={{fontWeight:'normal'}}>联系电话：13910904709</h1>
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
