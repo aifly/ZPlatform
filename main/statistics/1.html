@@ -7,6 +7,7 @@
        <div id="container" style="height: 100%"></div>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+       <script src='../static/libs/web_socket.js'></script>
        <script type="text/javascript">
 var dom = document.getElementById("container");
 var myChart = echarts.init(dom);
@@ -115,8 +116,11 @@ option = {
 if (option && typeof option === "object") {
     myChart.setOption(option, true);
 }
+      
+      var ws ;
+      WEB_SOCKET_SWF_LOCATION = "../static/libs/WebSocketMain.swf";
+
       connect();
-       var ws ;
       function connect() {
            // 创建websocket
         ws = new WebSocket("ws://socket.zmiti.com:7272");
@@ -127,6 +131,13 @@ if (option && typeof option === "object") {
               console.log("连接关闭，定时重连");
               connect();
            };
+
+           ws.onopen = function(){
+              console.log('connect...');
+               var login_data = {"type":"login","client_name":'xuchang',"room_id":"11"};
+              ws.send(JSON.stringify(login_data));
+           }
+
            ws.onerror = function() {
               console.log("出现错误");
            };
@@ -134,18 +145,23 @@ if (option && typeof option === "object") {
 
          function onmessage(e){
           
-                var data = JSON.parse(e.data);
-               
+                var data = eval("("+e.data+")");
                 switch(data['type']){
                     // 服务端ping客户端
                     case 'ping':
-
                         ws.send('{"type":"pong"}');
                         break;
                     // 登录 更新用户列表
                     case 'login':
                         //{"type":"login","client_id":xxx,"client_name":"xxx","client_list":"[...]","time":"xxx"}
-                        
+                         if(data['client_list'])
+                        {
+                            client_list = data['client_list'];
+                        }
+                        else
+                        {
+                            client_list[data['client_id']] = data['client_name']; 
+                        }
                         console.log(data['client_name']+"登录成功");
                         break;
                     // 发言
@@ -155,7 +171,8 @@ if (option && typeof option === "object") {
                     // 用户退出 更新用户列表
                     case 'logout':
                         //{"type":"logout","client_id":xxx,"time":"xxx"}
-                        alert('logout');
+                         // console.log(data['client_name']+"退出了");
+                          alert(data['client_name'] + 'logout')
                        // delete client_list[data['from_client_id']];
                 }
             }
