@@ -395,7 +395,7 @@ function getLocalTime(nS) {
                     if (data.getret === 0) {
                         message.success("删除工单成功");
                         setTimeout(() => {
-                            window.location.hash='workorder/';
+                            window.location.hash='listorder/';
                         }, 2000)
 
                     }

@@ -138,5 +138,47 @@ body {
   height: 100%;
   overflow: hidden;
 }
+.zmiti-listorder-main-ui{
+  font-size: 12px;
+  .zmiti-listorder-header-inner {
+      padding-left: 8px;
+      margin-top: 10px;
+      position: relative;
+  }
+  .zmiti-listorder-header-inner:before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: #88b7e0;
+    left: 0;
+    -webkit-transform: scale(1,0.7);
+    transform: scale(1,0.7);
+  }
+  .listorder-search {
+      margin: 15px 0;
+      .rig {
+          text-align: right;
+      }
+      .zmiti-listorder-with130 {
+          width: 130px;
+      }
+      .zmiti-listorder-with70 {
+          width: 70px;
+      }
+      .zmiti-listorder-with60 {
+          width: 60px;
+      }
+      .listorder-heigth30 {
+          height: 30px;
+          line-height: 30px;
+          overflow: hidden;
+      }
+  }
+  .zmiti-listorder-line {
+      height: 15px;
+      overflow: hidden;
+      border-bottom: 1px solid #ddd;
+  }
 
-
+}
