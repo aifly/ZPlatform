@@ -260,7 +260,6 @@ class ZmitiListOrderApp extends Component {
         },()=>{
 
             this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
-
             this.state.dataSource = this.dataSource.filter((item)=>{
 
                 return  item.workorderid.indexOf(this.state.workorderid)>-1;
@@ -275,9 +274,14 @@ class ZmitiListOrderApp extends Component {
         },()=>{
             this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
 
-            this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.content.indexOf(this.state.keyword)>-1;
+            this.state.dataSource = this.state.dataSource.filter((item)=>{
+
+                return item.content.indexOf(this.state.keyword)>-1;
+            
             });
+            if(this.state.keyword.length <=0 ){
+            	this.state.dataSource = this.dataSource.concat([]);
+            }
             this.forceUpdate();
         })
     }
@@ -388,6 +392,8 @@ class ZmitiListOrderApp extends Component {
 				return item.status !== 0;
 			}
 		});
+
+		this.state.keyword = '';
 
 		this.forceUpdate();
 
