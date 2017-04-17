@@ -7,9 +7,6 @@ import MainUI from '../components/main.jsx';
 import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 const Step = Steps.Step;
 const { Header, Content } = Layout;
-function getLocalTime(nS) { 
-    return new Date(parseInt(nS) * 1000).toLocaleString();
-}
  class ZmitiEditOrderApp extends Component {
 	constructor(props) {
 		super(props);
@@ -119,7 +116,7 @@ function getLocalTime(nS) {
                                                         {item.workordertype === 0 && '管理员回复：'}
 														{item.workordertype === 1 && this.state.operauser}
                                                         <p>{item.content}</p>
-                                                        <p>{getLocalTime(item.operatime)}</p>
+                                                        <p>时间：{item.operatime}</p>
                                                         <p>
                                                         {item.attachment && item.attachment.split(',').map((atta,i)=>{
                                                         	return <a key={i} href={atta} title={atta}> {/*atta.split('/').pop()*/}点击下载</a>
