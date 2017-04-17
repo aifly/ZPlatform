@@ -272,16 +272,13 @@ class ZmitiWorkOrderApp extends Component {
                 userid:s.userid,
                 getusersigid:s.getusersigid,
                 setworkorderid:workorderid,
-
             },
             success(data){
                 if(data.getret === 0){
                     message.success('删除成功！');
                     setTimeout(()=>{
                         s.bindNewdata();
-
                     },2000)
-
                 }
                 else if(data.getret === -3){
                     message.error('您没有访问的权限,2秒后跳转到首页');
