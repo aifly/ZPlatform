@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import {Icon,Steps,Form , Input,Button, Row, Col,Layout ,Tooltip,Progress,Select,message,Popconfirm,Modal} from '../commoncomponent/common.jsx';
+import {Icon,Steps,Form , Input,Button, Row, Col,Layout ,Tooltip,Progress,Select,message,Popconfirm,Modal,Table} from '../commoncomponent/common.jsx';
 const { Option, OptGroup } = Select;
 
 
@@ -40,6 +40,7 @@ class ZmitiViewUserInforApp extends Component {
                 companyname:'',
                 companyaddress:'',
                 businesslicensenumber:'',
+                newbusinessLicensenumber:'',
                 enddate:'',
                 capacity:'',
                 capacitied:'',
@@ -53,12 +54,44 @@ class ZmitiViewUserInforApp extends Component {
                 companydocumetn:'',
                 companytotalprice:'',
                 departmentData:[]
-            }
+            },
+            ModalText: '',
+            visible: true,
+            uploadData:[],
 		};
+
 	}
 
 	render() {
         var s =this;
+        const uploadColumns=[{
+            title: '上传名称',
+            dataIndex: 'filename',
+            key: 'filename',
+        },{
+            title: '文件大小',
+            dataIndex: 'datainfosize',
+            key: 'datainfosize',
+        },{
+            title: '文件路径',
+            dataIndex: 'datainfourl',
+            key: 'datainfourl',
+            className:'hidden',
+        }, {
+            title: '文件密码',
+            dataIndex: 'setpwd',
+            key: 'setpwd',
+            className:'hidden',
+        },{
+            title: '操作',
+            dataIndex: 'operation',
+            key: 'operation',
+            render:(text,recoder,index)=>(
+                <span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,recoder,index)}> 删除</a></span>
+            )
+        },
+        ];
+
 
         var mainComponent =
 			<div className="viewuserinfor-main" style={{height:this.state.mainHeight}} >
@@ -94,7 +127,9 @@ class ZmitiViewUserInforApp extends Component {
                                                 </Popconfirm>&nbsp;&nbsp;&nbsp;&nbsp;<label>管理员电话：</label>{this.state.companyData.companyadminphone}
 										</li>
 										<li>
-											<label>营业注册号：</label>{this.state.companyData.businesslicensenumber}&nbsp;&nbsp;&nbsp;&nbsp;<Button className="btn-c1">查看扫描件</Button>&nbsp;<Button className="btn-c1">查看合同</Button>
+											<label>营业注册号：</label>{this.state.companyData.businesslicensenumber}
+
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<Button className="btn-c1">查看扫描件</Button>&nbsp;<Button className="btn-c1">查看合同</Button>
 										</li>
 										<li>
 											<label>公司地址：</label>{this.state.companyData.companyaddress}&nbsp;&nbsp;&nbsp;&nbsp;<a className="c2" href="#">修改</a>
@@ -244,6 +279,40 @@ class ZmitiViewUserInforApp extends Component {
 							</ul>
 						
 				</div>
+
+                <Modal title="上传公司营业执照"
+                       visible={this.state.visible}
+                       onOk={this.handleOk.bind(this)}
+                       confirmLoading={this.state.confirmLoading}
+                       onCancel={this.handleCancel.bind(this)}
+                >
+                    <Row gutter={16} className="rowlinght">
+                        <Col span={6} >
+                            统一社会信用代码：
+                        </Col>
+                        <Col span={18}>
+                            <Input  placeholder="请录入公司营业执照的统一信用代码" value={this.state.companyData.newbusinessLicensenumber} onChange={this.inputbusinesslicensenumber.bind(this)} />
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={24}>
+                        </Col>
+                    </Row>
+                    <Row gutter={16}>
+                        <Col span={6}>
+                            上传营业执照：
+                        </Col>
+                        <Col span={18}>
+                            <div style={{position:'relative'}}>
+                                <Button>
+                                    <Icon type="upload"  /> 附件上传
+                                </Button>
+                                <input ref="upload-file" onChange={this.uploadFile.bind(this)} type="file"  style={{position:'absolute',left:0,top:0,opacity:0,cursor:'pointer'}}/>
+                                <Table columns={uploadColumns} dataSource={this.state.uploadData} showHeader={false} />
+                            </div>
+                        </Col>
+                    </Row>
+                </Modal>
 			</div>
 
 		return (
@@ -268,6 +337,65 @@ class ZmitiViewUserInforApp extends Component {
 	    s.getcompanyuserlist();
 
 
+    }
+    //上传附件
+    uploadFile() {//上传附件
+
+        let formData = new FormData(),
+            s = this;
+        formData.append('setupfile', this.refs['upload-file'].files[0]);
+        formData.append('setuploadtype', 0);
+        formData.append('setdatainfoclassid', '1465782285');
+        formData.append('userid', s.userid);
+        formData.append('getusersigid', s.getusersigid);
+        $.ajax({
+            url: window.baseUrl + '/upload/upload_file',
+            type: 'post',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success(data){
+                console.log(data);
+                return;
+                data.getfileurl[0].key = s.props.randomString(8);
+                s.state.uploadData.push(data.getfileurl[0]);
+                s.forceUpdate();
+            }
+        })
+    }
+    delUploadfile(recoder,index){
+
+        var s=this;
+
+        $.ajax({
+
+            url: window.baseUrl + 'user/del_workorderfile/',
+
+            data: {
+                userid: s.userid,
+                getusersigid: s.getusersigid,
+                setpwd: recoder.setpwd,
+                filename: recoder.filename,
+            },
+            success(data){
+                if (data.getret === 0) {
+                    message.success("成功删除！");
+                    s.state.uploadData.splice(index,1);
+                    s.forceUpdate();
+                }
+                else if (data.getret === -3) {
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(() => {
+                        location.href = '/';
+                    }, 2000)
+                }
+                else {
+                    message.error(data.getmsg);
+                }
+
+
+            }
+        })
     }
     //获取公司的部门及用户
     getcompanyuserlist(){
@@ -309,6 +437,34 @@ class ZmitiViewUserInforApp extends Component {
 
 
     }
+    showModal(){
+        this.setState({
+            visible: true,
+        });
+    }
+    handleOk(){
+        this.setState({
+            ModalText: '数据正在提交！',
+            confirmLoading: true,
+        });
+        setTimeout(() => {
+            this.setState({
+                visible: false,
+                confirmLoading: false,
+            });
+        }, 2000);
+    }
+    handleCancel(){
+        console.log('Clicked cancel button');
+        this.setState({
+            visible: false,
+        });
+    }
+    inputbusinesslicensenumber(e){
+        var s=this;
+        s.state.companyData.newbusinessLicensenumber = e.target.value;
+        s.forceUpdate();
+    }
     getCompanydetail(){
         var s=this;
         $.ajax({
@@ -330,7 +486,7 @@ class ZmitiViewUserInforApp extends Component {
                     s.state.companyData.companyaddress=data.detail_info.companyaddress;
                     s.state.companyData.businesslicensenumber=data.detail_info.businesslicensenumber;
                     if(s.state.companyData.businesslicensenumber==="" || s.state.companyData.businesslicensenumber === null){
-                        s.state.companyData.businesslicensenumber=<a className="c2" href="#">增加</a>;
+                        s.state.companyData.businesslicensenumber=<a className="c2" href="javascript:void(0);" onClick={s.showModal.bind(s)}>增加</a>;
                     }
                     s.state.companyData.enddate=data.detail_info.enddate;
                     s.state.companyData.capacity=data.detail_info.capacity;
