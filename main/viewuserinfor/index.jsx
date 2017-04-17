@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import {Icon,Steps,Form , Input,Button, Row, Col,Layout ,Tooltip,Progress} from '../commoncomponent/common.jsx';
+import {Icon,Steps,Form , Input,Button, Row, Col,Layout ,Tooltip,Progress,Select,message,Popconfirm,Modal} from '../commoncomponent/common.jsx';
+const { Option, OptGroup } = Select;
 
 
 
@@ -16,6 +17,7 @@ const Step = Steps.Step;
 const FormItem = Form.Item;
 const { Header, Content } = Layout;
 
+
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
@@ -26,65 +28,37 @@ class ZmitiViewUserInforApp extends Component {
 		
 		this.state = {
             mainHeight:document.documentElement.clientHeight - 50,
-            userData:{
-                portrait:'./personalAcc/static/images/user.jpg',//用户头像
-                username:'',//用户名
-                useremail:'',
-                usermobile:'',
-                departmentname:'麟腾传媒文化有限公司',
-                departmentid:'',
+            projectlist:[],
+            companyData:{
+                companyadmin:'',//公司管理员
+                companyadminid:'',//公司管理员ID
+                useremail:'',//用户邮箱
+                companyadminphone:'',//管理员电话
                 companyid:'',
                 appid:'',
                 appsecret:'',
                 companyname:'',
-                userrealname:'',//用户真实姓名
-                usersex:'1',//用户性别
-                useremergencycontacter:'',//紧急联系人
-                useremergencycontactmobile:'',//紧急联系人电话/
-                credentials:[
-
-                ],//用户证件照片
-
-                expiredate:'2016-12-13',//过期时间/
-                currentVal:50,//进度条当前值,用户试用期总时间
-                maxVal:100,//进度最大值,已使用的时间 (两个数据无关紧要,我最终要根据两个数据算出比例.)
-            },
+                companyaddress:'',
+                businesslicensenumber:'',
+                enddate:'',
+                capacity:'',
+                capacitied:'',
+                capacityratio:'',
+                companynum:'',
+                usernumber:'',
+                companynumratio:'',
+                worksNumber:'',
+                companylogourl:'',
+                contract:'',
+                companydocumetn:'',
+                companytotalprice:'',
+                departmentData:[]
+            }
 		};
 	}
 
 	render() {
         var s =this;
-
-        const props = {
-            baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
-                s.state.userData.portrait = imgData.src;
-                s.forceUpdate();
-            }
-        };
-
-        const userProps ={
-            documentbaseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
-                s.state.userData.credentials.push({src:imgData.src});
-                s.forceUpdate();
-            }
-        }
-
-        let zmitiProgressProps = {
-            label:'',
-            unit:1,
-            isShowInfo:false
-        }
-
-        const formItemLayout = {
-            labelCol: {span: 6},
-            wrapperCol: {span: 14},
-        };
 
         var mainComponent =
 			<div className="viewuserinfor-main" style={{height:this.state.mainHeight}} >
@@ -93,23 +67,37 @@ class ZmitiViewUserInforApp extends Component {
 						<Col span={14} >
 							<div className="viewuserinfor-all">
 								<div className="userFace">
-									<img src='./static/images/userinfor-face.jpg'/>
+									<img src={this.state.companyData.companylogourl}/>
 									<div className="editUserIco">
 										<a href="#" className="icoEdit">修改</a>
 									</div>
 								</div>
-								<div className="companyName">{this.state.userData.companyname}</div>
+								<div className="companyName">{this.state.companyData.companyname}</div>
 								<div className="hr10"></div>
 								<div className="information">
 									<ul>
-										<li>
-											<label>公司负责人：</label>{this.state.userData.username}&nbsp;&nbsp;&nbsp;&nbsp;<a className="c2" href="#">修改</a>&nbsp;&nbsp;&nbsp;&nbsp;<label>负责人电话：</label>{this.state.userData.usermobile}
+										<li className="companyupdatestyle">
+
+                                            <span>
+                                                <Select value={this.state.companyData.companyadmin} className={"companyupdatestyle-inner " + (this.state.modifyAdmin?'active':'')} onChange={this.companyadminChange.bind(this)}>
+
+                                                    {this.state.companyData.departmentData.map((item,i)=>{
+
+                                                        return <Option  key={i} value={item.username}>{item.username}</Option>
+                                                    })}
+
+                                                </Select>
+                                            </span>
+                                            <label>公司管理员：</label>{this.state.companyData.companyadmin}&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <Popconfirm title="修改管理员后，您将不再具备管理员权限。您确定要修改吗？" onConfirm={this.updatecompanyadmin.bind(this)} onCancel="" okText="确认修改" cancelText="暂不修改">
+                                                    <a className="c2" href="javasctip:void(0);" >修改</a>
+                                                </Popconfirm>&nbsp;&nbsp;&nbsp;&nbsp;<label>管理员电话：</label>{this.state.companyData.companyadminphone}
 										</li>
 										<li>
-											<label>营业注册号：</label>{this.state.userData.businesslicensenumber}&nbsp;&nbsp;&nbsp;&nbsp;<Button className="btn-c1">查看扫描件</Button>&nbsp;<Button className="btn-c1">查看合同</Button>
+											<label>营业注册号：</label>{this.state.companyData.businesslicensenumber}&nbsp;&nbsp;&nbsp;&nbsp;<Button className="btn-c1">查看扫描件</Button>&nbsp;<Button className="btn-c1">查看合同</Button>
 										</li>
 										<li>
-											<label>公司地址：</label>{this.state.userData.companyaddress}&nbsp;&nbsp;&nbsp;&nbsp;<a className="c2" href="#">修改</a>
+											<label>公司地址：</label>{this.state.companyData.companyaddress}&nbsp;&nbsp;&nbsp;&nbsp;<a className="c2" href="#">修改</a>
 										</li>
 									</ul>
 								</div>
@@ -117,7 +105,7 @@ class ZmitiViewUserInforApp extends Component {
 						</Col>
 						<Col span={10} >
 							<div >
-								<span className="viewuserinfor-dates">您的帐号将于 <span className="c1">2016-01-03</span> 到期</span>
+								<span className="viewuserinfor-dates">您的帐号将于 <span className="c1">{this.state.companyData.enddate}</span> 到期</span>
 								<Button className="btn-c1">前往续费</Button><Button className="btn-c2">消费记录</Button>
 							</div>
 							<div className="hr10"></div>
@@ -125,8 +113,8 @@ class ZmitiViewUserInforApp extends Component {
 								<div className="placeIco "><Icon type="hdd" /></div>
 								<div className="placeNum">
 									<div className="placeTip">总空间&nbsp;<a href="#">扩充&gt;&gt;</a></div>
-									<Progress percent={30} showInfo={false} />
-									<span>300M/1T</span>
+									<Progress percent={s.state.companyData.capacityratio*1} showInfo={false} />
+									<span>{s.state.companyData.capacitied}/{s.state.companyData.capacity}</span>
 								</div>
 							</div>
 							<div className="hr20"></div>
@@ -134,16 +122,16 @@ class ZmitiViewUserInforApp extends Component {
 								<div className="placeIco "><Icon type="user" /></div>
 								<div className="placeNum">
 									<div className="placeTip">用户数&nbsp;<a href="#">扩充&gt;&gt;</a></div>
-									<Progress percent={50} showInfo={false} />
-									<span>5/10</span>
+									<Progress percent={s.state.companyData.companynumratio*1} showInfo={false} />
+									<span>{this.state.companyData.usernumber}/{this.state.companyData.companynum}</span>
 								</div>
 							</div>
 							<div className="hr20"></div>
 							<div className="size18">微信公众号设置</div>
 							<div className="viewuserinfor-weixin">
 								<ul>
-									<li><Input addonBefore='AppId' type='text' value={this.state.userData.appid} onChange={(e)=>{this.state.userData.appid=e.target.value;this.forceUpdate()}} placeholder='appid'/></li>
-									<li><Input addonBefore='appsecret' type='text' placeholder='appsecret' value={this.state.userData.appsecret} onChange={(e)=>{this.state.userData.appsecret=e.target.value;this.forceUpdate()}}/></li>
+									<li><Input addonBefore='AppId' type='text' value={this.state.companyData.appid} onChange={(e)=>{this.state.companyData.appid=e.target.value;this.forceUpdate()}} placeholder='appid'/></li>
+									<li><Input addonBefore='appsecret' type='text' placeholder='appsecret' value={this.state.companyData.appsecret} onChange={(e)=>{this.state.companyData.appsecret=e.target.value;this.forceUpdate()}}/></li>
 								</ul>
 							</div>
 						</Col>
@@ -155,31 +143,31 @@ class ZmitiViewUserInforApp extends Component {
 						<li>
 							<div className="viewuserinfor-col">
 								<h5><div><span>总计作品</span></div></h5>
-								<div className="viewnums"><span className="a1">32</span>个</div>
+								<div className="viewnums"><span className="a1">{s.state.companyData.worksNumber}</span>个</div>
 							</div>
 						</li>
 						<li>
 							<div className="viewuserinfor-col">
 								<h5><div><span>总部门数</span></div></h5>
-								<div className="viewnums"><span className="a2">100</span>个</div>
+								<div className="viewnums"><span className="a2">{this.state.companyData.departmentCount}</span>个</div>
 							</div>
 						</li>
 						<li>
 							<div className="viewuserinfor-col">
 								<h5><div><span>总人数</span></div></h5>
-								<div className="viewnums"><span className="a3">61</span>人</div>
+								<div className="viewnums"><span className="a3">{this.state.companyData.usernumber}</span>人</div>
 							</div>
 						</li>
 						<li>
 							<div className="viewuserinfor-col">
 								<h5><div><span>空间使用量</span></div></h5>
-								<div className="viewnums"><span className="a4">453</span>M</div>
+								<div className="viewnums"><span className="a4">{this.state.companyData.capacitied.replace(/mb|m|MB|M|GB/ig,"")}</span>G</div>
 							</div>
 						</li>
 						<li>
 							<div className="viewuserinfor-col">
 								<h5><div><span>总消费</span></div></h5>
-								<div className="viewnums"><span className="a5">88</span>元</div>
+								<div className="viewnums"><span className="a5">{this.state.companytotalprice}</span>元</div>
 							</div>
 						</li>
 					</ul>
@@ -205,7 +193,7 @@ class ZmitiViewUserInforApp extends Component {
 									<span className="tit-c1">交互式富图片</span>
 									<span className="tit-c2"><a href="#">申请使用</a></span>
 								</li>
-							
+
 								<li>
 									<span className="rad b4"></span>
 									<span className="tit-c1">企业项目管理</span>
@@ -221,7 +209,7 @@ class ZmitiViewUserInforApp extends Component {
 									<span className="tit-c1">页面服务</span>
 									<span className="tit-c2"><a href="#">申请使用</a></span>
 								</li>
-							
+
 								<li>
 									<span className="rad b7"></span>
 									<span className="tit-c1">互联网整体方案服务</span>
@@ -272,207 +260,255 @@ class ZmitiViewUserInforApp extends Component {
         this.userid = userid;
         this.getusersigid = getusersigid;
     }
+    updatecompanyadmin(){
+	    var s=this
+        s.setState({
+            modifyAdmin:true
+        });
+	    s.getcompanyuserlist();
+
+
+    }
+    //获取公司的部门及用户
+    getcompanyuserlist(){
+
+        var s=this;
+        $.ajax({
+            url:window.baseUrl+'user/get_departmentlist/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                setcompanyid:s.state.companyData.companyid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    s.state.companyData.departmentData = data.getdata.treeData[0].userList;
+                    s.forceUpdate();
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data);
+                }
+            }
+        })
+    }
     componentDidMount(){
 
         var s = this;
-        window.obserable.on('modifyUesrCredentials',()=>{
-            this.modifyUesrCredentials();
-        });
-
-        window.obserable.on('removeCredentials',(data)=>{
-            this.state.userData.credentials.splice(data,1);
-            this.forceUpdate();
-        });
+        s.getCompanydetail();
+        s.getCompanywx();
+        s.getumber();
+        s.getprojectlist();
+        s.getcompanytotalprice();
 
 
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        this.getUserDetail({
-            $:$,
-            userid:s.userid,
-            getusersigid:s.getusersigid,
-            setuserid : userid,
-            sussess:(data)=>{
-                if(data.getret === 0){
-                    console.log(data)
-                    var da = data.getuserinfo;
-                    s.state.userData={
-                        portrait:da.portrait||'./personalAcc/static/images/user.jpg',
-                        username:da.username,//用户名
-                        useremail:da.useremail,
-                        usermobile:da.usermobile,
-                        departmentname:da.departmentname,
-                        departmentid:da.departmentid,
-                        companyid:da.companyid,
-                        companyname:da.companyname,
-                        appid:da.wxappid,
-                        appsecret :da.wxappsecret,
-                        userrealname:da.userrealname,//用户真实姓名
-                        usersex:da.usersex+'',//用户性别
-                        useremergencycontacter:da.useremergencycontacter,//紧急联系人
-                        useremergencycontactmobile:da.useremergencycontactmobile,//紧急联系人电话/
-                        credentials:da.credentials,//用户证件照片
-                        expiredate:s.endDate,//过期时间/
-                        currentVal:parseFloat(s.capacitied),//进度条当前值,用户试用期总时间
-                        maxVal:s.capacity,//进度最大值,已使用的时间 (两个数据无关紧要,我最终要根据两个数据算出比例.)
-                    };
-
-
-                    s.forceUpdate();
-                }
-                else{
-                    message.error(data.getmsg);
-                }
-            }
-        });
-    }
-    changePortrait(){//更换头像
-
-        var obserable=window.obserable;
-        this.setState({
-            showCredentialsDiolog:false
-        },()=>{
-            obserable.trigger({
-                type:'showModal',
-                data:{type:0,id:'personAcc'}
-            })
-        })
 
     }
-
-    delayDay(){//延长试用。
-        var s = this;
-        this.ajaxStart = this.ajaxStart === undefined ? 1:0;
-        if(this.ajaxStart){
-            this.ajaxStart = 0;
-            $.ajax({
-                type:'post',
-                url:window.baseUrl + 'user/user_delayday',
-                data:{
-                    userid:s.userid,
-                    getusersigid:s.getusersigid
-                },
-                success(data){
-                    if(data.getret === 0){
-                        message.success('您的申请已经提交到后台，我们将在1-2个工作日内审核！感谢您使用智媒体');
-                    }else{
-                        message.error(data.getmsg);
-                    }
-                }
-            });
-        }
-        else{
-            message.error('您的申请已经提交到后台，无须重复申请。');
-        }
-    }
-
-    modifyUesrCredentials(){
-        var obserable=window.obserable;
-        this.setState({
-            showCredentialsDiolog:true
-        },()=>{
-            obserable.trigger({
-                type:'showModal',
-                data:{type:0,id:'userCredentials'}
-            })
-        })
-    }
-
-
-    modifyUserPwd(){//修改密码
-        var  oldPwd = this.refs['old-pwd'].refs.input.value;
-        var  newPwd = this.refs['new-pwd'].refs.input.value;
-        var  surePwd = this.refs['sure-pwd'].refs.input.value;
-
-        if(oldPwd.length<=0){
-            this.setState({
-                showOldPwdError:true
-            });
-
-            return 0;
-        }
-        if(newPwd.length<=0){
-            this.setState({
-                showNewPwdError:true
-            })
-            return 0;
-        }
-        if(surePwd.length<=0){
-            this.setState({
-                showSurePwdError:true
-            })
-            return 0;
-        }
-
-        if(surePwd !== newPwd){
-            message.error('两次输入密码不一致');
-            return;
-        }
-
-        var s = this;
-
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
+    getCompanydetail(){
+        var s=this;
         $.ajax({
-            url:window.baseUrl + 'user/edit_userpwd/',
+            url:window.baseUrl+'user/get_companydetail',
             data:{
-                setolduserpwd:oldPwd,
-                setnewuserpwd:newPwd,
-                setuserid:userid,
                 userid:s.userid,
-                getusersigid:s.getusersigid
+                getusersigid:s.getusersigid,
             },
             success(data){
-                message[data.getret === 0?'success':'error'](data.getmsg);
-                s.setState({
-                    modifyUserPwdDialogVisible:false
-                });
-            }
-        })
+                if(data.getret === 0){
+                    s.state.companyData.companyname=data.detail_info.companyname;
+                    s.state.companyData.companyadmin=data.detail_info.companyadmin;
+                    s.state.companyData.companylogourl=data.detail_info.companylogourl;
+                    if(s.state.companyData.companylogourl===""){
+                        s.state.companyData.companylogourl="./static/images/userinfor-face.jpg"
+                    }
+                    s.state.companyData.companyadminphone=data.detail_info.companyadminphone;
+                    s.state.companyData.departmentCount=data.detail_info.departmentCount;
+                    s.state.companyData.companyaddress=data.detail_info.companyaddress;
+                    s.state.companyData.businesslicensenumber=data.detail_info.businesslicensenumber;
+                    if(s.state.companyData.businesslicensenumber==="" || s.state.companyData.businesslicensenumber === null){
+                        s.state.companyData.businesslicensenumber=<a className="c2" href="#">增加</a>;
+                    }
+                    s.state.companyData.enddate=data.detail_info.enddate;
+                    s.state.companyData.capacity=data.detail_info.capacity;
+                    s.state.companyData.capacitied=data.detail_info.capacitied;
+                    var strcapacitied=s.state.companyData.capacitied;
+                    var strcapacity=s.state.companyData.capacity;
+                    s.state.companyData.capacityratio=(strcapacitied.replace(/mb|m|MB|M|GB/ig,"")*1)/(strcapacity.replace(/mb|m|MB|M|GB/ig,"")*1)*100;
+                    s.state.companyData.companynum=data.detail_info.companynum;
+                    s.state.companyData.usernumber=data.detail_info.usernumber;
+                    var strusernumber=s.state.companyData.usernumber;
+                    var strcompanynum=s.state.companyData.companynum;
+                    s.state.companyData.companyid=data.detail_info.companyid;
 
-    }
-    save(){
-		/* this.refs['save-btn'].classList.add('active');
-		 setTimeout(()=>{
-		 this.refs['save-btn'].classList.remove('active');
-		 },150)*/
-        var s = this;
-        var credentialsStr = '';
-        s.state.userData.credentials.map((data,i) =>{
-            credentialsStr+= data.src+ (i>= s.state.userData.credentials.length-1 ? '':',');
-        });
-
-
-        var params = {
-            userid : s.userid,
-            setuserid:s.userid,
-            getusersigid:s.getusersigid,
-            usermobile: s.state.userData.usermobile,
-            useremail: s.state.userData.useremail,
-            userrealname: s.state.userData.userrealname,
-            dateofbirth: s.state.userData.dateofbirth,
-            datesign: s.state.userData.datesign || '阳历',
-            emergencycontact: s.state.userData.useremergencycontacter,
-            contactmobile: s.state.userData.useremergencycontactmobile,
-            usericon: s.state.userData.portrait,
-            credentials:credentialsStr,
-            wxappid:s.state.userData.appid,
-            wxappsecret:s.state.userData.appsecret,
-            comment:'' //备注
-        }
-
-        $.ajax({
-            url:window.baseUrl + 'user/edit_user/',
-            data:params,
-            success(data){
-
-                if(data.getret === 0 ){
-                    message.success(data.getmsg);
+                    s.state.companyData.companynumratio=(strusernumber*1)/(strcompanynum*1)*100;
+                    s.forceUpdate();
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
                 }
                 else{
-                    message.error(data.getmsg);
+                    message.error(data);
                 }
             }
         })
+    }
+    getCompanywx(){
+        var s=this;
+        $.ajax({
+            url:window.baseUrl+'user/get_companywx',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+            },
+            success(data){
 
+                if(data.getret === 0){
+                    s.state.companyData.appid=data.wxappid;
+                    s.state.companyData.appsecret=data.wxappsecret;
+                    s.forceUpdate();
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data);
+                }
+            }
+        })
+    }
+    getumber(){
+        var s=this;
+        $.ajax({
+            url:window.baseUrl+'user/get_companyworksnum',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+            },
+            success(data){
+
+                if(data.getret === 0){
+                    s.state.companyData.worksNumber=data.worksnum;
+                    s.forceUpdate();
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data);
+                }
+            }
+        })
+    }
+    getprojectlist(){
+        var s=this;
+        $.ajax({
+            url:window.baseUrl+'product/get_product/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+            },
+            success(data){
+
+                if(data.getret === 0){
+                    s.state.projectlist=data.productlist;
+                    s.forceUpdate();
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data);
+                }
+            }
+        })
+    }
+    getcompanytotalprice(){
+        var s=this;
+        $.ajax({
+            url:window.baseUrl+'user/get_companytotalprice',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    s.state.companytotalprice=data.totalprice;
+                    if(s.state.companytotalprice==="" ){
+                        s.state.companytotalprice=0;
+                    }
+                    s.forceUpdate();
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data);
+                }
+            }
+        })
+    }
+    //改变公司管理员用户
+    companyadminChange(e){
+        var s= this;
+        console.log(s.state.companyData.departmentData)
+
+        s.state.companyData.companyadmin = e;
+
+        s.state.companyData.departmentData.map((item,i)=>{
+            if(item.username === e){
+                s.state.companyData.companyadminphone  = item.mobile;
+                s.state.companyData.companyadminid=item.key;
+            }
+        })
+        s.forceUpdate();
+        $.ajax({
+            url:window.baseUrl+'company/changer_companyadmin',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                setuserid:s.state.companyData.companyadminid,
+            },
+            success(data){
+                console.log(data);
+                if(data.getret === 0){
+                    message.success("管理员修改成功，系统需要您重新登录以获得新的权限！",3);
+                    setTimeout(()=>{
+
+                        location.href = window.loginUrl;
+
+                    },3000)
+                    s.forceUpdate();
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data);
+                }
+            }
+        })
     }
 
 }

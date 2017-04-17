@@ -30,6 +30,7 @@ class MainUI extends React.Component {
             baseUrl:'http://api.zmiti.com/v2/',
             companyId:'',
             routers:[],
+            removeCompany:false,
             defaultOpenKeys:'sub1'
             
         }
@@ -84,7 +85,6 @@ class MainUI extends React.Component {
         }else if(hash.indexOf('custom')>-1 || hash.indexOf('mycustom')>-1){
             defaultOpenKeys = 'sub4';
         }
-
         if(this.state.isCompany && this.usertypesign === window.Role.COMPANYADMINUSER){//this.usertypesign === 5的时候,才是公司管理员.
             this.userMenuConfig = [//用户中心下的菜单
                 {
@@ -110,8 +110,11 @@ class MainUI extends React.Component {
                     "isShow":true
                 }
             ];
+
+
+
             companyMenu = [1].map((it,i)=>{
-                return <SubMenu key="sub2" title={<span><Icon type="user" style={{marginRight:'22px'}} /><span>企业中心</span></span>}>
+                return  <SubMenu className={'zmiti-company-menu '+ (this.state.removeCompany?'hide':'')}  key="sub2" title={<span><Icon type="user" style={{marginRight:'22px'}} /><span>企业中心</span></span>}>
                             {this.userMenuConfig.map(item=>{
                                 return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
                             })}
@@ -274,6 +277,9 @@ class MainUI extends React.Component {
     }
 
     componentDidMount() {
+
+
+
       
 
         var hash = window.location.hash;
@@ -292,6 +298,8 @@ class MainUI extends React.Component {
                 current = item.key;
             }
         });
+
+
 
         this.setState({
             isCompany:this.companyid,
