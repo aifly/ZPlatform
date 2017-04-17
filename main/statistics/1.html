@@ -118,9 +118,10 @@ if (option && typeof option === "object") {
 }
       
       var ws ;
-      WEB_SOCKET_SWF_LOCATION = "../static/libs/WebSocketMain.swf";
 
-      connect();
+      window.onload = function(){
+        connect();
+      }
       function connect() {
            // 创建websocket
         ws = new WebSocket("ws://socket.zmiti.com:7272");
@@ -163,10 +164,12 @@ if (option && typeof option === "object") {
                             client_list[data['client_id']] = data['client_name']; 
                         }
                         console.log(data['client_name']+"登录成功");
+
+                        ws.send(JSON.stringify({type:'say',content:"mb"}))
                         break;
                     // 发言
                     case 'say':
-                      
+                        say('zmiti', 'zmiti', data['content'], data['time']);
                         break;
                     // 用户退出 更新用户列表
                     case 'logout':
@@ -176,6 +179,11 @@ if (option && typeof option === "object") {
                        // delete client_list[data['from_client_id']];
                 }
             }
+
+
+    function say(from_client_id, from_client_name, content, time){
+      console.log('from-client-id: '+ from_client_id+" from-client-name: " + from_client_name + ' 说 ：'+ content + ' 时间 ' + time);
+    }
        </script>
    </body>
 </html>
