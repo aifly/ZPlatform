@@ -24,11 +24,7 @@ class ZmitiMycustomApp extends Component {
 	render() {
 
 		var component = <div className='mycustom-main-ui'>
-			 <Tabs tabPosition={'left'}>
-	          <TabPane tab="Tab 1" key="1">Content of Tab 1</TabPane>
-	          <TabPane tab="Tab 2" key="2">Content of Tab 2</TabPane>
-	          <TabPane tab="Tab 3" key="3">Content of Tab 3</TabPane>
-	        </Tabs>
+			 <h1 style={{fontWeight:'normal'}}>联系电话：13910904709</h1>
 		</div>
 		return (
 			<MainUI component={component}></MainUI>

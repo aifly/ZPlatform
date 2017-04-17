@@ -31,6 +31,11 @@ export default class ZmitiUserList extends Component {
 					return item.isover === this.state.current ||  item.isover === 2;//isover : 0 正式账号，1为试用账户
 				});		
 				break;
+			case "listorder":
+				userList = this.props.userList.filter(item=>{
+					return item.status === this.state.current;//status : 0 处理中，1已处理
+				});	
+				break;
 			case 'workorder':
 				userList = this.props.userList
 	/*			userList = this.props.userList.filter(item=>{
@@ -93,14 +98,15 @@ export default class ZmitiUserList extends Component {
 						<div className='user-title'>
 							{this.props.title}
 						</div>
-						<ul onClick={this.changeAccount}>
+						<ul>
 							{
 								this.props.tags.map((tag,i)=>{
 									if(this.props.rightType === 'custom'){
-										return <li data-index={i} key={i} className={(this.props.selectedIndex === i) ?'active':''}><div data-index={i}>{tag}</div></li>
+
+										return <li  onClick={this.changeAccount.bind(this,i)} data-index={i} key={i} className={(this.props.selectedIndex === i) ?'active':''}><div data-index={i}>{tag}</div></li>
 									}
 									else{
-										return <li data-index={i} key={i} className={(this.state.current === i) ?'active':''}><div data-index={i}>{tag}</div></li>
+										return <li  onClick={this.changeAccount(this,i)} data-index={i} key={i} className={(this.state.current === i) ?'active':''}><div data-index={i}>{tag}</div></li>
 									}
 								})
 							}
@@ -138,14 +144,18 @@ export default class ZmitiUserList extends Component {
 	 
 	}
 	changeAccount(e){
-
-		if(e.target.parentNode.nodeName === 'LI' || e.target.nodeName === "LI"){
-			var index = e.target.getAttribute('data-index');
+		var index = e;
+		if(this.props.rightType === 'custom'){
+			this.props.changeAccount && this.props.changeAccount(index);
+		}
+		else{
 			this.setState({
 				current:index*1
 			});
 			this.props.changeAccount && this.props.changeAccount(index);
 		}
+		
+		
 	}
 }
 

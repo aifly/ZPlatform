@@ -3,10 +3,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm   } from '../commoncomponent/common.jsx';
-const RadioGroup = Radio.Group;
-let FormItem  = Form.Item;
-let Option = Select.Option;
+import { message,Tooltip , Row, Col  } from '../commoncomponent/common.jsx';
 
 import { Link } from 'react-router';
 import MainUI from '../components/Main.jsx';
@@ -21,6 +18,7 @@ class ZmitiCustomApp extends Component {
 		
 		this.state = {
 			setuserid:'',
+			selectedIndex:0,
 			mainHeight:document.documentElement.clientHeight - 50,
 			userList:[
 				
@@ -64,11 +62,28 @@ class ZmitiCustomApp extends Component {
 			userList:this.state.userList,
 			columns:[columns1,columns2],
 			userid:this.userid,
-			changeAccount:this.changeAccount,
-			type:'custom',
+			changeAccount:this.changeAccount.bind(this),
+			type:'custom-1',
 			tags:['共享作品','我的作品'],
 			mainHeight:this.state.mainHeight,
 			title:title,
+			selectedIndex: this.state.selectedIndex,
+			rightType: "custom",
+			customRightComponent:<section className='custom-list-C'>
+				<ul className='custom-list'>
+					
+					{this.state.userList.map((item,i)=>{
+						return <li key={i}>
+							<div className='custom-item-shareimg' style={{background:'url('+(item.thumbnail|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
+							<div className='custom-item-qrcode' style={{background:'url('+item.qrcode+') no-repeat center / cover'}}></div>
+							<div className='custom-item-name'>{item.customname}</div>
+							<Tooltip placement="top" title={'当前作品浏览量： '+item.totalpv}>
+								<div className='custom-item-view'><a href={item.viewpath} target='_blank'><img src='./static/images/eye.png'/></a></div>
+							</Tooltip>
+						</li>
+					})}
+				</ul>
+			</section>
 		}
 
 		const formItemLayout = {
@@ -77,7 +92,7 @@ class ZmitiCustomApp extends Component {
          };
 
   
-		var mainComponent = <div>
+		var mainComponent = <div className='custom-main-ui'>
 			<ZmitiUserList {...props}></ZmitiUserList>
 			
 		</div>;
@@ -87,8 +102,24 @@ class ZmitiCustomApp extends Component {
 	}
 
 	changeAccount(i){
+		
+		this.state.selectedIndex = i*1;
+		this.customlist = this.customlist || this.state.userList.concat([]);
+		this.state.userList = this.customlist.filter(item=>{
+			switch(i){
+				case 0:
+					return item.isshare !== 0;
+				break;
+				case 1:
+					return this.userid === item.userid;//未审核
+				break;
+				default:{
+					return 1;
+				}
+			}
+		});
 
-
+		this.forceUpdate();
 	}
 
 	componentDidMount() {
@@ -105,6 +136,12 @@ class ZmitiCustomApp extends Component {
 				if(data.getret === 0){
 					console.log(data.customlist);
 					 data.customlist.map((item,i)=>{
+					 	var img = new Image();
+					 	img.onerror = ()=>{
+					 		item.thumbnail = './static/images/default-chat.jpg';
+					 		s.forceUpdate();
+					 	};
+					 	img.src = item.thumbnail;
 					 	if(item.customtype === 1){
 					 		item.customtype = 'h5';
 					 	}else{

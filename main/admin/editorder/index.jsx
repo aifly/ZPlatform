@@ -7,6 +7,9 @@ import MainUI from '../components/main.jsx';
 import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 const Step = Steps.Step;
 const { Header, Content } = Layout;
+function getLocalTime(nS) { 
+    return new Date(parseInt(nS) * 1000).toLocaleString();
+}
  class ZmitiEditOrderApp extends Component {
 	constructor(props) {
 		super(props);
@@ -107,16 +110,16 @@ const { Header, Content } = Layout;
                                             this.state.workeorderinfo.map((item,i)=> {
 
                                             return(
-                                                <li key={i}>
+                                                <li key={i} className={item.workordertype === 0 && 'messageDiv'}>
                                                     <div className="view-faceIco">
                                                     	{item.workordertype === 0 && <img src={'./static/images/notify.jpg'}/>}
                                                         {item.workordertype === 1 && <img src={this.state.usericon}/>}
                                                     </div>
                                                     <div className="view-Infor">
-                                                        {item.workordertype === 0 && '管理员回复'}
-														{item.workordertype === 1 && this.userid}
-                                                        <p>问题描述：{item.content}</p>
-                                                        <p>{item.operatime}</p>
+                                                        {item.workordertype === 0 && '管理员回复：'}
+														{item.workordertype === 1 && this.state.operauser}
+                                                        <p>{item.content}</p>
+                                                        <p>{getLocalTime(item.operatime)}</p>
                                                         <p>
                                                         {item.attachment && item.attachment.split(',').map((atta,i)=>{
                                                         	return <a key={i} href={atta} title={atta}> {/*atta.split('/').pop()*/}点击下载</a>
@@ -142,17 +145,18 @@ const { Header, Content } = Layout;
 						<Content>
 							<div className="view-questionPane">
 								<div className="view-questionForm">
-									<Form>										
-										<Input type="textarea" placeholder="此处限定5000字符" className="workorderquestion-inputContent" />
-										<div className="hr10"></div>
-
-										<div>
-											<Button
-												type="primary"
-												htmlType="submit"
-											>提交</Button>
-										</div>
-									</Form>
+									<Form>
+                                        <Input type="textarea" placeholder="此处限定5000字符" onFocus={()=>{this.setState({questionError:false})}} className={"workorderquestion-inputContent "+ (this.state.submitWorkorder?'error-table':'')} value={this.state.questionContent} onChange={e=>{this.setState({questionContent:e.target.value})}}/>
+                                        <div className="hr10"></div>
+                                        
+                                        <p>
+                                            <Button
+                                                type="primary"
+                                                htmlType="submit"
+                                                onClick={this.submitWorkorder.bind(this)}
+                                            >提交</Button>
+                                        </p>
+                                    </Form>
 								</div>
 							</div>
 						</Content>
@@ -206,7 +210,8 @@ const { Header, Content } = Layout;
                     s.filterStatus();
                 	s.state.workordertype=data.workinfo.workordertype;
                     s.getuserinfo();
-
+                    s.state.operauser=data.workinfo.userid;
+                    console.log(data,"userinformation");
                     //s.getworkordername();
                     s.forceUpdate();
 
@@ -232,6 +237,7 @@ const { Header, Content } = Layout;
                 if(data.getret === 0){
                 	s.state.usericon=data.getuserinfo.portrait;
                     s.forceUpdate();
+                    console.log(data.getuserinfo.username,"用户信息")
                 }
                 else if(data.getret === -3){
                     message.error('您没有访问的权限,2秒后跳转到首页');
@@ -258,11 +264,11 @@ const { Header, Content } = Layout;
                 setworkorderid:s.props.params.id,
             },
 			success(data){
-				console.log(data,"123")
+				//console.log(data)
                 if(data.getret === 0){
                     //data.workinfo.operainfo[0].key = s.props.randomString(8);
                     s.state.workeorderinfo=data.workinfo.operainfo;
-                    console.log(s.state.workeorderinfo);
+                    console.log(s.state.workeorderinfo,"工单列表");
                     s.forceUpdate();
                 }
                /* else if(data.getret === -3){
@@ -407,6 +413,64 @@ const { Header, Content } = Layout;
 		}
 
 	}
+    //追加工单问题
+    submitWorkorder(){
+        var s=this;
+        var isOk=0;
+
+        if(s.state.questionContent=="") {
+            s.setState({
+                questionError:true
+            })
+            isOk=1
+        }
+        if(isOk!=0){
+            return;
+        }
+        else {
+            //判断是否有附件
+
+            //判断是否有附件
+            var attachment:"";
+            if(s.state.uploadData.length>0) {
+                attachment=s.state.uploadData[0].datainfourl;
+                for(var i=1;i<s.state.uploadData.length;i++){
+                    attachment=attachment + "," +s.state.uploadData[i].datainfourl;
+                }
+            }
+
+            //附件结束
+            $.ajax({
+                url: window.baseUrl + 'user/opera_workorder',
+               
+                data: {
+                    userid: s.userid,
+                    getusersigid: s.getusersigid,
+                    setworkorderid:s.state.workorderid,
+                    setcontent: s.state.questionContent,
+                    setattachment:attachment,
+                    setoperatype:0,
+                },
+                success(data){
+                    if (data.getret === 0) {
+                        message.success("您已成功提交工单，我们会尽快处理");
+                        setTimeout(() => {
+                            location.hash = 'editorder/'+s.state.workorderid;
+                        }, 2000)
+                    }
+                    else if (data.getret === -3) {
+                        message.error('您没有访问的权限,2秒后跳转到首页');
+                        setTimeout(() => {
+                            location.href = '/';
+                        }, 2000)
+                    }
+                    else {
+                        message.error(data.getmsg);
+                    }
+                }
+            })
+        }
+    }
 	
 }
 export default ZmitiValidateUser(ZmitiEditOrderApp);

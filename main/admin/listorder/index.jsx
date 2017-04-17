@@ -37,34 +37,22 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 			dataIndex: 'username',
 			key: 'username',
 		}, {
-			title: '工单标题',
-			dataIndex: 'title',
-			key: 'title',
-		}, {
 			title: '工单内容',
 			dataIndex: 'content',
 			key: 'content',
-		}, {
-			title: '处理人',
-			dataIndex: 'adminname',
-			key: 'adminname',
 		}, {
 			title: '工单类型',
 			dataIndex: 'workordertype',
 			key: 'workordertype',
 		}, {
 			title: '工单状态',
-			dataIndex: 'status',
-			key: 'status',
+			dataIndex: 'statusName',
+			key: 'statusName',
 		}, {
 			title: '创建时间',
 			dataIndex: 'createtime',
 			key: 'createtime',
 			sorter: (a, b) => a.key - b.key
-		}, {
-			title: '修改时间',
-			dataIndex: 'operatime',
-			key: 'operatime',
 		}];
 		var columns1 = columns.concat( { 
 			title: '操作', 
@@ -83,16 +71,18 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 			changeAccount:this.changeAccount,
 			mainHeight:this.state.mainHeight,
 			tags:['处理中','已处理'],
-			type:'workorder',
+			type:'listorder',
 			selectedIndex:0,
 			title,
 			keyDown:(value)=>{
+
           clearTimeout(this.keyupTimer);
           this.defautlUserList === undefined && (this.defautlUserList = this.state.userList.concat([]));
           this.keyupTimer = setTimeout(()=>{
             var userlists = this.defautlUserList;
             var condition = 'workorderid';
             this.state.userList  = userlists.filter(user=>{
+
               switch(this.condition*1){
                 case 0://提问内容
                   condition = 'workorderid';
@@ -116,7 +106,8 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 
 		}
 
-		console.log(props.userList)
+		//console.log(props.userList)
+		
 
     //console.log(this.state.mainHeight);
 		return (
@@ -132,6 +123,14 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 		validateUser(()=>{loginOut(undefined,undefined,false);},this);
 
 	}
+	changeAccount(i){
+        if(i*1===0){
+            window.location.hash='#/listorder/工单管理';
+        }else if(i*1===1){
+            window.location.hash='#/listorder/工单管理';
+        }
+
+    }
 	componentDidMount() {
 		/*  var {userid,getusersigid} = this.props.params;
 		  this.getusersigid = this.getusersigid = getusersigid;
@@ -150,17 +149,54 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
       let s = this;
 
       $.ajax({
-      	type:"POST",
+      	type:"GET",
       	url:window.baseUrl+"/user/get_workorder/",
       	data:params,
       	success(data){
-      		console.log(data);
+      		
       		
       		if(data.getret === 0){
+      			console.log(data.workorderinfo);
+      			data.workorderinfo.map((item,i)=>{
+				 	if(item.status === 0){
+				 		item.status=0;
+				 	}else{
+				 		item.status=1;
+				 	}
+				 	s.state.userList.push(item);
+				 });
+      			s.state.userList.forEach((item,i)=>{
+      				switch(item.status){
+      					case 0:
+      					item.statusName = '处理中';
+      					break;
+      					case 1:
+      					item.statusName = '已处理';
+      					break;
+      				}
+      				switch(item.workordertype){
+      					case 0:
+      					item.workordertype = '财务类';
+      					break;
+      					case 1:
+      					item.workordertype = '会员帐号类';
+      					break;
+      					case 2:
+      					item.workordertype = '定制服务类';
+      					break;
+      					case 3:
+      					item.workordertype = '产品技术类';
+      					break;
+      					case 4:
+      					item.workordertype = '其它类';
+      					break;
+      				}
 
+      			})
       			s.setState({
-      				userList:data.workorderinfo
+      				userList:s.state.userList
       			});
+      			s.forceUpdate();
       		}
       		else if(data.getret === -3){
       			message.error('您没有访问的权限,2秒后跳转到首页');

@@ -351,44 +351,46 @@ ul{
 				}
 			}
 		}
+
+		li:nth-child(1) .rad{
+			border-color:#e9573e;
+		}
+		li:nth-child(2) .rad{
+			border-color:#24b498;
+		}
+		li:nth-child(3) .rad{
+			border-color:#00a1cb;
+		}
+		li:nth-child(4) .rad{
+			border-color:#5bd5d6;
+		}
+		li:nth-child(5) .rad{
+			border-color:#89dd5b;
+		}
+		li:nth-child(6) .rad{
+			border-color:#9a6bbf;
+		}
+		li:nth-child(7) .rad{
+			border-color:#f2c26d;
+		}
+		li:nth-child(8) .rad{
+			border-color:#333d79;
+		}
+		li:nth-child(9) .rad{
+			border-color:#ee709f;
+		}
+		li:nth-child(10) .rad{
+			border-color:#7a70ca;
+		}
+		li:nth-child(11) .rad{
+			border-color:#e48b72;
+		}
+		li:nth-child(12) .rad{
+			border-color:#64b0cb;
+		}
 	}
 }
-.b1{
-	border-color:#e9573e;
-}
-.b2{
-	border-color:#24b498;
-}
-.b3{
-	border-color:#00a1cb;
-}
-.b4{
-	border-color:#5bd5d6;
-}
-.b5{
-	border-color:#89dd5b;
-}
-.b6{
-	border-color:#9a6bbf;
-}
-.b7{
-	border-color:#f2c26d;
-}
-.b8{
-	border-color:#333d79;
-}
-.b9{
-	border-color:#ee709f;
-}
-.b10{
-	border-color:#7a70ca;
-}
-.b11{
-	border-color:#e48b72;
-}
-.b12{
-	border-color:#64b0cb;
-}
+
 .tit-a1{
 	font-size:20px;
 	color:#99071f;

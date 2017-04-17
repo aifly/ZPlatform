@@ -1,142 +1,101 @@
-html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
-  padding: 0;
-  margin: 0;
+@import '../../../public/css/base.scss';
+
+.custom-main-ui{
+  .custom-list-C{
+    width:94%;
+    margin:0 auto;
+    .custom-list{
+
+      @include displayFlex(row);
+      -webkit-flex-wrap:wrap;
+          flex-wrap:wrap;
+          li{
+            
+            margin:11px;
+            $size:200px;
+            @include pos(r);
+            width:$size;
+            height:$size + 40;
+            box-sizing:border-box;
+            
+            background-color: rgba(0,0,0,.6);
+            .custom-item-shareimg{
+              height:$size;
+            }
+
+            &:hover{
+              .custom-item-qrcode{
+                @include transform(scale(1));  
+              }              
+            }
+
+            .custom-item-qrcode{
+              width:100%;
+              height: $size;
+              @include pos(a);
+              z-index: 100;
+              top: 0;
+              @include transform(scale(0));
+              @include transition(.2s);
+
+            }
+
+            .custom-item-view{
+              @include pos(a);
+              width:20px;
+              bottom: 5px;
+              right: 10px;
+              cursor: pointer;
+            }
+
+            .custom-item-name{
+              color:#fff;
+              margin:10px;
+              font-size: 12px;
+              white-space:nowrap;
+                    word-break:break-all;
+                    overflow:hidden;
+                    text-overflow:ellipsis;
+                    -webkit-text-overflow:ellipsis;
+            }
+            &:hover{
+              .custom-item-operator{
+                display:block;
+              }
+            }
+            .custom-item-operator{
+          width:50px;
+          z-index: 10; 
+          display:none;
+          text-align: center;
+          padding-left: 2px;
+          @include pos(a);
+          a{display: block;width:100%;
+            height: 100%;}
+          top:0;
+          left:100%;
+          &>div{
+
+            @include transition(.2s);
+            &:hover{
+              background:#2db7f5;
+              color:#fff;
+              a{color:#fff;}
+            }
+            cursor:pointer;
+            background:#fff;
+            &:nth-of-type(2){
+              margin:2px 0;
+            }
+            @include br(3px);
+            color:#2db7f5;
+            a{color:#2db7f5;}
+            font-size: 12px;
+            border:1px solid #2db7f5;
+
+          }
+            }
+          }
+    }
+  }
 }
-
-a {
-  text-decoration: none;
-}
-
-li {
-  list-style: none;
-}
-
-html, body {
-  height: 100%;
-}
-
-img {
-  border: none;
-  vertical-align: top;
-  width: 100%;
-  height: auto;
-}
-
-input, textarea {
-  outline: none;
-}
-
-@mixin pos($v) {
-  @if
-  $v == a {
-  position: absolute;
-} @else if $v == r {
-  position: relative;
-} @else if $v == f {
-  position: fixed;
-}
-}
-
-@mixin br($v:50%) {
-  border-radius: $v;
-}
-
-@mixin opacity($v:0) {
-  opacity: $v;
-}
-
-@mixin transform($v) {
-  -webkit-transform: $v;
-  transform: $v;
-}
-
-@mixin transformOrigin($v) {
-  -webkit-transform-origin: $v;
-  transform-origin: $v;
-}
-
-@mixin backgroundSize($v:cover) {
-  background-size: $v;
-}
-
-@mixin transition_transform($v) {
-  -webkit-transition: -webkit-transform $v;
-  transition: transform $v;
-}
-
-@mixin transform_origin($v:center) {
-  -webkit-transform-origin: $v;
-  transform-origin: $v;
-}
-
-@mixin transition($v) {
-  -webkit-transition: $v;
-  transition: $v;
-}
-
-@mixin transitionTimingFunction($v:cubic-bezier(1, -0.025, 1, 0.865)
-
-)
-{
-  -webkit-transition-timing-function: $v;
-  transition-timing-function: $v;
-}
-
-@mixin transform($v) {
-  -webkit-transform: $v;
-  transform: $v;
-}
-
-@mixin background($bg) {
-  background: $bg;
-}
-
-@mixin backgroundSize($v:cover) {
-  background-size: $v;
-}
-
-@mixin animation($v) {
-  -webkit-animation: $v;
-  animation: $v;
-}
-
-@mixin transform3d {
-  -webkit-transform-style: preserve-3d;
-  transform-style: preserve-3d;
-  perspective: 800px;
-  -webkit-perspective: 800px;
-}
-
-@mixin displayBox($v) {
-  display: -webkit-box;
-  -webkit-box-align: center;
-  -webkit-box-pack: center;
-  -webkit-box-orient: $v;
-}
-
-@mixin fly-h-gradient-line {
-  background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, .2)), color-stop(0.5, rgba(204, 204, 204, 1)), to(rgba(204, 204, 204, .2)));
-  background: -moz-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
-  background: -ms-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
-}
-
-@mixin fly-v-gradient-line($minOpacity:.2,$maxOpacity:1) {
-  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, $minOpacity)), color-stop(0.5, rgba(204, 204, 204, $maxOpacity)), to(rgba(204, 204, 204, $minOpacity)));
-  background: -moz-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
-  background: -ms-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
-}
-
-@mixin displayFlex($v:column) {
-  display: flex;
-  display: -webkit-flex;
-  flex-flow: $v;
-}
-
-body {
-  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  height: 100%;
-  overflow: hidden;
-}
-
-
