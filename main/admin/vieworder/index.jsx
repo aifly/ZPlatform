@@ -114,7 +114,7 @@ const { Header, Content } = Layout;
                                                     </div>
                                                     <div className="view-Infor">
                                                         {item.workordertype === 0 && '管理员回复'}
-														{item.workordertype === 1 && this.username}
+                                                        {item.workordertype === 1 && this.state.operauser}
                                                         <p>问题描述：{item.content}</p>
                                                         <p>{item.operatime}</p>
                                                         <p>
@@ -187,6 +187,7 @@ const { Header, Content } = Layout;
                 	s.state.createtime=data.workinfo.createtime;
                 	s.state.status=data.workinfo.status;
                     s.state.totalminu=data.workinfo.totalminu;
+                    s.state.operauser=data.workinfo.userid;
                     s.filterStatus();
                 	s.state.workordertype=data.workinfo.workordertype;
                     s.getuserinfo();
