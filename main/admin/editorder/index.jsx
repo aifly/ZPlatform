@@ -453,9 +453,9 @@ function getLocalTime(nS) {
                 },
                 success(data){
                     if (data.getret === 0) {
-                        message.success("您已成功提交工单，我们会尽快处理");
+                        message.success("您已成功回复工单，我们会尽快处理");
                         setTimeout(() => {
-                            location.hash = 'editorder/'+s.state.workorderid;
+                            location.hash = 'listorder/工单管理'+s.state.workorderid;
                         }, 2000)
                     }
                     else if (data.getret === -3) {
