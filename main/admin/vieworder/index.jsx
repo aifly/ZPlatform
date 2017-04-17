@@ -54,7 +54,7 @@ const { Header, Content } = Layout;
 					<div className="zmiti-workorder-line"></div>
 					<div className="hr10"></div>
 					<div className="hr10"></div>
-					<Steps current={3}>
+					<Steps current={this.state.status*1}>
 						<Step title="已受理"  icon={<Icon type="user"/>} />
 						<Step title="已处理"  icon={<Icon type="solution"/>}/>
 						<Step title="已确认"  icon={<Icon type="save"/>}/>
