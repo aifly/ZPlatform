@@ -141,7 +141,7 @@ class App extends React.Component{
 
 	componentWillMount(){
 
-		this.listen();
+		///this.listen();
 
 		window.obserable = new Obserable();
 		

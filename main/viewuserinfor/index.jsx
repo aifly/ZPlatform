@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import {Icon,Steps,Form , Input,Button, Row, Col,Layout ,Tooltip,Progress,Select,message,Popconfirm,notification} from '../commoncomponent/common.jsx';
+import {Icon,Steps,Form , Input,Button, Row, Col,Layout ,Tooltip,Progress,Select,message,Popconfirm,Modal} from '../commoncomponent/common.jsx';
 const { Option, OptGroup } = Select;
 
 
@@ -17,12 +17,6 @@ const Step = Steps.Step;
 const FormItem = Form.Item;
 const { Header, Content } = Layout;
 
-const openNotificationWithIcon = (type) => {
-    notification[type]({
-        message: '您已不再是管理员！',
-        description: '您修改管理员后，将不再具备管理员权限。系统将带您转向个人中心页面',
-    });
-};
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -496,12 +490,12 @@ class ZmitiViewUserInforApp extends Component {
             success(data){
                 console.log(data);
                 if(data.getret === 0){
-                    message.success("管理员修改成功",3);
-                    openNotificationWithIcon('info');
+                    message.success("管理员修改成功，系统需要您重新登录以获得新的权限！",3);
                     setTimeout(()=>{
 
-                        location.hash='/';
-                    },2000)
+                        location.href = window.loginUrl;
+
+                    },3000)
                     s.forceUpdate();
                 }
                 else if(data.getret === -3){
