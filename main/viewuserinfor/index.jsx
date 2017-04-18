@@ -349,7 +349,6 @@ class ZmitiViewUserInforApp extends Component {
         formData.append('setdatainfotype', 0);
         formData.append('userid', s.userid);
         formData.append('getusersigid', s.getusersigid);
-
         $.ajax({
             url: window.baseUrl + 'compnay/upload_file',
             type: 'post',
