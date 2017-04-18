@@ -343,17 +343,19 @@ class ZmitiViewUserInforApp extends Component {
 
         let formData = new FormData(),
             s = this;
+
         formData.append('setupfile', this.refs['upload-file'].files[0]);
         formData.append('setuploadtype', 0);
-        formData.append('setdatainfoclassid', '1465782285');
+        formData.append('setdatainfotype', 0);
         formData.append('userid', s.userid);
         formData.append('getusersigid', s.getusersigid);
+
         $.ajax({
-            url: window.baseUrl + '/upload/upload_file',
+            url: window.baseUrl + 'compnay/upload_file',
             type: 'post',
-            data: formData,
             contentType: false,
             processData: false,
+            data: formData,
             success(data){
                 console.log(data);
                 return;
@@ -361,7 +363,9 @@ class ZmitiViewUserInforApp extends Component {
                 s.state.uploadData.push(data.getfileurl[0]);
                 s.forceUpdate();
             }
-        })
+        });
+
+
     }
     delUploadfile(recoder,index){
 
