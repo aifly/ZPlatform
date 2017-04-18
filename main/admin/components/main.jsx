@@ -90,7 +90,7 @@ class MainUI extends Component {
           "isShow":true
       },
       {
-          "linkTo":"/workorder/工单管理",
+          "linkTo":"/listorder/工单管理",
           "key":"workorder",
           "title":"工单管理",
           "isIcon":true,
