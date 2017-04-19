@@ -20,7 +20,7 @@ import ZmitiWxChatListApp from './wxchat/list.jsx';
 import ZmitiViewQuestionApp  from './viewquestion/index.jsx';
 import ZmitiViewUserInforApp  from './viewuserinfor/index.jsx';
 import ZmitiStatisticsListApp  from './statistics/index.jsx';
-
+import ZmitiViewPersonalApp  from './viewpersonal/index.jsx';
 import Obserable from './static/libs/obserable.js';
 
 
@@ -52,7 +52,8 @@ class App extends React.Component{
 				{path: '/workorderquestion/(:id)', app: ZmitiWorkOrderQuestionApp},
 				{path: '/statistics/', app: ZmitiStatisticsListApp},
 				{path: '/viewquestion/(:id)', app: ZmitiViewQuestionApp},
-				{path: '/viewuserinfor/(:id)', app: ZmitiViewUserInforApp}
+				{path: '/viewuserinfor/(:id)', app: ZmitiViewUserInforApp},
+				{path: '/viewpersonal/(:id)', app: ZmitiViewPersonalApp}
 		];
 		return (
 			<Router history={hashHistory}>
