@@ -83,13 +83,25 @@ ul{
 			width: 150px;
 			opacity:1;
 		}
+		&.withAdress{
+			@include transition(.2s);
+			width: 400px;
+			opacity:1;
+			left: 90px;
+		}
 	}
 
+
 }
+
 .rowlinght{
 	height: 25px;
 	line-height: 25px;
 	margin: 10px 0;
+	.error-table{
+		border-color: red!important;
+		color: red!important;
+	}
 }
 .viewuserinfor-nums{
 	color:#6e7a90;

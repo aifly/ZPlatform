@@ -29,6 +29,8 @@ class ZmitiViewUserInforApp extends Component {
 		this.state = {
             mainHeight:document.documentElement.clientHeight - 50,
             projectlist:[],
+            isError:false,
+            ModalText:'',
             companyData:{
                 companyadmin:'',//公司管理员
                 companyadminid:'',//公司管理员ID
@@ -55,9 +57,11 @@ class ZmitiViewUserInforApp extends Component {
                 companytotalprice:'',
                 departmentData:[]
             },
-            ModalText: '',
-            visible: true,
+            showfooter:null,
+            visible: false,
+            modalTitles:['上传营业执照','查看扫描件','查看合同'],
             uploadData:[],
+            currentDialog:-1,//0表示是的添加营业执照 1 表示查看扫描件 2表示查看合同
 		};
 
 	}
@@ -79,8 +83,8 @@ class ZmitiViewUserInforApp extends Component {
             className:'hidden',
         }, {
             title: '文件密码',
-            dataIndex: 'setpwd',
-            key: 'setpwd',
+            dataIndex: 'filepwd',
+            key: 'filepwd',
             className:'hidden',
         },{
             title: '操作',
@@ -127,12 +131,13 @@ class ZmitiViewUserInforApp extends Component {
                                                 </Popconfirm>&nbsp;&nbsp;&nbsp;&nbsp;<label>管理员电话：</label>{this.state.companyData.companyadminphone}
 										</li>
 										<li>
-											<label>营业注册号：</label>{this.state.companyData.businesslicensenumber}
+											<label>营业注册号：</label>{this.state.companyData.businesslicensenumber || <a className="c2" href="javascript:void(0);" onClick={s.showModal.bind(s,0)}>增加</a>}
 
-                                            &nbsp;&nbsp;&nbsp;&nbsp;<Button className="btn-c1">查看扫描件</Button>&nbsp;<Button className="btn-c1">查看合同</Button>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;<Button className="btn-c1" onClick={s.showModal.bind(s,1)}>查看扫描件</Button>&nbsp;<Button className="btn-c1" onClick={s.showModal.bind(s,2)}>查看合同</Button>
 										</li>
-										<li>
-											<label>公司地址：</label>{this.state.companyData.companyaddress}&nbsp;&nbsp;&nbsp;&nbsp;<a className="c2" href="#">修改</a>
+										<li className="companyupdatestyle">
+                                            <Input placeholder="请录入公司地址" value={this.state.companyData.companyaddress} className={"companyupdatestyle-inner " + (this.state.modifyAdress?'withAdress':'')} onChange={this.inputAddress.bind(this)} onBlur={this.updateAddress.bind(this)}></Input>
+											<label>公司地址：</label>{this.state.companyData.companyaddress}&nbsp;&nbsp;&nbsp;&nbsp;<a className="c2" href="javasctipt:void(0);" onClick={this.getupdateAddress.bind(this)} >修改</a>
 										</li>
 									</ul>
 								</div>
@@ -165,8 +170,8 @@ class ZmitiViewUserInforApp extends Component {
 							<div className="size18">微信公众号设置</div>
 							<div className="viewuserinfor-weixin">
 								<ul>
-									<li><Input addonBefore='AppId' type='text' value={this.state.companyData.appid} onChange={(e)=>{this.state.companyData.appid=e.target.value;this.forceUpdate()}} placeholder='appid'/></li>
-									<li><Input addonBefore='appsecret' type='text' placeholder='appsecret' value={this.state.companyData.appsecret} onChange={(e)=>{this.state.companyData.appsecret=e.target.value;this.forceUpdate()}}/></li>
+									<li><Input addonBefore='AppId' type='text' value={this.state.companyData.appid} onChange={(e)=>{this.state.companyData.appid=e.target.value;this.forceUpdate()}} placeholder='appid' onBlur={this.updatewx.bind(this)}/></li>
+									<li><Input addonBefore='appsecret' type='text' placeholder='appsecret' value={this.state.companyData.appsecret}  onBlur={this.updatewx.bind(this)} onChange={(e)=>{this.state.companyData.appsecret=e.target.value;this.forceUpdate()} }/></li>
 								</ul>
 							</div>
 						</Col>
@@ -280,38 +285,50 @@ class ZmitiViewUserInforApp extends Component {
 						
 				</div>
 
-                <Modal title="上传公司营业执照"
+                <Modal title={this.state.modalTitles[this.state.currentDialog]}
                        visible={this.state.visible}
                        onOk={this.handleOk.bind(this)}
                        confirmLoading={this.state.confirmLoading}
                        onCancel={this.handleCancel.bind(this)}
+                       footer={this.state.showfooter}
+
                 >
-                    <Row gutter={16} className="rowlinght">
-                        <Col span={6} >
-                            统一社会信用代码：
-                        </Col>
-                        <Col span={18}>
-                            <Input  placeholder="请录入公司营业执照的统一信用代码" value={this.state.companyData.newbusinessLicensenumber} onChange={this.inputbusinesslicensenumber.bind(this)} />
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col span={24}>
-                        </Col>
-                    </Row>
-                    <Row gutter={16}>
-                        <Col span={6}>
-                            上传营业执照：
-                        </Col>
-                        <Col span={18}>
-                            <div style={{position:'relative'}}>
-                                <Button>
-                                    <Icon type="upload"  /> 附件上传
-                                </Button>
-                                <input ref="upload-file" onChange={this.uploadFile.bind(this)} type="file"  style={{position:'absolute',left:0,top:0,opacity:0,cursor:'pointer'}}/>
-                                <Table columns={uploadColumns} dataSource={this.state.uploadData} showHeader={false} />
-                            </div>
-                        </Col>
-                    </Row>
+
+                    {this.state.currentDialog === 0 && <div>
+                        <Row gutter={16} className="rowlinght">
+                            <Col span={6} >
+                                统一社会信用代码：
+                            </Col>
+                            <Col span={18}>
+                                <Input  placeholder="请录入公司营业执照的统一信用代码" onFocus={()=>{this.setState({isError:false})}} className={(this.state.isError?'error-table':'')} value={this.state.companyData.newbusinessLicensenumber} onChange={this.inputbusinesslicensenumber.bind(this)} />
+                            </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col span={24}>
+                            </Col>
+                        </Row>
+                        <Row gutter={16}>
+                            <Col span={6}>
+                                上传营业执照：
+                            </Col>
+                            <Col span={18}>
+                                <div style={{position:'relative'}}>
+                                    <Button>
+                                        <Icon type="upload"  /> 附件上传
+                                    </Button>
+                                    <input ref="upload-file" onChange={this.uploadFile.bind(this)} type="file"  style={{position:'absolute',left:0,top:0,opacity:0,cursor:'pointer'}}/>
+                                    <Table columns={uploadColumns} dataSource={this.state.uploadData} showHeader={false} />
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>}
+                    {this.state.currentDialog === 1 && <div>
+                        <p className="viewuserinfor-main-image">{s.state.companyData.companydocumetn && <img src={s.state.companyData.companydocumetn} />}</p>
+                    </div>}
+                    {this.state.currentDialog === 2 && <div>
+                        <p className="viewuserinfor-main-image">{s.state.companyData.contract&& <img src={s.state.companyData.contract}/>}</p>
+                    </div>}
+
                 </Modal>
 			</div>
 
@@ -319,8 +336,74 @@ class ZmitiViewUserInforApp extends Component {
 			<MainUI component={mainComponent}></MainUI>
 			);
 	}
+    inputAddress(e){
+	    this.state.companyData.companyaddress=e.target.value;
+	    this.forceUpdate();
+    }
+    updateAddress(){
+        var s=this
+        $.ajax({
+            url:window.baseUrl+'company/edit_companyinfo',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                companyaddress:s.state.companyData.companyaddress,
+            },
+            success(data){
+                if(data.getret === 0){
+                    message.success("公司地址修改成功");
+                    s.setState({
+                        modifyAdress:false
+                    });
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data.getmsg);
+                }
+            }
+        })
+    }
 
-
+    updatewx(){
+        var s=this
+        $.ajax({
+            url:window.baseUrl+'company/edit_companywx',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                setwxappid:s.state.companyData.appid,
+                wxappsecret:s.state.companyData.appsecret,
+            },
+            success(data){
+                if(data.getret === 0){
+                    message.success("公司微信公众号修改成功");
+                    s.setState({
+                        modifyAdress:false
+                    });
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data.getmsg);
+                }
+            }
+        })
+    }
+    getupdateAddress(){
+        var s=this
+        s.setState({
+            modifyAdress:true
+        });
+    }
 	componentWillMount() {
         let {resizeMainHeight,validateUser,loginOut,getUserDetail} = this.props;
         resizeMainHeight(this);
@@ -343,23 +426,23 @@ class ZmitiViewUserInforApp extends Component {
 
         let formData = new FormData(),
             s = this;
-
+        console.log(s.userid);
         formData.append('setupfile', this.refs['upload-file'].files[0]);
         formData.append('setuploadtype', 0);
         formData.append('setdatainfotype', 0);
         formData.append('userid', s.userid);
         formData.append('getusersigid', s.getusersigid);
         $.ajax({
-            url: window.baseUrl + 'compnay/upload_file',
+            url: window.baseUrl + 'company/upload_file',
             type: 'post',
             contentType: false,
             processData: false,
             data: formData,
             success(data){
                 console.log(data);
-                return;
-                data.getfileurl[0].key = s.props.randomString(8);
-                s.state.uploadData.push(data.getfileurl[0]);
+
+                data.getfileurlArr[0].key = s.props.randomString(8);
+                s.state.uploadData.push(data.getfileurlArr[0]);
                 s.forceUpdate();
             }
         });
@@ -440,25 +523,85 @@ class ZmitiViewUserInforApp extends Component {
 
 
     }
-    showModal(){
-        this.setState({
+    showModal(i){
+        var s=this
+        s.setState({
             visible: true,
+            currentDialog:i,
         });
-    }
-    handleOk(){
-        this.setState({
-            ModalText: '数据正在提交！',
-            confirmLoading: true,
-        });
-        setTimeout(() => {
-            this.setState({
-                visible: false,
-                confirmLoading: false,
+        if(i!=0){
+            s.setState({
+                showfooter:null
             });
-        }, 2000);
+        }else {
+            s.setState({
+                showfooter:<Button key="btn" onClick={this.handleOk.bind(this)}>
+                   确 定
+                </Button>
+            });
+        }
+
+
+    }
+
+    //提交信息
+    handleOk(){
+        var s=this;
+        var isOk=0;
+        if(s.state.companyData.newbusinessLicensenumber==""){
+            s.setState({
+                isError:true
+            });
+
+        }
+        else {
+
+            this.setState({
+                ModalText: '数据正在提交！',
+                confirmLoading:true,
+
+            });
+            var attachment:"";
+            if(s.state.uploadData.length>0) {
+                attachment=s.state.uploadData[0].datainfourl;
+                for(var i=1;i<s.state.uploadData.length;i++){
+                    attachment=attachment + "," +s.state.uploadData[i].datainfourl;
+                }
+            }
+            $.ajax({
+                url:window.baseUrl+'company/edit_companyinfo',
+                data:{
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    businesslicensenumber:s.state.companyData.newbusinessLicensenumber,
+                    companydocumetn:attachment,
+                },
+                success(data){
+                    if(data.getret === 0){
+                        message.success("公司统一编码信息录入成功");
+                        s.getCompanydetail();
+                        s.state.companyData.businessLicensenumber = s.state.companyData.newbusinessLicensenumber;
+                        s.state.visible = false;
+                        s.state.confirmLoading = false;
+                        s.forceUpdate();
+                    }
+                    else if(data.getret === -3){
+                        message.error('您没有访问的权限,2秒后跳转到首页');
+                        setTimeout(()=>{
+                            location.href='/';
+                        },2000)
+                    }
+                    else{
+                        message.error(data.getmsg);
+                    }
+                }
+            })
+
+
+        }
     }
     handleCancel(){
-        console.log('Clicked cancel button');
+
         this.setState({
             visible: false,
         });
@@ -470,6 +613,7 @@ class ZmitiViewUserInforApp extends Component {
     }
     getCompanydetail(){
         var s=this;
+
         $.ajax({
             url:window.baseUrl+'user/get_companydetail',
             data:{
@@ -477,6 +621,7 @@ class ZmitiViewUserInforApp extends Component {
                 getusersigid:s.getusersigid,
             },
             success(data){
+                console.log(data)
                 if(data.getret === 0){
                     s.state.companyData.companyname=data.detail_info.companyname;
                     s.state.companyData.companyadmin=data.detail_info.companyadmin;
@@ -488,9 +633,6 @@ class ZmitiViewUserInforApp extends Component {
                     s.state.companyData.departmentCount=data.detail_info.departmentCount;
                     s.state.companyData.companyaddress=data.detail_info.companyaddress;
                     s.state.companyData.businesslicensenumber=data.detail_info.businesslicensenumber;
-                    if(s.state.companyData.businesslicensenumber==="" || s.state.companyData.businesslicensenumber === null){
-                        s.state.companyData.businesslicensenumber=<a className="c2" href="javascript:void(0);" onClick={s.showModal.bind(s)}>增加</a>;
-                    }
                     s.state.companyData.enddate=data.detail_info.enddate;
                     s.state.companyData.capacity=data.detail_info.capacity;
                     s.state.companyData.capacitied=data.detail_info.capacitied;
@@ -502,6 +644,14 @@ class ZmitiViewUserInforApp extends Component {
                     var strusernumber=s.state.companyData.usernumber;
                     var strcompanynum=s.state.companyData.companynum;
                     s.state.companyData.companyid=data.detail_info.companyid;
+                    s.state.companyData.companydocumetn=data.detail_info.companydocumetn;
+                    if(s.state.companyData.companydocumetn==""){
+                        s.state.companyData.companydocumetn==""
+                    }
+                    s.state.companyData.contract=data.detail_info.contract;
+                    if(s.state.companyData.contract==""){
+                        s.state.companyData.contract==""
+                    }
 
                     s.state.companyData.companynumratio=(strusernumber*1)/(strcompanynum*1)*100;
                     s.forceUpdate();
