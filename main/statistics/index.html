@@ -7,11 +7,41 @@
            body{
              overflow: hidden;
            }
+           .zmiti-user{
+            position: fixed;
+            right: 0;
+            top: 0;
+            text-align: center;
+            animation: move 10s linear forwards;
+           }
+
+           @-webkit-keyframes move{
+             to{
+                -webkit-transform:translate3d(-2000px,0,0);
+             }
+           }
+           @keyframes move{
+             to{
+               transform:translate3d(-2000px,0,0);
+             }
+           }
+
+           .zmiti-user img{
+            width: 30px;
+           }
+           .zmiti-user span{
+                display: block;
+                color:#fff;
+                font-size: 12px;
+           }
+
+
        </style>
    </head>
    <body style="height: 100%; margin: 0">
 
        <div id="container" style="height: 100%"></div>
+       <div id="box"></div>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
        <script src='../static/libs/socket.io.js'></script>
@@ -138,15 +168,16 @@
                 })
 */
             myChart.setOption(config(userData), true);
-            
+            window.userlist = [];
             var socket = io('http://socket.zmiti.com:2120');
+            var box = document.getElementById('box');
 
             /*socket.on('connect', function(){
               socket.emit('login', opt.uid||'');
             });*/
             // 后端推送来消息时
                 var s = this;
-                socket.on('new_msg', function(msg){
+                socket.on('publish', function(msg){
                     msg = msg.replace(/&quot;/g,"\"");
 
                     var data = JSON.parse(msg);
@@ -174,13 +205,45 @@
                          });   
 
                     }
+
                     localStorage.setItem('geoCoordMap',JSON.stringify(geoCoordMap));
                     localStorage.setItem('userData',JSON.stringify({userData:userData}));
+                    var nickname = data.nickname;
+                    var headimgurl = data.headimgurl;
+                    
+                    var personDom = '<div class="zmiti-user"><img src='+headimgurl+' /><span>'+nickname+'</span></div>'
 
                     myChart.setOption(config(userData), true);
+
+
+                    var isAppend = true;
+                    window.userlist.map(function(item,i){
+                        if(item.nickname === nickname && item.headimgurl === headimgurl){
+                            isAppend = false;
+                        }
+                    });
+
+                    if(isAppend){
+                        window.userlist.push({nickname:nickname,headimgurl:headimgurl});
+                        var personDom = '<div class="zmiti-user" style="top:'+Math.random()*50+'px"><img src='+headimgurl+' /><span>'+nickname+'</span></div>';
+
+                        document.getElementById('box').innerHTML += personDom;
+
+                        var users = document.getElementById('box').querySelectorAll('.zmiti-user');
+
+                        users[users.length-1].addEventListener('webkitAnimationEnd',function(){
+                            document.getElementById('box').removeChild(this);
+                            this.style.display = 'none';
+                            window.userlist.pop();
+
+                        });    
+                    }
+                    
                      
                 });
-            
+
+
+
        </script>
 
    </body>

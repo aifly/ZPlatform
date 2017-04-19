@@ -32,6 +32,10 @@ var config = {
                 loader: 'style-loader!css-loader'
             },
             {
+                test: /\.(eot|svg|ttf|woff|woff2|png)\w*/,
+                loader: 'file'
+            },
+            {
                 test: /\.(png|jpg)$/,
                 loader: 'url-loader?limit=8192'
             }]

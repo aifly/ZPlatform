@@ -96,6 +96,14 @@ class MainUI extends Component {
           "isIcon":true,
           "type":"edit",
           "isShow":true
+      },
+      {
+          "linkTo":"/poetry/",
+          "key":"poetry",
+          "title":"诗词管理",
+          "isIcon":true,
+          "type":"edit",
+          "isShow":true
       }
     ]
     if(this.usertypesign===4){//超级管理员

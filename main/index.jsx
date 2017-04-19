@@ -53,6 +53,7 @@ class App extends React.Component{
 				{path: '/statistics/', app: ZmitiStatisticsListApp},
 				{path: '/viewquestion/(:id)', app: ZmitiViewQuestionApp},
 				{path: '/viewuserinfor/(:id)', app: ZmitiViewUserInforApp}
+				
 		];
 		return (
 			<Router history={hashHistory}>

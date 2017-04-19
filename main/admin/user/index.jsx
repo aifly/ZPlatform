@@ -13,12 +13,12 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 		this.state = {
 			current:0,
 			mainHeight:document.documentElement.clientHeight - 50,
+      selectedIndex:0,
 			userList:[
 
 			],
 
 		};
-		this.changeAccount = this.changeAccount.bind(this);
 		this.transFormal = this.transFormal.bind(this);
 		this.disableUser = this.disableUser.bind(this);
 	}
@@ -72,9 +72,9 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 		let props={
 			userList:this.state.userList,
 			columns:[columns1,columns2],
-			changeAccount:this.changeAccount,
 			mainHeight:this.state.mainHeight,
       title,
+      changeAccount:this.changeAccount.bind(this), 
       keyDown:(value)=>{
           clearTimeout(this.keyupTimer);
           this.defautlUserList === undefined && (this.defautlUserList = this.state.userList.concat([]));
@@ -240,8 +240,10 @@ import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 
        }
      changeAccount(e){
-		// e : 0  1;
-  	}
+		    this.setState({
+          selectedIndex:e
+        })
+  	}  
 }
 export default ZmitiValidateUser(ZmitiUserApp);
 ZmitiUserApp.defaultProps = {
