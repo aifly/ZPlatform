@@ -13,7 +13,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import ZmitiProgress from '../components/Progress.jsx';
 import ZmitiCard from '../components/cardgroup.jsx';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
-import ZmitiScan from '../components/scan.jsx';
+import ZmitiPersonalScan from '../components/picture.jsx';
 import $ from 'jquery';
 const FormItem = Form.Item;
 const { Header, Content } = Layout;
@@ -52,6 +52,7 @@ class ZmitiViewPersonalApp extends Component {
                 userrealname:'',//用户真实姓名
                 usersex:'1',//用户性别
                 dateofbirth:'2011-12-31',
+                datesign:'阳历',//陰曆陽曆
                 useremergencycontacter:'',//紧急联系人
                 useremergencycontactmobile:'',//紧急联系人电话/
                 credentials:[
@@ -68,19 +69,6 @@ class ZmitiViewPersonalApp extends Component {
             },
             modifyUserPwdDialogVisible:false,
             modPersonalDialogVisible:false,
-            inputValue: 1,            
-            leftmargin:0,
-            linum:100,
-        }
-        this.onChangeSlider = (value) => {
-          var temp = document.getElementById('viewpersonal-imgs');
-          var nums = temp.getElementsByTagName("li").length;
-          var viewnum=nums-5;
-          this.setState({
-            inputValue: value,
-            leftmargin:-value,
-            linum:viewnum
-          });
         }
     }
 
@@ -182,88 +170,66 @@ class ZmitiViewPersonalApp extends Component {
 				<div className="hr50"></div>
         
         <div className="viewpersonal-forms">
-          
-          <Row gutter={30}>
-            <Col span={6}>
-              <div className="label">姓名:</div>
-              <Input placeholder="真实姓名"
-                value={this.state.userData.userrealname} onChange={(e)=>{this.state.userData.userrealname=e.target.value;this.forceUpdate();}}
-              />
+          <Row gutter={20}>
+            <Col span={8}>
+              <Row gutter={20}>
+                <Col span={16}>
+                  <div className="label">姓名:</div>
+                  <Input placeholder="真实姓名"
+                    value={this.state.userData.userrealname} onChange={(e)=>{this.state.userData.userrealname=e.target.value;this.forceUpdate();}}
+                  />
+                </Col>
+                <Col span={8}>
+                  <div className="label">性别：</div>
+                  <Select placeholder='性别'  onChange={(value)=>{this.state.userData.usersex=value;this.forceUpdate();}} value={this.state.userData.usersex}>
+                       <Option value={'1'}>男</Option>
+                       <Option value={'2'}>女</Option>
+                   </Select>
+                </Col>
+              </Row>
+              <Row gutter={20}>
+                <Col span={16}>
+                  <div className="label">出生日期：</div>
+                  <DatePicker
+                        format="YYYY-MM-DD"
+                        onChange={this.changeDateOfBirth.bind(this)}
+                        value={moment(this.state.userData.dateofbirth,dateFormat)}
+                        size={'default'} />
+                </Col>
+                <Col span={8}>
+                  <div className="label">&nbsp;</div>
+                  <Select placeholder='性别'  onChange={(value)=>{this.state.userData.datesign=value;this.forceUpdate();}} value={this.state.userData.datesign}>
+                       <Option value={'阳历'}>阳历</Option>
+                       <Option value={'阴历'}>阴历</Option>
+                   </Select>
+                </Col>
+              </Row>
             </Col>
-            <Col span={3} >
-              <div className="label">性别：</div>
-              <Select placeholder='性别'  onChange={(value)=>{this.state.userData.usersex=value;this.forceUpdate();}} value={this.state.userData.usersex}>
-                               <Option value={'1'}>男</Option>
-                               <Option value={'2'}>女</Option>
-                           </Select>
-            </Col>
-            <Col span={3} >
-              <div className="label">出生日期：</div>
-              <DatePicker
-                      format="YYYY-MM-DD"
-                      onChange={this.changeDateOfBirth.bind(this)}
-                      value={moment(this.state.userData.dateofbirth,dateFormat)}
-                      size={'default'} />
-            </Col>
-            <Col span={6}>
+            <Col span={8}></Col>
+            <Col span={8}>
               <div className="label">紧急联系人: </div>
               <Input
                 placeholder="突发状况的联系人" 
                 value={this.state.userData.useremergencycontacter} onChange={(e)=>{this.state.userData.useremergencycontacter=e.target.value;this.forceUpdate();}}
               />
-            </Col>
-            <Col span={6}>
               <div className="label">紧急联系人电话： </div>
               <Input
                 placeholder="真实联系方式"
                 value={this.state.userData.useremergencycontactmobile}
                 onChange={(e)=>{this.state.userData.useremergencycontactmobile=e.target.value;this.forceUpdate();}}
                />
-            </Col>
-          </Row>
-          <div className="hr10"></div>
-          
-          
-        </div>
-        <div className="hr40"></div>
-        <ZmitiScan {...this.state.userData}></ZmitiScan>
-        <div className='text-right'>
+               <div className="hr10"></div>
+               <div className='text-right'>
                 <Button type='primary' size='large' icon='save' onClick={this.save.bind(this)}>保存</Button>
-              </div>
-        <div className="viewpersonal-scan">
-          <h5><div><span>用户相关扫描件</span></div></h5>
-          <div className="hr10"></div>
-          <ul id="viewpersonal-imgs" style={{ marginLeft:this.state.leftmargin*157 }} name={this.state.linum} onChange={this.onChangeSlider}>
-            <li><img src={'./static/images/file-add.jpg'} /></li>
-            <li><img src={'./static/images/file-normal.jpg'} /></li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
-            <li>7</li>
-            <li>8</li>
-            <li>9</li>
-            <li>10</li>
-            <li>11</li>
-            <li>7</li>
-            <li>8</li>
-            <li>9</li>
-            <li>10</li>
-            <li>11</li>
-          </ul>
-          <div className="clear"></div>
+                </div>
+            </Col>
+          </Row>   
         </div>
+        <div className="hr30"></div>
+        <div className="viewpersonal-large"><div><span>用户相关扫描件</span></div></div>
         <div className="hr10"></div>
-        <Row>
-          <Col span={16}>
-            <Slider min={0} max={this.state.linum} onChange={this.onChangeSlider} value={this.state.inputValue} />
-          </Col>
-          <Col span={4}>
-            <InputNumber min={0} max={this.state.linum} style={{ marginLeft: 16 }}
-              value={this.state.inputValue} onChange={this.onChangeSlider}
-            />
-          </Col>
-        </Row>
+        <ZmitiPersonalScan {...this.state.userData}></ZmitiPersonalScan>
+        
 				<div className="hr40"></div>
 				<div className="viewpersonal-works">
 					<div className="tit-a1">产品与服务</div>
@@ -379,14 +345,22 @@ class ZmitiViewPersonalApp extends Component {
                         label="手机"
                         hasFeedback
                       >                        
-                          <Input type='text' ref='usermobile'  />                        
+                          
+                          <Input placeholder="请输入正确格式" ref="usermobile"
+                            value={this.state.userData.usermobile} 
+                            onChange={(e)=>{this.state.userData.usermobile=e.target.value;this.forceUpdate();}}
+                          />                      
                       </FormItem>
                       <FormItem
                         {...formItemLayout}
                         label="E-mail"
                         hasFeedback
                       >                        
-                          <Input type='text' ref='useremail'  />                        
+                          
+                          <Input placeholder="请输入正确格式" ref="useremail"
+                            value={this.state.userData.useremail} 
+                            onChange={(e)=>{this.state.userData.useremail=e.target.value;this.forceUpdate();}}
+                          />                       
                       </FormItem>
                     </Form>
                   </Modal>
@@ -484,7 +458,8 @@ class ZmitiViewPersonalApp extends Component {
                 usersex:da.usersex+'',//用户性别
                 useremergencycontacter:da.useremergencycontacter,//紧急联系人
                 useremergencycontactmobile:da.useremergencycontactmobile,//紧急联系人电话/
-                dateofbirth:da.dateofbirth || '1970-07-01',//出生日期/
+                dateofbirth:da.dateofbirth || '1970-07-01',//出生日期
+                datesign:da.datesign+'',//阴历阳历
                 credentials:da.credentials,//用户证件照片
                 expiredate:s.endDate,//过期时间/
                 capacitied:(parseFloat(da.capacitied)/1000/1000).toFixed(2),//已使用空间
@@ -499,7 +474,7 @@ class ZmitiViewPersonalApp extends Component {
           }
         }
       });
-      s.scanwidth();
+
     }
     save(){
         var s = this;
@@ -515,6 +490,7 @@ class ZmitiViewPersonalApp extends Component {
           customername: s.state.userData.userrealname,
           usersex:s.state.userData.usersex,
           dateofbirth:s.state.userData.dateofbirth,
+          datesign: s.state.userData.datesign || '阳历',
           emergencycontact: s.state.userData.useremergencycontacter,
           contactmobile: s.state.userData.useremergencycontactmobile,
           usericon: s.state.userData.portrait,
@@ -676,19 +652,7 @@ class ZmitiViewPersonalApp extends Component {
         }
       })
     }
-    //scan
-    /**/
-    scanums(){
-      var temp = document.getElementById('viewpersonal-imgs');
-      var linum = temp.getElementsByTagName("li").length;
-      return linum;
-    }
-    scanwidth(){
-      var temp = document.getElementById('viewpersonal-imgs');
-      var linum = temp.getElementsByTagName("li").length;
-      var ulwidth=parseInt(linum*157);
-      temp.style.width=ulwidth+'px';
-    }
+
 
     
 }
