@@ -21,6 +21,7 @@ import ZmitiViewQuestionApp  from './viewquestion/index.jsx';
 import ZmitiViewUserInforApp  from './viewuserinfor/index.jsx';
 import ZmitiStatisticsListApp  from './statistics/index.jsx';
 import ZmitiViewPersonalApp  from './viewpersonal/index.jsx';
+import ZmitiWXUserInfoApp  from './wxuserinfo/index.jsx';
 import Obserable from './static/libs/obserable.js';
 
 
@@ -53,7 +54,8 @@ class App extends React.Component{
 				{path: '/statistics/', app: ZmitiStatisticsListApp},
 				{path: '/viewquestion/(:id)', app: ZmitiViewQuestionApp},
 				{path: '/viewuserinfor/(:id)', app: ZmitiViewUserInforApp},
-				{path: '/viewpersonal/(:id)', app: ZmitiViewPersonalApp}
+				{path: '/viewpersonal/(:id)', app: ZmitiViewPersonalApp},
+				{path: '/wxuserinfo/', app: ZmitiWXUserInfoApp}
 		];
 		return (
 			<Router history={hashHistory}>

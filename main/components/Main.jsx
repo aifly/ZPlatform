@@ -78,7 +78,7 @@ class MainUI extends React.Component {
 
         var hash = window.location.hash;
         var defaultOpenKeys = 'sub1';
-        if(hash.indexOf('userdepartment')>-1||hash.indexOf('project')>-1||hash.indexOf('viewuserinfor')>-1){
+        if(hash.indexOf('wxuserinfo')>-1|| hash.indexOf('userdepartment')>-1||hash.indexOf('project')>-1||hash.indexOf('viewuserinfor')>-1){
             defaultOpenKeys = 'sub2';
         }else if(hash.indexOf('personalAcc')>-1 || hash.indexOf('renewal')>-1){
             defaultOpenKeys = 'sub3';
@@ -97,18 +97,27 @@ class MainUI extends React.Component {
                 {
                     "linkTo":"/userdepartment/",
                     "key":"userdepartment",
-                    "title":"用户和部门",
+                    "title":"部门和员工",
                     "isIcon":true,
                     "type":"team",
                     "isShow":true
-                },{
-                    "linkTo":"/project/",
-                    "key":"project",
-                    "title":"项目管理",
+                },
+                {
+                   "linkTo":"/wxuserinfo/",
+                    "key":"wxuserinfo",
+                    "title":"用户信息",
                     "isIcon":true,
-                    "type":"picture",
-                    "isShow":true
+                    "type":"team",
+                    "isShow":true     
                 }
+                // {
+                //     "linkTo":"/project/",
+                //     "key":"project",
+                //     "title":"项目管理",
+                //     "isIcon":true,
+                //     "type":"picture",
+                //     "isShow":true
+                // }
             ];
 
 
