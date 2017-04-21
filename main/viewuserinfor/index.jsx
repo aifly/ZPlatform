@@ -58,6 +58,7 @@ class ZmitiViewUserInforApp extends Component {
                 departmentData:[]
             },
             showfooter:null,
+            wxdisable:true,
             visible: false,
             modalTitles:['上传营业执照','查看扫描件','查看合同'],
             uploadData:[],
@@ -167,11 +168,11 @@ class ZmitiViewUserInforApp extends Component {
 								</div>
 							</div>
 							<div className="hr20"></div>
-							<div className="size18">微信公众号设置</div>
+                            <div className="size18">微信公众号设置<span><a href="javascrpt:void(0)" onClick={this.modifyWxInfo.bind(this)}> {this.state.wxdisable?'点击修改':'保存'}</a></span></div>
 							<div className="viewuserinfor-weixin">
 								<ul>
-									<li><Input addonBefore='AppId' type='text' value={this.state.companyData.appid} onChange={(e)=>{this.state.companyData.appid=e.target.value;this.forceUpdate()}} placeholder='appid' onBlur={this.updatewx.bind(this)}/></li>
-									<li><Input addonBefore='appsecret' type='text' placeholder='appsecret' value={this.state.companyData.appsecret}  onBlur={this.updatewx.bind(this)} onChange={(e)=>{this.state.companyData.appsecret=e.target.value;this.forceUpdate()} }/></li>
+									<li><Input addonBefore='AppId' type='text' value={this.state.companyData.appid} onChange={(e)=>{this.state.companyData.appid=e.target.value;this.forceUpdate()}} placeholder='appid'  disabled={this.state.wxdisable} /></li>
+									<li><Input addonBefore='appsecret' type='text' placeholder='appsecret' value={this.state.companyData.appsecret}   onChange={(e)=>{this.state.companyData.appsecret=e.target.value;this.forceUpdate()}} disabled={this.state.wxdisable}  /></li>
 								</ul>
 							</div>
 						</Col>
@@ -369,6 +370,28 @@ class ZmitiViewUserInforApp extends Component {
         })
     }
 
+    modifyWxInfo(){
+
+        if(!this.state.wxdisable){
+
+            if(this.defaultWxInfo.wxappid === this.state.companyData.appid && this.defaultWxInfo.wxappsecret === this.state.companyData.appsecret){
+                message.warning('公众好号信息没有修改，无需更新');
+                this.setState({
+                    wxdisable:!this.state.wxdisable
+                });
+                return;
+            }
+
+
+            this.updatewx();
+        }
+
+        this.setState({
+            wxdisable:!this.state.wxdisable
+        });
+    }
+
+
     updatewx(){
         var s=this
         $.ajax({
@@ -377,7 +400,7 @@ class ZmitiViewUserInforApp extends Component {
                 userid:s.userid,
                 getusersigid:s.getusersigid,
                 setwxappid:s.state.companyData.appid,
-                wxappsecret:s.state.companyData.appsecret,
+                setwxappsecret:s.state.companyData.appsecret,
             },
             success(data){
                 if(data.getret === 0){
@@ -519,6 +542,9 @@ class ZmitiViewUserInforApp extends Component {
         s.getumber();
         s.getprojectlist();
         s.getcompanytotalprice();
+
+
+
 
 
 
@@ -681,6 +707,11 @@ class ZmitiViewUserInforApp extends Component {
                 if(data.getret === 0){
                     s.state.companyData.appid=data.wxappid;
                     s.state.companyData.appsecret=data.wxappsecret;
+                    s.defaultWxInfo = {
+                        wxappid : data.wxappid,
+                        wxappsecret:data.wxappsecret
+                    }
+
                     s.forceUpdate();
                 }
                 else if(data.getret === -3){
