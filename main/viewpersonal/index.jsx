@@ -2,20 +2,19 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import {Slider,Icon,Steps,Form,DatePicker , Input,Button, Row, Col,Layout ,Tooltip,Progress,Select,message,Popconfirm,Modal,Table,moment} from '../commoncomponent/common.jsx';
+import {InputNumber,Slider,Icon,Steps,Form,DatePicker , Input,Button, Row, Col,Layout ,Tooltip,Progress,Select,message,Popconfirm,Modal,Table,moment} from '../commoncomponent/common.jsx';
 const { Option, OptGroup } = Select;
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 
 import { Link } from 'react-router';
 import MainUI from '../components/Main.jsx';
-
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import ZmitiProgress from '../components/Progress.jsx';
 import ZmitiCard from '../components/cardgroup.jsx';
+import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import ZmitiScan from '../components/scan.jsx';
 import $ from 'jquery';
-const Step = Steps.Step;
 const FormItem = Form.Item;
 const { Header, Content } = Layout;
 const dateFormat = 'YYYY-MM-DD';
@@ -60,8 +59,8 @@ class ZmitiViewPersonalApp extends Component {
                 ],//用户证件照片
               
                 expiredate:'2016-12-13',//过期时间/
-                currentVal:50,//进度条当前值,用户试用期总时间
-                maxVal:100,//进度最大值,已使用的时间 (两个数据无关紧要,我最终要根据两个数据算出比例.)
+                capacitied:0,//已使用空间
+                capacity:1,//总空间
                 projectnum:'',//作品总个数.
                 loginnum:'',//登录次数.
                 spaceuse:'',//空间使用量
@@ -69,12 +68,33 @@ class ZmitiViewPersonalApp extends Component {
             },
             modifyUserPwdDialogVisible:false,
             modPersonalDialogVisible:false,
-
+            inputValue: 1,            
+            leftmargin:0,
+            linum:100,
+        }
+        this.onChangeSlider = (value) => {
+          var temp = document.getElementById('viewpersonal-imgs');
+          var nums = temp.getElementsByTagName("li").length;
+          var viewnum=nums-5;
+          this.setState({
+            inputValue: value,
+            leftmargin:-value,
+            linum:viewnum
+          });
         }
     }
 
 	render() {
         var s =this;
+        const props = {
+            baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+                s.state.userData.portrait = imgData.src;
+                s.forceUpdate();
+            }
+        };
         const { disabled } = s.state;
         const userProps ={
             documentbaseUrl: window.baseUrl,
@@ -96,20 +116,22 @@ class ZmitiViewPersonalApp extends Component {
            labelCol: {span: 6},
            wrapperCol: {span: 14},
          };
+             //
+        
 
          
 
 
         var mainComponent =
-			<div className="viewpersonal-main-ui" style={{height:this.state.mainHeight}} >
-				<div className="viewuserinfor-persion">
+			<div className="viewpersonal-main-ui" id="viewpersonal-main-ui" style={{height:this.state.mainHeight}} >
+				<div className="viewuserinfor-persion" id="viewuserinfor-persion">
 					<Row gutter={16}>
 						<Col span={14} >
 							<div className="viewuserinfor-all">
-								<div className="userFace">
-									<img src={this.state.userData.portrait}/>
+								<div className="viewpersonal-userFace">
+									<img className="viewpersonal-faceico" src={this.state.userData.portrait}/>
 									<div className="editUserIco">
-										<Button className="viewpersonal-icoEdit" onClick={this.changePortrait.bind(this)}>修改</Button>
+										<a href="javascript:void(0)" className="viewpersonal-icoEdit" onClick={this.changePortrait.bind(this)}><img src={'./static/images/ico-edit.png'} /></a>
 									</div>
 								</div>
 								<div className="viewpersonal-user-pass">
@@ -136,7 +158,8 @@ class ZmitiViewPersonalApp extends Component {
 							</div>
 						</Col>
 						<Col span={10} >
-							<div >
+              
+							<div>
 								<span className="viewuserinfor-dates">您的帐号将于 <span className="c1">{this.state.userData.expiredate}</span> 到期</span>
 								<Button className="btn-c1">前往续费</Button><Button className="btn-c2">消费记录</Button>
 							</div>
@@ -146,9 +169,12 @@ class ZmitiViewPersonalApp extends Component {
 								<div className="placeNum">
 									<div className="placeTip">总空间&nbsp;<a href="#">扩充&gt;&gt;</a></div>
 									<Progress percent={50} showInfo={false} />
-                  <span>{this.state.userData.currentVal}M/{this.state.userData.maxVal}</span>
+                  <span>{this.state.userData.capacitied}G/{this.state.userData.capacity}G</span>
 								</div>
 							</div>
+              <div className="hr30"></div>
+              
+              
 							
 						</Col>
 					</Row>
@@ -156,7 +182,7 @@ class ZmitiViewPersonalApp extends Component {
 				<div className="hr50"></div>
         
         <div className="viewpersonal-forms">
-          <Form>
+          
           <Row gutter={30}>
             <Col span={6}>
               <div className="label">姓名:</div>
@@ -196,44 +222,49 @@ class ZmitiViewPersonalApp extends Component {
             </Col>
           </Row>
           <div className="hr10"></div>
-          <Button className="ipt-btn5" type='submit' onClick={this.save.bind(this)}>保存</Button>
-          </Form>
+          
+          
         </div>
         <div className="hr40"></div>
         <ZmitiScan {...this.state.userData}></ZmitiScan>
-        <Slider defaultValue={0} disabled={disabled} />
-				<div className="viewpersonal-nums">
-					<ul>
-						<li>
-							<div className="viewpersonal-col">
-								<h5><div><span>总计作品</span></div></h5>
-								<div className="viewnums"><span className="a1">{this.state.userData.projectnum || 0}</span>个</div>
-							</div>
-						</li>
-						<li>
-							<div className="viewpersonal-col">
-								<h5><div><span>总登录次数</span></div></h5>
-								<div className="viewnums"><span className="a2">{this.state.userData.loginnum || 1}</span>个</div>
-							</div>
-						</li>
-						<li>
-							<div className="viewpersonal-col">
-								<h5><div><span>总消费数</span></div></h5>
-								<div className="viewnums"><span className="a3">{this.state.userData.consume || 0}</span>元</div>
-							</div>
-						</li>
-						<li>
-							<div className="viewpersonal-col">
-								<h5><div><span>空间使用量</span></div></h5>
-								<div className="viewnums"><span className="a4">{this.state.userData.currentVal}</span>M</div>
-							</div>
-						</li>
-					</ul>
-					<div className="clear"></div>
-				</div>
+        <div className='text-right'>
+                <Button type='primary' size='large' icon='save' onClick={this.save.bind(this)}>保存</Button>
+              </div>
+        <div className="viewpersonal-scan">
+          <h5><div><span>用户相关扫描件</span></div></h5>
+          <div className="hr10"></div>
+          <ul id="viewpersonal-imgs" style={{ marginLeft:this.state.leftmargin*157 }} name={this.state.linum} onChange={this.onChangeSlider}>
+            <li><img src={'./static/images/file-add.jpg'} /></li>
+            <li><img src={'./static/images/file-normal.jpg'} /></li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            <li>11</li>
+            <li>7</li>
+            <li>8</li>
+            <li>9</li>
+            <li>10</li>
+            <li>11</li>
+          </ul>
+          <div className="clear"></div>
+        </div>
+        <div className="hr10"></div>
+        <Row>
+          <Col span={16}>
+            <Slider min={0} max={this.state.linum} onChange={this.onChangeSlider} value={this.state.inputValue} />
+          </Col>
+          <Col span={4}>
+            <InputNumber min={0} max={this.state.linum} style={{ marginLeft: 16 }}
+              value={this.state.inputValue} onChange={this.onChangeSlider}
+            />
+          </Col>
+        </Row>
 				<div className="hr40"></div>
-
-
 				<div className="viewpersonal-works">
 					<div className="tit-a1">产品与服务</div>
 					
@@ -359,7 +390,9 @@ class ZmitiViewPersonalApp extends Component {
                       </FormItem>
                     </Form>
                   </Modal>
-
+           {!this.state.showCredentialsDiolog && <ZmitiUploadDialog id="personAcc" {...props}></ZmitiUploadDialog>}
+            
+            {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="userCredentials" {...userProps}></ZmitiUploadDialog>}
 
 			</div>
 
@@ -431,13 +464,7 @@ class ZmitiViewPersonalApp extends Component {
         setuserid : userid,
         sussess:(data)=>{
           if(data.getret === 0){
-            console.log(data)
-            /*
-            
-       userData:{
-                portrait:'./personalAcc/static/images/user.jpg',//用户头像
-            },
-             */
+            console.log(data);
             var da = data.getuserinfo;
 
             console.log(da)
@@ -457,11 +484,11 @@ class ZmitiViewPersonalApp extends Component {
                 usersex:da.usersex+'',//用户性别
                 useremergencycontacter:da.useremergencycontacter,//紧急联系人
                 useremergencycontactmobile:da.useremergencycontactmobile,//紧急联系人电话/
-                dateofbirth:da.dateofbirth || new Date(),//紧急联系人电话/
+                dateofbirth:da.dateofbirth || '1970-07-01',//出生日期/
                 credentials:da.credentials,//用户证件照片
                 expiredate:s.endDate,//过期时间/
-                currentVal:parseFloat(s.capacitied),//进度条当前值,用户试用期总时间
-                maxVal:s.capacity,//进度最大值,已使用的时间 (两个数据无关紧要,我最终要根据两个数据算出比例.)
+                capacitied:(parseFloat(da.capacitied)/1000/1000).toFixed(2),//已使用空间
+                capacity:parseFloat(da.capacity),//总空间
             };
 
             
@@ -472,7 +499,7 @@ class ZmitiViewPersonalApp extends Component {
           }
         }
       });
-      
+      s.scanwidth();
     }
     save(){
         var s = this;
@@ -489,7 +516,9 @@ class ZmitiViewPersonalApp extends Component {
           usersex:s.state.userData.usersex,
           dateofbirth:s.state.userData.dateofbirth,
           emergencycontact: s.state.userData.useremergencycontacter,
-          contactmobile: s.state.userData.useremergencycontactmobile
+          contactmobile: s.state.userData.useremergencycontactmobile,
+          usericon: s.state.userData.portrait,
+          credentials:credentialsStr,
         }
 
         console.log(params);
@@ -647,6 +676,20 @@ class ZmitiViewPersonalApp extends Component {
         }
       })
     }
+    //scan
+    /**/
+    scanums(){
+      var temp = document.getElementById('viewpersonal-imgs');
+      var linum = temp.getElementsByTagName("li").length;
+      return linum;
+    }
+    scanwidth(){
+      var temp = document.getElementById('viewpersonal-imgs');
+      var linum = temp.getElementsByTagName("li").length;
+      var ulwidth=parseInt(linum*157);
+      temp.style.width=ulwidth+'px';
+    }
+
     
 }
 

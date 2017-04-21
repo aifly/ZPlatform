@@ -3,21 +3,70 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
-body {
-  font-family: Microsoft Yahei;
-  font-size: 12px; }
+.text-right {
+  text-align: right; }
 
 .viewpersonal-main-ui {
   padding: 50px;
   min-width: 1020px;
   overflow: auto;
-  background-color: #f1f1f1; }
+  background-color: #f1f1f1;
+  /* 	.ant-slider-handle{
+  		width:30px;
+  		background-color: #3a9ef7;
+  		border:none;
+  		@include radius(10px);
+  	} */ }
   .viewpersonal-main-ui .viewpersonal-update {
     position: relative; }
     .viewpersonal-main-ui .viewpersonal-update .viewpersonal-mobile {
       width: 230px; }
     .viewpersonal-main-ui .viewpersonal-update .viewpersonal-email {
       width: 230px; }
+  .viewpersonal-main-ui .ant-slider {
+    background-color: #c6c6c6;
+    border-color: #f1f1f1;
+    height: 4px;
+    border: none;
+    -moz-box-shadow: 3px 3px 2px #cdcdcd;
+    box-shadow: 3px 3px 2px #cdcdcd; }
+  .viewpersonal-main-ui .placeIco {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 18px;
+    text-align: center;
+    -webkit-border-radius: 50%;
+    -moz-webkit-border-radius: 50%;
+    border-radius: 50%; }
+  .viewpersonal-main-ui .placeNum {
+    position: relative;
+    padding: 0 80px 0 0; }
+    .viewpersonal-main-ui .placeNum .placeTip {
+      color: #6e7a90;
+      font-size: 14px;
+      line-height: 1; }
+      .viewpersonal-main-ui .placeNum .placeTip a {
+        color: #999;
+        font-size: 12px; }
+    .viewpersonal-main-ui .placeNum span {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      display: inline-block;
+      width: 70px;
+      font-size: 12px;
+      color: #94a1bb; }
+    .viewpersonal-main-ui .placeNum .ant-progress-inner {
+      background-color: #ffffff; }
+  .viewpersonal-main-ui .icoA .placeIco {
+    background-color: #5bb4d8; }
+  .viewpersonal-main-ui .icoA .ant-progress-bg {
+    background-color: #5bb4d8; }
 
 .rowlinght {
   height: 25px;
@@ -79,19 +128,19 @@ body {
     .viewpersonal-nums .viewnums span.a5 {
       color: #d9990e; }
 
-.userFace {
+.viewpersonal-userFace {
   width: 130px;
   height: 120px;
   position: relative;
   float: left;
   margin-right: 20px; }
-  .userFace img {
+  .viewpersonal-userFace .viewpersonal-faceico {
     width: 120px;
     height: 120px;
     -webkit-border-radius: 50%;
     -moz-webkit-border-radius: 50%;
     border-radius: 50%; }
-  .userFace .editUserIco {
+  .viewpersonal-userFace .editUserIco {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -125,16 +174,12 @@ body {
   display: block;
   width: 20px;
   height: 20px;
+  line-height: 1;
   padding: 0;
-  border: none;
-  background: url(../images/ico-edit.png) no-repeat;
-  text-indent: -9999em; }
-
-.viewpersonal-icoEdit:hover {
-  background: url(../images/ico-edit.png) no-repeat; }
-
-.viewpersonal-icoEdit:focus {
-  background: url(../images/ico-edit.png) no-repeat; }
+  border: none; }
+  .viewpersonal-icoEdit img {
+    width: 20px;
+    height: 20px; }
 
 .viewuserinfor-all {
   margin: 0 5% 0 0;
@@ -158,46 +203,6 @@ body {
   position: relative;
   padding: 0 0 0 40px;
   height: 32px; }
-
-.placeIco {
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: #ffffff;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  font-size: 18px;
-  text-align: center;
-  -webkit-border-radius: 50%;
-  -moz-webkit-border-radius: 50%;
-  border-radius: 50%; }
-
-.placeNum {
-  position: relative;
-  padding: 0 80px 0 0; }
-  .placeNum .placeTip {
-    color: #6e7a90;
-    font-size: 14px;
-    line-height: 1; }
-    .placeNum .placeTip a {
-      color: #999;
-      font-size: 12px; }
-  .placeNum span {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    display: inline-block;
-    width: 70px;
-    font-size: 12px;
-    color: #94a1bb; }
-  .placeNum .ant-progress-inner {
-    background-color: #ffffff; }
-
-.icoA .placeIco {
-  background-color: #5bb4d8; }
-.icoA .ant-progress-bg {
-  background-color: #5bb4d8; }
 
 .viewpersonal-forms div.label {
   line-height: 1;
@@ -298,6 +303,44 @@ body {
 .tit-a1 {
   font-size: 20px;
   color: #99071f; }
+
+.viewpersonal-scan {
+  position: relative;
+  min-width: 1020px;
+  overflow: hidden; }
+  .viewpersonal-scan ul li {
+    width: 145px;
+    height: 145px;
+    background-color: #cccccc;
+    display: list-item;
+    float: left;
+    margin-right: 12px; }
+    .viewpersonal-scan ul li img {
+      -webkit-border-radius: 10px;
+      -moz-webkit-border-radius: 10px;
+      border-radius: 10px;
+      width: 145px;
+      height: 145px;
+      display: block; }
+  .viewpersonal-scan h5 {
+    font-size: 18px;
+    text-align: center;
+    border-bottom: 1px #e4e6ea solid;
+    padding: 0 0 15px 0;
+    position: relative;
+    margin-bottom: 20px; }
+    .viewpersonal-scan h5 div {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 30px;
+      line-height: 30px;
+      overflow: hidden;
+      text-align: center; }
+    .viewpersonal-scan h5 span {
+      background-color: #f1f1f1;
+      padding: 0 8px; }
 
 @media (max-width: 1200px) {
   .viewpersonal-works ul {
