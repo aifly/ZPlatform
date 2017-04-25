@@ -286,10 +286,8 @@ $baseColor:#99071e;
             @include pos(a);
             width:100%;
             height:100%;
-            background:rgba(0,0,0,.5) url('../richimg/static/images/checked.png') no-repeat center center;
+            background:rgba(0,0,0,.5) url(../richimg/static/images/checked.png) no-repeat center center;
             z-index:1;
-
-
           }
         }
         margin:2px;

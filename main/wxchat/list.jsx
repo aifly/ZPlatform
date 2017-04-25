@@ -115,8 +115,7 @@ class ZmitiWxChatListApp extends Component {
 							</ul>
 						</section>}
 			<WXEntryApp {...this.state} {...data}></WXEntryApp>	
-			<ZmitiUploadDialog id={'wxchat-members-head'} {...userHeadProps}></ZmitiUploadDialog>		
-			<ZmitiUploadDialog id={'test'} {...userHeadProps}></ZmitiUploadDialog>		
+			<ZmitiUploadDialog id='wxchat-members-head' {...userHeadProps}></ZmitiUploadDialog>		
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
@@ -196,6 +195,7 @@ class ZmitiWxChatListApp extends Component {
 					message.success(data.getmsg);
 					$.ajax({
 						url:window.baseUrl + '/weixin/getoauthurl/',
+						type:'post',
 						data:{
 
 							userid:s.userid,//不需要传公共参数。
@@ -205,10 +205,10 @@ class ZmitiWxChatListApp extends Component {
 							state:new Date().getTime()+''
 						},
 						success(dt){
-
+							
 							message[dt.getret === 0?'success':'error'](data.getmsg);
 							if(dt.getret === 0){
-								window.location.hash =  '/wxchat/'+ data.worksid+'/'
+								window.location.hash =  '/wxchat/'+ data.worksid+'/';
 							}
 						}
 					})

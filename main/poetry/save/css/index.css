@@ -1,0 +1,153 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.wxchat-save-main-ui {
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+  width: 1000px;
+  left: 50%;
+  margin-left: -500px;
+  height: 100%;
+  top: 50%;
+  margin-top: -300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  -ms-flex-flow: row;
+      flex-flow: row; }
+  .wxchat-save-main-ui > aside {
+    width: 400px;
+    height: 600px; }
+    .wxchat-save-main-ui > aside:last-of-type {
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1; }
+    .wxchat-save-main-ui > aside:first-of-type {
+      position: relative; }
+      .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 286px;
+        height: 600px;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%); }
+        .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main {
+          width: 260px;
+          margin: 85px auto;
+          border: 5px solid #858b9d;
+          border-radius: 3px;
+          position: relative;
+          box-sizing: border-box;
+          height: 440px;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          display: -webkit-flex;
+          -ms-flex-flow: column;
+              flex-flow: column; }
+          .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-bg-C {
+            position: absolute;
+            right: -50px;
+            z-index: 100;
+            top: 0px;
+            cursor: pointer; }
+            .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-bg-C > aside {
+              margin: 5px 0; }
+              .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-bg-C > aside section {
+                position: absolute;
+                top: 5px;
+                right: 100%; }
+          .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-header {
+            width: 100%;
+            height: 50px;
+            overflow: hidden; }
+            .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-header > div {
+              color: #fff;
+              text-align: center;
+              margin-top: 14px;
+              cursor: pointer; }
+              .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-header > div:hover span {
+                background-position: left top !important; }
+              .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-header > div span {
+                display: inline-block; }
+                .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-header > div span:first-of-type {
+                  display: inline-block;
+                  white-space: nowrap;
+                  margin-top: 8px;
+                  word-break: break-all;
+                  text-overflow: ellipsis;
+                  -webkit-text-overflow: ellipsis;
+                  overflow: hidden;
+                  max-width: 120px; }
+          .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-body {
+            -webkit-box-flex: 1;
+                -ms-flex: 1;
+                    flex: 1;
+            position: relative;
+            overflow: hidden;
+            background-color: #ebebeb; }
+            .wxchat-save-main-ui > aside:first-of-type .wxchat-phone-container .wxchat-talk-main .wxchat-talk-body .wxchat-add-talk-btn {
+              width: 240px;
+              cursor: pointer;
+              margin: 10px auto; }
+  .wxchat-save-main-ui > aside:last-of-type {
+    position: relative; }
+    .wxchat-save-main-ui > aside:last-of-type .wxchat-share-ui {
+      width: 400px;
+      height: 70%;
+      position: absolute;
+      top: 50%;
+      margin-top: -200px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      display: -webkit-flex;
+      -ms-flex-flow: column;
+          flex-flow: column; }
+      .wxchat-save-main-ui > aside:last-of-type .wxchat-share-ui section {
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1; }
+        .wxchat-save-main-ui > aside:last-of-type .wxchat-share-ui section:nth-of-type(1) textarea {
+          width: 100%;
+          border: 1px solid #2db7f5;
+          resize: none;
+          margin-top: 10px;
+          height: 47px; }
+        .wxchat-save-main-ui > aside:last-of-type .wxchat-share-ui section:nth-of-type(1) .wxchat-operat-shareimg {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.6);
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          display: -webkit-flex;
+          -ms-flex-flow: column;
+              flex-flow: column; }
+          .wxchat-save-main-ui > aside:last-of-type .wxchat-share-ui section:nth-of-type(1) .wxchat-operat-shareimg button {
+            margin: 8px 0; }
+        .wxchat-save-main-ui > aside:last-of-type .wxchat-share-ui section:nth-of-type(2) {
+          font-size: 18px; }
+        .wxchat-save-main-ui > aside:last-of-type .wxchat-share-ui section:nth-of-type(3) .wxchat-publish-btn, .wxchat-save-main-ui > aside:last-of-type .wxchat-share-ui section:nth-of-type(3) .wxchat-back-edit {
+          width: 120px;
+          height: 36px;
+          line-height: 36px;
+          cursor: pointer;
+          text-align: center;
+          color: #fff;
+          font-size: 16px;
+          border-radius: 5px; }
+        .wxchat-save-main-ui > aside:last-of-type .wxchat-share-ui section:nth-of-type(3) .wxchat-publish-btn {
+          background: #d8271c; }
+        .wxchat-save-main-ui > aside:last-of-type .wxchat-share-ui section:nth-of-type(3) .wxchat-back-edit {
+          background: #2db7f5; }
+
+/*# sourceMappingURL=index.css.map */

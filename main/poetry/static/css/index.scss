@@ -1,0 +1,204 @@
+@import "../../../public/css/base.scss";
+
+h2,h3,h4,h5{
+  font-weight: normal;
+}
+.wxchat-main-ui{
+  width: 100%;
+  height: 100%;
+  padding-bottom: 20px;
+  overflow:auto;
+  &>.hide{
+    opacity:0;
+    @include transition(.5s);
+  }
+  
+  &>.show{
+    opacity:1;
+    z-index: 10;
+    @include transition(.5s);
+  }
+  .wxchat-main-content{
+    width:1000px;
+    height: 86vh;
+
+    @include displayFlex(row);
+    aside:last-of-type{
+      margin-left: 40px;
+    }
+    margin: 0 auto;
+    img{
+      height: 100%;
+      width:auto;;
+    }
+  }
+
+  .wxchat-members,.wxchat-title{
+    h2{
+      font-size:18px;
+      color:#000;
+      span{
+        font-size: 14px;
+        color:#ccc;
+      }
+    }
+  }
+
+  .wxchat-title{
+    h2{
+      margin-bottom: 10px;
+    }
+  }
+  .wxchat-members{
+    margin-top: 40px;
+  }
+
+  .wxchat-members-scroll{
+    max-width: 448px;
+    margin-top:10px;
+    max-height: 420px;
+    margin-left: -10px;
+    @include pos(r);
+    overflow: hidden;
+    
+    ul{
+      width:100%;
+       @include displayFlex(row);
+       -webkit-flex-wrap:wrap;
+       flex-wrap:wrap;
+      li{
+        @include pos(r);
+        @at-root.wxchat-king{
+          @include pos(a);
+          left: 0;
+          top:0;
+          width:24px !important;
+          height: 24px !important;
+
+        }
+
+        &:hover{
+            .wxchat-member-bar{
+              display: block;
+            }
+            &>div{
+               &:first-of-type{
+                  border-color:rgba(0, 140, 237,1);
+               }
+            }
+          }
+
+
+       .wxchat-member-bar{
+
+          &.active{
+            right: -76px;  
+            left: auto;
+            z-index: 100;
+            padding-left: 3px;
+            aside{
+            }
+          }
+          @include pos(a);
+          left: -73px;
+          display: none;
+          padding-right: 3px;
+          aside{
+            margin-right: 3px;
+            border:1px solid rgba(0, 140, 237,1);
+            background: #fff;
+            color:rgba(0, 140, 237,1);
+            width:70px;
+            text-align: center;
+            margin: 5px 0;
+            height: 26px;
+            line-height: 26px;
+            @include br(3px);
+            cursor: pointer;
+            @include transition(.2s);
+            &:hover{
+              background: rgba(0, 140, 237,1);
+              color:#fff;
+            }
+            &:first-of-type{
+              margin: 6px 0;
+            }
+
+          }
+        }
+
+        input{
+          background: transparent;
+          border:none;
+          text-align: center;
+        }
+
+        .ant-input:focus {
+            outline: 0;
+            box-shadow: 0 0 0 1px rgba(0, 140, 237, 0);
+            border:1px dashed rgba(0, 140, 237, .6);
+        }
+
+        width:100px;
+        margin:5px 5px 5px 5px;
+        @include displayFlex();
+        div{
+          &:first-of-type{
+            border:1px solid #ccc;
+            section{
+              width:80%;
+              height: 80%;
+              margin: 10%;
+            }
+          }
+          width:100%;
+          height:100px;
+          &:last-of-type{
+             height:auto;
+             margin-top: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  .wxchat-sure-btn{
+    margin-top: 60px;
+    width: 180px;
+    height: 50px;
+    background: #d8271c;
+    color:#fff;
+    border:none;
+    font-size: 20px;
+    @include br(8px);
+    outline: none;
+    cursor:pointer;
+  }
+}
+
+
+
+@media all and (max-height: 670px) {
+  .wxchat-main-ui{
+    .wxchat-members{
+      margin-top:10px;
+    }
+    &>div>h4{
+      height:1vh !important;
+    }
+    .wxchat-sure-btn{
+      margin-top: 10px;
+      height:40px;
+      line-height: 40px;
+    }
+    .wxchat-main-content {
+      margin-top: 0;
+      height:90vh;
+      &>aside:last-of-type{
+        h4{
+          height:0 !important;
+        }
+      }
+    }
+  } 
+}

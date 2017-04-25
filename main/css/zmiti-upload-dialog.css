@@ -181,7 +181,11 @@
       .zmiti-upload-body .zmiti-asset-C .zmiti-edit-btn button {
         margin-right: 10px; }
   .zmiti-upload-body .zmmiti-asset-content {
-    height: 400px; }
+    height: 400px;
+    overflow: hidden;
+    width: 574px;
+    position: relative;
+    -webkit-user-select: none; }
     .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C {
       display: -webkit-box;
       display: -ms-flexbox;
@@ -199,8 +203,8 @@
         position: fixed;
         z-index: -1; }
       .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption {
-        width: 140px;
-        height: 140px;
+        width: 134px;
+        height: 134px;
         border: 1px solid #ccc;
         margin: 2px;
         box-sizing: border-box;
@@ -212,7 +216,7 @@
           position: absolute;
           width: 100%;
           height: 100%;
-          background: rgba(0, 0, 0, 0.5) url("../richimg/static/images/checked.png") no-repeat center center;
+          background: rgba(0, 0, 0, 0.5) url(../richimg/static/images/checked.png) no-repeat center center;
           z-index: 1; }
         .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption:not(:first-of-type):hover {
           border-color: #f00; }
@@ -223,7 +227,7 @@
           opacity: 1; }
         .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-C {
           width: 100%;
-          height: 140px;
+          height: 133px;
           overflow: hidden; }
         .zmiti-upload-body .zmmiti-asset-content .zmiti-img-figure-C figcaption .zmiti-img-info {
           width: 100%;
@@ -318,5 +322,22 @@
 
 .zmiti-asset-menu {
   display: none; }
+
+.vertical-center-modal {
+  text-align: center;
+  white-space: nowrap; }
+
+.vertical-center-modal:before {
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  width: 0; }
+
+.vertical-center-modal .ant-modal {
+  display: inline-block;
+  vertical-align: middle;
+  top: 0;
+  text-align: left; }
 
 /*# sourceMappingURL=zmiti-upload-dialog.css.map */
