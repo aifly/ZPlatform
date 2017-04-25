@@ -15,7 +15,7 @@ import ZmitiWorkOrderApp from './workorder/index.jsx';
 import ZmitiEditOrderApp from './editorder/index.jsx';
 import ZmitiViewOrderApp from './vieworder/index.jsx';
 import ZmitiListOrderApp from './listorder/index.jsx';
-import ZmitiPoetryApp from './poetry/index.jsx';
+import ZmitiPoetryApp from './datum/index.jsx';
 
 class App extends React.Component{
     constructor(args) {
@@ -32,7 +32,7 @@ class App extends React.Component{
 				{path:'/editorder/(:id)',app:ZmitiEditOrderApp},
 				{path:'/vieworder/(:id)',app:ZmitiViewOrderApp},
 				{path:'/listorder/:title',app:ZmitiListOrderApp},
-				{path: '/poetry/', app: ZmitiPoetryApp}
+				{path: '/datum/', app: ZmitiPoetryApp}
 			];
     return (
         <Router history={hashHistory} >

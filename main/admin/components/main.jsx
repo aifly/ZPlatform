@@ -98,9 +98,9 @@ class MainUI extends Component {
           "isShow":true
       },
       {
-          "linkTo":"/poetry/",
-          "key":"poetry",
-          "title":"诗词管理",
+          "linkTo":"/datum/",
+          "key":"datum",
+          "title":"资料管理",
           "isIcon":true,
           "type":"edit",
           "isShow":true
