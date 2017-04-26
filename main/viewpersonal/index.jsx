@@ -168,9 +168,9 @@ class ZmitiViewPersonalApp extends Component {
 							<div className="hr10"></div>
 							<div className="viewuserinfor-place icoA">
 								<div className="placeIco "><Icon type="hdd" /></div>
-								<div className="placeNum">
+								<div className="placeNum" alt={this.state.userData.capacitied} title={this.state.userData.capacity} name={s.state.userData.capacityratio}>
 									<div className="placeTip">总空间&nbsp;<a href="#">扩充&gt;&gt;</a></div>
-									<Progress percent={s.state.userData.capacityratio*0.001} showInfo={false} />
+									<Progress percent={s.state.userData.capacityratio*1} showInfo={false} />
                   <span>{this.state.userData.capacitied}/{this.state.userData.capacity}</span>
 								</div>
 							</div>
@@ -508,7 +508,7 @@ class ZmitiViewPersonalApp extends Component {
             s.state.userData.capacitied=da.capacitied;
             var strcapacitied=s.state.userData.capacitied;
             var strcapacity=s.state.userData.capacity;
-            s.state.userData.capacityratio=(strcapacitied.replace(/mb|m|MB|M|GB/ig,"")*1)/(strcapacity.replace(/mb|m|MB|M|GB/ig,"")*1)*100;
+            s.state.userData.capacityratio=(strcapacitied.replace(/mb|m|MB|M|GB/ig,"")*1)/(strcapacity.replace(/mb|m|MB|M|GB/ig,"")*1)*0.1;
             
             s.forceUpdate();
           }
@@ -714,8 +714,6 @@ class ZmitiViewPersonalApp extends Component {
           processData: false,
           success(data){
                     console.log(data);
-                    //data.getfileurlArr[0].key = s.props.randomString(8);
-                    //s.state.uploadData.push(data.getfileurlArr[0]);
                     s.forceUpdate();
                     window.location.reload();
           }
