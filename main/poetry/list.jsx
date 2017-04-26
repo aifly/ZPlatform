@@ -63,8 +63,8 @@ class ZmitiPoetryListApp extends Component {
 					</li>
 					{this.state.poetryList.map((item,i)=>{
 						return <li key={i}>
-
-							<div onClick={this.save.bind(this,item.worksid)} className='poetry-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
+							<section onClick={this.save.bind(this,item.worksid)}  className='poetry-qrcode'><img src={item.qrcodeUrl}/></section>
+							<div className='poetry-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 							<div className='poetry-item-name'>{item.worksname}</div>
 							<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
 								<div className='poetry-item-view'><a href={item.viewpath} target='_blank'><img src='./static/images/eye.png'/></a></div>
@@ -174,6 +174,7 @@ class ZmitiPoetryListApp extends Component {
 			},
 			success(data){
 				if(data.getret === 0){
+
 					s.state.poetryList = data.getworksInfo;
 					s.forceUpdate();
 				}

@@ -27,6 +27,18 @@
         background-color: rgba(0, 0, 0, 0.6); }
       .poetry-list-main-ui .poetry-list-C .poetry-list li .poetry-item-shareimg {
         height: 200px; }
+      .poetry-list-main-ui .poetry-list-C .poetry-list li:hover .poetry-qrcode {
+        -webkit-transform: scale(1);
+        transform: scale(1); }
+      .poetry-list-main-ui .poetry-list-C .poetry-list li .poetry-qrcode {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        -webkit-transition: 0.2s;
+        transition: 0.2s;
+        -webkit-transform: scale(0);
+        transform: scale(0); }
       .poetry-list-main-ui .poetry-list-C .poetry-list li .poetry-item-view {
         position: absolute;
         width: 20px;

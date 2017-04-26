@@ -174,39 +174,44 @@ window.getCookie = function(cname){
     return "";  
 };
 
-var s = JSON.parse(window.getCookie('login'));
+try{
+	var s = JSON.parse(window.getCookie('login'));
 
-$.ajax({
-	url:window.baseUrl+'product/get_product/',
-    data:{
-      userid:s.userid,
-      getusersigid:s.getusersigid
-    },
-    success(data){
-    	if(data.getret === 0){
-    		var arr = [];
-    		data.productlist.map((item,i)=>{
+	$.ajax({
+		url:window.baseUrl+'product/get_product/',
+	    data:{
+	      userid:s.userid,
+	      getusersigid:s.getusersigid
+	    },
+	    success(data){
+	    	if(data.getret === 0){
+	    		var arr = [];
+	    		data.productlist.map((item,i)=>{
 
-    			arr.push({
-    				"productid":item.productid,
-    				"linkTo":item.producturl,
-					"key":item.producturl.split('/')[1],
-					"title":item.productname,
-					"iconType":item.icontype,
-					"type":item.producticon
-    			})
-    		});
-    		window.globalMenus = arr;
-			ReactDOM.render(<App></App>, document.getElementById('fly-main'));
-			window.mainLeftSize = 180;
-			window.onresize = function(){
-				window.obserable.trigger({type:'setMainHeight'});
-				window.obserable.trigger({type:'setMenuWidth'});
-			}
+	    			arr.push({
+	    				"productid":item.productid,
+	    				"linkTo":item.producturl,
+						"key":item.producturl.split('/')[1],
+						"title":item.productname,
+						"iconType":item.icontype,
+						"type":item.producticon
+	    			})
+	    		});
+	    		window.globalMenus = arr;
+				ReactDOM.render(<App></App>, document.getElementById('fly-main'));
+				window.mainLeftSize = 180;
+				window.onresize = function(){
+					window.obserable.trigger({type:'setMainHeight'});
+					window.obserable.trigger({type:'setMenuWidth'});
+				}
 
 
-    	}
-    }
-})
+	    	}
+	    }
+	})
+}
+catch(e){
+	window.location.href = window.loginUrl;
+}
  
 
