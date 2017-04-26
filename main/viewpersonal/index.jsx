@@ -13,7 +13,6 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import ZmitiProgress from '../components/Progress.jsx';
 import ZmitiCard from '../components/cardgroup.jsx';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
-import ZmitiPersonalScan from '../components/picture.jsx';
 import $ from 'jquery';
 const FormItem = Form.Item;
 const { Header, Content } = Layout;
@@ -60,19 +59,29 @@ class ZmitiViewPersonalApp extends Component {
                 ],//用户证件照片
               
                 expiredate:'2016-12-13',//过期时间/
-                capacitied:0,//已使用空间
-                capacity:1,//总空间
+                capacitied:'',//已使用空间
+                capacity:'',//总空间
                 projectnum:'',//作品总个数.
                 loginnum:'',//登录次数.
                 spaceuse:'',//空间使用量
                 consume:'',//总消费数
+                capacityratio:'',//空间占用比
             },
             modifyUserPwdDialogVisible:false,
             modPersonalDialogVisible:false,
+            uploadData:[],//上传图片
+            imgsData:[],//库里图片
+            imgsNum:0,//图片数量
+            inputValue:0,//滑动起始值
+        }
+        this.onChangeSlider = (value) => {
+            this.setState({
+              inputValue: value,
+            });
         }
     }
 
-	render() {
+	render() {        
         var s =this;
         const props = {
             baseUrl: window.baseUrl,
@@ -104,9 +113,14 @@ class ZmitiViewPersonalApp extends Component {
            labelCol: {span: 6},
            wrapperCol: {span: 14},
          };
-             //
+         //
+         let w =157 * this.state.imgsNum;
+          let ulStyle = {
+            width: w,
+            marginLeft:-this.state.inputValue*157
+          }
         
-
+          
          
 
 
@@ -154,10 +168,10 @@ class ZmitiViewPersonalApp extends Component {
 							<div className="hr10"></div>
 							<div className="viewuserinfor-place icoA">
 								<div className="placeIco "><Icon type="hdd" /></div>
-								<div className="placeNum">
+								<div className="placeNum" alt={this.state.userData.capacitied} title={this.state.userData.capacity} name={s.state.userData.capacityratio}>
 									<div className="placeTip">总空间&nbsp;<a href="#">扩充&gt;&gt;</a></div>
-									<Progress percent={50} showInfo={false} />
-                  <span>{this.state.userData.capacitied}G/{this.state.userData.capacity}G</span>
+									<Progress percent={s.state.userData.capacityratio*1} showInfo={false} />
+                  <span>{this.state.userData.capacitied}/{this.state.userData.capacity}</span>
 								</div>
 							</div>
               <div className="hr30"></div>
@@ -228,7 +242,36 @@ class ZmitiViewPersonalApp extends Component {
         <div className="hr30"></div>
         <div className="viewpersonal-large"><div><span>用户相关扫描件</span></div></div>
         <div className="hr10"></div>
-        <ZmitiPersonalScan {...this.state.userData}></ZmitiPersonalScan>
+
+        <div className="viewpersonal-scan">
+          <div className="viewpsersonal-column">
+              <div className="viewpersonal-add">
+                <input ref="upload-file" onChange={this.uploadFile.bind(this)} type="file"  />                                
+              </div>
+              <div className="viewpsersonal-picList" ref="acc-scan-C">
+                  <ul  className="viewpersonal-imgs" id="viewpersonal-imgs" style={ulStyle}>                      
+                    
+                        {
+                          this.state.imgsData.map((item,i)=> {
+                            return(
+                                <li key={i}>
+                                  <div><img src={item.src}/></div>
+                                </li>
+                            )
+                          })
+                        }
+                  
+                  </ul>
+
+              </div>
+              <div className="clear"></div>
+          </div>
+          <div>
+
+              <Slider min={0} max={this.state.imgsNum-3} tipFormatter={null} onChange={this.onChangeSlider} value={this.state.inputValue} />
+
+          </div>                  
+        </div>
         
 				<div className="hr40"></div>
 				<div className="viewpersonal-works">
@@ -441,31 +484,31 @@ class ZmitiViewPersonalApp extends Component {
             console.log(data);
             var da = data.getuserinfo;
 
-            console.log(da)
+            console.log(da,'全部信息');
 
-            s.state.userData={
-                portrait:da.portrait||'./personalAcc/static/images/user.jpg',
-                username:da.username,//用户名
-                useremail:da.useremail,
-                usermobile:da.usermobile,
-                departmentname:da.departmentname,
-                departmentid:da.departmentid,
-                companyid:da.companyid,
-                companyname:da.companyname,
-                appid:da.wxappid,
-                appsecret :da.wxappsecret,
-                userrealname:da.userrealname,//用户真实姓名
-                usersex:da.usersex+'',//用户性别
-                useremergencycontacter:da.useremergencycontacter,//紧急联系人
-                useremergencycontactmobile:da.useremergencycontactmobile,//紧急联系人电话/
-                dateofbirth:da.dateofbirth || '1970-07-01',//出生日期
-                datesign:da.datesign+'',//阴历阳历
-                credentials:da.credentials,//用户证件照片
-                expiredate:s.endDate,//过期时间/
-                capacitied:(parseFloat(da.capacitied)/1000/1000).toFixed(2),//已使用空间
-                capacity:parseFloat(da.capacity),//总空间
-            };
-
+            s.state.userData.portrait=da.portrait||'./personalAcc/static/images/user.jpg',
+            s.state.userData.username=da.username,//用户名
+            s.state.userData.useremail=da.useremail,
+            s.state.userData.usermobile=da.usermobile,
+            s.state.userData.departmentname=da.departmentname,
+            s.state.userData.departmentid=da.departmentid,
+            s.state.userData.companyid=da.companyid,
+            s.state.userData.companyname=da.companyname,
+            s.state.userData.appid=da.wxappid,
+            s.state.userData.appsecret=da.wxappsecret,
+            s.state.userData.userrealname=da.userrealname,//用户真实姓名
+            s.state.userData.usersex=da.usersex+'',//用户性别
+            s.state.userData.useremergencycontacter=da.useremergencycontacter,//紧急联系人
+            s.state.userData.useremergencycontactmobile=da.useremergencycontactmobile,//紧急联系人电话/
+            s.state.userData.dateofbirth=da.dateofbirth || '1970-07-01',//出生日期
+            s.state.userData.datesign=da.datesign+'',//阴历阳历
+            s.state.userData.credentials=da.credentials,//用户证件照片
+            s.state.userData.expiredate=s.endDate,//过期时间/
+            s.state.userData.capacity=da.capacity;
+            s.state.userData.capacitied=da.capacitied;
+            var strcapacitied=s.state.userData.capacitied;
+            var strcapacity=s.state.userData.capacity;
+            s.state.userData.capacityratio=(strcapacitied.replace(/mb|m|MB|M|GB/ig,"")*1)/(strcapacity.replace(/mb|m|MB|M|GB/ig,"")*1)*0.1;
             
             s.forceUpdate();
           }
@@ -474,6 +517,7 @@ class ZmitiViewPersonalApp extends Component {
           }
         }
       });
+      s.getPersonalImg();
 
     }
     save(){
@@ -651,6 +695,84 @@ class ZmitiViewPersonalApp extends Component {
             window.location.reload();
         }
       })
+    }
+    //上传图片
+    uploadFile(){
+
+        let formData = new FormData(),
+            s = this;
+        formData.append('userid',s.userid);
+        formData.append('getusersigid',s.getusersigid);
+        formData.append('setuploadtype','0');
+        formData.append('setdatainfoclassid','1465285201');//1465782386
+        formData.append('setupfile', this.refs['upload-file'].files[0]);
+        $.ajax({
+          url:window.baseUrl+ 'upload/upload_file',
+          type:'post',
+          data:formData,
+          contentType: false,
+          processData: false,
+          success(data){
+                    console.log(data);
+                    s.forceUpdate();
+                    window.location.reload();
+          }
+        })
+    }
+    //获取图片
+    getPersonalImg(){
+        var s=this;
+        $.ajax({
+            url: window.baseUrl + 'datainfoclass/get_datainfo/',
+
+            data: {
+                userid: s.userid,
+                getusersigid: s.getusersigid,
+                setdatainfoclassid:1465285201,
+                setdatainfotype:0
+            },
+            success(data){
+              console.log(data,"图片列表");
+              s.state.imgsData=data.allImgs;
+              s.state.imgsNum=data.allImgs.length;
+              s.forceUpdate();
+            }
+        })
+    }
+    //删除图片
+    delUploadfile(recoder,index){
+
+        var s=this;
+
+        $.ajax({
+
+            url: window.baseUrl + 'user/del_workorderfile/',
+
+            data: {
+                userid: s.userid,
+                getusersigid: s.getusersigid,
+                setpwd: recoder.setpwd,
+                filename: recoder.filename,
+            },
+            success(data){
+                if (data.getret === 0) {
+                    message.success("成功删除！");
+                    s.state.uploadData.splice(index,1);
+                    s.forceUpdate();
+                }
+                else if (data.getret === -3) {
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(() => {
+                        location.href = '/';
+                    }, 2000)
+                }
+                else {
+                    message.error(data.getmsg);
+                }
+
+
+            }
+        })
     }
 
 

@@ -25,6 +25,7 @@
 	.viewpsersonal-column{
 		position: relative;
 		padding: 0 0 0 157px;
+		min-height: 145px;
 		overflow: hidden;
 		.viewpersonal-add{
 			position: absolute;
@@ -34,15 +35,29 @@
 			height:145px;
 			margin-right:12px;
 			cursor: pointer;
+			background:url(../static/images/file-add.jpg) no-repeat;
 			img{
 				width:145px;
 				height:145px;
+				cursor: pointer;
+			}
+			input{
+				width:145px;
+				height:145px;
+				border:none;
+				opacity:0;
+				background:none;
 				cursor: pointer;
 			}
 		}
 	}
 	.viewpsersonal-picList{
 		overflow:hidden;
+		img{
+			width:145px;
+			height:145px;
+			display: block;
+		}
 	}
 	.viewpersonal-imgs{
 		li{
