@@ -15,6 +15,7 @@
   .viewpersonal-scan .viewpsersonal-column {
     position: relative;
     padding: 0 0 0 157px;
+    min-height: 145px;
     overflow: hidden; }
     .viewpersonal-scan .viewpsersonal-column .viewpersonal-add {
       position: absolute;
@@ -23,13 +24,25 @@
       top: 0;
       height: 145px;
       margin-right: 12px;
-      cursor: pointer; }
+      cursor: pointer;
+      background: url(../static/images/file-add.jpg) no-repeat; }
       .viewpersonal-scan .viewpsersonal-column .viewpersonal-add img {
         width: 145px;
         height: 145px;
         cursor: pointer; }
+      .viewpersonal-scan .viewpsersonal-column .viewpersonal-add input {
+        width: 145px;
+        height: 145px;
+        border: none;
+        opacity: 0;
+        background: none;
+        cursor: pointer; }
   .viewpersonal-scan .viewpsersonal-picList {
     overflow: hidden; }
+    .viewpersonal-scan .viewpsersonal-picList img {
+      width: 145px;
+      height: 145px;
+      display: block; }
   .viewpersonal-scan .viewpersonal-imgs li {
     width: 145px;
     height: 145px;
