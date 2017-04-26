@@ -1,0 +1,580 @@
+@import "../../../public/css/base.scss";
+.wxchat-main-stage{//main - stage
+    opacity:0;
+    z-index: -1;
+    @include pos(a);
+    top:0;
+    width:100%;
+    
+    @include displayFlex(row);
+    &>aside{
+      &:first-of-type{
+        flex:1;
+        @include pos(r);
+        .wxchat-phone-container{
+            @include pos(a);
+            left: 50%;
+            top:50%;
+            width:286px;
+            height:600px;
+            @include transform(translate(-50%,-50%));
+
+            .wxchat-talk-main{
+              width:260px;
+              margin:85px auto;
+              border:5px solid #858b9d;
+              @include br(3px);
+              @include pos(r);
+              .wxchat-talk-bg-C{
+                @include pos(a);
+                right:-50px;
+                z-index: 100;
+                top:0px;
+                cursor:pointer;
+
+                &>aside{
+                  margin:5px 0;
+                  section{
+                    @include pos(a);
+                    top:5px;
+                    right:100%;
+                  }
+                }
+              }
+              box-sizing:border-box;
+              height: 440px;
+              @include displayFlex();
+              .wxchat-talk-header{
+                width:100%;
+                height: 50px;
+                overflow:hidden;
+                &>div{
+                  color:#fff;
+                  text-align: center;
+                  margin-top: 14px;
+                  cursor: pointer;
+                  &:hover{
+                  	 span{
+                  	 	background-position: left top !important;
+                  	 }
+                  }
+                  span{
+                  	display: inline-block;
+                    &:first-of-type{
+                      background:#333;
+                      display: inline-block;
+                       white-space:nowrap;
+                        word-break:break-all;
+                        text-overflow:ellipsis;
+                        -webkit-text-overflow:ellipsis;
+                      padding: 0 4px 3px 4px;
+                      @include br(3px);
+                      overflow:hidden;
+                      max-width: 120px;
+                    }
+                    &:last-of-type{
+                    	width: 31px;
+                    	height: 31px;
+                    	@include pos(r);
+                    	top:2px;
+                    	@include transform(scale(.8));
+                    	left: 2px;
+                    }
+                  }
+                }
+              }
+              .wxchat-talk-body{
+                 flex:1;
+                 @include pos(r);
+                 overflow: hidden;
+                 background-color:#ebebeb;
+                  $size:240px;
+                 .wxchat-add-talk-btn{
+                 	width:$size;
+                 	cursor: pointer;
+                 	margin:10px auto;
+                 }
+                
+                 .wxchat-edit-member-list{
+                     	width:$size;
+          				    margin: 12px auto;
+          				    background: #ccc; 
+          				    @include br(5px);
+          				    color:#fff;
+          				    padding: 7px 10px;
+          				    line-height: 16px;
+          				    box-sizing:border-box;
+          				    font-size: 12px;
+          				    @include  pos(r);
+          				    -webkit-text-size-adjust: none;
+          				    div{
+          				      height: 100%;
+          				      width:100%;
+          				    }
+                 }
+
+                 .wxchat-edit-talk-list{
+                    width:$size;
+                    margin:12px auto;
+                    li{
+                        &.active{
+                          border:1px solid #ed4949;
+                         /// box-shadow: 0 0 30px rgba(45,183,245,.5) ;
+                          box-sizing:border-box;
+                        }
+                        @include pos(r);
+                        cursor: pointer;
+                        font-size: 12px;
+                        @include displayFlex(row);
+                        margin:10px 0;
+                        .wxchat-edit-talk-head{
+                          width:40px;
+                          height: 40px;
+                        }
+                        .wxchat-edit-talk-content{
+                          max-width: 160px;
+                          margin-left: 12px;
+
+                          word-wrap:break-word;
+                          word-break:break-all;
+
+                          .wxchat-audia{
+                            width:100px;
+                            height: 22px;
+                            background-color: #fff;
+                            @include br(4px);
+                            @include pos(r);
+                            img{
+                              width:10px;
+                              margin: 6px;
+                            }
+                            &:before{
+                              content:'';
+                              @include pos(a);
+                              $size1:6px;
+                              width:$size1;
+                              height: $size1;
+                              background-color:#fff;
+                              left: -$size1 / 2;
+                              top:8px;
+                              @include transform(rotate(45deg));
+                            }
+                            &:after{
+                              content:'';
+                              @include pos(a);
+                              width:5px;
+                              height: 5px;
+                              background-color: #f00;
+                              @include br(50%);
+                              right: -8px;
+                            }
+                          }
+
+                          &.wxchat-edit-talk-img{
+                            aside:last-of-type{
+                              &:before{
+                                display:none;
+                              }
+                              div{
+                                background:transparent;
+                                border:none;
+                                padding:0;
+                              }
+                            }  
+                          }
+                          aside:first-of-type{
+                          	@include transformOrigin(left top);
+                          	@include transform(scale(.9));
+                            margin-top: -3px;
+
+                             overflow: hidden;
+                            white-space:nowrap;
+                            word-break:break-all;
+                            text-overflow:ellipsis;
+                            -webkit-text-overflow:ellipsis;
+                          }
+                          aside:last-of-type{
+
+                            div{
+                              background:#fff;
+                              border:1px solid #bbbbbb; 
+                              @include br(3px);
+                              padding:5px 5px;
+                              color:#333;
+                              a{
+                                color:inherit;    
+                              }
+                            }
+                            box-sizing:border-box;
+                            @include pos(r);
+                            &:before{
+                              content:'';
+                              @include pos(a);
+                              left:-5px;
+                              @include br(1px);
+                              width:10px;
+                              height: 10px;
+                              background: #fff;
+                              border:1px solid #bbb;
+                              border-right: none;
+                              border-top:none; 
+                              top: 10px;
+                              @include transform(rotate(45deg));
+                            }
+                          }
+
+
+                        }
+                    }
+
+                    .wxchat-edit-talk-user{
+                       justify-content:flex-end;
+
+
+                        .wxchat-edit-talk-content{
+                         margin-right: 12px;
+                         display: inline-block;
+                          &.wxchat-edit-talk-img{
+
+
+                           .wxchat-audia{
+                             background:#a7e753;
+                             height:26px;
+                             text-align: right;
+                             img{
+                              @include transform(rotate(180deg));
+                             }
+                             &:after{
+                              display:none;
+                             }
+                             &:before{
+                              content:'';
+                              @include pos(a);
+                              $size1:6px;
+                              width:$size1;
+                              height: $size1;
+                              background-color:inherit;
+                              right: -$size1 / 2;
+                              left:auto;
+                              top:8px;
+                              @include transform(rotate(45deg));
+                            }
+                           }
+                            aside:last-of-type{
+                              &:before{
+                                display:none;
+                              }
+                              div{
+                                background:transparent;
+                                border:none;
+                                padding:0;
+                              }
+                            }  
+                          }          
+                          aside:first-of-type{
+                            margin: 0;
+                            overflow: hidden;
+                            white-space:nowrap;
+                            word-break:break-all;
+                            text-overflow:ellipsis;
+                            -webkit-text-overflow:ellipsis;
+                          }
+                          aside:last-of-type{
+
+                              @include pos(r);
+                              div{
+                                background: #a7e753;
+
+                              }
+                              &:before{
+                                content:'';
+                                right:-5px;
+                                left: auto;
+                                background: #a7e753;
+                                border-left: none;
+                                border-bottom:none; 
+                              }
+                            }
+                      }        
+                    }
+                 }
+
+                 .wxchat-group-name{
+                 	font-size: 12px;
+                 	color:#fff;
+                  padding: 2px;
+                 	background: #ccc;
+                 	width:$size;
+                 	margin:0 auto;
+                 	text-align: center;
+                 	@include br(2px);
+                 }
+
+              }
+              .wxchat-talk-footer{
+                width:100%;
+                height: 34px;
+              }
+            }
+        }
+      }
+      &:last-of-type{
+         width:500px;
+         overflow: auto;
+      }
+    }
+
+
+    //right aside 
+    .wxchat-edit-header{
+    	$size:50px;
+    	width:100%;
+    	height: $size;
+    	
+    	color:#fff;
+    	@include displayFlex(row);
+    	@include pos(r);
+    	&:before{
+    		content:'';
+    		width:1px;
+    		//background: #dbe3e8;
+    		height: $size - 2;
+    		top:1px;
+    		left: 50%;
+    		@include pos(a);
+    	}
+    	aside{
+    		font-size: 16px;
+    		flex:1;
+    		background: #333;
+    		text-align: center;
+    		line-height: $size;
+    		cursor: pointer;
+    		@include transition(.4s);
+    		&:hover{
+    			background: #008ced;
+    		}
+
+    	}
+    }
+
+    .wxchat-modify-memebers{
+    	width: 435px;
+    	margin: 0 auto;
+    	h2{
+    		font-size: 18px;
+    		color:#7b9099;
+    		margin-top: 30px;
+    	}
+    }
+     .wxchat-modify-groupname{
+     	width: 435px;
+    	margin: 0 auto;
+    	h2{
+    		font-size: 18px;
+    		color:#7b9099;
+    		margin-top: 30px;
+    		height: 50px;
+    	}
+     }
+     .wxchat-modify-talk-content{
+     	width: 435px;
+    	margin: 0 auto;
+     	h2{
+    		font-size: 18px;
+    		color:#7b9099;
+    		margin-top: 30px;
+    		height: 50px;
+    	}
+    	$size:52px;
+    	.wxchat-edit-me{
+    		width:$size;
+    		height:$size;
+    		box-sizing:border-box;
+    		border:1px solid #cccccc;
+    		background-color: #fff;
+    		@include br(2px);
+    		text-align: center;
+    		padding: 4px;
+    		cursor: pointer;
+    		@include pos(r);
+    		div{
+    			
+    			height: 100%;
+    		}
+    		section{
+    			margin-top: 6px;
+    		}
+    		&:hover{
+    			.wxchat-member-bar{
+    				display: block;
+    			}
+    		}
+    		.wxchat-member-bar{
+		          @include pos(a);
+		          padding-left: 3px;
+		          top:0;
+              z-index: 100;
+              display: none;
+		          margin: 0;
+		          right: -70px;
+		          aside{
+		            
+		            border:1px solid rgba(0, 140, 237,1);
+		            background: #fff;
+		            color:rgba(0, 140, 237,1);
+		            width:70px;
+		            text-align: center;
+		            margin: 1px 0;
+		            height: 26px;
+		            line-height: 26px;
+		            @include br(3px);
+		            cursor: pointer;
+		            @include transition(.2s);
+		            &:hover{
+		              background: rgba(0, 140, 237,1);
+		              color:#fff;
+		            }
+		            &:first-of-type{
+		              
+		            }
+		          }
+		        }
+
+    	}
+    	.wxchat-edit-line{
+    		width:100%;
+    		height: 1px;
+    		background-color: #ccc;
+    		margin: 30px auto 10px;
+    	}
+    	.wxchat-edit-count{
+    		img{
+    			width:20px;
+    			vertical-align: middle;
+    			margin-right: 10px;
+    		}
+    		color:#b4b8c2;
+    		font-size: 14px;
+
+
+    	}
+
+
+    	.wxchat-edit-scroll{
+    		height: $size + 30;
+    		width:100%;
+    		overflow: hidden;
+    		@include pos(r);
+    		&:after{
+    			content:'';
+    			@include pos(a);
+    			height: 1px;
+    			width:100%;
+    			background-color: #ccc;
+    			bottom: 0;
+    		}
+    		margin-top: 10px;
+    		ul{
+    			@include displayFlex(row);
+    			li{
+            &.active{
+              border:1px solid #2db7f5;
+            }
+            border:1px transparent;
+    				cursor: pointer;
+    				@include pos(r);
+    				width:$size;
+    				height: $size;
+    				margin: 0 5px;
+    				text-align: center;
+    				&>div{
+    					&:first-of-type{
+    						width:100%;
+    						height: 100%;
+    						padding: 4px;
+    						border:1px solid #ccc;
+    						section{
+    							width:100%;
+    							height: 100%;
+    						}
+    					}
+    					&.wxchat-user-name{
+    						max-width: $size;
+    						overflow: hidden;
+                white-space:nowrap;
+                word-break:break-all;
+                text-overflow:ellipsis;
+                -webkit-text-overflow:ellipsis;
+    					}
+    				}
+    			}
+    		}
+    	}
+     }
+
+
+
+     .wxchat-linkobj-C{
+
+        &:before{
+          content:'';
+          @include pos(a);
+          width:10px;
+          height: 10px;
+          @include transform(rotate(45deg));
+          background: #fff;
+          left: -5px;
+          top:8px;
+
+        }
+
+        &.wxchat-linkobj-isMe{
+
+            &:before{display: none;}
+            &:after{
+              content:'';
+              @include pos(a);
+              width:10px;
+              height: 10px;
+              @include transform(rotate(45deg));
+              background: #fff;
+              right: -5px;
+              top:8px;
+
+            }  
+
+        }
+        width: 160px;
+        height:70px;
+        background-color: #fff !important;
+        box-sizing:border-box;
+        padding:5px 10px !important;
+        @include pos(r);
+        section:nth-of-type(1){
+            overflow: hidden;
+            white-space:nowrap;
+            word-break:break-all;
+            text-overflow:ellipsis;
+            -webkit-text-overflow:ellipsis;
+        }
+        section:nth-of-type(2){
+          font-size: 12px;
+          @include transform(scale(.8));
+          @include transformOrigin(left);
+          overflow: hidden;
+          max-height: 38px;
+          word-wrap:break-word;
+          word-break:break-all;
+          color:#999;
+        }
+        section:nth-of-type(3){
+          @include pos(a);
+          right:10px;
+          bottom: 10px;
+          width:30px;
+          height: 30px;
+          @include br(4px);
+        }
+     }
+  }

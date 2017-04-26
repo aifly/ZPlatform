@@ -70,7 +70,6 @@ export default class ZmitiUploadDialog extends React.Component {
     }
 
     showModal(data) {
-
         if (this.props.id !== data.id) {
             return;
         }
@@ -359,11 +358,13 @@ export default class ZmitiUploadDialog extends React.Component {
 
 
         PubSub.subscribe("showModal", (d, e)=> {
+
             this.showModal(e);
         });
 
         var obserable=window.obserable;
         obserable.on('showModal',(data)=>{
+
             this.showModal(data);
         });
 
@@ -757,11 +758,12 @@ export default class ZmitiUploadDialog extends React.Component {
 
 
             var imgType = type === 0 ? 'src':'imgSrc';
-
+          
             return (
                 <figcaption key={i} onClick={this.chooseImg}
                             data-id={img.id+(img.index === undefined?'_none':'_'+img.index)} className="figcaption"
                             style={{position:'relative',zIndex:100-i}}>
+                    
                     <div className="zmiti-img-C"><img src={img[imgType]} style={style} draggable="false" alt=""/></div>
                     <div className="zmiti-img-info">
                         <section className="zmiti-img-i">

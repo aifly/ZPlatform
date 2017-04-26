@@ -22,6 +22,7 @@ import ZmitiViewUserInforApp  from './viewuserinfor/index.jsx';
 import ZmitiStatisticsListApp  from './statistics/index.jsx';
 import ZmitiViewPersonalApp  from './viewpersonal/index.jsx';
 import ZmitiWXUserInfoApp  from './wxuserinfo/index.jsx';
+import ZmitiPoetryListApp  from './poetry/list.jsx';
 import Obserable from './static/libs/obserable.js';
 
 
@@ -55,7 +56,8 @@ class App extends React.Component{
 				{path: '/viewquestion/(:id)', app: ZmitiViewQuestionApp},
 				{path: '/viewuserinfor/(:id)', app: ZmitiViewUserInforApp},
 				{path: '/viewpersonal/(:id)', app: ZmitiViewPersonalApp},
-				{path: '/wxuserinfo/', app: ZmitiWXUserInfoApp}
+				{path: '/wxuserinfo/', app: ZmitiWXUserInfoApp},
+				{path: '/poetry/', app: ZmitiPoetryListApp},
 		];
 		return (
 			<Router history={hashHistory}>

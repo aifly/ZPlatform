@@ -276,8 +276,8 @@ class ZmitiWxChatApp extends Component {
 						window.obserable.trigger({
 							type:'refreshMemberScroll'
 						})
-
-						s.props.loading(s.state.data.loadingImg,null,()=>{
+						
+						s.props.loading(s.state.data.loadingImg|| [],null,()=>{
 							
 		  					window.obserable.trigger({
 					  			type:'refreshTalkBodyScroll'
