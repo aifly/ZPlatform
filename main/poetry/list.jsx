@@ -58,12 +58,13 @@ class ZmitiPoetryListApp extends Component {
 		var component = <div className='poetry-list-main-ui'>
 			<section className='poetry-list-C'>
 				<ul className='poetry-list'>
-					<li  title='创建作品' onClick={()=>{this.setState({isEntry:0})}}>
+					<li  title='创建作品' onClick={this.createWork.bind(this)}>
 						<img src='./static/images/create.png'/>
 					</li>
 					{this.state.poetryList.map((item,i)=>{
 						return <li key={i}>
-							<div className='poetry-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
+
+							<div onClick={this.save.bind(this,item.worksid)} className='poetry-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 							<div className='poetry-item-name'>{item.worksname}</div>
 							<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
 								<div className='poetry-item-view'><a href={item.viewpath} target='_blank'><img src='./static/images/eye.png'/></a></div>
@@ -79,7 +80,59 @@ class ZmitiPoetryListApp extends Component {
 	}
 
 
+	save(worksid){
+		$.ajax({
+			url:window.baseUrl+'/works/update_works/',
+			type:'post',
+			data:{
+				worksid:worksid,
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				datajson:JSON.stringify({worksid:worksid,wxappid:'wxfacf4a639d9e3bcc',
+				wxappsecret:'149cdef95c99ff7cab523d8beca86080'}),
+				worksname:'诗词解密测试',
+				dirname:'poetry',
+				workstag:'',
+				workico:''
+			},
+			success(data){
+				message[data.getret === 0?'success':'error'](data.getmsg);
+			}
+		})
+	}
 
+	createWork(){
+
+		
+		var s = this;
+
+		var type = 0;
+		
+		switch(s.usertypesign) {
+			case window.Role.COMPANYUSER://公司员工
+			case window.Role.COMPANYADMINUSER://公司管理员。
+				type = 1;//对应的是公司的作品。
+				break;
+		}
+		
+		$.ajax({
+			url:window.baseUrl+'/works/create_works/',
+			type:'get',
+			data:{
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				productid:s.productid,
+				dirname:'poetry',
+				worksname:'诗词解密测试',
+				workstate:1,
+				worktypesign:type,
+				datajson:JSON.stringify({})
+			},
+			success(data){
+				message[data.getret === 0?'success':'error'](data.getmsg);
+			}
+		});
+	}
 
 	componentWillMount() {
 		
@@ -97,14 +150,17 @@ class ZmitiPoetryListApp extends Component {
 
 		var s = this;
 
-		window.s = this;
-
-		return;
-
+		window.globalMenus.map((item,i)=>{
+			
+			 if(item.linkTo === '/poetry/'){
+			 	this.productid = item.productid;//获取当前产品的id;
+			 }
+		});
 		$.ajax({
 			url:window.baseUrl + 'works/get_worksinfo/',
 			data:{
 				type:1000,
+				productid:s.productid,
 				userid:s.userid,
 				getusersigid:s.getusersigid
 			},

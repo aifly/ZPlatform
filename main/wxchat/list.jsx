@@ -156,13 +156,7 @@ class ZmitiWxChatListApp extends Component {
 	}
 
 	entryEdit (){
-		window.globalMenus.map((item,i)=>{
-			
-			 if(item.linkTo === '/wxchatlist/'){
-			 	this.productid = item.productid;//获取当前产品的id;
-			 }
-		});
-		
+		 
 		var s = this;
 	 
 		var type = 0;
@@ -251,11 +245,19 @@ class ZmitiWxChatListApp extends Component {
 
 		window.s = this;
 
+		window.globalMenus.map((item,i)=>{
+			
+			 if(item.linkTo === '/wxchatlist/'){
+			 	this.productid = item.productid;//获取当前产品的id;
+			 }
+		});
+
 		$.ajax({
 			url:window.baseUrl + 'works/get_worksinfo/',
 			data:{
 				type:1000,
 				userid:s.userid,
+				productid:s.productid,
 				getusersigid:s.getusersigid
 			},
 			success(data){
