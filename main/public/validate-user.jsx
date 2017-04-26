@@ -27,6 +27,15 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
       return <div></div>;
 	}
 
+	ajaxFail(data){
+		if(data.getret === 1300){
+			message.error(data.getmsg);
+			setTimeout(()=>{
+				window.location.href = window.loginUrl;
+			},1000)
+		}
+	}
+
 	componentWillMount() {
 	  
 	}
@@ -330,8 +339,28 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		}catch(e){
 
 		}
+	}
 
-		
+	zmitiAjax(options={}){
+		var s = this;
+		$.ajax({
+			url:options.url,
+			type:options.type||'get',
+			data:options.data||{},
+			error(){
+				options.error();
+			},
+			success(data){
+				if(data.getret === 1300){
+
+					message.error(data.getmsg);
+					setTimeout(()=>{
+						window.location.href = window.loginUrl;
+					},1000)
+				}
+				options.success(data);
+			}
+		})
 	}
 
 	componentDidMount() {
@@ -357,7 +386,9 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			listen:this.listen,
 			getProductList:this.getProductList,
 			loading:this.loading,
-			randomString:this.randomString
+			ajaxFail:this.ajaxFail,
+			randomString:this.randomString,
+			zmitiAjax:this.zmitiAjax
 			//fillFeilds:this.fillFeilds
 		}
 
