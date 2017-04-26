@@ -81,7 +81,7 @@ class ZmitiPoetryListApp extends Component {
 
 
 	save(worksid){
-		$.ajax({
+		this.zmitiAjax.ajax({
 			url:window.baseUrl+'/works/update_works/',
 			type:'post',
 			data:{
@@ -97,6 +97,9 @@ class ZmitiPoetryListApp extends Component {
 			},
 			success(data){
 				message[data.getret === 0?'success':'error'](data.getmsg);
+				if(data.getret === 1300){//用户登录超时
+					window.location.href = window.loginUrl;
+				}
 			}
 		})
 	}
@@ -115,7 +118,7 @@ class ZmitiPoetryListApp extends Component {
 				break;
 		}
 		
-		$.ajax({
+		this.zmitiAjax({
 			url:window.baseUrl+'/works/create_works/',
 			type:'get',
 			data:{
@@ -136,10 +139,13 @@ class ZmitiPoetryListApp extends Component {
 
 	componentWillMount() {
 		
-		let {resizeMainHeight,validateUser,loginOut} = this.props;
+		let {resizeMainHeight,validateUser,loginOut,zmitiAjax} = this.props;
 
 		resizeMainHeight(this);	
-		
+
+		this.zmitiAjax = zmitiAjax;
+
+
 		let {userid,getusersigid,usertypesign} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
 		this.userid = userid;
 		this.getusersigid = getusersigid;
@@ -156,7 +162,7 @@ class ZmitiPoetryListApp extends Component {
 			 	this.productid = item.productid;//获取当前产品的id;
 			 }
 		});
-		$.ajax({
+		this.zmitiAjax({
 			url:window.baseUrl + 'works/get_worksinfo/',
 			data:{
 				type:1000,
@@ -166,7 +172,6 @@ class ZmitiPoetryListApp extends Component {
 			},
 			success(data){
 				if(data.getret === 0){
-					console.log(data.getworksInfo);
 					s.state.poetryList = data.getworksInfo;
 					s.forceUpdate();
 				}

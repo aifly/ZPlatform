@@ -877,6 +877,21 @@ window.addEventListener('load', ()=> {
                                 capacity:d.capacity,//最大空间使用量。
                             }
 
+                            var opt = {
+                                userids:[d.userid],
+                                content:"您的账号已经在其它地方登录，请重新登录",
+                                href:window.location.href
+                            }
+
+                            $.ajax({
+                                url:data.baseUrl+'msg/send_msg',
+                                data:{
+                                    type:'zmiti-logout',
+                                    content:JSON.stringify(opt),
+                                    to:opt.to||''
+                                }
+                            })
+
                             var p = JSON.stringify(params);
 
 
