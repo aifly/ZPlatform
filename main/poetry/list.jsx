@@ -81,7 +81,8 @@ class ZmitiPoetryListApp extends Component {
 
 
 	save(worksid){
-		this.zmitiAjax.ajax({
+		var s = this;
+		this.zmitiAjax({
 			url:window.baseUrl+'/works/update_works/',
 			type:'post',
 			data:{
@@ -144,6 +145,7 @@ class ZmitiPoetryListApp extends Component {
 		resizeMainHeight(this);	
 
 		this.zmitiAjax = zmitiAjax;
+
 
 
 		let {userid,getusersigid,usertypesign} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
