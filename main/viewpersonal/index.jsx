@@ -170,7 +170,7 @@ class ZmitiViewPersonalApp extends Component {
 								<div className="placeIco "><Icon type="hdd" /></div>
 								<div className="placeNum">
 									<div className="placeTip">总空间&nbsp;<a href="#">扩充&gt;&gt;</a></div>
-									<Progress percent={s.state.userData.capacityratio*1} showInfo={false} />
+									<Progress percent={s.state.userData.capacityratio*0.001} showInfo={false} />
                   <span>{this.state.userData.capacitied}/{this.state.userData.capacity}</span>
 								</div>
 							</div>
