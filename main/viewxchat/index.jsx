@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './static/css/index.min.css';
+import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
 import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
@@ -37,14 +37,18 @@ class ZmitiViewxChatApp extends Component {
 
         const columns = [{
             title: '头像',
-            dataIndex: 'workorderid',
-            key: 'workorderid',
+            dataIndex: 'headimgurl',
+            key: 'headimgurl',
 			width:100,
+            filterIcon:true,
+            render:(value)=>{
+                return <img src={value} />;
+            }
 
         }, {
             title: '昵称',
-            dataIndex: 'content',
-            key: 'content',
+            dataIndex: 'nickname',
+            key: 'nickname',
             render:(value,record)=>{
                 var getLength=value.length;
                 if(getLength>=40)
@@ -57,24 +61,18 @@ class ZmitiViewxChatApp extends Component {
 
         }, {
             title: '类型',
-            dataIndex: 'workordertype',
-            key: 'workordertype',
+            dataIndex: 'usertype',
+            key: 'usertype',
 			width:100,
             filters:[{
-                text:'财务类',
+                text:'0',
                 value:'0',
             },{
-                text:'会员帐号类',
+                text:'1',
                 value:'1',
             },{
-                text:'定制服务类',
+                text:'2',
                 value:'2',
-            }, {
-                text: '产品技术类',
-                value: '3',
-            },{
-                text:'其它类',
-                value:'4',
             }
             ],
             onFilter:(value,record)=>value*1===record.workordertype,
@@ -82,15 +80,11 @@ class ZmitiViewxChatApp extends Component {
             render:(value,record)=>{
                 switch(value){
                     case 0:
-                        return "财务类";
+                        return "0";
                     case 1:
-                        return "会员帐号类";
+                        return "1";
                     case 2:
-                        return "定制服务类";
-                    case 3:
-                        return "产品技术类";
-                    case 4:
-                        return "其它类";
+                        return "2";
                 }
             }
         }, {
@@ -100,16 +94,9 @@ class ZmitiViewxChatApp extends Component {
 			width:150,
         }, {
             title: '总积分',
-            dataIndex: 'status',
-            key: 'status',
-			width:100,
-            filters:[
-            ],
-			onFilter:(value,record)=>value*1===record.status,
-			sorter:(a,b)=>a.status-b.status,
-			render:(value,record)=>{
-
-			}
+            dataIndex: 'totalintegral',
+            key: 'totalintegral',
+			width:100
 
         }, {
             title: '操作',
@@ -117,7 +104,7 @@ class ZmitiViewxChatApp extends Component {
             key: 'operation',
             width:100,
 			render:(text,recoder,index)=>(
-                <span><span className="workorder-gotodetail"><Link to={'/viewquestion/'+recoder.workorderid}>查看</Link></span><span className="workorder-del"><a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.workorderid)}> 删除</a></span>
+                <span><span className="workorder-gotodetail"><Link to={'./'}>查看</Link></span><span className="workorder-del"><a href="javascript:void(0);"> 删除</a></span>
 				</span>
 			)
 
@@ -125,35 +112,30 @@ class ZmitiViewxChatApp extends Component {
 
         
         var mainComponent=
-            
-            <div className="zmiti-workorder-main-ui padding-10">
-				<Row className='zmiti-workorder-header'>
-					<Col span={8}  className='zmiti-workorder-header-inner' >微信用户列表</Col>
-                    <Col span={8} offset={8} className='zmiti-workorder-button-right'></Col>
+        <div className="zmiti-viewxchat-main-ui" style={{height:this.state.mainHeight}}>
+            <div className="padding-10">
+				<Row className='zmiti-viewxchat-header'>
+					<Col span={8}  className='zmiti-viewxchat-header-inner' >微信用户列表</Col>
+                    <Col span={8} offset={8} className='zmiti-viewxchat-button-right'></Col>
 				</Row>
-				<div className="zmiti-workorder-line"></div>
-				<Row gutter={10} type='flex' className='workorder-search '>
-					<Col  className={'zmiti-workorder-with60 workorder-heigth45 rig'} >时间:</Col>
-					<Col  className={'workorder-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.startDate} onChange={(e)=>{this.setState({startDate:e})}} /></Col>
-					<Col  className={'zmiti-workorder-with30 workorder-heigth45 cen'} value={this.state.endDate}>至:</Col>
-					<Col  className={'workorder-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.endDate} onChange={e=>{this.setState({endDate:e})}} /></Col>
-					<Col  className={'zmiti-workorder-with60 workorder-heigth45 rig'}>昵称:</Col>
-					<Col  className={'workorder-heigth45'}><Input value={this.state.keyword} placeholder="关键词" onChange={this.searchByKeyword.bind(this)}/></Col>
-					<Col  className={'workorder-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
+				<div className="zmiti-viewxchat-line"></div>
+				<Row gutter={10} type='flex' className='viewxchat-search '>
+					<Col  className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'} >时间:</Col>
+					<Col  className={'viewxchat-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.startDate} onChange={(e)=>{this.setState({startDate:e})}} /></Col>
+					<Col  className={'zmiti-viewxchat-with30 viewxchat-heigth45 cen'} value={this.state.endDate}>至:</Col>
+					<Col  className={'viewxchat-heigth45 zmiti-viewxchat-with130 '}><DatePicker value={this.state.endDate} onChange={e=>{this.setState({endDate:e})}} /></Col>
+					<Col  className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'}>昵称:</Col>
+					<Col  className={'viewxchat-heigth45'}><Input value={this.state.keyword} placeholder="关键词" onChange={this.searchByKeyword.bind(this)}/></Col>
+					<Col  className={'viewxchat-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
 				</Row>
 				<Table dataSource={this.state.dataSource} columns={columns} bordered/>
-
+            </div>
 		</div>
-
   
 		return (
             <MainUI component={mainComponent}></MainUI>
         );
 	}
-    gotoView(workorderid){
-        location.href='/viewquestion/'+workorderid;
-
-    }
 
     searchBybutton(){
         var workorderid = this.state.workorderid;
@@ -162,7 +144,7 @@ class ZmitiViewxChatApp extends Component {
         var keyWord=this.state.keyword;
         var s = this;
         $.ajax({
-            url:window.baseUrl+'user/get_workorder',
+            url:window.baseUrl+'weixin/get_wxuserlist',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -170,7 +152,6 @@ class ZmitiViewxChatApp extends Component {
                 setstarttime:startDate,
                 setendtime:endDate,
                 setkeyword:keyWord,
-                setisadmin:0,
             },
             success(data){
                 if(data.getret === 0){                    
@@ -249,18 +230,16 @@ class ZmitiViewxChatApp extends Component {
     bindNewdata(){
         var s=this
         $.ajax({
-            url:window.baseUrl+'user/get_workorder',
+            url:window.baseUrl+'weixin/get_wxuserlist',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                setisadmin:0,
-
             },
             success(data){
 
                 if(data.getret === 0){
                     console.log(data,"信息列表");
-                    s.state.dataSource = data.workorderinfo;
+                    s.state.dataSource = data.userlist;
                     s.forceUpdate();
                 }
                 else if(data.getret === -3){
@@ -278,14 +257,6 @@ class ZmitiViewxChatApp extends Component {
     }
 
 
-	changeAccount(i){
-        if(i*1===1){
-            window.location.hash='commitworkorder/';
-        }else if(i*1===0){
-            this.bindNewdata();
-        }
-
-	}
 
 	componentDidMount() {
 

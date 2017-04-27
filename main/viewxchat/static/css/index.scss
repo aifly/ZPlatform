@@ -15,8 +15,9 @@
 @at-root .hidden{
   display: none;
 }
-.zmiti-workorder-main-ui{
-  .zmiti-workorder-header-inner{
+.zmiti-viewxchat-main-ui{
+  overflow:auto;
+  .zmiti-viewxchat-header-inner{
     padding-left: 8px;
     margin-top: 10px;
     @include pos(r);
@@ -28,49 +29,44 @@
       background:#88B7E0 ;
       left:0;
       @include transform(scale(1,.7));
+
     }
 
   }
-  .zmiti-workorder-button-right button{
+  .zmiti-viewxchat-button-right button{
     float:right;
     margin-top: 5px;
   }
-  .zmiti-workorder-line{
+  .zmiti-viewxchat-line{
     height:15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd;
   }
-  .workorder-search {
+  .viewxchat-search {
     margin: 15px 0px;
-    .workorder-heigth45{
+    .viewxchat-heigth45{
       height: 45px;
       line-height: 45px;
       overflow: hidden;
     }
-    .zmiti-workorder-with100{
+    .zmiti-viewxchat-with100{
       width: 80px;
 
     }
-    .zmiti-workorder-with130{
+    .zmiti-viewxchat-with130{
       width: 130px;
 
     }
-    .zmiti-workorder-with30{
+    .zmiti-viewxchat-with30{
       width: 30px;
 
     }
-    .zmiti-workorder-with60{
+    .zmiti-viewxchat-with60{
       width: 60px;
     }
 
   }
-  .red{
-    color: #ff0000;
-  }
-  .green{
-    color:#00ada7;
-  }
-  .workorder-table{
+  .viewxchat-table{
     border: 1px solid #e1e6eb;
     margin-top: 15px;
     background:#FFffff;
@@ -84,20 +80,20 @@
       border-bottom: 1px solid #e1e6eb;
 
     }
-    .zmiti-workorder-table-row{
+    .zmiti-viewxchat-table-row{
       padding: 30px;
-      .workorder-table-col-title{
+      .viewxchat-table-col-title{
         float: left;
         width: 75%;
       }
-      .workorder-table-col-button{
+      .viewxchat-table-col-button{
         float: right;
         width: 25%;
         text-align: center;
         padding: 3px 0px;
 
       }
-      .workorder-table-col-content{
+      .viewxchat-table-col-content{
         padding-top: 5px;
         width: 100%;
         clear: both;
@@ -107,14 +103,14 @@
         font-family: "宋体";
 
       }
-      .workorder-table-box{
+      .viewxchat-table-box{
         height: 50px;
         line-height: 50px;
         padding-left:25px;
         padding-right: 15px;
         background: #F5f6FA;
         margin-bottom: 10px;
-        .workorder-table-col-button{
+        .viewxchat-table-col-button{
           margin-top: 10px;
         }
       }
