@@ -704,7 +704,7 @@ class ZmitiViewPersonalApp extends Component {
         formData.append('userid',s.userid);
         formData.append('getusersigid',s.getusersigid);
         formData.append('setuploadtype','0');
-        formData.append('setdatainfoclassid','1465285201');//1465782386
+        formData.append('setdatainfoclassid','1465782386');//1465782386//1465285201
         formData.append('setupfile', this.refs['upload-file'].files[0]);
         $.ajax({
           url:window.baseUrl+ 'upload/upload_file',
@@ -715,7 +715,8 @@ class ZmitiViewPersonalApp extends Component {
           success(data){
                     console.log(data);
                     s.forceUpdate();
-                    window.location.reload();
+                    
+                    //window.location.reload();
           }
         })
     }
@@ -728,7 +729,7 @@ class ZmitiViewPersonalApp extends Component {
             data: {
                 userid: s.userid,
                 getusersigid: s.getusersigid,
-                setdatainfoclassid:1465285201,
+                setdatainfoclassid:1465782386,
                 setdatainfotype:0
             },
             success(data){
