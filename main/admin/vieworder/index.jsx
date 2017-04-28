@@ -29,6 +29,8 @@ const { Header, Content } = Layout;
             isHidden:false,
 			orderoperation:"",
             workeorderinfo:[],
+            setuserid:'',
+            customername:'',
 		};
 
 		this.condition = 0;
@@ -64,7 +66,7 @@ const { Header, Content } = Layout;
 					<div className="view-questionInfo">
 						<div className="gutter-example">
 							<Row>
-								<Col span={24}><span className="questionTitle">问题标题：</span>{this.state.content}</Col>
+								<Col span={24}><span className="questionTitle">问题描述：</span>{this.state.content}</Col>
 							</Row>
 							<Row>
 								<Col span={6}>
@@ -84,17 +86,17 @@ const { Header, Content } = Layout;
 					</div>
 					<div className="hr10"></div>
 					<Layout className="workorder-table">
-						<Header>沟通记录</Header>
+						<Header>{this.state.getworkordername}</Header>
 						<Content>
 							<div className="view-questionPane">
 								<div className="view-questionLists">
 									<ul>
 										<li>
                                             <div className="view-faceIco">
-                                            	<img src='./static/images/header.png' />
+                                            	<img src={this.state.usericon}/>
                                             </div>
                                             <div className="view-Infor">
-                                                <div>******</div>
+                                                <div>{this.state.customername}</div>
                                                 <div>问题描述：{this.state.content}</div>
                                                 <div>                                                
                                                 	
@@ -114,12 +116,12 @@ const { Header, Content } = Layout;
                                                     </div>
                                                     <div className="view-Infor">
                                                         {item.workordertype === 0 && '管理员回复'}
-                                                        {item.workordertype === 1 && this.state.operauser}
+                                                        {item.workordertype === 1 && this.state.customername}
                                                         <p>问题描述：{item.content}</p>
                                                         <p>{item.operatime}</p>
                                                         <p>
                                                         {item.attachment && item.attachment.split(',').map((atta,i)=>{
-                                                        	return <a href={atta} title={atta}> {/*atta.split('/').pop()*/}点击下载</a>
+                                                        	return <a key={i} href={atta} title={atta}> {/*atta.split('/').pop()*/}点击下载</a>
                                                         })}
                                                         
                                                         </p>
@@ -190,33 +192,31 @@ const { Header, Content } = Layout;
                     s.state.operauser=data.workinfo.userid;
                     s.filterStatus();
                 	s.state.workordertype=data.workinfo.workordertype;
-                    s.getuserinfo();
-
-                    //s.getworkordername();
+                    s.getuserinfo(data.workinfo.userid);//工單用戶信息                    
+                    s.getworkordername();
                     s.forceUpdate();
-
                 }
 			}
 
 		})
         s.getworkorderlist();
-		
-
 	}
 	//获取用户信息
-	getuserinfo(){
+	getuserinfo(inputValue){
     	var s=this;
+
     	$.ajax({
             url:window.baseUrl+'user/get_userdetails/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                setuserid:s.userid,
+                isonly:1,
+                setuserid:inputValue,
             },
             success(data){
-            	console.log(data,"userinfor");
                 if(data.getret === 0){
-                	s.state.usericon=data.getuserinfo.portrait;
+                    s.state.customername=data.getuserinfo.customername;//名称
+                	s.state.usericon=data.getuserinfo.usericon;//头像
                     s.forceUpdate();
                 }
                 else if(data.getret === -3){
@@ -230,6 +230,7 @@ const { Header, Content } = Layout;
                 }
 			}
 		})
+        return inputValue
 
 	}
 	//获取工单详细列表（本次工单的所有对话）
@@ -245,20 +246,10 @@ const { Header, Content } = Layout;
 			success(data){
 				console.log(data)
                 if(data.getret === 0){
-                    //data.workinfo.operainfo[0].key = s.props.randomString(8);
                     s.state.workeorderinfo=data.workinfo.operainfo;
-                    console.log(s.state.workeorderinfo);
+                    s.state.setuserid=data.workinfo.operainfo[0].operauser;
                     s.forceUpdate();
                 }
-               /* else if(data.getret === -3){
-                    message.error('您没有访问的权限,2秒后跳转到首页');
-                    setTimeout(()=>{
-                        location.href='/';
-                    },2000)
-                }
-                else{
-                    loginOut(data.getmsg,window.loginUrl,false);
-                }*/
             }
 
 		})
