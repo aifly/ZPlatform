@@ -882,33 +882,36 @@ window.addEventListener('load', ()=> {
                                 content:"您的账号已经在其它地方登录，请重新登录",
                                 href:window.location.href
                             }
-
                             $.ajax({
                                 url:data.baseUrl+'msg/send_msg',
                                 data:{
-                                    type:'zmiti-logout',
+                                    type:'zmitilogout',
                                     content:JSON.stringify(opt),
                                     to:opt.to||''
+                                },
+                                success(data){
+                                    if(data.getret === 0){
+                                        var p = JSON.stringify(params);
+                                       // document.cookie = p;
+                                        self.clearCookie('login');
+                                        self.setCookie('login',p,1);
+                                       // url+='/'+d.userid+'/'+d.getusersigid;
+
+                                       // alert(url)
+                                        a.href =url;// './main/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
+                                        a.style.position = 'fixed';
+                                        a.style.zIndex = -1;
+                                        a.style.opacity = 0;
+                                        a.click();
+                 
+                                    }
+                                    else{
+                                        alert('error');
+                                    }
                                 }
-                            })
+                            });
 
-                            var p = JSON.stringify(params);
-
-
-                           // document.cookie = p;
-                            self.clearCookie('login');
-                            self.setCookie('login',p,1);
-
-
-                           // url+='/'+d.userid+'/'+d.getusersigid;
-
-                           // alert(url)
-                            a.href =url;// './main/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
-                            a.style.position = 'fixed';
-                            a.style.zIndex = -1;
-                            a.style.opacity = 0;
-                            a.click();
- 
+                            
 
                             //console.log(params);
 /*

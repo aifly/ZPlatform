@@ -78,19 +78,21 @@ class App extends React.Component{
     });*/
     // 后端推送来消息时
     var s = this;
-    socket.on('new_msg', function(msg){
+    socket.on('zmitilogout', function(msg){
+    	console.log(msg);
     		msg = msg.replace(/&quot;/g,"\"");
 	    	var data = JSON.parse(msg);
+
 	    	var uid = window.obserable.trigger({type:"getuserid"});
 	    	if(data.userids.length>0){
 	    		data.userids.forEach((userid)=>{
 	    				if(uid === userid){
 	    					//向当前用户发。
 	    					 if (Notification.permission == "granted") {
-					            s.popNotice({body:data.content});
+					            s.popNotice({body:data.content,href:data.href});
 					        } else if (Notification.permission != "denied") {
 					            Notification.requestPermission(function (permission) {
-					              s.popNotice({body:data.content});
+					              s.popNotice({body:data.content,href:data.href});
 					            });
 					        }else{
 					        		notification['info']({
@@ -109,10 +111,10 @@ class App extends React.Component{
 		            });
 		        }
 		        else{
-									notification['info']({
-				        			message:data.content,
-				        			description:'智媒体提示您'
-				        		});
+					notification['info']({
+        			message:data.content,
+        			description:'智媒体提示您'
+        		});
 		        }
 	    	}
 	    	
@@ -124,10 +126,16 @@ class App extends React.Component{
 			if (window.Notification) {
 		    if (Notification.permission == "granted") {
 	            var notifications = new Notification(opt.title||"智媒体提醒您：", {
-	            	body:opt.body || '你有新的任务了，http://pm.zmiti.com请查看',
-	              icon:opt.icon || 'http://image.zhangxinxu.com/image/study/s/s128/mm1.jpg',
+	            	body:opt.body || '您有新的消息',
+	              icon:opt.icon || 'http://www.zmiti.com/main/static/images/notify.jpg',
 	              sound:opt.sound || 'http://webapi.zmiti.com/public/corruption/assets/music/right.mp3',
 	            });
+
+
+
+	             setTimeout(()=>{
+ 	            	location.href= opt.href;
+ 	             },1000)
 	            
 	            notifications.onclick = function() {
 	                //text.innerHTML = '张小姐已于' + new Date().toTimeString().split(' ')[0] + '加你为好友！';
@@ -139,7 +147,10 @@ class App extends React.Component{
 	                }
 	                notifications.close();
 	            };
-	        }    
+	        } 
+	        setTimeout(()=>{
+            	location.href= opt.href;
+             },1000)
 		} else {
 				fnFail && fnFail();
 		    console.log('your browser did not support notification,plese update your browser');
@@ -148,7 +159,7 @@ class App extends React.Component{
 
 	componentWillMount(){
 
-		///this.listen();
+		this.listen();
 
 		window.obserable = new Obserable();
 		

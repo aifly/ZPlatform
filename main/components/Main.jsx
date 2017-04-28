@@ -80,7 +80,7 @@ class MainUI extends React.Component {
         var defaultOpenKeys = 'sub1';
         if(hash.indexOf('wxuserinfo')>-1|| hash.indexOf('userdepartment')>-1||hash.indexOf('project')>-1||hash.indexOf('viewuserinfor')>-1){
             defaultOpenKeys = 'sub2';
-        }else if(hash.indexOf('personalAcc')>-1 || hash.indexOf('renewal')>-1){
+        }else if(hash.indexOf('viewpersonal')>-1 || hash.indexOf('renewal')>-1){
             defaultOpenKeys = 'sub3';
         }else if(hash.indexOf('custom')>-1 || hash.indexOf('mycustom')>-1){
             defaultOpenKeys = 'sub4';
@@ -301,7 +301,7 @@ class MainUI extends React.Component {
         }
         configMenus = configMenus.concat(this.singleUserMenuConfig);
         configMenus = configMenus.concat(this.customMenuConfig);
-        console.log(hash)
+        
         configMenus.forEach(item=>{
             if(hash.split('/')[1] === item.key){
                 current = item.key;
