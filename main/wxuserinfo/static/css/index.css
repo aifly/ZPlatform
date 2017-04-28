@@ -33,7 +33,7 @@
     color: #000;
     font-size: 18px;
     line-height: 2;
-    margin: 10px 0; }
+    margin: 10px 0 0 0; }
     .zmiti-viewxchat-main-ui .zmiti-viewxchat-h2 label {
       font-size: 18px; }
   .zmiti-viewxchat-main-ui .ant-table-body img {
@@ -56,12 +56,20 @@
       margin-top: 5px; }
   .zmiti-viewxchat-main-ui .red {
     color: #ff0000; }
+  .zmiti-viewxchat-main-ui .zmiti-viewxchat-h3 {
+    color: #000;
+    font-size: 18px;
+    line-height: 1.4; }
+    .zmiti-viewxchat-main-ui .zmiti-viewxchat-h3 .pd10-2 {
+      padding: 0 10px;
+      font-size: 25px;
+      font-family: Ariay; }
   .zmiti-viewxchat-main-ui .zmiti-viewxchat-line {
     height: 15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd; }
   .zmiti-viewxchat-main-ui .viewxchat-search {
-    margin: 15px 0px; }
+    margin-bottom: 10px; }
     .zmiti-viewxchat-main-ui .viewxchat-search .viewxchat-heigth45 {
       height: 45px;
       line-height: 45px;
