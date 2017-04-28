@@ -129,7 +129,7 @@ class ZmitiListOrderApp extends Component {
 			onFilter:(value,record)=>value*1===record.status,
 			sorter:(a,b)=>a.status-b.status,
 			render:(value,record)=>{
-				console.log(value);
+				
             	switch(value){
 					case 0:
 						return <div className='red'>已受理</div>;
@@ -299,7 +299,7 @@ class ZmitiListOrderApp extends Component {
             success(data){
 
                 if(data.getret === 0){
-                	console.log(data);
+                	
                     //s.state.dataSource = data.workorderinfo;
                     //s.forceUpdate();
                     data.workorderinfo.map((item,i)=>{

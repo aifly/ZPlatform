@@ -109,13 +109,13 @@ const { Header, Content } = Layout;
                                             this.state.workeorderinfo.map((item,i)=> {
 
                                             return(
-                                                <li key={i}>
+                                                <li key={i} className={item.workordertype === 0 && 'messageDiv'}>
                                                     <div className="view-faceIco">
                                                     	{item.workordertype === 0 && <img src={'./static/images/notify.jpg'}/>}
                                                         {item.workordertype === 1 && <img src={this.state.usericon}/>}
                                                     </div>
                                                     <div className="view-Infor">
-                                                        {item.workordertype === 0 && '管理员回复'}
+                                                        {item.workordertype === 0 && '管理员回复：'}
                                                         {item.workordertype === 1 && this.state.customername}
                                                         <p>问题描述：{item.content}</p>
                                                         <p>{item.operatime}</p>
