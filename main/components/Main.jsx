@@ -133,8 +133,8 @@ class MainUI extends React.Component {
 
         this.singleUserMenuConfig = [//个人中心下的菜单列表
             {
-                "linkTo":"/personalAcc/",
-                "key":"personalAcc",
+                "linkTo":"/viewpersonal/",
+                "key":"viewpersonal",
                 "title":"基本资料",
                 "isIcon":true,
                 "type":"user",
