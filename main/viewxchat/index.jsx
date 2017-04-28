@@ -25,12 +25,10 @@ class ZmitiViewxChatApp extends Component {
 		this.state = {
             mainHeight:document.documentElement.clientHeight - 50,
             dataSource:[],
-            workorderid:'',
+            wxopenid:'',
             keyword:'',
             startDate:null,
             endDate:moment(new Date(),'YYYY-MM-DD'),
-
-
 		};
 	}
 	render() {
@@ -75,8 +73,8 @@ class ZmitiViewxChatApp extends Component {
                 value:'2',
             }
             ],
-            onFilter:(value,record)=>value*1===record.workordertype,
-            sorter:(a,b)=>a.workordertype-b.workordertype,
+            onFilter:(value,record)=>value*1===record.usertype,
+            sorter:(a,b)=>a.usertype-b.usertype,
             render:(value,record)=>{
                 switch(value){
                     case 0:
@@ -88,23 +86,29 @@ class ZmitiViewxChatApp extends Component {
                 }
             }
         }, {
+            title: '总积分',
+            dataIndex: 'totalintegral',
+            key: 'totalintegral',
+            width:100
+
+        },{
+            title: '最后登录地点',
+            dataIndex: 'citypos',
+            key: 'citypos',
+            width:150
+
+        },{
             title: '创建时间',
             dataIndex: 'createtime',
             key: 'createtime',
 			width:150,
-        }, {
-            title: '总积分',
-            dataIndex: 'totalintegral',
-            key: 'totalintegral',
-			width:100
-
-        }, {
+        },  {
             title: '操作',
             dataIndex: 'operation',
             key: 'operation',
-            width:100,
+            width:150,
 			render:(text,recoder,index)=>(
-                <span><span className="workorder-gotodetail"><Link to={'./'}>查看</Link></span><span className="workorder-del"><a href="javascript:void(0);"> 删除</a></span>
+                <span><span className="workorder-del"><a href="javascript:void(0);"> 删除</a></span>
 				</span>
 			)
 
@@ -125,7 +129,7 @@ class ZmitiViewxChatApp extends Component {
 					<Col  className={'zmiti-viewxchat-with30 viewxchat-heigth45 cen'} value={this.state.endDate}>至:</Col>
 					<Col  className={'viewxchat-heigth45 zmiti-viewxchat-with130 '}><DatePicker value={this.state.endDate} onChange={e=>{this.setState({endDate:e})}} /></Col>
 					<Col  className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'}>昵称:</Col>
-					<Col  className={'viewxchat-heigth45'}><Input value={this.state.keyword} placeholder="关键词" onChange={this.searchByKeyword.bind(this)}/></Col>
+					<Col  className={'viewxchat-heigth45'}><Input value={this.state.keyword} placeholder="昵称" onChange={this.searchByKeyword.bind(this)}/></Col>
 					<Col  className={'viewxchat-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
 				</Row>
 				<Table dataSource={this.state.dataSource} columns={columns} bordered/>
@@ -138,7 +142,7 @@ class ZmitiViewxChatApp extends Component {
 	}
 
     searchBybutton(){
-        var workorderid = this.state.workorderid;
+        var wxopenid = this.state.wxopenid;
         var startDate = this.state.startDate.format("YYYY-MM-DD");
         var endDate=this.state.endDate.format("YYYY-MM-DD");
         var keyWord=this.state.keyword;
@@ -148,7 +152,7 @@ class ZmitiViewxChatApp extends Component {
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                setworkorderid:workorderid,
+                wxopenid:s.wxopenid,
                 setstarttime:startDate,
                 setendtime:endDate,
                 setkeyword:keyWord,
@@ -181,7 +185,7 @@ class ZmitiViewxChatApp extends Component {
 
             this.state.dataSource = this.dataSource.filter((item)=>{
 
-                return  item.workorderid.indexOf(this.state.workorderid)>-1;
+                return  item.wxopenid.indexOf(this.state.wxopenid)>-1;
             });
             this.forceUpdate();
         });
@@ -194,19 +198,19 @@ class ZmitiViewxChatApp extends Component {
             this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
 
             this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.content.indexOf(this.state.keyword)>-1;
+                return  item.nickname.indexOf(this.state.keyword)>-1;
             });
             this.forceUpdate();
         })
     }
-    delData(workorderid){
+    delData(wxopenid){
         var s = this;
         $.ajax({
             url:window.baseUrl+'user/del_workorder/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                setworkorderid:workorderid,
+                wxopenid:wxopenid,
             },
             success(data){
                 if(data.getret === 0){
