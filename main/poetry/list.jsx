@@ -63,12 +63,19 @@ class ZmitiPoetryListApp extends Component {
 					</li>
 					{this.state.poetryList.map((item,i)=>{
 						return <li key={i}>
-							<section onClick={this.save.bind(this,item.worksid)}  className='poetry-qrcode'><img src={item.qrcodeUrl}/></section>
+							<section onClick={this.save.bind(this,item.worksid,item.viewpath)}  className='poetry-qrcode'><img src={item.qrcodeUrl}/></section>
 							<div className='poetry-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 							<div className='poetry-item-name'>{item.worksname}</div>
 							<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
 								<div className='poetry-item-view'><a href={item.viewpath} target='_blank'><img src='./static/images/eye.png'/></a></div>
 							</Tooltip>
+							<div className='poetry-item-operator'>
+											{/*<div><a href={item.viewpath} target='_blank'>预览</a></div>
+																						<div><Link to={'/poetry/'+item.worksid}>编辑</Link></div>*/}
+											<Popconfirm placement="top" title={'确定要删除吗？'} onConfirm={this.deletePoetry.bind(this,item.worksid,i)}>
+												<div>删除</div>
+											</Popconfirm>
+										</div>
 						</li>
 					})}
 				</ul>
@@ -79,8 +86,28 @@ class ZmitiPoetryListApp extends Component {
 		);
 	}
 
+	deletePoetry(worksid,i){
+		var s = this;
+		$.ajax({
+			url:window.baseUrl+'works/del_works/',
+			data:{
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				worksid:worksid
+			},success(data){
+				if(data.getret === 0){
+					message.success(data.getmsg);
+					s.state.poetryList.splice(i,1);
+					s.forceUpdate();
+				}
+				else{
+					message.error(data.getmsg);
+				}
+			}
+		})
+	}
 
-	save(worksid){
+	save(worksid,viewpath){
 		var s = this;
 		this.zmitiAjax({
 			url:window.baseUrl+'/works/update_works/',
@@ -90,7 +117,9 @@ class ZmitiPoetryListApp extends Component {
 				userid:s.userid,
 				getusersigid:s.getusersigid,
 				datajson:JSON.stringify({worksid:worksid,wxappid:'wxfacf4a639d9e3bcc',
-				wxappsecret:'149cdef95c99ff7cab523d8beca86080'}),
+					wxappsecret:'149cdef95c99ff7cab523d8beca86080',
+					viewpath:viewpath
+				}),
 				worksname:'诗词解密测试',
 				dirname:'poetry',
 				workstag:'',
@@ -134,6 +163,7 @@ class ZmitiPoetryListApp extends Component {
 			},
 			success(data){
 				message[data.getret === 0?'success':'error'](data.getmsg);
+				
 			}
 		});
 	}
