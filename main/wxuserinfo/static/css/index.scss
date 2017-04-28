@@ -38,6 +38,15 @@
     }
 
   }
+  .zmiti-viewxchat-h2{
+    color:#000;
+    font-size:18px;
+    line-height: 2;
+    margin:10px 0;
+    label{
+      font-size:18px;
+    }
+  }
   .ant-table-body{
     img{
       @include radius50();
@@ -54,9 +63,16 @@
       text-align:center;
     }
   }
-  .zmiti-viewxchat-button-right button{
-    float:right;
-    margin-top: 5px;
+  .zmiti-viewxchat-button-right {
+    text-align: right;
+    padding-top:10px;
+    button{
+      float:right;
+      margin-top: 5px;
+    }
+  }
+  .red{
+    color:#ff0000;
   }
   .zmiti-viewxchat-line{
     height:15px;

@@ -29,6 +29,8 @@ class ZmitiWXUserInfoApp extends Component {
             keyword:'',
             startDate:null,
             endDate:moment(new Date(),'YYYY-MM-DD'),
+            companyname:'麟腾传媒',
+            personalNum:'0',
         };
     }
     render() {
@@ -92,23 +94,17 @@ class ZmitiWXUserInfoApp extends Component {
             width:100
 
         },{
-            title: '最后登录地点',
-            dataIndex: 'citypos',
-            key: 'citypos',
-            width:150
-
-        },{
             title: '创建时间',
             dataIndex: 'createtime',
             key: 'createtime',
             width:150,
         },  {
             title: '操作',
-            dataIndex: 'operation',
-            key: 'operation',
+            dataIndex: '',
+            key: '',
             width:150,
             render:(text,recoder,index)=>(
-                <span><span className="workorder-del"><a href="javascript:void(0);"> 删除</a></span>
+                <span><span className="workorder-del"><a href={'#/viewxchat/'+recoder.wxopenid}> 查看</a></span>
                 </span>
             )
 
@@ -119,10 +115,10 @@ class ZmitiWXUserInfoApp extends Component {
         <div className="zmiti-viewxchat-main-ui" style={{height:this.state.mainHeight}}>
             <div className="padding-10">
                 <Row className='zmiti-viewxchat-header'>
-                    <Col span={8}  className='zmiti-viewxchat-header-inner' >微信用户列表</Col>
-                    <Col span={8} offset={8} className='zmiti-viewxchat-button-right'></Col>
+                    <Col span={8}  className='zmiti-viewxchat-header-inner' ><label>公司名称：</label>{this.state.companyname}</Col>
+                    <Col span={8} offset={8} className='zmiti-viewxchat-button-right'>用户数：<span className="red">{this.state.personalNum}</span>个</Col>
                 </Row>
-                <div className="zmiti-viewxchat-line"></div>
+                <div className="zmiti-viewxchat-line"></div>                
                 <Row gutter={10} type='flex' className='viewxchat-search '>
                     <Col  className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'} >时间:</Col>
                     <Col  className={'viewxchat-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.startDate} onChange={(e)=>{this.setState({startDate:e})}} /></Col>
@@ -132,6 +128,7 @@ class ZmitiWXUserInfoApp extends Component {
                     <Col  className={'viewxchat-heigth45'}><Input value={this.state.keyword} placeholder="昵称" onChange={this.searchByKeyword.bind(this)}/></Col>
                     <Col  className={'viewxchat-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
                 </Row>
+                
                 <Table dataSource={this.state.dataSource} columns={columns} bordered/>
             </div>
         </div>
@@ -244,6 +241,7 @@ class ZmitiWXUserInfoApp extends Component {
                 if(data.getret === 0){
                     console.log(data,"信息列表");
                     s.state.dataSource = data.userlist;
+                    s.state.personalNum = data.userlist.length;
                     s.forceUpdate();
                 }
                 else if(data.getret === -3){
@@ -259,18 +257,27 @@ class ZmitiWXUserInfoApp extends Component {
             }
         })
     }
-
-
-
     componentDidMount() {
 
         var s = this;
         s.bindNewdata();
-
+        s.getcompanyinfo();
     }
+    getcompanyinfo(){
+        var s=this;
+        $.ajax({
+            url:window.baseUrl+'user/get_companydetail/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
 
-
-    
+            },
+            success(data){
+                s.state.companyname=data.detail_info.companyname;
+                s.forceUpdate();
+            }
+        })
+    }
 
     componentWillMount() {
 
