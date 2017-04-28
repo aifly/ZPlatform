@@ -161,6 +161,30 @@
 
 }
 
+
+.poetry-title-input{
+      height: 450px;
+      @include pos(r);
+      input{
+            width: 250px;;
+            @include pos(a);
+            height: 50px;
+            left: 50px;
+            top: 150px;
+            background:transparent;
+            border:none;
+            text-align: center;
+            font-size: 20px;
+      }     
+      .poetry-title-btn{
+            text-align: center;
+            margin-top: 40px;
+            button{
+                  @include transform(scale(1.4));
+            }
+      }
+}
+
  .poetry-type-list{
       @include displayFlex(row);
       &>aside{
@@ -178,6 +202,8 @@
       @include br(2px);
       background: #ccc;
 }
+
+
 
 .ant-confirm-body .ant-confirm-content{
       margin: 0;

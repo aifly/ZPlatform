@@ -22,7 +22,8 @@ class ZmitiPoetryListApp extends Component {
 			mainHeight:document.documentElement.clientHeight - 50,
 			isEntry:1,
 			currentState:0,
-			visible:true,
+			visible:false,
+			showTitle:true,//是否显示输入标题对话框
 			poetryList:[
 				  
 			],//聊天作品列表
@@ -89,8 +90,8 @@ class ZmitiPoetryListApp extends Component {
 					<div onClick={()=>{this.setState({currentState:-1})}} className='poetry-sea-list'>查看历史创建</div>
 				</aside>
 				 <Modal title="" visible={this.state.visible}
-				  width='800'
-		          onOk={this.handleOk} onCancel={this.handleCancel}
+				  width={800}
+				  footer=<div><Button type='primary' size="large" onClick={this.entryInputTitle.bind(this)}>下一步</Button></div>
 		        >
 		          <div className='poetry-type-C'>
 			         <section className='poetry-type-list'>
@@ -106,11 +107,30 @@ class ZmitiPoetryListApp extends Component {
 			         </section>
 			      </div>
 		        </Modal>
+
+		        <Modal title="" visible={this.state.showTitle}
+				  width={400}
+				  footer={''}
+		        >
+		         <div className='poetry-title-input'>
+		         	<input type='text' placeholder= '请输入标题'/>
+		         	<img src='./static/images/peotry-title-bg.png'/>
+		         	<div className='poetry-title-btn'><Button type='primary' size="large">下一步</Button></div>
+		         </div>
+		        </Modal>
+		        
 			</section>}
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
 		);
+	}
+
+	entryInputTitle(){
+
+		this.setState({
+			visible:false
+		})
 	}
 
 	showChooseType(){
