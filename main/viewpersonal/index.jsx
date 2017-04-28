@@ -125,7 +125,7 @@ class ZmitiViewPersonalApp extends Component {
 
 
         var mainComponent =
-			<div className="viewpersonal-main-ui" id="viewpersonal-main-ui"  >
+			<div className="viewpersonal-main-ui" id="viewpersonal-main-ui" style={{height:this.state.mainHeight}} >
 				<div className="viewuserinfor-persion" id="viewuserinfor-persion">
 					<Row gutter={16}>
 						<Col span={14} >
@@ -234,7 +234,7 @@ class ZmitiViewPersonalApp extends Component {
                />
                <div className="hr10"></div>
                <div className='text-right'>
-                <Button type='primary' size='large' icon='save' onClick={this.save.bind(this)}>保存</Button>
+                <Button type='primary' size='large' icon='save' onClick={this.save.bind(this)}>保存全部</Button>
                 </div>
             </Col>
           </Row>   
