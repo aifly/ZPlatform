@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './static/css/index.min.css';
+import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
 import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
@@ -19,33 +19,37 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import $ from 'jquery';
 
 class ZmitiWXUserInfoApp extends Component {
-	constructor(props) {
-		super(props);
-		
-		this.state = {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
             mainHeight:document.documentElement.clientHeight - 50,
             dataSource:[],
-            workorderid:'',
+            wxopenid:'',
             keyword:'',
             startDate:null,
             endDate:moment(new Date(),'YYYY-MM-DD'),
-
-
-		};
-	}
-	render() {
+            companyname:'麟腾传媒',
+            personalNum:'0',
+        };
+    }
+    render() {
 
         const columns = [{
-            title: '工单编号',
-            dataIndex: 'workorderid',
-            key: 'workorderid',
-			width:100,
+            title: '头像',
+            dataIndex: 'headimgurl',
+            key: 'headimgurl',
+            width:100,
+            filterIcon:true,
+            render:(value)=>{
+                return <img src={value} />;
+            }
 
         }, {
-            title: '问题内容',
-            dataIndex: 'content',
-            key: 'content',
-           render:(value,record)=>{
+            title: '昵称',
+            dataIndex: 'nickname',
+            key: 'nickname',
+            render:(value,record)=>{
                 var getLength=value.length;
                 if(getLength>=40)
                 {
@@ -56,170 +60,102 @@ class ZmitiWXUserInfoApp extends Component {
             }
 
         }, {
-            title: '工单类型',
-            dataIndex: 'workordertype',
-            key: 'workordertype',
-			width:100,
+            title: '类型',
+            dataIndex: 'usertype',
+            key: 'usertype',
+            width:100,
             filters:[{
-                text:'财务类',
+                text:'0',
                 value:'0',
             },{
-                text:'会员帐号类',
+                text:'1',
                 value:'1',
             },{
-                text:'定制服务类',
+                text:'2',
                 value:'2',
-            }, {
-                text: '产品技术类',
-                value: '3',
-            },{
-                text:'其它类',
-                value:'4',
             }
             ],
-            onFilter:(value,record)=>value*1===record.workordertype,
-            sorter:(a,b)=>a.workordertype-b.workordertype,
+            onFilter:(value,record)=>value*1===record.usertype,
+            sorter:(a,b)=>a.usertype-b.usertype,
             render:(value,record)=>{
                 switch(value){
                     case 0:
-                        return "财务类";
+                        return "0";
                     case 1:
-                        return "会员帐号类";
+                        return "1";
                     case 2:
-                        return "定制服务类";
-                    case 3:
-                        return "产品技术类";
-                    case 4:
-                        return "其它类";
+                        return "2";
                 }
             }
         }, {
+            title: '总积分',
+            dataIndex: 'totalintegral',
+            key: 'totalintegral',
+            width:100
+
+        },{
             title: '创建时间',
             dataIndex: 'createtime',
             key: 'createtime',
-			width:150,
-        }, {
-            title: '工单状态',
-            dataIndex: 'status',
-            key: 'status',
-			width:100,
-            filters:[{
-                text:'已受理',
-                value:'0',
-            },{
-                text:'已处理',
-                value:'1',
-            },{
-                text:'已确认',
-                value:'2',
-            },{
-                text:'已评价',
-                value:'3',
-            },{
-                text:'已关闭',
-                value:'4',
-            }
-            ],
-			onFilter:(value,record)=>value*1===record.status,
-			sorter:(a,b)=>a.status-b.status,
-			render:(value,record)=>{
-            	switch(value){
-					case 0:
-						return <div className='red'>已受理</div>;
-						break;
-					case 1:
-						return <div className='green'>已处理</div>;
-						break;
-					case 2:
-						return "已确认";
-						break;
-					case 3:
-						return "已评价";
-						break;
-                    case 4:
-                        return "已关闭";
-                        break;
-                    case 5:
-                        return <div className='red'>请您确认</div>;
-                        break;
-				}
-			}
-
-        }, {
+            width:150,
+        },  {
             title: '操作',
-            dataIndex: 'operation',
-            key: 'operation',
-            width:100,
-			render:(text,recoder,index)=>(
-                <span><span className="workorder-gotodetail"><Link to={'/viewquestion/'+recoder.workorderid}>查看</Link></span><span className="workorder-del"><a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.workorderid)}> 删除</a></span>
-				</span>
-			)
+            dataIndex: '',
+            key: '',
+            width:150,
+            render:(text,recoder,index)=>(
+                <span><span className="workorder-del"><a href={'#/viewxchat/'+recoder.wxopenid}> 查看</a></span>
+                </span>
+            )
 
         }];
 
-        var title = this.props.params.title || '服务支持中心';
-        let props={
-            userid:this.userid,
-            changeAccount:this.changeAccount.bind(this),
-            tags:['我的工单','提交工单'],
-            mainHeight:this.state.mainHeight,
-            title:title,
-            type:'workorder-1',
-            selectedIndex:0,
-            rightType:"custom",
-            customRightComponent:<div className="zmiti-workorder-main-ui padding-10">
-				<Row className='zmiti-workorder-header'>
-					<Col span={8}  className='zmiti-workorder-header-inner' >我的工单</Col>
-                    <Col span={8} offset={8} className='zmiti-workorder-button-right'><Button type='primary' onClick={this.changeAccount.bind(this,1)}>提交工单</Button></Col>
-				</Row>
-				<div className="zmiti-workorder-line"></div>
-				<Row gutter={10} type='flex' className='workorder-search '>
-					<Col  className='zmiti-workorder-with100 workorder-heigth45'>工单编号：</Col>
-					<Col  className={'workorder-heigth45'}><Input value={this.state.workorderid} onChange={this.searchByWorkorderid.bind(this)}  placeholder="工单编号录入" /></Col>
-					<Col  className={'zmiti-workorder-with60 workorder-heigth45 rig'} >时间:</Col>
-					<Col  className={'workorder-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.startDate} onChange={(e)=>{this.setState({startDate:e})}} /></Col>
-					<Col  className={'zmiti-workorder-with30 workorder-heigth45 cen'} value={this.state.endDate}>至:</Col>
-					<Col  className={'workorder-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.endDate} onChange={e=>{this.setState({endDate:e})}} /></Col>
-					<Col  className={'zmiti-workorder-with60 workorder-heigth45 rig'}>关键词:</Col>
-					<Col  className={'workorder-heigth45'}><Input value={this.state.keyword} placeholder="关键词" onChange={this.searchByKeyword.bind(this)}/></Col>
-					<Col  className={'workorder-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
-				</Row>
-				<Table dataSource={this.state.dataSource} columns={columns} bordered/>
-
-		</div>
-        }
+        
+        var mainComponent=
+        <div className="zmiti-viewxchat-main-ui" style={{height:this.state.mainHeight}}>
+            <div className="padding-10">
+                <Row className='zmiti-viewxchat-header'>
+                    <Col span={8}  className='zmiti-viewxchat-header-inner' ><label>公司名称：</label>{this.state.companyname}</Col>
+                    <Col span={8} offset={8} className='zmiti-viewxchat-button-right'>用户数：<span className="red">{this.state.personalNum}</span>个</Col>
+                </Row>
+                <div className="zmiti-viewxchat-line"></div>                
+                <Row gutter={10} type='flex' className='viewxchat-search '>
+                    <Col  className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'} >时间:</Col>
+                    <Col  className={'viewxchat-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.startDate} onChange={(e)=>{this.setState({startDate:e})}} /></Col>
+                    <Col  className={'zmiti-viewxchat-with30 viewxchat-heigth45 cen'} value={this.state.endDate}>至:</Col>
+                    <Col  className={'viewxchat-heigth45 zmiti-viewxchat-with130 '}><DatePicker value={this.state.endDate} onChange={e=>{this.setState({endDate:e})}} /></Col>
+                    <Col  className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'}>昵称:</Col>
+                    <Col  className={'viewxchat-heigth45'}><Input value={this.state.keyword} placeholder="昵称" onChange={this.searchByKeyword.bind(this)}/></Col>
+                    <Col  className={'viewxchat-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
+                </Row>
+                
+                <Table dataSource={this.state.dataSource} columns={columns} bordered/>
+            </div>
+        </div>
   
-		var mainComponent = <div>
-			<ZmitiUserList {...props}></ZmitiUserList>
-		</div>;
-		return (
-			<MainUI component={mainComponent}></MainUI>
-			);
-	}
-    gotoView(workorderid){
-        location.href='/viewquestion/'+workorderid;
-
+        return (
+            <MainUI component={mainComponent}></MainUI>
+        );
     }
 
     searchBybutton(){
-        var workorderid = this.state.workorderid;
+        var wxopenid = this.state.wxopenid;
         var startDate = this.state.startDate.format("YYYY-MM-DD");
         var endDate=this.state.endDate.format("YYYY-MM-DD");
         var keyWord=this.state.keyword;
         var s = this;
         $.ajax({
-            url:window.baseUrl+'user/get_workorder',
+            url:window.baseUrl+'weixin/get_wxuserlist',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                setworkorderid:workorderid,
+                wxopenid:s.wxopenid,
                 setstarttime:startDate,
                 setendtime:endDate,
                 setkeyword:keyWord,
-                setisadmin:0,
             },
             success(data){
-                if(data.getret === 0){
+                if(data.getret === 0){                    
                     s.state.dataSource = data.workorderinfo;
                     s.forceUpdate();
                 }
@@ -235,7 +171,7 @@ class ZmitiWXUserInfoApp extends Component {
             }
         })
 
-	}
+    }
 
     searchByWorkorderid(e){
         this.setState({
@@ -246,7 +182,7 @@ class ZmitiWXUserInfoApp extends Component {
 
             this.state.dataSource = this.dataSource.filter((item)=>{
 
-                return  item.workorderid.indexOf(this.state.workorderid)>-1;
+                return  item.wxopenid.indexOf(this.state.wxopenid)>-1;
             });
             this.forceUpdate();
         });
@@ -259,19 +195,19 @@ class ZmitiWXUserInfoApp extends Component {
             this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
 
             this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.content.indexOf(this.state.keyword)>-1;
+                return  item.nickname.indexOf(this.state.keyword)>-1;
             });
             this.forceUpdate();
         })
     }
-    delData(workorderid){
+    delData(wxopenid){
         var s = this;
         $.ajax({
             url:window.baseUrl+'user/del_workorder/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                setworkorderid:workorderid,
+                wxopenid:wxopenid,
             },
             success(data){
                 if(data.getret === 0){
@@ -295,17 +231,17 @@ class ZmitiWXUserInfoApp extends Component {
     bindNewdata(){
         var s=this
         $.ajax({
-            url:window.baseUrl+'user/get_workorder',
+            url:window.baseUrl+'weixin/get_wxuserlist',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                setisadmin:0,
-
             },
             success(data){
 
                 if(data.getret === 0){
-                    s.state.dataSource = data.workorderinfo;
+                    console.log(data,"信息列表");
+                    s.state.dataSource = data.userlist;
+                    s.state.personalNum = data.userlist.length;
                     s.forceUpdate();
                 }
                 else if(data.getret === -3){
@@ -321,42 +257,44 @@ class ZmitiWXUserInfoApp extends Component {
             }
         })
     }
+    componentDidMount() {
+
+        var s = this;
+        s.bindNewdata();
+        s.getcompanyinfo();
+    }
+    getcompanyinfo(){
+        var s=this;
+        $.ajax({
+            url:window.baseUrl+'user/get_companydetail/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+
+            },
+            success(data){
+                s.state.companyname=data.detail_info.companyname;
+                s.forceUpdate();
+            }
+        })
+    }
+
+    componentWillMount() {
 
 
-	changeAccount(i){
-        if(i*1===1){
-            window.location.hash='commitworkorder/';
-        }else if(i*1===0){
-            this.bindNewdata();
-        }
+        let {resizeMainHeight,validateUser,loginOut} = this.props;
 
-	}
+        resizeMainHeight(this);
+        
+        let {username,userid,getusersigid} = validateUser(()=>{},this);
+        this.userid = userid;
+        this.getusersigid = getusersigid;
 
-	componentDidMount() {
-
-		var s = this;
-		s.bindNewdata();
-
-	}
-
-
-	
-
-	componentWillMount() {
-
-
-		let {resizeMainHeight,validateUser,loginOut} = this.props;
-
-		resizeMainHeight(this);
-		
-		let {username,userid,getusersigid} = validateUser(()=>{},this);
-		this.userid = userid;
-		this.getusersigid = getusersigid;
-
-		
-	}
+        
+    }
 
 }
+
 
 export default ZmitiValidateUser(ZmitiWXUserInfoApp);
 /*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/
