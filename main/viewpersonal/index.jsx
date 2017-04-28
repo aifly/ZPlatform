@@ -125,7 +125,7 @@ class ZmitiViewPersonalApp extends Component {
 
 
         var mainComponent =
-			<div className="viewpersonal-main-ui" id="viewpersonal-main-ui" style={{height:this.state.mainHeight}} >
+			<div className="viewpersonal-main-ui" id="viewpersonal-main-ui"  >
 				<div className="viewuserinfor-persion" id="viewuserinfor-persion">
 					<Row gutter={16}>
 						<Col span={14} >
