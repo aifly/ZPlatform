@@ -6,9 +6,11 @@ import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
+const Option = Select.Option;
 import { Link } from 'react-router';
 import MainUI from '../components/Main.jsx';
-
+import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
+const FormItem = Form.Item;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import $ from 'jquery';
@@ -21,17 +23,21 @@ class ZmitiTripostApp extends Component {
 			setuserid:'',
 			selectedIndex:0,
 			mainHeight:document.documentElement.clientHeight-50,
+			modpostDialogVisible:false,			
+			jobname:'',
+			level:'',
 			dataSource:[],
 		};
 
 		
 	}
 	render() {
+		var s =this;
 		const columns = [{
             title: '公司编号',
             dataIndex: 'companyid',
             key: 'companyid',
-            width:100
+            width:300
 
         },{
             title: '职务名称',
@@ -42,11 +48,6 @@ class ZmitiTripostApp extends Component {
             title: '职务级别',
             dataIndex: 'level',
             key: 'level'
-
-        },{
-            title: '状态',
-            dataIndex: 'status',
-            key: 'status'
 
         },{
             title: '创建时间',
@@ -63,6 +64,10 @@ class ZmitiTripostApp extends Component {
             )
 
         }]
+        const formItemLayout = {
+           labelCol: {span: 6},
+           wrapperCol: {span: 14},
+        };
 
 		var title = this.props.params.title || '出差宝';
 
@@ -81,11 +86,44 @@ class ZmitiTripostApp extends Component {
 					<div className="zmiti-tripost-header">
 						<Row>
 							<Col span={8} className="zmiti-tripost-header-inner">职务</Col>
-						</Row>						
+							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={()=>{this.setState({modpostDialogVisible:true})}}>新增职务</Button></Col>
+					</Row>						
 					</div>
 					<div className="zmiti-tripost-line"></div>
 					<Table dataSource={this.state.dataSource} columns={columns} bordered/>
 				</div>
+				<Modal title="新增职务" visible={this.state.modpostDialogVisible}
+					onOk={this.modpostOk.bind(this)}
+					onCancel={()=>{this.setState({modpostDialogVisible:false})}}
+                  >
+                    <Form>
+                      <FormItem
+                        {...formItemLayout}
+                        label="职务名称"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="职务名称" 
+							value={this.state.jobname}
+							onChange={(e)=>{this.state.jobname=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="职务级别"
+                        hasFeedback
+                      >
+                          <Select placeholder="职务级别" onChange={(value)=>{this.state.level=value;this.forceUpdate();}} value={this.state.level}>
+                          	<Option value={1}>普通职称</Option>
+                          	<Option value={2}>中级职称</Option>
+                          	<Option value={3}>高级职称</Option>
+                          </Select>                     
+                      </FormItem>
+
+                    </Form>
+                  </Modal>
+                  {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddpost" {...userProps}></ZmitiUploadDialog>}
+
 			</div>
 		}
   
@@ -109,19 +147,22 @@ class ZmitiTripostApp extends Component {
             window.location.hash='tripexpence/';
         }
 	}
+
 	bindNewdata(){
-        var s=this
+        var s = this;
+        var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
-            url:window.baseUrl+'weixin/get_wxuserlist',//接口地址
+            url:window.baseUrl+'travel/get_joblist',//接口地址
             data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
+				setuserid:userid,
+				userid:s.userid,
+				getusersigid:s.getusersigid
             },
             success(data){
 
                 if(data.getret === 0){
                     console.log(data,"信息列表");
-                    s.state.dataSource = data.userlist;
+                    s.state.dataSource = data.joblist;
                     s.forceUpdate();
                 }
             }
@@ -145,6 +186,45 @@ class ZmitiTripostApp extends Component {
 
 		
 	}
+	modifyaddpost(){
+      var obserable=window.obserable;
+         this.setState({
+            showCredentialsDiolog:true
+        },()=>{
+          obserable.trigger({
+              type:'showModal',
+              data:{type:0,id:'addpost'}
+          })  
+        }) 
+    }
+	//新增職稱
+    modpostOk(){
+    	var s =this;
+    	var userid = this.props.params.userid?this.props.params.userid:this.userid;
+    	var  jobnameTxt =s.state.jobname;
+		var  levelTxt = s.state.level;
+		$.ajax({
+			url:window.baseUrl + 'travel/add_job/',
+			data:{
+				setuserid:userid,
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				jobname:jobnameTxt,
+				level:levelTxt
+			},
+			success(data){
+				if(data.getret === 0){
+					console.log(data);
+                    s.bindNewdata();
+                    s.forceUpdate();
+                    s.setState({
+		              modpostDialogVisible:false
+		            });
+                }
+			}
+		})
+		//console.log("dialog");
+    }
 
 }
 
