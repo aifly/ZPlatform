@@ -13,13 +13,13 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import $ from 'jquery';
 
-class ZmitiTripseasonApp extends Component {
+class ZmitiTriptrafficApp extends Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
 			setuserid:'',
-			selectedIndex:1,
+			selectedIndex:2,
 			mainHeight:document.documentElement.clientHeight-50,
 			dataSource:[],
 		};
@@ -34,24 +34,14 @@ class ZmitiTripseasonApp extends Component {
             width:100
 
         },{
-            title: '省份',
-            dataIndex: 'provid',
-            key: 'provid'
+            title: '交通标识唯一标准',
+            dataIndex: 'transportid',
+            key: 'transportid'
 
         },{
-            title: '城市',
-            dataIndex: 'cityid',
-            key: 'cityid'
-
-        },{
-            title: '日期类别',
-            dataIndex: 'seasontype',
-            key: 'seasontype'
-
-        },{
-            title: '日期范围',
-            dataIndex: 'daterange',
-            key: 'daterange'
+            title: '职务编号',
+            dataIndex: 'jobid',
+            key: 'jobid'
 
         },{
             title: '状态',
@@ -83,13 +73,13 @@ class ZmitiTripseasonApp extends Component {
 			tags:['职务','淡旺季','交通费','差旅费'],
 			mainHeight:this.state.mainHeight,
 			title:title,
-			selectedIndex: 1,
+			selectedIndex: 2,
 			rightType: "custom",
 			customRightComponent:<div className='tripost-main-ui' style={{height:this.state.mainHeight}}>
 				<div className='pad-10'>
 					<div className="zmiti-tripost-header">
 						<Row>
-							<Col span={8} className="zmiti-tripost-header-inner">淡旺季</Col>
+							<Col span={8} className="zmiti-tripost-header-inner">交通费</Col>
 						</Row>						
 					</div>
 					<div className="zmiti-tripost-line"></div>
@@ -158,5 +148,5 @@ class ZmitiTripseasonApp extends Component {
 
 }
 
-export default ZmitiValidateUser(ZmitiTripseasonApp);
+export default ZmitiValidateUser(ZmitiTriptrafficApp);
 /*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/

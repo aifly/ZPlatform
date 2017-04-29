@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Tooltip , Row, Col  } from '../commoncomponent/common.jsx';
-
+import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
 import { Link } from 'react-router';
 import MainUI from '../components/Main.jsx';
 
@@ -20,15 +21,48 @@ class ZmitiTripostApp extends Component {
 			setuserid:'',
 			selectedIndex:0,
 			mainHeight:document.documentElement.clientHeight-50,
-			userList:[
-				
-			],
-
+			dataSource:[],
 		};
 
 		
 	}
 	render() {
+		const columns = [{
+            title: '公司编号',
+            dataIndex: 'companyid',
+            key: 'companyid',
+            width:100
+
+        },{
+            title: '职务名称',
+            dataIndex: 'jobname',
+            key: 'jobname'
+
+        },{
+            title: '职务级别',
+            dataIndex: 'level',
+            key: 'level'
+
+        },{
+            title: '状态',
+            dataIndex: 'status',
+            key: 'status'
+
+        },{
+            title: '创建时间',
+            dataIndex: 'creattime',
+            key: 'creattime'
+
+        },  {
+            title: '操作',
+            dataIndex: '',
+            key: '',
+            width:150,
+            render:(text,recoder,index)=>(
+                <span><a href="#"> 查看</a></span>
+            )
+
+        }]
 
 		var title = this.props.params.title || '出差宝';
 
@@ -37,14 +71,21 @@ class ZmitiTripostApp extends Component {
 			userid:this.userid,
 			changeAccount:this.changeAccount.bind(this),
 			type:'custom-1',
-			tags:['职务','淡旺季'],
+			tags:['职务','淡旺季','交通费','差旅费'],
 			mainHeight:this.state.mainHeight,
 			title:title,
 			selectedIndex: 0,
 			rightType: "custom",
 			customRightComponent:<div className='tripost-main-ui' style={{height:this.state.mainHeight}}>
-			
-				<div>职务</div>
+				<div className='pad-10'>
+					<div className="zmiti-tripost-header">
+						<Row>
+							<Col span={8} className="zmiti-tripost-header-inner">职务</Col>
+						</Row>						
+					</div>
+					<div className="zmiti-tripost-line"></div>
+					<Table dataSource={this.state.dataSource} columns={columns} bordered/>
+				</div>
 			</div>
 		}
   
@@ -58,21 +99,39 @@ class ZmitiTripostApp extends Component {
 	}
 
 	changeAccount(i){
-        if(i*1===1){
+        if(i*1===0){
+        	window.location.hash='tripost/';            
+        }else if(i*1===1){
             window.location.hash='tripseason/';
-        }else if(i*1===0){
-            window.location.hash='tripost/';
+        }else if(i*1===2){
+            window.location.hash='triptraffic/';
+        }else if(i*1===3){
+            window.location.hash='tripexpence/';
         }
-
 	}
+	bindNewdata(){
+        var s=this
+        $.ajax({
+            url:window.baseUrl+'weixin/get_wxuserlist',//接口地址
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+            },
+            success(data){
+
+                if(data.getret === 0){
+                    console.log(data,"信息列表");
+                    s.state.dataSource = data.userlist;
+                    s.forceUpdate();
+                }
+            }
+        })
+    }
 
 	componentDidMount() {
 		var s=  this;
-
-	}
-
-
-	
+		s.bindNewdata();
+	}	
 
 	componentWillMount() {
 
