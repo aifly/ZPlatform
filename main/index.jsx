@@ -24,6 +24,8 @@ import ZmitiViewPersonalApp  from './viewpersonal/index.jsx';
 import ZmitiWXUserInfoApp  from './wxuserinfo/index.jsx';
 import ZmitiPoetryListApp  from './poetry/list.jsx';
 import ZmitiViewxChatApp  from './viewxchat/index.jsx';
+import ZmitiTripostApp  from './tripost/index.jsx';
+import ZmitiTripseasonApp  from './tripseason/index.jsx';
 import Obserable from './static/libs/obserable.js';
 
 
@@ -60,6 +62,8 @@ class App extends React.Component{
 				{path: '/viewxchat/(:id)', app: ZmitiViewxChatApp},
 				{path: '/wxuserinfo/', app: ZmitiWXUserInfoApp},
 				{path: '/poetry/', app: ZmitiPoetryListApp},
+				{path: '/tripost/(:id)', app: ZmitiTripostApp},
+				{path: '/tripseason/(:id)', app: ZmitiTripseasonApp},
 		];
 		return (
 			<Router history={hashHistory}>

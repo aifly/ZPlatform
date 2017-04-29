@@ -33,106 +33,43 @@ class ZmitiViewxChatApp extends Component {
 	}
 	render() {
 
-        const columns = [{
-            title: '头像',
-            dataIndex: 'headimgurl',
-            key: 'headimgurl',
-			width:100,
-            filterIcon:true,
-            render:(value)=>{
-                return <img src={value} />;
-            }
-
-        }, {
-            title: '昵称',
-            dataIndex: 'nickname',
-            key: 'nickname',
-            render:(value,record)=>{
-                var getLength=value.length;
-                if(getLength>=40)
-                {
-                    return value.substring(0,40);
-                }
-                else
-                    return value;
-            }
-
-        }, {
-            title: '类型',
-            dataIndex: 'usertype',
-            key: 'usertype',
-			width:100,
-            filters:[{
-                text:'0',
-                value:'0',
-            },{
-                text:'1',
-                value:'1',
-            },{
-                text:'2',
-                value:'2',
-            }
-            ],
-            onFilter:(value,record)=>value*1===record.usertype,
-            sorter:(a,b)=>a.usertype-b.usertype,
-            render:(value,record)=>{
-                switch(value){
-                    case 0:
-                        return "0";
-                    case 1:
-                        return "1";
-                    case 2:
-                        return "2";
-                }
-            }
-        }, {
-            title: '总积分',
-            dataIndex: 'totalintegral',
-            key: 'totalintegral',
-            width:100
-
-        },{
-            title: '最后登录地点',
-            dataIndex: 'citypos',
-            key: 'citypos',
-            width:150
-
-        },{
-            title: '创建时间',
-            dataIndex: 'createtime',
-            key: 'createtime',
-			width:150,
-        },  {
-            title: '操作',
-            dataIndex: 'operation',
-            key: 'operation',
-            width:150,
-			render:(text,recoder,index)=>(
-                <span><span className="workorder-del"><a href="javascript:void(0);"> 删除</a></span>
-				</span>
-			)
-
-        }];
+        
 
         
         var mainComponent=
-        <div className="zmiti-viewxchat-main-ui" style={{height:this.state.mainHeight}}>
+        <div className="zmiti-vieweixin-main-ui" style={{height:this.state.mainHeight}}>
             <div className="padding-10">
-				<Row className='zmiti-viewxchat-header'>
-					<Col span={8}  className='zmiti-viewxchat-header-inner' >微信用户列表</Col>
-                    <Col span={8} offset={8} className='zmiti-viewxchat-button-right'></Col>
-				</Row>
-				<div className="zmiti-viewxchat-line"></div>
-				<Row gutter={10} type='flex' className='viewxchat-search '>
-					<Col  className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'} >时间:</Col>
-					<Col  className={'viewxchat-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.startDate} onChange={(e)=>{this.setState({startDate:e})}} /></Col>
-					<Col  className={'zmiti-viewxchat-with30 viewxchat-heigth45 cen'} value={this.state.endDate}>至:</Col>
-					<Col  className={'viewxchat-heigth45 zmiti-viewxchat-with130 '}><DatePicker value={this.state.endDate} onChange={e=>{this.setState({endDate:e})}} /></Col>
-					<Col  className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'}>昵称:</Col>
-					<Col  className={'viewxchat-heigth45'}><Input value={this.state.keyword} placeholder="昵称" onChange={this.searchByKeyword.bind(this)}/></Col>
-					<Col  className={'viewxchat-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
-				</Row>
-				<Table dataSource={this.state.dataSource} columns={columns} bordered/>
+                <Row className='zmiti-vieweixin-header'>
+                    <Col span={8}  className='zmiti-vieweixin-header-inner' >用户信息</Col>
+                    <Col span={8} offset={8} className='zmiti-vieweixin-button-right'><Button type='primary' onClick={this.goback.bind(this)}>返回列表</Button></Col>
+                </Row>
+                <div className="zmiti-vieweixin-line"></div>
+                <div className="zmiti-viewxchat-detail">
+                    <Row gutter={20}>
+                        <Col span={4} className="zmiti-viewxchat-label">昵称：</Col>
+                        <Col span={20}></Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col span={4} className="zmiti-viewxchat-label">地理位置经度：</Col>
+                        <Col span={20}></Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col span={4} className="zmiti-viewxchat-label">地理位置纬度：</Col>
+                        <Col span={20}></Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col span={4} className="zmiti-viewxchat-label">类型：</Col>
+                        <Col span={20}></Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col span={4} className="zmiti-viewxchat-label">总积分：</Col>
+                        <Col span={20}></Col>
+                    </Row>
+                    <Row gutter={20}>
+                        <Col span={4} className="zmiti-viewxchat-label">公众号appid：</Col>
+                        <Col span={20}></Col>
+                    </Row>
+                </div>
             </div>
 		</div>
   
@@ -263,9 +200,22 @@ class ZmitiViewxChatApp extends Component {
 
 
 	componentDidMount() {
+		
+		//*获取指定用户信息
+        var wxopenid=this.props.params.id;
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'weixin/getwxuserinfo',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                wxopenid:wxopenid,
+            },
+            success(data){
+                console.log(data,'getwxuserinfo');
+            }
+        })
 
-		var s = this;
-		s.bindNewdata();
 
 	}
 
@@ -285,6 +235,9 @@ class ZmitiViewxChatApp extends Component {
 
 		
 	}
+    goback(){
+        window.location="#/wxuserinfo/"
+    }
 
 }
 
