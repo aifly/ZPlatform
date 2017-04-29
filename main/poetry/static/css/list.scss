@@ -189,10 +189,70 @@
       @include displayFlex(row);
       &>aside{
             flex:1;cursor: pointer;
-            &.active{
-                  border:1px solid #108ee9;
+            &>section{
+                  &:first-of-type{
+                        width: 203px;
+                        height: 77px;
+                        margin:0 auto;
+                        span{
+                              display: inline-block;
+                              margin:18px 60px;
+                              color:#999999;
+                              font-weight: bold;
+                              font-size: 26px;
+                              &.active{
+                                    color:#fff;
+                              }
+                        }
+                  }
+                  &:nth-of-type(2){
+                        text-align: center;
+                        img{width:56px;margin-left: -50px}
+                        margin-top: -20px;
+                        @include pos(r);
+                        z-index: 1;
+                  }
+                  &:nth-of-type(3){
+                        border:2px solid #ab622e;
+                        @include br(4px);
+                        text-align: center;
+                        
+                        display: inline-block;
+                        @include pos(r);
+                        left: 50%;
+                        top: -4px;
+                        background: #fff;
+                        z-index: 0;
+                        padding: 3px 10px;
+                        @include transform(translate3d(-70%,0,0));
+                  }
+                  &.poetry-custom{
+                        span{
+                              margin-left: 30px !important;
+                        }
+                  }
+            }
+
+      }
+      &>aside:nth-of-type(1),&>aside:nth-of-type(2){
+            &>section{
+                  &:first-of-type{
+                        span{
+                              margin-left: 60px;
+                        }
+                  }
             }
       }
+      &>aside:nth-of-type(3){
+            &>section{
+                  &:first-of-type{
+                        span{
+                              margin-left: 40px;
+                        }
+                  }
+            }
+      }
+   
 
 }
 .poetry-line{

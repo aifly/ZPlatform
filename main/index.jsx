@@ -23,6 +23,7 @@ import ZmitiStatisticsListApp  from './statistics/index.jsx';
 import ZmitiViewPersonalApp  from './viewpersonal/index.jsx';
 import ZmitiWXUserInfoApp  from './wxuserinfo/index.jsx';
 import ZmitiPoetryListApp  from './poetry/list.jsx';
+import ZmitiPoetryApp  from './poetry/index.jsx';
 import ZmitiViewxChatApp  from './viewxchat/index.jsx';
 import Obserable from './static/libs/obserable.js';
 
@@ -60,6 +61,7 @@ class App extends React.Component{
 				{path: '/viewxchat/(:id)', app: ZmitiViewxChatApp},
 				{path: '/wxuserinfo/', app: ZmitiWXUserInfoApp},
 				{path: '/poetry/', app: ZmitiPoetryListApp},
+				{path: '/poetryedit/:id', app: ZmitiPoetryApp},
 		];
 		return (
 			<Router history={hashHistory}>

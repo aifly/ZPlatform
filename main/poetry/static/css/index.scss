@@ -3,202 +3,275 @@
 h2,h3,h4,h5{
   font-weight: normal;
 }
-.wxchat-main-ui{
-  width: 100%;
-  height: 100%;
-  padding-bottom: 20px;
-  overflow:auto;
-  &>.hide{
-    opacity:0;
-    @include transition(.5s);
-  }
-  
-  &>.show{
-    opacity:1;
-    z-index: 10;
-    @include transition(.5s);
-  }
-  .wxchat-main-content{
-    width:1000px;
-    height: 86vh;
-
+ .poetryedit-main-ui{
+     background: #eaedf1;
     @include displayFlex(row);
-    aside:last-of-type{
-      margin-left: 40px;
-    }
-    margin: 0 auto;
-    img{
-      height: 100%;
-      width:auto;;
-    }
-  }
-
-  .wxchat-members,.wxchat-title{
-    h2{
-      font-size:18px;
-      color:#000;
-      span{
-        font-size: 14px;
-        color:#ccc;
-      }
-    }
-  }
-
-  .wxchat-title{
-    h2{
-      margin-bottom: 10px;
-    }
-  }
-  .wxchat-members{
-    margin-top: 40px;
-  }
-
-  .wxchat-members-scroll{
-    max-width: 448px;
-    margin-top:10px;
-    max-height: 420px;
-    margin-left: -10px;
-    @include pos(r);
-    overflow: hidden;
-    
-    ul{
-      width:100%;
-       @include displayFlex(row);
-       -webkit-flex-wrap:wrap;
-       flex-wrap:wrap;
-      li{
-        @include pos(r);
-        @at-root.wxchat-king{
-          @include pos(a);
-          left: 0;
-          top:0;
-          width:24px !important;
-          height: 24px !important;
-
+    &>aside{
+      &:first-of-type{
+        -webkit-flex:1;
+        flex:1;
+        @include displayFlex();
+        .editpoetry-iphone{
+           width:30%;
+            margin: 0 auto;
+            @include pos(r);
+            top: 50%;
+            @include transform(translate3d(0,-50%,0));
         }
-
-        &:hover{
-            .wxchat-member-bar{
+        &>div{
+          @include pos(r);
+          input{
+              background: #1092e6;
+              color:#fff;
+              text-align: center;
+              font-size: 18px;
+              height: 40px;
+              width: 80%;
+              top: -40px;
               display: block;
+              @include pos(a);
+              left: 10%;
+
+          }
+          .poetryedit-btn-ground{
+            @include pos(a);
+            right: -55px;
+            top: 50px;
+
+
+            .poetryedit-bg-btn,.poetryedit-bgsound-btn{
+              
+              width: 60px;
+              height: 60px;
+              cursor: pointer;
+              @include transform(scale(.7));
+              @include transformOrigin(left);
+            }  
+          }
+          
+        }
+      }
+      &:last-of-type{
+        width: 500px;
+        background: #Fff;
+
+        .poetryedit-right-C{
+
+          .poetryedit-next{
+            button{
+              @include transform(scale(1.5));
             }
-            &>div{
-               &:first-of-type{
-                  border-color:rgba(0, 140, 237,1);
+            text-align: center;
+          }
+
+          margin-top: 50px;
+
+           header{
+              width: 100%;
+              height: 60px;
+              line-height: 60px;
+              font-size: 20px;
+              text-indent: 2em;
+              border-bottom:1px solid #ccc;
+           }
+           @include pos(r);
+
+           .poetry-share-ui{
+              width:400px;
+              height:70%;   
+              left: 15%;
+              top: 100px;
+              @include pos(a);
+              
+              @include displayFlex();
+              section{
+                flex:1;
+                &:nth-of-type(1){
+                  textarea{
+                    width:100%;
+                    border:1px solid #2db7f5;
+                    resize:none;
+                    margin-top: 10px;
+                    height:47px;
+                  }
+
+                  .poetry-operat-shareimg{
+                    @include pos(a);
+                    left:0;
+                    top:0;
+                    width:100%;
+                    height:100%;
+                    background:rgba(0,0,0,.6);
+                    @include displayFlex();
+                    button{
+                      margin:8px 0;
+                    }
+                  }
+                }
+                &:nth-of-type(2){
+                  font-size: 18px;
+
+                }
+                &:nth-of-type(3){
+                  .poetry-publish-btn,.poetry-back-edit{
+                    width:120px;
+                    height:36px;
+                    line-height: 36px;
+                    cursor:pointer;
+                    text-align: center;
+                    color:#fff;
+                    font-size: 16px;
+                    @include br(5px)
+                  }
+                  .poetry-publish-btn{
+                    background:#d8271c;
+                  }
+                  .poetry-back-edit{
+                    background:#2db7f5;
+                  }
+                }
+              }
+            }
+
+
+            .poetryedit-custom-list{
+              li{
+                width: 40px;
+                height: 40px;
+                background: #494c57;
+                color:#fff;
+                text-align: center;
+                cursor: pointer;
+                line-height: 40px;
+                font-size: 20px;
+                &:not(:first-of-type){
+                  margin:10px 0;
+                }
+                @include pos(r);
+                &:hover{
+                  span{
+                    opacity:1;
+                  }
+                }
+                span{
+                  opacity:0;
+                  @include pos(a);
+                  width: 12px;
+                  height: 12px;
+                  right: 0;
+                  top: 0;
+                  font-size: 12px;
+                  line-height: 6px;
+                }
+                &.active{
+                  background: #108ee9;
+                }
+              }
+              @include pos(a);
+              left: -40px;
+            }
+            .poetryedit-custom-center{
+              width: 450px;
+              margin: 20px auto;
+            }
+            .poetryedit-custom-title{
+                              
+            } 
+            .poetryedit-custom-aduio{
+              img{width: 40px;vertical-align: middle;}
+              font-size: 16px;
+            }
+            .poetryedit-custom-content{
+               textarea{
+                width: 100%;
+                border:1px solid #108ee9;
+                 resize:none;
+                 height:120px;
+                 padding: 6px;
+                 @include br(6px);
                }
             }
-          }
-
-
-       .wxchat-member-bar{
-
-          &.active{
-            right: -76px;  
-            left: auto;
-            z-index: 100;
-            padding-left: 3px;
-            aside{
+            .poetryedit-custom-btn{
+              button{
+                @include transform(scale(1.2));
+              }
             }
-          }
+           .poetryedit-bg-C{
+              width: 480px;
+              margin: 20px auto 0;
+              @include br(10px);
+              background: #f1f1f1;
+             ul{
+              padding-top: 10px;
+                @include displayFlex(row);
+                flex-wrap:wrap;
+                li{
+                  width: 140px;
+                  cursor: pointer;
+                  margin:10px;
+                  @include br(4px);
+                  &.active{
+                    box-sizing:border-box;
+                    border:2px solid #3da5e8;
+                  }
+                }
+             }
+           }
+
+           .poetryedit-bgsound-C{
+            width: 480px;
+            margin: 20px auto;
+              ul{
+                li{
+                  height: 40px;
+                  line-height: 40px;
+                  &:nth-of-type(2n){
+                    background: #eee;
+
+                  }
+                  cursor: pointer;
+                  font-size: 16px;
+                  @include transition(.2s);
+                  &:not(:first-of-type):hover{
+                    background: #1092e6;
+                    color:#fff;
+                  }
+                  &.active{
+                    background: #1092e6;
+                    color:#fff; 
+                  }
+                  @include displayFlex(row);
+                  aside{
+                    flex:1;
+                    text-align: center;
+                    -webkit-flex:1;
+                    img{width:30px;vertical-align: middle;}
+                  }
+                }
+              }
+           }
+        }
+
+        @include pos(r);
+        .poetryedit-save-btn{
           @include pos(a);
-          left: -73px;
-          display: none;
-          padding-right: 3px;
-          aside{
-            margin-right: 3px;
-            border:1px solid rgba(0, 140, 237,1);
-            background: #fff;
-            color:rgba(0, 140, 237,1);
-            width:70px;
-            text-align: center;
-            margin: 5px 0;
-            height: 26px;
-            line-height: 26px;
-            @include br(3px);
-            cursor: pointer;
-            @include transition(.2s);
-            &:hover{
-              background: rgba(0, 140, 237,1);
-              color:#fff;
-            }
-            &:first-of-type{
-              margin: 6px 0;
-            }
-
-          }
-        }
-
-        input{
-          background: transparent;
-          border:none;
-          text-align: center;
-        }
-
-        .ant-input:focus {
-            outline: 0;
-            box-shadow: 0 0 0 1px rgba(0, 140, 237, 0);
-            border:1px dashed rgba(0, 140, 237, .6);
-        }
-
-        width:100px;
-        margin:5px 5px 5px 5px;
-        @include displayFlex();
-        div{
-          &:first-of-type{
-            border:1px solid #ccc;
-            section{
-              width:80%;
-              height: 80%;
-              margin: 10%;
-            }
-          }
+          top: 0;
           width:100%;
-          height:100px;
-          &:last-of-type{
-             height:auto;
-             margin-top: 5px;
+          text-align: center;
+          button{
+            display: none;
+          }
+          background: #333;
+          height: 50px;
+          font-size: 20px;
+          color:#fff;
+          line-height: 50px;
+          cursor: pointer;
+          @include transition(.3s);
+          &:hover{
+            background: #008ced;
           }
         }
       }
     }
-  }
-
-  .wxchat-sure-btn{
-    margin-top: 60px;
-    width: 180px;
-    height: 50px;
-    background: #d8271c;
-    color:#fff;
-    border:none;
-    font-size: 20px;
-    @include br(8px);
-    outline: none;
-    cursor:pointer;
-  }
-}
-
-
-
-@media all and (max-height: 670px) {
-  .wxchat-main-ui{
-    .wxchat-members{
-      margin-top:10px;
-    }
-    &>div>h4{
-      height:1vh !important;
-    }
-    .wxchat-sure-btn{
-      margin-top: 10px;
-      height:40px;
-      line-height: 40px;
-    }
-    .wxchat-main-content {
-      margin-top: 0;
-      height:90vh;
-      &>aside:last-of-type{
-        h4{
-          height:0 !important;
-        }
-      }
-    }
-  } 
-}
+ }

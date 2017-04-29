@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { message,Row,Col,Input,Button } from '../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Icon } from '../commoncomponent/common.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
@@ -13,55 +13,45 @@ import MainUI from '../components/Main.jsx';
 import $ from 'jquery';
 
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
+ 
 
-import WXEntryApp from './entry/index.jsx';
-import WXEditApp from './edit/index.jsx';
-import WXSaveApp from './save/index.jsx';
-
-class ZmitiWxChatApp extends Component {
+class ZmitiPoetryApp extends Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
-			currentEditIndex:-1,
 			mainHeight:document.documentElement.clientHeight - 50,
-			currentDialogName:'wxchat-members-head',
-			isShowReplaceMyHeadImg:false,
-			isShowBackgroundDialog:false,
-			isEntry:1,//是否进入编辑状态
-			currentTalkIndex:0,
+			isBg:true,//是否选中风格，
+			isBgSound:false,
+			isShare:false,
+			isCustom:false,
+			customIndex:0,
+			currentCustom:{
+
+			},
+			themeList:[
+				{name:'default',src:'./static/images/poetry-theme1.jpg'},
+			],
+			audioList:[
+				{name:'花火',type:'纯音乐',src:''},
+				{name:'花火',type:'纯音乐',src:'1'},
+				{name:'花火',type:'纯音乐',src:'2'},
+				{name:'花火',type:'纯音乐',src:'3'},
+				{name:'花火',type:'纯音乐',src:'4'},
+				{name:'花火',type:'纯音乐',src:'5'}
+			],
 			data:{
 				shareTitle:'',//分享标题
 				shareDesc:'',//分享描述
 				shareImg:'',//分享图片300.jpg;
 				background:'',//聊天背景图片
 				bgSound:'',//背景音乐
-				username:'',
-				myHeadImg:'',
-				groupName:'',//群名称
-				title:'2017两会',
+				worksname:'',
+				theme:'default',
+				type:'',
 				viewpath:'',//预览地址
-				memberList:[
-					
-				],
-				talk:[
-
-					
-
-					/*{
-						isMe:false,
-						id:1,
-						head:'http://api.zmiti.com/zmiti_ele/user/xuchang/material/20161210/28fb05e9289de3bd09bf6f5da1eeb66e.jpg',
-						name:'徐畅',
-						text:'国大家好大家好大家好大家好大家好大家好',
-						href:'http://h5.zmiti.com/public/xwords/'
-					},{
-						isMe:true,
-						head:'',
-						name:'邓彬',
-						text:'大家好，新人求罩',
-					}*/
-				]
+				customList:[{content:'',title:'',id:this.props.randomString()}]
+				 
 			}
 		}; 
 	}
@@ -69,181 +59,297 @@ class ZmitiWxChatApp extends Component {
 
 	render() {
 		var mainStyle = {
-			background:'url(./static/images/wxtalk-bg.png) repeat center',
+			height:this.state.mainHeight
 		}
 
 		var s = this;
 
-		const userHeadProps = {
-            baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
-                s.state.data.memberList.push({
-                	id:s.props.randomString(8),
-                	head:imgData.src,
-                	name:''
-                });
+		const showShareProps  = {
+	  		baseUrl: window.baseUrl,
+	        getusersigid: s.getusersigid,
+	        userid: s.userid,
+	        onFinish(imgData){
+	        	s.modifyShareInfo('shareImg','',imgData.src);
+	        	
+	        }
+	  	}
 
-                s.forceUpdate(()=>{
-                	 window.obserable.trigger({
-	                	type:'refreshMemberList'
-	                })
-                	
-                });
-            }
-        };
-        const linkProps = {
-            baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
-                s.state.data.talk[s.state.currentTalkIndex].linkObj.img = imgData.src;
-                s.forceUpdate();
-            }
-        };
+		 
+       var shareStyle = {cursor:'pointer',position:'relative'};
+       if(this.state.data.shareImg){
+	  		shareStyle.background = 'url('+this.state.data.shareImg+') no-repeat center / cover'
+	  	}
+		var component = <div className='poetryedit-main-ui' style={mainStyle}>
+			<aside>
+				<div className='editpoetry-iphone'>
+					<Input type='text' value={this.state.data.worksname} onChange={e=>{this.state.data.worksname = e.target.value;this.forceUpdate()}}/>
+					<img  draggable='false'  src='./static/images/poetry-phone.png'/>
+					<section className='poetryedit-btn-ground'>
+						<div onClick={this.changeMenu.bind(this,'bg')} className='poetryedit-bg-btn' style={{background:'url(./static/images/poetry-bg-btn.png) no-repeat left '+(this.state.isBg ? 'top':'bottom')+''}}>
+						
+						</div>
+						<div onClick={this.changeMenu.bind(this,'bgsound')} className='poetryedit-bgsound-btn' style={{background:'url(./static/images/poetry-bgsound-btn.png) no-repeat left '+(this.state.isBgSound ? 'top':'bottom')+''}}>
+							
+						</div>
+					</section>
+				</div>
+			</aside>
+			<aside>
+				{this.state.isBg && <section className='poetryedit-right-C'>
+					<header>背景图片设置</header>
+					<section className='poetryedit-bg-C'>
+						<ul>
+							{
+								this.state.themeList.map((item,i)=>{
+									return <li onClick={()=>{this.state.data.theme = item.name;this.forceUpdate()}} className={this.state.data.theme === item.name?'active':''} key={i}>
+										<img src={item.src}/>
+									</li>
+								})	
+							}
+						</ul>
+					</section>
+					<div style={{marginTop:30}} className='poetryedit-next'><Button type='primary' onClick={this.entryShare.bind(this)}>下一步</Button></div>
+				</section>}
+				{this.state.isBgSound && <section className='poetryedit-right-C'>
+					<header>背景音乐设置</header>
+					<section className='poetryedit-bgsound-C'>
+						<ul>
+							<li>
+								<aside>歌名</aside>
+								<aside>类型</aside>
+								<aside>播放</aside>
+								<aside>设为</aside>
+							</li>
+							{
+								this.state.audioList.map((item,i)=>{
+									return <li onClick={()=>{this.state.data.bgSound = item.src;this.forceUpdate()}} className={this.state.data.bgSound === item.src?'active':''} key={i}>
+										<aside>{item.name}</aside>
+										<aside>{item.type}</aside>
+										<aside><img src='./static/images/poetry-play-btn.png'/></aside>
+										<aside>设为</aside>		
+									</li>
+								})	
+							}
+							<li className={this.state.data.bgSound === '-1' ? 'active':''} onClick={()=>{this.state.data.bgSound = '-1';this.forceUpdate()}}>
+								<aside></aside>
+								<aside>无背景音乐</aside>
+								<aside></aside>
+							</li>
+						</ul>
+					</section>
+					<div className='poetryedit-next'><Button type='primary' onClick={this.entryShare.bind(this)}>下一步</Button></div>
+				</section>}
 
-        const backgroundProps = {
-        	baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
+				{this.state.isShare && <section className='poetryedit-right-C'>
+					<header>分享设置</header>
+					<aside>
+						<div className='poetry-share-ui'>
+							<section>
+								<Row type='flex' align='start' gutter={20}>
+									<Col span={6}>
+										<div style={shareStyle}>
+											<img onClick={this.modifyShareImg.bind(this)} style={{opacity:this.state.data.shareImg?0:1}} src='./static/images/add-share.png'/>
+											{this.state.data.shareImg && this.state.showShareImgBtn && <div className='poetry-operat-shareimg'>
+																					<Button type='primary' icon='reload' onClick={this.replaceShareImg.bind(this)}>替换</Button>
+																					<Button type='primary' icon='delete' onClick={this.modifyShareInfo.bind(this,'shareImg','','')}>删除</Button>
+																				</div>}
+										</div>
+									</Col>
+									<Col span={18}>
+										<Input value={this.state.data.shareTitle} onChange={this.modifyShareInfo.bind(this,'shareTitle')} type='text' placeholder='请输入分享的标题'/>
+										<textarea placeholder='请输入分享的描述' value={this.state.data.shareDesc}  onChange={this.modifyShareInfo.bind(this,'shareDesc')}></textarea>
+									</Col>
+								</Row>				
+							</section>
+							<section>
+								<Row type='flex' align='middle'>
+									<Col span={12}>
+										<img src={this.state.data.qrcode||'./static/images/qrcode.png'}/>
+									</Col>
+									<Col span={12}>
+										<div>扫二维码分享给好友</div>
+									</Col>
+								</Row>				
+							</section>
+							
+						</div>	
+					</aside>
+				</section>}
 
-                s.state.data.background = imgData.src;
-                s.forceUpdate();
-            }	
-        }
+				{this.state.isCustom && <section className='poetryedit-right-C'>
+					<header>我的自定义诗词</header>
+					<ul className='poetryedit-custom-list'>
+						{this.state.data.customList.map((item,i)=>{
+							return <li onClick={this.changeCurrentCustom.bind(this,i)} className={this.state.customIndex === i?'active':''} key={i}>{i+1}<span>x</span></li>
+						})}
+					</ul>
+					<section className='poetryedit-custom-title poetryedit-custom-center'>
+						<Input value={this.state.data.customList[this.state.customIndex].title} onChange={e=>{this.state.data.customList[this.state.customIndex].title = e.target.value;this.forceUpdate()}} type='text' placeholder='请输入标题'/>
+					</section>
+					<section className='poetryedit-custom-center poetryedit-custom-aduio'>
+						<img src='./static/images/poetry-add-audio.png'/>
+						添加音频组件
+					</section>
+					<section className='poetryedit-custom-center poetryedit-custom-content'>
+						<textarea  value={this.state.data.customList[this.state.customIndex].content} onChange={e=>{this.state.data.customList[this.state.customIndex].content = e.target.value;this.forceUpdate()}} placeholder='请输入内容'></textarea>
+					</section>
 
-        const repalcemyheadimgProps ={
-        	baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
-            	s.state.data.myHeadImg = imgData.src;
-            	s.state.isShowReplaceMyHeadImg= false;
-            	s.state.data.talk.forEach((item,i)=>{
-            		item.isMe && (item.head = imgData.src);
-            	});
-            	s.forceUpdate()
-            }
-        }
-
-        const  replaceTalkImgProps = {//替换聊天中的图片
-        	baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
-            	
-            	s.state.data.talk[s.state.currentTalkIndex].img = imgData.src;
-            	
-            	s.state.data.talk[s.state.currentTalkIndex].text = '';
-
-            	s.state.isShowReplaceTalkImg= false;
-
-            	s.forceUpdate(()=>{
-            		window.obserable.trigger({type:'refreshTalkBodyScroll'});
-            	})
-            }
-        } 
-
-        const editHeadProps = {
-        	baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
-            	if(s.state.currentEditIndex === -1){
-            		return;
-            	}
-
-            	s.state.data.talk.forEach((item,i)=>{
-            		if(s.state.data.memberList[s.state.currentEditIndex].id === item.id){
-            			item.head = imgData.src;
-            		}
-            	});
-            	s.state.data.memberList[s.state.currentEditIndex].head = imgData.src;
-                s.forceUpdate();
-            }
-        }
-
-
-        var data ={
-        	modifyTitle:this.modifyTitle.bind(this),
-        	uploadHead:this.uploadHead.bind(this),
-        	modifyUserName:this.modifyUserName.bind(this),
-        	entryEdit:this.entryEdit.bind(this),
-        	modifyGroupName:this.modifyGroupName.bind(this),
-        	loading:this.props.loading,
-
-        }
-
-
-		var component = <div className='wxchat-main-ui' style={mainStyle}>
-			{this.state.data.bgSound && <audio src={this.state.data.bgSound} autoPlay loop></audio>}
-			<WXEntryApp {...this.state} {...data}></WXEntryApp>			
-			<WXEditApp {...this.state} {...data}></WXEditApp>
-			<WXSaveApp {...this.state} {...data} userid={this.userid} getusersigid={this.getusersigid}></WXSaveApp>
-			<ZmitiUploadDialog id={this.state.currentDialogName} {...userHeadProps}></ZmitiUploadDialog>
-
-			{this.state.currentEditIndex !== -1 && <ZmitiUploadDialog id={'memberList-'+ this.state.currentEditIndex} {...editHeadProps}></ZmitiUploadDialog>}
-
-
-			{this.state.isShowReplaceMyHeadImg && <ZmitiUploadDialog id={'repalcemyheadimg'} {...repalcemyheadimgProps}></ZmitiUploadDialog>}
-			{this.state.isShowReplaceTalkImg && <ZmitiUploadDialog id={'isShowReplaceTalkImg'} {...replaceTalkImgProps}></ZmitiUploadDialog>}
-			{this.state.isShowBackgroundDialog && <ZmitiUploadDialog id={'showBackgroundDialog'} {...backgroundProps}></ZmitiUploadDialog>}
-			{this.state.isShowLinkDialog && <ZmitiUploadDialog id={'showLinkDialog'} {...linkProps}></ZmitiUploadDialog>}
+					<section className='poetryedit-custom-center poetryedit-custom-btn'>
+						<Button type='primary' onClick={this.addCustom.bind(this)}>继续</Button>
+					</section>
+					<div className='poetryedit-next'><Button type='primary' onClick={this.entryShare.bind(this)}>下一步</Button></div>
+				</section>}
+				<div title='保存作品' className='poetryedit-save-btn' onClick={this.save.bind(this)}><Icon type="save" />保存</div>
+				{this.state.showShareDialog && <ZmitiUploadDialog id={'showShareDialog'} {...showShareProps}></ZmitiUploadDialog>}	
+			</aside>
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
 		);
 	}
 
-	modifyUserName(e,i){
+	changeCurrentCustom(i,e){
+		if(e.target.nodeName === "SPAN"){
+			if(this.state.data.customList.length<=1){
+				message.error('至少要有1条记录');
+				return;
+			}
+			this.state.data.customList.splice(i,1);
+			this.state.customIndex = this.state.data.customList.length -1;
+		}else{
 
+			this.state.customIndex = i;
+			this.state.currentCustom = this.state.data.customList[i];
+		}
 
-
-		this.state.data.memberList[i].name = e.target.value;
-		this.forceUpdate();
-	}
-
-	entryEdit(){
-
-		//创建or更新作品
-		//
-		//
+		this.forceUpdate();	
 		
+	}
 
+	modifyShareImg(){
 
+		if(!this.state.data.shareImg){
+			this.replaceShareImg()
+		}
+		else{
+			this.setState({
+				showShareImgBtn:true,
+				showShareDialog:false
+			});
+		}
+
+	}
+
+	addCustom(){
+		let {randomString} = this.props;
+
+		if(this.state.data.customList.length>=10){
+			message.error('最多添加10条记录');
+			return;
+		}
+
+		if(this.state.data.customList[this.state.customIndex].content.length<=0){
+			message.error('内空不能空为');
+			return;
+		}
+	    
+		this.state.data.customList.push ({content:'',title:'',id:randomString()});
+
+		this.state.customIndex = this.state.data.customList.length -1;
+
+		console.log(this.state.data.customList)
+
+		
+		this.forceUpdate();
+	}
+
+	replaceShareImg(){
+
+	  	this.setState({
+	  		showShareDialog:true,
+	  		showShareImgBtn:false
+	  	},()=>{
+
+	  		window.obserable.trigger({
+	  			type:'showModal',
+	  			data:{
+	  				id:'showShareDialog',
+	  				type:0
+	  			}
+	  		})
+	  	})
+	}
+	
+	modifyShareInfo(name,e,data){
+
+		this.state.data[name] = e.target?e.target.value : data;
+		this.forceUpdate();
+  }
+
+	entryShare(){
+		//进入分享页面
 		this.setState({
-			isEntry:true
-		});
+			isBg:false,
+			isBgSound:false,
+			isCustom:false,
+			isShare:true
+		})
 	}
 
-	 
+	save(){
+		var s = this;
+		if(this.state.data.customList[this.state.data.customList.length - 1].content.length<=0){
+			this.state.data.customList.pop();
+		}
+		$.ajax({
+			url:window.baseUrl+'/works/update_works/',
+			type:'post',
+			data:{
+				worksid:s.state.data.worksid,
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				datajson:JSON.stringify(s.state.data),
+				worksname:s.state.data.worksname,
+				dirname:'poetry',
+				workstag:'',
+				workico:''
+			},
+			success(data){
+				message[data.getret === 0?'success':'error'](data.getmsg);
+				if(data.getret === 1300){//用户登录超时
+					window.location.href = window.loginUrl;
+				}
+			}
+		})
+	}
 
-	uploadHead(){
-		var obserable=window.obserable;
-		obserable.trigger({
-		  type:'showModal',
-		  data:{type:0,id:'wxchat-members-head'}
-		});
+	changeMenu(type){
+		if(type === 'bg'){
+			this.setState({
+				isBg:true,
+				isCustom:false,
+				isBgSound:false,
+				isShare:false
+			});
+		}else if(type ==='bgsound'){
+			this.setState({
+				isBg:false,
+				isCustom:false,
+				isBgSound:true,
+				isShare:false
+			});
+		}
 	}
 
 
-	modifyTitle(e){
-		this.state.data.title = e.target.value;
-		this.forceUpdate();
-	}
-
-	modifyGroupName(val){
-		this.state.data.groupName = val;
-		this.forceUpdate();
-	}
 
 	componentWillMount() {
 		
-		let {resizeMainHeight,validateUser,loginOut} = this.props;
+		let {resizeMainHeight,validateUser,loginOut,randomString} = this.props;
 
 		resizeMainHeight(this);	
+
+		this.randomString = randomString;
 		
 		let {userid,getusersigid,usertypesign} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
 		this.userid = userid;
@@ -255,328 +361,35 @@ class ZmitiWxChatApp extends Component {
 
 		var s = this;
 		this.worksid = s.props.params.id;
+
+		if(!this.worksid){
+			message.error('url 参数不正确');
+			return;
+		}
 		$.ajax({
 			url:window.baseUrl + '/works/get_filecontent/',
 			data:{
 				userid:s.userid,
 				getusersigid:s.getusersigid,
-				worksid:s.worksid,
+				worksid:s.worksid
 			},
 			success(data){
 				if(data.getret === 0){
-					
+					console.log(JSON.parse(data.filecontent))
 					s.state.data = JSON.parse(data.filecontent);
-					s.state.data.talk.forEach((item,i)=>{
-						if(!item.linkObj){
-							item.linkObj = {};
-						}
-					});
-					s.state.viewpath = data.path.viewpath;
-					s.forceUpdate(()=>{
-						window.obserable.trigger({
-							type:'refreshMemberScroll'
-						})
+					!s.state.data.theme && (s.state.data.theme = 'default');
+					!s.state.data.bgSound && (s.state.data.bgSound = '');
+					if(s.state.data.type === 'CUSTOM'){
+						s.state.isBg = s.state.isBgSound = false;
+						s.state.isCustom = true;
+					}
+					s.state.data.customList = s.state.data.customList || [];
+					s.state.data.customList  = s.state.data.customList.length<=0 ?  [{title:'',content:'',id:s.randomString() }] :  s.state.data.customList;
 
-						s.props.loading(s.state.data.loadingImg,null,()=>{
-							
-		  					window.obserable.trigger({
-					  			type:'refreshTalkBodyScroll'
-					  		})
-		  				})
-					});
-
-					
+					s.forceUpdate()
 				}
 			}
 		})
-
-		
-
-		window.s = this;
-		window.obserable.on('setMainMember',(i)=>{//设置群主
-			if(i===0){
-				return;
-			}
-			var mainMember = this.state.data.memberList[0];
-			this.state.data.memberList[0] = this.state.data.memberList.splice(i,1)[0];
-			this.state.data.memberList.splice(i,0,mainMember)
-			
-			this.forceUpdate();
-		});
-
-
-		window.obserable.on('replaceHead',(i)=>{//替换头像
-
-			this.setState({currentEditIndex:i},()=>{
-				
-				window.obserable.trigger({
-				  type:'showModal',
-				  data:{type:0,id:'memberList-'+i}
-				});
-			});
-
-
-		});
-
-		window.obserable.on('deleteMember',(i)=>{//删除成员
-			if(this.state.data.memberList.length<=2){
-				message.error('聊天成员最少为2个');
-				return;
-			}
-			this.state.data.memberList.splice(i,1);
-			this.forceUpdate(()=>{
-				window.obserable.trigger({
-					type:'refreshMemberList'
-				});
-
-			});
-		});
-		
-		window.obserable.on('repalceMyHeadImg',()=>{
-			this.setState({isShowReplaceMyHeadImg:true},()=>{
-				window.obserable.trigger({
-					type:'showModal',
-					data:{type:0,id:'repalcemyheadimg'}
-				});
-			});
-		});
-
-		window.obserable.on('modifyCurrentTalk',data=>{//输入框改变时。
-			this.state.data.talk[this.state.currentTalkIndex].text = data;
-			this.state.data.talk[this.state.currentTalkIndex].img = '';//清空聊天图片
-			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};//清空聊天图片
-			this.forceUpdate();
-			this.timer && clearTimeout(this.timer);
-			this.timer = setTimeout(()=>{
-				window.obserable.trigger({type:'refreshTalkBodyScroll'});
-			},370);
-		});
-
-		window.obserable.on('modifyCurrentIndex',data=>{ //设置当前的聊天记录。
-			this.setState({
-				currentTalkIndex:data
-			});
-
-			var type= 0;
-			if(this.state.data.talk[data].img){
-				type= 1;
-			}else if(this.state.data.talk[data].audioSrc){
-				type= 2;
-			}
-			else if(this.state.data.talk[data].videoSrc){
-				type= 3;
-			}
-			else if(this.state.data.talk[data].linkObj.img || this.state.data.talk[data].linkObj.title || this.state.data.talk[data].linkObj.href ||this.state.data.talk[data].linkObj.desc){
-				type= 4;
-			}
-
-
-			window.obserable.trigger({
-				type:'changeTalkType',
-				data:type
-			})
-		});
-
-		window.obserable.on('setCurrentTalk',data=>{//设置聊天的内容和头像
-			if(!this.state.data.talk[this.state.currentTalkIndex]){
-				return;
-			}
-			this.state.data.talk[this.state.currentTalkIndex].head = this.state.data.memberList[data].head;
-			this.state.data.talk[this.state.currentTalkIndex].name = this.state.data.memberList[data].name;
-			this.state.data.talk[this.state.currentTalkIndex].id = this.state.data.memberList[data].id;
-			this.state.data.talk[this.state.currentTalkIndex].isMe = false;
-			this.forceUpdate();
-
-		});
-
-		window.obserable.on('addTalk',()=>{//
-			var talk = {
-				isMe:false,
-				id:-1,
-				head:'',
-				name:'xxx',
-				text:'',
-				linkObj:{}
-			}
-			this.state.data.talk.push(talk);
-			this.state.currentTalkIndex = this.state.data.talk.length -1;
-			this.forceUpdate(()=>{
-				this.timer && clearTimeout(this.timer);
-				this.timer = setTimeout(()=>{
-					window.obserable.trigger({type:'refreshTalkBodyScroll'});
-				},370);
-			});
-		});
-
-
-		window.obserable.on("setTalkIsMe",()=>{//设置当前的聊天内容为我。
-			this.state.data.talk[this.state.currentTalkIndex].id = -1;
-			this.state.data.talk[this.state.currentTalkIndex].isMe = true;
-			this.state.data.talk[this.state.currentTalkIndex].head = this.state.data.myHeadImg;
-			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyCurrentTalkHref',(data)=>{//更新当前聊天的链接。
-  			this.state.data.talk[this.state.currentTalkIndex].href = data;
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyTalkImg',()=>{//替换图片。
-  			this.setState({
-  				isShowReplaceTalkImg:true
-  			},()=>{
-  				window.obserable.trigger({
-  					type:'showModal',
-					data:{type:0,id:'isShowReplaceTalkImg'}
-  				})
-  			})
-  		});
-
-  		window.obserable.on('deleteTalkImg',()=>{
-  			var s = this;
-  			s.state.data.talk[s.state.currentTalkIndex].img = null;
-        	s.forceUpdate()
-  		});
-
-  		window.obserable.on('deleteTalk',(i)=>{
-  			if(this.state.data.talk.length<=1){
-  				message.error('至少得有一个聊天记录');
-  				return;
-  			}
-
-  			this.state.currentTalkIndex = this.state.data.talk.length - 2;
-  			this.forceUpdate();
-
-  			this.state.data.talk.splice(i,1);
-
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyUserName',data=>{
-  			this.state.data.username = data;
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyBackground',(data)=>{
-  			this.setState({
-  				isShowBackgroundDialog:true
-  			},()=>{
-  				window.obserable.trigger({
-  					type:"showModal",
-  					data:{
-  						type:0,
-  						id:'showBackgroundDialog'
-  					}
-  				})
-  			});
-  		});
-
-  		window.obserable.on('deleteBackground',()=>{
-  			this.state.data.background = '';//清除背景图片
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyBgSound',(e)=>{
-  			this.state.data.bgSound = e;//添加背景音乐
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('deleteBgSound',(e)=>{
-  			this.state.data.bgSound = '';//添加背景音乐
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('backtoedit',()=>{//返回编辑
-  			this.setState({
-  				isEntry:1
-  			});
-
-  			window.obserable.trigger({
-  				type:'save'
-  			})
-  		});
-
-  		window.obserable.on('modifyShareInfo',(data)=>{//分享标题,描述
-  			this.state.data[data.name] = data.title;
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on("save",()=>{
-  			this.state.isEntry = 2;
-
-
-  			var s = this;
-
-  			s.filterLoadingImg(s.state.data);
-  			s.state.data.loadingImg = s.loadingImg;//把所有的资源图片统一加到页面上。
-			this.forceUpdate();
-  			$.ajax({
-  				url:window.baseUrl+'/works/update_works/',
-  				type:'post',
-  				data:{
-  					worksid:s.worksid,
-  					userid:s.userid,
-  					getusersigid:s.getusersigid,
-  					datajson:JSON.stringify(s.state.data),
-  					worksname:s.state.data.title,
-  					workstag:'',
-  					workico:s.state.data.shareImg
-  				},
-  				success(data){
-  					
-  					message[data.getret === 0?'success':'error'](data.getmsg);
-  				}
-
-  			})
-
-  		});
-
-  		window.obserable.on('modifyCurrentTalkAudio',(data)=>{
-  			this.state.data.talk[this.state.currentTalkIndex].audioSrc = data;
-  			this.state.data.talk[this.state.currentTalkIndex].text = '';
-  			this.state.data.talk[this.state.currentTalkIndex].img = '';
-  			this.state.data.talk[this.state.currentTalkIndex].videoSrc ='';
-  			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyCurrentTalkVideo',(data)=>{
-  			this.state.data.talk[this.state.currentTalkIndex].videoSrc = data;
-  			this.state.data.talk[this.state.currentTalkIndex].text = '';
-  			this.state.data.talk[this.state.currentTalkIndex].img = '';
-  			this.state.data.talk[this.state.currentTalkIndex].audioSrc ='';
-  			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};
-  			this.forceUpdate(()=>{
-  				this.timer && clearTimeout(this.timer);
-				this.timer = setTimeout(()=>{
-					window.obserable.trigger({type:'refreshTalkBodyScroll'});
-				},370);
-  			});
-  		});
-
-  		window.obserable.on('modifyLink',(data)=>{
-  			this.state.data.talk[this.state.currentTalkIndex].videoSrc = '';
-  			this.state.data.talk[this.state.currentTalkIndex].text = '';
-  			this.state.data.talk[this.state.currentTalkIndex].img = '';
-  			this.state.data.talk[this.state.currentTalkIndex].audioSrc ='';
-  			this.state.data.talk[this.state.currentTalkIndex].linkObj[data.name] = data.value;
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyLinkImg',()=>{
-			this.setState({
-				isShowLinkDialog:true
-			},()=>{
-				window.obserable.trigger({
-					type:'showModal',
-					data:{
-						type:0,
-						id:'showLinkDialog'
-					}
-				})
-			})
-		});
-
 
 	}
 
@@ -605,4 +418,4 @@ class ZmitiWxChatApp extends Component {
  
 }
 
-export default ZmitiValidateUser(ZmitiWxChatApp);
+export default ZmitiValidateUser(ZmitiPoetryApp);

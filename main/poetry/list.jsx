@@ -23,19 +23,15 @@ class ZmitiPoetryListApp extends Component {
 			isEntry:1,
 			currentState:0,
 			visible:false,
-			showTitle:true,//是否显示输入标题对话框
+			showTitle:false,//是否显示输入标题对话框
 			poetryList:[
 				  
 			],//聊天作品列表
-
-
 			data:{
-				shareTitle:'',//分享标题
-				shareDesc:'',//分享描述
-				shareImg:'',//分享图片300.jpg;
-				background:'',//聊天背景图片
-				bgSound:'',//背景音乐 
-				type:'SHI'
+				type:'SHI',
+				worksname:'',
+				theme:'default',
+
 			}
 		}; 
 	}
@@ -54,12 +50,12 @@ class ZmitiPoetryListApp extends Component {
 		var component = <div className='poetry-list-main-ui'>
 			{this.state.currentState === -1 && <section className='poetry-list-C'>
 				<ul className='poetry-list'>
-					<li  title='创建作品' onClick={this.createWork.bind(this)}>
+					<li  title='创建作品' onClick={this.entryCreateWork.bind(this)}>
 						<img src='./static/images/create.png'/>
 					</li>
 					{this.state.poetryList.map((item,i)=>{
 						return <li key={i}>
-							<section onClick={this.save.bind(this,item.worksid,item.viewpath)}  className='poetry-qrcode'><img src={item.qrcodeUrl}/></section>
+							<section  className='poetry-qrcode'><img src={item.qrcodeUrl}/></section>
 							<div className='poetry-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 							<div className='poetry-item-name'>{item.worksname}</div>
 							<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
@@ -67,7 +63,8 @@ class ZmitiPoetryListApp extends Component {
 							</Tooltip>
 							<div className='poetry-item-operator'>
 											{/*<div><a href={item.viewpath} target='_blank'>预览</a></div>
-																						<div><Link to={'/poetry/'+item.worksid}>编辑</Link></div>*/}
+																						</div>*/}
+											<div><Link to={'/poetryedit/'+item.worksid}>编辑</Link></div>
 											<Popconfirm placement="top" title={'确定要删除吗？'} onConfirm={this.deletePoetry.bind(this,item.worksid,i)}>
 												<div>删除</div>
 											</Popconfirm>
@@ -95,14 +92,38 @@ class ZmitiPoetryListApp extends Component {
 		        >
 		          <div className='poetry-type-C'>
 			         <section className='poetry-type-list'>
-			         	<aside onClick={this.modifyType.bind(this,'SHI')}><img draggable='false' src={this.state.data.type==='SHI'?'./static/images/poetry-poetry1.png':'./static/images/poetry-poetry.png'}/></aside>
-			         	<aside  onClick={this.modifyType.bind(this,'CI')}><img draggable='false' src={this.state.data.type==='CI'?'./static/images/poetry-ci1.png':'./static/images/poetry-ci.png'}/></aside>
-			         	<aside onClick={this.modifyType.bind(this,'TONGYAO')}><img draggable='false' src={this.state.data.type==='TONGYAO'?'./static/images/poetry-tongyao1.png':'./static/images/poetry-tongyao.png'}/></aside>
+			         	<aside onClick={this.modifyType.bind(this,'SHI')}>
+			         		<section style={{background:'url(./static/images/'+(this.state.data.type === "SHI"?'poetry-bg1.png':'poetry-bg.png')+') no-repeat center / contain'}}>
+			         			<span className={this.state.data.type === "SHI"?'active':''}>诗</span>
+			         		</section>
+			         		<section><img src='./static/images/poetry-hand.png'/></section>
+			         		<section>系统会随机给您一首诗</section>
+			         	</aside>
+			         	<aside  onClick={this.modifyType.bind(this,'CI')}>
+			         		<section style={{background:'url(./static/images/'+(this.state.data.type === "CI"?'poetry-bg1.png':'poetry-bg.png')+')  no-repeat center / contain'}}>
+			         			<span className={this.state.data.type === "CI"?'active':''}>词</span>
+			         		</section>
+			         		<section><img src='./static/images/poetry-hand.png'/></section>
+			         		<section>系统会随机给您一首词</section>
+			         	</aside>
+			         	<aside onClick={this.modifyType.bind(this,'TONGYAO')}>
+			         		<section style={{background:'url(./static/images/'+(this.state.data.type === "TONGYAO"?'poetry-bg1.png':'poetry-bg.png')+')  no-repeat center / contain'}}>
+			         			<span className={this.state.data.type === "TONGYAO"?'active':''}>童谣</span>
+			         		</section>
+			         		<section><img src='./static/images/poetry-hand.png'/></section>
+			         		<section>系统会随机给您一首童谣</section>
+			         	</aside>
 			         </section>
 			         <section className='poetry-line'></section>
 			         <section  className='poetry-type-list'>
 			         	<aside style={{opacity:0}}><img draggable='false' src='./static/images/poetry-poetry.png'/></aside>
-			         	<aside  onClick={this.modifyType.bind(this,'CUSTOM')}><img draggable='false' src={this.state.data.type==='TONGYAO'?'./static/images/poetry-custom1.png':'./static/images/poetry-custom.png'}/></aside>
+			         	<aside  onClick={this.modifyType.bind(this,'CUSTOM')}>
+			         		<section className='poetry-custom' style={{background:'url(./static/images/'+(this.state.data.type === "CUSTOM"?'poetry-bg1.png':'poetry-bg.png')+')  no-repeat center / contain'}}>
+			         			<span className={this.state.data.type === "CUSTOM"?'active':''}>自定义</span>
+			         		</section>
+			         		<section><img src='./static/images/poetry-hand.png'/></section>
+			         		<section>我要自己作一首</section>
+			         	</aside>
 			         	<aside  style={{opacity:0}}><img draggable='false' src='./static/images/poetry-ci.png'/></aside>
 			         </section>
 			      </div>
@@ -113,9 +134,9 @@ class ZmitiPoetryListApp extends Component {
 				  footer={''}
 		        >
 		         <div className='poetry-title-input'>
-		         	<input type='text' placeholder= '请输入标题'/>
+		         	<input value={this.state.data.worksname} onChange={e=>{this.state.data.worksname = e.target.value;this.forceUpdate()}} type='text' placeholder= '请输入标题'/>
 		         	<img src='./static/images/peotry-title-bg.png'/>
-		         	<div className='poetry-title-btn'><Button type='primary' size="large">下一步</Button></div>
+		         	<div className='poetry-title-btn'><Button onClick={this.createWork.bind(this)} type='primary' size="large">下一步</Button></div>
 		         </div>
 		        </Modal>
 		        
@@ -126,10 +147,23 @@ class ZmitiPoetryListApp extends Component {
 		);
 	}
 
+	entryCreateWork(){
+		this.setState({currentState:0},()=>{
+			this.flyParticleToImage({
+				 container: this.refs['poetry-text'],
+	            img: this.refs['poetry-text-img'],
+	            complate: function () {
+
+	            }
+			});
+		})
+	}
+
 	entryInputTitle(){
 
 		this.setState({
-			visible:false
+			visible:false,
+			showTitle:true
 		})
 	}
 
@@ -141,6 +175,11 @@ class ZmitiPoetryListApp extends Component {
 
 
 	modifyType(type){
+
+		if(type === "CI" || type === "TONGYAO"){
+			message.warning('敬请期待');
+			return false;
+		}
 
 		this.state.data.type = type;
 		this.forceUpdate();
@@ -270,7 +309,7 @@ class ZmitiPoetryListApp extends Component {
 
     }
 
-	save(worksid,viewpath){
+	save(worksid,viewpath,title){
 		var s = this;
 		this.zmitiAjax({
 			url:window.baseUrl+'/works/update_works/',
@@ -281,9 +320,10 @@ class ZmitiPoetryListApp extends Component {
 				getusersigid:s.getusersigid,
 				datajson:JSON.stringify({worksid:worksid,wxappid:'wxfacf4a639d9e3bcc',
 					wxappsecret:'149cdef95c99ff7cab523d8beca86080',
-					viewpath:viewpath
+					viewpath:viewpath,
+					worksname:title
 				}),
-				worksname:'诗词解密测试',
+				worksname:title,
 				dirname:'poetry',
 				workstag:'',
 				workico:''
@@ -299,7 +339,11 @@ class ZmitiPoetryListApp extends Component {
 
 	createWork(){
 
-		
+		if(this.state.data.worksname.length <= 0){
+			message.error('作品名称不能为空');
+			return;
+		}
+
 		var s = this;
 
 		var type = 0;
@@ -310,8 +354,8 @@ class ZmitiPoetryListApp extends Component {
 				type = 1;//对应的是公司的作品。
 				break;
 		}
-		
-		this.zmitiAjax({
+
+		$.ajax({
 			url:window.baseUrl+'/works/create_works/',
 			type:'get',
 			data:{
@@ -319,13 +363,17 @@ class ZmitiPoetryListApp extends Component {
 				getusersigid:s.getusersigid,
 				productid:s.productid,
 				dirname:'poetry',
-				worksname:'诗词解密测试',
+				worksname:s.state.data.worksname,
 				workstate:1,
 				worktypesign:type,
-				datajson:JSON.stringify({})
+				datajson:JSON.stringify(this.state.data)
 			},
 			success(data){
+
 				message[data.getret === 0?'success':'error'](data.getmsg);
+				if(data.getret === 0 ){
+					window.location.hash= '/poetryedit/'+data.worksid;
+				}
 				
 			}
 		});
@@ -357,7 +405,7 @@ class ZmitiPoetryListApp extends Component {
 			 	this.productid = item.productid;//获取当前产品的id;
 			 }
 		});
-		this.zmitiAjax({
+		$.ajax({
 			url:window.baseUrl + 'works/get_worksinfo/',
 			data:{
 				type:1000,
@@ -367,7 +415,7 @@ class ZmitiPoetryListApp extends Component {
 			},
 			success(data){
 				if(data.getret === 0){
-
+					console.log(data.getworksInfo)
 					s.state.poetryList = data.getworksInfo;
 					s.forceUpdate();
 				}
