@@ -27,6 +27,7 @@ class ZmitiTripostApp extends Component {
 			jobname:'',
 			level:'',
 			dataSource:[],
+			jobid:'',
 		};
 
 		
@@ -60,7 +61,7 @@ class ZmitiTripostApp extends Component {
             key: '',
             width:150,
             render:(text,recoder,index)=>(
-                <span><a href="#"> 查看</a></span>
+                <span><a href="#"> 查看</a><a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.jobid)}> 删除</a></span>
             )
 
         }]
@@ -169,6 +170,7 @@ class ZmitiTripostApp extends Component {
         })
     }
 
+
 	componentDidMount() {
 		var s=  this;
 		s.bindNewdata();
@@ -224,6 +226,35 @@ class ZmitiTripostApp extends Component {
 			}
 		})
 		//console.log("dialog");
+    }
+    //删除
+    delData(jobid){
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'travel/del_job/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                jobid:jobid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    message.success('删除成功！');
+                    setTimeout(()=>{
+                        s.bindNewdata();
+                    },2000)
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data.getmsg);
+                }
+            }
+        })
     }
 
 }
