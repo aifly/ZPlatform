@@ -23,7 +23,8 @@ class ZmitiTripostApp extends Component {
 			setuserid:'',
 			selectedIndex:0,
 			mainHeight:document.documentElement.clientHeight-50,
-			modpostDialogVisible:false,			
+			modpostDialogVisible:false,
+			modpostEditDialogVisible:false,		
 			jobname:'',
 			level:'',
 			dataSource:[],
@@ -61,7 +62,10 @@ class ZmitiTripostApp extends Component {
             key: '',
             width:150,
             render:(text,recoder,index)=>(
-                <span><a href="#"> 查看</a><a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.jobid)}> 删除</a></span>
+                <span>
+                	<a href="#"> 查看</a>
+                	<a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.jobid)}> 删除</a>
+                </span>
             )
 
         }]
@@ -123,7 +127,38 @@ class ZmitiTripostApp extends Component {
 
                     </Form>
                   </Modal>
+                  <Modal title="修改职务" visible={this.state.modpostEditDialogVisible}
+					onOk={this.modpostOk.bind(this)}
+					onCancel={()=>{this.setState({modpostEditDialogVisible:false})}}
+                  >
+                    <Form>
+                      <FormItem
+                        {...formItemLayout}
+                        label="职务名称"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="职务名称" 
+							value={this.state.jobname}
+							onChange={(e)=>{this.state.jobname=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="职务级别"
+                        hasFeedback
+                      >
+                          <Select placeholder="职务级别" onChange={(value)=>{this.state.level=value;this.forceUpdate();}} value={this.state.level}>
+                          	<Option value={1}>普通职称</Option>
+                          	<Option value={2}>中级职称</Option>
+                          	<Option value={3}>高级职称</Option>
+                          </Select>                     
+                      </FormItem>
+
+                    </Form>
+                  </Modal>
                   {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddpost" {...userProps}></ZmitiUploadDialog>}
+                  {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddeditpost" {...userProps}></ZmitiUploadDialog>}
 
 			</div>
 		}
@@ -163,7 +198,7 @@ class ZmitiTripostApp extends Component {
 
                 if(data.getret === 0){
                     console.log(data,"信息列表");
-                    s.state.dataSource = data.joblist;
+                    s.state.dataSource = data.list;
                     s.forceUpdate();
                 }
             }
@@ -188,6 +223,7 @@ class ZmitiTripostApp extends Component {
 
 		
 	}
+	//dialog
 	modifyaddpost(){
       var obserable=window.obserable;
          this.setState({
@@ -199,6 +235,7 @@ class ZmitiTripostApp extends Component {
           })  
         }) 
     }
+
 	//新增職稱
     modpostOk(){
     	var s =this;
@@ -236,6 +273,37 @@ class ZmitiTripostApp extends Component {
                 userid:s.userid,
                 getusersigid:s.getusersigid,
                 jobid:jobid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    message.success('删除成功！');
+                    setTimeout(()=>{
+                        s.bindNewdata();
+                    },2000)
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data.getmsg);
+                }
+            }
+        })
+    }
+    //编辑
+    editData(jobid){
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'travel/edit_job/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                jobid:jobid,
+                jobname:jobnameTxt,
+				level:levelTxt
             },
             success(data){
                 if(data.getret === 0){
