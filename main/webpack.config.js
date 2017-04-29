@@ -1,8 +1,10 @@
 var webpack = require('webpack');
+
 var config = {
     entry: {
         'index': "./index.jsx",
-        'admin':'./admin/index.jsx'
+        'admin':'./admin/index.jsx',
+        //vendor: ['react','react-dom','iscroll','jquery']
     },
     output: {
         //publicPath: './static/js',
@@ -21,6 +23,11 @@ var config = {
         //'jquery':"$",
        // 'iscroll':'IScroll'
     },
+    plugins: [
+     /* new webpack.optimize.CommonsChunkPlugin({
+         name:"vendor",  
+      }),*/
+    ],
     module: {
         loaders: [{
             test: /\.jsx|\.js|\.es6$/,

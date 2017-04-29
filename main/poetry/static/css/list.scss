@@ -1,5 +1,6 @@
 @import "../../../public/css/base.scss";
 .poetry-list-main-ui{
+      -webkit-user-select:none;
 	.poetry-list-C{
 		width:94%;
 		margin:0 auto;
@@ -100,5 +101,110 @@
        		}
 		}
 	}	 
+
+      .poetry-create-C{
+            width: 100%;
+            @include pos(r);
+            background: #eaedf1;
+            @include displayFlex(row);
+            &>aside{
+                  
+                  &:first-of-type{
+                        -webkit-flex:1;
+                        flex:1;
+                        @include displayFlex();
+                        .poetry-iphone{
+                              width:30%;
+                              margin: 0 auto;
+                              @include pos(r);
+                              top: 50%;
+                              @include transform(translate3d(0,-50%,0));
+                        }
+                  }
+                  &:last-of-type{
+                        width: 500px;
+                        @include pos(r);
+                        background: #f1f1f1;
+                        .poetry-text{
+                              width: 80%;
+                              left: 10%;
+                              @include pos(a);
+                              top: 30%;
+                              img{
+                                    opacity:0;
+                              }
+                        }
+                        .poetry-creat-btn{
+                              @include pos(a);
+                              width: 176px;
+                              height: 48px;
+                              line-height: 48px;
+                              text-align: center;
+                              font-size: 22px;
+                              color:#fff;
+                              bottom: 100px;
+                              left: 50%;
+                              margin-left: -88px;
+                              cursor: pointer;
+                        }
+                        .poetry-sea-list{
+                              @include pos(a);
+                              bottom: 50px;
+                              right: 50px;
+                              cursor: pointer;
+                        }
+                  }
+
+            }
+      }
+
+
 }
- 
+
+
+.poetry-title-input{
+      height: 450px;
+      @include pos(r);
+      input{
+            width: 250px;;
+            @include pos(a);
+            height: 50px;
+            left: 50px;
+            top: 150px;
+            background:transparent;
+            border:none;
+            text-align: center;
+            font-size: 20px;
+      }     
+      .poetry-title-btn{
+            text-align: center;
+            margin-top: 40px;
+            button{
+                  @include transform(scale(1.4));
+            }
+      }
+}
+
+ .poetry-type-list{
+      @include displayFlex(row);
+      &>aside{
+            flex:1;cursor: pointer;
+            &.active{
+                  border:1px solid #108ee9;
+            }
+      }
+
+}
+.poetry-line{
+      width: 100%;
+      margin:20px auto;
+      height: 2px;
+      @include br(2px);
+      background: #ccc;
+}
+
+
+
+.ant-confirm-body .ant-confirm-content{
+      margin: 0;
+}
