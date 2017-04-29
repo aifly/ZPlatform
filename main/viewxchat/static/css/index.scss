@@ -20,9 +20,9 @@
   -ms-border-radius: 50%;
   border-radius: 50%;
 }
-.zmiti-viewxchat-main-ui{
+.zmiti-vieweixin-main-ui{
   overflow:auto;
-  .zmiti-viewxchat-header-inner{
+  .zmiti-vieweixin-header-inner{
     padding-left: 8px;
     margin-top: 10px;
     @include pos(r);
@@ -34,111 +34,27 @@
       background:#88B7E0 ;
       left:0;
       @include transform(scale(1,.7));
-
-    }
-
+    }    
   }
-  .ant-table-body{
-    img{
-      @include radius50();
-      width:45px;
-      height:45px;
-    }
-    td.col3{
-      text-align:center;
-    }
-    td.col4{
-      text-align:center;
-    }
-    td.col5{
-      text-align:center;
-    }
+  .zmiti-vieweixin-button-right button{
+        float:right;
+        margin-top: 5px;
   }
-  .zmiti-viewxchat-button-right button{
-    float:right;
-    margin-top: 5px;
-  }
-  .zmiti-viewxchat-line{
+  .zmiti-vieweixin-line{
     height:15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd;
   }
-  .viewxchat-search {
-    margin: 15px 0px;
-    .viewxchat-heigth45{
-      height: 45px;
-      line-height: 45px;
-      overflow: hidden;
+  .zmiti-viewxchat-detail{
+    padding:20px 0;
+    font-size:14px;
+    .ant-row{
+      margin:0 0 10px 0;
     }
-    .zmiti-viewxchat-with100{
-      width: 80px;
-
+    .zmiti-viewxchat-label{
+      text-align:right;
+      line-height: 1.8;
     }
-    .zmiti-viewxchat-with130{
-      width: 130px;
-
-    }
-    .zmiti-viewxchat-with30{
-      width: 30px;
-
-    }
-    .zmiti-viewxchat-with60{
-      width: 60px;
-    }
-
-  }
-  .viewxchat-table{
-    border: 1px solid #e1e6eb;
-    margin-top: 15px;
-    background:#FFffff;
-    .ant-layout-header{
-      background: #F5f6FA;
-      border-left: 4px solid #6d7781;
-      padding-left: 16px;
-      height: 38px;
-      line-height: 38px;
-      overflow: hidden;
-      border-bottom: 1px solid #e1e6eb;
-
-    }
-    .zmiti-viewxchat-table-row{
-      padding: 30px;
-      .viewxchat-table-col-title{
-        float: left;
-        width: 75%;
-      }
-      .viewxchat-table-col-button{
-        float: right;
-        width: 25%;
-        text-align: center;
-        padding: 3px 0px;
-
-      }
-      .viewxchat-table-col-content{
-        padding-top: 5px;
-        width: 100%;
-        clear: both;
-        font-size: 12px;
-        color: #999999;
-        line-height: 24px;
-        font-family: "宋体";
-
-      }
-      .viewxchat-table-box{
-        height: 50px;
-        line-height: 50px;
-        padding-left:25px;
-        padding-right: 15px;
-        background: #F5f6FA;
-        margin-bottom: 10px;
-        .viewxchat-table-col-button{
-          margin-top: 10px;
-        }
-      }
-
-
-    }
-
   }
 
 }

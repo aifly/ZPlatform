@@ -115,19 +115,31 @@ class ZmitiWXUserInfoApp extends Component {
         <div className="zmiti-viewxchat-main-ui" style={{height:this.state.mainHeight}}>
             <div className="padding-10">
                 <Row className='zmiti-viewxchat-header'>
-                    <Col span={8}  className='zmiti-viewxchat-header-inner' ><label>公司名称：</label>{this.state.companyname}</Col>
-                    <Col span={8} offset={8} className='zmiti-viewxchat-button-right'>用户数：<span className="red">{this.state.personalNum}</span>个</Col>
+                    <Col span={8}  className='zmiti-viewxchat-header-inner' >微信用户列表</Col>
+                    <Col span={8} offset={8} className='zmiti-viewxchat-button-right'></Col>
                 </Row>
-                <div className="zmiti-viewxchat-line"></div>                
-                <Row gutter={10} type='flex' className='viewxchat-search '>
-                    <Col  className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'} >时间:</Col>
-                    <Col  className={'viewxchat-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.startDate} onChange={(e)=>{this.setState({startDate:e})}} /></Col>
-                    <Col  className={'zmiti-viewxchat-with30 viewxchat-heigth45 cen'} value={this.state.endDate}>至:</Col>
-                    <Col  className={'viewxchat-heigth45 zmiti-viewxchat-with130 '}><DatePicker value={this.state.endDate} onChange={e=>{this.setState({endDate:e})}} /></Col>
-                    <Col  className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'}>昵称:</Col>
-                    <Col  className={'viewxchat-heigth45'}><Input value={this.state.keyword} placeholder="昵称" onChange={this.searchByKeyword.bind(this)}/></Col>
-                    <Col  className={'viewxchat-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
+                <div className="zmiti-viewxchat-line"></div>
+                <Row>
+                    <Col span={12}><div className="zmiti-viewxchat-h2">{this.state.companyname}</div></Col>
+                    <Col span={9}></Col>
+                    <Col span={3}></Col>
                 </Row>
+                <Row>
+                    <Col span={20}>
+                        <Row gutter={10} type='flex' className='viewxchat-search '>
+                            <Col className={'viewxchat-heigth45 '} >时间:</Col>
+                            <Col className={'viewxchat-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.startDate} onChange={(e)=>{this.setState({startDate:e})}} /></Col>
+                            <Col className={'zmiti-viewxchat-with30 viewxchat-heigth45 cen'} value={this.state.endDate}>至:</Col>
+                            <Col className={'viewxchat-heigth45 zmiti-viewxchat-with130 '}><DatePicker value={this.state.endDate} onChange={e=>{this.setState({endDate:e})}} /></Col>
+                            <Col className={'zmiti-viewxchat-with60 viewxchat-heigth45 rig'}>昵称:</Col>
+                            <Col className={'viewxchat-heigth45'}><Input value={this.state.keyword} placeholder="昵称" onChange={this.searchByKeyword.bind(this)}/></Col>
+                            <Col className={'viewxchat-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
+                            <Col className={'viewxchat-heigth45'}></Col>
+                        </Row>
+                    </Col>
+                    <Col span={4}><div className="zmiti-viewxchat-h3">用户数：<span className="red pd10-2">{this.state.personalNum}</span>个</div></Col>
+                </Row>              
+                
                 
                 <Table dataSource={this.state.dataSource} columns={columns} bordered/>
             </div>

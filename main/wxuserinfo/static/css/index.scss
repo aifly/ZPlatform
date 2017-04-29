@@ -42,7 +42,7 @@
     color:#000;
     font-size:18px;
     line-height: 2;
-    margin:10px 0;
+    margin:10px 0 0 0;
     label{
       font-size:18px;
     }
@@ -74,13 +74,24 @@
   .red{
     color:#ff0000;
   }
+  .zmiti-viewxchat-h3{
+    color:#000;
+    font-size:18px;
+    line-height: 1.4;
+    .pd10-2{
+      padding:0 10px;
+      font-size:25px;
+      font-family:Ariay;
+    }
+  }
+  
   .zmiti-viewxchat-line{
     height:15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd;
   }
   .viewxchat-search {
-    margin: 15px 0px;
+    margin-bottom: 10px;
     .viewxchat-heigth45{
       height: 45px;
       line-height: 45px;

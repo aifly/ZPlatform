@@ -164,6 +164,13 @@ class MainUI extends React.Component {
                 "title":"我要订制",
                 "isIcon":true,
                 "type":"user"
+            },
+            {
+                "linkTo":"/tripost/",
+                "key":"tripost",
+                "title":"出差宝",
+                "isIcon":true,
+                "type":"user"
             }
         ]
 
