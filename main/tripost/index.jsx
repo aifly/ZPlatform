@@ -27,6 +27,9 @@ class ZmitiTripostApp extends Component {
 			modpostEditDialogVisible:false,		
 			jobname:'',
 			level:'',
+			setjobid:'',
+			setjobname:'',
+			setlevel:'',
 			dataSource:[],
 			jobid:'',
 		};
@@ -49,7 +52,20 @@ class ZmitiTripostApp extends Component {
         },{
             title: '职务级别',
             dataIndex: 'level',
-            key: 'level'
+            key: 'level',
+            render:(value,record)=>{
+            	switch(value){
+					case 1:
+						return "初级职称";
+						break;
+					case 2:
+						return "中级职称";
+						break;
+					case 3:
+						return "高级职称";
+						break;
+				}
+            }
 
         },{
             title: '创建时间',
@@ -63,7 +79,7 @@ class ZmitiTripostApp extends Component {
             width:150,
             render:(text,recoder,index)=>(
                 <span>
-                	<a href="#"> 查看</a>
+                	<a href="javascript:void(0);"  onClick={this.editData.bind(this,recoder.jobid)}> 修改</a>
                 	<a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.jobid)}> 删除</a>
                 </span>
             )
@@ -128,7 +144,7 @@ class ZmitiTripostApp extends Component {
                     </Form>
                   </Modal>
                   <Modal title="修改职务" visible={this.state.modpostEditDialogVisible}
-					onOk={this.modpostOk.bind(this)}
+					onOk={this.modsaveData.bind(this)}
 					onCancel={()=>{this.setState({modpostEditDialogVisible:false})}}
                   >
                     <Form>
@@ -139,8 +155,8 @@ class ZmitiTripostApp extends Component {
                       >                        
                           
                           <Input placeholder="职务名称" 
-							value={this.state.jobname}
-							onChange={(e)=>{this.state.jobname=e.target.value;this.forceUpdate();}}
+							value={this.state.setjobname}
+							onChange={(e)=>{this.state.setjobname=e.target.value;this.forceUpdate();}}
                           />                      
                       </FormItem>
                       <FormItem
@@ -148,11 +164,11 @@ class ZmitiTripostApp extends Component {
                         label="职务级别"
                         hasFeedback
                       >
-                          <Select placeholder="职务级别" onChange={(value)=>{this.state.level=value;this.forceUpdate();}} value={this.state.level}>
+                          <Select placeholder="职务级别" onChange={(value)=>{this.state.setlevel=value;this.forceUpdate();}} value={this.state.setlevel}>
                           	<Option value={1}>普通职称</Option>
                           	<Option value={2}>中级职称</Option>
                           	<Option value={3}>高级职称</Option>
-                          </Select>                     
+                          </Select>               
                       </FormItem>
 
                     </Form>
@@ -184,6 +200,24 @@ class ZmitiTripostApp extends Component {
         }
 	}
 
+	componentDidMount() {
+		var s=  this;
+		s.bindNewdata();
+	}	
+
+	componentWillMount() {
+
+		let {resizeMainHeight,validateUser,loginOut} = this.props;
+
+		resizeMainHeight(this);	
+		
+		let {username,userid,getusersigid} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
+		this.userid = userid;
+		this.getusersigid = getusersigid;
+
+		
+	}
+	//显示列表
 	bindNewdata(){
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
@@ -205,25 +239,7 @@ class ZmitiTripostApp extends Component {
         })
     }
 
-
-	componentDidMount() {
-		var s=  this;
-		s.bindNewdata();
-	}	
-
-	componentWillMount() {
-
-		let {resizeMainHeight,validateUser,loginOut} = this.props;
-
-		resizeMainHeight(this);	
-		
-		let {username,userid,getusersigid} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
-		this.userid = userid;
-		this.getusersigid = getusersigid;
-
-		
-	}
-	//dialog
+	//弹框
 	modifyaddpost(){
       var obserable=window.obserable;
          this.setState({
@@ -262,7 +278,6 @@ class ZmitiTripostApp extends Component {
                 }
 			}
 		})
-		//console.log("dialog");
     }
     //删除
     delData(jobid){
@@ -295,32 +310,52 @@ class ZmitiTripostApp extends Component {
     }
     //编辑
     editData(jobid){
+    	var s = this;
+    	var userid = this.props.params.userid?this.props.params.userid:this.userid;
+        s.setState({        	
+        	modpostEditDialogVisible:true
+        })
+        $.ajax({
+        	url:window.baseUrl+'travel/get_jobdetial/',
+        	data:{
+        		userid:s.userid,
+                getusersigid:s.getusersigid,
+                jobid:jobid,
+        	},
+        	success(data){
+        		//console.log(jobid);
+        		if(data.getret === 0){
+	        		s.state.setjobname=data.detial.jobname;
+	        		s.state.setlevel=data.detial.level;
+	        		s.state.setjobid=jobid;	        		
+	        		s.forceUpdate();	        		
+        		}
+        	}
+        })
+        //
+    }
+    //保存修改
+    modsaveData(jobid){
         var s = this;
+        var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
             url:window.baseUrl+'travel/edit_job/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                jobid:jobid,
-                jobname:jobnameTxt,
-				level:levelTxt
+                jobid:s.state.setjobid,
+                jobname:s.state.setjobname,
+				level:s.state.setlevel
             },
             success(data){
                 if(data.getret === 0){
-                    message.success('删除成功！');
-                    setTimeout(()=>{
-                        s.bindNewdata();
-                    },2000)
+                   //console.log(data,'保存成功');
+					s.bindNewdata();
+					s.setState({        	
+						modpostEditDialogVisible:false
+					})
                 }
-                else if(data.getret === -3){
-                    message.error('您没有访问的权限,2秒后跳转到首页');
-                    setTimeout(()=>{
-                        location.href='/';
-                    },2000)
-                }
-                else{
-                    message.error(data.getmsg);
-                }
+
             }
         })
     }
