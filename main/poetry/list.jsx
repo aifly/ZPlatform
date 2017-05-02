@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { message,Input,Button,Modal,Tooltip,Popconfirm } from '../commoncomponent/common.jsx';
+import { message,Input,Button,Modal,Tooltip,Popconfirm,Icon } from '../commoncomponent/common.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
@@ -59,7 +59,7 @@ class ZmitiPoetryListApp extends Component {
 							<div className='poetry-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 							<div className='poetry-item-name'>{item.worksname}</div>
 							<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
-								<div className='poetry-item-view'><a href={item.viewpath} target='_blank'><img src='./static/images/eye.png'/></a></div>
+								<div className='poetry-item-view'><Link to={'/statistics/'+item.worksid}><Icon type="dot-chart" /></Link></div>
 							</Tooltip>
 							<div className='poetry-item-operator'>
 											{/*<div><a href={item.viewpath} target='_blank'>预览</a></div>
