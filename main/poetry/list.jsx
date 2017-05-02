@@ -311,18 +311,15 @@ class ZmitiPoetryListApp extends Component {
 
 	save(worksid,viewpath,title){
 		var s = this;
-		this.zmitiAjax({
+		s.state.data.viewpath = viewpath;
+		$.ajax({
 			url:window.baseUrl+'/works/update_works/',
 			type:'post',
 			data:{
 				worksid:worksid,
 				userid:s.userid,
 				getusersigid:s.getusersigid,
-				datajson:JSON.stringify({worksid:worksid,wxappid:'wxfacf4a639d9e3bcc',
-					wxappsecret:'149cdef95c99ff7cab523d8beca86080',
-					viewpath:viewpath,
-					worksname:title
-				}),
+				datajson:JSON.stringify(s.state.data),
 				worksname:title,
 				dirname:'poetry',
 				workstag:'',

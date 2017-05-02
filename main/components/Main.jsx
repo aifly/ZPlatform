@@ -310,11 +310,11 @@ class MainUI extends React.Component {
         configMenus = configMenus.concat(this.customMenuConfig);
         
         configMenus.forEach(item=>{
-            if(hash.split('/')[1] === item.key){
+            if(hash.split('/')[1] === item.key || hash.split('/')[1].indexOf(item.key)>-1 || item.key.indexOf(hash.split('/')[1])>-1){
                 current = item.key;
             }
+           
         });
-
 
 
         this.setState({
