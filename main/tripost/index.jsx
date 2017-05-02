@@ -32,6 +32,7 @@ class ZmitiTripostApp extends Component {
 			setlevel:'',
 			dataSource:[],
 			jobid:'',
+			keyword:'',
 		};
 
 		
@@ -53,7 +54,7 @@ class ZmitiTripostApp extends Component {
             title: '职务级别',
             dataIndex: 'level',
             key: 'level',
-            render:(value,record)=>{
+            render:(value,record,index)=>{
             	switch(value){
 					case 1:
 						return "初级职称";
@@ -111,6 +112,10 @@ class ZmitiTripostApp extends Component {
 					</Row>						
 					</div>
 					<div className="zmiti-tripost-line"></div>
+					<Row gutter={10} type='flex' className='tripost-search '>
+						<Col className="tripost-heigth45">职务名称：</Col>
+						<Col className="tripost-heigth45"><Input value={this.state.keyword} placeholder="职务名称" onChange={this.searchByKeyword.bind(this)}/></Col>
+					</Row>
 					<Table dataSource={this.state.dataSource} columns={columns} bordered/>
 				</div>
 				<Modal title="新增职务" visible={this.state.modpostDialogVisible}
@@ -217,6 +222,19 @@ class ZmitiTripostApp extends Component {
 
 		
 	}
+	//search
+	searchByKeyword(e){
+        this.setState({
+            keyword:e.target.value
+        },()=>{
+            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+
+            this.state.dataSource = this.dataSource.filter((item)=>{
+                return  item.jobname.indexOf(this.state.keyword)>-1;
+            });
+            this.forceUpdate();
+        })
+    }
 	//显示列表
 	bindNewdata(){
         var s = this;

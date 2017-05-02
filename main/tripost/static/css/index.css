@@ -20,5 +20,9 @@
     height: 15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd; }
+  .tripost-main-ui .tripost-heigth45 {
+    height: 45px;
+    line-height: 45px;
+    overflow: hidden; }
 
 /*# sourceMappingURL=index.css.map */
