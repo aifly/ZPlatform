@@ -33,6 +33,7 @@ class ZmitiTripostApp extends Component {
 			dataSource:[],
 			jobid:'',
 			keyword:'',
+			companyname:'',
 		};
 
 		
@@ -40,12 +41,6 @@ class ZmitiTripostApp extends Component {
 	render() {
 		var s =this;
 		const columns = [{
-            title: '公司编号',
-            dataIndex: 'companyid',
-            key: 'companyid',
-            width:300
-
-        },{
             title: '职务名称',
             dataIndex: 'jobname',
             key: 'jobname'
@@ -107,9 +102,9 @@ class ZmitiTripostApp extends Component {
 				<div className='pad-10'>
 					<div className="zmiti-tripost-header">
 						<Row>
-							<Col span={8} className="zmiti-tripost-header-inner">职务</Col>
+							<Col span={8} className="zmiti-tripost-header-inner">职务-{this.state.companyname}</Col>
 							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={()=>{this.setState({modpostDialogVisible:true})}}>新增职务</Button></Col>
-					</Row>						
+						</Row>						
 					</div>
 					<div className="zmiti-tripost-line"></div>
 					<Row gutter={10} type='flex' className='tripost-search '>
@@ -208,6 +203,7 @@ class ZmitiTripostApp extends Component {
 	componentDidMount() {
 		var s=  this;
 		s.bindNewdata();
+		s.getCompanydetail();
 	}	
 
 	componentWillMount() {
@@ -377,7 +373,24 @@ class ZmitiTripostApp extends Component {
             }
         })
     }
-
+    //获取公司信息
+    getCompanydetail(){
+    	var s=this;
+    	$.ajax({
+    		url:window.baseUrl+'user/get_companydetail',
+    		data:{
+    			userid:s.userid,
+    			 getusersigid:s.getusersigid
+    		},
+    		success(data){
+    			if(data.getret === 0){
+    				s.setState({
+    					companyname:data.detail_info.companyname
+    				})
+    			}
+    		}
+    	})
+    }
 }
 
 export default ZmitiValidateUser(ZmitiTripostApp);
