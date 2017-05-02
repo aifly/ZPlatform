@@ -1,0 +1,62 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+body {
+  overflow: hidden;
+  background: url(../images/statistics.jpg) no-repeat center/cover; }
+
+.zmiti-main-ui {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  -ms-flex-flow: row;
+      flex-flow: row;
+  width: 100%;
+  height: 100%; }
+  .zmiti-main-ui > div:nth-of-type(1) {
+    -webkit-box-flex: 2;
+        -ms-flex: 2;
+            flex: 2; }
+  .zmiti-main-ui > div:nth-of-type(2) {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    position: absolute;
+    width: 33vw;
+    height: 100%;
+    right: 0;
+    z-index: 1;
+    top: 0; }
+
+.zmiti-container {
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%; }
+
+.zmiti-user {
+  position: fixed;
+  right: 0;
+  top: 0;
+  text-align: center;
+  -webkit-animation: move 10s linear forwards;
+          animation: move 10s linear forwards; }
+
+@-webkit-keyframes move {
+  to {
+    -webkit-transform: translate3d(-2000px, 0, 0); } }
+@keyframes move {
+  to {
+    -webkit-transform: translate3d(-2000px, 0, 0);
+            transform: translate3d(-2000px, 0, 0); } }
+.zmiti-user img {
+  width: 30px; }
+
+.zmiti-user span {
+  display: block;
+  color: #fff;
+  font-size: 12px; }
+
+/*# sourceMappingURL=statistics.css.map */

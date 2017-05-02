@@ -1,52 +1,14 @@
-<!DOCTYPE html>
-<html style="height: 100%">
-   <head>
-       <meta charset="utf-8">
-       <title>智媒体统计报表</title>
-       <style type="text/css">
-           body{
-             overflow: hidden;
-           }
-           .zmiti-user{
-            position: fixed;
-            right: 0;
-            top: 0;
-            text-align: center;
-            animation: move 10s linear forwards;
-           }
+var ZmitiUtil = {
+	getQueryString:function(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return (r[2]);
+        return null;
+    },
+	init:function(){
 
-           @-webkit-keyframes move{
-             to{
-                -webkit-transform:translate3d(-2000px,0,0);
-             }
-           }
-           @keyframes move{
-             to{
-               transform:translate3d(-2000px,0,0);
-             }
-           }
-
-           .zmiti-user img{
-            width: 30px;
-           }
-           .zmiti-user span{
-                display: block;
-                color:#fff;
-                font-size: 12px;
-           }
-
-
-       </style>
-   </head>
-   <body style="height: 100%; margin: 0">
-
-       <div id="container" style="height: 100%"></div>
-       <div id="box"></div>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
-       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-       <script src='../static/libs/socket.io.js'></script>
-       <script type="text/javascript">
-            var dom = document.getElementById("container");
+		var id = this.getQueryString('worksid');
+		var dom = document.getElementById("container");
             var myChart = echarts.init(dom);
             var app = {};
             var option = null;
@@ -73,7 +35,7 @@
 
             var config = function(userData){
                 return  {
-                backgroundColor: '#404a59',
+                backgroundColor: 'transparent',
                 title: {
                     text: '智媒体统计报表',
                     subtext: 'www.zmiti.com',
@@ -100,10 +62,10 @@
                 },
                 visualMap: {
                     min: 0,
-                    max: 200,
+                    max: 500,
                     calculable: true,
                     inRange: {
-                        color: ['#50a3ba', '#eac736', '#d94e5d']
+                        color: ['#f4e6a2',  '#c0464e']
                     },
                     textStyle: {
                         color: '#fff'
@@ -117,13 +79,16 @@
                             show: false
                         }
                     },
+                    center:[
+                        126.6308452923,39.4701180437
+                    ],
                     itemStyle: {
                         normal: {
-                            areaColor: '#323c48',//地图的背景颜色 
-                            borderColor: '#000'//地图边框颜色。
+                            areaColor: '#475e81',//地图的背景颜色 
+                            borderColor: '#55f3fe'//地图边框颜色。
                         },
                         emphasis: {
-                            areaColor: '#2a333d'
+                            areaColor: '#48cde5'
                         }
                     }
                 },
@@ -149,7 +114,11 @@
                             emphasis: {
                                 borderColor: 'transparent',
                                 borderWidth: 3,
+                                color:'#f90'
                             },
+                            normal: {
+                                color: '#f90'
+                            }
                         }
                     }
                 ]
@@ -177,7 +146,7 @@
             });*/
             // 后端推送来消息时
                 var s = this;
-                socket.on('publish', function(msg){
+                socket.on(id, function(msg){
                     msg = msg.replace(/&quot;/g,"\"");
 
                     var data = JSON.parse(msg);
@@ -242,9 +211,7 @@
                      
                 });
 
+	}
+}
 
-
-       </script>
-
-   </body>
-</html>
+ZmitiUtil.init();

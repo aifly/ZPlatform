@@ -58,7 +58,7 @@ class App extends React.Component{
 				{path: '/commitworkorder/', app: ZmitiCommitWorkOrderApp},
 				{path: '/workorder/', app: ZmitiWorkOrderApp},
 				{path: '/workorderquestion/(:id)', app: ZmitiWorkOrderQuestionApp},
-				{path: '/statistics/', app: ZmitiStatisticsListApp},
+				{path: '/statistics/:id', app: ZmitiStatisticsListApp},
 				{path: '/viewquestion/(:id)', app: ZmitiViewQuestionApp},
 				{path: '/viewuserinfor/(:id)', app: ZmitiViewUserInforApp},
 				{path: '/viewpersonal/(:id)', app: ZmitiViewPersonalApp},

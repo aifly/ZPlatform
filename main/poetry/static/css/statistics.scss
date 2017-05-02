@@ -1,0 +1,57 @@
+@import "../../../public/css/base.scss";
+body{
+     overflow: hidden;
+     background: url(../images/statistics.jpg) no-repeat center / cover;
+   }
+
+.zmiti-main-ui{
+	@include displayFlex(row);
+	width: 100%;
+	height: 100%;
+	&>div{
+		&:nth-of-type(1){
+  			flex:2
+		}
+		&:nth-of-type(2){
+			flex:1;
+			@include pos(a);
+			width: 33vw;
+			height: 100%;
+			right: 0;
+			z-index: 1;
+			top: 0;
+		}
+	}
+}
+.zmiti-container{
+	box-sizing:border-box;
+	@include pos(a);
+	width: 100%;
+}
+.zmiti-user{
+position: fixed;
+right: 0;
+top: 0;
+text-align: center;
+animation: move 10s linear forwards;
+}
+
+@-webkit-keyframes move{
+ to{
+    -webkit-transform:translate3d(-2000px,0,0);
+ }
+}
+@keyframes move{
+ to{
+   transform:translate3d(-2000px,0,0);
+ }
+}
+
+.zmiti-user img{
+width: 30px;
+}
+.zmiti-user span{
+    display: block;
+    color:#fff;
+    font-size: 12px;
+}
