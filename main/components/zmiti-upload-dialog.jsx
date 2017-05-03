@@ -535,10 +535,6 @@ export default class ZmitiUploadDialog extends React.Component {
 
                     da = da.getfileurlArr[0];
 
-                    console.log(da);
-
-                    return;
-
                     let option = {
                         src: da.datainfourl,
                         size: da.datainfosize1,

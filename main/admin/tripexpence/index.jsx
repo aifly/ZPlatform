@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 
 import './static/css/index.css';
-import ZmitiUserList  from '../components/zmiti-user-list.jsx';
+import ZmitiUserList  from '../../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 import { Link } from 'react-router';
-import MainUI from '../components/Main.jsx';
+import MainUI from '../components/main.jsx';
 
-import {ZmitiValidateUser} from '../public/validate-user.jsx';
+import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 
-import $ from 'jquery';
 
 class ZmitiTripexpenceApp extends Component {
 	constructor(props) {

@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
 
 import './static/css/index.css';
-import ZmitiUserList  from '../components/zmiti-user-list.jsx';
+import ZmitiUserList  from '../../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 import { Link } from 'react-router';
-import MainUI from '../components/Main.jsx';
+import MainUI from '../components/main.jsx';
 
-import {ZmitiValidateUser} from '../public/validate-user.jsx';
+import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 
-import $ from 'jquery';
 
-class ZmitiTriptrafficApp extends Component {
+class ZmitiTripseasonApp extends Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
 			setuserid:'',
-			selectedIndex:2,
+			selectedIndex:1,
 			mainHeight:document.documentElement.clientHeight-50,
 			dataSource:[],
 		};
@@ -34,14 +33,24 @@ class ZmitiTriptrafficApp extends Component {
             width:100
 
         },{
-            title: '交通标识唯一标准',
-            dataIndex: 'transportid',
-            key: 'transportid'
+            title: '省份',
+            dataIndex: 'provid',
+            key: 'provid'
 
         },{
-            title: '职务编号',
-            dataIndex: 'jobid',
-            key: 'jobid'
+            title: '城市',
+            dataIndex: 'cityid',
+            key: 'cityid'
+
+        },{
+            title: '日期类别',
+            dataIndex: 'seasontype',
+            key: 'seasontype'
+
+        },{
+            title: '日期范围',
+            dataIndex: 'daterange',
+            key: 'daterange'
 
         },{
             title: '状态',
@@ -73,13 +82,13 @@ class ZmitiTriptrafficApp extends Component {
 			tags:['职务','淡旺季','交通费','差旅费'],
 			mainHeight:this.state.mainHeight,
 			title:title,
-			selectedIndex: 2,
+			selectedIndex: 1,
 			rightType: "custom",
 			customRightComponent:<div className='tripost-main-ui' style={{height:this.state.mainHeight}}>
 				<div className='pad-10'>
 					<div className="zmiti-tripost-header">
 						<Row>
-							<Col span={8} className="zmiti-tripost-header-inner">交通费</Col>
+							<Col span={8} className="zmiti-tripost-header-inner">淡旺季</Col>
 						</Row>						
 					</div>
 					<div className="zmiti-tripost-line"></div>
@@ -148,5 +157,5 @@ class ZmitiTriptrafficApp extends Component {
 
 }
 
-export default ZmitiValidateUser(ZmitiTriptrafficApp);
+export default ZmitiValidateUser(ZmitiTripseasonApp);
 /*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/

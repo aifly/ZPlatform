@@ -88,6 +88,7 @@ class ZmitiPoetryListApp extends Component {
 				</aside>
 				 <Modal title="" visible={this.state.visible}
 				  width={800}
+				  onCancel={()=>{this.setState({visible:false})}}
 				  footer=<div><Button type='primary' size="large" onClick={this.entryInputTitle.bind(this)}>下一步</Button></div>
 		        >
 		          <div className='poetry-type-C'>
@@ -131,6 +132,7 @@ class ZmitiPoetryListApp extends Component {
 
 		        <Modal title="" visible={this.state.showTitle}
 				  width={400}
+				  onCancel={()=>{this.setState({showTitle:false})}}
 				  footer={''}
 		        >
 		         <div className='poetry-title-input'>
