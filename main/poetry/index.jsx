@@ -53,7 +53,7 @@ class ZmitiPoetryApp extends Component {
 				customList:[{content:'',title:'',id:this.props.randomString()}]
 				 
 			}
-		}; 
+		}
 	}
 
 
@@ -298,7 +298,7 @@ class ZmitiPoetryApp extends Component {
 
 	save(){
 		var s = this;
-		if(this.state.data.customList[this.state.data.customList.length - 1].content.length<=0){
+		if(this.state.data.customList[this.state.data.customList.length - 1] && !this.state.data.customList[this.state.data.customList.length - 1].content){
 			this.state.data.customList.pop();
 		}
 		$.ajax({

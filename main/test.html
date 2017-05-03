@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>svg animation test</title>
+	<style type="text/css">
+	@import url(http://fonts.googleapis.com/css?family=Open+Sans:800);
+		.text {
+		  fill: none;
+		  stroke-width: 2;
+		  stroke-dasharray: 0 200;
+		  stroke-dashoffset: 0;
+		}
+
+		.text:nth-child(3n + 1) {
+		  stroke: #F60A0A;
+		    animation: stroke 3s  ease-in-out forwards infinite;  
+
+		}
+		.text:nth-child(3n + 2) {
+		  stroke: #F2FF14;
+		animation: stroke1 3s  ease-in-out forwards infinite;
+
+		}
+
+		.text:nth-child(3n + 3) {
+		  stroke: #FB9505;
+		  animation: stroke2 3s  ease-in-out forwards infinite;
+		}
+
+
+		@keyframes stroke {
+		  100% {
+		    stroke-dashoffset: 1000;
+		    stroke-dasharray: 80 160;
+		  }
+		}
+
+		@keyframes stroke1 {
+		  100% {
+		    stroke-dashoffset: 1080;
+		    stroke-dasharray: 80 160;
+		  }
+		}
+
+
+		@keyframes stroke2 {
+		  100% {
+		    stroke-dashoffset: 1160;
+		    stroke-dasharray: 80 160;
+		  }
+		}
+		/* Other styles */
+		html, body {
+		  height: 100%;
+		}
+
+		body {
+		  background: #212121;
+		  background-size: .2em 100%;
+		  font: 14.5em/1 Open Sans, Impact;
+		  text-transform: uppercase;
+		  margin: 0;
+		}
+
+		svg {
+		  position: absolute;
+		  width: 100%;
+		  height: 100%;
+		}
+	</style>
+</head>
+<body>
+	<svg viewBox="0 0 2320 300">
+	  <!-- Symbol -->
+	  <symbol id="s-text">
+		    <text text-anchor="middle"
+		          x="50%" y="50%" dy=".35em">
+		      智媒体
+		    </text>
+		  </symbol>  
+
+		  <!-- Duplicate symbols -->
+		  <use xlink:href="#s-text" class="text"
+		       ></use>
+		  <use xlink:href="#s-text" class="text"
+		       ></use>
+		  <use xlink:href="#s-text" class="text"
+		       ></use>
+	</svg>
+</body>
+</html>
