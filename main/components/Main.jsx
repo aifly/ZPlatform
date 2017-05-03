@@ -82,7 +82,7 @@ class MainUI extends React.Component {
             defaultOpenKeys = 'sub2';
         }else if(hash.indexOf('viewpersonal')>-1 || hash.indexOf('renewal')>-1){
             defaultOpenKeys = 'sub3';
-        }else if(hash.indexOf('custom')>-1 || hash.indexOf('mycustom')>-1){
+        }else if(hash.indexOf('custom')>-1 || hash.indexOf('mycustom')|| hash.indexOf('tripseason')>-1){
             defaultOpenKeys = 'sub4';
         }
         if(this.state.isCompany && this.usertypesign === window.Role.COMPANYADMINUSER){//this.usertypesign === 5的时候,才是公司管理员.
@@ -159,9 +159,16 @@ class MainUI extends React.Component {
                 "type":"edit"
             },
             {
-                "linkTo":"/mycustom/",
-                "key":"mycustom",
+                "linkTo":"/myorder/",
+                "key":"myorder",
                 "title":"我要订制",
+                "isIcon":true,
+                "type":"user"
+            },
+            {
+                "linkTo":"/tripost/",
+                "key":"tripost",
+                "title":"出差宝",
                 "isIcon":true,
                 "type":"user"
             }

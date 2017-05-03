@@ -25,6 +25,10 @@ import ZmitiWXUserInfoApp  from './wxuserinfo/index.jsx';
 import ZmitiPoetryListApp  from './poetry/list.jsx';
 import ZmitiPoetryApp  from './poetry/index.jsx';
 import ZmitiViewxChatApp  from './viewxchat/index.jsx';
+import ZmitiTripostApp  from './tripost/index.jsx';
+import ZmitiTripseasonApp  from './tripseason/index.jsx';
+import ZmitiTriptrafficApp from './triptraffic/index.jsx';
+import ZmitiTripexpenceApp from './tripexpence/index.jsx';
 
 import Obserable from './static/libs/obserable.js';
 
@@ -49,7 +53,7 @@ class App extends React.Component{
 				{path: '/project/', app: ZmitiProject},
 				{path: '/renewal/', app: ZmitiRenewalApp},
 				{path: '/custom/', app: ZmitiCustom},
-				{path: '/mycustom/', app: ZmitiMycustom},
+				{path: '/myorder/', app: ZmitiMycustom},
 				{path: '/wxchat/:id', app: ZmitiWxChatApp},
 				{path: '/wxchatlist/', app: ZmitiWxChatListApp},
 				{path: '/commitworkorder/', app: ZmitiCommitWorkOrderApp},
@@ -63,6 +67,10 @@ class App extends React.Component{
 				{path: '/wxuserinfo/', app: ZmitiWXUserInfoApp},
 				{path: '/poetry/', app: ZmitiPoetryListApp},
 				{path: '/poetryedit/:id', app: ZmitiPoetryApp},
+				{path: '/tripost/(:id)', app: ZmitiTripostApp},
+				{path: '/tripseason/(:id)', app: ZmitiTripseasonApp},
+				{path: '/triptraffic/(:id)',app:ZmitiTriptrafficApp},
+				{path: '/tripexpence/(:id)',app:ZmitiTripexpenceApp}
 				
 		];
 		return (

@@ -16,10 +16,6 @@ import ZmitiEditOrderApp from './editorder/index.jsx';
 import ZmitiViewOrderApp from './vieworder/index.jsx';
 import ZmitiListOrderApp from './listorder/index.jsx';
 import ZmitiPoetryApp from './datum/index.jsx';
-import ZmitiTripostApp  from './tripost/index.jsx';
-import ZmitiTripseasonApp  from './tripseason/index.jsx';
-import ZmitiTriptrafficApp from './triptraffic/index.jsx';
-import ZmitiTripexpenceApp from './tripexpence/index.jsx';
 
 class App extends React.Component{
     constructor(args) {
@@ -37,10 +33,7 @@ class App extends React.Component{
 				{path:'/vieworder/(:id)',app:ZmitiViewOrderApp},
 				{path:'/listorder/:title',app:ZmitiListOrderApp},
 				{path: '/datum/', app: ZmitiPoetryApp},
-				{path: '/tripost/(:id)', app: ZmitiTripostApp},
-				{path: '/tripseason/(:id)', app: ZmitiTripseasonApp},
-				{path: '/triptraffic/(:id)',app:ZmitiTriptrafficApp},
-				{path: '/tripexpence/(:id)',app:ZmitiTripexpenceApp}
+				
 			];
     return (
         <Router history={hashHistory} >

@@ -104,13 +104,6 @@ class MainUI extends Component {
           "isIcon":true,
           "type":"edit",
           "isShow":true
-      },
-      {
-          "linkTo":"/tripost/",
-          "key":"tripost",
-          "title":"出差宝",
-          "isIcon":true,
-          "type":"user"
       }
     ]
     if(this.usertypesign===4){//超级管理员
