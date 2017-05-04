@@ -18,9 +18,9 @@ var ZmitiUtil = {
             var hours = date.getHours();
             var mins = date.getMinutes();
             var seconds = date.getSeconds();
-            hours<10 && (hours = '0'+hours);
-            mins<10 && (mins = '0'+mins);
-            seconds<10 && (seconds = '0'+seconds);
+            hours < 10 && (hours = '0'+hours);
+            mins < 10 && (mins = '0'+mins);
+            seconds < 10 && (seconds = '0'+seconds);
             zmitiTime.html(hours+"<span>:</span>"+mins);
             zmitiDate.html(year+'.'+month+'.'+day+ ' 星期'+arr[week]);
 
@@ -63,7 +63,7 @@ var ZmitiUtil = {
                     s.geoCoordMap[item.usercity] = [item.longitude,item.latitude];
                     //s.geoCoordMap = JSON.parse(geoCoordMap);
                 });
-
+                s.fillPV(data.worksinfo.totalviewcount);
                 $("#zmiti-work-name").html(data.worksinfo.worksname);
             }
             
@@ -84,6 +84,10 @@ var ZmitiUtil = {
         }
 
         return res;
+    },
+    fillPV:function(num){
+        var zmitiPV = $('#zmiti-pv-count');
+        zmitiPV.html(this.formatNumer(num));
     },
     dataConfig:function(userData){
         var s = this;
@@ -177,6 +181,16 @@ var ZmitiUtil = {
             ]
         };
     },
+    formatNumer:function(num){
+        var result = [ ], counter = 0;
+        num = (num || 0).toString().split('');
+        for (var i = num.length - 1; i >= 0; i--) {
+            counter++;
+            result.unshift(num[i]);
+            if (!(counter % 3) && i != 0) { result.unshift(','); }
+        }
+        return result.join('');
+    },
 	init:function(){
         var s = this;
 
@@ -229,8 +243,8 @@ var ZmitiUtil = {
                     var address = data.address,
                         pos = data.pos;
 
-                    if(geoCoordMap[address]){//存在
-                        userData.forEach(function(item,i){
+                    if(this.geoCoordMap[address]){//存在
+                        this.userData.forEach(function(item,i){
                             if(item.name === address){
                                 item.value++;
                             }
@@ -238,21 +252,21 @@ var ZmitiUtil = {
                         
                     }
                     else{
-                         geoCoordMap[address] = pos;
-                         userData.push({
+                         this.geoCoordMap[address] = pos;
+                         this.userData.push({
                             name:address,
                             value:1
                          });   
                     }
 
-                    localStorage.setItem(worksid+'geoCoordMap',JSON.stringify(geoCoordMap));
-                    localStorage.setItem(worksid+'userData',JSON.stringify({userData:userData}));
+                    localStorage.setItem(worksid+'geoCoordMap',JSON.stringify(this.geoCoordMap));
+                    localStorage.setItem(worksid+'userData',JSON.stringify({userData:this.userData}));
                     var nickname = data.nickname;
                     var headimgurl = data.headimgurl;
                     
                     var personDom = '<div class="zmiti-user"><img src='+headimgurl+' /><span>'+nickname+'</span></div>'
 
-                    myChart.setOption(s.dataConfig(userData), true);
+                    myChart.setOption(s.dataConfig(this.userData), true);
 
 
                     var isAppend = true;

@@ -22,12 +22,12 @@ body{
 		@include displayFlex(row);
 		 justify-content:center;
 		.zmiti-work-name{
-			font-size: 48px;
+			font-size: 2.5vw;
 		}
 		.zmiti-header-date{
 			margin-left: 20px;
 			color:#3bf3ff;
-			font-size:20px;
+			font-size:1vw;
 			height: 60px;
 			@include pos(r);
 			top: 20px;
@@ -42,7 +42,33 @@ body{
 		}
 	}
 }
-
+.zmiti-pv-C{
+	width:66vw;
+	height:100px;
+	@include  pos(a);
+	left:0;
+	top:100px;
+	color:#fff;
+	font-size:30px;
+	&>div{
+		@include pos(a);
+		left: 50%;
+		@include transform(translate3d(-50%,0,0));
+		font-size: 1vw;
+		&>div{
+			&:last-of-type{
+				font-size: 2.5vw;
+				color:#f90;
+				font-weight: bold;
+				i{
+					font-weight: normal;
+					font-size: 1vw;
+					font-style:normal;
+				}
+			}
+		}
+	}
+}
 @-webkit-keyframes clock{
 	to{
 		opacity:0;
