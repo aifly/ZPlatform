@@ -91,7 +91,9 @@ class App extends React.Component{
     // 后端推送来消息时
     var s = this;
     socket.on('zmitilogout', function(msg){
-    	console.log(msg);
+    	   if(!msg){
+    	   	return;
+    	   }
     		msg = msg.replace(/&quot;/g,"\"");
 	    	var data = JSON.parse(msg);
 

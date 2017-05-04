@@ -2,7 +2,52 @@
 body{
      overflow: hidden;
      background: url(../images/statistics.jpg) no-repeat center / cover;
+     font-family: "Helvetica Neue", 'Helvetica', "Microsoft YaHei", arial, sans-serif;
    }
+.zmiti-header{
+	width: 66vw;
+	height: 100px;
+	@include pos(a);
+	left: 0;
+	top: 0;
+	z-index: 0;
+	.zmiti-work-C{
+		width: 100%;
+		color:#fff;
+		height: 100%;
+		left: 50%;
+		@include transform(translate3d(-50%,0,0));
+		@include pos(a);
+		line-height: 100px;
+		@include displayFlex(row);
+		 justify-content:center;
+		.zmiti-work-name{
+			font-size: 48px;
+		}
+		.zmiti-header-date{
+			margin-left: 20px;
+			color:#3bf3ff;
+			font-size:20px;
+			height: 60px;
+			@include pos(r);
+			top: 20px;
+			@include displayFlex();
+			line-height: 30px;
+			span{
+				display: inline-block;
+				margin:0 2px;
+				font-weight: bold;
+				@include animation(clock .5s infinite alternate);
+			}
+		}
+	}
+}
+
+@-webkit-keyframes clock{
+	to{
+		opacity:0;
+	}
+}
 
 .zmiti-main-ui{
 	@include displayFlex(row);

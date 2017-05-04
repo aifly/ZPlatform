@@ -301,7 +301,7 @@ class ZmitiPoetryApp extends Component {
 		if(this.state.data.customList[this.state.data.customList.length - 1] && !this.state.data.customList[this.state.data.customList.length - 1].content){
 			this.state.data.customList.pop();
 		}
-		if(this.state.data.customList.length <= 0){
+		if(this.state.data.type==="CUSTOM" && this.state.data.customList.length <= 0){
 			message.error('至少要有1条记录');
 			return;
 		}

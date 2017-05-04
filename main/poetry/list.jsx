@@ -178,7 +178,7 @@ class ZmitiPoetryListApp extends Component {
 
 	modifyType(type){
 
-		if(type === "CI" || type === "TONGYAO"){
+		if(type === "CI" || type === "TONGYAO" || type === "CUSTOM"){
 			message.warning('敬请期待');
 			return false;
 		}
@@ -356,7 +356,7 @@ class ZmitiPoetryListApp extends Component {
 
 		$.ajax({
 			url:window.baseUrl+'/works/create_works/',
-			type:'get',
+			type:'post',
 			data:{
 				userid:s.userid,
 				getusersigid:s.getusersigid,
@@ -404,6 +404,7 @@ class ZmitiPoetryListApp extends Component {
 			 	this.productid = item.productid;//获取当前产品的id;
 			 }
 		});
+
 		$.ajax({
 			url:window.baseUrl + 'works/get_worksinfo/',
 			data:{
@@ -411,15 +412,13 @@ class ZmitiPoetryListApp extends Component {
 				productid:s.productid,
 				userid:s.userid,
 				getusersigid:s.getusersigid
-			},
-			success(data){
-				if(data.getret === 0){
-					console.log(data.getworksInfo)
-					s.state.poetryList = data.getworksInfo;
-					s.forceUpdate();
-				}
 			}
-		})
+		}).then((data)=>{
+			if(data.getret === 0){
+				s.state.poetryList = data.getworksInfo;
+				s.forceUpdate();
+			}
+		});
 		setTimeout(()=>{
 			this.flyParticleToImage({
 				 container: this.refs['poetry-text'],

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>promise</title>
+	<meta charset="utf-8">
+</head>
+<body>
+<button>点击</button>
+<p></p>
+<script src='./node_modules/jquery/dist/jquery.min.js'></script>
+<script>
+	$(function(){
+
+		function runAsync(){
+		    var def = $.Deferred();
+		    //做一些异步操作
+		    setTimeout(function(){
+		        console.log('runAsync执行完成');
+		        def.resolve('');
+		    }, 2000);
+		    return def.promise(); //就在这里调用
+		}
+		function runAsync2(){
+		    var def = $.Deferred();
+		    //做一些异步操作
+		    setTimeout(function(){
+		        console.log('runAsync2执行完成');
+		        def.resolve('');
+		    }, 2000);
+		    return def.promise(); //就在这里调用
+		}
+
+		function runAsync3(){
+		    var def = $.Deferred();
+		    //做一些异步操作
+		    setTimeout(function(){
+		        console.log('runAsync3执行完成');
+		        def.resolve('');
+		    }, 2000);
+		    return def.promise(); //就在这里调用
+		}
+		$("button").bind( "click", function() {
+			$("p").append( " 已开始... ");
+			$.when(runAsync()).then(()=>{
+				return runAsync2();
+			}).then(()=>{
+				return runAsync3();
+			}).done(()=>{
+				console.log('all done ')
+			});
+		});
+	});
+</script>
+</body>
+</html>	
