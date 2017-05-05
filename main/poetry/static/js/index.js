@@ -7,6 +7,7 @@ var ZmitiUtil = {
     },
 
     fillDate:function(){
+        var s = this;
         var zmitiTime = $('.zmiti-header-date div:eq(0)'),
             zmitiDate = $('.zmiti-header-date div:eq(1)');
         var arr = ['日','一','二','三','四','五','六']
@@ -33,6 +34,9 @@ var ZmitiUtil = {
                 mins<10 && (mins = '0'+mins);
                 seconds<10 && (seconds = '0'+seconds);
                 zmitiTime.html(hours+"<span>:</span>"+mins);
+
+                s.hours = hours;
+                s.mins = mins;
                 if(mins === 0 && hours === 0 && mins === 0){
                     year = date.getFullYear();
                     month = date.getMonth()+1;
@@ -64,6 +68,9 @@ var ZmitiUtil = {
                     //s.geoCoordMap = JSON.parse(geoCoordMap);
                 });
                 s.fillPV(data.worksinfo.totalviewcount);
+                s.defaultCount = data.worksinfo.totalviewcount || 0;
+                localStorage.setItem('worksname'+ worksid,data.worksinfo.worksname);
+                localStorage.setItem('defaultcount'+ worksid,s.defaultCount);
                 $("#zmiti-work-name").html(data.worksinfo.worksname);
             }
             
@@ -72,7 +79,6 @@ var ZmitiUtil = {
     },
     convertData:function(data){
         var res = [];
-        console.log(data.length)
         for (var i = 0; i < data.length; i++) {
             var geoCoord = this.geoCoordMap[data[i].name];
             if (geoCoord) {
@@ -85,9 +91,181 @@ var ZmitiUtil = {
 
         return res;
     },
+    scoreConfig:function(){
+        return option = {
+            title: {
+                textStyle:{
+                    color:'#3bf3ff',
+                    fontFamily:'Microsoft YaHei',
+                    fontWeight:'normal'
+                },
+                text: '用户得分趋势'
+            },
+            tooltip : {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#6a7985'
+                    }
+                }
+            },
+            legend: {
+                data:['用户得分趋势'],
+                textStyle:{
+                    color:'#fff'
+                }
+            },
+            toolbox: {
+               
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data: ['','04:00','08:00','12:00','16:00','20:00','24:00'],
+                    nameTextStyle:{
+                        color:'#fff'
+                    },
+                    axisLine:{
+                        lineStyle:{
+                            color:'#fff'
+                        }
+                    }
+                }
+            ],
+            yAxis : [
+                 {
+                    type : 'value',
+                    axisLine:{
+                        lineStyle:{
+                            color:'#fff'
+                        }
+                    }
+                }
+            ],
+            series : [
+                {
+                    name:'用户得分趋势',
+                    type:'line',
+                    stack: '总量',
+                    areaStyle: {normal: {}},
+                    data:[120, 132, 101, 134, 90, 230, 510],
+                    itemStyle:{
+                        normal:{
+                            color:'#3bf3ff',
+                            borderWidth:3
+                        }
+                    },
+                    lineStyle:{
+                        normal:{
+                            color:'#3bf3ff'    
+                        }
+                    } 
+                }
+            ]
+        };
+
+    },
+    visitConfig:function(){
+        return option = {
+            title: {
+                text: '用户访问趋势',
+
+                textStyle:{
+                    color:'#3bf3ff',
+                    fontFamily:'Microsoft YaHei',
+                    fontWeight:'normal'
+
+                }
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['访问趋势'],
+                textStyle:{
+                    color:'#fff'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['','04:00','08:00','12:00','16:00','20:00','24:00'],
+                nameTextStyle:{
+                    color:'#fff'
+                },
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                }
+            },
+            yAxis: {
+                type: 'value',
+                axisLine:{
+                    lineStyle:{
+                        color:'#fff'
+                    }
+                }
+            },
+            series: [
+                {
+                    name:'访问趋势',
+                    type:'line',
+                    stack: '总量',
+                    label:{
+
+                    },
+                    data:[120, 132, 101, 134, 90, 230, 210],
+                    //smooth:true,是否平滑显示线条，默认为false
+                    itemStyle:{
+                        normal:{
+                            color:'#3bf3ff',
+                            borderWidth:3
+                        }
+                    },
+                    lineStyle:{
+                        normal:{
+                            color:'#3bf3ff'    
+                        }
+                    },
+                    splitLine:{
+                        lineStyle:{
+                            color:['#fff']
+                        }
+                    },
+                    axisLabel:{
+                        textStyle:{
+                            color:'#f00'
+                        }
+                    }
+                }
+            ]
+        };
+    },
     fillPV:function(num){
         var zmitiPV = $('#zmiti-pv-count');
-        zmitiPV.html(this.formatNumer(num));
+        var html = this.formatNumer(num);
+        html = html.split('').map(function(item,i){
+            return item === ','? ' ':'<span>'+item+'</span>';
+        });
+        zmitiPV.html(html.join(''));
     },
     dataConfig:function(userData){
         var s = this;
@@ -112,7 +290,7 @@ var ZmitiUtil = {
                 orient: 'vertical',
                 y: 'top',
                 x:'left',
-                data:['智媒体用户分布'],
+                data:['用户分布位置'],
                 textStyle: {
                     color: '#fff'
                 }
@@ -133,7 +311,7 @@ var ZmitiUtil = {
                 roam: true,
                 label: {
                     emphasis: {
-                        show: false
+                        show: true
                     }
                 },
                 center:[
@@ -157,7 +335,7 @@ var ZmitiUtil = {
                     symbol: '',
                     data:s.convertData(userData),
                     symbolSize: function(val){
-                         return val[2]  / 2 ;
+                         return val[2]  / 5 ;
                     },
                     label: {
                         normal: {
@@ -181,6 +359,7 @@ var ZmitiUtil = {
             ]
         };
     },
+
     formatNumer:function(num){
         var result = [ ], counter = 0;
         num = (num || 0).toString().split('');
@@ -191,13 +370,37 @@ var ZmitiUtil = {
         }
         return result.join('');
     },
+    initVisitChart:function(){
+        var dom = document.getElementById("zmiti-visit-C");
+            var myChart = echarts.init(dom);
+            this.visitChart = myChart;
+            myChart.setOption(this.visitConfig());
+    },
+    initScoreChart:function(){
+         var dom = document.getElementById("zmiti-score-C");
+            var myChart = echarts.init(dom);
+            this.scoreChart = myChart;
+            myChart.setOption(this.scoreConfig());
+    },
+
+    bindEvent:function(){
+        var tabContent =  $('.zmiti-tab-content')
+        $('.zmiti-tab aside').on('click',function(){
+            var index = $(this).index();
+            $(this).addClass('active').siblings().removeClass('active');
+            tabContent.eq(index).show().siblings('.zmiti-tab-content').hide();
+
+        });
+    },
 	init:function(){
         var s = this;
-
         this.fillDate();
-
-		var worksid = this.getQueryString('worksid');
-       
+        this.initVisitChart();
+        this.initScoreChart();
+        this.bindEvent();
+        var worksid = this.getQueryString('worksid');
+        $("#zmiti-work-name").html(localStorage.getItem('worksname'+worksid));
+        this.fillPV(localStorage.getItem('defaultcount'+worksid));
 		var dom = document.getElementById("container");
             var myChart = echarts.init(dom);
             this.myChart = myChart;
@@ -210,15 +413,15 @@ var ZmitiUtil = {
                 //{name: "常德市", value: 123,key:'asa'},
             ];
 
-            geoCoordMap = localStorage.getItem(worksid+'geoCoordMap') || '{}';
+            geoCoordMap = localStorage.getItem('geoCoordMap'+worksid) || '{}';
             geoCoordMap = JSON.parse(geoCoordMap);
 
-            var userArr = localStorage.getItem(worksid+'userData')||'{}';
+            var userArr = localStorage.getItem('userData'+worksid)||'{}';
                 userData = JSON.parse(userArr).userData || [];
    
             this.userData = userData;
             this.geoCoordMap = geoCoordMap;
-            myChart.setOption(this.dataConfig(userData), true);
+            myChart.setOption(this.dataConfig(userData));
             window.userlist = [];
             var socket = io('http://socket.zmiti.com:2120');
             var box = document.getElementById('box');
@@ -227,9 +430,8 @@ var ZmitiUtil = {
               socket.emit('login', opt.uid||'');
             });*/
             // 后端推送来消息时
-                
+              
                 socket.on(worksid, function(msg){
-
                     if(!msg){
                         return;
                     }
@@ -243,8 +445,8 @@ var ZmitiUtil = {
                     var address = data.address,
                         pos = data.pos;
 
-                    if(this.geoCoordMap[address]){//存在
-                        this.userData.forEach(function(item,i){
+                    if(s.geoCoordMap[address]){//存在
+                        s.userData.forEach(function(item,i){
                             if(item.name === address){
                                 item.value++;
                             }
@@ -252,21 +454,31 @@ var ZmitiUtil = {
                         
                     }
                     else{
-                         this.geoCoordMap[address] = pos;
-                         this.userData.push({
+                         s.geoCoordMap[address] = pos;
+                         s.userData.push({
                             name:address,
                             value:1
                          });   
                     }
 
-                    localStorage.setItem(worksid+'geoCoordMap',JSON.stringify(this.geoCoordMap));
-                    localStorage.setItem(worksid+'userData',JSON.stringify({userData:this.userData}));
+                    s.defaultCount++;
+                    localStorage.setItem('defaultcount'+ worksid,s.defaultCount);
+                    s.fillPV(s.defaultCount);
+
+                    localStorage.setItem('geoCoordMap'+worksid,JSON.stringify(s.geoCoordMap));
+                    localStorage.setItem('userData'+worksid,JSON.stringify({userData:s.userData}));
                     var nickname = data.nickname;
                     var headimgurl = data.headimgurl;
                     
-                    var personDom = '<div class="zmiti-user"><img src='+headimgurl+' /><span>'+nickname+'</span></div>'
 
-                    myChart.setOption(s.dataConfig(this.userData), true);
+                     var personDom = "<div class='zmiti-user'>\
+                                          <aside><img src="+headimgurl+" /></aside>\
+                                          <aside>\
+                                              <div><span class='zmiti-nickname'>"+nickname+"</span>上线了</div>\
+                                              <span>"+s.hours+":"+s.mins+"</span>\
+                                          </aside>\
+                                        </div>"
+                    myChart.setOption(s.dataConfig(s.userData), true);
 
 
                     var isAppend = true;
@@ -278,21 +490,19 @@ var ZmitiUtil = {
 
                     if(isAppend){
                         window.userlist.push({nickname:nickname,headimgurl:headimgurl});
-                        var personDom = '<div class="zmiti-user" style="top:'+Math.random()*50+'px"><img src='+headimgurl+' /><span>'+nickname+'</span></div>';
+                        //var personDom = '<div class="zmiti-user" style="top:'+Math.random()*50+'px"><img src='+headimgurl+' /><span>'+nickname+'</span></div>';
 
                         document.getElementById('box').innerHTML += personDom;
 
                         var users = document.getElementById('box').querySelectorAll('.zmiti-user');
-
-                        users[users.length-1].addEventListener('webkitAnimationEnd',function(){
-                            document.getElementById('box').removeChild(this);
-                            this.style.display = 'none';
-                            window.userlist.pop();
-
-                        });    
-                    }
+                        $('#box .zmiti-user').on('webkitAnimationEnd',function(){
+                             setTimeout(()=>{
+                                $(this).remove();
+                                window.userlist.pop();
+                            },5000)
+                        });
+                    } 
                     
-                     
                 });
 
 	}

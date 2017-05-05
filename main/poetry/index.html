@@ -19,7 +19,7 @@
           <div>
             <div>总浏览量</div>
             <div>
-              <span id="zmiti-pv-count">0</span>
+              <label id="zmiti-pv-count">0</label>
               <i>人</i>
             </div>
           </div>
@@ -29,10 +29,32 @@
            
          </div>    
          <div class="zmiti-right-panel">
-           
+            <header class="zmiti-right-header">
+             <aside>
+                <div>日流量PV</div>
+                <div>10,100</div>
+             </aside>
+             <aside>
+                <div>日流量UV</div>
+                <div>1,100</div>
+             </aside>
+           </header>
+           <div class='zmiti-tab'>
+                <aside>排行</aside>
+                <aside class='active'>趋势</aside>
+           </div>
+           <section class="zmiti-ranking zmiti-tab-content" style="display: none;">
+              排行
+           </section>
+           <section class="zmiti-trend  zmiti-tab-content">
+              <div class='zmiti-visit-C' id="zmiti-visit-C"></div>
+              <div class='zmiti-score-C' id="zmiti-score-C"></div>
+           </section>
          </div>
       </section>
-       <div id="box"></div>
+      <div id="box">
+         
+      </div>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
        <script src='../static/libs/socket.io.js'></script>
