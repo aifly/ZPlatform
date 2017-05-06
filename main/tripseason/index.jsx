@@ -51,6 +51,8 @@ class ZmitiTripseasonApp extends Component {
             cityid:'',
             seasontype:'',
             daterange:'',
+            startdate:'2017-02-02',
+            endate:'2017-04-02',
 
             setprovid:'',
             setcityid:'',
@@ -62,6 +64,13 @@ class ZmitiTripseasonApp extends Component {
     }
     
     getProductDetail(record,index,e){
+        var s=this;
+        var defaultValue=new Array();
+        defaultValue[0]=String(record.provid);
+        defaultValue[1]=String(record.cityid);
+        var daterange=record.daterange.split(',');
+        var startdate=daterange[0];
+        var endate=daterange[1];
         this.currentId = record.cityid;
         if(e.target.nodeName === "SPAN" || e.target.nodeName === 'BUTTON'){
             return;//如果点击的是删除按钮，则不用弹出产品详情。
@@ -71,9 +80,13 @@ class ZmitiTripseasonApp extends Component {
             proid:record.proid,
             cityid:record.cityid,
             seasontype:record.seasontype,
-            daterage:record.daterage,
+            daterange:record.daterange,
             createtime:record.createtime,
+            defaultValue:defaultValue,
+            startdate:startdate,
+            endate:endate
         })
+        console.log(startdate,endate)
     }
     
     render() {
@@ -154,7 +167,7 @@ class ZmitiTripseasonApp extends Component {
                                  onRowClick={(record,index,i)=>{this.getProductDetail(record,index,i)}}
                                  dataSource={this.state.dataSource} columns={columns} />
                 </div>
-                <Modal title="新增日期类别" visible={this.state.modpostDialogVisible}
+                <Modal title="日期类别" visible={this.state.modpostDialogVisible}
                     onOk={this.addProduct.bind(this)}
                     onCancel={()=>{this.setState({modpostDialogVisible:false})}}
                   >
@@ -165,9 +178,7 @@ class ZmitiTripseasonApp extends Component {
                         label="选择城市"
                         hasFeedback
                       >                        
-                          
-                      <Cascader options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
-                     
+                         <Cascader options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
                       </FormItem>
                       <FormItem
                         {...formItemLayout}
@@ -184,7 +195,7 @@ class ZmitiTripseasonApp extends Component {
                         label="开始日期"
                         hasFeedback
                       >
-                        <RangePicker onChange={this.dateonChange.bind(this)} />
+                        <RangePicker defaultValue={[moment(this.state.startdate), moment(this.state.endate)]} onChange={this.dateonChange.bind(this)} />
                       </FormItem>
                       
 
@@ -270,9 +281,8 @@ class ZmitiTripseasonApp extends Component {
 
 
         }
-        if(this.currentId!==-1){//编辑
-            params.provid='25';
-            params.cityid = this.currentId;
+        if(this.currentId!==-1){//编辑            
+            params.cityid = this.currentId;            
             $.ajax({
                 type:'POST',
                 url:window.baseUrl + 'travel/edit_seasondate/',
@@ -284,7 +294,7 @@ class ZmitiTripseasonApp extends Component {
                   });
                   s.bindNewdata();
                 }
-              });
+            });
         }else{
             $.ajax({
               type:'POST',
@@ -422,10 +432,10 @@ class ZmitiTripseasonApp extends Component {
             success(data){
                 if(data.getret === 0){
                     message.success('删除成功！');
-                    console.log(this.url);
+                    
                     setTimeout(()=>{
                         s.bindNewdata();
-                        console.log(provid,cityid);
+                        console.log(this.url,provid,cityid);
                     },2000)
                 }
                 else if(data.getret === -3){
