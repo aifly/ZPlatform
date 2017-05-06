@@ -103,7 +103,7 @@ class ZmitiTripostApp extends Component {
 					<div className="zmiti-tripost-header">
 						<Row>
 							<Col span={8} className="zmiti-tripost-header-inner">职务-{this.state.companyname}</Col>
-							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={()=>{this.setState({modpostDialogVisible:true})}}>新增职务</Button></Col>
+							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={()=>{this.setState({modpostDialogVisible:true})}}>添加</Button></Col>
 						</Row>						
 					</div>
 					<div className="zmiti-tripost-line"></div>
@@ -296,9 +296,12 @@ class ZmitiTripostApp extends Component {
     //删除
     delData(jobid){
         var s = this;
+        var userid = this.props.params.userid?this.props.params.userid:this.userid;
+        
         $.ajax({
             url:window.baseUrl+'travel/del_job/',
             data:{
+                setuserid:userid,
                 userid:s.userid,
                 getusersigid:s.getusersigid,
                 jobid:jobid,
@@ -332,7 +335,8 @@ class ZmitiTripostApp extends Component {
         $.ajax({
         	url:window.baseUrl+'travel/get_jobdetial/',
         	data:{
-        		userid:s.userid,
+        		setuserid:userid,
+                userid:s.userid,
                 getusersigid:s.getusersigid,
                 jobid:jobid,
         	},
@@ -355,6 +359,7 @@ class ZmitiTripostApp extends Component {
         $.ajax({
             url:window.baseUrl+'travel/edit_job/',
             data:{
+                setuserid:userid,
                 userid:s.userid,
                 getusersigid:s.getusersigid,
                 jobid:s.state.setjobid,
