@@ -46,8 +46,8 @@ class ZmitiTripseasonApp extends Component {
             dataSource:[],
             inputValue: '',//省市
             
-            defaultValue:[],//编辑时省市默认值
-            
+            defaultValue:[],//省市默认值
+            disabled:false,
 
             provid:'',
             cityid:'',
@@ -56,10 +56,8 @@ class ZmitiTripseasonApp extends Component {
             startdate:'2017-01-01',
             endate:'2017-03-31',
 
-
             options:[],
             optiondata: [],
-            selectValue:['zhejiang', 'hangzhou'],
             
         };
         this.currentId = -1;
@@ -84,15 +82,13 @@ class ZmitiTripseasonApp extends Component {
             seasontype:record.seasontype,
             daterange:record.daterange,
             createtime:record.createtime,
-            
+            disabled:true,
             defaultValue:defaultValue,
             startdate:startdate,
             endate:endate,
             selectValue:['zhejiang', 'taizhou'],
         })
-        //defaultValue:defaultValue,
-        console.log(this.state.defaultValue,'defaultValue')
-        //this.forceUpdate();
+
     }
     
     render() {
@@ -184,7 +180,7 @@ class ZmitiTripseasonApp extends Component {
                         label="选择城市"
                         hasFeedback
                       >                        
-                        <Cascader value={this.state.defaultValue} options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
+                        <Cascader disabled={this.state.disabled} value={this.state.defaultValue} options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
                     </FormItem>
                       <FormItem
                         {...formItemLayout}
