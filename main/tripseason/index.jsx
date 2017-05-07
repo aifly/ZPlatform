@@ -51,12 +51,13 @@ class ZmitiTripseasonApp extends Component {
 
             provid:'',
             cityid:'',
-            seasontype:'2',
+            seasontype:'',
             daterange:'',
             startdate:'2017-01-01',
             endate:'2017-03-31',
 
             options:[],
+            optiondata: [],
             
         };
         this.currentId = -1;
@@ -76,7 +77,7 @@ class ZmitiTripseasonApp extends Component {
         }
         this.setState({
             modpostDialogVisible:true,
-            proid:record.proid,
+            provid:record.provid,
             cityid:record.cityid,
             seasontype:record.seasontype,
             daterange:record.daterange,
@@ -85,8 +86,9 @@ class ZmitiTripseasonApp extends Component {
             defaultValue:defaultValue,
             startdate:startdate,
             endate:endate,
+            selectValue:['zhejiang', 'taizhou'],
         })
-
+        this.forceUpdate();
     }
     
     render() {
@@ -178,7 +180,7 @@ class ZmitiTripseasonApp extends Component {
                         label="选择城市"
                         hasFeedback
                       >                        
-                        <Cascader disabled={this.state.disabled} value={this.state.defaultValue} options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
+                        <Cascader disabled={this.state.disabled} defaultValue={this.state.defaultValue}  options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
                     </FormItem>
                       <FormItem
                         {...formItemLayout}
@@ -273,11 +275,12 @@ class ZmitiTripseasonApp extends Component {
         var s = this;
         var params = {
             userid:this.userid,
+            setuserid:this.userid,
             getusersigid:this.getusersigid,
             seasontype:this.state.seasontype,
             daterange:this.state.daterange,
-            provid:this.state.inputValue[0],
-            cityid:this.state.inputValue[1],
+            provid:this.state.provid,
+            cityid:this.state.cityid,
 
 
         }
@@ -293,6 +296,7 @@ class ZmitiTripseasonApp extends Component {
                     modpostDialogVisible:false
                   });
                   s.bindNewdata();
+                  console.log(this.url)
                 }
             });
         }else{
