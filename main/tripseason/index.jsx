@@ -72,6 +72,7 @@ class ZmitiTripseasonApp extends Component {
         var startdate=daterange[0];
         var endate=daterange[1];
         this.currentId = record.cityid;
+        this.currentPid = record.provid;
         if(e.target.nodeName === "SPAN" || e.target.nodeName === 'BUTTON'){
             return;//如果点击的是删除按钮，则不用弹出产品详情。
         }
@@ -279,13 +280,14 @@ class ZmitiTripseasonApp extends Component {
             getusersigid:this.getusersigid,
             seasontype:this.state.seasontype,
             daterange:this.state.daterange,
-            provid:this.state.provid,
-            cityid:this.state.cityid,
+            provid:this.state.inputValue[0],//this.state.provid,//
+            cityid:this.state.inputValue[1],//this.state.cityid,//
 
 
         }
         if(this.currentId!==-1){//编辑            
-            params.cityid = this.currentId;            
+            params.cityid = this.currentId;  
+            params.provid = this.currentPid;         
             $.ajax({
                 type:'POST',
                 url:window.baseUrl + 'travel/edit_seasondate/',
@@ -296,7 +298,8 @@ class ZmitiTripseasonApp extends Component {
                     modpostDialogVisible:false
                   });
                   s.bindNewdata();
-                  console.log(this.url)
+                  console.log(params.provid,params.cityid);
+                  
                 }
             });
         }else{
@@ -310,43 +313,12 @@ class ZmitiTripseasonApp extends Component {
                     modpostDialogVisible:false
                   });
                   s.bindNewdata();
+                  console.log(params.provid,params.cityid);
               }
             }); 
         }
     }
-    //新增日期类别
-    modpostOk(){
-        var s =this;
-        
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        var  seasontypeTxt =s.state.seasontype;
-        var  daterangeTxt = s.state.daterange;
-        $.ajax({
-            type:'POST',
-            url:window.baseUrl + 'travel/add_seasondate/',
-            data:{
-                setuserid:userid,
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                seasontype:seasontypeTxt,
-                daterange:daterangeTxt,
-                provid:s.state.inputValue[0],
-                cityid:s.state.inputValue[1]
-            },
-            success(data){
-                if(data.getret === 0){
-                    console.log(data,"淡旺季");
-                    s.bindNewdata();
-                    s.forceUpdate();
-                    s.setState({
-                      modpostDialogVisible:false
-                    });
-                }
-                console.log(this.url,"提交地址")
-            }
-        })
-
-    }
+    
     //获取公司信息
     getCompanydetail(){
         var s=this;
@@ -388,7 +360,7 @@ class ZmitiTripseasonApp extends Component {
                     
                     setTimeout(()=>{
                         s.bindNewdata();
-                        console.log(this.url,provid,cityid);
+                        console.log(this.url);
                     },2000)
                 }
                 else if(data.getret === -3){
