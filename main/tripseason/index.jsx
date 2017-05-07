@@ -51,13 +51,12 @@ class ZmitiTripseasonApp extends Component {
 
             provid:'',
             cityid:'',
-            seasontype:'',
+            seasontype:'2',
             daterange:'',
             startdate:'2017-01-01',
             endate:'2017-03-31',
 
             options:[],
-            optiondata: [],
             
         };
         this.currentId = -1;
@@ -86,7 +85,6 @@ class ZmitiTripseasonApp extends Component {
             defaultValue:defaultValue,
             startdate:startdate,
             endate:endate,
-            selectValue:['zhejiang', 'taizhou'],
         })
 
     }
