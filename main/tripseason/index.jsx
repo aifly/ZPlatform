@@ -7,6 +7,7 @@ import {Cascader,message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const Option = Select.Option;
+
 import { Link } from 'react-router';
 
 import MainUI from '../components/Main.jsx';
@@ -68,6 +69,7 @@ class ZmitiTripseasonApp extends Component {
         var defaultValue=new Array();
         defaultValue[0]=record.provid;
         defaultValue[1]=record.cityid;
+        console.log(record);
         var daterange=record.daterange.split(',');
         var startdate=daterange[0];
         var endate=daterange[1];
@@ -89,6 +91,8 @@ class ZmitiTripseasonApp extends Component {
             endate:endate,
             selectValue:['zhejiang', 'taizhou'],
         })
+        console.log(this.currentId,'currentId');
+
         this.forceUpdate();
     }
     
@@ -114,9 +118,9 @@ class ZmitiTripseasonApp extends Component {
             key: 'seasontype',
             render:(value,record)=>{
                 switch(value){
-                    case 1:
+                    case 0:
                         return "旺季";
-                    case 2:
+                    case 1:
                         return "淡季";
                 }
             }
@@ -162,7 +166,7 @@ class ZmitiTripseasonApp extends Component {
                     <div className="zmiti-tripseason-header">
                         <Row>
                             <Col span={8} className="zmiti-tripseason-header-inner">淡旺季-{this.state.companyname}</Col>
-                            <Col span={8} offset={8} className='zmiti-tripseason-button-right'><Button type='primary' onClick={()=>{this.setState({modpostDialogVisible:true});this.cityid=-1;}}>添加</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-tripseason-button-right'><Button type='primary' onClick={this.seasonform.bind(this)}>添加</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-tripseason-line"></div>
@@ -181,7 +185,7 @@ class ZmitiTripseasonApp extends Component {
                         label="选择城市"
                         hasFeedback
                       >                        
-                        <Cascader disabled={this.state.disabled} defaultValue={this.state.defaultValue}  options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
+                        <Cascader disabled={this.state.disabled} value={this.state.defaultValue}   options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
                     </FormItem>
                       <FormItem
                         {...formItemLayout}
@@ -189,8 +193,8 @@ class ZmitiTripseasonApp extends Component {
                         hasFeedback
                       >
                           <Select placeholder="类别" onChange={(value)=>{this.state.seasontype=value;this.forceUpdate();}} value={this.state.seasontype}>
-                            <Option value={'1'}>旺季</Option>
-                            <Option value={'2'}>淡季</Option>
+                            <Option value={0}>旺季</Option>
+                            <Option value={1}>淡季</Option>
                           </Select>                   
                       </FormItem>
                       <FormItem
@@ -198,7 +202,7 @@ class ZmitiTripseasonApp extends Component {
                         label="开始日期"
                         hasFeedback
                       >
-                        <RangePicker defaultValue={[moment(this.state.startdate), moment(this.state.endate)]} onChange={this.dateonChange.bind(this)} />
+                        <RangePicker value={[moment(this.state.startdate), moment(this.state.endate)]} onChange={this.dateonChange.bind(this)} />
                       </FormItem>
                       
 
@@ -282,12 +286,11 @@ class ZmitiTripseasonApp extends Component {
             daterange:this.state.daterange,
             provid:this.state.inputValue[0],//this.state.provid,//
             cityid:this.state.inputValue[1],//this.state.cityid,//
-
-
         }
-        if(this.currentId!==-1){//编辑            
+
+        if(this.currentId!==-1){//编辑        
             params.cityid = this.currentId;  
-            params.provid = this.currentPid;         
+            params.provid = this.currentPid;
             $.ajax({
                 type:'POST',
                 url:window.baseUrl + 'travel/edit_seasondate/',
@@ -350,7 +353,6 @@ class ZmitiTripseasonApp extends Component {
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                setuserid:userid,
                 provid:provid,
                 cityid:cityid
             },
@@ -361,6 +363,7 @@ class ZmitiTripseasonApp extends Component {
                     setTimeout(()=>{
                         s.bindNewdata();
                         console.log(this.url);
+                        console.log(data,'data')
                     },2000)
                 }
                 else if(data.getret === -3){
@@ -393,24 +396,6 @@ class ZmitiTripseasonApp extends Component {
                 if(data.getret === 0){
                     s.setState({
                         options:data.list[0].children,
-                        optiondata:[{
-                          value: 'zhejiang',
-                          label: '浙江',
-                          children: [{
-                            value: 'hangzhou',
-                            label: '杭州'
-                          },{
-                            value: 'taizhou',
-                            label: '台州'
-                          }],
-                        }, {
-                          value: 'jiangsu',
-                          label: 'Jiangsu',
-                          children: [{
-                            value: 'nanjing',
-                            label: 'Nanjing'
-                          }],
-                        }]
                     })
                     s.forceUpdate();
                 }
@@ -422,12 +407,34 @@ class ZmitiTripseasonApp extends Component {
     cityonChange(value){
         var s=this;
         s.state.inputValue=value;
+        s.state.defaultValue=value;
+        s.forceUpdate();
     }
     //选择日期范围
     dateonChange(date, dateString){        
         var s=this;
         s.state.daterange=dateString[0]+","+dateString[1];
-        //console.log(s.state.daterange);
+        s.state.startdate=dateString[0];
+        s.state.endate=dateString[1];
+        s.forceUpdate();
+        console.log(s.state.daterange);
+    }
+    //弹出新增加时
+    seasonform(){
+        var s=this;
+        this.currentId=-1;
+        this.setState({
+            modpostDialogVisible:true,
+            disabled:false,
+            defaultValue:[],
+            provid:'',
+            cityid:'',
+            seasontype:'',
+            daterange:'',
+            startdate:'2017-01-01',
+            endate:'2017-03-31',
+        })
+        console.log(this.currentId,'currentId');
     }
 
 
