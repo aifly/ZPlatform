@@ -3,6 +3,33 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
+ul, li {
+  list-style: none;
+  padding: 0;
+  margin: 0; }
+
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
 body {
   overflow: hidden;
   background: url(../images/statistics.jpg) no-repeat center/cover;
@@ -105,6 +132,13 @@ body {
         font-size: 1.2vw;
         color: #f90; }
 
+.zmiti-tab-content {
+  border-radius: 6px;
+  margin: 0 auto;
+  width: 98%; }
+  .zmiti-tab-content.active {
+    background: rgba(238, 238, 238, 0.1); }
+
 .zmiti-tab {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -124,6 +158,165 @@ body {
     cursor: pointer; }
     .zmiti-tab aside.active {
       color: #3bf3ff; }
+
+.zmiti-poetry-course-C {
+  color: #fff;
+  position: absolute;
+  z-index: 1000;
+  bottom: 20px;
+  left: 80px;
+  background: rgba(238, 238, 238, 0.1);
+  border-radius: 6px; }
+  .zmiti-poetry-course-C header {
+    color: #3bf3ff;
+    height: 40px;
+    line-height: 40px;
+    position: relative;
+    text-indent: 1em; }
+    .zmiti-poetry-course-C header:after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 8px;
+      left: 0;
+      top: 100%;
+      background: url(../images/bg-line.png) no-repeat center 0; }
+  .zmiti-poetry-course-C .zmiti-poetry-title {
+    height: 40px;
+    line-height: 40px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -ms-flex-flow: row;
+        flex-flow: row; }
+    .zmiti-poetry-course-C .zmiti-poetry-title span {
+      display: block;
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      text-align: center; }
+  .zmiti-poetry-course-C .zmiti-poetry-course-scroll {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    overflow: hidden; }
+    .zmiti-poetry-course-C .zmiti-poetry-course-scroll li {
+      height: 40px;
+      line-height: 40px;
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      text-align: center;
+      cursor: pointer;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      display: -webkit-flex;
+      -ms-flex-flow: row;
+          flex-flow: row; }
+      .zmiti-poetry-course-C .zmiti-poetry-course-scroll li:nth-of-type(2n+1) {
+        background: rgba(235, 235, 235, 0.05); }
+      .zmiti-poetry-course-C .zmiti-poetry-course-scroll li:hover {
+        color: #f90; }
+      .zmiti-poetry-course-C .zmiti-poetry-course-scroll li.active {
+        color: #3bf3ff;
+        background: url(../images/bg.png) repeat-x center 0/contain; }
+      .zmiti-poetry-course-C .zmiti-poetry-course-scroll li span {
+        display: block;
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        text-align: center; }
+
+.zmiti-ranking-title {
+  width: 100%;
+  margin: 20px auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  -ms-flex-flow: row;
+      flex-flow: row;
+  color: #a1a2a3;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 10px; }
+  .zmiti-ranking-title:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 8px;
+    left: 0;
+    top: 100%;
+    background: url(../images/bg-line.png) no-repeat center 0; }
+  .zmiti-ranking-title li {
+    height: 40px;
+    line-height: 40px;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    text-align: center;
+    cursor: pointer; }
+    .zmiti-ranking-title li:last-of-type {
+      -webkit-box-flex: 0;
+          -ms-flex: none;
+              flex: none;
+      padding: 0 3px; }
+    .zmiti-ranking-title li.active {
+      color: #3bf3ff;
+      background: url(../images/bg.png) repeat-x center 0/contain; }
+
+.zmiti-ranking-sub-title {
+  width: 100%;
+  height: 40px;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  -ms-flex-flow: row;
+      flex-flow: row; }
+  .zmiti-ranking-sub-title span {
+    text-align: center;
+    display: block;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1; }
+
+.zmiti-ranking-list-scorll {
+  overflow: hidden;
+  position: relative; }
+
+.zmiti-ranking-list {
+  color: #fff; }
+  .zmiti-ranking-list li {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -ms-flex-flow: row;
+        flex-flow: row;
+    text-align: center; }
+    .zmiti-ranking-list li span {
+      display: block;
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1; }
+      .zmiti-ranking-list li span:first-of-type {
+        color: #3bf3ff; }
+      .zmiti-ranking-list li span:last-of-type {
+        color: #f90; }
+      .zmiti-ranking-list li span:nth-of-type(2) {
+        max-width: 20vw; }
+    .zmiti-ranking-list li:nth-of-type(2n+1) {
+      background: rgba(255, 255, 255, 0.1); }
+    .zmiti-ranking-list li:nth-of-type(1) span:first-of-type, .zmiti-ranking-list li:nth-of-type(2) span:first-of-type, .zmiti-ranking-list li:nth-of-type(3) span:first-of-type {
+      color: #f90; }
 
 .zmiti-visit-C, .zmiti-score-C {
   height: 30vh;

@@ -1,7 +1,1 @@
-{
-"version": 3,
-"mappings": "",
-"sources": [],
-"names": [],
-"file": "base.css"
-}
+{"version":3,"sources":["base.scss"],"names":[],"mappings":"AAAA;;;;GAIG;AA6GH;EACI,iBAAgB;EAChB,oBAAkB;EAClB,sBAAoB;EACpB,wBAAsB;EACtB,gCAA8B,EAAA;;AAElC;EACG,sBAAoB;EACpB,sBAAoB,EAAA","file":"base.css"}

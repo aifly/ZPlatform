@@ -56,6 +56,7 @@ var ZmitiUtil = {
                 worksid:worksid
             }
         }).then(function(data){
+            console.log(data)
             if(data.getret === 0){
                 console.log(data)
                 s.userData.length = 0;
@@ -76,7 +77,88 @@ var ZmitiUtil = {
             
             s.myChart.setOption(s.dataConfig(s.userData), true);
         });
+ 
     },
+
+    setSize:function(){
+        var dom = $('.zmiti-ranking-list-scorll');
+        var height = document.documentElement.clientHeight - dom.offset().top ;
+         var num = height % 40;
+
+        dom.height(height- num);
+        this.setSroll(dom);
+        var s = this;
+     
+    },
+    setSroll:function(dom){
+        this.scroll = new IScroll(dom[0],{
+            scrollX:false,
+            scrollY:true,
+            scrollbars:true,//显示滚动条
+            interactiveScrollbars:true,//允许用户拖动滚动条
+            mouseWheel:true
+        });
+        var dom1 = $('.zmiti-poetry-course-scroll');
+        this.courseScroll = new IScroll(dom1[0],{
+            scrollX:false,
+            scrollY:true,
+            scrollbars:true,//显示滚动条
+            interactiveScrollbars:true,//允许用户拖动滚动条
+            mouseWheel:true 
+        });
+    },
+
+    loadDataByCate:function(type){
+        var worksid = this.getQueryString('worksid');
+        var s = this;
+        switch(type){
+            case "shengfen":
+                $('.zmiti-ranking-sub-title span:eq(1)').html('名称');
+                $('.zmiti-ranking-sub-title span:eq(2)').html('提交量');
+            break;
+        }
+        
+         $.ajax({
+            url:'./static//js/data.json',
+            data:{
+                worksid:worksid
+            }
+        }).done((data)=>{
+            if(data.getret === 0){
+                var html = '';
+                data.list.map(function(item,i){
+                    html += '<li>\
+                    <span>'+(i+1)+'</span><span title='+item.name+' class="zmiti-text-overflow">《'+item.name+'》</span><span>'+s.formatNumer(item.value)+'</span>\
+                    </li>';
+                });
+                $('.zmiti-ranking-list').html(html);
+                s.scroll.refresh();
+            }
+        })
+    },
+    loadDataByCource:function(){
+        var worksid = this.getQueryString('worksid');
+        var dom  = $('.zmiti-poetry-course-scroll');
+        var s = this;
+        $.ajax({
+            url:'./static/js/course.json',
+            data:{
+                worksid:worksid
+            }
+        }).done(data=>{
+            if(data.getret === 0){
+                var html = '';
+                data.list.map(function(item,i){
+                    html+='<li>\
+                    <span title='+item.name+' class="zmiti-text-overflow">《'+item.name+'》</span><span>'+s.formatNumer(item.value)+'</span>\
+                    </li>';
+                });
+                dom.find('ul').html(html);
+                s.courseScroll.refresh();
+            }
+        })
+    },
+
     convertData:function(data){
         var res = [];
         for (var i = 0; i < data.length; i++) {
@@ -384,20 +466,35 @@ var ZmitiUtil = {
     },
 
     bindEvent:function(){
-        var tabContent =  $('.zmiti-tab-content')
+        var s = this;
+        var tabContent =  $('.zmiti-tab-content');
+        this.count = this.count ||  0 ;
         $('.zmiti-tab aside').on('click',function(){
             var index = $(this).index();
             $(this).addClass('active').siblings().removeClass('active');
             tabContent.eq(index).show().siblings('.zmiti-tab-content').hide();
+            tabContent.eq(index)[index === 0 ? 'addClass':'removeClass']('active');
+            if(index === 0 && s.count === 0 ){
+                s.setSize();
+                s.scroll.refresh();
+                s.count++;
+            }
+        });
 
+        $('.zmiti-ranking-title li').on('click',function(){
+            var index = $(this).index();
+            $(this).addClass('active').siblings(this).removeClass('active');
         });
     },
 	init:function(){
         var s = this;
         this.fillDate();
+        this.setSize();
         this.initVisitChart();
         this.initScoreChart();
         this.bindEvent();
+        this.loadDataByCate('shengfen');
+        this.loadDataByCource();
         var worksid = this.getQueryString('worksid');
         $("#zmiti-work-name").html(localStorage.getItem('worksname'+worksid));
         this.fillPV(localStorage.getItem('defaultcount'+worksid));

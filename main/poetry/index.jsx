@@ -164,7 +164,7 @@ class ZmitiPoetryApp extends Component {
 							<section>
 								<Row type='flex' align='middle'>
 									<Col span={12}>
-										<img src={this.state.data.qrcode||'./static/images/qrcode.png'}/>
+										<img src={this.state.data.qrcodeurl||'./static/images/qrcode.png'}/>
 									</Col>
 									<Col span={12}>
 										<div>扫二维码分享给好友</div>
@@ -359,6 +359,7 @@ class ZmitiPoetryApp extends Component {
 		this.userid = userid;
 		this.getusersigid = getusersigid;
 		this.usertypesign = usertypesign;
+		this.loginOut = loginOut;
 	}
 
 	componentDidMount() {
@@ -379,18 +380,26 @@ class ZmitiPoetryApp extends Component {
 			},
 			success(data){
 				if(data.getret === 0){
-					console.log(JSON.parse(data.filecontent))
-					s.state.data = JSON.parse(data.filecontent);
-					!s.state.data.theme && (s.state.data.theme = 'default');
-					!s.state.data.bgSound && (s.state.data.bgSound = '');
-					if(s.state.data.type === 'CUSTOM'){
-						s.state.isBg = s.state.isBgSound = false;
-						s.state.isCustom = true;
-					}
-					s.state.data.customList = s.state.data.customList || [];
-					s.state.data.customList  = s.state.data.customList.length<=0 ?  [{title:'',content:'',id:s.randomString() }] :  s.state.data.customList;
+					try{
+						console.log(JSON.parse(data.filecontent))
+						s.state.data = JSON.parse(data.filecontent);
+						!s.state.data.theme && (s.state.data.theme = 'default');
+						!s.state.data.bgSound && (s.state.data.bgSound = '');
+						if(s.state.data.type === 'CUSTOM'){
+							s.state.isBg = s.state.isBgSound = false;
+							s.state.isCustom = true;
+						}
+						s.state.data.customList = s.state.data.customList || [];
+						s.state.data.customList  = s.state.data.customList.length<=0 ?  [{title:'',content:'',id:s.randomString() }] :  s.state.data.customList;
 
-					s.forceUpdate()
+						s.forceUpdate()
+					}catch(e){
+						message.error('您没有该作品该编辑');
+						setTimeout(()=>{
+							s.loginOut();
+						},400)
+					}
+					
 				}
 			}
 		})

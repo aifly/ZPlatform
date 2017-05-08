@@ -109,3 +109,16 @@
   display: -webkit-flex;
   flex-flow: $v;
 }
+
+
+.zmiti-text-overflow{
+    overflow: hidden;
+    white-space:nowrap;
+    word-break:break-all;
+    text-overflow:ellipsis;
+    -webkit-text-overflow:ellipsis;
+}
+.zmiti-break-all{
+   word-wrap:break-word;
+   word-break:break-all;
+}

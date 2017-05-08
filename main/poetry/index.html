@@ -15,6 +15,20 @@
              </section>
           </div>
       </header>
+      <footer class='zmiti-poetry-course-C'>
+          <header>
+             诗词历程图
+          </header>
+          <div class="zmiti-poetry-title">
+            <span>诗名</span>
+            <span>支点</span>
+          </div>
+          <div class="zmiti-poetry-course-scroll">
+              <ul>
+                
+              </ul>
+          </div>
+      </footer>
       <section class="zmiti-pv-C">
           <div>
             <div>总浏览量</div>
@@ -43,10 +57,27 @@
                 <aside>排行</aside>
                 <aside class='active'>趋势</aside>
            </div>
-           <section class="zmiti-ranking zmiti-tab-content" style="display: none;">
-              排行
+           <section class="zmiti-ranking zmiti-tab-content"  style="display: none;">
+              <ul class="zmiti-ranking-title">
+                <li class="active">省份</li>
+                <li>用户积分</li>
+                <li>内容</li>
+                <li>各省读诗识别率</li>
+              </ul>
+              <div class='zmiti-ranking-sub-title'>
+                <span>序号</span>
+                <span></span>
+                <span></span>
+              </div>
+              <section class="zmiti-ranking-list-scorll">
+                <ul class='zmiti-ranking-list'>
+                
+                </ul>  
+              </section>
+              
+
            </section>
-           <section class="zmiti-trend  zmiti-tab-content">
+           <section class="zmiti-trend  zmiti-tab-content" >
               <div class='zmiti-visit-C' id="zmiti-visit-C"></div>
               <div class='zmiti-score-C' id="zmiti-score-C"></div>
            </section>
@@ -59,6 +90,7 @@
        <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
        <script src='../static/libs/socket.io.js'></script>
        <script src='./static/js/jquery.min.js'></script>
+       <script type="text/javascript" src='../node_modules/iscroll/build/iscroll.js'></script>
        <script type="text/javascript" src='./static/js/index.js'></script>
 
    </body>
