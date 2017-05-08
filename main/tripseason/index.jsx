@@ -185,7 +185,7 @@ class ZmitiTripseasonApp extends Component {
                         label="选择城市"
                         hasFeedback
                       >                        
-                        <Cascader disabled={this.state.disabled}   options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
+                        <Cascader disabled={this.state.disabled} value={this.state.defaultValue}   options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
                     </FormItem>
                       <FormItem
                         {...formItemLayout}
@@ -202,7 +202,7 @@ class ZmitiTripseasonApp extends Component {
                         label="开始日期"
                         hasFeedback
                       >
-                        <RangePicker  onChange={this.dateonChange.bind(this)} />
+                        <RangePicker value={[moment(this.state.startdate), moment(this.state.endate)]} onChange={this.dateonChange.bind(this)} />
                       </FormItem>
                       
 
@@ -396,24 +396,6 @@ class ZmitiTripseasonApp extends Component {
                 if(data.getret === 0){
                     s.setState({
                         options:data.list[0].children,
-                        optiondata:[{
-                          value: 'zhejiang',
-                          label: '浙江',
-                          children: [{
-                            value: 'hangzhou',
-                            label: '杭州'
-                          },{
-                            value: 'taizhou',
-                            label: '台州'
-                          }],
-                        }, {
-                          value: 'jiangsu',
-                          label: 'Jiangsu',
-                          children: [{
-                            value: 'nanjing',
-                            label: 'Nanjing'
-                          }],
-                        }]
                     })
                     s.forceUpdate();
                 }
@@ -425,11 +407,16 @@ class ZmitiTripseasonApp extends Component {
     cityonChange(value){
         var s=this;
         s.state.inputValue=value;
+        s.state.defaultValue=value;
+        s.forceUpdate();
     }
     //选择日期范围
     dateonChange(date, dateString){        
         var s=this;
         s.state.daterange=dateString[0]+","+dateString[1];
+        s.state.startdate=dateString[0];
+        s.state.endate=dateString[1];
+        s.forceUpdate();
         console.log(s.state.daterange);
     }
     //弹出新增加时
