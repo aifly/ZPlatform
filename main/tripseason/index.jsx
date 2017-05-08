@@ -92,6 +92,7 @@ class ZmitiTripseasonApp extends Component {
             selectValue:['zhejiang', 'taizhou'],
         })
         console.log(this.currentId,'currentId');
+
         this.forceUpdate();
     }
     
@@ -192,8 +193,8 @@ class ZmitiTripseasonApp extends Component {
                         hasFeedback
                       >
                           <Select placeholder="类别" onChange={(value)=>{this.state.seasontype=value;this.forceUpdate();}} value={this.state.seasontype}>
-                            <Option value={'1'}>旺季</Option>
-                            <Option value={'2'}>淡季</Option>
+                            <Option value={1}>旺季</Option>
+                            <Option value={2}>淡季</Option>
                           </Select>                   
                       </FormItem>
                       <FormItem
