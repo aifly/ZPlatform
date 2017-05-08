@@ -118,9 +118,9 @@ class ZmitiTripseasonApp extends Component {
             key: 'seasontype',
             render:(value,record)=>{
                 switch(value){
-                    case 1:
+                    case 0:
                         return "旺季";
-                    case 2:
+                    case 1:
                         return "淡季";
                 }
             }
@@ -193,8 +193,8 @@ class ZmitiTripseasonApp extends Component {
                         hasFeedback
                       >
                           <Select placeholder="类别" onChange={(value)=>{this.state.seasontype=value;this.forceUpdate();}} value={this.state.seasontype}>
-                            <Option value={1}>旺季</Option>
-                            <Option value={2}>淡季</Option>
+                            <Option value={0}>旺季</Option>
+                            <Option value={1}>淡季</Option>
                           </Select>                   
                       </FormItem>
                       <FormItem
@@ -353,7 +353,6 @@ class ZmitiTripseasonApp extends Component {
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                setuserid:userid,
                 provid:provid,
                 cityid:cityid
             },
@@ -364,6 +363,7 @@ class ZmitiTripseasonApp extends Component {
                     setTimeout(()=>{
                         s.bindNewdata();
                         console.log(this.url);
+                        console.log(data,'data')
                     },2000)
                 }
                 else if(data.getret === -3){
