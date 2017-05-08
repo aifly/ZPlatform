@@ -41,22 +41,44 @@ class ZmitiTripexpenceApp extends Component {
 			othertraficprice:'',//其它交通补助费
 			otherprice:'',//其它补助费
 			expenseid:'',
-			setsetexpenseid:'',
-			setprovid:'30',//省份id
-			setcityid:'377',//城市id
-			setjobid:'',//职务id
-			sethotelprice1:'',//住宿费
-			sethotelprice2:'',//旺季住宿费
-			setfoodprice:'',//伙食费
-			setothertraficprice:'',//其它交通补助费
-			setotherprice:'',//其它补助费
+			
             inputValue: '',//省市
             defaultValue:[],//编辑时省市默认值
             options:[],
+            disabled:false,
 		};
 
-		
+		this.currentId = -1;
 	}
+    getProductDetail(record,index,e){
+        var s=this;
+        var defaultValue=new Array();
+        defaultValue[0]=record.provid;
+        defaultValue[1]=record.cityid;
+        console.log(record);
+
+        this.currentId = record.expenseid;
+        if(e.target.nodeName === "SPAN" || e.target.nodeName === 'BUTTON'){
+            return;//如果点击的是删除按钮，则不用弹出产品详情。
+        }
+        this.setState({
+            modpostDialogVisible:true,
+            expenseid:record.expenseid,
+            provid:record.provid,
+            cityid:record.cityid,
+            jobid:record.jobid,
+            hotelprice1:record.hotelprice1,
+            hotelprice2:record.hotelprice2,
+            foodprice:record.foodprice,
+            othertraficprice:record.othertraficprice,
+            otherprice:record.otherprice,
+            disabled:true,
+            defaultValue:defaultValue,
+        })
+        //console.log(s.state.provid,s.state.cityid,'defaultValue');
+
+        this.forceUpdate();
+    }
 	render() {
 		const columns = [{
             title: '省份',
@@ -110,10 +132,9 @@ class ZmitiTripexpenceApp extends Component {
             key: '',
             width:150,
             render:(text,recoder,index)=>(
-                <span>
-                	<a href="javascript:void(0);"  onClick={this.editData.bind(this,recoder.expenseid)}> 修改</a>
-                	<a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.expenseid)}> 删除</a>
-                </span>
+
+                <Button  onClick={this.delData.bind(this,recoder.expenseid)}> 删除</Button>
+                
             )
 
         }]
@@ -139,14 +160,17 @@ class ZmitiTripexpenceApp extends Component {
 					<div className="zmiti-tripost-header">
 						<Row>
 							<Col span={8} className="zmiti-tripost-header-inner">差旅费-{this.state.companyname}</Col>
-							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={()=>{this.setState({modpostDialogVisible:true})}}>添加</Button></Col>
+							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={this.expenceform.bind(this)}>添加</Button></Col>
 						</Row>					
 					</div>
 					<div className="zmiti-tripost-line"></div>
-					<Table dataSource={this.state.dataSource} columns={columns} bordered/>
+					
+                    <Table bordered={true}
+                                 onRowClick={(record,index,i)=>{this.getProductDetail(record,index,i)}}
+                                 dataSource={this.state.dataSource} columns={columns} />
 				</div>
-				<Modal title="新增差旅费" visible={this.state.modpostDialogVisible}
-					onOk={this.modpostOk.bind(this)}
+				<Modal title="差旅费" visible={this.state.modpostDialogVisible}
+					onOk={this.addProduct.bind(this)}
 					onCancel={()=>{this.setState({modpostDialogVisible:false})}}
                 >
                 	<Form>
@@ -156,9 +180,8 @@ class ZmitiTripexpenceApp extends Component {
                             hasFeedback
                           >                        
                               
-                          <Cascader options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
-                         
-                          </FormItem>
+                          <Cascader disabled={this.state.disabled} value={this.state.defaultValue}   options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
+                        </FormItem>
                         <FormItem
 							{...formItemLayout}
 							label="职务"
@@ -227,91 +250,10 @@ class ZmitiTripexpenceApp extends Component {
                         </FormItem>
                     </Form>
                 </Modal>
-                <Modal title="修改差旅费" visible={this.state.modpostEditDialogVisible}
-					onOk={this.modsaveData.bind(this)}
-					onCancel={()=>{this.setState({modpostEditDialogVisible:false})}}
-                >
-                	<Form>
-						<FormItem
-                        {...formItemLayout}
-                        label="选择城市"
-                        hasFeedback
-                      >                        
-                          
-                      <Cascader defaultValue={this.state.defaultValue} options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
-                     
-                      </FormItem>
-                        <FormItem
-							{...formItemLayout}
-							label="职务"
-							hasFeedback
-							>
-							<Select placeholder="职务" onChange={(value)=>{this.state.setjobid=value;this.forceUpdate();}} value={this.state.setjobid}
-                          	>
-                          	{
-                                this.state.tripost.map((item,i)=> {
-	                                return(
-		                          		<option key={i} value={item.jobid}>{item.jobname}</option>
-		                          	)
-                            	})
-                            }
-                          	</Select> 
-                        </FormItem>
-						<FormItem
-							{...formItemLayout}
-							label="住宿费"
-							hasFeedback
-							>
-							<Input placeholder="住宿费" 
-							value={this.state.sethotelprice1}
-							onChange={(e)=>{this.state.sethotelprice1=e.target.value;this.forceUpdate();}}
-							/>
-                        </FormItem>
-                        <FormItem
-							{...formItemLayout}
-							label="旺季住宿费"
-							hasFeedback
-							>
-							<Input placeholder="旺季住宿费" 
-							value={this.state.sethotelprice2}
-							onChange={(e)=>{this.state.sethotelprice2=e.target.value;this.forceUpdate();}}
-							/>
-                        </FormItem>
-                        <FormItem
-							{...formItemLayout}
-							label="伙食费"
-							hasFeedback
-							>
-							<Input placeholder="伙食费" 
-							value={this.state.setfoodprice}
-							onChange={(e)=>{this.state.setfoodprice=e.target.value;this.forceUpdate();}}
-							/>
-                        </FormItem>
-                        <FormItem
-							{...formItemLayout}
-							label="其它交通补助费"
-							hasFeedback
-							>
-							<Input placeholder="其它交通补助费" 
-							value={this.state.setothertraficprice}
-							onChange={(e)=>{this.state.setothertraficprice=e.target.value;this.forceUpdate();}}
-							/>
-                        </FormItem>
-                        <FormItem
-							{...formItemLayout}
-							label="其它补助费"
-							hasFeedback
-							>
-							<Input placeholder="其它补助费" 
-							value={this.state.setotherprice}
-							onChange={(e)=>{this.state.setotherprice=e.target.value;this.forceUpdate();}}
-							/>
-                        </FormItem>
-                    </Form>
-                </Modal>
+                
 				{this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddpost" {...userProps}></ZmitiUploadDialog>}
-                {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddeditpost" {...userProps}></ZmitiUploadDialog>}
-			</div>
+                
+            </div>
 		}
   
 		var mainComponent = <div>
@@ -368,114 +310,58 @@ class ZmitiTripexpenceApp extends Component {
           })  
         }) 
     }
-
-    //新增
-    modpostOk(){
-    	var s =this;
-    	var userid = this.props.params.userid?this.props.params.userid:this.userid;
-    	var transportidTxt =s.state.transportVal;
-		var jobidTxt = s.state.tripostVal;
-		$.ajax({
-			url:window.baseUrl + 'travel/add_expense/',
-			data:{
-				setuserid:userid,
-				userid:s.userid,
-				getusersigid:s.getusersigid,
-				provid:s.state.inputValue[0],
-                cityid:s.state.inputValue[1],
-				jobid:s.state.jobid,
-				hotelprice1:s.state.hotelprice1,
-				hotelprice2:s.state.hotelprice2,
-				foodprice:s.state.foodprice,
-				othertraficprice:s.state.othertraficprice,
-				otherprice:s.state.otherprice,
-			},
-			success(data){				
-                s.bindNewdata();
-                s.forceUpdate();
-                s.setState({
-	              modpostDialogVisible:false
-	            });
-	            //console.log(this.url,"提交地址")
-			}
-		})
-		
-    }
-    //编辑
-    editData(expenseid){
+    addProduct(){//添加
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        var defaultValue=new Array();
-        s.setState({            
-            modpostEditDialogVisible:true
-        })
-        $.ajax({
-            type:'POST',
-            url:window.baseUrl+'travel/get_expensedetial/',
-            data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                setuserid:userid,
-                expenseid:expenseid,
-            },
-            success(data){
-                //console.log(jobid);
-                if(data.getret === 0){
-                    s.state.setprovid=data.detial.provid;
-                    s.state.setcityid=data.detial.cityid;
-                    s.state.setjobid=data.detial.jobid;
-                    s.state.sethotelprice1=data.detial.hotelprice1;
-                    s.state.sethotelprice2=data.detial.hotelprice2;
-                    s.state.setfoodprice=data.detial.foodprice;
-                    s.state.setothertraficprice=data.detial.othertraficprice;
-                    s.state.setotherprice=data.detial.otherprice;            
-                     
-                    s.state.setexpenseid=expenseid;  
-                    defaultValue.push(String(data.detial.provid),String(data.detial.cityid));
-                    s.state.defaultValue=defaultValue;
-                    
-                    s.setState({ 
-                        defaultValue:defaultValue
-                    })
-                    console.log(s.state.defaultValue);      
-                    s.forceUpdate();                    
-                }
-            }
-        })
-        //
-    }
-    //保存修改
-    modsaveData(expenseid){
-        var s = this;
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        $.ajax({
-            url:window.baseUrl+'travel/edit_expense/',
-            data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                setuserid:userid,
-                provid:s.state.setprovid,
-				cityid:s.state.setcityid,
-				jobid:s.state.setjobid,
-				hotelprice1:s.state.sethotelprice1,
-				hotelprice2:s.state.sethotelprice2,
-				foodprice:s.state.setfoodprice,
-				othertraficprice:s.state.setothertraficprice,
-				otherprice:s.state.setotherprice,
-				expenseid:s.state.setexpenseid,
-            },
-            success(data){
-                if(data.getret === 0){
-                   //console.log(data,'保存成功');
-                    s.bindNewdata();
-                    s.setState({            
-                        modpostEditDialogVisible:false
-                    })
-                }
+        var params = {
+            userid:this.userid,
+            getusersigid:this.getusersigid,  
+            setuserid:userid,          
+            provid:s.state.provid,//this.state.inputValue[0],
+            cityid:s.state.cityid,//this.state.inputValue[1],
+            jobid:s.state.jobid,
+            hotelprice1:s.state.hotelprice1,
+            hotelprice2:s.state.hotelprice2,
+            foodprice:s.state.foodprice,
+            othertraficprice:s.state.othertraficprice,
+            otherprice:s.state.otherprice,
+        }
 
-            }
-        })
+        if(this.currentId!==-1){//编辑        
+            params.expenseid = this.currentId;  
+            
+            $.ajax({
+                type:'GET',
+                url:window.baseUrl + 'travel/edit_expense/',
+                data:params,
+                success(data){
+                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                  s.setState({
+                    modpostDialogVisible:false
+                  });
+                  s.bindNewdata();
+                  
+                  
+                }
+            });
+            //console.log(params,'edit_expense');
+        }else{
+            $.ajax({
+              type:'POST',
+              url:window.baseUrl + 'travel/add_expense/',
+              data:params,
+              success(data){
+                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                  s.setState({
+                    modpostDialogVisible:false
+                  });
+                  s.bindNewdata();
+                  console.log(this.url,'add_expense');
+              }
+            }); 
+        }
     }
+
     //删除
     delData(expenseid){
         var s = this;
@@ -554,7 +440,7 @@ class ZmitiTripexpenceApp extends Component {
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         var provinceOptions=[];
         $.ajax({
-            url:window.baseUrl+'travel/get_basedata',
+            url:window.baseUrl+'travel/get_citylist',
             data:{
                 setuserid:userid,
                 userid:s.userid,
@@ -563,50 +449,42 @@ class ZmitiTripexpenceApp extends Component {
             },
             success(data){
                 if(data.getret === 0){
-                    //console.log(data.result.citys[0].list,"基础数据");
-                    /*var items=data.result.citys[0].list;
-                    $.each(data.result.citys[0].list,function(index,item){   
-                        provinceOptions.label=item.name;
-                        provinceOptions.value=item.provinceId;
-                        provinceOptions.children=item.cities;
-
-                    }) 
-                    
-                    
-                    console.log(provinceOptions,"省市");*/
-
+                    s.setState({
+                        options:data.list[0].children,
+                    })
                     s.forceUpdate();
                 }
             }
         })
-                    s.setState({
-                        options:[{
-                          value: '30',
-                          label: '云南',
-                          children: [{
-                            value: '377',
-                            label: '临沧'
-                          },{
-                            value: '370',
-                            label: '丽江'
-                          }],
-                        }, {
-                          value: '19',
-                          label: '内蒙古',
-                          children: [{
-                            value: '267',
-                            label: '乌兰察布市'
-                          },{
-                            value: '266',
-                            label: '乌海'
-                          }],
-                        }]
-                    })
     }
     //选择省市
     cityonChange(value){
         var s=this;
         s.state.inputValue=value;
+        
+        s.state.defaultValue=value;
+        console.log(value);
+        s.forceUpdate();
+    }
+    //增加
+    expenceform(){
+        var s=this;
+        this.currentId=-1;
+        this.setState({
+            modpostDialogVisible:true,
+            disabled:false,
+            defaultValue:[],
+            expenseid:'',
+            provid:'',
+            cityid:'',
+            jobid:'',
+            hotelprice1:'',
+            hotelprice2:'',
+            foodprice:'',
+            othertraficprice:'',
+            otherprice:'',            
+        })
+        console.log(this.currentId,'currentId');
     }
 
 	componentDidMount() {
