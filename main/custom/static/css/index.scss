@@ -37,7 +37,6 @@
               top: 0;
               @include transform(scale(0));
               @include transition(.2s);
-
             }
 
             .custom-item-view{
@@ -46,6 +45,12 @@
               bottom: 5px;
               right: 10px;
               cursor: pointer;
+              i{
+                color:#fff;
+                font-size: 16px;
+                @include pos(r);
+                top: -5px;
+              }
             }
 
             .custom-item-name{
