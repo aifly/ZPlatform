@@ -331,7 +331,7 @@ class ZmitiTripexpenceApp extends Component {
             params.expenseid = this.currentId;  
             
             $.ajax({
-                type:'GET',
+                type:'POST',
                 url:window.baseUrl + 'travel/edit_expense/',
                 data:params,
                 success(data){
@@ -344,7 +344,7 @@ class ZmitiTripexpenceApp extends Component {
                   
                 }
             });
-            //console.log(params,'edit_expense');
+            console.log(params,'edit_expense');
         }else{
             $.ajax({
               type:'POST',
@@ -460,10 +460,11 @@ class ZmitiTripexpenceApp extends Component {
     //选择省市
     cityonChange(value){
         var s=this;
-        s.state.inputValue=value;
-        
+        s.state.inputValue=value;        
         s.state.defaultValue=value;
-        console.log(value);
+        s.state.provid=value[0];
+        s.state.cityid=value[1];
+        //console.log(s.state.provid,s.state.cityid);        
         s.forceUpdate();
     }
     //增加
