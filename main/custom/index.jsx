@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Tooltip , Row, Col  } from '../commoncomponent/common.jsx';
+import { message,Tooltip , Row, Col ,Icon } from '../commoncomponent/common.jsx';
 
 import { Link } from 'react-router';
 import MainUI from '../components/Main.jsx';
@@ -77,8 +77,9 @@ class ZmitiCustomApp extends Component {
 							<div className='custom-item-shareimg' style={{background:'url('+(item.thumbnail|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 							<div className='custom-item-qrcode' style={{background:'url('+item.qrcode+') no-repeat center / cover'}}></div>
 							<div className='custom-item-name'>{item.customname}</div>
+							{item.adminurl && <div className='custom-item-view'><Link to={item.adminurl}><Icon type="laptop" /></Link></div>}
 							<Tooltip placement="top" title={'当前作品浏览量： '+item.totalpv}>
-								<div className='custom-item-view'><a href={item.viewpath} target='_blank'><img src='./static/images/eye.png'/></a></div>
+								{!item.adminurl && <div title='点击进入管理后台' className='custom-item-view'><a href={item.viewpath}><img src='./static/images/eye.png'/></a></div>}
 							</Tooltip>
 						</li>
 					})}
@@ -148,6 +149,9 @@ class ZmitiCustomApp extends Component {
 					 		item.customtype = '其它';
 					 	}
 					 	s.state.userList.push(item);
+					 });
+					 s.state.userList = s.state.userList.filter((item,i)=>{
+					 	return item.isshare !== 0;
 					 });
 					s.forceUpdate();
 				}

@@ -58,7 +58,7 @@ var ZmitiUtil = {
         }).then(function(data){
             console.log(data)
             if(data.getret === 0){
-                console.log(data)
+               
                 s.userData.length = 0;
                 data.usercountlist.map(function(item,i){
                     s.userData.push({
