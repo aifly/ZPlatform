@@ -82,19 +82,19 @@ class ZmitiTripexpenceApp extends Component {
 	render() {
 		const columns = [{
             title: '省份',
-            dataIndex: 'provid',
-            key: 'provid',
+            dataIndex: 'provname',
+            key: 'provname',
             width:100
 
         },{
             title: '城市',
-            dataIndex: 'cityid',
-            key: 'cityid'
+            dataIndex: 'cityname',
+            key: 'cityname'
 
         },{
             title: '职务',
-            dataIndex: 'jobid',
-            key: 'jobid'
+            dataIndex: 'jobname',
+            key: 'jobname'
 
         },{
             title: '住宿费',

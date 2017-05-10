@@ -104,13 +104,13 @@ class ZmitiTripseasonApp extends Component {
         };
         const columns = [{
             title: '省份',
-            dataIndex: 'provid',
-            key: 'provid'
+            dataIndex: 'provname',
+            key: 'provname'
 
         },{
             title: '城市',
-            dataIndex: 'cityid',
-            key: 'cityid'
+            dataIndex: 'cityname',
+            key: 'cityname'
 
         },{
             title: '日期类别',
