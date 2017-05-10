@@ -3,6 +3,17 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
 .wxchat-list-main-ui .wxchat-list-C {
   width: 94%;
   margin: 0 auto; }
@@ -44,6 +55,18 @@
         -webkit-text-overflow: ellipsis; }
       .wxchat-list-main-ui .wxchat-list-C .wxchat-list li:hover .wxchat-item-operator {
         display: block; }
+      .wxchat-list-main-ui .wxchat-list-C .wxchat-list li:hover .wxchat-qrcode {
+        -webkit-transform: scale(1);
+        transform: scale(1); }
+      .wxchat-list-main-ui .wxchat-list-C .wxchat-list li .wxchat-qrcode {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        -webkit-transition: 0.2s;
+        transition: 0.2s;
+        -webkit-transform: scale(0);
+        transform: scale(0); }
       .wxchat-list-main-ui .wxchat-list-C .wxchat-list li .wxchat-item-operator {
         width: 50px;
         z-index: 10;

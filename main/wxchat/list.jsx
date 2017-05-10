@@ -96,7 +96,9 @@ class ZmitiWxChatListApp extends Component {
 									<img src='./static/images/create.png'/>
 								</li>
 								{this.state.wxchatList.map((item,i)=>{
+									console.log(item.qrcodeUrl)
 									return <li key={i}>
+										<section  className='wxchat-qrcode'><img src={item.qrcodeUrl}/></section>
 										<div className='wxchat-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 										<div className='wxchat-item-name'>{item.worksname}</div>
 										<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
