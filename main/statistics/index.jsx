@@ -29,9 +29,10 @@ class ZmitiStatisticsListApp extends Component {
 	render() {
 
 		var worksid = this.props.params.id;
+		var productName = this.props.params.productname;
 
 		var component = <div className='' style={{height:this.state.mainHeight}}>
-				<iframe style={{height:this.state.mainHeight}} src={'./poetry/index.html?worksid='+worksid}></iframe>
+				<iframe style={{height:this.state.mainHeight}} src={'./'+productName+'/index.html?worksid='+worksid}></iframe>
 		</div>
 		return (
 			<MainUI component={component}></MainUI>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { message,Row,Col,Input,Button,Popconfirm,Tooltip } from '../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Popconfirm,Tooltip ,Icon} from '../commoncomponent/common.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
@@ -102,7 +102,7 @@ class ZmitiWxChatListApp extends Component {
 										<div className='wxchat-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 										<div className='wxchat-item-name'>{item.worksname}</div>
 										<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
-											<div className='wxchat-item-view'><a href={item.viewpath} target='_blank'><img src='./static/images/eye.png'/></a></div>
+											<div className='wxchat-item-view'><Link to={'/statistics/wxchat/'+item.worksid}><Icon type="dot-chart" /></Link></div>
 										</Tooltip>
 										
 										<div className='wxchat-item-operator'>

@@ -27,10 +27,14 @@
 
        			.wxchat-item-view{
        				@include pos(a);
-       				width:20px;
-       				bottom: 5px;
-       				right: 10px;
-       				cursor: pointer;
+                              width:20px;
+                              bottom: 13px;
+                              right: 10px;
+                              cursor: pointer;
+
+                              color:#fff;
+                              font-size:16px;
+                              a{color:#fff}
        			}
 
        			.wxchat-item-name{

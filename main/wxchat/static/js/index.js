@@ -138,14 +138,14 @@ var ZmitiUtil = {
             interactiveScrollbars:true,//允许用户拖动滚动条
             mouseWheel:true
         });
-        var dom1 = $('.zmiti-poetry-course-scroll');
+       /* var dom1 = $('.zmiti-poetry-course-scroll');
         this.courseScroll = new IScroll(dom1[0],{
             scrollX:false,
             scrollY:true,
             scrollbars:true,//显示滚动条
             interactiveScrollbars:true,//允许用户拖动滚动条
             mouseWheel:true 
-        });
+        });*/
     },
 
     loadDataByCate:function(type){
@@ -176,28 +176,7 @@ var ZmitiUtil = {
             }
         })
     },
-    loadDataByCource:function(){
-        var worksid = this.getQueryString('worksid');
-        var dom  = $('.zmiti-poetry-course-scroll');
-        var s = this;
-        $.ajax({
-            url:'./static/js/course.json',
-            data:{
-                worksid:worksid
-            }
-        }).done(data=>{
-            if(data.getret === 0){
-                var html = '';
-                data.list.map(function(item,i){
-                    html+='<li>\
-                    <span title='+item.name+' class="zmiti-text-overflow">《'+item.name+'》</span><span>'+s.formatNumer(item.value)+'</span>\
-                    </li>';
-                });
-                dom.find('ul').html(html);
-                s.courseScroll.refresh();
-            }
-        })
-    },
+   
 
     convertData:function(data){
         var res = [];
@@ -498,12 +477,6 @@ var ZmitiUtil = {
             this.visitChart = myChart;
             myChart.setOption(this.visitConfig(list));
     },
-    initScoreChart:function(){
-         var dom = document.getElementById("zmiti-score-C");
-            var myChart = echarts.init(dom);
-            this.scoreChart = myChart;
-            myChart.setOption(this.scoreConfig());
-    },
 
     bindEvent:function(){
         var s = this;
@@ -535,10 +508,11 @@ var ZmitiUtil = {
         this.fillDate();
         this.setSize();
         
-        this.initScoreChart();
+       // this.initScoreChart();
         this.bindEvent();
-        this.loadDataByCate('shengfen');
-        this.loadDataByCource();
+        
+        //this.loadDataByCate('shengfen');
+
         var worksid = this.getQueryString('worksid');
         this.getDefaultLocaStorage(worksid);
 
