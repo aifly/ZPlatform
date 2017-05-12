@@ -32,24 +32,37 @@ class ZmitiTriptrafficApp extends Component {
 			transport:[],
 			tripost:[],
             traffic:'',
-            setjobid:'',
-            settransportid:'',
-            settraffic:'',
+            
 
 		};
 
-		
+		this.currentId = -1;
 	}
+    getProductDetail(record,index,e){
+        var s=this;
+        this.currentId = record.traffic;
+        if(e.target.nodeName === "SPAN" || e.target.nodeName === 'BUTTON'){
+            return;//如果点击的是删除按钮，则不用弹出产品详情。
+        }
+        this.setState({
+            modpostDialogVisible:true,
+            traffic:record.traffic,
+            transportid:record.transportid,
+            jobid:record.jobid,
+        })
+
+        this.forceUpdate();
+    }
 	render() {
 		const columns = [{
             title: '交通工具',
-            dataIndex: 'transportid',
-            key: 'transportid'
+            dataIndex: 'transportname',
+            key: 'transportname'
 
         },{
             title: '职务',
-            dataIndex: 'jobid',
-            key: 'jobid'
+            dataIndex: 'jobname',
+            key: 'jobname'
 
         },{
             title: '创建时间',
@@ -62,10 +75,7 @@ class ZmitiTriptrafficApp extends Component {
             key: '',
             width:150,
             render:(text,recoder,index)=>(
-                <span>
-                    <a href="javascript:void(0);"  onClick={this.editData.bind(this,recoder.traffic)}> 修改</a>
-                    <a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.traffic)}> 删除</a>
-                </span>
+                <Button  onClick={this.delData.bind(this,recoder.traffic)}> 删除</Button>                
             )
 
         }]
@@ -91,14 +101,16 @@ class ZmitiTriptrafficApp extends Component {
 					<div className="zmiti-tripost-header">
 						<Row>
 							<Col span={8} className="zmiti-tripost-header-inner">交通费-{this.state.companyname}</Col>
-							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={()=>{this.setState({modpostDialogVisible:true})}}>添加</Button></Col>
+							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={this.trafficform.bind(this)}>添加</Button></Col>
 						</Row>				
 					</div>
 					<div className="zmiti-tripost-line"></div>
-					<Table dataSource={this.state.dataSource} columns={columns} bordered/>
+					<Table bordered={true}
+                                 onRowClick={(record,index,i)=>{this.getProductDetail(record,index,i)}}
+                                 dataSource={this.state.dataSource} columns={columns} />
 				</div>
-				<Modal title="新增交通费" visible={this.state.modpostDialogVisible}
-					onOk={this.modpostOk.bind(this)}
+				<Modal title="交通费" visible={this.state.modpostDialogVisible}
+					onOk={this.addProduct.bind(this)}
 					onCancel={()=>{this.setState({modpostDialogVisible:false})}}
                   >
                     <Form>
@@ -139,51 +151,10 @@ class ZmitiTriptrafficApp extends Component {
 
                     </Form>
                   </Modal>
-                  <Modal title="修改" visible={this.state.modpostEditDialogVisible}
-                    onOk={this.modsaveData.bind(this)}
-                    onCancel={()=>{this.setState({modpostEditDialogVisible:false})}}
-                  >
-                    <Form>
-                      <FormItem
-                        {...formItemLayout}
-                        label="交通工具"
-                        hasFeedback
-                      >                        
-                          
-                          
-                          <Select placeholder="交通工具" onChange={(value)=>{this.state.settransportid=value;this.forceUpdate();}} value={this.state.settransportid}
-                          >
-                            {
-                                this.state.transport.map((item,i)=> {
-                                    return(
-                                        <option key={i} value={item.transportid}>{item.transportname}-{item.transportlevel}</option>
-                                    )
-                                })
-                            }
-                          </Select>                    
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="职务"
-                        hasFeedback
-                      >
-                          <Select placeholder="职务" onChange={(value)=>{this.state.setjobid=value;this.forceUpdate();}} value={this.state.setjobid}
-                          >
-                            {
-                                this.state.tripost.map((item,i)=> {
-                                    return(
-                                        <option key={i} value={item.jobid}>{item.jobname}</option>
-                                    )
-                                })
-                            }
-                          </Select>                     
-                      </FormItem>
-
-                    </Form>
-                  </Modal>
+                  
 				{this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddpost" {...userProps}></ZmitiUploadDialog>}
-                {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddeditpost" {...userProps}></ZmitiUploadDialog>}
-			</div>
+              
+            </div>
 		}
   
 		var mainComponent = <div>
@@ -240,32 +211,7 @@ class ZmitiTriptrafficApp extends Component {
         }) 
     }
 
-    //新增
-    modpostOk(){
-    	var s =this;
-    	var userid = this.props.params.userid?this.props.params.userid:this.userid;
-    	var transportidTxt =s.state.transportid;
-		var jobidTxt = s.state.jobid;
-		$.ajax({
-			url:window.baseUrl + 'travel/add_traffic/',
-			data:{
-				setuserid:userid,
-				userid:s.userid,
-				getusersigid:s.getusersigid,
-				transportid:transportidTxt,
-				jobid:jobidTxt
-			},
-			success(data){				
-                s.bindNewdata();
-                s.forceUpdate();
-                s.setState({
-	              modpostDialogVisible:false
-	            });
-	            console.log(this.url,"提交地址")
-			}
-		})
-
-    }
+    
     //获取公司信息
     getCompanydetail(){
         var s=this;
@@ -330,59 +276,50 @@ class ZmitiTriptrafficApp extends Component {
             }
         })
     }
-    //编辑
-    editData(traffic){
+    addProduct(){//添加
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        s.setState({            
-            modpostEditDialogVisible:true
-        })
-        $.ajax({
-            type:'POST',
-            url:window.baseUrl+'travel/get_trafficdetial/',
-            data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                setuserid:userid,
-                traffic:traffic,
-            },
-            success(data){
-                //console.log(jobid);
-                if(data.getret === 0){
-                    s.state.settransportid=data.detial.transportid;
-                    s.state.settraffic=traffic;
-                    s.state.setjobid=data.detial.jobid;                 
-                    s.forceUpdate();                    
-                }
-            }
-        })
-        //
-    }
-    //保存修改
-    modsaveData(traffic){
-        var s = this;
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        $.ajax({
-            url:window.baseUrl+'travel/edit_traffic/',
-            data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                setuserid:userid,
-                jobid:s.state.setjobid,
-                traffic:s.state.settraffic,
-                transportid:s.state.settransportid
-            },
-            success(data){
-                if(data.getret === 0){
-                   //console.log(data,'保存成功');
-                    s.bindNewdata();
-                    s.setState({            
-                        modpostEditDialogVisible:false
-                    })
-                }
+        var params = {
+            userid:this.userid,
+            getusersigid:this.getusersigid,          
+            transportid:s.state.transportid,
+            jobid:s.state.jobid,
+        }
 
-            }
-        })
+        if(this.currentId!==-1){//编辑        
+            params.traffic = this.currentId;  
+            
+            $.ajax({
+                type:'POST',
+                url:window.baseUrl + 'travel/edit_traffic/',
+                data:params,
+                success(data){
+                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                  s.setState({
+                    modpostDialogVisible:false
+                  });
+                  s.bindNewdata();
+                  
+                  
+                }
+            });
+            console.log(params,'edit_traffic');
+        }else{
+            $.ajax({
+              type:'POST',
+              url:window.baseUrl + 'travel/add_traffic/',
+              data:params,
+              success(data){
+                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                  s.setState({
+                    modpostDialogVisible:false
+                  });
+                  s.bindNewdata();
+                  console.log(this.url,'add_traffic');
+              }
+            }); 
+        }
+
     }
     //删除
     delData(traffic){
@@ -414,7 +351,17 @@ class ZmitiTriptrafficApp extends Component {
         })
     }
 
-
+    //add-dialog
+    trafficform(){
+        var s=this;
+        this.currentId=-1;
+        this.setState({
+            modpostDialogVisible:true,
+            transportid:'',
+            transportid:''
+        })
+        s.forceUpdate();
+    }
 	componentDidMount() {
 		var s=  this;
 		s.bindNewdata();

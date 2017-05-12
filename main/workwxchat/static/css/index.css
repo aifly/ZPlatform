@@ -1,0 +1,136 @@
+@charset "UTF-8";
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
+.padding-10 {
+  padding: 10px; }
+.lef {
+  text-align: left; }
+.rig {
+  text-align: right; }
+.cen {
+  text-align: center; }
+.hidden {
+  display: none; }
+.zmiti-workwxchat-main-ui {
+  overflow: auto; }
+  .zmiti-workwxchat-main-ui .zmiti-workwxchat-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .zmiti-workwxchat-main-ui .zmiti-workwxchat-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .zmiti-workwxchat-main-ui .zmiti-workwxchat-h2 {
+    color: #000;
+    font-size: 18px;
+    line-height: 2;
+    margin: 10px 0 0 0; }
+    .zmiti-workwxchat-main-ui .zmiti-workwxchat-h2 label {
+      font-size: 18px; }
+  .zmiti-workwxchat-main-ui .ant-table-body img {
+    -webkit-border-radius: 50%;
+    -ms-border-radius: 50%;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px; }
+  .zmiti-workwxchat-main-ui .ant-table-body td.col3 {
+    text-align: center; }
+  .zmiti-workwxchat-main-ui .ant-table-body td.col4 {
+    text-align: center; }
+  .zmiti-workwxchat-main-ui .ant-table-body td.col5 {
+    text-align: center; }
+  .zmiti-workwxchat-main-ui .zmiti-workwxchat-button-right {
+    text-align: right;
+    padding-top: 10px; }
+    .zmiti-workwxchat-main-ui .zmiti-workwxchat-button-right button {
+      float: right;
+      margin-top: 5px; }
+  .zmiti-workwxchat-main-ui .red {
+    color: #ff0000; }
+  .zmiti-workwxchat-main-ui .zmiti-workwxchat-h3 {
+    color: #000;
+    font-size: 18px;
+    line-height: 1.4; }
+    .zmiti-workwxchat-main-ui .zmiti-workwxchat-h3 .pd10-2 {
+      padding: 0 10px;
+      font-size: 25px;
+      font-family: Ariay; }
+  .zmiti-workwxchat-main-ui .zmiti-workwxchat-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .zmiti-workwxchat-main-ui .viewxchat-search {
+    margin-bottom: 10px; }
+    .zmiti-workwxchat-main-ui .viewxchat-search .viewxchat-heigth45 {
+      height: 45px;
+      line-height: 45px;
+      overflow: hidden; }
+    .zmiti-workwxchat-main-ui .viewxchat-search .zmiti-workwxchat-with100 {
+      width: 80px; }
+    .zmiti-workwxchat-main-ui .viewxchat-search .zmiti-workwxchat-with130 {
+      width: 130px; }
+    .zmiti-workwxchat-main-ui .viewxchat-search .zmiti-workwxchat-with30 {
+      width: 30px; }
+    .zmiti-workwxchat-main-ui .viewxchat-search .zmiti-workwxchat-with60 {
+      width: 60px; }
+  .zmiti-workwxchat-main-ui .viewxchat-table {
+    border: 1px solid #e1e6eb;
+    margin-top: 15px;
+    background: #FFffff; }
+    .zmiti-workwxchat-main-ui .viewxchat-table .ant-layout-header {
+      background: #F5f6FA;
+      border-left: 4px solid #6d7781;
+      padding-left: 16px;
+      height: 38px;
+      line-height: 38px;
+      overflow: hidden;
+      border-bottom: 1px solid #e1e6eb; }
+    .zmiti-workwxchat-main-ui .viewxchat-table .zmiti-workwxchat-table-row {
+      padding: 30px; }
+      .zmiti-workwxchat-main-ui .viewxchat-table .zmiti-workwxchat-table-row .viewxchat-table-col-title {
+        float: left;
+        width: 75%; }
+      .zmiti-workwxchat-main-ui .viewxchat-table .zmiti-workwxchat-table-row .viewxchat-table-col-button {
+        float: right;
+        width: 25%;
+        text-align: center;
+        padding: 3px 0px; }
+      .zmiti-workwxchat-main-ui .viewxchat-table .zmiti-workwxchat-table-row .viewxchat-table-col-content {
+        padding-top: 5px;
+        width: 100%;
+        clear: both;
+        font-size: 12px;
+        color: #999999;
+        line-height: 24px;
+        font-family: "瀹嬩綋"; }
+      .zmiti-workwxchat-main-ui .viewxchat-table .zmiti-workwxchat-table-row .viewxchat-table-box {
+        height: 50px;
+        line-height: 50px;
+        padding-left: 25px;
+        padding-right: 15px;
+        background: #F5f6FA;
+        margin-bottom: 10px; }
+        .zmiti-workwxchat-main-ui .viewxchat-table .zmiti-workwxchat-table-row .viewxchat-table-box .viewxchat-table-col-button {
+          margin-top: 10px; }
+
+/*# sourceMappingURL=index.css.map */

@@ -698,25 +698,24 @@ class ZmitiViewPersonalApp extends Component {
     }
     //上传图片
     uploadFile(){
-
+    	var userid = this.props.params.userid?this.props.params.userid:this.userid;
         let formData = new FormData(),
             s = this;
         formData.append('userid',s.userid);
         formData.append('getusersigid',s.getusersigid);
         formData.append('setuploadtype','0');
-        formData.append('setdatainfoclassid','1465782386');//1465782386//1465285201
-        formData.append('setupfile', this.refs['upload-file'].files[0]);
+        formData.append('setdatainfoclassid','1465782386');
+        formData.append('setupfile', this.refs['upload-file'].files[0]);       
         $.ajax({
           url:window.baseUrl+ 'upload/upload_file',
-          type:'post',
+          type:'POST',
           data:formData,
           contentType: false,
           processData: false,
           success(data){
-                    console.log(data);
+                    //console.log(data);
                     s.forceUpdate();
-                    
-                    //window.location.reload();
+                    getPersonalImg.forceUpdate();                    
           }
         })
     }
