@@ -150,17 +150,13 @@ class ZmitiCustomApp extends Component {
 					 	}
 					 	s.state.userList.push(item);
 					 });
-					 s.state.userList = s.state.userList.filter((item,i)=>{
-					 	return item.isshare !== 0;
-					 });
+					s.changeAccount(0);
 					s.forceUpdate();
 				}
 			}
 		});
 	}
 
-
-	
 
 	componentWillMount() {
 
@@ -178,4 +174,3 @@ class ZmitiCustomApp extends Component {
 }
 
 export default ZmitiValidateUser(ZmitiCustomApp);
-/*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/

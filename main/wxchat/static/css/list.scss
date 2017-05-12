@@ -27,10 +27,14 @@
 
        			.wxchat-item-view{
        				@include pos(a);
-       				width:20px;
-       				bottom: 5px;
-       				right: 10px;
-       				cursor: pointer;
+                              width:20px;
+                              bottom: 13px;
+                              right: 10px;
+                              cursor: pointer;
+
+                              color:#fff;
+                              font-size:16px;
+                              a{color:#fff}
        			}
 
        			.wxchat-item-name{
@@ -47,6 +51,18 @@
        				.wxchat-item-operator{
        					display:block;
        				}
+       				.wxchat-qrcode{
+       					@include transform(scale(1));
+       				}
+       			}
+
+       			.wxchat-qrcode{
+       				@include pos(a);
+       				top: 0;
+       				left: 0;
+       				z-index: 10;
+       				@include transition(.2s);
+       				@include transform(scale(0));
        			}
        			.wxchat-item-operator{
 					width:50px;
