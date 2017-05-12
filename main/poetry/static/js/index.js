@@ -16,6 +16,7 @@ var ZmitiUtil = {
         }).done((data)=>{
             if(data.getret === 0 ){
                 var list = data.list;
+                list.unshift(0);
                 s.initVisitChart(list);
             }
         });

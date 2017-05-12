@@ -16,6 +16,7 @@ var ZmitiUtil = {
         }).done((data)=>{
             if(data.getret === 0 ){
                 var list = data.list;
+                list.unshift(0);
                 s.initVisitChart(list);
             }
         });
@@ -436,7 +437,7 @@ var ZmitiUtil = {
                     symbol: '',
                     data:s.convertData(userData),
                     symbolSize: function(val){
-                         return val[2]  / 5 ;
+                         return val[2] /10 ;
                     },
                     label: {
                         normal: {

@@ -398,8 +398,9 @@ class ZmitiWxChatApp extends Component {
 				text:'',
 				linkObj:{}
 			}
-			this.state.data.talk.push(talk);
-			this.state.currentTalkIndex = this.state.data.talk.length -1;
+
+			this.state.data.talk.splice(this.state.currentTalkIndex+1,0,talk);
+			this.state.currentTalkIndex = this.state.currentTalkIndex+1;
 			this.forceUpdate(()=>{
 				this.timer && clearTimeout(this.timer);
 				this.timer = setTimeout(()=>{
@@ -503,10 +504,11 @@ class ZmitiWxChatApp extends Component {
 
   		window.obserable.on("save",()=>{
   			this.state.isEntry = 2;
-
-
   			var s = this;
-
+  			if(this.state.data.memberList.length<=1){
+  				message.error('聊天的人数不能少于两人');
+  				return;
+  			}
   			s.filterLoadingImg(s.state.data);
   			s.state.data.loadingImg = s.loadingImg;//把所有的资源图片统一加到页面上。
 			this.forceUpdate();
