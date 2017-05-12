@@ -95,7 +95,7 @@ class ZmitiWorkWxchatApp extends Component {
             key: '',
             width:150,
             render:(text,recoder,index)=>(
-                <span><span className="workorder-del"><a href={'#/workwxchat/'+recoder.wxopenid}> 查看</a></span>
+                <span><span className="workorder-del"><a href={'#/'}> 查看</a></span>
                 </span>
             )
 
