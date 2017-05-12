@@ -102,7 +102,7 @@ class ZmitiWxChatListApp extends Component {
 										<div className='wxchat-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 										<div className='wxchat-item-name'>{item.worksname}</div>
 										<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
-											<div className='wxchat-item-view'><Link to={'/statistics/wxchat/'+item.worksid}><Icon type="dot-chart" /></Link></div>
+											<div className='wxchat-item-view'><Link to={'/workwxchat/'+item.worksid}><Icon type="user" /></Link><Link to={'/statistics/wxchat/'+item.worksid}><Icon type="dot-chart" /></Link></div>
 										</Tooltip>
 										
 										<div className='wxchat-item-operator'>

@@ -584,7 +584,9 @@ class ZmitiWxChatApp extends Component {
 
 	filterLoadingImg(data){
 		this.loadingImg = this.loadingImg || [];
+
 		for(var attr in data){
+
 			if(typeof data[attr] === 'object'){
 				this.filterLoadingImg(data[attr]);
 			}else{
