@@ -243,7 +243,6 @@ class ZmitiWorkWxchatApp extends Component {
             success(data){
 
                 if(data.getret === 0){
-                    console.log(data,"信息列表");
                     s.state.dataSource = data.userlist;
                     s.state.personalNum = data.userlist.length;
                     s.forceUpdate();
