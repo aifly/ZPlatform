@@ -53,7 +53,7 @@ var ZmitiUtil = {
 
                 s.hours = hours;
                 s.mins = mins;
-                if(mins === 0 && hours === 0 && mins === 0){
+                if(seconds === '00' && hours === '00' && mins === '00'){
                     year = date.getFullYear();
                     month = date.getMonth()+1;
                     day = date.getDate();
