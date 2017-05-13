@@ -78,16 +78,16 @@ class ZmitiInforListApp extends Component {
             width:100,
             render:(value,record,index)=>{
             	switch(value){
-					case 0:
-						return "唐诗";
-						break;
-					case 1:
-						return "宋词";
-						break;
-					case 2:
-						return "自定义";
-						break;
-				}
+      					case 0:
+      						return "唐诗";
+      						break;
+      					case 1:
+      						return "宋词";
+      						break;
+      					case 2:
+      						return "自定义";
+      						break;
+      				}
             }
 
         }, {
