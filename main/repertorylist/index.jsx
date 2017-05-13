@@ -35,7 +35,7 @@ class ZmitiRepertoryListApp extends Component {
 		  <div className='pad-10'>
           <div className="zmiti-repertorylist-header">
               <Row>
-                  <Col span={8} className="zmiti-repertorylist-header-inner">诗词资料</Col>
+                  <Col span={8} className="zmiti-repertorylist-header-inner">元素库</Col>
                   <Col span={8} offset={8} className='zmiti-repertorylist-button-right'>
                     <div className="repertoryUpBtn">
                       <Button type="primary" icon="upload" size="default">上传</Button>
