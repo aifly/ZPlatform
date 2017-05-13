@@ -1,5 +1,5 @@
 import React from 'react';
-import { message,Row,Col,Input,Button,Checkbox,Modal } from '../../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Checkbox,Modal ,InputNumber} from '../../commoncomponent/common.jsx';
 
 import './css/index.css';
 
@@ -53,7 +53,7 @@ export default class WXEditApp extends React.Component {
 								</aside>
 							</section>
 							<aside className='wxchat-talk-header' style={{background:'url(./static/images/wx-header.png) no-repeat center / contain'}}>
-								<div onClick={()=>{this.setState({currentShowArea:'modifyTitle'})}}><span>{this.props.data.title}</span><span style={{background:'url(./static/images/wx-header-edit.png) no-repeat left bottom'}}></span></div>
+								<div onClick={this.showMembers.bind(this)}><span>{this.props.data.title}</span><span style={{background:'url(./static/images/wx-header-edit.png) no-repeat left bottom'}}></span></div>
 							</aside>
 							<aside className='wxchat-talk-body' ref='wxchat-talk-body' style={bodyStyle}>
 								<div ref='wxchat-talk-body-scroller' style={{paddingBottom:20}}>
@@ -196,6 +196,10 @@ export default class WXEditApp extends React.Component {
 							</ul>
 						</section>
 						<h2>输入聊天内容</h2>
+						<Row type='flex' align='middle'>
+							<Col>显示正此聊天的时间：</Col>
+							<Col> <InputNumber min={2} max={5} value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].duration} onChange={this.modifyDuration.bind(this)} defaultValue={2} /> (单位：S)</Col>
+						</Row>
 						<WXTalkContentApp {...this.props}></WXTalkContentApp>
 					</section>}
 				</aside>
@@ -210,6 +214,23 @@ export default class WXEditApp extends React.Component {
     			</Modal>	
 			</div>
     );
+  }
+
+  showMembers(){
+  	this.setState({currentShowArea:'modifyTitle'});
+
+  	setTimeout(()=>{
+  		window.obserable.trigger({
+	  		type:'refreshMemberList'
+	  	})
+  	},200);
+  }
+
+  modifyDuration(value){
+  	window.obserable.trigger({
+  		type:'modifyDuration',
+  		data:value
+  	})
   }
 
   save(){
