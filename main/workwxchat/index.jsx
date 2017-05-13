@@ -291,9 +291,12 @@ class ZmitiWorkWxchatApp extends Component {
 
         resizeMainHeight(this);
         
-        let {username,userid,getusersigid} = validateUser(()=>{},this);
+        let {username,userid,getusersigid,usertypesign} = validateUser(()=>{},this);
         this.userid = userid;
         this.getusersigid = getusersigid;
+        if(usertypesign===window.Role.DEFAULTUSER){
+            loginOut('您没有访问的权限',window.mainUrl,true);//不是hash跳转。location.href跳转
+        }
 
         
     }

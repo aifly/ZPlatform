@@ -30,6 +30,7 @@ import ZmitiTripseasonApp  from './tripseason/index.jsx';
 import ZmitiTriptrafficApp from './triptraffic/index.jsx';
 import ZmitiTripexpenceApp from './tripexpence/index.jsx';
 import ZmitiWorkWxchatApp from './workwxchat/index.jsx';
+import ZmitiInforListApp from './inforlist/index.jsx';
 import Obserable from './static/libs/obserable.js';
 
 
@@ -71,7 +72,8 @@ class App extends React.Component{
 				{path: '/tripseason/(:id)', app: ZmitiTripseasonApp},
 				{path: '/triptraffic/(:id)',app:ZmitiTriptrafficApp},
 				{path: '/tripexpence/(:id)',app:ZmitiTripexpenceApp},
-				{path: '/workwxchat/(:id)',app:ZmitiWorkWxchatApp}
+				{path: '/workwxchat/(:id)',app:ZmitiWorkWxchatApp},
+				{path: '/inforlist/', app: ZmitiInforListApp},
 				
 		];
 		return (
