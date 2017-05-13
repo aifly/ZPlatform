@@ -715,7 +715,7 @@ class ZmitiViewPersonalApp extends Component {
           success(data){
                     //console.log(data);
                     s.forceUpdate();
-                    getPersonalImg.forceUpdate();                    
+                    s.getPersonalImg();                    
           }
         })
     }
