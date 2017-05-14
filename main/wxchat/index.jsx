@@ -502,11 +502,6 @@ class ZmitiWxChatApp extends Component {
   			this.forceUpdate();
   		});
 
-  		window.obserable.on('modifyDuration',(data)=>{
-  			this.state.data.talk[this.state.currentTalkIndex].duration = data;
-  			this.forceUpdate();
-  		});
-
   		window.obserable.on("save",()=>{
   			this.state.isEntry = 2;
   			var s = this;
@@ -516,9 +511,6 @@ class ZmitiWxChatApp extends Component {
   			}
   			s.filterLoadingImg(s.state.data);
   			s.state.data.loadingImg = s.loadingImg;//把所有的资源图片统一加到页面上。
-  			s.state.data.talk.forEach((item,i)=>{
-  				!item.duration && (item.duration = 2)
-  			});
 			this.forceUpdate();
   			$.ajax({
   				url:window.baseUrl+'/works/update_works/',
