@@ -47,6 +47,10 @@
     margin: 10px 0 0 0; }
     .zmiti-workwxchat-main-ui .zmiti-workwxchat-h2 label {
       font-size: 18px; }
+    .zmiti-workwxchat-main-ui .zmiti-workwxchat-h2 .small {
+      font-size: 14px;
+      font-weight: normal;
+      color: #666666; }
   .zmiti-workwxchat-main-ui .ant-table-body img {
     -webkit-border-radius: 50%;
     -ms-border-radius: 50%;

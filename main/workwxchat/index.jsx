@@ -32,6 +32,7 @@ class ZmitiWorkWxchatApp extends Component {
             startDate:null,
             endDate:moment(new Date(),'YYYY-MM-DD'),
             companyname:'麟腾传媒',
+            worksname:'',
             personalNum:'0',
         };
     }
@@ -119,7 +120,7 @@ class ZmitiWorkWxchatApp extends Component {
                 </Row>
                 <div className="zmiti-workwxchat-line"></div>
                 <Row>
-                    <Col span={12}><div className="zmiti-workwxchat-h2">{this.state.companyname}</div></Col>
+                    <Col span={12}><div className="zmiti-workwxchat-h2">{this.state.worksname}<span className="small">（{this.state.companyname}）</span></div></Col>
                     <Col span={9}></Col>
                     <Col span={3}></Col>
                 </Row>
@@ -265,11 +266,13 @@ class ZmitiWorkWxchatApp extends Component {
         var worksid=this.props.params.id;
         s.bindNewdata();
         s.getcompanyinfo();
+        s.getworkdetail();
     }
     getcompanyinfo(){
         var s=this;
         $.ajax({
             url:window.baseUrl+'user/get_companydetail/',
+            type:"POST",
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,               
@@ -277,6 +280,22 @@ class ZmitiWorkWxchatApp extends Component {
             },
             success(data){
                 s.state.companyname=data.detail_info.companyname;
+                s.forceUpdate();
+            }
+        })
+    }
+    getworkdetail(){
+        var s=this;
+        $.ajax({
+            url:window.baseUrl+'works/get_worksdetial/',
+            type:"POST",
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,               
+                worksid:s.props.params.id
+            },
+            success(data){
+                s.state.worksname=data.detial.worksname; 
                 s.forceUpdate();
             }
         })
