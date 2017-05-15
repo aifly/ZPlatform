@@ -73,3 +73,12 @@
 .inforlistTextarea{
 		resize:none;
 }
+.dialogInformation{
+	.ant-modal{
+		padding-bottom:0;
+		top:70px;
+	}
+	.ant-modal-content{
+		height: 100%;
+	}
+}

@@ -30,4 +30,10 @@
 .inforlistTextarea {
   resize: none; }
 
+.dialogInformation .ant-modal {
+  padding-bottom: 0;
+  top: 70px; }
+.dialogInformation .ant-modal-content {
+  height: 100%; }
+
 /*# sourceMappingURL=index.css.map */

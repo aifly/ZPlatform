@@ -23,6 +23,7 @@ class ZmitiViewinforListApp extends Component {
 			setuserid:'',
 			selectedIndex:0,
 			mainHeight:document.documentElement.clientHeight-50,
+      dialogHeight:document.documentElement.clientHeight,
 			modpostDialogVisible:false,
 			title:'',
 			author:'',
@@ -34,30 +35,12 @@ class ZmitiViewinforListApp extends Component {
 			dataSource:[],
 			workdataid:'',
 			keyword:'',
+      disabled:false,
 		};
-        this.currentId = -1;
+    this.currentId = -1;
 		
 	}
-    getProductDetail(record,index,e){
-        var s=this;
-        this.currentId = record.workdataid;
-        if(e.target.nodeName === "SPAN" || e.target.nodeName === 'BUTTON'){
-            return;//如果点击的是删除按钮，则不用弹出产品详情。
-        }
-        this.setState({
-            modpostDialogVisible:true,
-            workdataid:record.workdataid,
-            title:record.title,
-            author:record.author,
-            kindid:record.kindid,
-            originaltext:record.originaltext,
-            changetext:record.changetext,
-            datatype:record.datatype,
-            voiceurl:record.voiceurl,
-        })
-
-        this.forceUpdate();
-    }
+  
 	render() {
 		var s =this;
 		const columns = [{
@@ -68,7 +51,7 @@ class ZmitiViewinforListApp extends Component {
             title: '作者',
             dataIndex: 'author',
             key: 'author',
-            width:200,
+            width:120,
 
         },{
             title: '资料类型',
@@ -102,15 +85,15 @@ class ZmitiViewinforListApp extends Component {
             render:(text,recoder,index)=>(
 
                 <span>
-                  <a href="javascript:void(0);"> 修改</a>
-                  <a href="javascript:void(0);"  onClick={this.delData.bind(this,recoder.workdataid)}> 删除</a>
+                  <a href="javascript:void(0);" onClick={this.getEditdialog.bind(this,recoder.workdataid)}> 修改</a>
+                  <a href="javascript:void(0);" onClick={this.delData.bind(this,recoder.workdataid)}> 删除</a>
                 </span>              
             )
 
         }]
         const formItemLayout = {
-           labelCol: {span: 6},
-           wrapperCol: {span: 14},
+           labelCol: {span: 4},
+           wrapperCol: {span: 16},
         };
         var title = this.props.params.title || '资料库';
         let props={
@@ -133,11 +116,18 @@ class ZmitiViewinforListApp extends Component {
                     <div className="zmiti-inforlist-line"></div>
                     <Row gutter={10} type='flex' className='inforlist-search '>
                         <Col className="inforlist-heigth45">标题：</Col>
-                        <Col className="inforlist-heigth45"><Input value={this.state.keyword} placeholder="名称" onChange={this.searchByKeyword.bind(this)}/></Col>
+                        <Col className="inforlist-heigth45"><Input value={this.state.keyword} placeholder="名称" onChange={(e)=>{this.state.keyword=e.target.value;this.forceUpdate();}} /></Col>
+                        <Col className="inforlist-heigth45"><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
                     </Row>
-                    <Table bordered={true} dataSource={this.state.dataSource} columns={columns} />
+                    <Table bordered={true} 
+                    
+                    dataSource={this.state.dataSource} 
+                    columns={columns} />
                 </div>
-                <Modal title="诗词资料" visible={this.state.modpostDialogVisible}
+                <Modal title="诗词资料" 
+                    wrapClassName="dialogInformation"
+                    width={1000}                    
+                    visible={this.state.modpostDialogVisible}
                     onOk={this.addProduct.bind(this)}
                     onCancel={()=>{this.setState({modpostDialogVisible:false})}}
                   >
@@ -172,6 +162,7 @@ class ZmitiViewinforListApp extends Component {
                           
                           <Input 
                             type="textarea"
+                            autosize={{minRows: 2, maxRows: 5}}
                             placeholder="资料原文" 
                             value={this.state.originaltext}
                             className="inforlistTextarea"
@@ -186,6 +177,7 @@ class ZmitiViewinforListApp extends Component {
                           
                           <Input 
                             type="textarea"
+                            autosize={{minRows: 2, maxRows: 5}}
                             placeholder="译文" 
                             value={this.state.changetext}
                             className="inforlistTextarea"
@@ -197,7 +189,7 @@ class ZmitiViewinforListApp extends Component {
                         label="资料类型"
                         hasFeedback
                       >
-                          <Select placeholder="资料类型" onChange={(value)=>{this.state.datatype=value;this.forceUpdate();}} value={this.state.datatype}>
+                          <Select disabled={this.state.disabled} placeholder="资料类型" onChange={(value)=>{this.state.datatype=value;this.forceUpdate();}} value={this.state.datatype}>
                             <Option value={0}>唐诗</Option>
                             <Option value={1}>宋词</Option>
                             <Option value={2}>自定义</Option>
@@ -255,21 +247,9 @@ class ZmitiViewinforListApp extends Component {
     this.state.keyword = '';
     this.forceUpdate();
     this.bindNewdata();
-    console.log(this.state.selectedIndex);
+    //console.log(this.state.selectedIndex);
   }
-	//search
-	searchByKeyword(e){
-        this.setState({
-            keyword:e.target.value
-        },()=>{
-            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
-
-            this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.title.indexOf(this.state.keyword)>-1;
-            });
-            this.forceUpdate();
-        })
-    }
+	
 	//显示列表
 	bindNewdata(){
         var s = this;
@@ -284,12 +264,13 @@ class ZmitiViewinforListApp extends Component {
                 searchword:'',
             },
             success(data){
-
                 if(data.getret === 0){                    
                     s.state.dataSource = data.list;
-                    //console.log(s.state.dataSource,"信息列表");
-                    s.forceUpdate();
+                    //console.log(s.state.dataSource,"信息列表");                    
+                }else if(data.getret === 1002){
+                  s.state.dataSource=[];                  
                 }
+                s.forceUpdate();
             }
         })
     }
@@ -324,7 +305,7 @@ class ZmitiViewinforListApp extends Component {
 
         if(this.currentId!==-1){//编辑        
             params.workdataid = this.currentId;  
-            
+            //console.log(params.workdataid);
             $.ajax({
                 type:'POST',
                 url:window.baseUrl + 'document/edit_document/',
@@ -337,6 +318,7 @@ class ZmitiViewinforListApp extends Component {
                   s.bindNewdata();
                 }
             });
+            
         }else{
             $.ajax({
               type:'POST',
@@ -354,7 +336,63 @@ class ZmitiViewinforListApp extends Component {
         }
 
     }
+    //edit-dialog
+    getEditdialog(workdataid){
+      var s=this;
+      this.state.dataSource.map((item,i)=>{
+        if(item.workdataid===workdataid){
+          this.currentId = workdataid;
+          this.setState({
+            modpostDialogVisible:true,
+            disabled:true,
+            workdataid:item.workdataid,
+            title:item.title,
+            author:item.author,
+            kindid:item.kindid,
+            originaltext:item.originaltext,
+            changetext:item.changetext,
+            datatype:item.datatype,
+            voiceurl:item.voiceurl,
+          })
+          this.forceUpdate();
+          //console.log(this.currentId);
+        }
+      })
 
+    }
+    //search
+    searchBybutton(){
+          var selectedIndex = this.state.selectedIndex;
+          var keyWord=this.state.keyword;
+          var s = this;
+          $.ajax({
+             url:window.baseUrl+'document/get_documentlist',
+              data:{
+                  userid:s.userid,
+                  getusersigid:s.getusersigid,
+                  datatype:selectedIndex,
+                  type:1,
+                  searchword:keyWord,                  
+              },
+              success(data){
+                  if(data.getret === 0){
+                      s.state.dataSource = data.list;                      
+                  }else if(data.getret === 1002){
+                      s.state.dataSource=[];
+                  }else if(data.getret === -3){
+                      message.error('您没有访问的权限,2秒后跳转到首页');
+                      setTimeout(()=>{
+                          location.href='/';
+                      },2000)
+                  }
+                  else{
+                      message.error(data);                      
+                  }
+                  s.forceUpdate();
+              }
+          })
+
+    }
 	
     //删除
     delData(workdataid){
@@ -394,6 +432,7 @@ class ZmitiViewinforListApp extends Component {
         this.currentId=-1;
         this.setState({
             modpostDialogVisible:true,
+            disabled:false,
             title:'',
             author:'',
             kindid:'五言绝句',
