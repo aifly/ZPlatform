@@ -24,6 +24,7 @@ class ZmitiWorkWxchatApp extends Component {
         
         this.state = {
             mainHeight:document.documentElement.clientHeight - 50,
+            phoneDataList:[],
             dataSource:[],
             wxopenid:'',
             keyword:'',
@@ -243,8 +244,15 @@ class ZmitiWorkWxchatApp extends Component {
             success(data){
 
                 if(data.getret === 0){
-                    s.state.dataSource = data.userlist;
+                    //s.state.dataSource = data.userlist;
                     s.state.personalNum = data.userlist.length;
+                    $.each(data.userlist,function(i,item){
+                        if(item.phone!=""){                            
+                            s.state.phoneDataList.push(item);
+                        }
+                    })
+                    s.state.dataSource=s.state.phoneDataList;
+                    //console.log(s.state.phoneDataList);
                     s.forceUpdate();
                 }
                 else if(data.getret === -3){
