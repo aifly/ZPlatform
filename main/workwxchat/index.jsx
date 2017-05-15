@@ -207,43 +207,7 @@ class ZmitiWorkWxchatApp extends Component {
             }
         })
     }
-    //全部
-    /*bindNewdata(){
-        var s=this
-        $.ajax({
-            url:window.baseUrl+'weixin/get_workwxuserlist',
-            data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                worksid:s.props.params.id,
-            },
-            success(data){
-
-                if(data.getret === 0){
-                    //s.state.dataSource = data.userlist;
-                    s.state.personalNum = data.userlist.length;
-                    $.each(data.userlist,function(i,item){
-                        if(item.phone!=""){                            
-                            s.state.phoneDataList.push(item);
-                        }
-                    })
-                    s.state.dataSource=s.state.phoneDataList;
-                    //console.log(s.state.phoneDataList);
-                    s.forceUpdate();
-                }
-                else if(data.getret === -3){
-                    message.error('您没有访问的权限,2秒后跳转到首页');
-                    setTimeout(()=>{
-                        location.href='/';
-                    },2000)
-                }
-                else{
-                    message.error(data);
-
-                }
-            }
-        })
-    }*/
+    //按条件显示
     categoryData(value){
         var s=this;
         s.state.datatype=value.target.value;
@@ -302,6 +266,7 @@ class ZmitiWorkWxchatApp extends Component {
         }
 
     }
+    //全部
     bindNewdata(){
         var s=this
         $.ajax({
