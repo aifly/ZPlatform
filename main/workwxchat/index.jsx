@@ -129,7 +129,7 @@ class ZmitiWorkWxchatApp extends Component {
                             <Col className={'workwxchat-heigth45'}>
                                <RadioGroup onChange={this.categoryData.bind(this)} value={this.state.datatype}>
                                 <Radio value={1}>全部</Radio>
-                                <Radio value={2}>仅显示电话</Radio>
+                                <Radio value={2}>仅显示有电话用户</Radio>
                               </RadioGroup>
                             </Col>
                             <Col className={'zmiti-workwxchat-with60 workwxchat-heigth45 rig'}>姓名:</Col>
