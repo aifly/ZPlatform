@@ -93,6 +93,10 @@
       width: 30px; }
     .zmiti-workwxchat-main-ui .viewxchat-search .zmiti-workwxchat-with60 {
       width: 60px; }
+  .zmiti-workwxchat-main-ui .workwxchat-heigth45 {
+    line-height: 45px;
+    height: 45px;
+    overflow: hidden; }
   .zmiti-workwxchat-main-ui .viewxchat-table {
     border: 1px solid #e1e6eb;
     margin-top: 15px;

@@ -26,6 +26,7 @@ class ZmitiWorkWxchatApp extends Component {
             mainHeight:document.documentElement.clientHeight - 50,
             phoneDataList:[],
             dataSource:[],
+            datatype:1,
             wxopenid:'',
             keyword:'',
             startDate:null,
@@ -65,6 +66,12 @@ class ZmitiWorkWxchatApp extends Component {
             title: '姓名',
             dataIndex: 'realname',
             key: 'realname'
+           
+
+        }, {
+            title: '单位',
+            dataIndex: 'companyname',
+            key: 'companyname'
            
 
         }, {
@@ -119,6 +126,12 @@ class ZmitiWorkWxchatApp extends Component {
                 <Row>
                     <Col span={20}>
                         <Row gutter={10} type='flex' className='workwxchat-search '>                            
+                            <Col className={'workwxchat-heigth45'}>
+                               <RadioGroup onChange={this.categoryData.bind(this)} value={this.state.datatype}>
+                                <Radio value={1}>全部</Radio>
+                                <Radio value={2}>仅显示电话</Radio>
+                              </RadioGroup>
+                            </Col>
                             <Col className={'zmiti-workwxchat-with60 workwxchat-heigth45 rig'}>姓名:</Col>
                             <Col className={'workwxchat-heigth45'}><Input value={this.state.keyword} placeholder="姓名" onChange={this.searchByKeyword.bind(this)}/></Col>
                             <Col className={'workwxchat-heigth45'}></Col>
@@ -137,40 +150,6 @@ class ZmitiWorkWxchatApp extends Component {
         );
     }
 
-    searchBybutton(){
-        var wxopenid = this.state.wxopenid;
-        var startDate = this.state.startDate.format("YYYY-MM-DD");
-        var endDate=this.state.endDate.format("YYYY-MM-DD");
-        var keyWord=this.state.keyword;
-        var s = this;
-        $.ajax({
-            url:window.baseUrl+'weixin/get_wxuserlist',
-            data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                wxopenid:s.wxopenid,
-                setstarttime:startDate,
-                setendtime:endDate,
-                setkeyword:keyWord,
-            },
-            success(data){
-                if(data.getret === 0){                    
-                    s.state.dataSource = data.userlist;
-                    s.forceUpdate();
-                }
-                else if(data.getret === -3){
-                    message.error('您没有访问的权限,2秒后跳转到首页');
-                    setTimeout(()=>{
-                        location.href='/';
-                    },2000)
-                }
-                else{
-                    message.error(data);
-                }
-            }
-        })
-
-    }
 
     searchByWorkorderid(e){
         this.setState({
@@ -199,6 +178,7 @@ class ZmitiWorkWxchatApp extends Component {
             this.forceUpdate();
         })
     }
+    
     delData(wxopenid){
         var s = this;
         $.ajax({
@@ -227,7 +207,8 @@ class ZmitiWorkWxchatApp extends Component {
             }
         })
     }
-    bindNewdata(){
+    //全部
+    /*bindNewdata(){
         var s=this
         $.ajax({
             url:window.baseUrl+'weixin/get_workwxuserlist',
@@ -262,7 +243,94 @@ class ZmitiWorkWxchatApp extends Component {
                 }
             }
         })
+    }*/
+    categoryData(value){
+        var s=this;
+        s.state.datatype=value.target.value;
+        this.forceUpdate();
+        if(s.state.datatype===1){
+            s.state.dataSource =[];
+            $.ajax({
+                url:window.baseUrl+'weixin/get_workwxuserlist',
+                data:{
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    worksid:s.props.params.id,
+                },
+                success(data){
+                    if(data.getret === 0){
+                        s.state.dataSource = data.userlist;
+                        s.state.personalNum = data.userlist.length;                    
+                        //console.log(s.state.phoneDataList);
+                        s.forceUpdate();
+                    }
+                }
+            })
+        }else{
+            s.state.phoneDataList =[];
+            $.ajax({
+                url:window.baseUrl+'weixin/get_workwxuserlist',
+                data:{
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    worksid:s.props.params.id,
+                },
+                success(data){
+                    if(data.getret === 0){
+                        
+                        $.each(data.userlist,function(i,item){
+                            if(item.phone!=""){                            
+                                s.state.phoneDataList.push(item);
+                            }
+                        })
+                        s.state.personalNum = s.state.phoneDataList.length;
+                        s.state.dataSource=s.state.phoneDataList;
+                        s.forceUpdate();
+                    }
+                    else if(data.getret === -3){
+                        message.error('您没有访问的权限,2秒后跳转到首页');
+                        setTimeout(()=>{
+                            location.href='/';
+                        },2000)
+                    }
+                    else{
+                        message.error(data);
+
+                    }
+                }
+            })   
+        }
+
     }
+    bindNewdata(){
+        var s=this
+        $.ajax({
+            url:window.baseUrl+'weixin/get_workwxuserlist',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                worksid:s.props.params.id,
+            },
+            success(data){
+                if(data.getret === 0){
+                    s.state.dataSource = data.userlist;
+                    s.state.personalNum = data.userlist.length;
+                    s.forceUpdate();
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data);
+
+                }
+            }
+        })
+    }
+    //
     componentDidMount() {
 
         var s = this;
