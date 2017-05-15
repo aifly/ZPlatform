@@ -118,14 +118,9 @@ class ZmitiWorkWxchatApp extends Component {
                 </Row>
                 <Row>
                     <Col span={20}>
-                        <Row gutter={10} type='flex' className='workwxchat-search '>
-                            <Col className={'workwxchat-heigth45 '} >时间:</Col>
-                            <Col className={'workwxchat-heigth45 zmiti-workorder-with130 '}><DatePicker value={this.state.startDate} onChange={(e)=>{this.setState({startDate:e})}} /></Col>
-                            <Col className={'zmiti-workwxchat-with30 workwxchat-heigth45 cen'} value={this.state.endDate}>至:</Col>
-                            <Col className={'workwxchat-heigth45 zmiti-workwxchat-with130 '}><DatePicker value={this.state.endDate} onChange={e=>{this.setState({endDate:e})}} /></Col>
-                            <Col className={'zmiti-workwxchat-with60 workwxchat-heigth45 rig'}>昵称:</Col>
-                            <Col className={'workwxchat-heigth45'}><Input value={this.state.keyword} placeholder="昵称" onChange={this.searchByKeyword.bind(this)}/></Col>
-                            <Col className={'workwxchat-heigth45 lef'}><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
+                        <Row gutter={10} type='flex' className='workwxchat-search '>                            
+                            <Col className={'zmiti-workwxchat-with60 workwxchat-heigth45 rig'}>姓名:</Col>
+                            <Col className={'workwxchat-heigth45'}><Input value={this.state.keyword} placeholder="姓名" onChange={this.searchByKeyword.bind(this)}/></Col>
                             <Col className={'workwxchat-heigth45'}></Col>
                         </Row>
                     </Col>
@@ -160,7 +155,7 @@ class ZmitiWorkWxchatApp extends Component {
             },
             success(data){
                 if(data.getret === 0){                    
-                    s.state.dataSource = data.workorderinfo;
+                    s.state.dataSource = data.userlist;
                     s.forceUpdate();
                 }
                 else if(data.getret === -3){
@@ -199,7 +194,7 @@ class ZmitiWorkWxchatApp extends Component {
             this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
 
             this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.nickname.indexOf(this.state.keyword)>-1;
+                return  item.realname.indexOf(this.state.keyword)>-1;
             });
             this.forceUpdate();
         })
