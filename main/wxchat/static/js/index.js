@@ -437,7 +437,7 @@ var ZmitiUtil = {
                     symbol: '',
                     data:s.convertData(userData),
                     symbolSize: function(val){
-                         return val[2] /10 ;
+                         return val[2] / 100 ;
                     },
                     label: {
                         normal: {
