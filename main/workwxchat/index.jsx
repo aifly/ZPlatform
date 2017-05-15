@@ -213,23 +213,9 @@ class ZmitiWorkWxchatApp extends Component {
         s.state.datatype=value.target.value;
         this.forceUpdate();
         if(s.state.datatype===1){
-            s.state.dataSource =[];
-            $.ajax({
-                url:window.baseUrl+'weixin/get_workwxuserlist',
-                data:{
-                    userid:s.userid,
-                    getusersigid:s.getusersigid,
-                    worksid:s.props.params.id,
-                },
-                success(data){
-                    if(data.getret === 0){
-                        s.state.dataSource = data.userlist;
-                        s.state.personalNum = data.userlist.length;                    
-                        //console.log(s.state.phoneDataList);
-                        s.forceUpdate();
-                    }
-                }
-            })
+            s.state.personalNum = s.state.dataSource.length;
+            s.forceUpdate();
+            s.bindNewdata();
         }else{
             s.state.phoneDataList =[];
             $.ajax({
