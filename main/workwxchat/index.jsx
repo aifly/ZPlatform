@@ -217,38 +217,15 @@ class ZmitiWorkWxchatApp extends Component {
             s.forceUpdate();
             s.bindNewdata();
         }else{
-            s.state.phoneDataList =[];
-            $.ajax({
-                url:window.baseUrl+'weixin/get_workwxuserlist',
-                data:{
-                    userid:s.userid,
-                    getusersigid:s.getusersigid,
-                    worksid:s.props.params.id,
-                },
-                success(data){
-                    if(data.getret === 0){
-                        
-                        $.each(data.userlist,function(i,item){
-                            if(item.phone!=""){                            
-                                s.state.phoneDataList.push(item);
-                            }
-                        })
-                        s.state.personalNum = s.state.phoneDataList.length;
-                        s.state.dataSource=s.state.phoneDataList;
-                        s.forceUpdate();
-                    }
-                    else if(data.getret === -3){
-                        message.error('您没有访问的权限,2秒后跳转到首页');
-                        setTimeout(()=>{
-                            location.href='/';
-                        },2000)
-                    }
-                    else{
-                        message.error(data);
-
-                    }
+            s.state.phoneDataList =[]; 
+            this.state.dataSource.map((item,i)=>{
+                if(item.phone!=""){ 
+                    s.state.phoneDataList.push(item);
                 }
-            })   
+            })
+            s.state.personalNum = s.state.phoneDataList.length;
+            s.state.dataSource=s.state.phoneDataList;
+            s.forceUpdate(); 
         }
 
     }
