@@ -1,0 +1,39 @@
+.inforlist-main-ui {
+  overflow: auto; }
+  .inforlist-main-ui .zmiti-inforlist-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .inforlist-main-ui .zmiti-inforlist-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .inforlist-main-ui .zmiti-inforlist-button-right button {
+    float: right;
+    margin-top: 5px; }
+  .inforlist-main-ui .zmiti-inforlist-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .inforlist-main-ui .inforlist-heigth45 {
+    height: 45px;
+    line-height: 45px;
+    overflow: hidden; }
+  .inforlist-main-ui .inforlist-search {
+    margin: 15px 0; }
+
+.inforlistTextarea {
+  resize: none; }
+
+.dialogInformation .ant-modal {
+  padding-bottom: 0;
+  top: 70px; }
+.dialogInformation .ant-modal-content {
+  height: 100%; }
+
+/*# sourceMappingURL=index.css.map */

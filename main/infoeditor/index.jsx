@@ -15,7 +15,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import $ from 'jquery';
 
-class ZmitiViewinforListApp extends Component {
+class ZmitiInforEditorApp extends Component {
 	constructor(props) {
 		super(props);
 		
@@ -92,8 +92,20 @@ class ZmitiViewinforListApp extends Component {
 
         }]
         const formItemLayout = {
-           labelCol: {span: 4},
-           wrapperCol: {span: 16},
+           labelCol: {span: 6},
+           wrapperCol: {span: 14},
+        };
+        const tailFormItemLayout = {
+          wrapperCol: {
+            xs: {
+              span: 24,
+              offset: 0,
+            },
+            sm: {
+              span: 14,
+              offset: 6,
+            },
+          },
         };
         var title = this.props.params.title || '资料库';
         let props={
@@ -110,27 +122,14 @@ class ZmitiViewinforListApp extends Component {
                     <div className="zmiti-inforlist-header">
                         <Row>
                             <Col span={8} className="zmiti-inforlist-header-inner">诗词资料</Col>
-                            <Col span={8} offset={8} className='zmiti-inforlist-button-right'><Button type='primary' onClick={this.postform.bind(this)}>添加</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-inforlist-button-right'><Button type='primary' onClick={this.goback.bind(this)}>返回</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-inforlist-line"></div>
-                    <Row gutter={10} type='flex' className='inforlist-search '>
-                        <Col className="inforlist-heigth45">标题：</Col>
-                        <Col className="inforlist-heigth45"><Input value={this.state.keyword} placeholder="名称" onChange={(e)=>{this.state.keyword=e.target.value;this.forceUpdate();}} /></Col>
-                        <Col className="inforlist-heigth45"><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
-                    </Row>
-                    <Table bordered={true} 
+                    <div className="hr20"></div>
                     
-                    dataSource={this.state.dataSource} 
-                    columns={columns} />
                 </div>
-                <Modal title="诗词资料" 
-                    wrapClassName="dialogInformation"
-                    width={1000}                    
-                    visible={this.state.modpostDialogVisible}
-                    onOk={this.addProduct.bind(this)}
-                    onCancel={()=>{this.setState({modpostDialogVisible:false})}}
-                  >
+                
                     <Form>
                       <FormItem
                         {...formItemLayout}
@@ -162,7 +161,7 @@ class ZmitiViewinforListApp extends Component {
                           
                           <Input 
                             type="textarea"
-                            autosize={{minRows: 2, maxRows: 5}}
+                            autosize={{minRows: 4, maxRows: 8}}
                             placeholder="资料原文" 
                             value={this.state.originaltext}
                             className="inforlistTextarea"
@@ -177,7 +176,7 @@ class ZmitiViewinforListApp extends Component {
                           
                           <Input 
                             type="textarea"
-                            autosize={{minRows: 2, maxRows: 5}}
+                            autosize={{minRows: 4, maxRows: 8}}
                             placeholder="译文" 
                             value={this.state.changetext}
                             className="inforlistTextarea"
@@ -206,11 +205,12 @@ class ZmitiViewinforListApp extends Component {
                             onChange={(e)=>{this.state.voiceurl=e.target.value;this.forceUpdate();}}
                           />                      
                       </FormItem>
-
+                      <FormItem {...tailFormItemLayout}>
+                        <Button type="primary" htmlType="submit" size="large">提交</Button>
+                      </FormItem>
+                      
                     </Form>
-                  </Modal>
 
-                {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddpost" {...userProps}></ZmitiUploadDialog>}
             </div>
         }
 
@@ -226,7 +226,7 @@ class ZmitiViewinforListApp extends Component {
 
 	componentDidMount() {
 		var s=  this;
-		s.bindNewdata();
+
 
 	}	
 
@@ -246,47 +246,11 @@ class ZmitiViewinforListApp extends Component {
     this.state.selectedIndex = i*1;
     this.state.keyword = '';
     this.forceUpdate();
-    this.bindNewdata();
     //console.log(this.state.selectedIndex);
   }
 	
-	//显示列表
-	bindNewdata(){
-        var s = this;
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        $.ajax({
-            url:window.baseUrl+'document/get_documentlist',//接口地址
-            data:{
-        				userid:s.userid,
-        				getusersigid:s.getusersigid,
-                datatype:s.state.selectedIndex,             
-                type:1,
-                searchword:'',
-            },
-            success(data){
-                if(data.getret === 0){                    
-                    s.state.dataSource = data.list;
-                    //console.log(s.state.dataSource,"信息列表");                    
-                }else if(data.getret === 1002){
-                  s.state.dataSource=[];                  
-                }
-                s.forceUpdate();
-            }
-        })
-    }
 
-	//弹框
-	modifyaddpost(){
-      var obserable=window.obserable;
-         this.setState({
-            showCredentialsDiolog:true
-        },()=>{
-          obserable.trigger({
-              type:'showModal',
-              data:{type:0,id:'addpost'}
-          })  
-        }) 
-    }
+
 
     addProduct(){//添加
         var s = this;
@@ -441,10 +405,13 @@ class ZmitiViewinforListApp extends Component {
             voiceurl:''
         })
         s.forceUpdate();
-        window.location="#/infoeditor/";
+    }
+    //返回
+    goback(){
+      window.location="#/viewinforlist/"
     }
 
 }
 
-export default ZmitiValidateUser(ZmitiViewinforListApp);
+export default ZmitiValidateUser(ZmitiInforEditorApp);
 /*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/
