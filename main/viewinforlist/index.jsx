@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form,Icon, Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const Option = Select.Option;
@@ -37,7 +37,6 @@ class ZmitiViewinforListApp extends Component {
 			keyword:'',
       disabled:false,
 		};
-    this.currentId = -1;
 		
 	}
   
@@ -85,7 +84,7 @@ class ZmitiViewinforListApp extends Component {
             render:(text,recoder,index)=>(
 
                 <span>
-                  <a href="javascript:void(0);" onClick={this.getEditdialog.bind(this,recoder.workdataid)}> 修改</a>
+                  <a href={'#/infoeditor/'+recoder.workdataid}> 修改</a>
                   <a href="javascript:void(0);" onClick={this.delData.bind(this,recoder.workdataid)}> 删除</a>
                 </span>              
             )
@@ -110,7 +109,7 @@ class ZmitiViewinforListApp extends Component {
                     <div className="zmiti-inforlist-header">
                         <Row>
                             <Col span={8} className="zmiti-inforlist-header-inner">诗词资料</Col>
-                            <Col span={8} offset={8} className='zmiti-inforlist-button-right'><Button type='primary' onClick={this.postform.bind(this)}>添加</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-inforlist-button-right'><Button type='primary' icon="file-add" onClick={this.postform.bind(this)}>添加</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-inforlist-line"></div>
@@ -124,93 +123,7 @@ class ZmitiViewinforListApp extends Component {
                     dataSource={this.state.dataSource} 
                     columns={columns} />
                 </div>
-                <Modal title="诗词资料" 
-                    wrapClassName="dialogInformation"
-                    width={1000}                    
-                    visible={this.state.modpostDialogVisible}
-                    onOk={this.addProduct.bind(this)}
-                    onCancel={()=>{this.setState({modpostDialogVisible:false})}}
-                  >
-                    <Form>
-                      <FormItem
-                        {...formItemLayout}
-                        label="资料标题"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="资料标题" 
-                            value={this.state.title}
-                            onChange={(e)=>{this.state.title=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="资料作者"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="资料作者" 
-                            value={this.state.author}
-                            onChange={(e)=>{this.state.author=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="资料原文"
-                        hasFeedback
-                      >                        
-                          
-                          <Input 
-                            type="textarea"
-                            autosize={{minRows: 2, maxRows: 5}}
-                            placeholder="资料原文" 
-                            value={this.state.originaltext}
-                            className="inforlistTextarea"
-                            onChange={(e)=>{this.state.originaltext=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="译文"
-                        hasFeedback
-                      >                        
-                          
-                          <Input 
-                            type="textarea"
-                            autosize={{minRows: 2, maxRows: 5}}
-                            placeholder="译文" 
-                            value={this.state.changetext}
-                            className="inforlistTextarea"
-                            onChange={(e)=>{this.state.changetext=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="资料类型"
-                        hasFeedback
-                      >
-                          <Select disabled={this.state.disabled} placeholder="资料类型" onChange={(value)=>{this.state.datatype=value;this.forceUpdate();}} value={this.state.datatype}>
-                            <Option value={0}>唐诗</Option>
-                            <Option value={1}>宋词</Option>
-                            <Option value={2}>自定义</Option>
-                          </Select>                     
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="标准录音地址"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="标准录音地址" 
-                            value={this.state.voiceurl}
-                            onChange={(e)=>{this.state.voiceurl=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-
-                    </Form>
-                  </Modal>
-
-                {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddpost" {...userProps}></ZmitiUploadDialog>}
+               
             </div>
         }
 
@@ -227,7 +140,7 @@ class ZmitiViewinforListApp extends Component {
 	componentDidMount() {
 		var s=  this;
 		s.bindNewdata();
-
+    s.getcategory();
 	}	
 
 	componentWillMount() {
@@ -275,91 +188,7 @@ class ZmitiViewinforListApp extends Component {
         })
     }
 
-	//弹框
-	modifyaddpost(){
-      var obserable=window.obserable;
-         this.setState({
-            showCredentialsDiolog:true
-        },()=>{
-          obserable.trigger({
-              type:'showModal',
-              data:{type:0,id:'addpost'}
-          })  
-        }) 
-    }
 
-    addProduct(){//添加
-        var s = this;
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        var params = {
-            userid:s.userid,
-            getusersigid:s.getusersigid,
-            title:s.state.title,
-            author:s.state.author,
-            kindid:s.state.kindid,
-            originaltext:s.state.originaltext,
-            changetext:s.state.changetext,
-            datatype:s.state.datatype,
-            voiceurl:s.state.voiceurl,
-        }
-
-        if(this.currentId!==-1){//编辑        
-            params.workdataid = this.currentId;  
-            //console.log(params.workdataid);
-            $.ajax({
-                type:'POST',
-                url:window.baseUrl + 'document/edit_document/',
-                data:params,
-                success(data){
-                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
-                  s.setState({
-                    modpostDialogVisible:false
-                  });
-                  s.bindNewdata();
-                }
-            });
-            
-        }else{
-            $.ajax({
-              type:'POST',
-              url:window.baseUrl + 'document/add_document/',
-              data:params,
-              success(data){
-                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
-                  s.setState({
-                    modpostDialogVisible:false
-                  });
-                  s.bindNewdata();
-                  //console.log(this.data,'add_document');
-              }
-            }); 
-        }
-
-    }
-    //edit-dialog
-    getEditdialog(workdataid){
-      var s=this;
-      this.state.dataSource.map((item,i)=>{
-        if(item.workdataid===workdataid){
-          this.currentId = workdataid;
-          this.setState({
-            modpostDialogVisible:true,
-            disabled:true,
-            workdataid:item.workdataid,
-            title:item.title,
-            author:item.author,
-            kindid:item.kindid,
-            originaltext:item.originaltext,
-            changetext:item.changetext,
-            datatype:item.datatype,
-            voiceurl:item.voiceurl,
-          })
-          this.forceUpdate();
-          //console.log(this.currentId);
-        }
-      })
-
-    }
     //search
     searchBybutton(){
           var selectedIndex = this.state.selectedIndex;
@@ -426,22 +255,26 @@ class ZmitiViewinforListApp extends Component {
         })
     }
 
-    //add-dialog
+    //add
     postform(){
-        var s=this;
-        this.currentId=-1;
-        this.setState({
-            disabled:false,
-            title:'',
-            author:'',
-            kindid:'五言绝句',
-            originaltext:'',
-            changetext:'',
-            datatype:0,
-            voiceurl:''
-        })
-        s.forceUpdate();
         window.location="#/infoeditor/";
+    }
+    //分类
+    getcategory(){
+      var s=this;
+      $.ajax({
+        type:'POST',
+        url:window.baseUrl+'document/get_documentclasslist/',
+        data:{
+          userid:s.userid,
+          getusersigid:s.getusersigid,
+        },
+        success(data){
+          if(data.getret===0){
+            console.log(data);
+          }
+        }
+      })
     }
 
 }

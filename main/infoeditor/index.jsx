@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form ,Icon, Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const Option = Select.Option;
@@ -37,7 +37,7 @@ class ZmitiInforEditorApp extends Component {
 			keyword:'',
       disabled:false,
 		};
-    this.currentId = -1;
+    this.currentId = undefined;
 		
 	}
   
@@ -189,9 +189,9 @@ class ZmitiInforEditorApp extends Component {
                         hasFeedback
                       >
                           <Select disabled={this.state.disabled} placeholder="资料类型" onChange={(value)=>{this.state.datatype=value;this.forceUpdate();}} value={this.state.datatype}>
-                            <Option value={0}>唐诗</Option>
-                            <Option value={1}>宋词</Option>
-                            <Option value={2}>自定义</Option>
+                            <Option value={0}>{'唐诗'}</Option>
+                            <Option value={1}>{'宋词'}</Option>
+                            <Option value={2}>{'自定义'}</Option>
                           </Select>                     
                       </FormItem>
                       <FormItem
@@ -206,7 +206,7 @@ class ZmitiInforEditorApp extends Component {
                           />                      
                       </FormItem>
                       <FormItem {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit" size="large">提交</Button>
+                        <Button type="primary" icon="save" htmlType="submit" size="large" onClick={this.saveinformation.bind(this)}>提交</Button>
                       </FormItem>
                       
                     </Form>
@@ -227,7 +227,7 @@ class ZmitiInforEditorApp extends Component {
 	componentDidMount() {
 		var s=  this;
 
-
+    s.getinformation();
 	}	
 
 	componentWillMount() {
@@ -243,8 +243,9 @@ class ZmitiInforEditorApp extends Component {
 		
 	}
   changeAccount(i){       
-    this.state.selectedIndex = i*1;
-    this.state.keyword = '';
+    /*this.state.selectedIndex = i*1;
+    this.state.keyword = '';*/
+    window.location="#/viewinforlist/";
     this.forceUpdate();
     //console.log(this.state.selectedIndex);
   }
@@ -252,78 +253,6 @@ class ZmitiInforEditorApp extends Component {
 
 
 
-    addProduct(){//添加
-        var s = this;
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        var params = {
-            userid:s.userid,
-            getusersigid:s.getusersigid,
-            title:s.state.title,
-            author:s.state.author,
-            kindid:s.state.kindid,
-            originaltext:s.state.originaltext,
-            changetext:s.state.changetext,
-            datatype:s.state.datatype,
-            voiceurl:s.state.voiceurl,
-        }
-
-        if(this.currentId!==-1){//编辑        
-            params.workdataid = this.currentId;  
-            //console.log(params.workdataid);
-            $.ajax({
-                type:'POST',
-                url:window.baseUrl + 'document/edit_document/',
-                data:params,
-                success(data){
-                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
-                  s.setState({
-                    modpostDialogVisible:false
-                  });
-                  s.bindNewdata();
-                }
-            });
-            
-        }else{
-            $.ajax({
-              type:'POST',
-              url:window.baseUrl + 'document/add_document/',
-              data:params,
-              success(data){
-                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
-                  s.setState({
-                    modpostDialogVisible:false
-                  });
-                  s.bindNewdata();
-                  //console.log(this.data,'add_document');
-              }
-            }); 
-        }
-
-    }
-    //edit-dialog
-    getEditdialog(workdataid){
-      var s=this;
-      this.state.dataSource.map((item,i)=>{
-        if(item.workdataid===workdataid){
-          this.currentId = workdataid;
-          this.setState({
-            modpostDialogVisible:true,
-            disabled:true,
-            workdataid:item.workdataid,
-            title:item.title,
-            author:item.author,
-            kindid:item.kindid,
-            originaltext:item.originaltext,
-            changetext:item.changetext,
-            datatype:item.datatype,
-            voiceurl:item.voiceurl,
-          })
-          this.forceUpdate();
-          //console.log(this.currentId);
-        }
-      })
-
-    }
     //search
     searchBybutton(){
           var selectedIndex = this.state.selectedIndex;
@@ -358,42 +287,45 @@ class ZmitiInforEditorApp extends Component {
 
     }
 	
-    //删除
-    delData(workdataid){
-        var s = this;
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
+    //返回
+    goback(){
+      window.location="#/viewinforlist/";
+    }
+    //获取数据
+    getinformation(){
+      var s=this;      
+      this.currentId=s.props.params.id;
+      //console.log(this.currentId,"getinformation");
+      if(this.currentId!=undefined){     
         
         $.ajax({
-            url:window.baseUrl+'document/del_document/',
+            type:'POST',
+            url:window.baseUrl + 'document/get_documendetial/',
             data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                documentid:workdataid,
+              userid:s.userid,
+              getusersigid:s.getusersigid,
+              documentid:s.props.params.id,              
             },
-            success(data){
-                if(data.getret === 0){
-                    message.success('删除成功！');
-                    setTimeout(()=>{
-                        s.bindNewdata();
-                    },2000)
-                }
-                else if(data.getret === -3){
-                    message.error('您没有访问的权限,2秒后跳转到首页');
-                    setTimeout(()=>{
-                        location.href='/';
-                    },2000)
-                }
-                else{
-                    message.error(data.getmsg);
-                }
-            }
-        })
-    }
+            success(data){              
+              //console.log(data,"get_documendetial");
+              if(data.getret === 0){
+                s.setState({                  
+                  disabled:true,
+                  title:data.detial.title,
+                  author:data.detial.author,
+                  kindid:data.detial.kindid,
+                  originaltext:data.detial.originaltext,
+                  changetext:data.detial.changetext,
+                  datatype:data.detial.datatype,
+                  voiceurl:data.detial.voiceurl,
+                });
+                s.state.selectedIndex=s.state.datatype;
+                s.forceUpdate();
 
-    //add-dialog
-    postform(){
-        var s=this;
-        this.currentId=-1;
+              }
+            }
+        });
+      }else{
         this.setState({
             disabled:false,
             title:'',
@@ -405,13 +337,58 @@ class ZmitiInforEditorApp extends Component {
             voiceurl:''
         })
         s.forceUpdate();
+        
+      }
     }
-    //返回
-    goback(){
-      window.location="#/viewinforlist/"
+    //保存
+    saveinformation(){
+      var s=this;      
+      this.currentId=s.props.params.id;      
+      var params = {
+          userid:s.userid,
+          getusersigid:s.getusersigid,
+          title:s.state.title,
+          author:s.state.author,
+          kindid:s.state.kindid,
+          originaltext:s.state.originaltext,
+          changetext:s.state.changetext,
+          datatype:s.state.datatype,
+          voiceurl:s.state.voiceurl,
+      }
+     
+      if(this.currentId!=undefined){        
+
+        params.workdataid = this.currentId;
+        $.ajax({
+            type:'POST',
+            url:window.baseUrl + 'document/edit_document/',
+            data:params,
+            success(data){
+              message[data.getret === 0 ? 'success':'error'](data.getmsg);
+              s.forceUpdate();
+               window.location="#/viewinforlist/";
+            }
+        });
+        //console.log(this.currentId,"edit_document");
+      }else{       
+        
+        $.ajax({
+          type:'POST',
+          url:window.baseUrl + 'document/add_document/',
+          data:params,
+          success(data){
+              message[data.getret === 0 ? 'success':'error'](data.getmsg);
+              s.forceUpdate();
+              window.location="#/viewinforlist/";              
+          }
+        });
+        //console.log(this.currentId,"add_document");        
+      }
     }
 
 }
+
+
 
 export default ZmitiValidateUser(ZmitiInforEditorApp);
 /*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/
