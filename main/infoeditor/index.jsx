@@ -24,7 +24,7 @@ class ZmitiInforEditorApp extends Component {
 			selectedIndex:0,
 			mainHeight:document.documentElement.clientHeight-50,
       dialogHeight:document.documentElement.clientHeight,
-			modpostDialogVisible:false,
+			tags:['唐诗','宋词','童谣'],
 			title:'',
 			author:'',
 			kindid:'五言绝句',
@@ -42,55 +42,8 @@ class ZmitiInforEditorApp extends Component {
 	}
   
 	render() {
-		var s =this;
-		const columns = [{
-            title: '标题',
-            dataIndex: 'title',
-            key: 'title',
-        },{
-            title: '作者',
-            dataIndex: 'author',
-            key: 'author',
-            width:120,
-
-        },{
-            title: '资料类型',
-            dataIndex: 'datatype',
-            key: 'datatype',
-            width:100,
-            render:(value,record,index)=>{
-            	switch(value){
-      					case 0:
-      						return "唐诗";
-      						break;
-      					case 1:
-      						return "宋词";
-      						break;
-      					case 2:
-      						return "自定义";
-      						break;
-      				}
-            }
-
-        }, {
-            title: '创建时间',
-            dataIndex: 'createtime',
-            key: 'createtime',
-            width:150,
-        },  {
-            title: '操作',
-            dataIndex: 'operation',
-            key: 'operation',
-            width:150,
-            render:(text,recoder,index)=>(
-
-                <span>
-                  <a href="javascript:void(0);" onClick={this.getEditdialog.bind(this,recoder.workdataid)}> 修改</a>
-                  <a href="javascript:void(0);" onClick={this.delData.bind(this,recoder.workdataid)}> 删除</a>
-                </span>              
-            )
-
-        }]
+		    var s =this;
+		
         const formItemLayout = {
            labelCol: {span: 6},
            wrapperCol: {span: 14},
@@ -111,7 +64,7 @@ class ZmitiInforEditorApp extends Component {
         let props={
             userid:this.userid,
             changeAccount:this.changeAccount.bind(this),
-            tags:['唐诗','宋词','童谣'],
+            tags:this.state.tags,
             mainHeight:this.state.mainHeight,
             title:title,
             type:'workorder-1',
@@ -122,7 +75,7 @@ class ZmitiInforEditorApp extends Component {
                     <div className="zmiti-inforlist-header">
                         <Row>
                             <Col span={8} className="zmiti-inforlist-header-inner">诗词资料</Col>
-                            <Col span={8} offset={8} className='zmiti-inforlist-button-right'><Button type='primary' onClick={this.goback.bind(this)}>返回</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-inforlist-button-right'><Button type='primary' icon="left" onClick={this.goback.bind(this)}>返回</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-inforlist-line"></div>
@@ -188,10 +141,10 @@ class ZmitiInforEditorApp extends Component {
                         label="资料类型"
                         hasFeedback
                       >
-                          <Select disabled={this.state.disabled} placeholder="资料类型" onChange={(value)=>{this.state.datatype=value;this.forceUpdate();}} value={this.state.datatype}>
+                          <Select placeholder="资料类型" onChange={(value)=>{this.state.datatype=value;this.forceUpdate();}} value={this.state.datatype}>
                             <Option value={0}>{'唐诗'}</Option>
                             <Option value={1}>{'宋词'}</Option>
-                            <Option value={2}>{'自定义'}</Option>
+                            <Option value={2}>{'童谣'}</Option>
                           </Select>                     
                       </FormItem>
                       <FormItem
@@ -251,41 +204,6 @@ class ZmitiInforEditorApp extends Component {
   }
 	
 
-
-
-    //search
-    searchBybutton(){
-          var selectedIndex = this.state.selectedIndex;
-          var keyWord=this.state.keyword;
-          var s = this;
-          $.ajax({
-             url:window.baseUrl+'document/get_documentlist',
-              data:{
-                  userid:s.userid,
-                  getusersigid:s.getusersigid,
-                  datatype:selectedIndex,
-                  type:1,
-                  searchword:keyWord,                  
-              },
-              success(data){
-                  if(data.getret === 0){
-                      s.state.dataSource = data.list;                      
-                  }else if(data.getret === 1002){
-                      s.state.dataSource=[];
-                  }else if(data.getret === -3){
-                      message.error('您没有访问的权限,2秒后跳转到首页');
-                      setTimeout(()=>{
-                          location.href='/';
-                      },2000)
-                  }
-                  else{
-                      message.error(data);                      
-                  }
-                  s.forceUpdate();
-              }
-          })
-
-    }
 	
     //返回
     goback(){

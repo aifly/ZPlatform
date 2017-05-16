@@ -25,6 +25,7 @@ class ZmitiViewinforListApp extends Component {
 			mainHeight:document.documentElement.clientHeight-50,
       dialogHeight:document.documentElement.clientHeight,
 			modpostDialogVisible:false,
+      tags:['唐诗','宋词','童谣'],
 			title:'',
 			author:'',
 			kindid:'五言绝句',
@@ -98,7 +99,7 @@ class ZmitiViewinforListApp extends Component {
         let props={
             userid:this.userid,
             changeAccount:this.changeAccount.bind(this),
-            tags:['唐诗','宋词','童谣'],
+            tags:this.state.tags,
             mainHeight:this.state.mainHeight,
             title:title,
             type:'workorder-1',
