@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
-import { message,Select,Modal,Form,Icon,Tag, Input,Button, Row, Col,Switch,Radio,InputNumber,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form,Icon,Tag,Tooltip, Input,Button, Row, Col,Switch,Radio,InputNumber,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const Option = Select.Option;
@@ -58,7 +58,7 @@ class ZmitiViewinforListApp extends Component {
           s.setState({ tags });
         }
       })
-      console.log(s.state.workdatatype,'this.state.workdatatype');
+      //console.log(s.state.workdatatype,'this.state.workdatatype');
       $.ajax({
         type:'GET',
         url:window.baseUrl+'document/del_documentclass',//接口地址
@@ -76,6 +76,7 @@ class ZmitiViewinforListApp extends Component {
       
     }
 
+
     this.showInput = () => {
       this.setState({ inputVisible: true }, () => this.input.focus());
     }
@@ -84,36 +85,60 @@ class ZmitiViewinforListApp extends Component {
 
     this.saveInputRef = input => this.input = input
 	}
-/*    handleClose(removedTag){
-      const tags = this.state.tags.filter(tag => tag !== removedTag);
-      console.log(removedTag,'handleClose');
-      this.setState({ tags });
-    }*/
+
   handleInputChange(e){
     this.setState({ inputValue: e.target.value });
   }
   editInput(e){
       var s=this;
       const value = e.target.value;
-      s.setState({ value });
+      const alt = e.target.alt;
+      const state = this.state;
+      let tags = state.tags;
+      s.setState({ 
+        value
+      });
+      s.setState({ tags });
       s.forceUpdate();
-      console.log(e.target.value,"editInput")
+      console.log(alt,"editInput",tags)
   }
   saveinput(e){
-    var s=this;
-    //const value = e.target.value;
-    //s.setState({ value });
-    const state = this.state;
-    const value = state.value;
-    /*let tags = state.tags;
-    if (value && tags.indexOf(value) === -1) {
-      tags = [...tags, value];
-    }
-*/
-    console.log(value,'newTags');
-    
-    //sql
-    s.forceUpdate();
+      var s=this;
+      const value = e.target.value;//名称
+      const autoid = e.target.alt;//序号
+      const state = this.state;
+      let tags = state.tags;
+      s.setState({ 
+        value
+      });
+      $.each(this.state.dataSource,function(i,item){        
+        if(i===parseInt(autoid)){
+          s.state.workdatatype=item.workdatatype; 
+          console.log(s.state.workdatatype,"workdatatype");       
+          //s.setState({ tags });
+        }
+
+      })
+      $.ajax({
+        type:'GET',
+        url:window.baseUrl+'document/edit_documentclass',//接口地址
+        data:{
+          userid:s.userid,
+          getusersigid:s.getusersigid,
+          workdatatype:s.state.workdatatype,
+          typename:value,
+        },
+        success(data){
+          if(data.getret === 0){
+            console.log(data,'修改成功！');
+            s.setState({ tags });
+            s.forceUpdate();
+          }
+        }
+      })
+      
+      //console.log(autoid,"saveinput",value);
+     
   }
 	render() {
 		var s =this;
@@ -205,6 +230,7 @@ class ZmitiViewinforListApp extends Component {
               defaultValue= {isLongTag ? `${tag.slice(0, 20)}...` : tag}
               onChange={this.editInput.bind(this)}
               onBlur={this.saveinput.bind(this)}
+              alt={index}
              />
             </Tag>
           );
