@@ -181,33 +181,7 @@ class ZmitiViewinforListApp extends Component {
                         <Col className="inforlist-heigth45"><Input value={this.state.keyword} placeholder="名称" onChange={(e)=>{this.state.keyword=e.target.value;this.forceUpdate();}} /></Col>
                         <Col className="inforlist-heigth45"><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
                     </Row>
-      <div>
-        {tags.map((tag, index) => {
-          const isLongTag = tag.length > 20;
-          const tagElem = (
-            <Tag key={tag} closable={index !== 0} afterClose={() => this.handleClose(tag)}>
-             <input type="text"  
-              defaultValue= {isLongTag ? `${tag.slice(0, 20)}...` : tag}
-              onChange={this.editInput.bind(this)}
-              onBlur={this.saveinput.bind(this)}
-              alt={index}
-             />
-            </Tag>
-          );
-          return isLongTag ? <Tooltip title={tag}>{tagElem}</Tooltip> : tagElem;
-        })}
-        {inputVisible && (
-          <Input
-            ref={this.saveInputRef}
-            type="text" size="small"
-            style={{ width: 78 }}
-            value={inputValue}
-            onChange={this.handleInputChange.bind(this)}
-            onBlur={this.handleInputConfirm.bind(this)}
-          />
-        )}
-        {!inputVisible && <Button size="small" type="dashed" onClick={this.showInput}>+ 添加分类</Button>}
-      </div>
+
                   <Table bordered={true} 
                           dataSource={this.state.dataList} 
                           columns={columnList} />
@@ -217,14 +191,34 @@ class ZmitiViewinforListApp extends Component {
                     onOk={this.addProduct.bind(this)}
                     onCancel={()=>{this.setState({modpostDialogVisible:false})}}
                 >
-                      <FormItem
-                        {...formItemLayout}
-                        label="分类名称"
-                        hasFeedback
-                      >                        
-                          
-                                              
-                      </FormItem>
+                  <div className="inforListModal">
+                    {tags.map((tag, index) => {
+                      const isLongTag = tag.length > 20;
+                      const tagElem = (
+                        <Tag key={tag} closable={index !== 0} afterClose={() => this.handleClose(tag)}>
+                         <input type="text" 
+                          className="inforlistCategoryIpt" 
+                          defaultValue= {isLongTag ? `${tag.slice(0, 20)}...` : tag}
+                          onChange={this.editInput.bind(this)}
+                          onBlur={this.saveinput.bind(this)}
+                          alt={index}
+                         />
+                        </Tag>
+                      );
+                      return isLongTag ? <Tooltip title={tag}>{tagElem}</Tooltip> : tagElem;
+                    })}
+                    {inputVisible && (
+                      <Input
+                        ref={this.saveInputRef}
+                        type="text" size="small"
+                        style={{ width: 110 }}
+                        value={inputValue}
+                        onChange={this.handleInputChange.bind(this)}
+                        onBlur={this.handleInputConfirm.bind(this)}
+                      />
+                    )}
+                    {!inputVisible && <Button size="small" type="dashed" onClick={this.showInput}>+ 添加分类</Button>}
+                  </div>
                 </Modal>
                 
             </div>
@@ -393,6 +387,7 @@ class ZmitiViewinforListApp extends Component {
       this.setState({
             modpostDialogVisible:false,
       })
+      s.forceUpdate();
     }
     //dialog
     dialogform(){

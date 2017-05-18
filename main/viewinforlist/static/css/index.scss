@@ -83,3 +83,25 @@
 		height: 100%;
 	}
 }
+.inforListModal{
+	.ant-tag{
+		width:110px;
+		margin-bottom:10px;
+	}
+	.ant-btn-dashed{
+		width:110px;
+		margin-bottom:10px;
+	}
+	.inforlistCategoryIpt{
+		width:75px;
+		height:18px;
+		border:1px solid #f7f7f7;
+		background-color: #f7f7f7;
+	}
+	.ant-tag:hover{
+		border-color:#108ee9;
+		.inforlistCategoryIpt{
+			color:#000;
+		}
+	}
+}

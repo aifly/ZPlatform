@@ -37,4 +37,20 @@
 .dialogInformation .ant-modal-content {
   height: 100%; }
 
+.inforListModal .ant-tag {
+  width: 110px;
+  margin-bottom: 10px; }
+.inforListModal .ant-btn-dashed {
+  width: 110px;
+  margin-bottom: 10px; }
+.inforListModal .inforlistCategoryIpt {
+  width: 75px;
+  height: 18px;
+  border: 1px solid #f7f7f7;
+  background-color: #f7f7f7; }
+.inforListModal .ant-tag:hover {
+  border-color: #108ee9; }
+  .inforListModal .ant-tag:hover .inforlistCategoryIpt {
+    color: #000; }
+
 /*# sourceMappingURL=index.css.map */
