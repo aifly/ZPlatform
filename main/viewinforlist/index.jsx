@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
-
-import { message,Select,Modal,Form,Icon, Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form,Icon,Tag, Input,Button, Row, Col,Switch,Radio,InputNumber,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const Option = Select.Option;
@@ -12,8 +10,10 @@ import MainUI from '../components/Main.jsx';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 const FormItem = Form.Item;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
-
 import $ from 'jquery';
+
+
+//20170516
 
 class ZmitiViewinforListApp extends Component {
 	constructor(props) {
@@ -25,6 +25,8 @@ class ZmitiViewinforListApp extends Component {
 			mainHeight:document.documentElement.clientHeight-50,
       dialogHeight:document.documentElement.clientHeight,
 			modpostDialogVisible:false,
+      categoryname:'',
+      categorydata:[],
       tags:['唐诗','宋词','童谣'],
 			title:'',
 			author:'',
@@ -33,17 +35,90 @@ class ZmitiViewinforListApp extends Component {
 			changetext:'',
       datatype:0,
       voiceurl:'',
-			dataSource:[],
+			dataList:[],
+      dataSource:[],//分类数据
+      autoid:'',//分类id
 			workdataid:'',
 			keyword:'',
       disabled:false,
+      editable: false,
+      value: this.props.value,
+      inputVisible: false,
+      inputValue: '',
 		};
-		
+
+    this.handleClose = (removedTag) => {
+      var s=this;
+      //removedTag:栏目名称
+      const tags = this.state.tags.filter(tag => tag !== removedTag);
+      
+      $.each(this.state.dataSource,function(i,item){        
+        if(item.typename===removedTag){
+          s.state.autoid=item.autoid;          
+          s.setState({ tags });
+        }
+      })
+      //console.log(s.state.autoid,'this.state.autoid');
+      $.ajax({
+        type:'POST',
+        url:window.baseUrl+'document/del_documentclass',//接口地址
+        data:{
+          userid:s.userid,
+          getusersigid:s.getusersigid,
+          autoid:s.state.autoid
+        },
+        success(data){
+          if(data.getret === 0){
+            console.log(data,'删除成功！')
+          }
+        }
+      })
+      
+    }
+
+    this.showInput = () => {
+      this.setState({ inputVisible: true }, () => this.input.focus());
+    }
+
+
+
+    this.saveInputRef = input => this.input = input
 	}
-  
+/*    handleClose(removedTag){
+      const tags = this.state.tags.filter(tag => tag !== removedTag);
+      console.log(removedTag,'handleClose');
+      this.setState({ tags });
+    }*/
+  handleInputChange(e){
+    this.setState({ inputValue: e.target.value });
+  }
+  editInput(e){
+      var s=this;
+      const value = e.target.value;
+      s.setState({ value });
+      s.forceUpdate();
+      console.log(e.target.value,"editInput")
+  }
+  saveinput(e){
+    var s=this;
+    //const value = e.target.value;
+    //s.setState({ value });
+    const state = this.state;
+    const value = state.value;
+    /*let tags = state.tags;
+    if (value && tags.indexOf(value) === -1) {
+      tags = [...tags, value];
+    }
+*/
+    console.log(value,'newTags');
+    
+    //sql
+    s.forceUpdate();
+  }
 	render() {
 		var s =this;
-		const columns = [{
+    
+		const columnList = [{
             title: '标题',
             dataIndex: 'title',
             key: 'title',
@@ -95,6 +170,8 @@ class ZmitiViewinforListApp extends Component {
            labelCol: {span: 4},
            wrapperCol: {span: 16},
         };
+        const { tags, inputVisible, inputValue } = this.state;
+        const { value, editable } = this.state;
         var title = this.props.params.title || '资料库';
         let props={
             userid:this.userid,
@@ -110,7 +187,7 @@ class ZmitiViewinforListApp extends Component {
                     <div className="zmiti-inforlist-header">
                         <Row>
                             <Col span={8} className="zmiti-inforlist-header-inner">诗词资料</Col>
-                            <Col span={8} offset={8} className='zmiti-inforlist-button-right'><Button type='primary' icon="file-add" onClick={this.postform.bind(this)}>添加</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-inforlist-button-right'><Button icon="file-add" onClick={this.postform.bind(this)}>添加资料</Button><Button icon="folder-add" onClick={this.dialogform.bind(this)}>分类管理</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-inforlist-line"></div>
@@ -119,12 +196,51 @@ class ZmitiViewinforListApp extends Component {
                         <Col className="inforlist-heigth45"><Input value={this.state.keyword} placeholder="名称" onChange={(e)=>{this.state.keyword=e.target.value;this.forceUpdate();}} /></Col>
                         <Col className="inforlist-heigth45"><Button onClick={this.searchBybutton.bind(this)}>查询</Button></Col>
                     </Row>
-                    <Table bordered={true} 
-                    
-                    dataSource={this.state.dataSource} 
-                    columns={columns} />
+      <div>
+        {tags.map((tag, index) => {
+          const isLongTag = tag.length > 20;
+          const tagElem = (
+            <Tag key={tag} closable={index !== 0} afterClose={() => this.handleClose(tag)}>
+             <input type="text"  
+              defaultValue= {isLongTag ? `${tag.slice(0, 20)}...` : tag}
+              onChange={this.editInput.bind(this)}
+              onBlur={this.saveinput.bind(this)}
+             />
+            </Tag>
+          );
+          return isLongTag ? <Tooltip title={tag}>{tagElem}</Tooltip> : tagElem;
+        })}
+        {inputVisible && (
+          <Input
+            ref={this.saveInputRef}
+            type="text" size="small"
+            style={{ width: 78 }}
+            value={inputValue}
+            onChange={this.handleInputChange.bind(this)}
+            onBlur={this.handleInputConfirm.bind(this)}
+          />
+        )}
+        {!inputVisible && <Button size="small" type="dashed" onClick={this.showInput}>+ 添加分类</Button>}
+      </div>
+                  <Table bordered={true} 
+                          dataSource={this.state.dataList} 
+                          columns={columnList} />
+
                 </div>
-               
+                <Modal title="诗词分类" visible={this.state.modpostDialogVisible}
+                    onOk={this.addProduct.bind(this)}
+                    onCancel={()=>{this.setState({modpostDialogVisible:false})}}
+                >
+                      <FormItem
+                        {...formItemLayout}
+                        label="分类名称"
+                        hasFeedback
+                      >                        
+                          
+                                              
+                      </FormItem>
+                </Modal>
+                
             </div>
         }
 
@@ -179,10 +295,10 @@ class ZmitiViewinforListApp extends Component {
             },
             success(data){
                 if(data.getret === 0){                    
-                    s.state.dataSource = data.list;
-                    //console.log(s.state.dataSource,"信息列表");                    
+                    s.state.dataList = data.list;
+                    //console.log(s.state.dataList,"信息列表");                    
                 }else if(data.getret === 1002){
-                  s.state.dataSource=[];                  
+                  s.state.dataList=[];                  
                 }
                 s.forceUpdate();
             }
@@ -206,9 +322,9 @@ class ZmitiViewinforListApp extends Component {
               },
               success(data){
                   if(data.getret === 0){
-                      s.state.dataSource = data.list;                      
+                      s.state.dataList = data.list;                      
                   }else if(data.getret === 1002){
-                      s.state.dataSource=[];
+                      s.state.dataList=[];
                   }else if(data.getret === -3){
                       message.error('您没有访问的权限,2秒后跳转到首页');
                       setTimeout(()=>{
@@ -260,7 +376,7 @@ class ZmitiViewinforListApp extends Component {
     postform(){
         window.location="#/infoeditor/";
     }
-    //分类
+    //获取分类
     getcategory(){
       var s=this;
       $.ajax({
@@ -272,10 +388,68 @@ class ZmitiViewinforListApp extends Component {
         },
         success(data){
           if(data.getret===0){
-            console.log(data);
+            var typename=new Array();
+            $.each(data.list,function(i,item){
+              typename.push(item.typename);
+            })            
+            s.state.tags=typename;
+            s.state.dataSource=data.list;
+            console.log(s.state.dataSource);
+            s.forceUpdate();
           }
         }
       })
+    }
+
+    //add category
+    addProduct(){
+      var s=this;
+      this.setState({
+            modpostDialogVisible:false,
+      })
+    }
+    //dialog
+    dialogform(){
+      var s=this;
+      this.setState({
+            modpostDialogVisible:true,
+      })
+      s.forceUpdate();
+    }
+    //添加分类
+    handleInputConfirm(){
+      var s=this;
+      const state = this.state;
+      const inputValue = state.inputValue;
+      let tags = state.tags;
+      if (inputValue && tags.indexOf(inputValue) === -1) {
+        tags = [...tags, inputValue];
+      }
+      //
+      console.log(tags,'handleInputConfirm');
+      //add
+      console.log(inputValue,'inputValueinputValueinputValue');
+      $.ajax({
+        type:'POST',
+        url:window.baseUrl+'document/add_documentclass',//接口地址
+        data:{
+          userid:s.userid,
+          getusersigid:s.getusersigid,
+          typename:inputValue,
+        },
+        success(data){
+          if(data.getret === 0){
+              //state
+              s.setState({
+                tags,
+                inputVisible: false,
+                inputValue: '',
+              });                 
+              s.forceUpdate();                  
+          }
+        }
+      })
+
     }
 
 }

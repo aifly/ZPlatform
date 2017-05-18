@@ -15,7 +15,8 @@
       transform: scale(1, 0.7); }
   .inforlist-main-ui .zmiti-inforlist-button-right button {
     float: right;
-    margin-top: 5px; }
+    margin-top: 5px;
+    margin-left: 10px; }
   .inforlist-main-ui .zmiti-inforlist-line {
     height: 15px;
     overflow: hidden;
