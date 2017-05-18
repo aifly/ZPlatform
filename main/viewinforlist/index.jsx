@@ -37,7 +37,7 @@ class ZmitiViewinforListApp extends Component {
       voiceurl:'',
 			dataList:[],
       dataSource:[],//分类数据
-      autoid:'',//分类id
+      workdatatype:'',//分类id
 			workdataid:'',
 			keyword:'',
       disabled:false,
@@ -54,18 +54,18 @@ class ZmitiViewinforListApp extends Component {
       
       $.each(this.state.dataSource,function(i,item){        
         if(item.typename===removedTag){
-          s.state.autoid=item.autoid;          
+          s.state.workdatatype=item.workdatatype;          
           s.setState({ tags });
         }
       })
-      //console.log(s.state.autoid,'this.state.autoid');
+      console.log(s.state.workdatatype,'this.state.workdatatype');
       $.ajax({
-        type:'POST',
+        type:'GET',
         url:window.baseUrl+'document/del_documentclass',//接口地址
         data:{
           userid:s.userid,
           getusersigid:s.getusersigid,
-          autoid:s.state.autoid
+          workdatatype:s.state.workdatatype
         },
         success(data){
           if(data.getret === 0){
