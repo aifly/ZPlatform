@@ -76,12 +76,9 @@ class ZmitiViewinforListApp extends Component {
       
     }
 
-
     this.showInput = () => {
       this.setState({ inputVisible: true }, () => this.input.focus());
     }
-
-
 
     this.saveInputRef = input => this.input = input
 	}
@@ -100,46 +97,9 @@ class ZmitiViewinforListApp extends Component {
       });
       s.setState({ tags });
       s.forceUpdate();
-      console.log(alt,"editInput",tags)
+      //console.log(alt,"editInput",tags)
   }
-  saveinput(e){
-      var s=this;
-      const value = e.target.value;//名称
-      const autoid = e.target.alt;//序号
-      const state = this.state;
-      let tags = state.tags;
-      s.setState({ 
-        value
-      });
-      $.each(this.state.dataSource,function(i,item){        
-        if(i===parseInt(autoid)){
-          s.state.workdatatype=item.workdatatype; 
-          console.log(s.state.workdatatype,"workdatatype");       
-          //s.setState({ tags });
-        }
 
-      })
-      $.ajax({
-        type:'GET',
-        url:window.baseUrl+'document/edit_documentclass',//接口地址
-        data:{
-          userid:s.userid,
-          getusersigid:s.getusersigid,
-          workdatatype:s.state.workdatatype,
-          typename:value,
-        },
-        success(data){
-          if(data.getret === 0){
-            console.log(data,'修改成功！');
-            s.setState({ tags });
-            s.forceUpdate();
-          }
-        }
-      })
-      
-      //console.log(autoid,"saveinput",value);
-     
-  }
 	render() {
 		var s =this;
     
@@ -477,7 +437,47 @@ class ZmitiViewinforListApp extends Component {
       })
 
     }
+    //编辑
+    saveinput(e){
+        var s=this;
+        const value = e.target.value;//名称
+        const autoid = e.target.alt;//序号
+        const state = this.state;
+        let tags = state.tags;
+        s.setState({ 
+          value
+        });
+        //获取id
+        $.each(this.state.dataSource,function(i,item){        
+          if(i===parseInt(autoid)){
+            s.state.workdatatype=item.workdatatype;
+            s.state.tags[i]=value;
+            //console.log(s.state.workdatatype,"workdatatype"); 
+            //console.log(s.state.tags[i],"tagsindex");
+            s.setState({ tags });
+            s.forceUpdate();
+          }
 
+        })
+        //提交
+        $.ajax({
+          type:'GET',
+          url:window.baseUrl+'document/edit_documentclass',//接口地址
+          data:{
+            userid:s.userid,
+            getusersigid:s.getusersigid,
+            workdatatype:s.state.workdatatype,
+            typename:value,
+          },
+          success(data){
+            if(data.getret === 0){
+              console.log(data,'修改成功！');
+              s.setState({ tags });
+              s.forceUpdate();
+            }
+          }
+        })      
+    }
 }
 
 export default ZmitiValidateUser(ZmitiViewinforListApp);
