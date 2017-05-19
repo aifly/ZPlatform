@@ -47,40 +47,13 @@ class ZmitiViewinforListApp extends Component {
       inputValue: '',
 		};
 
-    this.handleClose = (removedTag) => {
-      var s=this;
-      //removedTag:栏目名称
-      const tags = this.state.tags.filter(tag => tag !== removedTag);
-      
-      $.each(this.state.dataSource,function(i,item){        
-        if(item.typename===removedTag){
-          s.state.workdatatype=item.workdatatype;          
-          s.setState({ tags });
-        }
-      })
-      //console.log(s.state.workdatatype,'this.state.workdatatype');
-      $.ajax({
-        type:'GET',
-        url:window.baseUrl+'document/del_documentclass',//接口地址
-        data:{
-          userid:s.userid,
-          getusersigid:s.getusersigid,
-          workdatatype:s.state.workdatatype
-        },
-        success(data){
-          if(data.getret === 0){
-            console.log(data,'删除成功！')
-          }
-        }
-      })
-      
-    }
+
 
     this.showInput = () => {
       this.setState({ inputVisible: true }, () => this.input.focus());
     }
-
-    this.saveInputRef = input => this.input = input
+    this.editInputRef = input => this.input = input;
+    this.saveInputRef = input => this.input = input;
 	}
 
   handleInputChange(e){
@@ -196,11 +169,13 @@ class ZmitiViewinforListApp extends Component {
                       const isLongTag = tag.length > 20;
                       const tagElem = (
                         <Tag key={tag} closable={index !== 0} afterClose={() => this.handleClose(tag)}>
-                         <input type="text" 
+                         <Input type="text" 
+                          ref={this.editInputRef}
                           className="inforlistCategoryIpt" 
                           defaultValue= {isLongTag ? `${tag.slice(0, 20)}...` : tag}
                           onChange={this.editInput.bind(this)}
                           onBlur={this.saveinput.bind(this)}
+                          
                           alt={index}
                          />
                         </Tag>
@@ -215,6 +190,7 @@ class ZmitiViewinforListApp extends Component {
                         value={inputValue}
                         onChange={this.handleInputChange.bind(this)}
                         onBlur={this.handleInputConfirm.bind(this)}
+                        onPressEnter={this.handleInputConfirm.bind(this)}
                       />
                     )}
                     {!inputVisible && <Button size="small" type="dashed" onClick={this.showInput}>+ 添加分类</Button>}
@@ -385,7 +361,7 @@ class ZmitiViewinforListApp extends Component {
     addProduct(){
       var s=this;
       this.setState({
-            modpostDialogVisible:false,
+        modpostDialogVisible:false,
       })
       s.forceUpdate();
     }
@@ -425,7 +401,8 @@ class ZmitiViewinforListApp extends Component {
                 tags,
                 inputVisible: false,
                 inputValue: '',
-              });                 
+              }); 
+              s.getcategory();                
               s.forceUpdate();                  
           }
         }
@@ -447,31 +424,61 @@ class ZmitiViewinforListApp extends Component {
           if(i===parseInt(autoid)){
             s.state.workdatatype=item.workdatatype;
             s.state.tags[i]=value;
-            //console.log(s.state.workdatatype,"workdatatype"); 
+            console.log(s.state.workdatatype,"workdatatype"); 
             //console.log(s.state.tags[i],"tagsindex");
-            s.setState({ tags });
-            s.forceUpdate();
+            //提交
+            $.ajax({
+              type:'GET',
+              url:window.baseUrl+'document/edit_documentclass',//接口地址
+              data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                workdatatype:s.state.workdatatype,
+                typename:value,
+              },
+              success(data){
+                if(data.getret === 0){
+                  console.log(s.state.tags,'修改成功！');
+                  s.getcategory();
+                  s.forceUpdate();
+                }
+              }
+            })  
           }
 
         })
-        //提交
-        $.ajax({
-          type:'GET',
-          url:window.baseUrl+'document/edit_documentclass',//接口地址
-          data:{
-            userid:s.userid,
-            getusersigid:s.getusersigid,
-            workdatatype:s.state.workdatatype,
-            typename:value,
-          },
-          success(data){
-            if(data.getret === 0){
-              console.log(data,'修改成功！');
-              s.setState({ tags });
-              s.forceUpdate();
+  
+    }
+    //删除
+    handleClose (removedTag){
+      var s=this;
+      //removedTag:栏目名称
+      const tags = this.state.tags.filter(tag => tag !== removedTag);
+      s.setState({ tags });
+      $.each(this.state.dataSource,function(i,item){        
+        if(item.typename===removedTag){
+          s.state.workdatatype=item.workdatatype;
+          $.ajax({
+            type:'GET',
+            url:window.baseUrl+'document/del_documentclass',//接口地址
+            data:{
+              userid:s.userid,
+              getusersigid:s.getusersigid,
+              workdatatype:s.state.workdatatype
+            },
+            success(data){
+              if(data.getret === 0){
+                console.log(s.state.tags,'删除成功！');
+                s.getcategory();
+                s.forceUpdate();
+              }
             }
-          }
-        })      
+          })
+        }
+      })
+      //console.log(s.state.workdatatype,'this.state.workdatatype');
+
+      
     }
 }
 

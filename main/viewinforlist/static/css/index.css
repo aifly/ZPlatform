@@ -39,18 +39,20 @@
 
 .inforListModal .ant-tag {
   width: 110px;
-  margin-bottom: 10px; }
+  margin-bottom: 10px;
+  padding-left: 0; }
 .inforListModal .ant-btn-dashed {
   width: 110px;
   margin-bottom: 10px; }
 .inforListModal .inforlistCategoryIpt {
-  width: 75px;
+  width: 83px;
   height: 18px;
-  border: 1px solid #f7f7f7;
+  border: none;
   background-color: #f7f7f7; }
 .inforListModal .ant-tag:hover {
-  border-color: #108ee9; }
+  border-color: #108ee9 !important; }
   .inforListModal .ant-tag:hover .inforlistCategoryIpt {
-    color: #000; }
+    color: #000;
+    border: none; }
 
 /*# sourceMappingURL=index.css.map */
