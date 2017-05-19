@@ -383,9 +383,9 @@ class ZmitiViewinforListApp extends Component {
         tags = [...tags, inputValue];
       }
       //
-      console.log(tags,'handleInputConfirm');
+      //console.log(tags,'handleInputConfirm');
       //add
-      console.log(inputValue,'inputValueinputValueinputValue');
+      //console.log(inputValue,'inputValueinputValueinputValue');
       $.ajax({
         type:'POST',
         url:window.baseUrl+'document/add_documentclass',//接口地址
@@ -424,7 +424,7 @@ class ZmitiViewinforListApp extends Component {
           if(i===parseInt(autoid)){
             s.state.workdatatype=item.workdatatype;
             s.state.tags[i]=value;
-            console.log(s.state.workdatatype,"workdatatype"); 
+            //console.log(s.state.workdatatype,"workdatatype"); 
             //console.log(s.state.tags[i],"tagsindex");
             //提交
             $.ajax({
@@ -438,7 +438,7 @@ class ZmitiViewinforListApp extends Component {
               },
               success(data){
                 if(data.getret === 0){
-                  console.log(s.state.tags,'修改成功！');
+                  //console.log(s.state.tags,'修改成功！');
                   s.getcategory();
                   s.forceUpdate();
                 }
@@ -468,7 +468,7 @@ class ZmitiViewinforListApp extends Component {
             },
             success(data){
               if(data.getret === 0){
-                console.log(s.state.tags,'删除成功！');
+                //console.log(s.state.tags,'删除成功！');
                 s.getcategory();
                 s.forceUpdate();
               }
