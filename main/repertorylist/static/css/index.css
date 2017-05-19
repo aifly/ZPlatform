@@ -50,12 +50,24 @@
       opacity: 0;
       cursor: pointer; }
   .repertorylist-main-ui .repertorylist-picList li {
-    width: 145px;
-    height: 145px;
-    float: left; }
+    width: 147px;
+    float: left;
+    margin: 0 10px 10px 0;
+    position: relative; }
+    .repertorylist-main-ui .repertorylist-picList li .repertorylist-pics {
+      border: 1px #cccccc solid; }
     .repertorylist-main-ui .repertorylist-picList li img {
       display: block;
       width: 145px;
       height: 145px; }
+    .repertorylist-main-ui .repertorylist-picList li .ant-btn {
+      position: absolute;
+      display: none;
+      left: 58px;
+      top: 58px; }
+  .repertorylist-main-ui .repertorylist-picList li:hover .repertorylist-pics {
+    opacity: 0.3; }
+  .repertorylist-main-ui .repertorylist-picList li:hover .ant-btn {
+    display: block; }
 
 /*# sourceMappingURL=index.css.map */

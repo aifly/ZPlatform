@@ -97,14 +97,35 @@
 	}
 	.repertorylist-picList{
 		li{
-			width:145px;
-			height:145px;
+			width:147px;
 			float:left;
+			margin:0 10px 10px 0;			
+			position: relative;
+			.repertorylist-pics{
+				border:1px #cccccc solid;
+			}
 			img{
 				display:block;
 				width:145px;
 				height:145px;
 			}
+			.ant-btn{
+				position: absolute;
+				display:none;
+				left: 58px;
+				top:58px;
+			}
+			.repertorylist-size{
+
+			}		
+		}
+		li:hover{
+			.repertorylist-pics{
+				opacity:0.3;
+			}
+			.ant-btn{
+				display:block;
+			}		
 		}
 	}
 }
