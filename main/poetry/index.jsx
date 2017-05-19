@@ -145,6 +145,9 @@ class ZmitiPoetryApp extends Component {
 					<aside>
 						<div className='poetry-share-ui'>
 							<section>
+								<Button type='primary' size='large' onClick={this.atMeAtTitle.bind(this)}>在标题中@我</Button>
+								<Button type='primary' size='large' style={{marginLeft:30}} onClick={this.atMeAtDesc.bind(this)}>在描述中@我</Button>
+								<h1 style={{height:10}}></h1>
 								<Row type='flex' align='start' gutter={20}>
 									<Col span={6}>
 										<div style={shareStyle}>
@@ -206,6 +209,16 @@ class ZmitiPoetryApp extends Component {
 		return (
 			<MainUI component={component}></MainUI>
 		);
+	}
+
+
+	atMeAtTitle(){
+		this.state.data.shareTitle+='@{username}';
+		this.forceUpdate();
+	}
+	atMeAtDesc(){
+		this.state.data.shareDesc+='@{username}';
+		this.forceUpdate();	
 	}
 
 	changeCurrentCustom(i,e){
