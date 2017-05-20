@@ -34,6 +34,8 @@ import ZmitiInforListApp from './inforlist/index.jsx';
 import ZmitiRepertoryListApp from './repertorylist/index.jsx';
 import ZmitiViewinforListApp from './viewinforlist/index.jsx';
 import ZmitiInforEditorApp from './infoeditor/index.jsx';
+import ZmitiViewBookListApp from './viewbooklist/index.jsx';
+import ZmitiViewCustomUserApp from './viewcustomuser/index.jsx';
 import Obserable from './static/libs/obserable.js';
 
 
@@ -80,6 +82,8 @@ class App extends React.Component{
 				{path: '/repertorylist/', app: ZmitiRepertoryListApp},
 				{path: '/viewinforlist/', app: ZmitiViewinforListApp},
 				{path: '/infoeditor/(:id)',app:ZmitiInforEditorApp},
+				{path: '/viewbooklist/',app:ZmitiViewBookListApp},
+				{path: '/viewcustomuser/(:id)',app:ZmitiViewCustomUserApp},
 				
 		];
 		return (
