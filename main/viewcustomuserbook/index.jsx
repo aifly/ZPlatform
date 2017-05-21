@@ -6,7 +6,7 @@ let Option = Select.Option;
 import MainUI from '../components/main.jsx';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import $ from 'jquery';
- class ZmitiViewBookListApp extends Component {
+ class ZmitiViewUserBookApp extends Component {
 	constructor(props) {
 		super(props);
 
@@ -52,33 +52,21 @@ import $ from 'jquery';
             width:120,
 
         }]
-        let props={
-            userid:this.userid,
-            changeAccount:this.changeAccount.bind(this),
-			tags:this.state.tags,
-            mainHeight:this.state.mainHeight,
-            title:title,
-            type:'workorder-1',
-            selectedIndex:this.state.selectedIndex,
-            rightType:"custom",
-            customRightComponent:<div className='viewcustombooklist-main-ui'>
+        
+        var mainComponent = <div className='viewcustomuserbook-main-ui'>
             	<div className='pad-10'>
-            		<div className="zmiti-viewcustombooklist-header">
+            		<div className="zmiti-viewcustomuserbook-header">
                         <Row>
-                            <Col span={8} className="zmiti-viewcustombooklist-header-inner">书本列表</Col>
-                            <Col span={8} offset={8} className='zmiti-viewcustombooklist-button-right'></Col>
+                            <Col span={8} className="zmiti-viewcustomuserbook-header-inner">书本列表</Col>
+                            <Col span={8} offset={8} className='zmiti-viewcustomuserbook-button-right'></Col>
                         </Row>                      
                     </div>
-                    <div className="zmiti-viewcustombooklist-line"></div>
+                    <div className="zmiti-viewcustomuserbook-line"></div>
                     <div className="hr20"></div>
             		<Table bordered={true} 
                           dataSource={this.state.dataSource} 
                           columns={columns} />
             	</div>
-            </div>
-        }
-        var mainComponent = <div>
-          <ZmitiUserList {...props}></ZmitiUserList>
         </div>;
         return (
           <MainUI component={mainComponent}></MainUI>
@@ -184,6 +172,6 @@ import $ from 'jquery';
 	}
 
 }
-export default ZmitiValidateUser(ZmitiViewBookListApp);
+export default ZmitiValidateUser(ZmitiViewUserBookApp);
 
 

@@ -1,7 +1,7 @@
 @import "../../../public/css/base.scss";
-.viewcustomuser-main-ui{
-	overflow:auto;
-	.zmiti-viewcustomuser-header-inner{
+.viewcustomuserbook-main-ui{
+	overflow: auto;
+	.zmiti-viewcustomuserbook-header-inner{
 		padding-left: 8px;
 		margin-top: 10px;
 		@include pos(r);
@@ -15,12 +15,12 @@
 			@include transform(scale(1,.7));
 		}
 	}
-	.zmiti-viewcustomuser-button-right button{
+	.zmiti-viewcustomuserbook-button-right button{
 		float:right;
 		margin-top: 5px;
 		margin-left:10px;
 	}
-	.zmiti-viewcustomuser-line{
+	.zmiti-viewcustomuserbook-line{
 		height:15px;
 		overflow: hidden;
 		border-bottom: 1px solid #dddddd;

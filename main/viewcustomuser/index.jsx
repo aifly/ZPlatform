@@ -78,7 +78,7 @@ import MainUI from '../components/Main.jsx';
             render:(text,recoder,index)=>(
 
                 <span>
-                  <a href={'#/viewcustombooklist/'+recoder.wxopenid}>查看</a>
+                  <a href={'#/viewcustomuserbook/'+recoder.wxopenid}>查看</a>
                 </span>              
             )
 
@@ -88,6 +88,14 @@ import MainUI from '../components/Main.jsx';
         const monthFormat = 'YYYY/MM';
         var component = <div className='viewcustomuser-main-ui' style={{height:this.state.mainHeight}}>
             <div className='pad-10'>
+                <div className="zmiti-viewcustomuser-header">
+                    <Row>
+                        <Col span={8} className="zmiti-viewcustomuser-header-inner">用户列表</Col>
+                        <Col span={8} offset={8} className='zmiti-viewcustomuser-button-right'></Col>
+                    </Row>                      
+                </div>
+                <div className="zmiti-viewcustomuser-line"></div>
+                <div className="hr20"></div>
                 <Table bordered={true} 
                 dataSource={this.state.dataSource} 
                 columns={columns} />

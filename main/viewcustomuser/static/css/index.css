@@ -16,5 +16,26 @@
 
 .viewcustomuser-main-ui {
   overflow: auto; }
+  .viewcustomuser-main-ui .zmiti-viewcustomuser-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .viewcustomuser-main-ui .zmiti-viewcustomuser-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .viewcustomuser-main-ui .zmiti-viewcustomuser-button-right button {
+    float: right;
+    margin-top: 5px;
+    margin-left: 10px; }
+  .viewcustomuser-main-ui .zmiti-viewcustomuser-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
 
 /*# sourceMappingURL=index.css.map */
