@@ -1,6 +1,6 @@
 import './static/css/index.css';
 import React from 'react';
-import {Button} from '../commoncomponent/common.jsx';
+import {message,Select,Modal,Form,Icon,Tag,Tooltip, Input,Button, Row, Col,Switch,Radio,InputNumber,DatePicker,Table ,moment} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
@@ -12,7 +12,8 @@ import MainUI from '../components/Main.jsx';
     constructor(args){
         super(...args);
         this.state = {
-           
+            mainHeight:document.documentElement.clientHeight-50,
+            dataSource:[],
         }
     }
 
@@ -32,7 +33,9 @@ import MainUI from '../components/Main.jsx';
             this.resizeMainHeight = resizeMainHeight;
     }
     componentDidMount(){
+        var s=this;
        this.resizeMainHeight(this);
+       s.getuserlists();
     }
 
 
@@ -46,15 +49,75 @@ import MainUI from '../components/Main.jsx';
             loginOut();
         },this);
         resizeMainHeight(this);
+        const columns = [{
+            title: '微信号',
+            dataIndex: 'wxuserid',
+            key: 'wxuserid',
+        },{
+            title: '手机号',
+            dataIndex: 'phone',
+            key: 'phone',
+            width:120,
+
+        },{
+            title: '邮箱',
+            dataIndex: 'email',
+            key: 'email',
+            width:200,
+
+        }, {
+            title: '时间',
+            dataIndex: 'createtime',
+            key: 'createtime',
+            width:150,
+        },  {
+            title: '操作',
+            dataIndex: 'operation',
+            key: 'operation',
+            width:150,
+            render:(text,recoder,index)=>(
+
+                <span>
+                  <a href={'#/viewcustombooklist/'+recoder.wxopenid}>查看</a>
+                </span>              
+            )
+
+        }]
 
        
         const monthFormat = 'YYYY/MM';
-        var component = <div>
-            请在这里填充主要内容。
+        var component = <div className='viewcustomuser-main-ui' style={{height:this.state.mainHeight}}>
+            <div className='pad-10'>
+                <Table bordered={true} 
+                dataSource={this.state.dataSource} 
+                columns={columns} />
+            </div>
         </div>
         return(
             <MainUI component={component}></MainUI>
         )
+    }
+    //获取用户列表
+    getuserlists(){
+        var s=this;
+        var worksid=s.props.params.id;
+        //console.log(worksid,'worksid');
+        $.ajax({
+            type:'POST',
+            url:window.baseUrl + 'book/get_userlist/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                worksid:worksid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    console.log(data.list);
+                    s.state.dataSource=data.list;
+                    s.forceUpdate();
+                }
+            }
+        });
     }
 
   

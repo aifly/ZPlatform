@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
-import { message,Select  } from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form,Icon,Tag,Tooltip, Input,Button, Row, Col,Switch,Radio,InputNumber,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
 let Option = Select.Option;
 import MainUI from '../components/main.jsx';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
-
+import $ from 'jquery';
  class ZmitiViewBookListApp extends Component {
 	constructor(props) {
 		super(props);
@@ -13,8 +13,13 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 		this.state = {
 			current:0,
 			mainHeight:document.documentElement.clientHeight - 50,
-      selectedIndex:0,
-			userList:[
+      		selectedIndex:0,
+      		bookIndex:0,
+      		tags:['全部'],
+      		keyword:'',
+      		booktypeList:[],
+      		workdatatype:0,
+			dataSource:[
 
 			],
 
@@ -23,108 +28,152 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 	}
 	render() {
 
-    
+		var title = this.props.params.title || '书本列表';
+		const columns=[{
+            title: '名称',
+            dataIndex: 'title',
+            key: 'title',
+        },{
+            title: '二维码',
+            dataIndex: 'qrcodeurl',
+            key: 'qrcodeurl',
+            width:120,
 
-		const columns = [{
-			title: '序号',
-			dataIndex: 'key',
-			key: 'xx',
-		},{
-			title: '用户名',
-			dataIndex: 'username',
-			key: 'username',
-		}, {
-			title: '手机',
-			dataIndex: 'mobile',
-			key: 'mobile',
-		}, {
-			title: '邮箱',
-			dataIndex: 'email',
-			key: 'email',
-		}, {
-			title: '注册日期',
-			dataIndex: 'regDate',
-			key: 'regDate',
-      sorter: (a, b) => a.key - b.key
-		}, {
-			title: '剩余天数',
-			dataIndex: 'surplusDays',
-			key: 'surplusDays',
-      sorter: (a, b) => a.surplusDays - b.surplusDays
-		}, {
-			title: '空间使用量',
-			dataIndex: 'userSpace',
-			key: 'userSpace',
-		}];
-		var columns1 = columns.concat( { 
-			title: '操作', 
-			dataIndex: '', key: 'x',
-      width:'30%',
-			render:  (text, record)  => <div data-userid={record.userid}></div> });
-		var columns2= columns.concat( { 
-			title: '操作', 
-      width:'30%',
-			dataIndex: '', key: 'x',
-			render: (text, record) => <div data-userid={record.userid}></div> });
-		
-    var title = this.props.params.title;
-		let props={
-			userList:this.state.userList,
-			columns:[columns1,columns2],
-			tags:['养生','其它'],
-			mainHeight:this.state.mainHeight,
-      title,
-      changeAccount:this.changeAccount.bind(this), 
-      keyDown:(value)=>{
-          clearTimeout(this.keyupTimer);
-          this.defautlUserList === undefined && (this.defautlUserList = this.state.userList.concat([]));
-          this.keyupTimer = setTimeout(()=>{
-            var userlists = this.defautlUserList;
-            var condition = 'username';
-            this.state.userList  = userlists.filter(user=>{
-              switch(this.condition*1){
-                case 0://提问内容
-                  condition = 'username';
-                break;
-                case 1://类型
-                  condition = 'username'
-                break;
-              }
+        },{
+            title: '时间',
+            dataIndex: 'createtime',
+            key: 'createtime',
+            width:120,
 
-             return user[condition].indexOf(value)>-1;
-            });
+        },{
+            title: '操作',
+            dataIndex: 'operation',
+            key: 'operation',
+            width:120,
 
-            this.forceUpdate(()=>{
-            });
-          },350);
-      },
-      selectComponent:<Select placeholder='用户名' onChange={()=>{}}  style={{width:120}} size='small' >
-                         <Option value="0">用户名</Option>
-                     </Select>
-		}
-
-		return (
-			<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
-			);
+        }]
+        let props={
+            userid:this.userid,
+            changeAccount:this.changeAccount.bind(this),
+			tags:this.state.tags,
+            mainHeight:this.state.mainHeight,
+            title:title,
+            type:'workorder-1',
+            selectedIndex:this.state.selectedIndex,
+            rightType:"custom",
+            customRightComponent:<div className='viewcustombooklist-main-ui'>
+            	<div className='pad-10'>
+            		<Table bordered={true} 
+                          dataSource={this.state.dataSource} 
+                          columns={columns} />
+            	</div>
+            </div>
+        }
+        var mainComponent = <div>
+          <ZmitiUserList {...props}></ZmitiUserList>
+        </div>;
+        return (
+          <MainUI component={mainComponent}></MainUI>
+        );
 	}
 
 	componentWillMount() {
-
 		let {resizeMainHeight,validateUser,loginOut,resizeLeftMenu} = this.props;
-
 		validateUser(()=>{loginOut(undefined,undefined,false);},this);
 
 	}
 	componentDidMount() {
- 
+		var s = this;
+		let {resizeMainHeight,validateUser,loginOut,resizeLeftMenu} = this.props;
+		resizeMainHeight(this,'setAdminHeight');
+		s.getbooktype();
+		s.bindNewdata();
+	}
+	changeAccount(i){ 
+		var s = this;     
+		this.state.selectedIndex = i*1;
+		this.state.keyword = '';
+		this.forceUpdate();
+		this.bindNewdata();
+		//console.log(this.state.selectedIndex);
+	}
+	//列表
+	bindNewdata(){
+		var s=this;
+		var wxopenid=s.props.params.id;
+		if(s.state.selectedIndex>0){
+			
+			$.each(s.state.booktypeList,function(m,item){
+					if(s.state.selectedIndex-1===m){
+						//console.log(item.workdatatype);
+						s.state.workdatatype=item.workdatatype;
+						$.ajax({
+					        type:'POST',
+					        url:window.baseUrl+'book/get_booklist/',
+					        data:{
+					          userid:s.userid,
+					          getusersigid:s.getusersigid,
+					          datatype:s.state.workdatatype,
+					          wxopenid:wxopenid,
+					        },
+					        success(data){
+					        	if(data.getret===0){
+					        		s.setState({
+					        			dataSource:data.list,
+					        		})
+					        		s.forceUpdate();
+					        		console.log(data,s.state.workdatatype);
+					        	}
+					        }
+						})
+					}
+			})
+		}else{
+			$.ajax({
+		        type:'POST',
+		        url:window.baseUrl+'book/get_booklist/',
+		        data:{
+		          userid:s.userid,
+		          getusersigid:s.getusersigid,
+		          datatype:'',
+		          wxopenid:wxopenid,
+		        },
+		        success(data){
+		        	if(data.getret===0){
+		        		s.setState({
+		        			dataSource:data.list,
+		        		})
+		        		s.forceUpdate();
+		        		console.log(data,'bindNewdata');
+		        	}
+		        }
+			})
+		}
 
-       let {resizeMainHeight,validateUser,loginOut,resizeLeftMenu} = this.props;
-      resizeMainHeight(this,'setAdminHeight');
- 
-  }
-  changeAccount(i){
-
-  }
+	}
+	//获取书本分类
+	getbooktype(){
+		var s = this;
+		$.ajax({
+            url:window.baseUrl+'book/get_bookclass/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+            },
+            success(data){
+                if(data.getret === 0){
+                	var typename=['全部'];
+		            $.each(data.list,function(i,item){
+		              typename.push(item.typename);
+		            })            
+		            s.state.tags=typename;
+		            s.state.booktypeList=data.list;
+		            console.log(data.list);
+		            s.forceUpdate();
+                }
+            }
+        })    
+	}
 
 }
 export default ZmitiValidateUser(ZmitiViewBookListApp);
