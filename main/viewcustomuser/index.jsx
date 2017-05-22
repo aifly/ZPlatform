@@ -82,12 +82,10 @@ import MainUI from '../components/Main.jsx';
             key: 'operation',
             width:80,
             render:(text,recoder,index)=>(
-
                 <span>
                   <a href={'#/viewcustomuserbook/'+recoder.wxopenid}>查看</a>
                 </span>              
             )
-
         }]
 
        

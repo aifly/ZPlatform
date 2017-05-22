@@ -58,12 +58,6 @@ import $ from 'jquery';
             key: 'createtime',
             width:150,
 
-        },{
-            title: '操作',
-            dataIndex: 'operation',
-            key: 'operation',
-            width:100,
-
         }]
         
         var mainComponent = <div className='viewcustomuserbook-main-ui'>

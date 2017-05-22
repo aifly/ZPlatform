@@ -66,7 +66,12 @@ import $ from 'jquery';
             title: '操作',
             dataIndex: 'operation',
             key: 'operation',
-            width:100,
+            width:80,
+            render:(value,recoder,index)=>(
+            	<span>
+                  <a href={'#/viewcustomuserbook/'+recoder.autoid}>修改</a>
+                </span>
+            )
 
         }]
         let props={
@@ -89,15 +94,9 @@ import $ from 'jquery';
                     <div className="zmiti-viewcustombooklist-line"></div>
                     <div className="hr20"></div>
                     <Row>
-                    	<Col span={8} className="zmiti-viewcustombooklist-select">
-	                    	<Select placeholder='用户名' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
-	                         <Option value="0">用户名</Option>
-	                         <Option value="1">书名</Option>
-	                     	</Select>
-                     	</Col>
                     	<Col span={8} className="zmiti-viewcustombooklist-search">
                     		<Search
-							    placeholder=""
+							    placeholder="书名"
 							    style={{ width: 200 }}
 							    size="default"
 							    onSearch={this.searchbtn.bind(this)}
@@ -221,17 +220,16 @@ import $ from 'jquery';
             }
         })    
 	}
-	//select
-	searchtype(value){
-		var s=this;
-		s.state.searchtype=value;
-		//console.log(s.state.searchtype);
-	}
 	//search 
 	searchbtn(value){
 		var s=this;
 		s.state.searchtext=value;
-		console.log(s.state.searchtype+"..."+s.state.searchtext)
+		console.log(s.state.searchtext);
+        this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+        this.state.dataSource = this.dataSource.filter((item)=>{
+            return  item.title.indexOf(this.state.searchtext)>-1;
+        });
+        this.forceUpdate(); 
 	}
 	//loading
 	loadData(){   
