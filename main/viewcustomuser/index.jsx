@@ -19,6 +19,8 @@ import MainUI from '../components/Main.jsx';
             searchtype:0,
             searchtext:'',
             dataSource:[],
+            alldataSource:[],
+            countNum:0,
         }
     }
 
@@ -42,6 +44,7 @@ import MainUI from '../components/Main.jsx';
        this.resizeMainHeight(this);
        s.getuserlists();
        s.loadData();
+
     }
 
 
@@ -101,19 +104,28 @@ import MainUI from '../components/Main.jsx';
                     <div className="zmiti-viewcustomuser-line"></div>
                     <div className="hr20"></div>
                     <Row>
-                        <Col span={8} className="zmiti-viewcustomuser-select">
-                            <Select placeholder='微信号' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
-                             <Option value="0">微信号</Option>
-                             <Option value="1">手机号</Option>
-                            </Select>
+                        <Col span={18}>
+                            <Row>
+                                <Col span={12} className="zmiti-viewcustomuser-select">
+                                    <Select placeholder='微信号' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
+                                     <Option value="0">微信号</Option>
+                                     <Option value="1">手机号</Option>
+                                     <Option value="2">邮箱</Option>
+                                    </Select>
+                                </Col>
+                                <Col span={12} className="zmiti-viewcustomuser-search">
+                                    <Search
+                                        placeholder=""
+                                        style={{ width: 200 }}
+                                        size="default"
+                                        onSearch={this.searchbtn.bind(this)}
+                                      />    
+                                </Col>
+                            </Row>
                         </Col>
-                        <Col span={8} className="zmiti-viewcustomuser-search">
-                            <Search
-                                placeholder=""
-                                style={{ width: 200 }}
-                                size="default"
-                                onSearch={this.searchbtn.bind(this)}
-                              />    
+
+                        <Col span={6} className="zmiti-viewcustomuser-count">
+                            总计：<span>{this.state.countNum}</span>条
                         </Col>
                     </Row>
                     <div className="hr20"></div> 
@@ -144,8 +156,11 @@ import MainUI from '../components/Main.jsx';
                 if(data.getret === 0){
                     console.log(data.list);
                     s.state.dataSource=data.list;
-                    s.state.loading=false,
+                    s.state.alldataSource=data.list;
+                    s.state.loading=false;
+                    s.state.countNum=s.state.dataSource.length;
                     s.forceUpdate();
+                    s.dataSource = s.state.dataSource.concat([]) ;     
                 }
             }
         });
@@ -154,27 +169,35 @@ import MainUI from '../components/Main.jsx';
     searchtype(value){
         var s=this;
         s.state.searchtype=value;
-        //console.log(s.state.searchtype);
+        
+        //s.getuserlists();
+        console.log(s.state.searchtype);
     }
     //search 
     searchbtn(value){
         var s=this;
         s.state.searchtext=value;
+
         //console.log(s.state.searchtype+"..."+s.state.searchtext);
-        if(s.state.searchtype===0){
-            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+        
+        if(s.state.searchtype*1===0){
             this.state.dataSource = this.dataSource.filter((item)=>{
                 return  item.wxuserid.indexOf(this.state.searchtext)>-1;
             });
-            this.forceUpdate(); 
-
-        }else{
-            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+            s.forceUpdate();
+        }else if(s.state.searchtype*1===1){
             this.state.dataSource = this.dataSource.filter((item)=>{
                 return  item.phone.indexOf(this.state.searchtext)>-1;
             });
-            this.forceUpdate();  
+            s.forceUpdate(); 
+        }else{
+            this.state.dataSource = this.dataSource.filter((item)=>{
+                return  item.email.indexOf(this.state.searchtext)>-1;
+            });
+            s.forceUpdate(); 
         }
+        
+
 
     }
     //loading
