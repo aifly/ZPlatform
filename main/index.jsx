@@ -84,7 +84,7 @@ class App extends React.Component{
 				{path: '/viewinforlist/', app: ZmitiViewinforListApp},
 				{path: '/infoeditor/(:id)',app:ZmitiInforEditorApp},
 				{path: '/viewcustombooklist/',app:ZmitiViewBookListApp},
-				{path: '/viewcustomuser/(:id)',app:ZmitiViewCustomUserApp},
+				{path: '/viewcustomuser/(:title)/(:id)',app:ZmitiViewCustomUserApp},
 				{path: '/viewcustomuserbook/(:id)',app:ZmitiViewUserBookApp},
 				
 		];

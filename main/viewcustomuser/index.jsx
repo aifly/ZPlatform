@@ -94,7 +94,7 @@ import MainUI from '../components/Main.jsx';
                 <div className='pad-10'>
                     <div className="zmiti-viewcustomuser-header">
                         <Row>
-                            <Col span={8} className="zmiti-viewcustomuser-header-inner">用户列表</Col>
+                            <Col span={8} className="zmiti-viewcustomuser-header-inner">{this.props.params.title}-用户列表</Col>
                             <Col span={8} offset={8} className='zmiti-viewcustomuser-button-right'></Col>
                         </Row>                      
                     </div>
