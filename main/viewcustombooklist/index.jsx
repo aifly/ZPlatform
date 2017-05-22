@@ -32,6 +32,10 @@ import $ from 'jquery';
 			title:'',
 			datatype:'',
 			datatypename:'全部',
+			datainfourl:'',//二维码图片
+			workdataid:'',//书本id
+			booktypeid:'',//书本分类id
+
 		};
 		this.condition = 0;
 	}
@@ -230,7 +234,7 @@ import $ from 'jquery';
 			})
 		}else{
 			$.ajax({
-		        type:'GET',
+		        type:'POST',
 		        url:window.baseUrl+'document/get_documentlist/',
 		        data:{
 		          userid:s.userid,
@@ -290,9 +294,9 @@ import $ from 'jquery';
 		var typename='';
 		$.each(s.state.dataSource,function(i,item){
 			if(item.workdataid===workdataid){
-				//console.log(workdataid,'workdataid');
+				//console.log(workdataid,'workdataid');				
 				$.each(s.state.booktypeList,function(m,category){
-					if(item.datatype===category.workdatatype){
+					if(item.datatype===category.workdatatype){						
 						typename=category.typename;
 					}
 				})
@@ -301,6 +305,8 @@ import $ from 'jquery';
 					title:item.title,
 					qrcodeurl:item.qrcodeurl,
 					datatypename:typename,
+					workdataid:workdataid,
+					booktypeid:item.datatype,
 				})
 			}
 		})
@@ -309,6 +315,28 @@ import $ from 'jquery';
 	//edit
 	editbookinfo(){
 		var s = this;
+		$.ajax({
+          url:window.baseUrl+ 'document/edit_book/',
+          type:'GET',
+          data:{
+          	userid:s.userid,
+            getusersigid:s.getusersigid,         	
+          	workdataid:s.state.workdataid,
+          	datatype:s.state.booktypeid,
+          	qrcodeurl:s.state.datainfourl,
+          },success(data){
+          	message[data.getret === 0 ? 'success':'error'](data.getmsg);
+          	if(data.getret===0){
+          		console.log(data,'修改成功');
+          		s.setState({
+					modDialogVisible:false,
+				})
+				s.bindNewdata();
+				s.forceUpdate(); 
+          	}
+          }
+        })
+		
 	}
 	//上传图片
     uploadFile(){
@@ -318,7 +346,7 @@ import $ from 'jquery';
         formData.append('userid',s.userid);
         formData.append('getusersigid',s.getusersigid);
         formData.append('setuploadtype','0');
-        formData.append('setdatainfoclassid','1465782386');
+        formData.append('setdatainfoclassid','1465782065');
         formData.append('setupfile', this.refs['upload-file'].files[0]);       
         $.ajax({
           url:window.baseUrl+ 'upload/upload_file',
@@ -327,8 +355,12 @@ import $ from 'jquery';
           contentType: false,
           processData: false,
           success(data){
-            //console.log(data);
-            s.forceUpdate();            
+          	message[data.getret === 0 ? 'success':'error'](data.getmsg);
+          	if(data.getret === 0){
+          		s.state.datainfourl=data.getfileurlArr[0].datainfourl;
+	            console.log(data.getfileurlArr[0].datainfourl);
+	            s.forceUpdate(); 
+            }          
           }
         })
     }
