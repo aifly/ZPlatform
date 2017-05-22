@@ -37,5 +37,11 @@
     height: 15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd; }
+  .viewcustombooklist-main-ui .zmiti-viewcustombooklist-key {
+    text-align: center; }
+  .viewcustombooklist-main-ui .zmiti-viewcustombooklist-select {
+    width: 130px; }
+  .viewcustombooklist-main-ui .zmiti-viewcustombooklist-search {
+    width: 230px; }
 
 /*# sourceMappingURL=index.css.map */

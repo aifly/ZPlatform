@@ -30,6 +30,15 @@ import $ from 'jquery';
 
 		var title = this.props.params.title || '书本列表';
 		const columns=[{
+            title:"序号",
+            dataIndex:'key',
+            key:'xx',
+            width:80,
+            filterIcon:true,
+            render:(value,recorder,index)=>{
+                return <div className="zmiti-viewcustomuserbook-key">{index+1}</div>;
+            }
+        },{
             title: '名称',
             dataIndex: 'title',
             key: 'title',
@@ -38,18 +47,22 @@ import $ from 'jquery';
             dataIndex: 'qrcodeurl',
             key: 'qrcodeurl',
             width:120,
+            filterIcon:true,
+            render:(value)=>{
+                return <img src={value} />;
+            }
 
         },{
             title: '时间',
             dataIndex: 'createtime',
             key: 'createtime',
-            width:120,
+            width:150,
 
         },{
             title: '操作',
             dataIndex: 'operation',
             key: 'operation',
-            width:120,
+            width:100,
 
         }]
         
@@ -58,7 +71,7 @@ import $ from 'jquery';
             		<div className="zmiti-viewcustomuserbook-header">
                         <Row>
                             <Col span={8} className="zmiti-viewcustomuserbook-header-inner">书本列表</Col>
-                            <Col span={8} offset={8} className='zmiti-viewcustomuserbook-button-right'></Col>
+                            <Col span={8} offset={8} className='zmiti-viewcustomuserbook-button-right'><Button type="primary" icon="left" onClick={this.goback.bind(this)}>返回用户列表</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-viewcustomuserbook-line"></div>
@@ -169,6 +182,11 @@ import $ from 'jquery';
                 }
             }
         })    
+	}
+	//
+	goback(){
+		var s = this;
+		window.location='#/viewcustomuser/';
 	}
 
 }

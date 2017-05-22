@@ -37,5 +37,9 @@
     height: 15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd; }
+  .viewcustomuser-main-ui .zmiti-viewcustomuser-select {
+    width: 130px; }
+  .viewcustomuser-main-ui .zmiti-viewcustomuser-search {
+    width: 230px; }
 
 /*# sourceMappingURL=index.css.map */

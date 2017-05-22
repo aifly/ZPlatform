@@ -1,7 +1,8 @@
 import './static/css/index.css';
 import React from 'react';
-import {message,Select,Modal,Form,Icon,Tag,Tooltip, Input,Button, Row, Col,Switch,Radio,InputNumber,DatePicker,Table ,moment} from '../commoncomponent/common.jsx';
-
+import {message,Select,Modal,Form,Icon,Tag,Tooltip, Input,Button, Row, Col,Switch,Radio,InputNumber,DatePicker,Table ,moment,Spin} from '../commoncomponent/common.jsx';
+let Search = Input.Search;
+let Option = Select.Option;
 import $ from 'jquery';
 
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
@@ -13,6 +14,10 @@ import MainUI from '../components/Main.jsx';
         super(...args);
         this.state = {
             mainHeight:document.documentElement.clientHeight-50,
+            loading:false,
+            tip:'数据拉取中...',
+            searchtype:0,
+            searchtext:'',
             dataSource:[],
         }
     }
@@ -36,6 +41,7 @@ import MainUI from '../components/Main.jsx';
         var s=this;
        this.resizeMainHeight(this);
        s.getuserlists();
+       s.loadData();
     }
 
 
@@ -74,7 +80,7 @@ import MainUI from '../components/Main.jsx';
             title: '操作',
             dataIndex: 'operation',
             key: 'operation',
-            width:150,
+            width:80,
             render:(text,recoder,index)=>(
 
                 <span>
@@ -86,21 +92,39 @@ import MainUI from '../components/Main.jsx';
 
        
         const monthFormat = 'YYYY/MM';
-        var component = <div className='viewcustomuser-main-ui' style={{height:this.state.mainHeight}}>
-            <div className='pad-10'>
-                <div className="zmiti-viewcustomuser-header">
+        var component = <Spin tip={this.state.tip} spinning={this.state.loading}><div className='viewcustomuser-main-ui' style={{height:this.state.mainHeight}}>
+                <div className='pad-10'>
+                    <div className="zmiti-viewcustomuser-header">
+                        <Row>
+                            <Col span={8} className="zmiti-viewcustomuser-header-inner">用户列表</Col>
+                            <Col span={8} offset={8} className='zmiti-viewcustomuser-button-right'></Col>
+                        </Row>                      
+                    </div>
+                    <div className="zmiti-viewcustomuser-line"></div>
+                    <div className="hr20"></div>
                     <Row>
-                        <Col span={8} className="zmiti-viewcustomuser-header-inner">用户列表</Col>
-                        <Col span={8} offset={8} className='zmiti-viewcustomuser-button-right'></Col>
-                    </Row>                      
+                        <Col span={8} className="zmiti-viewcustomuser-select">
+                            <Select placeholder='微信号' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
+                             <Option value="0">微信号</Option>
+                             <Option value="1">手机号</Option>
+                            </Select>
+                        </Col>
+                        <Col span={8} className="zmiti-viewcustomuser-search">
+                            <Search
+                                placeholder=""
+                                style={{ width: 200 }}
+                                size="default"
+                                onSearch={this.searchbtn.bind(this)}
+                              />    
+                        </Col>
+                    </Row>
+                    <div className="hr20"></div> 
+                    <Table bordered={true} 
+                    dataSource={this.state.dataSource} 
+                    columns={columns} />
                 </div>
-                <div className="zmiti-viewcustomuser-line"></div>
-                <div className="hr20"></div>
-                <Table bordered={true} 
-                dataSource={this.state.dataSource} 
-                columns={columns} />
             </div>
-        </div>
+        </Spin>
         return(
             <MainUI component={component}></MainUI>
         )
@@ -122,12 +146,45 @@ import MainUI from '../components/Main.jsx';
                 if(data.getret === 0){
                     console.log(data.list);
                     s.state.dataSource=data.list;
+                    s.state.loading=false,
                     s.forceUpdate();
                 }
             }
         });
     }
+    //select
+    searchtype(value){
+        var s=this;
+        s.state.searchtype=value;
+        //console.log(s.state.searchtype);
+    }
+    //search 
+    searchbtn(value){
+        var s=this;
+        s.state.searchtext=value;
+        //console.log(s.state.searchtype+"..."+s.state.searchtext);
+        if(s.state.searchtype===0){
+            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+            this.state.dataSource = this.dataSource.filter((item)=>{
+                return  item.wxuserid.indexOf(this.state.searchtext)>-1;
+            });
+            this.forceUpdate(); 
 
+        }else{
+            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+            this.state.dataSource = this.dataSource.filter((item)=>{
+                return  item.phone.indexOf(this.state.searchtext)>-1;
+            });
+            this.forceUpdate();  
+        }
+
+    }
+    //loading
+    loadData(){   
+        var s = this;
+        this.state.loading = true;
+        this.forceUpdate();
+    }
   
 }
 
