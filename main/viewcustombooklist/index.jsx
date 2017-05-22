@@ -124,7 +124,7 @@ import $ from 'jquery';
 	                          columns={columns} />
 	            	</div>
 	            </div>
-	            <Modal title={this.state.datatypename} visible={this.state.modDialogVisible}
+	            <Modal title={'分类：'+this.state.datatypename} visible={this.state.modDialogVisible}
 					onOk={this.editbookinfo.bind(this)}
 					onCancel={()=>{this.setState({modDialogVisible:false})}}
                   >
@@ -275,6 +275,7 @@ import $ from 'jquery';
 	searchbtn(value){
 		var s=this;
 		s.state.searchtext=value;
+		s.state.selectedIndex=0;
 		console.log(s.state.dataSource);
         this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
         this.state.dataSource = this.dataSource.filter((item)=>{
