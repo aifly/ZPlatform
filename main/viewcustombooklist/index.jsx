@@ -30,6 +30,8 @@ import $ from 'jquery';
 			dataSource:[
 			],
 			title:'',
+			datatype:'',
+			datatypename:'全部',
 		};
 		this.condition = 0;
 	}
@@ -122,7 +124,7 @@ import $ from 'jquery';
 	                          columns={columns} />
 	            	</div>
 	            </div>
-	            <Modal title="书本" visible={this.state.modDialogVisible}
+	            <Modal title={this.state.datatypename} visible={this.state.modDialogVisible}
 					onOk={this.editbookinfo.bind(this)}
 					onCancel={()=>{this.setState({modDialogVisible:false})}}
                   >
@@ -228,12 +230,11 @@ import $ from 'jquery';
 			})
 		}else{
 			$.ajax({
-		        type:'POST',
+		        type:'GET',
 		        url:window.baseUrl+'document/get_documentlist/',
 		        data:{
 		          userid:s.userid,
 		          getusersigid:s.getusersigid,
-		          datatype:'',
 		        },
 		        success(data){
 		        	if(data.getret===0){
@@ -284,13 +285,20 @@ import $ from 'jquery';
 	//dialog
 	bookdialog(workdataid){
 		var s = this;
+		var typename='';
 		$.each(s.state.dataSource,function(i,item){
 			if(item.workdataid===workdataid){
 				//console.log(workdataid,'workdataid');
+				$.each(s.state.booktypeList,function(m,category){
+					if(item.datatype===category.workdatatype){
+						typename=category.typename;
+					}
+				})
 				s.setState({
 					modDialogVisible:true,
 					title:item.title,
 					qrcodeurl:item.qrcodeurl,
+					datatypename:typename,
 				})
 			}
 		})
