@@ -27,8 +27,8 @@ import $ from 'jquery';
       		keyword:'',
       		booktypeList:[],
       		workdatatype:0,
-			dataSource:[
-			],
+			dataSource:[],
+			alldataSource:[],
 			title:'',
 			datatype:'',
 			datatypename:'全部',
@@ -239,6 +239,7 @@ import $ from 'jquery';
 		        success(data){
 		        	if(data.getret===0){
 		        		s.state.dataSource=data.list;
+		        		s.state.alldataSource=data.list;
 					    s.state.loading=false;
 		        		s.forceUpdate();
 		        		console.log(data,'bindNewdata');
@@ -277,7 +278,7 @@ import $ from 'jquery';
 		s.state.searchtext=value;
 		s.state.selectedIndex=0;
 		console.log(s.state.dataSource);
-        this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+        this.dataSource = this.alldataSource  || this.state.alldataSource.concat([]) ;
         this.state.dataSource = this.dataSource.filter((item)=>{
             return  item.title.indexOf(this.state.searchtext)>-1;
         });
