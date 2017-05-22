@@ -44,4 +44,40 @@
   .viewcustombooklist-main-ui .zmiti-viewcustombooklist-search {
     width: 230px; }
 
+.zmiti-viewcustombooklist-picture {
+  width: 100px;
+  height: 100px;
+  border: 1px #cccccc solid;
+  float: right; }
+  .zmiti-viewcustombooklist-picture img {
+    width: 98px;
+    height: 98px;
+    display: block; }
+
+.zmiti-viewcustombooklist-spaces {
+  width: 160px; }
+
+.zmiti-viewcustombooklist-upload {
+  position: relative;
+  width: 100px;
+  height: 28px;
+  overflow: hidden;
+  zoom: 1; }
+  .zmiti-viewcustombooklist-upload button {
+    position: absolute;
+    width: 100px;
+    height: 28px;
+    left: 0;
+    top: 0;
+    z-index: 1; }
+  .zmiti-viewcustombooklist-upload input {
+    position: absolute;
+    width: 160px;
+    height: 28px;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    opacity: 0;
+    cursor: pointer; }
+
 /*# sourceMappingURL=index.css.map */

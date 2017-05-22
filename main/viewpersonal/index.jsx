@@ -700,7 +700,7 @@ class ZmitiViewPersonalApp extends Component {
     uploadFile(){
     	var userid = this.props.params.userid?this.props.params.userid:this.userid;
         let formData = new FormData(),
-            s = this;
+        s = this;
         formData.append('userid',s.userid);
         formData.append('getusersigid',s.getusersigid);
         formData.append('setuploadtype','0');
