@@ -26,11 +26,18 @@ class ZmitiQAListApp extends Component {
 			isEntry:1,
 			showTitle:true,
 			data:{
-				questionlist:[],
-				worksname:'',
+				title: "党务纪检应知应会小测验",
+			      indexBg:"./assets/images/bg.png",
+			      theme:"DANGJIAN",
+			      duration:360,
+				duration:0,
+				question:[],
 				shareTitle:'',//分享标题
 				shareDesc:'',//分享描述
 				shareImg:'',//分享图片300.jpg;
+				loadingImg: [
+					
+				]
 			}
 		}; 
 	}
@@ -73,25 +80,25 @@ class ZmitiQAListApp extends Component {
         };
 
 
-		var component = <div className='wxchat-main-ui wxchat-list-main-ui'>
-			{this.state.isEntry === 1 && <section className='wxchat-list-C'>
-							<ul className='wxchat-list'>
+		var component = <div className='qa-main-ui qa-list-main-ui'>
+			{this.state.isEntry === 1 && <section className='qa-list-C'>
+							<ul className='qa-list'>
 								<li  title='创建作品' onClick={this.showCreateWorkModal.bind(this)}>
 									<img src='./static/images/create.png'/>
 								</li>
-								{this.state.data.questionlist.map((item,i)=>{
+								{this.state.data.question.map((item,i)=>{
 									return <li key={i}>
-										<section  className='wxchat-qrcode'><img src={item.qrcodeUrl}/></section>
-										<div className='wxchat-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
-										<div className='wxchat-item-name'>{item.worksname}</div>
+										<section  className='qa-qrcode'><img src={item.qrcodeUrl}/></section>
+										<div className='qa-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
+										<div className='qa-item-name'>{item.worksname}</div>
 										<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
-											<div className='wxchat-item-view'><Link to={'/workwxchat/'+item.worksid}><Icon type="user" /></Link><Link to={'/statistics/wxchat/'+item.worksid}><Icon type="dot-chart" /></Link></div>
+											<div className='qa-item-view'><Link to={'/workqa/'+item.worksid}><Icon type="user" /></Link><Link to={'/statistics/qa/'+item.worksid}><Icon type="dot-chart" /></Link></div>
 										</Tooltip>
 										
-										<div className='wxchat-item-operator'>
+										<div className='qa-item-operator'>
 											<div><a href={item.viewpath} target='_blank'>预览</a></div>
-											<div><Link to={'/wxchat/'+item.worksid}>编辑</Link></div>
-											<Popconfirm placement="top" title={'确定要删除吗？'} onConfirm={this.deleteWXChat.bind(this,item.worksid,i)}>
+											<div><Link to={'/qa/'+item.worksid}>编辑</Link></div>
+											<Popconfirm placement="top" title={'确定要删除吗？'} onConfirm={this.deleteqa.bind(this,item.worksid,i)}>
 												<div>删除</div>
 											</Popconfirm>
 										</div>
@@ -109,61 +116,19 @@ class ZmitiQAListApp extends Component {
 						  footer={''}
 				        >
 				         <div className='poetry-title-input'>
-				         	<input value={this.state.data.worksname} onChange={e=>{this.state.data.worksname = e.target.value;this.forceUpdate()}} type='text' placeholder= '请输入标题'/>
+				         	<input value={this.state.data.title} onChange={e=>{this.state.data.title = e.target.value;this.forceUpdate()}} type='text' placeholder= '请输入标题'/>
 				         	<img src='./static/images/peotry-title-bg.png'/>
 				         	<div className='poetry-title-btn'><Button onClick={this.createWork.bind(this)} type='primary' size="large">创建</Button></div>
 				         </div>
 		        </Modal>
 			
-			<ZmitiUploadDialog id='wxchat-members-head' {...userHeadProps}></ZmitiUploadDialog>		
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
 		);
 	}
 
-	createWork(){}
-
-
-	showCreateWorkModal(){
-
-	}
-
-	deleteWXChat(worksid,i){//删除作品
-		var s = this;
-		$.ajax({
-			url:window.baseUrl+'works/del_works/',
-			data:{
-				userid:s.userid,
-				getusersigid:s.getusersigid,
-				worksid:worksid
-			},success(data){
-				if(data.getret === 0){
-					message.success(data.getmsg);
-					s.state.wxchatList.splice(i,1);
-					s.forceUpdate();
-				}
-				else{
-					message.error(data.getmsg);
-				}
-			}
-		})
-		window.obserable.trigger({
-			type:'deleteWork',
-			data:{
-				worksid,
-				index:i
-			}
-		})
-	}
-
-	modifyTitle(e){
-		this.state.data.title = e.target.value;
-		this.forceUpdate();
-	}
-
-	entryEdit (){
-		 
+	createWork(){
 		var s = this;
 	 
 		var type = 0;
@@ -191,39 +156,63 @@ class ZmitiQAListApp extends Component {
 				datajson:JSON.stringify(s.state.data)
 			},
 			success(data){
-				if(data.getret === 0){
-
-					message.success(data.getmsg);
-					$.ajax({
-						url:window.baseUrl + '/weixin/getoauthurl/',
-						type:'post',
-						data:{
-
-							userid:s.userid,//不需要传公共参数。
-							redirect_uri:data.viewpath,
-							scope:'snsapi_userinfo',
-							worksid:data.worksid,
-							state:new Date().getTime()+''
-						},
-						success(dt){
-							
-							message[dt.getret === 0?'success':'error'](data.getmsg);
-							if(dt.getret === 0){
-								window.location.hash =  '/wxchat/'+ data.worksid+'/';
-							}
-						}
-					})
+				message[data.getret === 0?'success':'error'](data.getmsg);
+				if(data.getret === 0 ){
+					window.location.hash= '/qaedit/'+data.worksid;
 				}
 				
 			}
+		})	
+	}
+
+
+	showCreateWorkModal(){
+
+	}
+
+	deleteqa(worksid,i){//删除作品
+		var s = this;
+		$.ajax({
+			url:window.baseUrl+'works/del_works/',
+			data:{
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				worksid:worksid
+			},success(data){
+				if(data.getret === 0){
+					message.success(data.getmsg);
+					s.state.qaList.splice(i,1);
+					s.forceUpdate();
+				}
+				else{
+					message.error(data.getmsg);
+				}
+			}
 		})
+		window.obserable.trigger({
+			type:'deleteWork',
+			data:{
+				worksid,
+				index:i
+			}
+		})
+	}
+
+	modifyTitle(e){
+		this.state.data.title = e.target.value;
+		this.forceUpdate();
+	}
+
+	entryEdit (){
+		 
+		
 	}
 
 	uploadHead(){
 		var obserable=window.obserable;
 		obserable.trigger({
 		  type:'showModal',
-		  data:{type:0,id:'wxchat-members-head'}
+		  data:{type:0,id:'qa-members-head'}
 		});
 	}
 
@@ -271,7 +260,7 @@ class ZmitiQAListApp extends Component {
 			success(data){
 				if(data.getret === 0){
 					console.log(data.getworksInfo);
-					s.state.wxchatList = data.getworksInfo;
+					s.state.qaList = data.getworksInfo;
 					s.forceUpdate();
 				}
 			}

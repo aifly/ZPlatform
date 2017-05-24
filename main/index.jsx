@@ -6,6 +6,7 @@ import { Router, Route, hashHistory ,Link ,browserHistory } from 'react-router';
 import ZmitiHomeApp from './home/index.jsx';
 import ZmitiPuzzleApp from './puzzle/index.jsx';
 import ZmitiQAListApp from './qa/list.jsx';
+import ZmitiQAApp from './qa/index.jsx';
 import ZmitiMeetingApp from './meeting/index.jsx';
 import ZmitiUserDepartmentApp from './userdepartment/index.jsx';
 import ZmitiPersonalAccApp from './personalAcc/index.jsx';
@@ -88,6 +89,7 @@ class App extends React.Component{
 				{path: '/viewcustomuser/(:title)/(:id)',app:ZmitiViewCustomUserApp},
 				{path: '/viewcustomuserbook/(:id)',app:ZmitiViewUserBookApp},
 				{path: '/qa/',app:ZmitiQAListApp},
+				{path: '/qaedit/:id', app: ZmitiQAApp},
 				
 		];
 		return (

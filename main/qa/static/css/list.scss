@@ -1,9 +1,9 @@
 @import "../../../public/css/base.scss";
-.wxchat-list-main-ui{
-	.wxchat-list-C{
+.qa-list-main-ui{
+	.qa-list-C{
 		width:94%;
 		margin:0 auto;
-		.wxchat-list{
+		.qa-list{
 
 			@include displayFlex(row);
 			-webkit-flex-wrap:wrap;
@@ -21,11 +21,11 @@
        			&:not(:first-of-type){
        				background-color: rgba(0,0,0,.6);
        			}
-       			.wxchat-item-shareimg{
+       			.qa-item-shareimg{
        				height:$size;
        			}
 
-       			.wxchat-item-view{
+       			.qa-item-view{
        				@include pos(a);
                               width:50px !important;
                               bottom: 13px;
@@ -36,7 +36,7 @@
                               a{color:#fff;margin:0 4px;}
        			}
 
-       			.wxchat-item-name{
+       			.qa-item-name{
        				color:#fff;
        				margin:10px;
                               width: 120px;
@@ -49,15 +49,15 @@
                                 -webkit-text-overflow:ellipsis;
        			}
        			&:hover{
-       				.wxchat-item-operator{
+       				.qa-item-operator{
        					display:block;
        				}
-       				.wxchat-qrcode{
+       				.qa-qrcode{
        					@include transform(scale(1));
        				}
        			}
 
-       			.wxchat-qrcode{
+       			.qa-qrcode{
        				@include pos(a);
        				top: 0;
        				left: 0;
@@ -65,7 +65,7 @@
        				@include transition(.2s);
        				@include transform(scale(0));
        			}
-       			.wxchat-item-operator{
+       			.qa-item-operator{
 					width:50px;
 					z-index: 10; 
 					display:none;

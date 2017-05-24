@@ -13,7 +13,7 @@ import MainUI from '../components/Main.jsx';
 import $ from 'jquery';
 
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
- 
+ 	
 
 class ZmitiPoetryApp extends Component {
 	constructor(props) {
@@ -23,12 +23,7 @@ class ZmitiPoetryApp extends Component {
 			mainHeight:document.documentElement.clientHeight - 50,
 			isBg:true,//是否选中风格，
 			isBgSound:false,
-			isShare:false,
-			isCustom:false,
-			customIndex:0,
-			currentCustom:{
-
-			},
+			 
 			themeList:[
 				{name:'default',src:'./static/images/poetry-theme1.jpg'},
 			],
