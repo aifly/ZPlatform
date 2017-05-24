@@ -5,7 +5,8 @@ import './static/css/index.css';
 import { Router, Route, hashHistory ,Link ,browserHistory } from 'react-router';
 import ZmitiHomeApp from './home/index.jsx';
 import ZmitiPuzzleApp from './puzzle/index.jsx';
-import ZmitiQaApp from './qa/index.jsx';
+import ZmitiQAListApp from './qa/list.jsx';
+import ZmitiMeetingApp from './meeting/index.jsx';
 import ZmitiUserDepartmentApp from './userdepartment/index.jsx';
 import ZmitiPersonalAccApp from './personalAcc/index.jsx';
 import ZmitiRenewalApp from './renewal/index.jsx';
@@ -56,7 +57,7 @@ class App extends React.Component{
 				{path: '/puzzle/', app: ZmitiPuzzleApp},
 				{path: '/userdepartment/', app: ZmitiUserDepartmentApp},
 				{path: '/personalAcc/', app: ZmitiPersonalAccApp},
-				{path: '/qa/:title', app: ZmitiQaApp},
+				{path: '/meeting/:title', app: ZmitiMeetingApp},
 				{path: '/project/', app: ZmitiProject},
 				{path: '/renewal/', app: ZmitiRenewalApp},
 				{path: '/custom/', app: ZmitiCustom},
@@ -86,6 +87,7 @@ class App extends React.Component{
 				{path: '/viewcustombooklist/',app:ZmitiViewBookListApp},
 				{path: '/viewcustomuser/(:title)/(:id)',app:ZmitiViewCustomUserApp},
 				{path: '/viewcustomuserbook/(:id)',app:ZmitiViewUserBookApp},
+				{path: '/qa/',app:ZmitiQAListApp},
 				
 		];
 		return (
