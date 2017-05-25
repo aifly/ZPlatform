@@ -91,13 +91,13 @@ class ZmitiQAListApp extends Component {
 										<section  className='qa-qrcode'><img src={item.qrcodeUrl}/></section>
 										<div className='qa-item-shareimg' style={{background:'url('+(item.workico|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 										<div className='qa-item-name'>{item.worksname}</div>
-										<Tooltip placement="top" title={'当前作品浏览量： '+item.totalview}>
-											<div className='qa-item-view'><Link to={'/workqa/'+item.worksid}><Icon type="user" /></Link><Link to={'/statistics/qa/'+item.worksid}><Icon type="dot-chart" /></Link></div>
+										<Tooltip  placement="top" title={'当前作品浏览量： '+item.totalview}>
+											<div hidden className='qa-item-view'><Link to={'/workqa/'+item.worksid}><Icon type="user" /></Link><Link to={'/statistics/qa/'+item.worksid}><Icon type="dot-chart" /></Link></div>
 										</Tooltip>
 										
 										<div className='qa-item-operator'>
 											<div><a href={item.viewpath} target='_blank'>预览</a></div>
-											<div><Link to={'/qa/'+item.worksid}>编辑</Link></div>
+											<div><Link to={'/qaedit/'+item.worksid}>编辑</Link></div>
 											<Popconfirm placement="top" title={'确定要删除吗？'} onConfirm={this.deleteqa.bind(this,item.worksid,i)}>
 												<div>删除</div>
 											</Popconfirm>
@@ -150,6 +150,7 @@ class ZmitiQAListApp extends Component {
 				worksdesc:'',
 				workico:'',
 				workstag:'',
+				dirname:'qa',
 				workstate:0,//作品状态, 0，草稿,1，正常 ,2，已删除
 				imgurl:'',
 				worktypesign:type,//作品类型0:我的作品;1:公司作品;2,平台作品
@@ -181,7 +182,7 @@ class ZmitiQAListApp extends Component {
 			},success(data){
 				if(data.getret === 0){
 					message.success(data.getmsg);
-					s.state.qaList.splice(i,1);
+					s.state.data.question.splice(i,1);
 					s.forceUpdate();
 				}
 				else{
@@ -260,7 +261,7 @@ class ZmitiQAListApp extends Component {
 			success(data){
 				if(data.getret === 0){
 					console.log(data.getworksInfo);
-					s.state.qaList = data.getworksInfo;
+					s.state.data.question = data.getworksInfo;
 					s.forceUpdate();
 				}
 			}

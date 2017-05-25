@@ -3,7 +3,7 @@ import React from 'react';
 import { message,Row,Col,Input,Button,Icon } from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
-
+import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import MainUI from '../components/Main.jsx';
@@ -15,9 +15,9 @@ import MainUI from '../components/Main.jsx';
            mainHeight:document.documentElement.clientHeight - 50,
             isBg:true,//是否选中风格，
             isBgSound:false,
-             
+            questionIndex:0,
             themeList:[
-                {name:'DANGJIAN',src:'./static/images/poetry-theme1.jpg'},
+                {name:'DANGJIAN',src:'./static/images/qa-phone.png'},
             ],
             audioList:[
                 {name:'花火',type:'纯音乐',src:''},
@@ -85,12 +85,9 @@ componentWillMount() {
                         s.state.data = JSON.parse(data.filecontent);
                         !s.state.data.theme && (s.state.data.theme = 'DANGJIAN');
                         !s.state.data.bgSound && (s.state.data.bgSound = '');
-                        if(s.state.data.type === 'CUSTOM'){
-                            s.state.isBg = s.state.isBgSound = false;
-                            s.state.isCustom = true;
-                        }
-                        s.state.data.customList = s.state.data.customList || [];
-                        s.state.data.customList  = s.state.data.customList.length<=0 ?  [{title:'',content:'',id:s.randomString() }] :  s.state.data.customList;
+                        
+                        s.state.data.question = s.state.data.question || [];
+                        s.state.data.question  = s.state.data.question.length<=0 ?  [{title:'',img:'',score:0,answer:[{content:'',isRight:false}],id:s.randomString() }] :  s.state.data.question;
 
                         s.forceUpdate()
                     }catch(e){
@@ -136,14 +133,15 @@ componentWillMount() {
             <aside>
                 <div className='editpoetry-iphone'>
                     <Input type='text' value={this.state.data.title} onChange={e=>{this.state.data.title = e.target.value;this.forceUpdate()}}/>
-                    <img  draggable='false'  src='./static/images/poetry-phone.png'/>
+                    <img  draggable='false'  src='./static/images/qa-phone.png'/>
+                    <section className='qaedit-title'>{this.state.data.title}</section>
                     <section className='qaedit-btn-ground'>
                         <div onClick={this.changeMenu.bind(this,'bg')} className='qaedit-bg-btn' style={{background:'url(./static/images/poetry-bg-btn.png) no-repeat left '+(this.state.isBg ? 'top':'bottom')+''}}>
-                        
                         </div>
                         <div onClick={this.changeMenu.bind(this,'bgsound')} className='qaedit-bgsound-btn' style={{background:'url(./static/images/poetry-bgsound-btn.png) no-repeat left '+(this.state.isBgSound ? 'top':'bottom')+''}}>
                             
                         </div>
+                        <Button onClick={()=>{this.setState({isCustom:true,isBg:false,isBgSound:false})}} type='primary' className='qaedit-add-question-btn'>添加问题</Button>
                     </section>
                 </div>
             </aside>
@@ -233,22 +231,16 @@ componentWillMount() {
                 </section>}
 
                 {this.state.isCustom && <section className='qaedit-right-C'>
-                    <header>我的自定义诗词</header>
+                    <header>添加问题</header>
                     <ul className='qaedit-custom-list'>
                         {this.state.data.customList.map((item,i)=>{
                             return <li onClick={this.changeCurrentCustom.bind(this,i)} className={this.state.customIndex === i?'active':''} key={i}>{i+1}<span>x</span></li>
                         })}
                     </ul>
-                    <section className='qaedit-custom-title qaedit-custom-center'>
-                        <Input value={this.state.data.customList[this.state.customIndex].title} onChange={e=>{this.state.data.customList[this.state.customIndex].title = e.target.value;this.forceUpdate()}} type='text' placeholder='请输入标题'/>
-                    </section>
-                    <section className='qaedit-custom-center qaedit-custom-aduio'>
-                        <img src='./static/images/poetry-add-audio.png'/>
-                        添加音频组件
-                    </section>
-                    <section className='qaedit-custom-center qaedit-custom-content'>
-                        <textarea  value={this.state.data.customList[this.state.customIndex].content} onChange={e=>{this.state.data.customList[this.state.customIndex].content = e.target.value;this.forceUpdate()}} placeholder='请输入内容'></textarea>
-                    </section>
+                    {this.state.data.question[this.state.questionIndex] && <section className='qaedit-custom-center qaedit-custom-content'>
+                                            <textarea  value={this.state.data.question[this.state.questionIndex].content} onChange={e=>{this.state.data.question[this.state.questionIndex].content = e.target.value;this.forceUpdate()}} placeholder='请输入内容'></textarea>
+                                            <Input value={this.state.data.question[this.state.questionIndex].answer[0].content} addonBefore={'答案1'} addonAfter={'点击继续添加答案'} type='text'/>
+                                        </section>}
 
                     <section className='qaedit-custom-center qaedit-custom-btn'>
                         <Button type='primary' onClick={this.addCustom.bind(this)}>继续</Button>
@@ -357,8 +349,7 @@ componentWillMount() {
 
         this.state.customIndex = this.state.data.customList.length -1;
 
-        console.log(this.state.data.customList)
-
+       
         
         this.forceUpdate();
     }

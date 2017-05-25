@@ -17,6 +17,17 @@ h2,h3,h4,h5{
             @include pos(r);
             top: 50%;
             @include transform(translate3d(0,-50%,0));
+
+            .qaedit-title{
+               @include pos(a);
+               font-size: 1.8vw;
+               top:40%;
+               display: none;
+               left: 23%;
+               color:#f66;
+               width:11vw;
+               height: 20vh;
+            }
         }
         &>div{
           @include pos(r);
@@ -37,6 +48,10 @@ h2,h3,h4,h5{
             @include pos(a);
             right: -55px;
             top: 50px;
+
+            .qaedit-add-question-btn{
+              @include pos(a);
+            }
 
 
             .qaedit-bg-btn,.qaedit-bgsound-btn{
