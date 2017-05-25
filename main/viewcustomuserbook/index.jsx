@@ -180,7 +180,7 @@ import $ from 'jquery';
 	//
 	goback(){
 		var s = this;
-		window.location='#/viewcustomuser/';
+		window.location='#/viewcustomuser/读书/20';
 	}
 
 }
