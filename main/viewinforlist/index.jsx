@@ -27,7 +27,7 @@ class ZmitiViewinforListApp extends Component {
 			modpostDialogVisible:false,
       categoryname:'',
       categorydata:[],
-      tags:['唐诗','宋词','童谣'],
+      tags:[],
 			title:'',
 			author:'',
 			kindid:'五言绝句',
@@ -45,6 +45,7 @@ class ZmitiViewinforListApp extends Component {
       value: this.props.value,
       inputVisible: false,
       inputValue: '',
+      typeid:'',//'当前分类id'
 		};
 
 
@@ -240,12 +241,21 @@ class ZmitiViewinforListApp extends Component {
 	bindNewdata(){
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
+        var selectedIndex=s.state.selectedIndex;
+        var dataSource=s.state.dataSource;
+        $.each(dataSource,function(n,category){
+          if(n==selectedIndex){
+            s.state.typeid=category.workdatatype;
+            //console.log(category.workdatatype,category.typename);
+          }          
+        })
+
         $.ajax({
             url:window.baseUrl+'document/get_documentlist',//接口地址
             data:{
         				userid:s.userid,
         				getusersigid:s.getusersigid,
-                datatype:s.state.selectedIndex,             
+                datatype:s.state.typeid,             
                 type:1,
                 searchword:'',
             },
@@ -350,7 +360,7 @@ class ZmitiViewinforListApp extends Component {
             })            
             s.state.tags=typename;
             s.state.dataSource=data.list;
-            console.log(s.state.dataSource);
+            console.log(s.state.dataSource,'s.state.dataSource');
             s.forceUpdate();
           }
         }
@@ -419,6 +429,7 @@ class ZmitiViewinforListApp extends Component {
         s.setState({ 
           value
         });
+        var selectedIndex=s.state.selectedIndex;
         //获取id
         $.each(this.state.dataSource,function(i,item){        
           if(i===parseInt(autoid)){
@@ -426,8 +437,9 @@ class ZmitiViewinforListApp extends Component {
             s.state.tags[i]=value;
             //console.log(s.state.workdatatype,"workdatatype"); 
             //console.log(s.state.tags[i],"tagsindex");
+            
             //提交
-            $.ajax({
+           $.ajax({
               type:'GET',
               url:window.baseUrl+'document/edit_documentclass',//接口地址
               data:{
@@ -443,7 +455,7 @@ class ZmitiViewinforListApp extends Component {
                   s.forceUpdate();
                 }
               }
-            })  
+            }) 
           }
 
         })
