@@ -1,21 +1,13 @@
 import React, { Component } from 'react';
-
 import './static/css/index.css';
-import ZmitiUserList  from '../components/zmiti-user-list.jsx';
-
-import { message,Select,Modal,Form ,Icon, Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
-import 'moment/locale/zh-cn';
-moment.locale('zh-cn');
+import ZmitiUserList  from '../../components/zmiti-user-list.jsx';
+import { message,Select,Modal,Form,Icon,Tag,Tooltip, Input,Button, Row, Col,Switch,Radio,InputNumber,DatePicker,Table ,moment  } from '../../commoncomponent/common.jsx';
 const Option = Select.Option;
-import { Link } from 'react-router';
-import MainUI from '../components/Main.jsx';
-import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
-const FormItem = Form.Item;
-import {ZmitiValidateUser} from '../public/validate-user.jsx';
-
+import MainUI from '../components/main.jsx';
+import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 import $ from 'jquery';
-
-class ZmitiInforEditorApp extends Component {
+const FormItem = Form.Item;
+class ZmitiEditorInfoApp extends Component {
 	constructor(props) {
 		super(props);
 		
@@ -141,11 +133,15 @@ class ZmitiInforEditorApp extends Component {
                         label="资料类型"
                         hasFeedback
                       >
-                          <Select placeholder="资料类型" onChange={(value)=>{this.state.datatype=value;this.forceUpdate();}} value={this.state.datatype}>
-                            <Option value={0}>{'唐诗'}</Option>
-                            <Option value={1}>{'宋词'}</Option>
-                            <Option value={2}>{'童谣'}</Option>
-                          </Select>                     
+                         <Select placeholder="资料类型" onChange={(value)=>{this.state.datatype=value;this.forceUpdate();}} value={this.state.datatype}> 
+                          {
+                              this.state.dataSource.map((item,i)=> {
+                                return(
+                                  <Option key={i} value={item.workdatatype}>{item.typename}</Option>
+                                )
+                              })
+                          }
+                        </Select>                      
                       </FormItem>
                       <FormItem
                         {...formItemLayout}
@@ -179,8 +175,8 @@ class ZmitiInforEditorApp extends Component {
 
 	componentDidMount() {
 		var s=  this;
-
     s.getinformation();
+    s.getcategory();
 	}	
 
 	componentWillMount() {
@@ -198,7 +194,7 @@ class ZmitiInforEditorApp extends Component {
   changeAccount(i){       
     /*this.state.selectedIndex = i*1;
     this.state.keyword = '';*/
-    window.location="#/viewinforlist/";
+    window.location="#/datum/";
     this.forceUpdate();
     //console.log(this.state.selectedIndex);
   }
@@ -207,7 +203,7 @@ class ZmitiInforEditorApp extends Component {
 	
     //返回
     goback(){
-      window.location="#/viewinforlist/";
+      window.location="#/datum/";
     }
     //获取数据
     getinformation(){
@@ -284,7 +280,7 @@ class ZmitiInforEditorApp extends Component {
             success(data){
               message[data.getret === 0 ? 'success':'error'](data.getmsg);
               s.forceUpdate();
-               window.location="#/viewinforlist/";
+               window.location="#/datum/";
             }
         });
         //console.log(this.currentId,"edit_document");
@@ -297,16 +293,42 @@ class ZmitiInforEditorApp extends Component {
           success(data){
               message[data.getret === 0 ? 'success':'error'](data.getmsg);
               s.forceUpdate();
-              window.location="#/viewinforlist/";              
+              window.location="#/datum/";              
           }
         });
         //console.log(this.currentId,"add_document");        
       }
     }
-
+    //获取分类
+    getcategory(){
+      var s=this;
+      $.ajax({
+        type:'POST',
+        url:window.baseUrl+'document/get_documentclasslist/',
+        data:{
+          userid:s.userid,
+          getusersigid:s.getusersigid,
+        },
+        success(data){
+          if(data.getret===0){
+            console.log(data,'get_documentclasslist')
+            var typename=new Array();
+            $.each(data.list,function(i,item){
+              typename.push(item.typename);
+            })            
+            s.state.tags=typename;
+            s.state.dataSource=data.list;
+            console.log(s.state.dataSource,'s.state.dataSource');
+            s.forceUpdate();
+          }else{
+            console.log(this.url,'error:get_documentclasslist')
+          }
+        }
+      })
+    }
 }
 
 
 
-export default ZmitiValidateUser(ZmitiInforEditorApp);
+export default ZmitiValidateUser(ZmitiEditorInfoApp);
 /*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/

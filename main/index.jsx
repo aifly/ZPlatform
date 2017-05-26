@@ -34,8 +34,7 @@ import ZmitiTripexpenceApp from './tripexpence/index.jsx';
 import ZmitiWorkWxchatApp from './workwxchat/index.jsx';
 import ZmitiInforListApp from './inforlist/index.jsx';
 import ZmitiRepertoryListApp from './repertorylist/index.jsx';
-import ZmitiViewinforListApp from './viewinforlist/index.jsx';
-import ZmitiInforEditorApp from './infoeditor/index.jsx';
+
 import ZmitiViewBookListApp from './viewcustombooklist/index.jsx';
 import ZmitiViewCustomUserApp from './viewcustomuser/index.jsx';
 import ZmitiViewUserBookApp from './viewcustomuserbook/index.jsx';
@@ -83,8 +82,6 @@ class App extends React.Component{
 				{path: '/workwxchat/(:id)',app:ZmitiWorkWxchatApp},
 				{path: '/inforlist/', app: ZmitiInforListApp},
 				{path: '/repertorylist/', app: ZmitiRepertoryListApp},
-				{path: '/viewinforlist/', app: ZmitiViewinforListApp},
-				{path: '/infoeditor/(:id)',app:ZmitiInforEditorApp},
 				{path: '/viewcustombooklist/',app:ZmitiViewBookListApp},
 				{path: '/viewcustomuser/(:title)/(:id)',app:ZmitiViewCustomUserApp},
 				{path: '/viewcustomuserbook/(:id)',app:ZmitiViewUserBookApp},

@@ -16,7 +16,7 @@ import ZmitiEditOrderApp from './editorder/index.jsx';
 import ZmitiViewOrderApp from './vieworder/index.jsx';
 import ZmitiListOrderApp from './listorder/index.jsx';
 import ZmitiPoetryApp from './datum/index.jsx';
-
+import ZmitiEditorInfoApp from './editorinfo/index.jsx';
 class App extends React.Component{
     constructor(args) {
       super(...args);
@@ -33,6 +33,7 @@ class App extends React.Component{
 				{path:'/vieworder/(:id)',app:ZmitiViewOrderApp},
 				{path:'/listorder/:title',app:ZmitiListOrderApp},
 				{path: '/datum/', app: ZmitiPoetryApp},
+				{path: '/editorinfo/(:id)', app: ZmitiEditorInfoApp},
 				
 			];
     return (
