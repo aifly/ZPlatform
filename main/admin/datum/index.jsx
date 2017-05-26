@@ -305,7 +305,7 @@ class ZmitiDatumApp extends Component {
             })            
             s.state.tags=typename;
             s.state.dataSource=data.list;
-            console.log(s.state.dataSource,'s.state.dataSource');
+            //console.log(s.state.dataSource,'s.state.dataSource');
             s.forceUpdate();
           }else{
             console.log(this.url,'error:get_documentclasslist')
