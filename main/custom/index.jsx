@@ -77,7 +77,7 @@ class ZmitiCustomApp extends Component {
 							<div className='custom-item-shareimg' style={{background:'url('+(item.thumbnail|| './static/images/default-chat.jpg')+') no-repeat center / cover'}}></div>
 							<div className='custom-item-qrcode' style={{background:'url('+item.qrcode+') no-repeat center / cover'}}></div>
 							<div className='custom-item-name'>{item.customname}</div>
-							{item.adminurl && <div className='custom-item-view'><Link to={item.adminurl}><Icon type="laptop" /></Link></div>}
+							{item.adminurl && <div className='custom-item-view'><Link to={item.adminurl+'/'+item.customname+'/'+item.customid}><Icon type="laptop" /></Link></div>}
 							{item.adminurl && <div className='custom-item-view'><Link to={'/viewcustomuser/'+item.customname+'/'+item.customid}><Icon type="user" /></Link></div>}
 							<Tooltip placement="top" title={'当前作品浏览量： '+item.totalpv}>
 								{!item.adminurl && <div title='点击进入管理后台' className='custom-item-view'><a href={item.viewpath}><img src='./static/images/eye.png'/></a></div>}

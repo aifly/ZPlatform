@@ -38,6 +38,7 @@ import ZmitiRepertoryListApp from './repertorylist/index.jsx';
 import ZmitiViewBookListApp from './viewcustombooklist/index.jsx';
 import ZmitiViewCustomUserApp from './viewcustomuser/index.jsx';
 import ZmitiViewUserBookApp from './viewcustomuserbook/index.jsx';
+import ZmitiViewAnswerApp from './viewanswer/index.jsx';
 import Obserable from './static/libs/obserable.js';
 
 
@@ -87,6 +88,7 @@ class App extends React.Component{
 				{path: '/viewcustomuserbook/(:id)',app:ZmitiViewUserBookApp},
 				{path: '/qa/',app:ZmitiQAListApp},
 				{path: '/qaedit/:id', app: ZmitiQAApp},
+				{path: '/viewanswer/(:title)/(:id)',app:ZmitiViewAnswerApp},
 				
 		];
 		return (
