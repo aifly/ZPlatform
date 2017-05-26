@@ -77,7 +77,7 @@ class ZmitiDatumApp extends Component {
             key: 'datatype',
             width:100,
             render:(value,record,index)=>{
-                switch(value){
+                /*switch(value){
                         case 0:
                             return "唐诗";
                             break;
@@ -85,9 +85,10 @@ class ZmitiDatumApp extends Component {
                             return "宋词";
                             break;
                         case 2:
-                            return "自定义";
+                            return "童谣";
                             break;
-                    }
+                }*/
+                return this.state.tags[value]
             }
 
         }, {
