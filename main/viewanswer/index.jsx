@@ -77,11 +77,12 @@ import MainUI from '../components/Main.jsx';
             width:200,
 
         },{
-            title: '用时',
+            title: '用时（秒）',
             dataIndex: 'usetime',
             key: 'usetime',
             width:150,
-
+            onFilter:(value,record)=>value*1===record.usetime,
+            sorter:(a,b)=>a.usetime-b.usetime,
         }, {
             title: '提交时间',
             dataIndex: 'posttime',
@@ -92,6 +93,8 @@ import MainUI from '../components/Main.jsx';
             dataIndex: 'score',
             key: 'score',
             width:200,
+            onFilter:(value,record)=>value*1===record.score,
+            sorter:(a,b)=>a.score-b.score,
 
         }]
 
