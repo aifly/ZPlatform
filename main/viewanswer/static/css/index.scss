@@ -1,7 +1,7 @@
 @import "../../../public/css/base.scss";
-.viewcustomuser-main-ui{
+.viewanswer-main-ui{
 	overflow:auto;
-	.zmiti-viewcustomuser-header-inner{
+	.zmiti-viewanswer-header-inner{
 		padding-left: 8px;
 		margin-top: 10px;
 		@include pos(r);
@@ -15,23 +15,23 @@
 			@include transform(scale(1,.7));
 		}
 	}
-	.zmiti-viewcustomuser-button-right button{
+	.zmiti-viewanswer-button-right button{
 		float:right;
 		margin-top: 5px;
 		margin-left:10px;
 	}
-	.zmiti-viewcustomuser-line{
+	.zmiti-viewanswer-line{
 		height:15px;
 		overflow: hidden;
 		border-bottom: 1px solid #dddddd;
 	}
-	.zmiti-viewcustomuser-select{
+	.zmiti-viewanswer-select{
 		width:130px;
 	}
-	.zmiti-viewcustomuser-search{
+	.zmiti-viewanswer-search{
 		width:230px;
 	}
-	.zmiti-viewcustomuser-count{
+	.zmiti-viewanswer-count{
 		line-height: 30px;
 		text-align: right;
 		span{

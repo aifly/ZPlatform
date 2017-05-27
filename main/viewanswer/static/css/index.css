@@ -14,13 +14,13 @@
   word-wrap: break-word;
   word-break: break-all; }
 
-.viewcustomuser-main-ui {
+.viewanswer-main-ui {
   overflow: auto; }
-  .viewcustomuser-main-ui .zmiti-viewcustomuser-header-inner {
+  .viewanswer-main-ui .zmiti-viewanswer-header-inner {
     padding-left: 8px;
     margin-top: 10px;
     position: relative; }
-    .viewcustomuser-main-ui .zmiti-viewcustomuser-header-inner:before {
+    .viewanswer-main-ui .zmiti-viewanswer-header-inner:before {
       content: '';
       position: absolute;
       width: 2px;
@@ -29,22 +29,22 @@
       left: 0;
       -webkit-transform: scale(1, 0.7);
       transform: scale(1, 0.7); }
-  .viewcustomuser-main-ui .zmiti-viewcustomuser-button-right button {
+  .viewanswer-main-ui .zmiti-viewanswer-button-right button {
     float: right;
     margin-top: 5px;
     margin-left: 10px; }
-  .viewcustomuser-main-ui .zmiti-viewcustomuser-line {
+  .viewanswer-main-ui .zmiti-viewanswer-line {
     height: 15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd; }
-  .viewcustomuser-main-ui .zmiti-viewcustomuser-select {
+  .viewanswer-main-ui .zmiti-viewanswer-select {
     width: 130px; }
-  .viewcustomuser-main-ui .zmiti-viewcustomuser-search {
+  .viewanswer-main-ui .zmiti-viewanswer-search {
     width: 230px; }
-  .viewcustomuser-main-ui .zmiti-viewcustomuser-count {
+  .viewanswer-main-ui .zmiti-viewanswer-count {
     line-height: 30px;
     text-align: right; }
-    .viewcustomuser-main-ui .zmiti-viewcustomuser-count span {
+    .viewanswer-main-ui .zmiti-viewanswer-count span {
       color: #108ee9;
       padding: 0 5px; }
 

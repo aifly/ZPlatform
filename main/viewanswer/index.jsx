@@ -97,26 +97,26 @@ import MainUI from '../components/Main.jsx';
 
        
         const monthFormat = 'YYYY/MM';
-        var component = <Spin tip={this.state.tip} spinning={this.state.loading}><div className='viewcustomuser-main-ui' style={{height:this.state.mainHeight}}>
+        var component = <Spin tip={this.state.tip} spinning={this.state.loading}><div className='viewanswer-main-ui' style={{height:this.state.mainHeight}}>
                 <div className='pad-10'>
-                    <div className="zmiti-viewcustomuser-header">
+                    <div className="zmiti-viewanswer-header">
                         <Row>
-                            <Col span={8} className="zmiti-viewcustomuser-header-inner">{this.props.params.title}-问答统计列表</Col>
-                            <Col span={8} offset={8} className='zmiti-viewcustomuser-button-right'><Button type="primary" onClick={this.goback.bind(this)}><Icon type="left" />返回</Button></Col>
+                            <Col span={8} className="zmiti-viewanswer-header-inner">{this.props.params.title}-问答统计列表</Col>
+                            <Col span={8} offset={8} className='zmiti-viewanswer-button-right'><Button type="primary" onClick={this.goback.bind(this)}><Icon type="left" />返回</Button></Col>
                         </Row>                      
                     </div>
-                    <div className="zmiti-viewcustomuser-line"></div>
+                    <div className="zmiti-viewanswer-line"></div>
                     <div className="hr20"></div>
                     <Row>
                         <Col span={18}>
                             <Row>
-                                <Col span={12} className="zmiti-viewcustomuser-select">
+                                <Col span={12} className="zmiti-viewanswer-select">
                                     <Select placeholder='用户名' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
                                      <Option value="0">用户名</Option>
                                      <Option value="1">手机号</Option>
                                     </Select>
                                 </Col>
-                                <Col span={12} className="zmiti-viewcustomuser-search">
+                                <Col span={12} className="zmiti-viewanswer-search">
                                     <Search
                                         placeholder=""
                                         style={{ width: 200 }}
@@ -127,7 +127,7 @@ import MainUI from '../components/Main.jsx';
                             </Row>
                         </Col>
 
-                        <Col span={6} className="zmiti-viewcustomuser-count">
+                        <Col span={6} className="zmiti-viewanswer-count">
                             总计：<span>{this.state.countNum}</span>条
                         </Col>
                     </Row>
