@@ -130,7 +130,7 @@ class ZmitiQAListApp extends Component {
 
 	createWork(){
 		var s = this;
-	 
+	 	return;
 		var type = 0;
 		
 		switch(s.usertypesign) {
