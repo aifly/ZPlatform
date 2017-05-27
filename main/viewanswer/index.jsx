@@ -158,7 +158,7 @@ import MainUI from '../components/Main.jsx';
                 userid:s.userid,
                 getusersigid:s.getusersigid,                
                 customid:customid,
-                worksid:'',
+                //worksid:1495610848973,//
             },
             success(data){
                 if(data.getret === 0){
@@ -186,15 +186,10 @@ import MainUI from '../components/Main.jsx';
         var s = this;
         s.state.searchtext=e.target.value;
         this.forceUpdate();
-        console.log(e.target.value,'8888888888')
-
     }
     //search 
     searchbtn(){
         var s=this;
-        //s.state.searchtext=value;
-        console.log(s.state.searchtext,'9999999999')
-
         //console.log(s.state.searchtype+"..."+s.state.searchtext);
         
         if(s.state.searchtype*1===0){

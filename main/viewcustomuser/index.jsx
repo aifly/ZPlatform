@@ -21,6 +21,7 @@ import MainUI from '../components/Main.jsx';
             dataSource:[],
             alldataSource:[],
             countNum:0,
+            setuserid:'',
         }
     }
 
@@ -44,7 +45,7 @@ import MainUI from '../components/Main.jsx';
        this.resizeMainHeight(this);
        s.getuserlists();
        s.loadData();
-
+       s.getuserid();
     }
 
 
@@ -97,7 +98,7 @@ import MainUI from '../components/Main.jsx';
                 <div className='pad-10'>
                     <div className="zmiti-viewcustomuser-header">
                         <Row>
-                            <Col span={8} className="zmiti-viewcustomuser-header-inner">{this.props.params.title}-用户列表</Col>
+                            <Col span={8} className="zmiti-viewcustomuser-header-inner">{this.props.params.title}-访客列表</Col>
                             <Col span={8} offset={8} className='zmiti-viewcustomuser-button-right'></Col>
                         </Row>                      
                     </div>
@@ -145,12 +146,11 @@ import MainUI from '../components/Main.jsx';
         var worksid=s.props.params.id;
         //console.log(worksid,'worksid');
         $.ajax({
-            type:'POST',
             url:window.baseUrl + 'book/get_userlist/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                worksid:worksid,
+                customid:worksid,
             },
             success(data){
                 if(data.getret === 0){
@@ -159,6 +159,7 @@ import MainUI from '../components/Main.jsx';
                     s.state.alldataSource=data.list;
                     s.state.loading=false;
                     s.state.countNum=s.state.dataSource.length;
+                    console.log(this.url,'this.url')
                     s.forceUpdate();
                     s.dataSource = s.state.dataSource.concat([]) ;     
                 }
@@ -209,7 +210,32 @@ import MainUI from '../components/Main.jsx';
         this.state.loading = true;
         this.forceUpdate();
     }
-  
+    //userid
+    getuserid(){
+        var s=this;
+        var customid=s.props.params.id;
+        $.ajax({
+            url:window.baseUrl+'custom/get_custom_list/',
+            type:"get",
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid
+            },
+            success(data){
+                
+                if(data.getret === 0){
+                    console.log(data.customlist,'data.customlist');
+                    $.each(data.customlist,function(i,item){
+                        if(customid==item.customid){                            
+                            s.state.setuserid=item.userid;
+                            //console.log(s.state.setuserid,'s.state.setuserid');
+                        }
+                    })
+                }
+            }
+        })             
+    }
+
 }
 
 export default ZmitiValidateUser(ZmitiViewCustomUserApp);
