@@ -113,19 +113,21 @@ import MainUI from '../components/Main.jsx';
                     <Row>
                         <Col span={18}>
                             <Row>
-                                <Col span={12} className="zmiti-viewanswer-select">
+                                <Col span={10} className="zmiti-viewanswer-select">
                                     <Select placeholder='用户名' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
                                      <Option value="0">用户名</Option>
                                      <Option value="1">手机号</Option>
                                     </Select>
                                 </Col>
-                                <Col span={12} className="zmiti-viewanswer-search">
-                                    <Search
-                                        placeholder=""
-                                        style={{ width: 200 }}
-                                        size="default"
-                                        onSearch={this.searchbtn.bind(this)}
-                                      />    
+                                <Col span={8} className="zmiti-viewanswer-inputext">
+                                    <div>
+                                        <Input placeholder="请输入" onChange={this.searchtext.bind(this)} />
+                                    </div>                                   
+                                </Col>
+                                <Col span={6}>
+                                    <div className="zmiti-viewanswer-serachbtn">
+                                        <Button icon="search" onClick={this.searchbtn.bind(this)}>查询</Button>
+                                    </div>                                     
                                 </Col>
                             </Row>
                         </Col>
@@ -179,10 +181,19 @@ import MainUI from '../components/Main.jsx';
         //s.getuserlists();
         console.log(s.state.searchtype);
     }
+    //text
+    searchtext(e){
+        var s = this;
+        s.state.searchtext=e.target.value;
+        this.forceUpdate();
+        console.log(e.target.value,'8888888888')
+
+    }
     //search 
-    searchbtn(value){
+    searchbtn(){
         var s=this;
-        s.state.searchtext=value;
+        //s.state.searchtext=value;
+        console.log(s.state.searchtext,'9999999999')
 
         //console.log(s.state.searchtype+"..."+s.state.searchtext);
         

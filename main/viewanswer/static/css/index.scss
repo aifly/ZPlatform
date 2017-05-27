@@ -31,6 +31,9 @@
 	.zmiti-viewanswer-search{
 		width:230px;
 	}
+	.zmiti-viewanswer-inputext{
+		width:180px;
+	}
 	.zmiti-viewanswer-count{
 		line-height: 30px;
 		text-align: right;
@@ -38,5 +41,8 @@
 			color:#108ee9;
 			padding:0 5px;
 		}
+	}
+	.zmiti-viewanswer-serachbtn{
+		padding-left:10px;
 	}
 }

@@ -41,11 +41,15 @@
     width: 130px; }
   .viewanswer-main-ui .zmiti-viewanswer-search {
     width: 230px; }
+  .viewanswer-main-ui .zmiti-viewanswer-inputext {
+    width: 180px; }
   .viewanswer-main-ui .zmiti-viewanswer-count {
     line-height: 30px;
     text-align: right; }
     .viewanswer-main-ui .zmiti-viewanswer-count span {
       color: #108ee9;
       padding: 0 5px; }
+  .viewanswer-main-ui .zmiti-viewanswer-serachbtn {
+    padding-left: 10px; }
 
 /*# sourceMappingURL=index.css.map */
