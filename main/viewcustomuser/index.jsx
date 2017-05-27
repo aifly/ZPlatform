@@ -184,16 +184,19 @@ import MainUI from '../components/Main.jsx';
             this.state.dataSource = this.dataSource.filter((item)=>{
                 return  item.wxuserid.indexOf(this.state.searchtext)>-1;
             });
+            this.state.countNum=this.state.dataSource.length;
             s.forceUpdate();
         }else if(s.state.searchtype*1===1){
             this.state.dataSource = this.dataSource.filter((item)=>{
                 return  item.phone.indexOf(this.state.searchtext)>-1;
             });
+            this.state.countNum=this.state.dataSource.length;
             s.forceUpdate(); 
         }else{
             this.state.dataSource = this.dataSource.filter((item)=>{
                 return  item.email.indexOf(this.state.searchtext)>-1;
             });
+            this.state.countNum=this.state.dataSource.length;
             s.forceUpdate(); 
         }
         

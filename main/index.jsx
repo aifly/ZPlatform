@@ -83,7 +83,7 @@ class App extends React.Component{
 				{path: '/workwxchat/(:id)',app:ZmitiWorkWxchatApp},
 				{path: '/inforlist/', app: ZmitiInforListApp},
 				{path: '/repertorylist/', app: ZmitiRepertoryListApp},
-				{path: '/viewcustombooklist/',app:ZmitiViewBookListApp},
+				{path: '/viewcustombooklist/(:title)/(:id)',app:ZmitiViewBookListApp},
 				{path: '/viewcustomuser/(:title)/(:id)',app:ZmitiViewCustomUserApp},
 				{path: '/viewcustomuserbook/(:id)',app:ZmitiViewUserBookApp},
 				{path: '/qa/',app:ZmitiQAListApp},

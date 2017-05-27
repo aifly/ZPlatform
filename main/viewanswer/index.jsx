@@ -59,36 +59,40 @@ import MainUI from '../components/Main.jsx';
         },this);
         resizeMainHeight(this);
         const columns = [{
-            title: '微信号',
-            dataIndex: 'wxuserid',
-            key: 'wxuserid',
+            title: '序号',
+            dataIndex: 'key',
+            key: 'xx',
+            width:150,             
+            render:(value,recorder,index)=>{
+                return <div>{index+1}</div>
+            }
+        },{
+            title: '用户名',
+            dataIndex: 'realname',
+            key: 'realname',
         },{
             title: '手机号',
-            dataIndex: 'phone',
-            key: 'phone',
-            width:120,
-
-        },{
-            title: '邮箱',
-            dataIndex: 'email',
-            key: 'email',
+            dataIndex: 'mobile',
+            key: 'mobile',
             width:200,
 
-        }, {
-            title: '时间',
-            dataIndex: 'createtime',
-            key: 'createtime',
+        },{
+            title: '用时',
+            dataIndex: 'usetime',
+            key: 'usetime',
             width:150,
-        },  {
-            title: '操作',
-            dataIndex: 'operation',
-            key: 'operation',
-            width:80,
-            render:(text,recoder,index)=>(
-                <span>
-                  <a href={'#/viewcustomuserbook/'+recoder.wxopenid}>查看</a>
-                </span>              
-            )
+
+        }, {
+            title: '提交时间',
+            dataIndex: 'posttime',
+            key: 'posttime',
+            width:200,
+        },{
+            title: '得分',
+            dataIndex: 'score',
+            key: 'score',
+            width:200,
+
         }]
 
        
@@ -97,8 +101,8 @@ import MainUI from '../components/Main.jsx';
                 <div className='pad-10'>
                     <div className="zmiti-viewcustomuser-header">
                         <Row>
-                            <Col span={8} className="zmiti-viewcustomuser-header-inner">{this.props.params.title}-用户列表</Col>
-                            <Col span={8} offset={8} className='zmiti-viewcustomuser-button-right'></Col>
+                            <Col span={8} className="zmiti-viewcustomuser-header-inner">{this.props.params.title}-问答统计列表</Col>
+                            <Col span={8} offset={8} className='zmiti-viewcustomuser-button-right'><Button type="primary" onClick={this.goback.bind(this)}><Icon type="left" />返回</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-viewcustomuser-line"></div>
@@ -107,10 +111,9 @@ import MainUI from '../components/Main.jsx';
                         <Col span={18}>
                             <Row>
                                 <Col span={12} className="zmiti-viewcustomuser-select">
-                                    <Select placeholder='微信号' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
-                                     <Option value="0">微信号</Option>
+                                    <Select placeholder='用户名' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
+                                     <Option value="0">用户名</Option>
                                      <Option value="1">手机号</Option>
-                                     <Option value="2">邮箱</Option>
                                     </Select>
                                 </Col>
                                 <Col span={12} className="zmiti-viewcustomuser-search">
@@ -142,14 +145,15 @@ import MainUI from '../components/Main.jsx';
     //获取数据列表
     getuserlists(){
         var s=this;
-        var worksid=s.props.params.id;
+        var customid=s.props.params.id;
         //console.log(worksid,'worksid');
         $.ajax({
             url:window.baseUrl + 'weixin/getscorelist/',
             data:{
                 userid:s.userid,
-                getusersigid:s.getusersigid,
-                worksid:worksid,
+                getusersigid:s.getusersigid,                
+                customid:customid,
+                worksid:'',
             },
             success(data){
                 if(data.getret === 0){
@@ -181,18 +185,15 @@ import MainUI from '../components/Main.jsx';
         
         if(s.state.searchtype*1===0){
             this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.wxuserid.indexOf(this.state.searchtext)>-1;
+                return  item.realname.indexOf(this.state.searchtext)>-1;
             });
+            this.state.countNum=this.state.dataSource.length;            
             s.forceUpdate();
-        }else if(s.state.searchtype*1===1){
-            this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.phone.indexOf(this.state.searchtext)>-1;
-            });
-            s.forceUpdate(); 
         }else{
             this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.email.indexOf(this.state.searchtext)>-1;
+                return  item.mobile.indexOf(this.state.searchtext)>-1;
             });
+            this.state.countNum=this.state.dataSource.length;
             s.forceUpdate(); 
         }
         
@@ -204,6 +205,10 @@ import MainUI from '../components/Main.jsx';
         var s = this;
         this.state.loading = true;
         this.forceUpdate();
+    }
+    //返回
+    goback(){
+        window.location='#/custom/'
     }
   
 }
