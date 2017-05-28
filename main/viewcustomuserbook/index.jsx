@@ -64,7 +64,7 @@ import $ from 'jquery';
             	<div className='pad-10'>
             		<div className="zmiti-viewcustomuserbook-header">
                         <Row>
-                            <Col span={8} className="zmiti-viewcustomuserbook-header-inner">书本列表</Col>
+                            <Col span={8} className="zmiti-viewcustomuserbook-header-inner">书本列表-（{this.props.params.wxuserid}）</Col>
                             <Col span={8} offset={8} className='zmiti-viewcustomuserbook-button-right'><Button type="primary" icon="left" onClick={this.goback.bind(this)}>返回用户列表</Button></Col>
                         </Row>                      
                     </div>

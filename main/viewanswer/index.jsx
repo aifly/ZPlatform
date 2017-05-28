@@ -151,9 +151,8 @@ import MainUI from '../components/Main.jsx';
     getuserlists(){
         var s=this;
         var customid=s.props.params.id;
-        //console.log(worksid,'worksid');
         $.ajax({
-            url:window.baseUrl + 'weixin/get_customuserlist/',
+            url:window.baseUrl + 'weixin/get_userscorelist/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,                

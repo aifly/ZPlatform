@@ -37,6 +37,7 @@ import ZmitiRepertoryListApp from './repertorylist/index.jsx';
 
 import ZmitiViewBookListApp from './viewcustombooklist/index.jsx';
 import ZmitiViewCustomUserApp from './viewcustomuser/index.jsx';
+import ZmitiViewCustomUserListApp from './viewcustomuserlist/index.jsx';
 import ZmitiViewUserBookApp from './viewcustomuserbook/index.jsx';
 import ZmitiViewAnswerApp from './viewanswer/index.jsx';
 import Obserable from './static/libs/obserable.js';
@@ -85,7 +86,8 @@ class App extends React.Component{
 				{path: '/repertorylist/', app: ZmitiRepertoryListApp},
 				{path: '/viewcustombooklist/(:title)/(:id)',app:ZmitiViewBookListApp},
 				{path: '/viewcustomuser/(:title)/(:id)',app:ZmitiViewCustomUserApp},
-				{path: '/viewcustomuserbook/(:id)',app:ZmitiViewUserBookApp},
+				{path: '/viewcustomuserlist/(:title)/(:id)',app:ZmitiViewCustomUserListApp},
+				{path: '/viewcustomuserbook/(:wxuserid)/(:id)',app:ZmitiViewUserBookApp},
 				{path: '/qa/',app:ZmitiQAListApp},
 				{path: '/qaedit/:id', app: ZmitiQAApp},
 				{path: '/viewanswer/(:title)/(:id)',app:ZmitiViewAnswerApp},

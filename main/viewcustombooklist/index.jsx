@@ -214,8 +214,7 @@ import $ from 'jquery';
 						//console.log(item.workdatatype);
 						s.state.workdatatype=item.workdatatype;
 						$.ajax({
-					        type:'POST',
-					        url:window.baseUrl+'document/get_documentlist/',
+					        url:window.baseUrl+'book/get_booklist/',
 					        data:{
 					          userid:s.userid,
 					          getusersigid:s.getusersigid,
@@ -226,7 +225,7 @@ import $ from 'jquery';
 					        		s.state.dataSource=data.list;
 					        		s.state.loading=false;
 					        		s.forceUpdate();
-					        		console.log(data,s.state.workdatatype);
+					        		console.log(this.url,s.state.workdatatype);
 					        	}
 					        }
 						})
@@ -234,8 +233,7 @@ import $ from 'jquery';
 			})
 		}else{
 			$.ajax({
-		        type:'POST',
-		        url:window.baseUrl+'document/get_documentlist/',
+		        url:window.baseUrl+'book/get_booklist/',
 		        data:{
 		          userid:s.userid,
 		          getusersigid:s.getusersigid,
@@ -246,7 +244,7 @@ import $ from 'jquery';
 		        		s.state.alldataSource=data.list;
 					    s.state.loading=false;
 		        		s.forceUpdate();
-		        		console.log(data,'bindNewdata');
+		        		console.log(this.url,'bindNewdata');
 		        	}
 		        }
 			})
@@ -270,7 +268,7 @@ import $ from 'jquery';
 		            })            
 		            s.state.tags=typename;
 		            s.state.booktypeList=data.list;
-		            console.log(data.list);
+		            console.log(data.list,'booktypeList');
 		            s.forceUpdate();
                 }
             }

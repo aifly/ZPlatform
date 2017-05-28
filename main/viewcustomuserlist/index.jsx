@@ -9,7 +9,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import MainUI from '../components/Main.jsx';
 
- class ZmitiViewCustomUserApp extends React.Component{
+ class ZmitiViewCustomUserListApp extends React.Component{
     constructor(args){
         super(...args);
         this.state = {
@@ -60,36 +60,20 @@ import MainUI from '../components/Main.jsx';
         },this);
         resizeMainHeight(this);
         const columns = [{
-            title: '微信号',
-            dataIndex: 'wxuserid',
-            key: 'wxuserid',
+            title: '昵称',
+            dataIndex: 'nickname',
+            key: 'nickname',
         },{
             title: '手机号',
             dataIndex: 'phone',
             key: 'phone',
             width:120,
 
-        },{
-            title: '邮箱',
-            dataIndex: 'email',
-            key: 'email',
-            width:200,
-
         }, {
             title: '时间',
             dataIndex: 'createtime',
             key: 'createtime',
             width:150,
-        },  {
-            title: '操作',
-            dataIndex: 'operation',
-            key: 'operation',
-            width:80,
-            render:(text,recoder,index)=>(
-                <span>
-                  <a href={'#/viewcustomuserbook/'+recoder.wxuserid+'/'+recoder.wxopenid}>查看</a>
-                </span>              
-            )
         }]
 
        
@@ -108,10 +92,9 @@ import MainUI from '../components/Main.jsx';
                         <Col span={18}>
                             <Row>
                                 <Col span={12} className="zmiti-viewcustomuser-select">
-                                    <Select placeholder='微信号' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
-                                     <Option value="0">微信号</Option>
+                                    <Select placeholder='昵称' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
+                                     <Option value="0">昵称</Option>
                                      <Option value="1">手机号</Option>
-                                     <Option value="2">邮箱</Option>
                                     </Select>
                                 </Col>
                                 <Col span={12} className="zmiti-viewcustomuser-search">
@@ -143,14 +126,14 @@ import MainUI from '../components/Main.jsx';
     //获取訪客列表
     getuserlists(){
         var s=this;
-        var worksid=s.props.params.id;
+        var customid=s.props.params.id;
         //console.log(worksid,'worksid');
         $.ajax({
-            url:window.baseUrl + 'book/get_userlist/',
+            url:window.baseUrl + 'weixin/get_customuserlist/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                worksid:worksid,
+                customid:customid,
             },
             success(data){
                 if(data.getret === 0){
@@ -183,23 +166,26 @@ import MainUI from '../components/Main.jsx';
         
         if(s.state.searchtype*1===0){
             this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.wxuserid.indexOf(this.state.searchtext)>-1;
+                return  item.nickname.indexOf(this.state.searchtext)>-1;
             });
             this.state.countNum=this.state.dataSource.length;
             s.forceUpdate();
-        }else if(s.state.searchtype*1===1){
+        }else{
             this.state.dataSource = this.dataSource.filter((item)=>{
                 return  item.phone.indexOf(this.state.searchtext)>-1;
             });
             this.state.countNum=this.state.dataSource.length;
             s.forceUpdate(); 
-        }else{
+        }
+/*        else{
             this.state.dataSource = this.dataSource.filter((item)=>{
                 return  item.email.indexOf(this.state.searchtext)>-1;
             });
             this.state.countNum=this.state.dataSource.length;
             s.forceUpdate(); 
-        }
+        }*/
+        
+
 
     }
     //loading
@@ -236,4 +222,4 @@ import MainUI from '../components/Main.jsx';
 
 }
 
-export default ZmitiValidateUser(ZmitiViewCustomUserApp);
+export default ZmitiValidateUser(ZmitiViewCustomUserListApp);

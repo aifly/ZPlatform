@@ -1,0 +1,42 @@
+@import "../../../public/css/base.scss";
+.viewcustomuser-main-ui{
+	overflow:auto;
+	.zmiti-viewcustomuser-header-inner{
+		padding-left: 8px;
+		margin-top: 10px;
+		@include pos(r);
+		&:before{
+			content: '';
+			@include pos(a);
+			width:2px;
+			height:100%;
+			background:#88B7E0 ;
+			left:0;
+			@include transform(scale(1,.7));
+		}
+	}
+	.zmiti-viewcustomuser-button-right button{
+		float:right;
+		margin-top: 5px;
+		margin-left:10px;
+	}
+	.zmiti-viewcustomuser-line{
+		height:15px;
+		overflow: hidden;
+		border-bottom: 1px solid #dddddd;
+	}
+	.zmiti-viewcustomuser-select{
+		width:130px;
+	}
+	.zmiti-viewcustomuser-search{
+		width:230px;
+	}
+	.zmiti-viewcustomuser-count{
+		line-height: 30px;
+		text-align: right;
+		span{
+			color:#108ee9;
+			padding:0 5px;
+		}
+	}
+}
