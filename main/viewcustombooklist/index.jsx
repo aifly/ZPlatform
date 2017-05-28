@@ -214,7 +214,7 @@ import $ from 'jquery';
 						//console.log(item.workdatatype);
 						s.state.workdatatype=item.workdatatype;
 						$.ajax({
-					        url:window.baseUrl+'book/get_booklist/',
+					        url:window.baseUrl+'document/get_documentlist/',
 					        data:{
 					          userid:s.userid,
 					          getusersigid:s.getusersigid,
@@ -233,7 +233,7 @@ import $ from 'jquery';
 			})
 		}else{
 			$.ajax({
-		        url:window.baseUrl+'book/get_booklist/',
+		        url:window.baseUrl+'book/get_booknamelist/',
 		        data:{
 		          userid:s.userid,
 		          getusersigid:s.getusersigid,
@@ -244,7 +244,7 @@ import $ from 'jquery';
 		        		s.state.alldataSource=data.list;
 					    s.state.loading=false;
 		        		s.forceUpdate();
-		        		console.log(this.url,'bindNewdata');
+		        		//console.log(this.url,'bindNewdata');
 		        	}
 		        }
 			})
@@ -268,7 +268,7 @@ import $ from 'jquery';
 		            })            
 		            s.state.tags=typename;
 		            s.state.booktypeList=data.list;
-		            console.log(data.list,'booktypeList');
+		            //console.log(data.list,'booktypeList');
 		            s.forceUpdate();
                 }
             }
@@ -325,7 +325,7 @@ import $ from 'jquery';
           },success(data){
           	message[data.getret === 0 ? 'success':'error'](data.getmsg);
           	if(data.getret===0){
-          		console.log(data,'修改成功');
+          		//console.log(data,'修改成功');
           		s.setState({
 					modDialogVisible:false,
 				})
@@ -356,7 +356,7 @@ import $ from 'jquery';
           	message[data.getret === 0 ? 'success':'error'](data.getmsg);
           	if(data.getret === 0){
           		s.state.datainfourl=data.getfileurlArr[0].datainfourl;
-	            console.log(data.getfileurlArr[0].datainfourl);
+	            //console.log(data.getfileurlArr[0].datainfourl);
 	            s.forceUpdate(); 
             }          
           }

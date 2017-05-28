@@ -137,12 +137,12 @@ import MainUI from '../components/Main.jsx';
             },
             success(data){
                 if(data.getret === 0){
-                    console.log(data.list);
+                    //console.log(data.list);
                     s.state.dataSource=data.list;
                     s.state.alldataSource=data.list;
                     s.state.loading=false;
                     s.state.countNum=s.state.dataSource.length;
-                    console.log(this.url,'this.url')
+                    //console.log(this.url,'this.url')
                     s.forceUpdate();
                     s.dataSource = s.state.dataSource.concat([]) ;     
                 }
@@ -177,16 +177,6 @@ import MainUI from '../components/Main.jsx';
             this.state.countNum=this.state.dataSource.length;
             s.forceUpdate(); 
         }
-/*        else{
-            this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.email.indexOf(this.state.searchtext)>-1;
-            });
-            this.state.countNum=this.state.dataSource.length;
-            s.forceUpdate(); 
-        }*/
-        
-
-
     }
     //loading
     loadData(){   
@@ -208,7 +198,7 @@ import MainUI from '../components/Main.jsx';
             success(data){
                 
                 if(data.getret === 0){
-                    console.log(data.customlist,'data.customlist');
+                    //console.log(data.customlist,'data.customlist');
                     $.each(data.customlist,function(i,item){
                         if(customid==item.customid){                            
                             s.state.setuserid=item.userid;

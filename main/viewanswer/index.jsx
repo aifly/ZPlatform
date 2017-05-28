@@ -67,7 +67,7 @@ import MainUI from '../components/Main.jsx';
                 return <div>{index+1}</div>
             }
         },{
-            title: '用户名',
+            title: '昵称',
             dataIndex: 'realname',
             key: 'realname',
         },{
@@ -114,8 +114,8 @@ import MainUI from '../components/Main.jsx';
                         <Col span={18}>
                             <Row>
                                 <Col span={10} className="zmiti-viewanswer-select">
-                                    <Select placeholder='用户名' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
-                                     <Option value="0">用户名</Option>
+                                    <Select placeholder='昵称' onChange={this.searchtype.bind(this)}  style={{width:120}} defaultValue="0">
+                                     <Option value="0">昵称</Option>
                                      <Option value="1">手机号</Option>
                                     </Select>
                                 </Col>
@@ -161,13 +161,14 @@ import MainUI from '../components/Main.jsx';
             },
             success(data){
                 if(data.getret === 0){
-                    console.log(data.list);
+                    //console.log(data.list);
                     s.state.dataSource=data.list;
                     s.state.alldataSource=data.list;
                     s.state.loading=false;
                     s.state.countNum=s.state.dataSource.length;
                     s.forceUpdate();
-                    s.dataSource = s.state.dataSource.concat([]) ;     
+                    s.dataSource = s.state.dataSource.concat([]) ; 
+                    console.log(this.url)    
                 }
             }
         });
