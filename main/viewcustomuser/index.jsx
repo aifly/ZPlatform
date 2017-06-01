@@ -99,7 +99,7 @@ import MainUI from '../components/Main.jsx';
                     <div className="zmiti-viewcustomuser-header">
                         <Row>
                             <Col span={8} className="zmiti-viewcustomuser-header-inner">{this.props.params.title}-访客列表</Col>
-                            <Col span={8} offset={8} className='zmiti-viewcustomuser-button-right'></Col>
+                            <Col span={8} offset={8} className='zmiti-viewcustomuser-button-right'><Button type="primary" onClick={this.goback.bind(this)}><Icon type="left" />返回</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-viewcustomuser-line"></div>
@@ -207,6 +207,10 @@ import MainUI from '../components/Main.jsx';
         var s = this;
         this.state.loading = true;
         this.forceUpdate();
+    }
+    //返回
+    goback(){
+        window.location='#/custom/'
     }
     //userid
     getuserid(){

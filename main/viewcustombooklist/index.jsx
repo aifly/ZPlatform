@@ -107,7 +107,7 @@ import $ from 'jquery';
 	            		<div className="zmiti-viewcustombooklist-header">
 	                        <Row>
 	                            <Col span={8} className="zmiti-viewcustombooklist-header-inner">书本列表</Col>
-	                            <Col span={8} offset={8} className='zmiti-viewcustombooklist-button-right'></Col>
+	                            <Col span={8} offset={8} className='zmiti-viewcustombooklist-button-right'><Button type="primary" onClick={this.goback.bind(this)}><Icon type="left" />返回</Button></Col>
 	                        </Row>                      
 	                    </div>
 	                    <div className="zmiti-viewcustombooklist-line"></div>
@@ -368,6 +368,10 @@ import $ from 'jquery';
 		this.state.loading = true;
 		s.forceUpdate();
 	}
+	//返回
+    goback(){
+        window.location='#/custom/'
+    }
 
 }
 export default ZmitiValidateUser(ZmitiViewBookListApp);
