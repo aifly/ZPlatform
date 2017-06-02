@@ -88,7 +88,7 @@ class ZmitiDatumApp extends Component {
                             return "童谣";
                             break;
                 }*/
-                return this.state.tags[value]
+                return this.state.tags[this.state.selectedIndex]
             }
 
         }, {
@@ -220,13 +220,14 @@ class ZmitiDatumApp extends Component {
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         var selectedIndex=s.state.selectedIndex;
         var dataSource=s.state.dataSource;
+        var id=this.props.params.id;
         $.each(dataSource,function(n,category){
           if(n==selectedIndex){
             s.state.typeid=category.workdatatype;
-            //console.log(category.workdatatype,category.typename);
+            console.log(category.workdatatype,category.typename);
           }          
         })
-
+        
         $.ajax({
             url:window.baseUrl+'document/get_documentlist',//接口地址
             data:{
@@ -243,6 +244,7 @@ class ZmitiDatumApp extends Component {
                 }else if(data.getret === 1002){
                   s.state.dataList=[];                  
                 }
+                console.log(this.url,"this.url");
                 s.forceUpdate();
             }
         })
@@ -453,7 +455,9 @@ class ZmitiDatumApp extends Component {
         this.state.keyword = '';
         this.forceUpdate();
         this.bindNewdata();
+        window.location='#datum/'+i;
         //console.log(this.state.selectedIndex);
+        console.log(this.props.params.id);
     }
 }
 export default ZmitiValidateUser(ZmitiDatumApp);

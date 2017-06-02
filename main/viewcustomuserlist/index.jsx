@@ -142,7 +142,7 @@ import MainUI from '../components/Main.jsx';
                     s.state.alldataSource=data.list;
                     s.state.loading=false;
                     s.state.countNum=s.state.dataSource.length;
-                    //console.log(this.url,'this.url')
+                    console.log(this.url,'this.url')
                     s.forceUpdate();
                     s.dataSource = s.state.dataSource.concat([]) ;     
                 }

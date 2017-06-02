@@ -1,0 +1,75 @@
+.repertorycom-main-ui {
+  overflow: auto; }
+  .repertorycom-main-ui .repertorycom-column {
+    margin: 20px; }
+  .repertorycom-main-ui .zmiti-repertorycom-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .repertorycom-main-ui .zmiti-repertorycom-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .repertorycom-main-ui .zmiti-repertorycom-button-right button {
+    float: right;
+    margin-top: 5px; }
+  .repertorycom-main-ui .zmiti-repertorycom-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .repertorycom-main-ui .repertorycom-add {
+    width: 145px;
+    height: 145px;
+    float: left;
+    background: url(../images/add-img.jpg) no-repeat; }
+    .repertorycom-main-ui .repertorycom-add input {
+      width: 145px;
+      height: 145px;
+      border: none;
+      opacity: 0;
+      background: none;
+      cursor: pointer; }
+  .repertorycom-main-ui .repertoryUpBtn {
+    width: 80px;
+    height: 35px;
+    overflow: hidden;
+    float: right;
+    position: relative; }
+    .repertorycom-main-ui .repertoryUpBtn button {
+      cursor: pointer; }
+    .repertorycom-main-ui .repertoryUpBtn input {
+      width: 130px;
+      height: 25px;
+      overflow: hidden;
+      position: absolute;
+      left: -40px;
+      top: 5px;
+      opacity: 0;
+      cursor: pointer; }
+  .repertorycom-main-ui .repertorycom-picList li {
+    width: 182px;
+    float: left;
+    margin: 0 10px 10px 0;
+    position: relative; }
+    .repertorycom-main-ui .repertorycom-picList li .repertorycom-pics {
+      border: 1px #cccccc solid; }
+    .repertorycom-main-ui .repertorycom-picList li img {
+      display: block;
+      width: 180px;
+      height: 180px; }
+    .repertorycom-main-ui .repertorycom-picList li .ant-btn {
+      position: absolute;
+      display: none;
+      left: 78px;
+      top: 78px; }
+  .repertorycom-main-ui .repertorycom-picList li:hover .repertorycom-pics {
+    opacity: 0.3; }
+  .repertorycom-main-ui .repertorycom-picList li:hover .ant-btn {
+    display: block; }
+
+/*# sourceMappingURL=index.css.map */

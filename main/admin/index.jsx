@@ -17,6 +17,9 @@ import ZmitiViewOrderApp from './vieworder/index.jsx';
 import ZmitiListOrderApp from './listorder/index.jsx';
 import ZmitiPoetryApp from './datum/index.jsx';
 import ZmitiEditorInfoApp from './editorinfo/index.jsx';
+import ZmitiRepertoryPubApp from './repertorypub/index.jsx';
+import ZmitiRepertoryComApp from './repertorycom/index.jsx';
+import ZmitiRepertoryPerApp from './repertoryper/index.jsx';
 class App extends React.Component{
     constructor(args) {
       super(...args);
@@ -32,9 +35,11 @@ class App extends React.Component{
 				{path:'/editorder/(:id)',app:ZmitiEditOrderApp},
 				{path:'/vieworder/(:id)',app:ZmitiViewOrderApp},
 				{path:'/listorder/:title',app:ZmitiListOrderApp},
-				{path: '/datum/', app: ZmitiPoetryApp},
+				{path: '/datum/(:id)', app: ZmitiPoetryApp},
 				{path: '/editorinfo/(:id)', app: ZmitiEditorInfoApp},
-				
+				{path:'/repertorypub/',app:ZmitiRepertoryPubApp},
+				{path:'/repertorycom/',app:ZmitiRepertoryComApp},
+				{path:'/repertoryper/',app:ZmitiRepertoryPerApp},
 			];
     return (
         <Router history={hashHistory} >

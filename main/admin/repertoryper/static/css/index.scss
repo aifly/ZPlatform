@@ -1,0 +1,134 @@
+@mixin pos($v) {
+  @if
+  $v == a {
+  position: absolute;
+} @else if $v == r {
+  position: relative;
+} @else if $v == f {
+  position: fixed;
+}
+}
+@mixin transform($v) {
+  -webkit-transform: $v;
+  transform: $v;
+}
+
+@mixin transformOrigin($v) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+
+@mixin backgroundSize($v:cover) {
+  background-size: $v;
+}
+
+@mixin transition_transform($v) {
+  -webkit-transition: -webkit-transform $v;
+  transition: transform $v;
+}
+
+@mixin transform_origin($v:center) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+
+@mixin transition($v) {
+  -webkit-transition: $v;
+  transition: $v;
+}
+.repertoryper-main-ui{
+	overflow:auto;
+	.repertoryper-column{
+		margin:20px ;
+	}
+	.zmiti-repertoryper-header-inner{
+		padding-left: 8px;
+		margin-top: 10px;
+		@include pos(r);
+		&:before{
+			content: '';
+			@include pos(a);
+			width:2px;
+			height:100%;
+			background:#88B7E0 ;
+			left:0;
+			@include transform(scale(1,.7));
+		}
+	}
+	.zmiti-repertoryper-button-right button{
+		float:right;
+		margin-top: 5px;
+	}
+	.zmiti-repertoryper-line{
+		height:15px;
+		overflow: hidden;
+		border-bottom: 1px solid #dddddd;
+	}
+	.repertoryper-add{
+		width: 145px;
+		height: 145px;
+		float:left;
+		background:url(../images/add-img.jpg) no-repeat;
+		input {
+		    width: 145px;
+		    height: 145px;
+		    border: none;
+		    opacity: 0;
+		    background: none;
+		    cursor: pointer;
+		}
+	}
+	.repertoryUpBtn{
+		width:80px;
+		height:35px;
+		overflow:hidden;
+		float:right;
+		position:relative;
+		button{
+			cursor: pointer;
+		}
+		input{
+			width:130px;
+			height:25px;
+			overflow:hidden;
+			position:absolute;
+			left:-40px;
+			top:5px;
+			opacity:0;
+			cursor: pointer;
+		}
+	}
+	.repertoryper-picList{
+		li{
+			width:182px;
+			float:left;
+			margin:0 10px 10px 0;			
+			position: relative;
+			.repertoryper-pics{
+				border:1px #cccccc solid;
+			}
+			img{
+				display:block;
+				width:180px;
+				height:180px;
+			}
+			.ant-btn{
+				position: absolute;
+				display:none;
+				left: 78px;
+				top:78px;
+			}
+			.repertoryper-size{
+
+			}		
+		}
+		li:hover{
+			.repertoryper-pics{
+				opacity:0.3;
+			}
+			.ant-btn{
+				display:block;
+			}		
+		}
+	}
+}
