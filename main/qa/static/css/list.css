@@ -105,5 +105,66 @@
             margin: 2px 0; }
           .qa-list-main-ui .qa-list-C .qa-list li .qa-item-operator > div a {
             color: #2db7f5; }
+.qa-list-main-ui .qa-create-C {
+  width: 100%;
+  position: relative;
+  background: #eaedf1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  -ms-flex-flow: row;
+      flex-flow: row; }
+  .qa-list-main-ui .qa-create-C > aside:first-of-type {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -ms-flex-flow: column;
+        flex-flow: column; }
+    .qa-list-main-ui .qa-create-C > aside:first-of-type .qa-iphone {
+      width: 30%;
+      margin: 0 auto;
+      position: relative;
+      top: 50%;
+      -webkit-transform: translate3d(0, -50%, 0);
+      transform: translate3d(0, -50%, 0); }
+  .qa-list-main-ui .qa-create-C > aside:last-of-type {
+    width: 500px;
+    position: relative;
+    background: #f1f1f1; }
+    .qa-list-main-ui .qa-create-C > aside:last-of-type .qa-text {
+      width: 80%;
+      left: 10%;
+      position: absolute;
+      top: 30%; }
+      .qa-list-main-ui .qa-create-C > aside:last-of-type .qa-text img {
+        opacity: 0; }
+    .qa-list-main-ui .qa-create-C > aside:last-of-type .qa-creat-btn {
+      position: absolute;
+      width: 176px;
+      height: 48px;
+      line-height: 48px;
+      text-align: center;
+      font-size: 22px;
+      color: #fff;
+      bottom: 100px;
+      left: 50%;
+      margin-left: -88px;
+      cursor: pointer; }
+    .qa-list-main-ui .qa-create-C > aside:last-of-type .qa-sea-list {
+      position: absolute;
+      bottom: 50px;
+      right: 50px;
+      cursor: pointer; }
+
+.qa-title-input {
+  margin-top: 30px; }
+  .qa-title-input .qa-title-btn {
+    margin-top: 30px;
+    text-align: center; }
 
 /*# sourceMappingURL=list.css.map */

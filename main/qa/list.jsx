@@ -23,10 +23,10 @@ class ZmitiQAListApp extends Component {
 		
 		this.state = {
 			mainHeight:document.documentElement.clientHeight - 50,
-			isEntry:1,
-			showTitle:true,
+			isEntry:0,
+			showTitle:false,
 			data:{
-				title: "党务纪检应知应会小测验",
+				title: "",
 			      indexBg:"./assets/images/bg.png",
 			      theme:"DANGJIAN",
 			      duration:360,
@@ -108,20 +108,33 @@ class ZmitiQAListApp extends Component {
 
 
 						</section>}
+				{this.state.isEntry === 0 && <section className='qa-create-C' style={{height:this.state.mainHeight}}>
+				<aside>
+					<img  draggable='false' className='qa-iphone' src='./static/images/qa-phone.png'/>
+				</aside>
+				<aside>
+					<div className='qa-text' ref='qa-text'>
+						<img ref='qa-text-img'  draggable='false' src='./static/images/poetry-text.png'/>
+					</div>
+					<div onClick={()=>{this.setState({showTitle:true})}} className='qa-creat-btn' style={{background:'url(./static/images/poetry-btn-bg.png) no-repeat center center / contain'}}>
+						创建选题
+					</div>
+					<div onClick={()=>{this.setState({isEntry:1})}} className='qa-sea-list'>查看历史创建</div>
+				</aside>
+				
 
-
-						 <Modal title="" visible={this.state.showTitle}
-						  width={400}
-						  onCancel={()=>{this.setState({showTitle:false})}}
-						  footer={''}
-				        >
-				         <div className='poetry-title-input'>
-				         	<input value={this.state.data.title} onChange={e=>{this.state.data.title = e.target.value;this.forceUpdate()}} type='text' placeholder= '请输入标题'/>
-				         	<img src='./static/images/peotry-title-bg.png'/>
-				         	<div className='poetry-title-btn'><Button onClick={this.createWork.bind(this)} type='primary' size="large">创建</Button></div>
-				         </div>
+		        <Modal title="" visible={this.state.showTitle || true}
+				  width={400}
+				  onCancel={()=>{this.setState({showTitle:false})}}
+				  footer={''}
+		        >
+		         <div className='qa-title-input'>
+		         	<Input value={this.state.data.title} onChange={e=>{this.state.data.title = e.target.value;this.forceUpdate()}} type='text' placeholder= '请输入标题'/>
+		         	<div className='qa-title-btn'><Button onClick={this.createWork.bind(this)} type='primary' size="large">创建</Button></div>
+		         </div>
 		        </Modal>
-			
+		        
+			</section>}
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
@@ -130,7 +143,11 @@ class ZmitiQAListApp extends Component {
 
 	createWork(){
 		var s = this;
-	 	return;
+		console.log(this.state.data.title);
+		if(this.state.data.title.length <=0){
+			message.error('标题不能为空');
+			return;
+		}
 		var type = 0;
 		
 		switch(s.usertypesign) {

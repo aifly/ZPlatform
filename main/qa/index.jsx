@@ -141,7 +141,6 @@ componentWillMount() {
                         <div onClick={this.changeMenu.bind(this,'bgsound')} className='qaedit-bgsound-btn' style={{background:'url(./static/images/poetry-bgsound-btn.png) no-repeat left '+(this.state.isBgSound ? 'top':'bottom')+''}}>
                             
                         </div>
-                        <Button onClick={()=>{this.setState({isCustom:true,isBg:false,isBgSound:false})}} type='primary' className='qaedit-add-question-btn'>添加问题</Button>
                     </section>
                 </div>
             </aside>

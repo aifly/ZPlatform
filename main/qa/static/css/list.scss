@@ -99,6 +99,71 @@
        			}
        		}
 		}
-	}	 
+	}
+
+      .qa-create-C{
+            width: 100%;
+            @include pos(r);
+            background: #eaedf1;
+            @include displayFlex(row);
+            &>aside{
+                  
+                  &:first-of-type{
+                        -webkit-flex:1;
+                        flex:1;
+                        @include displayFlex();
+                        .qa-iphone{
+                              width:30%;
+                              margin: 0 auto;
+                              @include pos(r);
+                              top: 50%;
+                              @include transform(translate3d(0,-50%,0));
+                        }
+                  }
+                  &:last-of-type{
+                        width: 500px;
+                        @include pos(r);
+                        background: #f1f1f1;
+                        .qa-text{
+                              width: 80%;
+                              left: 10%;
+                              @include pos(a);
+                              top: 30%;
+                              img{
+                                    opacity:0;
+                              }
+                        }
+
+                        .qa-creat-btn{
+                              @include pos(a);
+                              width: 176px;
+                              height: 48px;
+                              line-height: 48px;
+                              text-align: center;
+                              font-size: 22px;
+                              color:#fff;
+                              bottom: 100px;
+                              left: 50%;
+                              margin-left: -88px;
+                              cursor: pointer;
+                        }
+                        .qa-sea-list{
+                              @include pos(a);
+                              bottom: 50px;
+                              right: 50px;
+                              cursor: pointer;
+                        }
+                  }
+
+            }
+
+
+      } 
 }
- 
+ .qa-title-input{
+      margin-top: 30px;
+      .qa-title-btn{
+            margin-top: 30px;
+            text-align: center;
+      }
+}
