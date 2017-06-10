@@ -34,7 +34,7 @@ class ZmitiRepertoryComApp extends Component {
 	}
 	render() {
 		var s =this; 
-    var title = this.props.params.title || '元素库';
+    var title = this.props.params.title || '素材云盘';
     let props={
       userid:this.userid,
       changeAccount:this.changeAccount.bind(this),

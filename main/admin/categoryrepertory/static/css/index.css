@@ -1,0 +1,75 @@
+.categoryrepertory-main-ui {
+  overflow: auto; }
+  .categoryrepertory-main-ui .categoryrepertory-column {
+    margin: 20px; }
+  .categoryrepertory-main-ui .zmiti-categoryrepertory-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .categoryrepertory-main-ui .zmiti-categoryrepertory-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .categoryrepertory-main-ui .zmiti-categoryrepertory-button-right button {
+    float: right;
+    margin-top: 5px; }
+  .categoryrepertory-main-ui .zmiti-categoryrepertory-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .categoryrepertory-main-ui .categoryrepertory-add {
+    width: 145px;
+    height: 145px;
+    float: left;
+    background: url(../images/add-img.jpg) no-repeat; }
+    .categoryrepertory-main-ui .categoryrepertory-add input {
+      width: 145px;
+      height: 145px;
+      border: none;
+      opacity: 0;
+      background: none;
+      cursor: pointer; }
+  .categoryrepertory-main-ui .repertoryUpBtn {
+    width: 80px;
+    height: 35px;
+    overflow: hidden;
+    float: right;
+    position: relative; }
+    .categoryrepertory-main-ui .repertoryUpBtn button {
+      cursor: pointer; }
+    .categoryrepertory-main-ui .repertoryUpBtn input {
+      width: 130px;
+      height: 25px;
+      overflow: hidden;
+      position: absolute;
+      left: -40px;
+      top: 5px;
+      opacity: 0;
+      cursor: pointer; }
+  .categoryrepertory-main-ui .categoryrepertory-picList li {
+    width: 182px;
+    float: left;
+    margin: 0 10px 10px 0;
+    position: relative; }
+    .categoryrepertory-main-ui .categoryrepertory-picList li .categoryrepertory-pics {
+      border: 1px #cccccc solid; }
+    .categoryrepertory-main-ui .categoryrepertory-picList li img {
+      display: block;
+      width: 180px;
+      height: 180px; }
+    .categoryrepertory-main-ui .categoryrepertory-picList li .ant-btn {
+      position: absolute;
+      display: none;
+      left: 78px;
+      top: 78px; }
+  .categoryrepertory-main-ui .categoryrepertory-picList li:hover .categoryrepertory-pics {
+    opacity: 0.3; }
+  .categoryrepertory-main-ui .categoryrepertory-picList li:hover .ant-btn {
+    display: block; }
+
+/*# sourceMappingURL=index.css.map */
