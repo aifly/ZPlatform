@@ -36,12 +36,12 @@
   -webkit-transition: $v;
   transition: $v;
 }
-.repertorypub-main-ui{
+.categoryrepertory-main-ui{
 	overflow:auto;
-	.repertorypub-column{
+	.categoryrepertory-column{
 		margin:20px ;
 	}
-	.zmiti-repertorypub-header-inner{
+	.zmiti-categoryrepertory-header-inner{
 		padding-left: 8px;
 		margin-top: 10px;
 		@include pos(r);
@@ -55,16 +55,16 @@
 			@include transform(scale(1,.7));
 		}
 	}
-	.zmiti-repertorypub-button-right button{
+	.zmiti-categoryrepertory-button-right button{
 		float:right;
 		margin-top: 5px;
 	}
-	.zmiti-repertorypub-line{
+	.zmiti-categoryrepertory-line{
 		height:15px;
 		overflow: hidden;
 		border-bottom: 1px solid #dddddd;
 	}
-	.repertorypub-add{
+	.categoryrepertory-add{
 		width: 145px;
 		height: 145px;
 		float:left;
@@ -98,13 +98,13 @@
 			cursor: pointer;
 		}
 	}
-	.repertorypub-picList{
+	.categoryrepertory-picList{
 		li{
 			width:182px;
 			float:left;
 			margin:0 10px 10px 0;			
 			position: relative;
-			.repertorypub-pics{
+			.categoryrepertory-pics{
 				border:1px #cccccc solid;
 			}
 			img{
@@ -118,12 +118,12 @@
 				left: 78px;
 				top:78px;
 			}
-			.repertorypub-size{
+			.categoryrepertory-size{
 
 			}		
 		}
 		li:hover{
-			.repertorypub-pics{
+			.categoryrepertory-pics{
 				opacity:0.3;
 			}
 			.ant-btn{

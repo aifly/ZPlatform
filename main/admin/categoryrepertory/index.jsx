@@ -59,15 +59,15 @@ class ZmitiCategoryRepertoryApp extends Component {
             type:'workorder-1',
             selectedIndex:this.state.selectedIndex,
             rightType:"custom",
-            customRightComponent:<div className='inforlist-main-ui' style={{height:this.state.mainHeight}}>
+            customRightComponent:<div className='categoryrepertory-main-ui' style={{height:this.state.mainHeight}}>
                 <div className='pad-10'>
-                    <div className="zmiti-inforlist-header">
+                    <div className="zmiti-categoryrepertory-header">
                         <Row>
-                            <Col span={8} className="zmiti-inforlist-header-inner">素材云盘</Col>
-                            <Col span={8} offset={8} className='zmiti-inforlist-button-right'><Button type='primary' icon="left" onClick={this.goback.bind(this)}>返回</Button></Col>
+                            <Col span={8} className="zmiti-categoryrepertory-header-inner">素材云盘</Col>
+                            <Col span={8} offset={8} className='zmiti-categoryrepertory-button-right'><Button type='primary' icon="left" onClick={this.goback.bind(this)}>返回</Button></Col>
                         </Row>                      
                     </div>
-                    <div className="zmiti-inforlist-line"></div>
+                    <div className="zmiti-categoryrepertory-line"></div>
                     <div className="hr20"></div>
                     
                 </div>

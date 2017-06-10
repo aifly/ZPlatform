@@ -1,12 +1,12 @@
-.repertorypub-main-ui {
+.categoryrepertory-main-ui {
   overflow: auto; }
-  .repertorypub-main-ui .repertorypub-column {
+  .categoryrepertory-main-ui .categoryrepertory-column {
     margin: 20px; }
-  .repertorypub-main-ui .zmiti-repertorypub-header-inner {
+  .categoryrepertory-main-ui .zmiti-categoryrepertory-header-inner {
     padding-left: 8px;
     margin-top: 10px;
     position: relative; }
-    .repertorypub-main-ui .zmiti-repertorypub-header-inner:before {
+    .categoryrepertory-main-ui .zmiti-categoryrepertory-header-inner:before {
       content: '';
       position: absolute;
       width: 2px;
@@ -15,34 +15,34 @@
       left: 0;
       -webkit-transform: scale(1, 0.7);
       transform: scale(1, 0.7); }
-  .repertorypub-main-ui .zmiti-repertorypub-button-right button {
+  .categoryrepertory-main-ui .zmiti-categoryrepertory-button-right button {
     float: right;
     margin-top: 5px; }
-  .repertorypub-main-ui .zmiti-repertorypub-line {
+  .categoryrepertory-main-ui .zmiti-categoryrepertory-line {
     height: 15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd; }
-  .repertorypub-main-ui .repertorypub-add {
+  .categoryrepertory-main-ui .categoryrepertory-add {
     width: 145px;
     height: 145px;
     float: left;
     background: url(../images/add-img.jpg) no-repeat; }
-    .repertorypub-main-ui .repertorypub-add input {
+    .categoryrepertory-main-ui .categoryrepertory-add input {
       width: 145px;
       height: 145px;
       border: none;
       opacity: 0;
       background: none;
       cursor: pointer; }
-  .repertorypub-main-ui .repertoryUpBtn {
+  .categoryrepertory-main-ui .repertoryUpBtn {
     width: 80px;
     height: 35px;
     overflow: hidden;
     float: right;
     position: relative; }
-    .repertorypub-main-ui .repertoryUpBtn button {
+    .categoryrepertory-main-ui .repertoryUpBtn button {
       cursor: pointer; }
-    .repertorypub-main-ui .repertoryUpBtn input {
+    .categoryrepertory-main-ui .repertoryUpBtn input {
       width: 130px;
       height: 25px;
       overflow: hidden;
@@ -51,25 +51,25 @@
       top: 5px;
       opacity: 0;
       cursor: pointer; }
-  .repertorypub-main-ui .repertorypub-picList li {
+  .categoryrepertory-main-ui .categoryrepertory-picList li {
     width: 182px;
     float: left;
     margin: 0 10px 10px 0;
     position: relative; }
-    .repertorypub-main-ui .repertorypub-picList li .repertorypub-pics {
+    .categoryrepertory-main-ui .categoryrepertory-picList li .categoryrepertory-pics {
       border: 1px #cccccc solid; }
-    .repertorypub-main-ui .repertorypub-picList li img {
+    .categoryrepertory-main-ui .categoryrepertory-picList li img {
       display: block;
       width: 180px;
       height: 180px; }
-    .repertorypub-main-ui .repertorypub-picList li .ant-btn {
+    .categoryrepertory-main-ui .categoryrepertory-picList li .ant-btn {
       position: absolute;
       display: none;
       left: 78px;
       top: 78px; }
-  .repertorypub-main-ui .repertorypub-picList li:hover .repertorypub-pics {
+  .categoryrepertory-main-ui .categoryrepertory-picList li:hover .categoryrepertory-pics {
     opacity: 0.3; }
-  .repertorypub-main-ui .repertorypub-picList li:hover .ant-btn {
+  .categoryrepertory-main-ui .categoryrepertory-picList li:hover .ant-btn {
     display: block; }
 
 /*# sourceMappingURL=index.css.map */
