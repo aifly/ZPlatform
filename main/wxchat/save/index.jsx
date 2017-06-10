@@ -26,6 +26,7 @@ export default class WXSaveApp extends React.Component {
         getusersigid: s.props.getusersigid,
         userid: s.props.userid,
         onFinish(imgData){
+
         	s.props.copyfile({
     			imgData,
         	 	that:s,
