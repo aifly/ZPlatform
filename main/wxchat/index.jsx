@@ -66,6 +66,7 @@ class ZmitiWxChatApp extends Component {
 		}; 
 	}
 
+	
 
 	render() {
 		var mainStyle = {
@@ -79,18 +80,26 @@ class ZmitiWxChatApp extends Component {
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
-                s.state.data.memberList.push({
-                	id:s.props.randomString(8),
-                	head:imgData.src,
-                	name:''
-                });
 
-                s.forceUpdate(()=>{
-                	 window.obserable.trigger({
-	                	type:'refreshMemberList'
-	                })
-                	
-                });
+            	s.copyfile({
+            	 	imgData,
+            	 	that:s,
+            	 	fn:src=>{
+	                 s.state.data.memberList.push({
+	                	id:s.props.randomString(8),
+	                	head:imgData.src,
+	                	name:''
+	                });
+
+	                s.forceUpdate(()=>{
+	                	 window.obserable.trigger({
+		                	type:'refreshMemberList'
+		                })
+	                	
+	                });
+	                }
+            	 });
+               
             }
         };
         const linkProps = {
@@ -98,8 +107,16 @@ class ZmitiWxChatApp extends Component {
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
-                s.state.data.talk[s.state.currentTalkIndex].linkObj.img = imgData.src;
-                s.forceUpdate();
+
+            	 s.copyfile({
+            	 	imgData,
+            	 	that:s,
+            	 	fn:src=>{
+	                	s.state.data.talk[s.state.currentTalkIndex].linkObj.img = src;
+		    			s.forceUpdate();
+	                }
+            	 });
+              
             }
         };
 
@@ -108,9 +125,15 @@ class ZmitiWxChatApp extends Component {
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
-
-                s.state.data.background = imgData.src;
-                s.forceUpdate();
+        		 
+        		 s.copyfile({
+            	 	imgData,
+            	 	that:s,
+            	 	fn:src=>{
+		                s.state.data.background  = src;
+		    			s.forceUpdate();
+	                }
+            	 });
             }	
         }
 
@@ -119,12 +142,20 @@ class ZmitiWxChatApp extends Component {
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
-            	s.state.data.myHeadImg = imgData.src;
-            	s.state.isShowReplaceMyHeadImg= false;
-            	s.state.data.talk.forEach((item,i)=>{
-            		item.isMe && (item.head = imgData.src);
-            	});
-            	s.forceUpdate()
+
+            	 s.copyfile({
+            	 	imgData,
+            	 	that:s,
+            	 	fn:src=>{
+		                s.state.data.myHeadImg = imgData.src;
+		            	s.state.isShowReplaceMyHeadImg= false;
+		            	s.state.data.talk.forEach((item,i)=>{
+		            		item.isMe && (item.head = imgData.src);
+		            	});
+		            	s.forceUpdate()
+	                }
+            	 });
+            	
             }
         }
 
@@ -133,16 +164,23 @@ class ZmitiWxChatApp extends Component {
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
-            	
-            	s.state.data.talk[s.state.currentTalkIndex].img = imgData.src;
-            	
-            	s.state.data.talk[s.state.currentTalkIndex].text = '';
 
-            	s.state.isShowReplaceTalkImg= false;
+            	 s.copyfile({
+            	 	imgData,
+            	 	that:s,
+            	 	fn:src=>{
+	                	s.state.data.talk[s.state.currentTalkIndex].img = imgData.src;
+        	
+		            	s.state.data.talk[s.state.currentTalkIndex].text = '';
 
-            	s.forceUpdate(()=>{
-            		window.obserable.trigger({type:'refreshTalkBodyScroll'});
-            	})
+		            	s.state.isShowReplaceTalkImg= false;
+
+		            	s.forceUpdate(()=>{
+		            		window.obserable.trigger({type:'refreshTalkBodyScroll'});
+		            	})
+	                }
+            	 });
+            
             }
         } 
 
@@ -155,13 +193,21 @@ class ZmitiWxChatApp extends Component {
             		return;
             	}
 
-            	s.state.data.talk.forEach((item,i)=>{
-            		if(s.state.data.memberList[s.state.currentEditIndex].id === item.id){
-            			item.head = imgData.src;
-            		}
-            	});
-            	s.state.data.memberList[s.state.currentEditIndex].head = imgData.src;
-                s.forceUpdate();
+            	 s.copyfile({
+            	 	imgData,
+            	 	that:s,
+            	 	fn:src=>{
+	                	s.state.data.talk.forEach((item,i)=>{
+		            	if(s.state.data.memberList[s.state.currentEditIndex].id === item.id){
+		            			item.head = imgData.src;
+		            		}
+		            	});
+		            	s.state.data.memberList[s.state.currentEditIndex].head = imgData.src;
+		                s.forceUpdate();
+	                }
+            	 });
+
+            	
             }
         }
 
@@ -173,6 +219,8 @@ class ZmitiWxChatApp extends Component {
         	entryEdit:this.entryEdit.bind(this),
         	modifyGroupName:this.modifyGroupName.bind(this),
         	loading:this.props.loading,
+        	copyfile:this.copyfile.bind(this),
+        	worksid:this.worksid
 
         }
 
@@ -241,12 +289,13 @@ class ZmitiWxChatApp extends Component {
 
 	componentWillMount() {
 		
-		let {resizeMainHeight,validateUser,loginOut} = this.props;
+		let {resizeMainHeight,validateUser,loginOut,copyfile} = this.props;
 
 		resizeMainHeight(this);	
 		
 		let {userid,getusersigid,usertypesign} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
 		this.userid = userid;
+		this.copyfile = copyfile;
 		this.getusersigid = getusersigid;
 		this.usertypesign = usertypesign;
 	}

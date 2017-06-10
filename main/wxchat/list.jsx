@@ -74,17 +74,24 @@ class ZmitiWxChatListApp extends Component {
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
-                s.state.data.memberList.push({
-                	id:s.randomString(),
-                	head:imgData.src,
-                	name:''
-                });
+            	s.copyfile({
+            	 	imgData,
+            	 	that:s,
+            	 	fn:src=>{
+	                	s.state.data.memberList.push({
+		                	id:s.randomString(),
+		                	head:imgData.src,
+		                	name:''
+		                });
 
-                s.forceUpdate(()=>{
-                	 window.obserable.trigger({
-	                	type:'refreshMemberList'
-	                })
-                });
+		                s.forceUpdate(()=>{
+		                	 window.obserable.trigger({
+			                	type:'refreshMemberList'
+			                });
+		                });
+	                }
+            	 });
+               
             }
         };
 
@@ -231,12 +238,13 @@ class ZmitiWxChatListApp extends Component {
 
 	componentWillMount() {
 		
-		let {resizeMainHeight,validateUser,loginOut} = this.props;
+		let {resizeMainHeight,validateUser,loginOut,copyfile} = this.props;
 
 		resizeMainHeight(this);	
 		
 		let {userid,getusersigid,usertypesign} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
 		this.userid = userid;
+		this.copyfile = copyfile;
 		this.getusersigid = getusersigid;
 		this.usertypesign = usertypesign;
 	}
