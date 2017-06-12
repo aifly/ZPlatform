@@ -1,6 +1,6 @@
 import './static/css/index.css';
 import React from 'react';
-import { message,Row,Col,Input,Button,Icon } from '../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Icon,InputNumber } from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
@@ -105,6 +105,7 @@ componentWillMount() {
                         s.state.data.question = s.state.data.question || [];
                         s.state.data.question  = s.state.data.question.length<=0 ?  [{title:'“三会一课制度”不包括下列哪个内容？',img:'',score:0,answer:[{content:'定期召开支部党员大会',isRight:false},{content:'定期召开支部委员会',isRight:false},{"content":"按时上好党课","isRight":false},{content:'定期召开民主生活会',isRight:true}],id:s.randomString() }] :  s.state.data.question;
                         s.state.data.duration  = s.state.data.duration || 360;
+                        s.state.data.questionType  = s.state.data.questionType || 'single';
  
                         s.forceUpdate(()=>{
 
@@ -176,7 +177,7 @@ componentWillMount() {
         var component = <div className='qaedit-main-ui' style={mainStyle}>
             <aside>
                 <div className='editpoetry-iphone' style={phoneStyle} >
-                    <Input type='text' value={this.state.data.title} onChange={e=>{this.state.data.title = e.target.value;this.forceUpdate()}}/>
+                    
                     <div className='zmiti-edit-phone-C'>
                         <ZmitiWxHeader {...headerProps}></ZmitiWxHeader>
                         <div className='qaedit-phone-body'>
@@ -262,8 +263,38 @@ componentWillMount() {
                 </section>
             </aside>
             <aside>
-                {this.state.isBg && <section className='qaedit-right-C'>
-                    <header>背景图片设置</header>
+                {this.state.currentSetting === 0 && <section className='qaedit-right-C'>
+                    <div className='editqa-title'>
+                        <Input type='text' value={this.state.data.title} addonBefore='作品标题' onChange={e=>{this.state.data.title = e.target.value;this.forceUpdate()}}/>
+                    </div>
+                    <div className="editqa-q-type">
+                        <section>
+                            题目类型 :                            
+                        </section>
+                        <section onClick={()=>{this.state.data.questionType = 'single';this.forceUpdate();}} className={this.state.data.questionType === 'single' ? 'active': ''}>
+                            单选
+                        </section>
+                        <section onClick={()=>{this.state.data.questionType = 'multi';this.forceUpdate();}} className={this.state.data.questionType === 'multi' ? 'active': ''}>
+                            多选
+                        </section>
+                        <section onClick={()=>{this.state.data.questionType = 'mixin';this.forceUpdate();}} className={this.state.data.questionType === 'mixin' ? 'active':''}>
+                            混合
+                        </section>
+                    </div>
+                    <div className="editqa-q-duration">
+                        <section>
+                            答题时间 :                            
+                        </section>
+                        <section>
+                            <InputNumber min={30} value={this.state.data.duration} onChange={e=>{this.state.data.duration = e;this.forceUpdate();}}/> S
+                        </section>
+                        <section>
+                            
+                        </section>
+                        <section>
+                            
+                        </section>
+                    </div>
                     <section className='qaedit-bg-C'>
                         <ul>
                             {
@@ -277,7 +308,7 @@ componentWillMount() {
                     </section>
                     <div style={{marginTop:30}} className='qaedit-next'><Button type='primary' onClick={this.entryShare.bind(this)}>下一步</Button></div>
                 </section>}
-                {this.state.isBgSound && <section className='qaedit-right-C'>
+                {this.state.currentSetting === -1 && <section className='qaedit-right-C'>
                     <header>背景音乐设置</header>
                     <section className='qaedit-bgsound-C'>
                         <ul>
