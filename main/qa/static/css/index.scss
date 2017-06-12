@@ -1,4 +1,4 @@
-@import "../../../public/css/base.scss";
+﻿@import "../../../public/css/base.scss";
 
 h2,h3,h4,h5{
   font-weight: normal;
@@ -10,16 +10,225 @@ h2,h3,h4,h5{
       &:first-of-type{
         -webkit-flex:1;
         flex:1;
+        @include pos(r);
         @include displayFlex();
         .editpoetry-iphone{
-           width:30%;
+           width:286px;
+           height: 600px;
             margin: 0 auto;
             @include pos(r);
             top: 50%;
             @include transform(translate3d(0,-50%,0));
+            .zmiti-edit-phone-C{
+              width: 90%;
+              height: 450px;
+              border:5px solid #ccc;
+              @include pos(r);
+              @include br(3px);
+              box-sizing:border-box;
+              margin: 80px auto;
+              @include displayFlex();
+              .qaedit-phone-body{
+                 width:100%;
+                 flex:1;
+                 -webkit-flex:1;
+                 @include pos(r);
+                 overflow: hidden;
+                  header{
+                     width: 100%;
+                     margin: 0 auto;
+                     height: 35px;
+                     line-height: 35px;
+                     background: #fff;
+                     @include displayFlex(row);
+                     &>aside{
+                       -webkit-flex:1;
+                       flex:1;
+                       margin-left: 20px;
+                       &:first-of-type{
+                         span{
+                          color:#999;
+                         }
+                       }
+                       &:last-of-type{
+                          -webkit-flex:2;
+                        flex:2;
+                        text-align: right;
+                        @include displayFlex(row);
+                        &>div{
+                           &:first-of-type{
+                             margin-top: 10px;
+                             margin-right: 20px;
+                           }
+                            color:#999;
+                            span{
+                              color:#f66;
+                            }
+                        }
+                       }
+                     }
+                   } 
 
+                   .editqa-question-list-C{
+                     
+                     &.left{
+                        @include transform(translate3d(-286px,0,0));
+                        @include transition(.35s);
+                        z-index: 1;
+                        .iScrollVerticalScrollbar{
+                          display: none !important;;
+                        }
+                      }
+                      &.active{
+                        @include transform(translate3d(0,0,0)); 
+                        @include transition(.2s);
+                        z-index: 2;
+                      }
+                      &.right{
+                        @include transform(translate3d(286px,0,0));
+                        z-index: 3;
+                      }
+                      width: 248px;
+                      overflow: hidden;
+                      @include pos(a);
+                      top: 0px;
+                      box-sizing:border-box;
+                      
+                     }
+
+                     .editqa-q-title{
+                        width: 90%;
+                        margin: 70px auto 0;
+                        background: rgba(255,255,255,.8);
+                        @include br(10px);
+                        &:before{
+                          content:'';
+                          @include pos(a);
+                          width: 100%;
+                          height: 100%;
+                          @include br(10px);
+                          box-shadow:0 0 20px rgba(0,0,0,.5)
+                        }
+
+                        font-size: 15px;
+                        line-height: 20px;
+                        &>span{
+                           color:#f66;
+                           font-size: 24px;
+                           @include pos(a);
+                           top: -44px;
+                        }
+                        
+                        box-sizing:border-box;
+                        @include pos(r);
+                        article>div{
+                          padding: 50px 20px 30px 20px;;
+                        }
+
+                        .editqa-pager{
+                           width: 80px;
+                           height: 80px;
+                           @include br(50%);
+                           @include pos(a);
+                           top: -40px;
+                           left: 50%;
+                           margin-left: -40px;
+                           background: #fff;
+                            font-size: 30px;
+                            line-height: 50px;
+                           border:1px dashed #222;
+                           &:before{
+                            content: '';
+                            @include pos(a);
+                            height: 80%;
+                            top: 12%;
+                            left: 55%;
+                            @include transform(rotate(40deg));
+                            width: 1px;
+                            background: #999;
+                            
+                          }
+
+                          span{
+                            font-family: Georgia;
+
+                            @include pos(a);
+                            &:nth-of-type(1){
+                              color:#f66;
+                              font-size: 50px;
+                              left: -10px;
+                              width: 70px;
+                              text-align: center;
+                              top: 0px;
+                            }
+                            &:nth-of-type(2){
+                              color:#999;
+                              font-size: 30px;
+                              right: -10px;
+                              bottom: 0px;
+                              width: 70px;
+                              text-align: center;
+                            }
+                          }
+                        }
+                     }
+
+                     .editqa-q-answer-list{
+                       width: 90%;
+                       margin: 20px auto;
+                       .editqa-q-item{
+                        
+
+                        background: rgba(255,255,255,.8);
+                        @include br(10px);
+                        &:before{
+                          content:'';
+                          @include pos(a);
+                          left: 0;
+                          top: 0;
+                          width: 100%;
+                          height: 100%;
+                          @include br(10px);
+                          box-shadow:0 0 10px rgba(0,0,0,.5)
+                        }
+
+                        @include pos(r);
+
+                         line-height: 40px;
+                         
+                         margin: 10px 0;
+                         @include br(10px);
+                         font-size: 14px;
+                         padding: 0 10px;
+                         box-sizing:border-box;
+                         &.active{
+                           background: #f66;
+                           color:#fff;
+                           border:none;
+                         }
+                       }
+                       .editqa-submit-btn{
+                         width: 100%;
+                         height: 70px;
+                         @include br(10px);
+                         text-align: center;
+                         color:#fff;
+                         background: #f66;
+                         line-height: 70px;
+                         font-size: 40px;
+                         border:1px solid #fff;
+                         margin-top: 40px;
+                         @include transition(.1s);
+                         &.active{
+                            @include transform(translate3d(0,3px,0) scale(.99));
+                         }
+                       }
+                     }
+              }
+            }
             .qaedit-title{
                @include pos(a);
+
                font-size: 1.8vw;
                top:40%;
                display: none;
@@ -29,6 +238,56 @@ h2,h3,h4,h5{
                height: 20vh;
             }
         }
+
+        .editqa-left-operator-btns{
+           @include pos(a);
+           right: 10px;
+           font-size: 16px;
+           -webkit-user-select:none;
+           top: 10px;
+           z-index: 10;
+           @include displayFlex(row);
+           &>aside{
+            @include transform3d();
+             margin: 0 10px;
+
+             &:hover{
+               div{
+                @include transition(.1s);
+                @include transform(translate3d(0,-2px,0) scale(1.1));
+               }
+             }
+             div{
+              
+              color:#fff;
+              $size:60px;
+              width: $size;
+              height: $size;
+              @include br(50%);
+              text-align: center;
+              line-height: $size;
+              @include transition(.1s);
+              background: #108ee9;
+              cursor: pointer;
+              &.tap{
+                @include transform(translate3d(0,0,0) scale(.99));
+              }
+              @include pos(r);
+             
+              &:after{
+                content:'';
+                @include pos(a);
+                width: 100%;
+                height: 100%;
+                @include br(50%);
+                left: 0;
+                top: 0;
+                box-shadow: 0 3px 10px rgba(0,0,0,.5);
+              }
+             }
+           }
+        }
+
         &>div{
           @include pos(r);
           input{
@@ -46,7 +305,7 @@ h2,h3,h4,h5{
           }
           .qaedit-btn-ground{
             @include pos(a);
-            right: -55px;
+            right: -60px;
             top: 50px;
 
             .qaedit-add-question-btn{
@@ -69,6 +328,54 @@ h2,h3,h4,h5{
       &:last-of-type{
         width: 500px;
         background: #Fff;
+
+        .editqa-setting-C{
+          @include pos(a);
+          top: 0;
+          width: 100%;
+          height: 50px;
+
+          cursor: pointer;
+
+          border:1px solid #373d41;
+          font-size: 16px;
+          -webkit-user-select:none;
+          @include displayFlex(row);
+          &>aside{
+
+            @include pos(r);
+
+
+            &:hover{
+              background: #2a2f32;
+              color:#fff;
+              line-height: 40px;
+              &:before{
+                content:'';
+                width: 100%;
+                height: 2px;
+                background: #fff;
+                @include pos(a);
+                bottom: 0;
+                left: 0;
+                @include transformOrigin(left);
+                @include transform(scale(0,1));
+                @include animation(qa-line .2s forwards .2s);
+                
+              }
+            }
+             flex:1;
+             @include transition(.3s);
+             -webkit-flex:1;
+             line-height: 50px;
+             text-align: center;
+             &.active{
+                background: #373d41;
+                color:#fff;
+              }
+          }
+
+        }
 
         .qaedit-right-C{
 
@@ -287,4 +594,19 @@ h2,h3,h4,h5{
         }
       }
     }
+ }
+
+ @-webkit-keyframes qa-line{
+    100%{
+      @include transformOrigin(left);
+      @include transform(scale(1,1));
+    }
+    
+ }
+  @-webkit-keyframes qa-line1{
+    100%{
+      @include transformOrigin(right);
+      @include transform(scale(0,1));
+    }
+    
  }

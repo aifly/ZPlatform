@@ -83,7 +83,7 @@ class ZmitiQAListApp extends Component {
 		var component = <div className='qa-main-ui qa-list-main-ui'>
 			{this.state.isEntry === 1 && <section className='qa-list-C'>
 							<ul className='qa-list'>
-								<li  title='创建作品' onClick={this.showCreateWorkModal.bind(this)}>
+								<li  title='创建作品' onClick={()=>{this.setState({showTitle:true})}}>
 									<img src='./static/images/create.png'/>
 								</li>
 								{this.state.data.question.map((item,i)=>{
@@ -122,8 +122,9 @@ class ZmitiQAListApp extends Component {
 					<div onClick={()=>{this.setState({isEntry:1})}} className='qa-sea-list'>查看历史创建</div>
 				</aside>
 				
+			</section>}
 
-		        <Modal title="" visible={this.state.showTitle || true}
+			<Modal title="请输入作品标题" visible={this.state.showTitle }
 				  width={400}
 				  onCancel={()=>{this.setState({showTitle:false})}}
 				  footer={''}
@@ -133,8 +134,6 @@ class ZmitiQAListApp extends Component {
 		         	<div className='qa-title-btn'><Button onClick={this.createWork.bind(this)} type='primary' size="large">创建</Button></div>
 		         </div>
 		        </Modal>
-		        
-			</section>}
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
