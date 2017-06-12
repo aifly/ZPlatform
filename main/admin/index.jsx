@@ -38,7 +38,7 @@ class App extends React.Component{
 				{path:'/listorder/:title',app:ZmitiListOrderApp},
 				{path: '/datum/(:id)', app: ZmitiPoetryApp},
 				{path: '/editorinfo/(:id)', app: ZmitiEditorInfoApp},
-				{path:'/repertorypub/',app:ZmitiRepertoryPubApp},
+				{path:'/repertorypub/(:id)',app:ZmitiRepertoryPubApp},
 				{path:'/repertorycom/',app:ZmitiRepertoryComApp},
 				{path:'/repertoryper/',app:ZmitiRepertoryPerApp},
 				{path:'/categoryrepertory/(:id)', app: ZmitiCategoryRepertoryApp},

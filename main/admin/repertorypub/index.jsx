@@ -67,6 +67,7 @@ class ZmitiRepertoryPubApp extends Component {
     const { tags, inputVisible, inputValue } = this.state;
     const { value, editable } = this.state;
     var title = this.props.params.title || '素材云盘';
+
     let props={
       userid:this.userid,
       changeAccount:this.changeAccount.bind(this),
@@ -190,7 +191,8 @@ class ZmitiRepertoryPubApp extends Component {
       this.state.keyword = '';
       this.forceUpdate();
       if(i===0){
-        window.location='#/repertorypub/'
+        window.location='#/repertorypub/'+'2093f57c-c147-fea8-993d-593bb1d4df1a';
+
       }else if(i===1){
         window.location='#/repertorypub/'
       }else{
@@ -202,12 +204,13 @@ class ZmitiRepertoryPubApp extends Component {
     //上传
     uploadFile(){
       var userid = this.props.params.userid?this.props.params.userid:this.userid;
+      var datainfoclassid=this.props.params.id || 1465782065;
         let formData = new FormData(),
             s = this;
         formData.append('userid',s.userid);
         formData.append('getusersigid',s.getusersigid);
         formData.append('setuploadtype','0');
-        formData.append('setdatainfoclassid','1465782065');
+        formData.append('setdatainfoclassid',datainfoclassid);//datainfoclassid
         formData.append('setupfile', this.refs['upload-file'].files[0]);       
         $.ajax({
           url:window.baseUrl+ 'upload/upload_file',
@@ -227,12 +230,14 @@ class ZmitiRepertoryPubApp extends Component {
     //获取图片
     getPersonalImg(){
         var s=this;
+        var datainfoclassid=this.props.params.id;
+        //console.log(datainfoclassid);
         $.ajax({
             url: window.baseUrl + 'datainfoclass/get_datainfo/',
             data: {
                 userid: s.userid,
                 getusersigid: s.getusersigid,
-                setdatainfoclassid:1465782065,
+                setdatainfoclassid:datainfoclassid || 1465782065,//1465782065
                 setdatainfotype:0
             },
             success(data){
@@ -319,10 +324,8 @@ class ZmitiRepertoryPubApp extends Component {
       if (inputValue && tags.indexOf(inputValue) === -1) {
         tags = [...tags, inputValue];
       }
-      //
-      //console.log(tags,'handleInputConfirm');
+
       //add
-      //console.log(inputValue,'inputValueinputValueinputValue');
       $.ajax({
         type:'POST',
         url:window.baseUrl+'datainfoclass/add_class_info',//接口地址
@@ -362,9 +365,7 @@ class ZmitiRepertoryPubApp extends Component {
           if(i===parseInt(autoid)){
             s.state.workdatatype=item.workdatatype;
             s.state.tags[i]=value;
-            //console.log(s.state.workdatatype,"workdatatype"); 
-            //console.log(s.state.tags[i],"tagsindex");
-            
+           
             //提交
            $.ajax({
               type:'GET',
