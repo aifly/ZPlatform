@@ -21,7 +21,7 @@ import MainUI from '../components/Main.jsx';
             isBg:true,//是否选中风格，
             isBgSound:false,
             currentQid:0,
-            currentSetting:2,//当前的设置面板  内容设置，风格设置 、发布设置。
+            currentSetting:0,//当前的设置面板  内容设置，风格设置 、发布设置。
             questionIndex:0,
             themeList:[
                 {name:'DANGJIAN',src:'./static/images/qa-phone.png'},
@@ -63,6 +63,7 @@ import MainUI from '../components/Main.jsx';
         this.arr = ["A",'B','C','D','E','F','G','H','I','J','K',"L",'M','N'];
         this.viewH = document.documentElement.clientHeight;
         window.s = this;
+        this.currentFocus = 'none';
     }
 
 componentWillMount() {
@@ -337,7 +338,7 @@ componentWillMount() {
                     <aside onClick={()=>{this.setState({currentSetting:2})}} className={this.state.currentSetting === 2 ?'active':''}>发布设置</aside>
                 </section>
                  <section  ref='editqa-base-scroll' className='qaedit-right-C' style={{height:this.viewH - 100,display:this.state.currentSetting === 0 ?'block':'none'}}>
-                    <div style={{paddingBottom:40}}>
+                    <div style={{padding:'20px 0 40px 0'}}>
                         <div className='editqa-title'>
                             <Input type='text' value={this.state.data.title} addonBefore='作品标题' onChange={e=>{this.state.data.title = e.target.value;this.forceUpdate()}}/>
                         </div>
@@ -345,23 +346,26 @@ componentWillMount() {
                             <section>
                                 题目类型 :                            
                             </section>
-                            <Popover content={<div>此作品只能都是单选题目</div>} title="作品类型">
-                                <section onClick={()=>{this.state.data.questionType = 'single';this.forceUpdate();}} className={this.state.data.questionType === 'single' ? 'active': ''}>  
-                                   单选
-                                </section>
-                            </Popover>
+                            <section>
+                                <Popover content={<div>此作品只能都是单选题目</div>} title="作品类型">
+                                    <section onClick={()=>{this.state.data.questionType = 'single';this.forceUpdate();}} className={this.state.data.questionType === 'single' ? 'active': ''}>  
+                                       单选
+                                    </section>
+                                </Popover>
 
 
-                            <Popover content={<div>此作品只能都是多选题目</div>} title="作品类型">
-                                <section onClick={()=>{this.state.data.questionType = 'multi';this.forceUpdate();}} className={this.state.data.questionType === 'multi' ? 'active': ''}>
-                                     多选
-                                </section>
-                            </Popover>
-                            <Popover content={<div>此作品单选多选可同时存在</div>} title="作品类型">
-                                <section onClick={()=>{this.state.data.questionType = 'mixin';this.forceUpdate();}} className={this.state.data.questionType === 'mixin' ? 'active':''}>
-                                    混合
-                                </section>
-                            </Popover>
+                                <Popover content={<div>此作品只能都是多选题目</div>} title="作品类型">
+                                    <section onClick={()=>{this.state.data.questionType = 'multi';this.forceUpdate();}} className={this.state.data.questionType === 'multi' ? 'active': ''}>
+                                         多选
+                                    </section>
+                                </Popover>
+                                <Popover content={<div>此作品单选多选可同时存在</div>} title="作品类型">
+                                    <section onClick={()=>{this.state.data.questionType = 'mixin';this.forceUpdate();}} className={this.state.data.questionType === 'mixin' ? 'active':''}>
+                                        混合
+                                    </section>
+                                </Popover>    
+                            </section>
+                            
                             
                         </div>
                         <div className="editqa-q-duration">
@@ -465,16 +469,16 @@ componentWillMount() {
                         <div className='poetry-share-ui'>
                             <section>
                                 <Button.Group size="large">
-                                      <Button type="primary">
+                                      <Button type="primary" onClick={this.addShareInfo.bind(this,'{username}')}>
                                         显示微信名
                                       </Button>
-                                      <Button type="primary">
+                                      <Button type="primary" onClick={this.addShareInfo.bind(this,'{pv}')}>
                                         显示浏览量
                                       </Button>
-                                      <Button type="primary">
+                                      <Button type="primary" onClick={this.addShareInfo.bind(this,'{score}')}>
                                         显示分数
                                       </Button>
-                                      <Button type="primary">
+                                      <Button type="primary" onClick={this.addShareInfo.bind(this,'{level}')}>
                                         显示称号
                                       </Button>
                                 </Button.Group>
@@ -491,8 +495,8 @@ componentWillMount() {
                                         </div>
                                     </Col>
                                     <Col span={18}>
-                                        <Input value={this.state.data.shareTitle} onChange={this.modifyShareInfo.bind(this,'shareTitle')} type='text' placeholder='请输入分享的标题'/>
-                                        <textarea placeholder='请输入分享的描述' value={this.state.data.shareDesc}  onChange={this.modifyShareInfo.bind(this,'shareDesc')}></textarea>
+                                        <Input onFocus={()=>{this.currentFocus = 'title'}} value={this.state.data.shareTitle} onChange={this.modifyShareInfo.bind(this,'shareTitle')} type='text' placeholder='请输入分享的标题'/>
+                                        <Input type='textarea' onFocus={()=>{this.currentFocus = 'desc'}} placeholder='请输入分享的描述' value={this.state.data.shareDesc}  onChange={this.modifyShareInfo.bind(this,'shareDesc')} />
                                     </Col>
                                 </Row>
                                         
@@ -507,6 +511,17 @@ componentWillMount() {
                                     </Col>
                                 </Row>              
                             </section>
+
+                            <section className='editqa-my-custom'>
+                                <Row type='flex' gutter={20}>
+                                    <Row span={4}>我的定制</Row>
+                                    <Row span={4}>
+                                        <Input placeholder='' type='text' value={this.state.data.custom} onChange={e=>{this.state.data.custom = e.target.value;this.forceUpdate();}}/>
+                                    </Row>
+                                    <Row span={16} className='editqa-my-custom-tip'>此项请在指定人员下填写，否则可能会导致作品不能正常运行，默认为空</Row>
+                                </Row>
+                            </section>
+
                             <section className='editqa-score-setting'>
                                 <div>
                                     分数设置
@@ -550,8 +565,19 @@ componentWillMount() {
         );
     }
 
+
+    addShareInfo(val){
+        if(this.currentFocus === 'title'){
+            this.state.data.shareTitle += val;
+            this.forceUpdate();
+        }else if(this.currentFocus === 'desc'){
+            this.state.data.shareDesc += val;
+            this.forceUpdate();
+        }
+    }
+
     addLevel(){
-        if(this.state.data.level.length>4){
+        if(this.state.data.level.length > 4){
             message.error('最多只能设置5个等级');
             return ;
         }
