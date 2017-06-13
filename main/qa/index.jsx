@@ -1,6 +1,6 @@
 import './static/css/index.css';
 import React from 'react';
-import { message,Row,Col,Input,Button,Icon,InputNumber } from '../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Icon,InputNumber,Popover,Checkbox } from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
@@ -21,7 +21,7 @@ import MainUI from '../components/Main.jsx';
             isBg:true,//是否选中风格，
             isBgSound:false,
             currentQid:0,
-            currentSetting:0,//当前的设置面板  内容设置，风格设置 、发布设置。
+            currentSetting:2,//当前的设置面板  内容设置，风格设置 、发布设置。
             questionIndex:0,
             themeList:[
                 {name:'DANGJIAN',src:'./static/images/qa-phone.png'},
@@ -44,8 +44,15 @@ import MainUI from '../components/Main.jsx';
                 theme:'default',
                 duration:360,
                 type:'',
+                level:[
+                    {
+                        score:0,
+                        name:''
+                    }
+                ],
                 question:[
                 {
+                    title:'',
                     answer:[]
                 }
                 ],
@@ -53,13 +60,14 @@ import MainUI from '../components/Main.jsx';
                  
             }
         }
-        this.arr = ["A",'B','C','D','E','F','G','H','I'];
+        this.arr = ["A",'B','C','D','E','F','G','H','I','J','K',"L",'M','N'];
         this.viewH = document.documentElement.clientHeight;
+        window.s = this;
     }
 
 componentWillMount() {
         
-        let {resizeMainHeight,validateUser,loginOut,randomString} = this.props;
+        let {resizeMainHeight,validateUser,loginOut,randomString,copyfile} = this.props;
 
         resizeMainHeight(this); 
 
@@ -70,6 +78,7 @@ componentWillMount() {
         let {userid,getusersigid,usertypesign} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
         this.userid = userid;
         this.getusersigid = getusersigid;
+        this.copyfile = copyfile;
         this.usertypesign = usertypesign;
         this.loginOut = loginOut;
     }
@@ -106,6 +115,8 @@ componentWillMount() {
                         s.state.data.question  = s.state.data.question.length<=0 ?  [{title:'“三会一课制度”不包括下列哪个内容？',img:'',score:0,answer:[{content:'定期召开支部党员大会',isRight:false},{content:'定期召开支部委员会',isRight:false},{"content":"按时上好党课","isRight":false},{content:'定期召开民主生活会',isRight:true}],id:s.randomString() }] :  s.state.data.question;
                         s.state.data.duration  = s.state.data.duration || 360;
                         s.state.data.questionType  = s.state.data.questionType || 'single';
+                        s.state.data.totalScore  = s.state.data.totalScore || 0;
+                        s.state.data.level  = s.state.data.level || [{score:0,name:''}];
  
                         s.forceUpdate(()=>{
 
@@ -119,13 +130,19 @@ componentWillMount() {
                                     });
                                 }
                             });
+                            s.baseScroll = new IScroll(s.refs['editqa-base-scroll'],{
+                                scrollbars:true,//显示滚动条
+                                interactiveScrollbars:true,//允许用户拖动滚动条
+                                mouseWheel:true
+                            });
                             setTimeout(()=>{
                                 s.state.data.question.map((item,i)=>{
                                     s['scroll'+i].refresh();
                                 });
-                            },1000)
+                                s.baseScroll.refresh();
+                            },1000);
 
-                        })
+                        });
                     }catch(e){
                         message.error('您没有该作品该编辑');
                         setTimeout(()=>{
@@ -135,7 +152,11 @@ componentWillMount() {
                     
                 }
             }
-        })
+        });
+
+        window.obserable.on('refreshQuestionScroll',()=>{
+            this['scroll'+this.state.questionIndex].refresh();
+        });
 
     }
 
@@ -144,21 +165,53 @@ componentWillMount() {
 
     render(){
 
-            var mainStyle = {
+        var mainStyle = {
             height:this.state.mainHeight
         }
 
         var s = this;
 
+        var currentQuestion = this.state.data.question[this.state.questionIndex];
         const showShareProps  = {
             baseUrl: window.baseUrl,
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
-                s.modifyShareInfo('shareImg','',imgData.src);
+
+                s.copyfile({
+                    imgData,
+                    that:s,
+                    worksid:s.worksid,
+                    fn:src=>{
+                      s.modifyShareInfo('shareImg','',imgData.src);
+                    }
+                });
+                
                 
             }
         }
+         const showQuestionImgProps  = {
+            baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+                s.copyfile({
+                    imgData,
+                    that:s,
+                    worksid:s.worksid,
+                    fn:src=>{
+                        currentQuestion.img = imgData.src;
+                        s.forceUpdate(()=>{
+                            window.obserable.trigger({
+                                type:'refreshQuestionScroll'
+                            })
+                        });
+                    }
+                });
+            }
+        }
+
+
 
          
        var shareStyle = {cursor:'pointer',position:'relative'};
@@ -173,12 +226,27 @@ componentWillMount() {
         var headerProps = {
             title:this.state.data.title
         }
+        this.state.data.totalScore = 0;
+        this.state.data.isMultiselect = false;
+        this.state.data.question.map((item,i)=>{
+            this.state.data.totalScore += item.score || 0;
+            var ar = 0;
+            item.answer.map((a,k)=>{
+                if(a.isRight){
+                    ar++;
+                }
+
+            });
+            this.state.data.isMultiselect = ar > 1;
+        });
+
 
         var component = <div className='qaedit-main-ui' style={mainStyle}>
             <aside>
+
                 <div className='editpoetry-iphone' style={phoneStyle} >
                     
-                    <div className='zmiti-edit-phone-C'>
+                    <div className='zmiti-edit-phone-C' onMouseDown={()=>{window.obserable.trigger({type:'refreshQuestionScroll'})}}>
                         <ZmitiWxHeader {...headerProps}></ZmitiWxHeader>
                         <div className='qaedit-phone-body'>
                             <header>
@@ -198,9 +266,9 @@ componentWillMount() {
                     </svg>
                     {this.state.data.question.map((question,q)=>{
                         var className = '';
-                        if(this.state.currentQid > q ){
+                        if(this.state.questionIndex > q ){
                             className = 'left';
-                        }else if(this.state.currentQid === q){
+                        }else if(this.state.questionIndex === q){
                             className = 'active';
                         }else{
                             className = 'right';
@@ -220,7 +288,7 @@ componentWillMount() {
                                                 <div>{question.title}</div>
                                             </article>
                                             <div className='editqa-pager'>
-                                                <span>{(this.state.currentQid||0) +1}</span>
+                                                <span>{(this.state.questionIndex||0) +1}</span>
                                                 <span>{this.state.data.question.length}</span>
                                             </div>
                                         </div>
@@ -263,39 +331,122 @@ componentWillMount() {
                 </section>
             </aside>
             <aside>
-                {this.state.currentSetting === 0 && <section className='qaedit-right-C'>
-                    <div className='editqa-title'>
-                        <Input type='text' value={this.state.data.title} addonBefore='作品标题' onChange={e=>{this.state.data.title = e.target.value;this.forceUpdate()}}/>
-                    </div>
-                    <div className="editqa-q-type">
-                        <section>
-                            题目类型 :                            
-                        </section>
-                        <section onClick={()=>{this.state.data.questionType = 'single';this.forceUpdate();}} className={this.state.data.questionType === 'single' ? 'active': ''}>
-                            单选
-                        </section>
-                        <section onClick={()=>{this.state.data.questionType = 'multi';this.forceUpdate();}} className={this.state.data.questionType === 'multi' ? 'active': ''}>
-                            多选
-                        </section>
-                        <section onClick={()=>{this.state.data.questionType = 'mixin';this.forceUpdate();}} className={this.state.data.questionType === 'mixin' ? 'active':''}>
-                            混合
-                        </section>
-                    </div>
-                    <div className="editqa-q-duration">
-                        <section>
-                            答题时间 :                            
-                        </section>
-                        <section>
-                            <InputNumber min={30} value={this.state.data.duration} onChange={e=>{this.state.data.duration = e;this.forceUpdate();}}/> S
-                        </section>
-                        <section>
+                 <section className='editqa-setting-C'>
+                    <aside onClick={()=>{this.setState({currentSetting:0})}} className={this.state.currentSetting === 0 ?'active':''}>内容设置</aside>
+                    <aside onClick={()=>{this.setState({currentSetting:1})}} className={this.state.currentSetting === 1 ?'active':''}>风格设置</aside>
+                    <aside onClick={()=>{this.setState({currentSetting:2})}} className={this.state.currentSetting === 2 ?'active':''}>发布设置</aside>
+                </section>
+                 <section  ref='editqa-base-scroll' className='qaedit-right-C' style={{height:this.viewH - 100,display:this.state.currentSetting === 0 ?'block':'none'}}>
+                    <div style={{paddingBottom:40}}>
+                        <div className='editqa-title'>
+                            <Input type='text' value={this.state.data.title} addonBefore='作品标题' onChange={e=>{this.state.data.title = e.target.value;this.forceUpdate()}}/>
+                        </div>
+                        <div className="editqa-q-type">
+                            <section>
+                                题目类型 :                            
+                            </section>
+                            <Popover content={<div>此作品只能都是单选题目</div>} title="作品类型">
+                                <section onClick={()=>{this.state.data.questionType = 'single';this.forceUpdate();}} className={this.state.data.questionType === 'single' ? 'active': ''}>  
+                                   单选
+                                </section>
+                            </Popover>
+
+
+                            <Popover content={<div>此作品只能都是多选题目</div>} title="作品类型">
+                                <section onClick={()=>{this.state.data.questionType = 'multi';this.forceUpdate();}} className={this.state.data.questionType === 'multi' ? 'active': ''}>
+                                     多选
+                                </section>
+                            </Popover>
+                            <Popover content={<div>此作品单选多选可同时存在</div>} title="作品类型">
+                                <section onClick={()=>{this.state.data.questionType = 'mixin';this.forceUpdate();}} className={this.state.data.questionType === 'mixin' ? 'active':''}>
+                                    混合
+                                </section>
+                            </Popover>
                             
-                        </section>
-                        <section>
+                        </div>
+                        <div className="editqa-q-duration">
+                            <section>
+                                答题时间 :                            
+                            </section>
+                            <section>
+                                <InputNumber min={30} value={this.state.data.duration} onChange={e=>{this.state.data.duration = e;this.forceUpdate();}}/> S
+                            </section>
+                            <section></section>
+                            <section></section>
+                        </div>
+
+                        <div className='editqa-q-tip'>
+                            <section>请设置第{this.state.questionIndex+1}题内容</section>
+                            <section></section>
+                            <section>占:<InputNumber min={1} onChange={(e)=>{currentQuestion.score = e;this.forceUpdate();}} value={currentQuestion.score}/> 分</section>
+                            <section>总分：<span>{this.state.data.totalScore}</span>分</section>
+                        </div>
+                        <div className='editqa-q-input'>
+                            <section>
+                                <Input onFocus={()=>{this.setState({titleError:false})}} className={this.state.titleError?'editqa-title-error':''} type='textarea' onChange={e=>{currentQuestion.title= e.target.value ;this.forceUpdate()}} value={currentQuestion.title}/>
+                                您一共录入了<span>{currentQuestion.title.length}</span>个字
+                            </section>
+                            <section style={{background:'url('+currentQuestion.img+') no-repeat center / cover'}}>
+                                {!currentQuestion.img && <img onClick={this.modifyQImg.bind(this)}  src='./static/images/uploadimg.jpg'/>}
+                                {currentQuestion.img&& <div onClick={()=>{currentQuestion.img= '';this.forceUpdate(()=>{window.obserable.trigger({type:'refreshQuestionScroll'})})}} className='editqa-q-img-remove'>
+                                    <Icon type='delete'/>
+                                </div>}
+                            </section>
+                        </div>
+
+                        
+
+                        <div className='ediqa-q-item'>
+                            {
+                                currentQuestion.answer.map((item,i)=>{
+                                    return <Row  style={{margin:'15px 0'}} type='flex' key={i}>
+                                                <Col span={2}>
+                                                    <Button onClick={this.modifyRightAnswer.bind(this,item)}  type={item.isRight?'primary':'default'}>{this.arr[i]+'、'}</Button>
+                                                </Col>
+                                                <Col span={i ===currentQuestion.answer.length -1 ? 10 : 10}><Input onChange={e=>{item.content = e.target.value;this.forceUpdate()}} value={item.content} type='text'/></Col>
+                                                <Col span={6}>
+                                                     <Button onClick={this.modifyRightAnswer.bind(this,item)} type={item.isRight ? 'primary':'default'}>设置成正确答案</Button>
+                                                </Col>
+                                                <Col span={4}>
+                                                    <Button onClick={this.deleteAnswer.bind(this,currentQuestion,i)} icon='delete'>删除</Button>
+                                                </Col>
+                                                {i === currentQuestion.answer.length -1 && <Col span={2}>
+                                                 <Popover content={<div>点击继续添加答案</div>} title="添加答案">
+                                                    <Button onClick={this.addAnswer.bind(this,currentQuestion.answer)} type={!item.isRight ? 'primary':'default'} title='继续添加答案'>+</Button>
+                                                </Popover>
+                                                </Col>}
+                                            </Row>
+                                })
+                            }
                             
-                        </section>
+                        </div>
+
+                        <div className='editqa-pagetion'>
+                            <section>
+                                题目索引：(可拖拽排序)
+                            </section>
+                            {
+                                this.state.data.question.map((item,i)=>{//this.state.data.question
+                                    return <div key={i}>
+                                        <Button onClick={this.setCurrentQuestion.bind(this,i)} onDragStart={this.dragStart.bind(this,i)} onDragOver={(ev)=>{ ev.preventDefault && ev.preventDefault();return false;}} onDrop={this.orderQuestion.bind(this,i)} draggable='true' type={this.state.questionIndex === i ? 'primary':'default'}>{i+1}</Button>
+                                        {this.state.data.question.length>1 &&  <img onClick={this.deleteQuestion.bind(this,i)} src='./static/images/delete.png'/>}
+                                    </div>
+                                })
+                            }
+                        </div>
+
+                        <div className='editqa-add-q-btns'>
+                            <Row style={{width:'100%'}} type='flex' justify="end">
+                                <Col span={12}><Button onClick={this.addQuestion.bind(this)}>添加题目</Button></Col>
+                            </Row>
+                        </div>
+
+                       
                     </div>
-                    <section className='qaedit-bg-C'>
+            
+                </section>
+                {this.state.currentSetting === 1 && <section className='qaedit-right-C'>
+                 <section  className='qaedit-bg-C'>
                         <ul>
                             {
                                 this.state.themeList.map((item,i)=>{
@@ -306,45 +457,28 @@ componentWillMount() {
                             }
                         </ul>
                     </section>
-                    <div style={{marginTop:30}} className='qaedit-next'><Button type='primary' onClick={this.entryShare.bind(this)}>下一步</Button></div>
-                </section>}
-                {this.state.currentSetting === -1 && <section className='qaedit-right-C'>
-                    <header>背景音乐设置</header>
-                    <section className='qaedit-bgsound-C'>
-                        <ul>
-                            <li>
-                                <aside>歌名</aside>
-                                <aside>类型</aside>
-                                <aside>播放</aside>
-                                <aside>设为</aside>
-                            </li>
-                            {
-                                this.state.audioList.map((item,i)=>{
-                                    return <li onClick={()=>{this.state.data.bgSound = item.src;this.forceUpdate()}} className={this.state.data.bgSound === item.src?'active':''} key={i}>
-                                        <aside>{item.name}</aside>
-                                        <aside>{item.type}</aside>
-                                        <aside><img src='./static/images/poetry-play-btn.png'/></aside>
-                                        <aside>设为</aside>       
-                                    </li>
-                                })  
-                            }
-                            <li className={this.state.data.bgSound === '-1' ? 'active':''} onClick={()=>{this.state.data.bgSound = '-1';this.forceUpdate()}}>
-                                <aside></aside>
-                                <aside>无背景音乐</aside>
-                                <aside></aside>
-                            </li>
-                        </ul>
-                    </section>
-                    <div className='qaedit-next'><Button type='primary' onClick={this.entryShare.bind(this)}>下一步</Button></div>
                 </section>}
 
-                {this.state.isShare && <section className='qaedit-right-C'>
+                {this.state.currentSetting === 2&& <section className='qaedit-right-C'>
                     <header>分享设置</header>
                     <aside>
                         <div className='poetry-share-ui'>
                             <section>
-                                <Button title='{username}会被替换成微信的昵称' type='primary' size='large' onClick={this.atMeAtTitle.bind(this)}>在标题中插入昵称</Button>
-                                <Button title='{username}会被替换成微信的昵称' type='primary' size='large' style={{marginLeft:30}} onClick={this.atMeAtDesc.bind(this)}>在描述中插入昵称</Button>
+                                <Button.Group size="large">
+                                      <Button type="primary">
+                                        显示微信名
+                                      </Button>
+                                      <Button type="primary">
+                                        显示浏览量
+                                      </Button>
+                                      <Button type="primary">
+                                        显示分数
+                                      </Button>
+                                      <Button type="primary">
+                                        显示称号
+                                      </Button>
+                                </Button.Group>
+                                
                                 <h1 style={{height:10}}></h1>
                                 <Row type='flex' align='start' gutter={20}>
                                     <Col span={6}>
@@ -360,51 +494,231 @@ componentWillMount() {
                                         <Input value={this.state.data.shareTitle} onChange={this.modifyShareInfo.bind(this,'shareTitle')} type='text' placeholder='请输入分享的标题'/>
                                         <textarea placeholder='请输入分享的描述' value={this.state.data.shareDesc}  onChange={this.modifyShareInfo.bind(this,'shareDesc')}></textarea>
                                     </Col>
-                                </Row>              
+                                </Row>
+                                        
                             </section>
                             <section>
-                                <Row type='flex' align='middle'>
+                                <Row type='flex' align='middle' justify='space-around'>
                                     <Col span={12}>
-                                        <img src={this.state.data.qrcodeurl||'./static/images/qrcode.png'}/>
+                                        <img style={{width:140}} src={this.state.data.qrcodeurl||'./static/images/qrcode.png'}/>
                                     </Col>
                                     <Col span={12}>
                                         <div>扫二维码分享给好友</div>
                                     </Col>
                                 </Row>              
                             </section>
+                            <section className='editqa-score-setting'>
+                                <div>
+                                    分数设置
+                                </div>
+                                <div className='editqa-score-tip'>
+                                    <section>您设置的题目总分为：{this.state.data.totalScore}分</section>
+                                    <section> <Checkbox   checked={this.state.data.showLevel} onChange={(e)=>{this.state.data.showLevel = !this.state.data.showLevel ;this.forceUpdate();}}>{this.state.data.showLevel?'':'不'}显示称号</Checkbox></section>
+                                </div>
+                            </section>
                             
+                            <section className='editqa-level-tip'>
+                                <div>分数段</div>
+                                <div>称号</div>
+                            </section>
+
+                            {this.state.data.level.map((item,i)=>{
+                                return  <Row  key={i} type='flex' style={{textAlign:'center',margin:'20px'}}>
+                                <Col span={6}>
+                                    <InputNumber min={1} max={this.state.data.totalScore} value={item.score} onChange={e=>{item.score = e;this.forceUpdate()}}/>
+                                </Col>
+                                <Col span={2}>-<span></span></Col>
+                                <Col span={8}>
+                                    <Input  value={item.name} onChange={e=>{item.name = e.target.value;this.forceUpdate()}}/>
+                                </Col>
+                                <Col span={6}>
+                                    <Button onClick={this.deleteLevel.bind(this,i)} icon='delete'>删除</Button>
+                                </Col>
+                                {i === this.state.data.level.length-1 && <Col span={2}><Button onClick={this.addLevel.bind(this)}>+</Button></Col>}
+                            </Row>
+                            })}
                         </div>  
                     </aside>
                 </section>}
-
-                {this.state.isCustom && <section className='qaedit-right-C'>
-                    <header>添加问题</header>
-                    <ul className='qaedit-custom-list'>
-                        {this.state.data.customList.map((item,i)=>{
-                            return <li onClick={this.changeCurrentCustom.bind(this,i)} className={this.state.customIndex === i?'active':''} key={i}>{i+1}<span>x</span></li>
-                        })}
-                    </ul>
-                    {this.state.data.question[this.state.questionIndex] && <section className='qaedit-custom-center qaedit-custom-content'>
-                                            <textarea  value={this.state.data.question[this.state.questionIndex].content} onChange={e=>{this.state.data.question[this.state.questionIndex].content = e.target.value;this.forceUpdate()}} placeholder='请输入内容'></textarea>
-                                            <Input value={this.state.data.question[this.state.questionIndex].answer[0].content} addonBefore={'答案1'} addonAfter={'点击继续添加答案'} type='text'/>
-                                        </section>}
-
-                    <section className='qaedit-custom-center qaedit-custom-btn'>
-                        <Button type='primary' onClick={this.addCustom.bind(this)}>继续</Button>
-                    </section>
-                    <div className='qaedit-next'><Button type='primary' onClick={this.entryShare.bind(this)}>下一步</Button></div>
-                </section>}
-                <section className='editqa-setting-C'>
-                    <aside onClick={()=>{this.setState({currentSetting:0})}} className={this.state.currentSetting === 0 ?'active':''}>内容设置</aside>
-                    <aside onClick={()=>{this.setState({currentSetting:1})}} className={this.state.currentSetting === 1 ?'active':''}>风格设置</aside>
-                    <aside onClick={()=>{this.setState({currentSetting:2})}} className={this.state.currentSetting === 2 ?'active':''}>发布设置</aside>
-                </section>
+                
                 {this.state.showShareDialog && <ZmitiUploadDialog id={'showShareDialog'} {...showShareProps}></ZmitiUploadDialog>}  
             </aside>
+            {this.state.showQuestionImgDialog && <ZmitiUploadDialog id='showQuestionImgDialog' {...showQuestionImgProps}></ZmitiUploadDialog>}
         </div>
         return (
             <MainUI component={component}></MainUI>
         );
+    }
+
+    addLevel(){
+        if(this.state.data.level.length>4){
+            message.error('最多只能设置5个等级');
+            return ;
+        }
+        this.state.data.level.push({
+            score:0,
+            name:''
+        });
+        this.forceUpdate();
+    }
+
+    deleteLevel(i){
+        if(this.state.data.level.length<=1){
+            message.error('至少要有一个等级');
+            return;
+        }
+        this.state.data.level.splice(i,1);
+        this.forceUpdate();
+
+    }
+    deleteQuestion(i){//删除题目
+
+        if(this.state.data.question.length<=1){
+            message.error('至少要有一道目录');
+            return;
+        }
+        this.state.data.question.splice(i,1);
+        this.forceUpdate(()=>{
+            window.obserable.trigger({
+                type:'refreshQuestionScroll'
+            });
+            this.baseScroll.refresh();
+        });
+
+    }
+
+
+    setCurrentQuestion(i){
+        this.setState({questionIndex:i});
+        window.obserable.trigger({
+            type:'refreshQuestionScroll'
+        });
+        
+        this.baseScroll.refresh();
+    }
+
+    dragStart(i,e){
+        
+        e.dataTransfer.setData("questionIndex", i)
+    }
+
+    orderQuestion(i,e){
+        var index = e.dataTransfer.getData("questionIndex")*1;
+        if(index > i){//从后往前拖拽
+            this.state.data.question.splice(i,0,this.state.data.question[index]);
+            this.state.data.question.splice(index+1,1);
+            this.state.questionIndex = i;
+            this.forceUpdate();
+        }else if(index < i){//从前往后拖拽
+            this.state.data.question.splice(i,0,this.state.data.question[index]);
+            this.state.data.question.splice(index,1);
+            this.state.questionIndex = i;
+            this.forceUpdate();
+        }
+        
+
+       
+    }
+
+    addQuestion(){//添加题目
+
+        var currentQuestion = this.state.data.question[this.state.questionIndex];
+        if(currentQuestion.title.length <= 0){
+            this.setState({
+                titleError:true
+            });
+            message.error('题干不能为空');
+            return ;
+        };
+        var hasRightAnswer = 0;
+        currentQuestion.answer.map((a,k)=>{
+
+            if(a.isRight){
+                hasRightAnswer++;
+            }
+
+        });
+
+        if(hasRightAnswer <= 0){
+            message.error('至少要设置一个正确答案');
+            return ;  
+        }
+
+        if(this.state.data.questionType === 'single'){
+            if(hasRightAnswer >= 2){
+                message.error('题目类型为单选题目，只能设置一个正确答案');
+                return;
+            };
+        }
+
+        var question = {
+            "img":"",
+            "title":"",
+            "score":1,
+            "isMultiselect":false,
+            "answer":[
+                {
+                    "content":"",
+                    "isRight":false
+                },
+                {
+                    "content":"",
+                    "isRight":false
+                }
+            ]
+        }
+
+        this.state.data.question.push(question);
+        this.state.questionIndex = this.state.questionIndex + 1;
+        this.forceUpdate(()=>{
+            this.baseScroll.refresh();
+        });
+    }
+
+    deleteAnswer(currentQuestion,i){//删除答案
+        if(currentQuestion.answer.length<=2){
+            message.error('至少要有两个答案');
+            return;
+        }
+        currentQuestion.answer.splice(i,1);
+        this.forceUpdate(()=>{
+            this.baseScroll.refresh();
+        });
+    }
+
+    modifyRightAnswer(item){//设置正确答案
+
+        item.isRight = !item.isRight;
+        this.forceUpdate();
+
+    }
+
+    addAnswer(answer){
+        if(answer.length>10){
+            message.error('最多只能设置10个答案');
+            return;
+        }
+        answer.push({
+            content:'',
+            isRight :false
+        });
+        this.forceUpdate(()=>{
+            this.baseScroll.refresh();
+        });
+    }
+
+    modifyQImg(){
+         this.setState({
+            showQuestionImgDialog:true,
+        },()=>{
+            window.obserable.trigger({
+                type:'showModal',
+                data:{
+                    id:'showQuestionImgDialog',
+                    type:0
+                }
+            })
+        })
     }
 
     changeMenu(type){
@@ -572,6 +886,7 @@ componentWillMount() {
 
     save(){
 
+        var s = this;
         this.setState({
             savetap:true
         });
@@ -582,16 +897,6 @@ componentWillMount() {
             });
         },150);
 
-        return;
-
-        var s = this;
-        if(this.state.data.customList[this.state.data.customList.length - 1] && !this.state.data.customList[this.state.data.customList.length - 1].content){
-            this.state.data.customList.pop();
-        }
-        if(this.state.data.type==="CUSTOM" && this.state.data.customList.length <= 0){
-            message.error('至少要有1条记录');
-            return;
-        }
 
         s.filterLoadingImg(s.state.data);
         s.state.data.loadingImg = s.loadingImg;
