@@ -16,6 +16,7 @@ import MainUI from '../components/Main.jsx';
  class ZmitiQAApp extends React.Component{
     constructor(args){
         super(...args);
+       
         this.state = {
            mainHeight:document.documentElement.clientHeight - 50,
             isBg:true,//是否选中风格，
@@ -60,6 +61,8 @@ import MainUI from '../components/Main.jsx';
                  
             }
         }
+
+
         this.arr = ["A",'B','C','D','E','F','G','H','I','J','K',"L",'M','N'];
         this.viewH = document.documentElement.clientHeight;
         window.s = this;
@@ -67,7 +70,7 @@ import MainUI from '../components/Main.jsx';
     }
 
 componentWillMount() {
-        
+         
         let {resizeMainHeight,validateUser,loginOut,randomString,copyfile} = this.props;
 
         resizeMainHeight(this); 
@@ -96,6 +99,7 @@ componentWillMount() {
             message.error('url 参数不正确');
             return;
         }
+
         $.ajax({
             url:window.baseUrl + '/works/get_filecontent/',
             data:{
@@ -104,6 +108,7 @@ componentWillMount() {
                 worksid:s.worksid
             },
             success(data){
+
                 if(data.getret === 0){
 
                     try{
@@ -238,7 +243,7 @@ componentWillMount() {
                 }
 
             });
-            this.state.data.isMultiselect = ar > 1;
+            item.isMultiselect = ar > 1;
         });
 
 
@@ -501,7 +506,7 @@ componentWillMount() {
                                 </Row>
                                         
                             </section>
-                            <section>
+                            <section hidden>
                                 <Row type='flex' align='middle' justify='space-around'>
                                     <Col span={12}>
                                         <img style={{width:140}} src={this.state.data.qrcodeurl||'./static/images/qrcode.png'}/>
@@ -519,6 +524,15 @@ componentWillMount() {
                                         <Input placeholder='' type='text' value={this.state.data.custom} onChange={e=>{this.state.data.custom = e.target.value;this.forceUpdate();}}/>
                                     </Row>
                                     <Row span={16} className='editqa-my-custom-tip'>此项请在指定人员下填写，否则可能会导致作品不能正常运行，默认为空</Row>
+                                </Row>
+                            </section>
+
+                            <section className='editqa-my-custom'>
+                                <Row type='flex' gutter={20}>
+                                    <Row span={4}>信息收集</Row>
+                                    <Row span={10}>
+                                        <Checkbox  checked={this.state.data.needInfo} onChange={(e)=>{this.state.data.needInfo = !this.state.data.needInfo ;this.forceUpdate();}}>{this.state.data.needInfo?'':'不'}需要用户填写姓名及电话号码</Checkbox>
+                                    </Row>
                                 </Row>
                             </section>
 
@@ -898,7 +912,7 @@ componentWillMount() {
         },150)
     }
 
-    publish(){
+    publish(){//发布
         this.setState({
             publishtap:true
         });
@@ -907,7 +921,18 @@ componentWillMount() {
             this.setState({
                 publishtap:false
             });
-        },150)
+        },150);
+        var s = this;
+        $.ajax({
+            url:window.baseUrl + 'works/release_works/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                worksid:s.worksid
+            }
+        }).done((data)=>{
+            console.log(data);
+        })
     }
 
     save(){
@@ -923,6 +948,66 @@ componentWillMount() {
             });
         },150);
 
+
+        var arr = [];
+        this.state.data.question.map((item,i)=>{
+
+            var hasRightAnswer = 0;
+            item.answer.map((a,k)=>{
+                if(a.isRight){
+                    hasRightAnswer++;
+                }
+            });
+            if(hasRightAnswer <= 0){
+                arr.push(i);
+            }
+
+        });
+
+
+        var arr1 = [];
+        if(this.state.data.questionType === 'single'){
+            this.state.data.question.map((item,i)=>{
+                var rightNum = 0;
+                item.answer.map((a,k)=>{
+                    if(a.isRight){
+                        rightNum++;
+                    }
+                });
+                if(rightNum > 1){
+                    arr1.push(i);
+                }
+            });
+        }
+
+        if(arr1.length){
+            var msg = '';
+            arr1.map((ar,k)=>{ 
+                msg +=(k>0? '、':'')+( ar+1);
+            });
+            this.setState({
+                questionIndex : arr1[0]
+            });
+            this.setState({
+                questionIndex : arr1[0]
+            });
+            message.error('当前作品类型为单选题，第' + msg + '道题目没有设置了多个正确答案',5);
+
+            return;
+        }
+
+
+        if(arr.length>0){
+            var msg = '';
+            arr.map((ar,k)=>{ 
+                msg +=(k>0? '、':'')+( ar+1);
+            });
+            this.setState({
+                questionIndex : arr[0]
+            });
+            message.error('第' + msg + '道题目没有设置正确答案',5);
+            return;
+        }
 
         s.filterLoadingImg(s.state.data);
         s.state.data.loadingImg = s.loadingImg;

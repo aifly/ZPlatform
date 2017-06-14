@@ -681,7 +681,7 @@ h2,h3,h4,h5{
 
             .editqa-my-custom{
               font-size: 16px;
-              margin:20px 0;
+              margin:20px 0 0 0;
               .editqa-my-custom-tip{
                 font-size: 12px;
                 color:#f66;
@@ -689,6 +689,7 @@ h2,h3,h4,h5{
             }
 
             .editqa-score-setting{
+              margin-top: 20px;
                &>div{
                  &:first-of-type{
                     font-size: 16px;

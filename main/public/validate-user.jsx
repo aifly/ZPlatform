@@ -185,8 +185,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 
 	validateUser(fn,that){
 		var s = this;
-
-		try{
+		try{	
 
 			 var params = JSON.parse(window.getCookie('login'));
 

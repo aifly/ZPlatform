@@ -1,2 +1,788 @@
-﻿.zmiti-text-overflow{overflow:hidden;white-space:nowrap;word-break:break-all;text-overflow:ellipsis;-webkit-text-overflow:ellipsis}.zmiti-break-all{word-wrap:break-word;word-break:break-all}h2,h3,h4,h5{font-weight:normal}.qaedit-main-ui{background:#eaedf1;display:flex;display:-webkit-flex;flex-flow:row}.qaedit-main-ui>aside:first-of-type{-webkit-flex:1;flex:1;position:relative;display:flex;display:-webkit-flex;flex-flow:column}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone{width:286px;height:600px;margin:0 auto;position:relative;top:50%;-webkit-transform:translate3d(0, -50%, 0);transform:translate3d(0, -50%, 0)}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C{width:90%;height:450px;border:5px solid #ccc;position:relative;border-radius:3px;box-sizing:border-box;margin:80px auto;display:flex;display:-webkit-flex;flex-flow:column}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body{width:100%;flex:1;-webkit-flex:1;position:relative;overflow:hidden}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header{width:100%;margin:0 auto;height:35px;line-height:35px;background:#fff;display:flex;display:-webkit-flex;flex-flow:row}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header>aside{-webkit-flex:1;flex:1;margin-left:20px}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header>aside:first-of-type span{color:#999}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header>aside:last-of-type{-webkit-flex:2;flex:2;text-align:right;display:flex;display:-webkit-flex;flex-flow:row}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header>aside:last-of-type>div{color:#999}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header>aside:last-of-type>div:first-of-type{margin-top:10px;margin-right:20px}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header>aside:last-of-type>div span{color:#f66}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-question-list-C{width:248px;overflow:hidden;position:absolute;top:0px;box-sizing:border-box}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-question-list-C.left{-webkit-transform:translate3d(-286px, 0, 0);transform:translate3d(-286px, 0, 0);-webkit-transition:.35s;transition:.35s;z-index:1}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-question-list-C.left .iScrollVerticalScrollbar{display:none !important}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-question-list-C.active{-webkit-transform:translate3d(0, 0, 0);transform:translate3d(0, 0, 0);-webkit-transition:.2s;transition:.2s;z-index:2}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-question-list-C.right{-webkit-transform:translate3d(286px, 0, 0);transform:translate3d(286px, 0, 0);z-index:3}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title{width:90%;margin:70px auto 0;background:rgba(255,255,255,0.8);border-radius:10px;font-size:15px;line-height:20px;box-sizing:border-box;position:relative}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title:before{content:'';position:absolute;width:100%;height:100%;border-radius:10px;box-shadow:0 0 20px rgba(0,0,0,0.5)}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title>span{color:#f66;font-size:24px;position:absolute;top:-44px}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title article>div{padding:50px 20px 30px 20px}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title .editqa-pager{width:80px;height:80px;border-radius:50%;position:absolute;top:-40px;left:50%;margin-left:-40px;background:#fff;font-size:30px;line-height:50px;border:1px dashed #222}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title .editqa-pager:before{content:'';position:absolute;height:80%;top:12%;left:55%;-webkit-transform:rotate(40deg);transform:rotate(40deg);width:1px;background:#999}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title .editqa-pager span{font-family:Georgia;position:absolute}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title .editqa-pager span:nth-of-type(1){color:#f66;font-size:50px;left:-10px;width:70px;text-align:center;top:0px}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title .editqa-pager span:nth-of-type(2){color:#999;font-size:30px;right:-10px;bottom:0px;width:70px;text-align:center}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list{width:90%;margin:20px auto}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list .editqa-q-item{background:rgba(255,255,255,0.8);border-radius:10px;position:relative;line-height:40px;margin:10px 0;border-radius:10px;font-size:14px;padding:0 10px;box-sizing:border-box}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list .editqa-q-item:before{content:'';position:absolute;left:0;top:0;width:100%;height:100%;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,0.5)}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list .editqa-q-item.active{background:#f66;color:#fff;border:none}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list .editqa-submit-btn{width:100%;height:70px;border-radius:10px;text-align:center;color:#fff;background:#f66;line-height:70px;font-size:40px;border:1px solid #fff;margin-top:40px;-webkit-transition:.1s;transition:.1s}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list .editqa-submit-btn.active{-webkit-transform:translate3d(0, 3px, 0) scale(0.99);transform:translate3d(0, 3px, 0) scale(0.99)}.qaedit-main-ui>aside:first-of-type .editpoetry-iphone .qaedit-title{position:absolute;font-size:1.8vw;top:40%;display:none;left:23%;color:#f66;width:11vw;height:20vh}.qaedit-main-ui>aside:first-of-type .editqa-left-operator-btns{position:absolute;right:10px;font-size:16px;-webkit-user-select:none;top:10px;z-index:10;display:flex;display:-webkit-flex;flex-flow:row}.qaedit-main-ui>aside:first-of-type .editqa-left-operator-btns>aside{-webkit-transform-style:preserve-3d;transform-style:preserve-3d;perspective:800px;-webkit-perspective:800px;margin:0 10px}.qaedit-main-ui>aside:first-of-type .editqa-left-operator-btns>aside:hover div{-webkit-transition:.1s;transition:.1s;-webkit-transform:translate3d(0, -2px, 0) scale(1.1);transform:translate3d(0, -2px, 0) scale(1.1)}.qaedit-main-ui>aside:first-of-type .editqa-left-operator-btns>aside div{color:#fff;width:60px;height:60px;border-radius:50%;text-align:center;line-height:60px;-webkit-transition:.1s;transition:.1s;background:#108ee9;cursor:pointer;position:relative}.qaedit-main-ui>aside:first-of-type .editqa-left-operator-btns>aside div.tap{-webkit-transform:translate3d(0, 0, 0) scale(0.99);transform:translate3d(0, 0, 0) scale(0.99)}.qaedit-main-ui>aside:first-of-type .editqa-left-operator-btns>aside div:after{content:'';position:absolute;width:100%;height:100%;border-radius:50%;left:0;top:0;box-shadow:0 3px 10px rgba(0,0,0,0.5)}.qaedit-main-ui>aside:first-of-type>div{position:relative}.qaedit-main-ui>aside:first-of-type>div input{background:#1092e6;color:#fff;text-align:center;font-size:18px;height:40px;width:80%;top:-40px;display:block;position:absolute;left:10%}.qaedit-main-ui>aside:first-of-type>div .qaedit-btn-ground{position:absolute;right:-60px;top:50px}.qaedit-main-ui>aside:first-of-type>div .qaedit-btn-ground .qaedit-add-question-btn{position:absolute}.qaedit-main-ui>aside:first-of-type>div .qaedit-btn-ground .qaedit-bg-btn,.qaedit-main-ui>aside:first-of-type>div .qaedit-btn-ground .qaedit-bgsound-btn{width:60px;height:60px;cursor:pointer;-webkit-transform:scale(0.7);transform:scale(0.7);-webkit-transform-origin:left;transform-origin:left}.qaedit-main-ui>aside:last-of-type{width:500px;background:#Fff;position:relative}.qaedit-main-ui>aside:last-of-type .editqa-title{width:90%;margin:20px auto 0}.qaedit-main-ui>aside:last-of-type .editqa-q-input{display:flex;display:-webkit-flex;flex-flow:row;width:90%;margin:0 auto 0}.qaedit-main-ui>aside:last-of-type .editqa-q-input>section{flex:1;-webkit-flex:1}.qaedit-main-ui>aside:last-of-type .editqa-q-input>section:last-of-type{flex:none;-webkit-flex:none}.qaedit-main-ui>aside:last-of-type .editqa-q-input>section img{width:100px}.qaedit-main-ui>aside:last-of-type .editqa-q-input textarea{height:100px;resize:none}.qaedit-main-ui>aside:last-of-type .editqa-q-input .editqa-title-error{border-color:#f66;box-shadow:0 0 20px rgba(255,0,0,0.5)}.qaedit-main-ui>aside:last-of-type .editqa-q-input span{color:#f66}.qaedit-main-ui>aside:last-of-type .editqa-pagetion{width:90%;margin:20px auto 0;position:relative}.qaedit-main-ui>aside:last-of-type .editqa-pagetion>div{display:inline-block;position:relative}.qaedit-main-ui>aside:last-of-type .editqa-pagetion>div:hover img{opacity:1}.qaedit-main-ui>aside:last-of-type .editqa-pagetion>div img{opacity:0;cursor:pointer;top:5px;right:3px;width:10px;position:absolute;z-index:1}.qaedit-main-ui>aside:last-of-type .editqa-pagetion button{margin:5px 2px 0 0;width:48px}.qaedit-main-ui>aside:last-of-type .editqa-q-type,.qaedit-main-ui>aside:last-of-type .editqa-q-duration,.qaedit-main-ui>aside:last-of-type .editqa-q-tip,.qaedit-main-ui>aside:last-of-type .editqa-q-img,.qaedit-main-ui>aside:last-of-type .editqa-add-q-btns{width:90%;margin:20px auto 0;text-align:center;display:flex;display:-webkit-flex;flex-flow:row}.qaedit-main-ui>aside:last-of-type .editqa-q-type section,.qaedit-main-ui>aside:last-of-type .editqa-q-duration section,.qaedit-main-ui>aside:last-of-type .editqa-q-tip section,.qaedit-main-ui>aside:last-of-type .editqa-q-img section,.qaedit-main-ui>aside:last-of-type .editqa-add-q-btns section{flex:1;-webkit-flex:1;height:30px;line-height:30px}.qaedit-main-ui>aside:last-of-type .editqa-q-type section span,.qaedit-main-ui>aside:last-of-type .editqa-q-duration section span,.qaedit-main-ui>aside:last-of-type .editqa-q-tip section span,.qaedit-main-ui>aside:last-of-type .editqa-q-img section span,.qaedit-main-ui>aside:last-of-type .editqa-add-q-btns section span{color:#f66}.qaedit-main-ui>aside:last-of-type .editqa-q-type section:not(:first-of-type),.qaedit-main-ui>aside:last-of-type .editqa-q-duration section:not(:first-of-type),.qaedit-main-ui>aside:last-of-type .editqa-q-tip section:not(:first-of-type),.qaedit-main-ui>aside:last-of-type .editqa-q-img section:not(:first-of-type),.qaedit-main-ui>aside:last-of-type .editqa-add-q-btns section:not(:first-of-type){cursor:pointer}.qaedit-main-ui>aside:last-of-type .editqa-q-type section:first-of-type,.qaedit-main-ui>aside:last-of-type .editqa-q-duration section:first-of-type,.qaedit-main-ui>aside:last-of-type .editqa-q-tip section:first-of-type,.qaedit-main-ui>aside:last-of-type .editqa-q-img section:first-of-type,.qaedit-main-ui>aside:last-of-type .editqa-add-q-btns section:first-of-type{font-weight:bold}.qaedit-main-ui>aside:last-of-type .editqa-q-type section.active,.qaedit-main-ui>aside:last-of-type .editqa-q-duration section.active,.qaedit-main-ui>aside:last-of-type .editqa-q-tip section.active,.qaedit-main-ui>aside:last-of-type .editqa-q-img section.active,.qaedit-main-ui>aside:last-of-type .editqa-add-q-btns section.active{background:#108ee9;color:#fff}.qaedit-main-ui>aside:last-of-type .editqa-q-type>section:first-of-type{flex:1;-webkit-flex:1}.qaedit-main-ui>aside:last-of-type .editqa-q-type>section:last-of-type{flex:3;border:1px solid #108ee9;-webkit-flex:3;display:flex;display:-webkit-flex;flex-flow:row}.qaedit-main-ui>aside:last-of-type .editqa-q-type>section:last-of-type>section:nth-of-type(2){border-right:1px solid #108ee9;border-left:1px solid #108ee9;border-radius:0}.qaedit-main-ui>aside:last-of-type .ediqa-q-item{width:90%;margin:30px auto}.qaedit-main-ui>aside:last-of-type .ediqa-q-item input{border-top-right-radius:0;border-bottom-right-radius:0}.qaedit-main-ui>aside:last-of-type .ediqa-q-item button{border-top-left-radius:0;border-bottom-left-radius:0}.qaedit-main-ui>aside:last-of-type .editqa-q-img{margin:10px auto 0}.qaedit-main-ui>aside:last-of-type .editqa-q-img>section{position:relative;width:150px;cursor:pointer;height:150px;flex:none;-webkit-flex:none}.qaedit-main-ui>aside:last-of-type .editqa-q-img>section:hover .editqa-q-img-remove{opacity:1}.qaedit-main-ui>aside:last-of-type .editqa-q-img>section .editqa-q-img-remove{position:absolute;width:100%;height:100%;left:0;-webkit-transition:.2s;transition:.2s;top:0;z-index:10;opacity:0;background:rgba(0,0,0,0.5);text-align:center;color:#fff;font-size:30px;line-height:150px}.qaedit-main-ui>aside:last-of-type .editqa-q-img>section:last-of-type{text-align:right;flex:1;-webkit-flex:1;cursor:default}.qaedit-main-ui>aside:last-of-type .editqa-setting-C{position:absolute;top:0;width:100%;height:50px;cursor:pointer;border:1px solid #373d41;font-size:16px;-webkit-user-select:none;display:flex;display:-webkit-flex;flex-flow:row}.qaedit-main-ui>aside:last-of-type .editqa-setting-C>aside{position:relative;flex:1;-webkit-transition:.3s;transition:.3s;-webkit-flex:1;line-height:50px;text-align:center}.qaedit-main-ui>aside:last-of-type .editqa-setting-C>aside:after{content:'';position:absolute;width:100%;height:100%;left:0;top:0;background:#373d41;-webkit-transform-origin:left;transform-origin:left;-webkit-transform:scale(0, 1);transform:scale(0, 1)}.qaedit-main-ui>aside:last-of-type .editqa-setting-C>aside:nth-of-type(2):hover:after{content:'风格设置';z-index:0;-webkit-transform:scale(1, 1);transform:scale(1, 1)}.qaedit-main-ui>aside:last-of-type .editqa-setting-C>aside:nth-of-type(3):hover:after{content:'发布设置';z-index:0;-webkit-transform:scale(1, 1);transform:scale(1, 1)}.qaedit-main-ui>aside:last-of-type .editqa-setting-C>aside:hover{color:#fff;line-height:40px}.qaedit-main-ui>aside:last-of-type .editqa-setting-C>aside:hover:after{content:'内容设置';z-index:0;-webkit-transition:-webkit-transform 0.2s 0.2s;transition:transform 0.2s 0.2s;-webkit-transform:scale(1, 1);transform:scale(1, 1)}.qaedit-main-ui>aside:last-of-type .editqa-setting-C>aside:hover:before{content:'';width:100%;height:2px;background:#fff;position:absolute;z-index:1;bottom:0;left:0;-webkit-transform-origin:left;transform-origin:left;-webkit-transform:scale(0, 1);transform:scale(0, 1);-webkit-animation:qa-line 0.2s forwards 0.2s;animation:qa-line 0.2s forwards 0.2s}.qaedit-main-ui>aside:last-of-type .editqa-setting-C>aside.active{background:#373d41;color:#fff}.qaedit-main-ui>aside:last-of-type .qaedit-right-C{margin-top:50px;position:relative}.qaedit-main-ui>aside:last-of-type .qaedit-right-C:nth-of-type(1){overflow:hidden}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-next{text-align:center}.qaedit-main-ui>aside:last-of-type .qaedit-right-C header{width:100%;height:60px;line-height:60px;font-size:20px;text-indent:2em;border-bottom:1px solid #ccc}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .editqa-level-tip{display:flex;display:-webkit-flex;flex-flow:row;margin:20px auto;width:100%}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .editqa-level-tip>div{height:30px;line-height:30px;-webkit-flex:1;flex:1;text-indent:5em}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .editqa-level-tip>div:last-of-type{text-indent:0}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .poetry-share-ui{width:400px;height:70%;left:10%;top:70px;position:absolute;display:flex;display:-webkit-flex;flex-flow:column}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .poetry-share-ui section{flex:1}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(1) textarea{width:100%;border:1px solid #2db7f5;resize:none;margin-top:10px;height:47px}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(1) .poetry-operat-shareimg{position:absolute;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;display:-webkit-flex;flex-flow:column}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(1) .poetry-operat-shareimg button{margin:8px 0}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(2){font-size:18px}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(3) .poetry-publish-btn,.qaedit-main-ui>aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(3) .poetry-back-edit{width:120px;height:36px;line-height:36px;cursor:pointer;text-align:center;color:#fff;font-size:16px;border-radius:5px}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(3) .poetry-publish-btn{background:#d8271c}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(3) .poetry-back-edit{background:#2db7f5}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .editqa-my-custom{font-size:16px;margin:20px 0}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .editqa-my-custom .editqa-my-custom-tip{font-size:12px;color:#f66}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .editqa-score-setting>div:first-of-type{font-size:16px;margin-bottom:20px}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .editqa-score-setting>div:nth-of-type(2){display:flex;display:-webkit-flex;flex-flow:row}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .editqa-score-setting>div:nth-of-type(2)>section{flex:1;-webkit-flex:1;font-size:14px}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .editqa-score-setting>div:nth-of-type(2)>section:last-of-type{text-align:right;color:#0e77ca;cursor:pointer}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-list{position:absolute;left:-40px}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-list li{width:40px;height:40px;background:#494c57;color:#fff;text-align:center;cursor:pointer;line-height:40px;font-size:20px;position:relative}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-list li:not(:first-of-type){margin:10px 0}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-list li:hover span{opacity:1}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-list li span{opacity:0;position:absolute;width:12px;height:12px;right:0;top:0;font-size:12px;line-height:6px}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-list li.active{background:#108ee9}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-center{width:450px;margin:20px auto}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-aduio{font-size:16px}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-aduio img{width:40px;vertical-align:middle}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-content textarea{width:100%;border:1px solid #108ee9;resize:none;height:120px;padding:6px;border-radius:6px}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-custom-btn button{-webkit-transform:scale(1.2);transform:scale(1.2)}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bg-C{width:480px;margin:20px auto 0;border-radius:10px;background:#f1f1f1}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bg-C ul{padding-top:10px;display:flex;display:-webkit-flex;flex-flow:row;flex-wrap:wrap}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bg-C ul li{width:140px;cursor:pointer;margin:10px;border-radius:4px}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bg-C ul li.active{box-sizing:border-box;border:2px solid #3da5e8}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bgsound-C{width:480px;margin:20px auto}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li{height:40px;line-height:40px;cursor:pointer;font-size:16px;-webkit-transition:.2s;transition:.2s;display:flex;display:-webkit-flex;flex-flow:row}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li:nth-of-type(2n){background:#eee}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li:not(:first-of-type):hover{background:#1092e6;color:#fff}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li.active{background:#1092e6;color:#fff}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li aside{flex:1;text-align:center;-webkit-flex:1}.qaedit-main-ui>aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li aside img{width:30px;vertical-align:middle}.qaedit-main-ui>aside:last-of-type .qaedit-save-btn{position:absolute;top:0;width:100%;text-align:center;background:#333;height:50px;font-size:20px;color:#fff;line-height:50px;cursor:pointer;-webkit-transition:.3s;transition:.3s}.qaedit-main-ui>aside:last-of-type .qaedit-save-btn button{display:none}.qaedit-main-ui>aside:last-of-type .qaedit-save-btn:hover{background:#008ced}@-webkit-keyframes qa-line{100%{-webkit-transform-origin:left;transform-origin:left;-webkit-transform:scale(1, 1);transform:scale(1, 1)}}@-webkit-keyframes qa-line1{100%{-webkit-transform-origin:right;transform-origin:right;-webkit-transform:scale(0, 1);transform:scale(0, 1)}}
+@charset "UTF-8";
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
+h2, h3, h4, h5 {
+  font-weight: normal; }
+
+.qaedit-main-ui {
+  background: #eaedf1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  -ms-flex-flow: row;
+      flex-flow: row; }
+  .qaedit-main-ui > aside:first-of-type {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -ms-flex-flow: column;
+        flex-flow: column; }
+    .qaedit-main-ui > aside:first-of-type .editpoetry-iphone {
+      width: 286px;
+      height: 600px;
+      margin: 0 auto;
+      position: relative;
+      top: 50%;
+      -webkit-transform: translate3d(0, -50%, 0);
+      transform: translate3d(0, -50%, 0); }
+      .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C {
+        width: 90%;
+        height: 450px;
+        border: 5px solid #ccc;
+        position: relative;
+        border-radius: 3px;
+        box-sizing: border-box;
+        margin: 80px auto;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        display: -webkit-flex;
+        -ms-flex-flow: column;
+            flex-flow: column; }
+        .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body {
+          width: 100%;
+          -webkit-box-flex: 1;
+              -ms-flex: 1;
+                  flex: 1;
+          -webkit-flex: 1;
+          position: relative;
+          overflow: hidden; }
+          .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header {
+            width: 100%;
+            margin: 0 auto;
+            height: 35px;
+            line-height: 35px;
+            background: #fff;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            display: -webkit-flex;
+            -ms-flex-flow: row;
+                flex-flow: row; }
+            .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header > aside {
+              -webkit-box-flex: 1;
+                  -ms-flex: 1;
+                      flex: 1;
+              margin-left: 20px; }
+              .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header > aside:first-of-type span {
+                color: #999; }
+              .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header > aside:last-of-type {
+                -webkit-box-flex: 2;
+                    -ms-flex: 2;
+                        flex: 2;
+                text-align: right;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                display: -webkit-flex;
+                -ms-flex-flow: row;
+                    flex-flow: row; }
+                .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header > aside:last-of-type > div {
+                  color: #999; }
+                  .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header > aside:last-of-type > div:first-of-type {
+                    margin-top: 10px;
+                    margin-right: 20px; }
+                  .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header > aside:last-of-type > div span {
+                    color: #f66; }
+          .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-question-list-C {
+            width: 248px;
+            overflow: hidden;
+            position: absolute;
+            top: 0px;
+            box-sizing: border-box; }
+            .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-question-list-C.left {
+              -webkit-transform: translate3d(-286px, 0, 0);
+              transform: translate3d(-286px, 0, 0);
+              -webkit-transition: 0.35s;
+              transition: 0.35s;
+              z-index: 1; }
+              .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-question-list-C.left .iScrollVerticalScrollbar {
+                display: none !important; }
+            .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-question-list-C.active {
+              -webkit-transform: translate3d(0, 0, 0);
+              transform: translate3d(0, 0, 0);
+              -webkit-transition: 0.2s;
+              transition: 0.2s;
+              z-index: 2; }
+            .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-question-list-C.right {
+              -webkit-transform: translate3d(286px, 0, 0);
+              transform: translate3d(286px, 0, 0);
+              z-index: 3; }
+          .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title {
+            width: 90%;
+            margin: 70px auto 0;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            font-size: 15px;
+            line-height: 20px;
+            box-sizing: border-box;
+            position: relative; }
+            .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title:before {
+              content: '';
+              position: absolute;
+              width: 100%;
+              height: 100%;
+              border-radius: 10px;
+              box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); }
+            .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title > span {
+              color: #f66;
+              font-size: 24px;
+              position: absolute;
+              top: -44px; }
+            .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title article > div {
+              padding: 50px 20px 30px 20px; }
+            .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title .editqa-pager {
+              width: 80px;
+              height: 80px;
+              border-radius: 50%;
+              position: absolute;
+              top: -40px;
+              left: 50%;
+              margin-left: -40px;
+              background: #fff;
+              font-size: 30px;
+              line-height: 50px;
+              border: 1px dashed #222; }
+              .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title .editqa-pager:before {
+                content: '';
+                position: absolute;
+                height: 80%;
+                top: 12%;
+                left: 55%;
+                -webkit-transform: rotate(40deg);
+                transform: rotate(40deg);
+                width: 1px;
+                background: #999; }
+              .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title .editqa-pager span {
+                font-family: Georgia;
+                position: absolute; }
+                .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title .editqa-pager span:nth-of-type(1) {
+                  color: #f66;
+                  font-size: 50px;
+                  left: -10px;
+                  width: 70px;
+                  text-align: center;
+                  top: 0px; }
+                .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-title .editqa-pager span:nth-of-type(2) {
+                  color: #999;
+                  font-size: 30px;
+                  right: -10px;
+                  bottom: 0px;
+                  width: 70px;
+                  text-align: center; }
+          .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list {
+            width: 90%;
+            margin: 20px auto; }
+            .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list .editqa-q-item {
+              background: rgba(255, 255, 255, 0.8);
+              border-radius: 10px;
+              position: relative;
+              line-height: 40px;
+              margin: 10px 0;
+              border-radius: 10px;
+              font-size: 14px;
+              padding: 0 10px;
+              box-sizing: border-box; }
+              .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list .editqa-q-item:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
+              .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list .editqa-q-item.active {
+                background: #f66;
+                color: #fff;
+                border: none; }
+            .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list .editqa-submit-btn {
+              width: 100%;
+              height: 70px;
+              border-radius: 10px;
+              text-align: center;
+              color: #fff;
+              background: #f66;
+              line-height: 70px;
+              font-size: 40px;
+              border: 1px solid #fff;
+              margin-top: 40px;
+              -webkit-transition: 0.1s;
+              transition: 0.1s; }
+              .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body .editqa-q-answer-list .editqa-submit-btn.active {
+                -webkit-transform: translate3d(0, 3px, 0) scale(0.99);
+                transform: translate3d(0, 3px, 0) scale(0.99); }
+      .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .qaedit-title {
+        position: absolute;
+        font-size: 1.8vw;
+        top: 40%;
+        display: none;
+        left: 23%;
+        color: #f66;
+        width: 11vw;
+        height: 20vh; }
+    .qaedit-main-ui > aside:first-of-type .editqa-left-operator-btns {
+      position: absolute;
+      right: 10px;
+      font-size: 16px;
+      -webkit-user-select: none;
+      top: 10px;
+      z-index: 10;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      display: -webkit-flex;
+      -ms-flex-flow: row;
+          flex-flow: row; }
+      .qaedit-main-ui > aside:first-of-type .editqa-left-operator-btns > aside {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        perspective: 800px;
+        -webkit-perspective: 800px;
+        margin: 0 10px; }
+        .qaedit-main-ui > aside:first-of-type .editqa-left-operator-btns > aside:hover div {
+          -webkit-transition: 0.1s;
+          transition: 0.1s;
+          -webkit-transform: translate3d(0, -2px, 0) scale(1.1);
+          transform: translate3d(0, -2px, 0) scale(1.1); }
+        .qaedit-main-ui > aside:first-of-type .editqa-left-operator-btns > aside div {
+          color: #fff;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          text-align: center;
+          line-height: 60px;
+          -webkit-transition: 0.1s;
+          transition: 0.1s;
+          background: #108ee9;
+          cursor: pointer;
+          position: relative; }
+          .qaedit-main-ui > aside:first-of-type .editqa-left-operator-btns > aside div.tap {
+            -webkit-transform: translate3d(0, 0, 0) scale(0.99);
+            transform: translate3d(0, 0, 0) scale(0.99); }
+          .qaedit-main-ui > aside:first-of-type .editqa-left-operator-btns > aside div:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            left: 0;
+            top: 0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5); }
+    .qaedit-main-ui > aside:first-of-type > div {
+      position: relative; }
+      .qaedit-main-ui > aside:first-of-type > div input {
+        background: #1092e6;
+        color: #fff;
+        text-align: center;
+        font-size: 18px;
+        height: 40px;
+        width: 80%;
+        top: -40px;
+        display: block;
+        position: absolute;
+        left: 10%; }
+      .qaedit-main-ui > aside:first-of-type > div .qaedit-btn-ground {
+        position: absolute;
+        right: -60px;
+        top: 50px; }
+        .qaedit-main-ui > aside:first-of-type > div .qaedit-btn-ground .qaedit-add-question-btn {
+          position: absolute; }
+        .qaedit-main-ui > aside:first-of-type > div .qaedit-btn-ground .qaedit-bg-btn, .qaedit-main-ui > aside:first-of-type > div .qaedit-btn-ground .qaedit-bgsound-btn {
+          width: 60px;
+          height: 60px;
+          cursor: pointer;
+          -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+          -webkit-transform-origin: left;
+          transform-origin: left; }
+  .qaedit-main-ui > aside:last-of-type {
+    width: 500px;
+    background: #Fff;
+    position: relative; }
+    .qaedit-main-ui > aside:last-of-type .editqa-title {
+      width: 90%;
+      margin: 20px auto 0; }
+    .qaedit-main-ui > aside:last-of-type .editqa-q-input {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      display: -webkit-flex;
+      -ms-flex-flow: row;
+          flex-flow: row;
+      width: 90%;
+      margin: 0 auto 0; }
+      .qaedit-main-ui > aside:last-of-type .editqa-q-input > section {
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        -webkit-flex: 1; }
+        .qaedit-main-ui > aside:last-of-type .editqa-q-input > section:last-of-type {
+          -webkit-box-flex: 0;
+              -ms-flex: none;
+                  flex: none;
+          -webkit-flex: none; }
+        .qaedit-main-ui > aside:last-of-type .editqa-q-input > section img {
+          width: 100px; }
+      .qaedit-main-ui > aside:last-of-type .editqa-q-input textarea {
+        height: 100px;
+        resize: none; }
+      .qaedit-main-ui > aside:last-of-type .editqa-q-input .editqa-title-error {
+        border-color: #f66;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+      .qaedit-main-ui > aside:last-of-type .editqa-q-input span {
+        color: #f66; }
+    .qaedit-main-ui > aside:last-of-type .editqa-pagetion {
+      width: 90%;
+      margin: 20px auto 0;
+      position: relative; }
+      .qaedit-main-ui > aside:last-of-type .editqa-pagetion > div {
+        display: inline-block;
+        position: relative; }
+        .qaedit-main-ui > aside:last-of-type .editqa-pagetion > div:hover img {
+          opacity: 1; }
+        .qaedit-main-ui > aside:last-of-type .editqa-pagetion > div img {
+          opacity: 0;
+          cursor: pointer;
+          top: 5px;
+          right: 3px;
+          width: 10px;
+          position: absolute;
+          z-index: 1; }
+      .qaedit-main-ui > aside:last-of-type .editqa-pagetion button {
+        margin: 5px 2px 0 0;
+        width: 48px; }
+    .qaedit-main-ui > aside:last-of-type .editqa-q-type, .qaedit-main-ui > aside:last-of-type .editqa-q-duration, .qaedit-main-ui > aside:last-of-type .editqa-q-tip, .qaedit-main-ui > aside:last-of-type .editqa-q-img, .qaedit-main-ui > aside:last-of-type .editqa-add-q-btns {
+      width: 90%;
+      margin: 20px auto 0;
+      text-align: center;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      display: -webkit-flex;
+      -ms-flex-flow: row;
+          flex-flow: row; }
+      .qaedit-main-ui > aside:last-of-type .editqa-q-type section, .qaedit-main-ui > aside:last-of-type .editqa-q-duration section, .qaedit-main-ui > aside:last-of-type .editqa-q-tip section, .qaedit-main-ui > aside:last-of-type .editqa-q-img section, .qaedit-main-ui > aside:last-of-type .editqa-add-q-btns section {
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        -webkit-flex: 1;
+        height: 30px;
+        line-height: 30px; }
+        .qaedit-main-ui > aside:last-of-type .editqa-q-type section span, .qaedit-main-ui > aside:last-of-type .editqa-q-duration section span, .qaedit-main-ui > aside:last-of-type .editqa-q-tip section span, .qaedit-main-ui > aside:last-of-type .editqa-q-img section span, .qaedit-main-ui > aside:last-of-type .editqa-add-q-btns section span {
+          color: #f66; }
+        .qaedit-main-ui > aside:last-of-type .editqa-q-type section:not(:first-of-type), .qaedit-main-ui > aside:last-of-type .editqa-q-duration section:not(:first-of-type), .qaedit-main-ui > aside:last-of-type .editqa-q-tip section:not(:first-of-type), .qaedit-main-ui > aside:last-of-type .editqa-q-img section:not(:first-of-type), .qaedit-main-ui > aside:last-of-type .editqa-add-q-btns section:not(:first-of-type) {
+          cursor: pointer; }
+        .qaedit-main-ui > aside:last-of-type .editqa-q-type section:first-of-type, .qaedit-main-ui > aside:last-of-type .editqa-q-duration section:first-of-type, .qaedit-main-ui > aside:last-of-type .editqa-q-tip section:first-of-type, .qaedit-main-ui > aside:last-of-type .editqa-q-img section:first-of-type, .qaedit-main-ui > aside:last-of-type .editqa-add-q-btns section:first-of-type {
+          font-weight: bold; }
+        .qaedit-main-ui > aside:last-of-type .editqa-q-type section.active, .qaedit-main-ui > aside:last-of-type .editqa-q-duration section.active, .qaedit-main-ui > aside:last-of-type .editqa-q-tip section.active, .qaedit-main-ui > aside:last-of-type .editqa-q-img section.active, .qaedit-main-ui > aside:last-of-type .editqa-add-q-btns section.active {
+          background: #108ee9;
+          color: #fff; }
+    .qaedit-main-ui > aside:last-of-type .editqa-q-type > section:first-of-type {
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1;
+      -webkit-flex: 1; }
+    .qaedit-main-ui > aside:last-of-type .editqa-q-type > section:last-of-type {
+      -webkit-box-flex: 3;
+          -ms-flex: 3;
+              flex: 3;
+      border: 1px solid #108ee9;
+      -webkit-flex: 3;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      display: -webkit-flex;
+      -ms-flex-flow: row;
+          flex-flow: row; }
+      .qaedit-main-ui > aside:last-of-type .editqa-q-type > section:last-of-type > section:nth-of-type(2) {
+        border-right: 1px solid #108ee9;
+        border-left: 1px solid #108ee9;
+        border-radius: 0; }
+    .qaedit-main-ui > aside:last-of-type .ediqa-q-item {
+      width: 90%;
+      margin: 30px auto; }
+      .qaedit-main-ui > aside:last-of-type .ediqa-q-item input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0; }
+      .qaedit-main-ui > aside:last-of-type .ediqa-q-item button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0; }
+    .qaedit-main-ui > aside:last-of-type .editqa-q-img {
+      margin: 10px auto 0; }
+      .qaedit-main-ui > aside:last-of-type .editqa-q-img > section {
+        position: relative;
+        width: 150px;
+        cursor: pointer;
+        height: 150px;
+        -webkit-box-flex: 0;
+            -ms-flex: none;
+                flex: none;
+        -webkit-flex: none; }
+        .qaedit-main-ui > aside:last-of-type .editqa-q-img > section:hover .editqa-q-img-remove {
+          opacity: 1; }
+        .qaedit-main-ui > aside:last-of-type .editqa-q-img > section .editqa-q-img-remove {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          -webkit-transition: 0.2s;
+          transition: 0.2s;
+          top: 0;
+          z-index: 10;
+          opacity: 0;
+          background: rgba(0, 0, 0, 0.5);
+          text-align: center;
+          color: #fff;
+          font-size: 30px;
+          line-height: 150px; }
+        .qaedit-main-ui > aside:last-of-type .editqa-q-img > section:last-of-type {
+          text-align: right;
+          -webkit-box-flex: 1;
+              -ms-flex: 1;
+                  flex: 1;
+          -webkit-flex: 1;
+          cursor: default; }
+    .qaedit-main-ui > aside:last-of-type .editqa-setting-C {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 50px;
+      cursor: pointer;
+      border: 1px solid #373d41;
+      font-size: 16px;
+      -webkit-user-select: none;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      display: -webkit-flex;
+      -ms-flex-flow: row;
+          flex-flow: row; }
+      .qaedit-main-ui > aside:last-of-type .editqa-setting-C > aside {
+        position: relative;
+        -webkit-box-flex: 1;
+            -ms-flex: 1;
+                flex: 1;
+        -webkit-transition: 0.3s;
+        transition: 0.3s;
+        -webkit-flex: 1;
+        line-height: 50px;
+        text-align: center; }
+        .qaedit-main-ui > aside:last-of-type .editqa-setting-C > aside:after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          top: 0;
+          background: #373d41;
+          -webkit-transform-origin: left;
+          transform-origin: left;
+          -webkit-transform: scale(0, 1);
+          transform: scale(0, 1); }
+        .qaedit-main-ui > aside:last-of-type .editqa-setting-C > aside:nth-of-type(2):hover:after {
+          content: '风格设置';
+          z-index: 0;
+          -webkit-transform: scale(1, 1);
+          transform: scale(1, 1); }
+        .qaedit-main-ui > aside:last-of-type .editqa-setting-C > aside:nth-of-type(3):hover:after {
+          content: '发布设置';
+          z-index: 0;
+          -webkit-transform: scale(1, 1);
+          transform: scale(1, 1); }
+        .qaedit-main-ui > aside:last-of-type .editqa-setting-C > aside:hover {
+          color: #fff;
+          line-height: 40px; }
+          .qaedit-main-ui > aside:last-of-type .editqa-setting-C > aside:hover:after {
+            content: '内容设置';
+            z-index: 0;
+            -webkit-transition: -webkit-transform 0.2s 0.2s;
+            transition: -webkit-transform 0.2s 0.2s;
+            transition: transform 0.2s 0.2s;
+            transition: transform 0.2s 0.2s, -webkit-transform 0.2s 0.2s;
+            -webkit-transform: scale(1, 1);
+            transform: scale(1, 1); }
+          .qaedit-main-ui > aside:last-of-type .editqa-setting-C > aside:hover:before {
+            content: '';
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            position: absolute;
+            z-index: 1;
+            bottom: 0;
+            left: 0;
+            -webkit-transform-origin: left;
+            transform-origin: left;
+            -webkit-transform: scale(0, 1);
+            transform: scale(0, 1);
+            -webkit-animation: qa-line 0.2s forwards 0.2s;
+            animation: qa-line 0.2s forwards 0.2s; }
+        .qaedit-main-ui > aside:last-of-type .editqa-setting-C > aside.active {
+          background: #373d41;
+          color: #fff; }
+    .qaedit-main-ui > aside:last-of-type .qaedit-right-C {
+      margin-top: 50px;
+      position: relative; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C:nth-of-type(1) {
+        overflow: hidden; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-next {
+        text-align: center; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C header {
+        width: 100%;
+        height: 60px;
+        line-height: 60px;
+        font-size: 20px;
+        text-indent: 2em;
+        border-bottom: 1px solid #ccc; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-level-tip {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        display: -webkit-flex;
+        -ms-flex-flow: row;
+            flex-flow: row;
+        margin: 20px auto;
+        width: 100%; }
+        .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-level-tip > div {
+          height: 30px;
+          line-height: 30px;
+          -webkit-box-flex: 1;
+              -ms-flex: 1;
+                  flex: 1;
+          text-indent: 5em; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-level-tip > div:last-of-type {
+            text-indent: 0; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui {
+        width: 400px;
+        height: 70%;
+        left: 10%;
+        top: 70px;
+        position: absolute;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        display: -webkit-flex;
+        -ms-flex-flow: column;
+            flex-flow: column; }
+        .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui section {
+          -webkit-box-flex: 1;
+              -ms-flex: 1;
+                  flex: 1; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(1) textarea {
+            width: 100%;
+            border: 1px solid #2db7f5;
+            resize: none;
+            margin-top: 10px;
+            height: 47px; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(1) .poetry-operat-shareimg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            display: -webkit-flex;
+            -ms-flex-flow: column;
+                flex-flow: column; }
+            .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(1) .poetry-operat-shareimg button {
+              margin: 8px 0; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(2) {
+            font-size: 18px; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(3) .poetry-publish-btn, .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(3) .poetry-back-edit {
+            width: 120px;
+            height: 36px;
+            line-height: 36px;
+            cursor: pointer;
+            text-align: center;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 5px; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(3) .poetry-publish-btn {
+            background: #d8271c; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(3) .poetry-back-edit {
+            background: #2db7f5; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-my-custom {
+        font-size: 16px;
+        margin: 20px 0 0 0; }
+        .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-my-custom .editqa-my-custom-tip {
+          font-size: 12px;
+          color: #f66; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-score-setting {
+        margin-top: 20px; }
+        .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-score-setting > div:first-of-type {
+          font-size: 16px;
+          margin-bottom: 20px; }
+        .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-score-setting > div:nth-of-type(2) {
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          display: -webkit-flex;
+          -ms-flex-flow: row;
+              flex-flow: row; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-score-setting > div:nth-of-type(2) > section {
+            -webkit-box-flex: 1;
+                -ms-flex: 1;
+                    flex: 1;
+            -webkit-flex: 1;
+            font-size: 14px; }
+            .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-score-setting > div:nth-of-type(2) > section:last-of-type {
+              text-align: right;
+              color: #0e77ca;
+              cursor: pointer; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-list {
+        position: absolute;
+        left: -40px; }
+        .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-list li {
+          width: 40px;
+          height: 40px;
+          background: #494c57;
+          color: #fff;
+          text-align: center;
+          cursor: pointer;
+          line-height: 40px;
+          font-size: 20px;
+          position: relative; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-list li:not(:first-of-type) {
+            margin: 10px 0; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-list li:hover span {
+            opacity: 1; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-list li span {
+            opacity: 0;
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            right: 0;
+            top: 0;
+            font-size: 12px;
+            line-height: 6px; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-list li.active {
+            background: #108ee9; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-center {
+        width: 450px;
+        margin: 20px auto; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-aduio {
+        font-size: 16px; }
+        .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-aduio img {
+          width: 40px;
+          vertical-align: middle; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-content textarea {
+        width: 100%;
+        border: 1px solid #108ee9;
+        resize: none;
+        height: 120px;
+        padding: 6px;
+        border-radius: 6px; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-custom-btn button {
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2); }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bg-C {
+        width: 480px;
+        margin: 20px auto 0;
+        border-radius: 10px;
+        background: #f1f1f1; }
+        .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bg-C ul {
+          padding-top: 10px;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          display: -webkit-flex;
+          -ms-flex-flow: row;
+              flex-flow: row;
+          -ms-flex-wrap: wrap;
+              flex-wrap: wrap; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bg-C ul li {
+            width: 140px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 4px; }
+            .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bg-C ul li.active {
+              box-sizing: border-box;
+              border: 2px solid #3da5e8; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bgsound-C {
+        width: 480px;
+        margin: 20px auto; }
+        .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li {
+          height: 40px;
+          line-height: 40px;
+          cursor: pointer;
+          font-size: 16px;
+          -webkit-transition: 0.2s;
+          transition: 0.2s;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          display: -webkit-flex;
+          -ms-flex-flow: row;
+              flex-flow: row; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li:nth-of-type(2n) {
+            background: #eee; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li:not(:first-of-type):hover {
+            background: #1092e6;
+            color: #fff; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li.active {
+            background: #1092e6;
+            color: #fff; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li aside {
+            -webkit-box-flex: 1;
+                -ms-flex: 1;
+                    flex: 1;
+            text-align: center;
+            -webkit-flex: 1; }
+            .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-bgsound-C ul li aside img {
+              width: 30px;
+              vertical-align: middle; }
+    .qaedit-main-ui > aside:last-of-type .qaedit-save-btn {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      text-align: center;
+      background: #333;
+      height: 50px;
+      font-size: 20px;
+      color: #fff;
+      line-height: 50px;
+      cursor: pointer;
+      -webkit-transition: 0.3s;
+      transition: 0.3s; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-save-btn button {
+        display: none; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-save-btn:hover {
+        background: #008ced; }
+
+@-webkit-keyframes qa-line {
+  100% {
+    -webkit-transform-origin: left;
+    transform-origin: left;
+    -webkit-transform: scale(1, 1);
+    transform: scale(1, 1); } }
+@-webkit-keyframes qa-line1 {
+  100% {
+    -webkit-transform-origin: right;
+    transform-origin: right;
+    -webkit-transform: scale(0, 1);
+    transform: scale(0, 1); } }
+
 /*# sourceMappingURL=index.css.map */
