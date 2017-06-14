@@ -5,6 +5,7 @@ window.mainUrl = 'http://localhost:3000'; //智媒体的首页.
 window.isDebug = false; //是否为调试版本
 window.adminUrl = './admin/index.html';//后台首面的地址 线上应该用 ./
 window.menuConfigUrl = './config/menuconfig.js';
+window.publishBaseUrl = 'http://h5.zmiti.com/';//作品发布后预览的地址 发布后发送到windows服务器上.
 
 window.Role = {
 	DEFAULTUSER:1,//普通用户

@@ -1,6 +1,6 @@
 import './static/css/index.css';
 import React from 'react';
-import { message,Row,Col,Input,Button,Icon,InputNumber,Popover,Checkbox } from '../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Icon,InputNumber,Popover,Checkbox ,Modal} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
@@ -18,10 +18,13 @@ import MainUI from '../components/Main.jsx';
         super(...args);
        
         this.state = {
-           mainHeight:document.documentElement.clientHeight - 50,
+           mainHei5ht:document.documentElement.clientHeight - 50,
             isBg:true,//是否选中风格，
             isBgSound:false,
             currentQid:0,
+            previewUrl:'',
+            showPreviewDialog:false,
+            
             currentSetting:0,//当前的设置面板  内容设置，风格设置 、发布设置。
             questionIndex:0,
             themeList:[
@@ -332,7 +335,7 @@ componentWillMount() {
                         <div className={this.state.savetap?'tap':''}>保存</div>
                     </aside>
                     <aside onClick={this.publish.bind(this)}>
-                        <div className={this.state.publishtap?'tap':''}>发布</div>
+                        <div className={this.state.publishtap?'tap':''}>{this.state.isPublishing?<Icon type='loading'/>:'发布'}</div>
                     </aside>
                 </section>
             </aside>
@@ -573,6 +576,26 @@ componentWillMount() {
                 {this.state.showShareDialog && <ZmitiUploadDialog id={'showShareDialog'} {...showShareProps}></ZmitiUploadDialog>}  
             </aside>
             {this.state.showQuestionImgDialog && <ZmitiUploadDialog id='showQuestionImgDialog' {...showQuestionImgProps}></ZmitiUploadDialog>}
+            <Modal 
+                title="请扫描二维码预览"
+                footer={''}
+                width={400}
+                onCancel={()=>{this.setState({showPreviewDialog:false})}}
+                visible={this.state.showPreviewDialog}
+                >
+                <div style={{textAlign:'center'}}>{this.state.data.qrcodeurl && <img style={{width:300}} src={this.state.data.qrcodeurl}/>}</div>
+            </Modal>
+            <Modal 
+                title="发布后访问地址"
+                footer={''}
+                width={500}
+                onCancel={()=>{this.setState({previewUrl:''})}}
+                visible={this.state.previewUrl}
+                >
+                <div style={{textAlign:'center'}}>
+                    <div>{this.state.previewUrl}</div>
+                    {this.state.publishQrcodeUrl && <img style={{width:300}} src={this.state.publishQrcodeUrl}/>}</div>
+            </Modal>
         </div>
         return (
             <MainUI component={component}></MainUI>
@@ -907,7 +930,8 @@ componentWillMount() {
 
         setTimeout(()=>{
             this.setState({
-                viewtap:false
+                viewtap:false,
+                showPreviewDialog:true
             });
         },150)
     }
@@ -923,16 +947,40 @@ componentWillMount() {
             });
         },150);
         var s = this;
-        $.ajax({
-            url:window.baseUrl + 'works/release_works/',
-            data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                worksid:s.worksid
-            }
-        }).done((data)=>{
-            console.log(data);
-        })
+        if(!this.state.isPublishing){
+            this.setState({
+                isPublishing:true
+            })
+            $.ajax({    
+                url:window.baseUrl + 'works/release_works/',
+                data:{
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    worksid:s.worksid
+                }
+            }).done((data)=>{
+                
+                s.state.isPublishing = false;
+                message[data.getret === 0?'success':'error'](data.getret === 0?'发布成功!!!':'发布失败');
+                if(data.getret === 0){
+                    s.state.previewUrl = window.publishBaseUrl + data.url;
+                    $.ajax({
+                        url:window.baseUrl+'share/create_qrcode',
+                        data:{
+                            url:window.publishBaseUrl + data.url
+                        }
+                    }).done((d)=>{
+                        if(d.getret === 0){
+                            s.setState({
+                                publishQrcodeUrl:d.qrcodeurl
+                            });                    }
+                    });
+                }
+                s.forceUpdate();
+            });
+        }
+
+      
     }
 
     save(){
