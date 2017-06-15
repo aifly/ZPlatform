@@ -25,7 +25,7 @@ import MainUI from '../components/Main.jsx';
             previewUrl:'',
             showPreviewDialog:false,
             
-            currentSetting:0,//当前的设置面板  内容设置，风格设置 、发布设置。
+            currentSetting:2,//当前的设置面板  内容设置，风格设置 、发布设置。
             questionIndex:0,
             themeList:[
                 {name:'DANGJIAN',src:'./static/images/qa-phone.png'},
@@ -144,11 +144,19 @@ componentWillMount() {
                                 interactiveScrollbars:true,//允许用户拖动滚动条
                                 mouseWheel:true
                             });
+
+                            s.publishScoll = new IScroll(s.refs['publish-scroll'],{
+                               scrollbars:true,
+                                interactiveScrollbars:true,
+                                mouseWheel:true 
+                            });
+
                             setTimeout(()=>{
                                 s.state.data.question.map((item,i)=>{
                                     s['scroll'+i].refresh();
                                 });
                                 s.baseScroll.refresh();
+                                s.publishScoll.refresh();
                             },1000);
 
                         });
@@ -199,6 +207,23 @@ componentWillMount() {
                 
             }
         }
+        const showBgProps  = {
+            baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+
+                s.copyfile({
+                    imgData,
+                    that:s,
+                    worksid:s.worksid,
+                    fn:src=>{
+                      s.state.data.indexBg = imgData.src;
+                      s.forceUpdate();
+                    }
+                });
+            }
+        }
          const showQuestionImgProps  = {
             baseUrl: window.baseUrl,
             getusersigid: s.getusersigid,
@@ -214,6 +239,25 @@ componentWillMount() {
                             window.obserable.trigger({
                                 type:'refreshQuestionScroll'
                             })
+                        });
+                    }
+                });
+            }
+        } 
+
+        const showIndexPageProps  = {
+            baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+                s.copyfile({
+                    imgData,
+                    that:s,
+                    worksid:s.worksid,
+                    fn:src=>{
+                        s.state.data.indexPage = imgData.src;
+                        s.forceUpdate(()=>{
+                            
                         });
                     }
                 });
@@ -285,8 +329,10 @@ componentWillMount() {
                         var scrollStyle ={
                             height:434-50,
                             overflow:'hidden',
-                           // background:"url(./static/images/bg.png) no-repeat center center / cover "
-
+                            //background:"url(./static/images/bg.png) no-repeat center center / cover "
+                        }
+                        if(this.state.data.indexBg){
+                            scrollStyle.background='url('+this.state.data.indexBg+') no-repeat center / cover';
                         }
 
                         return  <section className={'editqa-question-list-C '+ className} ref={'editqa-q-scroll'+q} key={q} style={scrollStyle}>
@@ -319,9 +365,15 @@ componentWillMount() {
                         </div>
                     </div>
                     <section className='qaedit-btn-ground'>
-                        <div onClick={this.changeMenu.bind(this,'bg')} className='qaedit-bg-btn' style={{background:'url(./static/images/poetry-bg-btn.png) no-repeat left '+(this.state.isBg ? 'top':'bottom')+''}}>
-                        </div>
-                        <div onClick={this.changeMenu.bind(this,'bgsound')} className='qaedit-bgsound-btn' style={{background:'url(./static/images/poetry-bgsound-btn.png) no-repeat left '+(this.state.isBgSound ? 'top':'bottom')+''}}>
+                        <Popover content={<div>替换背景图</div>}>
+                            <div onClick={this.changeMenu.bind(this,'bg')} className='qaedit-bg-btn' style={{background:'url(./static/images/bg-ico.png) no-repeat left  '+(this.state.isBg ? 'top':'bottom')+' / contain'}}>
+                                {this.state.showBgBtns && <div>
+                                                                    <Button onClick={this.replaceBg.bind(this)} type='primary' icon='reload'>替换背景图</Button>
+                                                                    <Button onClick={this.deleteBg.bind(this)} type='primary' icon='delete'>删除背景图</Button>
+                                                                </div>}
+                            </div>
+                        </Popover>
+                        <div onClick={this.changeMenu.bind(this,'bgsound')} className='qaedit-bgsound-btn' style={{background:'url(./static/images/music-ico.png) no-repeat left '+(this.state.isBgSound ? 'top':'bottom')+'/ contain'}}>
                             
                         </div>
                     </section>
@@ -471,111 +523,131 @@ componentWillMount() {
                     </section>
                 </section>}
 
-                {this.state.currentSetting === 2&& <section className='qaedit-right-C'>
-                    <header>分享设置</header>
-                    <aside>
-                        <div className='poetry-share-ui'>
-                            <section>
-                                <Button.Group size="large">
-                                      <Button type="primary" onClick={this.addShareInfo.bind(this,'{username}')}>
-                                        显示微信名
-                                      </Button>
-                                      <Button type="primary" onClick={this.addShareInfo.bind(this,'{pv}')}>
-                                        显示浏览量
-                                      </Button>
-                                      <Button type="primary" onClick={this.addShareInfo.bind(this,'{score}')}>
-                                        显示分数
-                                      </Button>
-                                      <Button type="primary" onClick={this.addShareInfo.bind(this,'{level}')}>
-                                        显示称号
-                                      </Button>
-                                </Button.Group>
+                { <section ref='publish-scroll' style={{display:this.state.currentSetting === 2?'block':'none',height:this.viewH - 100}} className='qaedit-right-C'>
+                    <div>
+                        <div className='editqa-header'>分享设置</div>
+                        <aside>
+                            <div className='poetry-share-ui'>
+                                <section>
+                                    <Button.Group size="large">
+                                          <Button type="primary" onClick={this.addShareInfo.bind(this,'{username}')}>
+                                            显示微信名
+                                          </Button>
+                                          <Button type="primary" onClick={this.addShareInfo.bind(this,'{pv}')}>
+                                            显示浏览量
+                                          </Button>
+                                          <Button type="primary" onClick={this.addShareInfo.bind(this,'{score}')}>
+                                            显示分数
+                                          </Button>
+                                          <Button type="primary" onClick={this.addShareInfo.bind(this,'{level}')}>
+                                            显示称号
+                                          </Button>
+                                    </Button.Group>
+                                    
+                                    <h1 style={{height:10}}></h1>
+                                    <Row type='flex' align='start' gutter={20}>
+                                        <Col span={6}>
+                                            <div style={shareStyle}>
+                                                <img onClick={this.modifyShareImg.bind(this)} style={{opacity:this.state.data.shareImg?0:1}} src='./static/images/add-share.png'/>
+                                                {this.state.data.shareImg && this.state.showShareImgBtn && <div className='poetry-operat-shareimg'>
+                                                                                        <Button type='primary' icon='reload' onClick={this.replaceShareImg.bind(this)}>替换</Button>
+                                                                                        <Button type='primary' icon='delete' onClick={this.modifyShareInfo.bind(this,'shareImg','','')}>删除</Button>
+                                                                                    </div>}
+                                            </div>
+                                        </Col>
+                                        <Col span={18}>
+                                            <Input onFocus={()=>{this.currentFocus = 'title'}} value={this.state.data.shareTitle} onChange={this.modifyShareInfo.bind(this,'shareTitle')} type='text' placeholder='请输入分享的标题'/>
+                                            <Input type='textarea' onFocus={()=>{this.currentFocus = 'desc'}} placeholder='请输入分享的描述' value={this.state.data.shareDesc}  onChange={this.modifyShareInfo.bind(this,'shareDesc')} />
+                                        </Col>
+                                    </Row>
+                                            
+                                </section>
+                                <div className='editqa-custom-index'>
+                                    <Row type='flex' align='middle'>
+                                        <Col span={6} style={{fontSize:'16px'}}>自定义首页</Col>
+                                        <Col span={12}>
+                                              <section style={{background:'url('+this.state.data.indexPage+') no-repeat center / cover'}}>
+                                                    {!this.state.data.indexPage && <img onClick={this.modifyIndexPage.bind(this)}  src='./static/images/uploadimg.jpg'/>}
+                                                    {this.state.data.indexPage&& <div onClick={()=>{this.state.data.indexPage= '';this.forceUpdate(()=>{window.obserable.trigger({type:'refreshQuestionScroll'})})}} className='editqa-q-img-remove'>
+                                                        <Icon type='delete'/>
+                                                    </div>}
+                                                </section>
+                                        </Col>
+                                        <Col span={6}>
+                                            若设置此项，则会替换默认的首页
+                                        </Col>
+                                    </Row>
+                                </div>
+                                <section hidden>
+                                    <Row type='flex' align='middle' justify='space-around'>
+                                        <Col span={12}>
+                                            <img style={{width:140}} src={this.state.data.qrcodeurl||'./static/images/qrcode.png'}/>
+                                        </Col>
+                                        <Col span={12}>
+                                            <div>扫二维码分享给好友</div>
+                                        </Col>
+                                    </Row>              
+                                </section>
+
+                                <section className='editqa-my-custom'>
+                                    <Row type='flex' gutter={20}>
+                                        <Row span={4}>我的定制</Row>
+                                        <Row span={4}>
+                                            <Input placeholder='' type='text' value={this.state.data.custom} onChange={e=>{this.state.data.custom = e.target.value;this.forceUpdate();}}/>
+                                        </Row>
+                                        <Row span={16} className='editqa-my-custom-tip'>此项请在指定人员下填写，否则可能会导致作品不能正常运行，默认为空</Row>
+                                    </Row>
+                                </section>
+
+                                <section className='editqa-my-custom'>
+                                    <Row type='flex' gutter={20}>
+                                        <Row span={4}>信息收集</Row>
+                                        <Row span={10}>
+                                            <Checkbox  checked={this.state.data.needInfo} onChange={(e)=>{this.state.data.needInfo = !this.state.data.needInfo ;this.forceUpdate();}}>{this.state.data.needInfo?'':'不'}需要用户填写姓名及电话号码</Checkbox>
+                                        </Row>
+                                    </Row>
+                                </section>
+
+                                <section className='editqa-score-setting'>
+                                    <div>
+                                        分数设置
+                                    </div>
+                                    <div className='editqa-score-tip'>
+                                        <section>您设置的题目总分为：{this.state.data.totalScore}分</section>
+                                        <section> <Checkbox   checked={this.state.data.showLevel} onChange={(e)=>{this.state.data.showLevel = !this.state.data.showLevel ;this.forceUpdate();}}>{this.state.data.showLevel?'':'不'}显示称号</Checkbox></section>
+                                    </div>
+                                </section>
                                 
-                                <h1 style={{height:10}}></h1>
-                                <Row type='flex' align='start' gutter={20}>
+                                <section className='editqa-level-tip'>
+                                    <div>分数段</div>
+                                    <div>称号</div>
+                                </section>
+
+                                {this.state.data.level.map((item,i)=>{
+                                    return  <Row  key={i} type='flex' style={{textAlign:'center',margin:'10px'}}>
                                     <Col span={6}>
-                                        <div style={shareStyle}>
-                                            <img onClick={this.modifyShareImg.bind(this)} style={{opacity:this.state.data.shareImg?0:1}} src='./static/images/add-share.png'/>
-                                            {this.state.data.shareImg && this.state.showShareImgBtn && <div className='poetry-operat-shareimg'>
-                                                                                    <Button type='primary' icon='reload' onClick={this.replaceShareImg.bind(this)}>替换</Button>
-                                                                                    <Button type='primary' icon='delete' onClick={this.modifyShareInfo.bind(this,'shareImg','','')}>删除</Button>
-                                                                                </div>}
-                                        </div>
+                                        <InputNumber min={1} max={this.state.data.totalScore} value={item.score} onChange={e=>{item.score = e;this.forceUpdate()}}/>
                                     </Col>
-                                    <Col span={18}>
-                                        <Input onFocus={()=>{this.currentFocus = 'title'}} value={this.state.data.shareTitle} onChange={this.modifyShareInfo.bind(this,'shareTitle')} type='text' placeholder='请输入分享的标题'/>
-                                        <Input type='textarea' onFocus={()=>{this.currentFocus = 'desc'}} placeholder='请输入分享的描述' value={this.state.data.shareDesc}  onChange={this.modifyShareInfo.bind(this,'shareDesc')} />
+                                    <Col span={2}>-<span></span></Col>
+                                    <Col span={8}>
+                                        <Input  value={item.name} onChange={e=>{item.name = e.target.value;this.forceUpdate()}}/>
                                     </Col>
+                                    <Col span={6}>
+                                        <Button onClick={this.deleteLevel.bind(this,i)} icon='delete'>删除</Button>
+                                    </Col>
+                                    {i === this.state.data.level.length-1 && <Col span={2}><Button onClick={this.addLevel.bind(this)}>+</Button></Col>}
                                 </Row>
-                                        
-                            </section>
-                            <section hidden>
-                                <Row type='flex' align='middle' justify='space-around'>
-                                    <Col span={12}>
-                                        <img style={{width:140}} src={this.state.data.qrcodeurl||'./static/images/qrcode.png'}/>
-                                    </Col>
-                                    <Col span={12}>
-                                        <div>扫二维码分享给好友</div>
-                                    </Col>
-                                </Row>              
-                            </section>
-
-                            <section className='editqa-my-custom'>
-                                <Row type='flex' gutter={20}>
-                                    <Row span={4}>我的定制</Row>
-                                    <Row span={4}>
-                                        <Input placeholder='' type='text' value={this.state.data.custom} onChange={e=>{this.state.data.custom = e.target.value;this.forceUpdate();}}/>
-                                    </Row>
-                                    <Row span={16} className='editqa-my-custom-tip'>此项请在指定人员下填写，否则可能会导致作品不能正常运行，默认为空</Row>
-                                </Row>
-                            </section>
-
-                            <section className='editqa-my-custom'>
-                                <Row type='flex' gutter={20}>
-                                    <Row span={4}>信息收集</Row>
-                                    <Row span={10}>
-                                        <Checkbox  checked={this.state.data.needInfo} onChange={(e)=>{this.state.data.needInfo = !this.state.data.needInfo ;this.forceUpdate();}}>{this.state.data.needInfo?'':'不'}需要用户填写姓名及电话号码</Checkbox>
-                                    </Row>
-                                </Row>
-                            </section>
-
-                            <section className='editqa-score-setting'>
-                                <div>
-                                    分数设置
-                                </div>
-                                <div className='editqa-score-tip'>
-                                    <section>您设置的题目总分为：{this.state.data.totalScore}分</section>
-                                    <section> <Checkbox   checked={this.state.data.showLevel} onChange={(e)=>{this.state.data.showLevel = !this.state.data.showLevel ;this.forceUpdate();}}>{this.state.data.showLevel?'':'不'}显示称号</Checkbox></section>
-                                </div>
-                            </section>
-                            
-                            <section className='editqa-level-tip'>
-                                <div>分数段</div>
-                                <div>称号</div>
-                            </section>
-
-                            {this.state.data.level.map((item,i)=>{
-                                return  <Row  key={i} type='flex' style={{textAlign:'center',margin:'20px'}}>
-                                <Col span={6}>
-                                    <InputNumber min={1} max={this.state.data.totalScore} value={item.score} onChange={e=>{item.score = e;this.forceUpdate()}}/>
-                                </Col>
-                                <Col span={2}>-<span></span></Col>
-                                <Col span={8}>
-                                    <Input  value={item.name} onChange={e=>{item.name = e.target.value;this.forceUpdate()}}/>
-                                </Col>
-                                <Col span={6}>
-                                    <Button onClick={this.deleteLevel.bind(this,i)} icon='delete'>删除</Button>
-                                </Col>
-                                {i === this.state.data.level.length-1 && <Col span={2}><Button onClick={this.addLevel.bind(this)}>+</Button></Col>}
-                            </Row>
-                            })}
-                        </div>  
-                    </aside>
+                                })}
+                            </div>  
+                        </aside>
+                    </div>
                 </section>}
                 
                 {this.state.showShareDialog && <ZmitiUploadDialog id={'showShareDialog'} {...showShareProps}></ZmitiUploadDialog>}  
+                {this.state.showBgDialog && <ZmitiUploadDialog id={'showBgDialog'} {...showBgProps}></ZmitiUploadDialog>}  
             </aside>
             {this.state.showQuestionImgDialog && <ZmitiUploadDialog id='showQuestionImgDialog' {...showQuestionImgProps}></ZmitiUploadDialog>}
+            {this.state.showIndexPageDialog && <ZmitiUploadDialog id='showIndexPageDialog' {...showIndexPageProps}></ZmitiUploadDialog>}
             <Modal 
                 title="请扫描二维码预览"
                 footer={''}
@@ -590,7 +662,7 @@ componentWillMount() {
                 footer={''}
                 width={500}
                 onCancel={()=>{this.setState({previewUrl:''})}}
-                visible={this.state.previewUrl}
+                visible={this.state.previewUrl?true:false}
                 >
                 <div style={{textAlign:'center'}}>
                     <div>{this.state.previewUrl}</div>
@@ -783,15 +855,52 @@ componentWillMount() {
             })
         })
     }
+    modifyIndexPage(){
+         this.setState({
+            showIndexPageDialog:true,
+        },()=>{
+            window.obserable.trigger({
+                type:'showModal',
+                data:{
+                    id:'showIndexPageDialog',
+                    type:0
+                }
+            })
+        })
+    }
+
+    replaceBg(){
+        this.setState({
+            showBgDialog:true,
+        });
+        window.obserable.trigger({
+            type:'showModal',
+            data:{
+                id:'showBgDialog',
+                type:0
+            }
+        });
+    }
+
+    deleteBg(){
+        this.state.data.indexBg = '';
+        this.state.showBgBtns = false;
+        this.showBgDialog = false;
+        this.forceUpdate();
+    }
 
     changeMenu(type){
         if(type === 'bg'){
-            this.setState({
-                isBg:true,
-                isCustom:false,
-                isBgSound:false,
-                isShare:false
-            });
+
+            if(this.state.data.indexBg){
+                this.setState({
+                    showBgBtns:true
+                });
+            }else{
+                this.replaceBg();
+            }
+            
+
         }else if(type ==='bgsound'){
             this.setState({
                 isBg:false,
@@ -985,6 +1094,7 @@ componentWillMount() {
 
     save(){
 
+        this.state.data.level = this.state.data.level.sort((a,b)=>{return b.score-a.score});
         var s = this;
         this.setState({
             savetap:true

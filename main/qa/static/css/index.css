@@ -19,6 +19,7 @@ h2, h3, h4, h5 {
   font-weight: normal; }
 
 .qaedit-main-ui {
+  height: 100%;
   background: #eaedf1;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -304,18 +305,26 @@ h2, h3, h4, h5 {
         left: 10%; }
       .qaedit-main-ui > aside:first-of-type > div .qaedit-btn-ground {
         position: absolute;
-        right: -60px;
-        top: 50px; }
+        right: -40px;
+        top: 50px;
+        z-index: 100; }
         .qaedit-main-ui > aside:first-of-type > div .qaedit-btn-ground .qaedit-add-question-btn {
           position: absolute; }
         .qaedit-main-ui > aside:first-of-type > div .qaedit-btn-ground .qaedit-bg-btn, .qaedit-main-ui > aside:first-of-type > div .qaedit-btn-ground .qaedit-bgsound-btn {
-          width: 60px;
-          height: 60px;
+          z-index: 100;
+          width: 40px;
+          height: 40px;
+          top: 0;
           cursor: pointer;
-          -webkit-transform: scale(0.7);
-          transform: scale(0.7);
+          margin: 10px 0;
+          -webkit-transform: scale(1);
+          transform: scale(1);
           -webkit-transform-origin: left;
           transform-origin: left; }
+          .qaedit-main-ui > aside:first-of-type > div .qaedit-btn-ground .qaedit-bg-btn > div, .qaedit-main-ui > aside:first-of-type > div .qaedit-btn-ground .qaedit-bgsound-btn > div {
+            position: absolute;
+            left: -280%;
+            top: 0; }
   .qaedit-main-ui > aside:last-of-type {
     width: 500px;
     background: #Fff;
@@ -545,6 +554,10 @@ h2, h3, h4, h5 {
       position: relative; }
       .qaedit-main-ui > aside:last-of-type .qaedit-right-C:nth-of-type(1) {
         overflow: hidden; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-header {
+        margin: 0px 10% 0;
+        padding-top: 20px;
+        font-size: 16px; }
       .qaedit-main-ui > aside:last-of-type .qaedit-right-C .qaedit-next {
         text-align: center; }
       .qaedit-main-ui > aside:last-of-type .qaedit-right-C header {
@@ -577,7 +590,7 @@ h2, h3, h4, h5 {
         height: 70%;
         left: 10%;
         top: 70px;
-        position: absolute;
+        margin: 20px auto 0;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -624,6 +637,30 @@ h2, h3, h4, h5 {
             background: #d8271c; }
           .qaedit-main-ui > aside:last-of-type .qaedit-right-C .poetry-share-ui section:nth-of-type(3) .poetry-back-edit {
             background: #2db7f5; }
+      .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-custom-index {
+        margin: 20px auto 0; }
+        .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-custom-index section {
+          margin: 0 auto;
+          width: 120px;
+          height: 120px;
+          position: relative; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-custom-index section:hover .editqa-q-img-remove {
+            opacity: 1; }
+          .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-custom-index section .editqa-q-img-remove {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            -webkit-transition: 0.2s;
+            transition: 0.2s;
+            top: 0;
+            z-index: 10;
+            opacity: 0;
+            background: rgba(0, 0, 0, 0.5);
+            text-align: center;
+            color: #fff;
+            font-size: 30px;
+            line-height: 120px; }
       .qaedit-main-ui > aside:last-of-type .qaedit-right-C .editqa-my-custom {
         font-size: 16px;
         margin: 20px 0 0 0; }
