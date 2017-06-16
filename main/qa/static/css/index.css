@@ -71,6 +71,8 @@ h2, h3, h4, h5 {
           .qaedit-main-ui > aside:first-of-type .editpoetry-iphone .zmiti-edit-phone-C .qaedit-phone-body header {
             width: 100%;
             margin: 0 auto;
+            position: relative;
+            z-index: 10;
             height: 35px;
             line-height: 35px;
             background: #fff;

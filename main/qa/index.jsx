@@ -25,7 +25,7 @@ import MainUI from '../components/Main.jsx';
             previewUrl:'',
             showPreviewDialog:false,
             
-            currentSetting:2,//当前的设置面板  内容设置，风格设置 、发布设置。
+            currentSetting:0,//当前的设置面板  内容设置，风格设置 、发布设置。
             questionIndex:0,
             themeList:[
                 {name:'DANGJIAN',src:'./static/images/qa-phone.png'},
@@ -45,7 +45,7 @@ import MainUI from '../components/Main.jsx';
                 background:'',//聊天背景图片
                 bgSound:'',//背景音乐
                 worksname:'',
-                theme:'default',
+                theme:'DANGJIAN',
                 duration:360,
                 type:'',
                 level:[
@@ -139,31 +139,35 @@ componentWillMount() {
                                     });
                                 }
                             });
-                            s.baseScroll = new IScroll(s.refs['editqa-base-scroll'],{
-                                scrollbars:true,//显示滚动条
-                                interactiveScrollbars:true,//允许用户拖动滚动条
-                                mouseWheel:true
-                            });
-
-                            s.publishScoll = new IScroll(s.refs['publish-scroll'],{
-                               scrollbars:true,
-                                interactiveScrollbars:true,
-                                mouseWheel:true 
-                            });
+                            if(s.refs['editqa-base-scroll']){
+                                 s.baseScroll = new IScroll(s.refs['editqa-base-scroll'],{
+                                    scrollbars:true,//显示滚动条
+                                    interactiveScrollbars:true,//允许用户拖动滚动条
+                                    mouseWheel:true
+                                });
+                            }
+                           
+                            if(s.refs['publish-scroll']){
+                                s.publishScoll = new IScroll(s.refs['publish-scroll'],{
+                                   scrollbars:true,
+                                    interactiveScrollbars:true,
+                                    mouseWheel:true 
+                                });
+                            }
 
                             setTimeout(()=>{
                                 s.state.data.question.map((item,i)=>{
-                                    s['scroll'+i].refresh();
+                                     s['scroll'+i]&&s['scroll'+i].refresh();
                                 });
-                                s.baseScroll.refresh();
-                                s.publishScoll.refresh();
+                                s.baseScroll&&s.baseScroll.refresh();
+                                s.publishScoll&&s.publishScoll.refresh();
                             },1000);
 
                         });
                     }catch(e){
                         message.error('您没有该作品该编辑');
                         setTimeout(()=>{
-                           s.loginOut();
+                          //// s.loginOut();
                         },400)
                     }
                     
@@ -334,7 +338,6 @@ componentWillMount() {
                         if(this.state.data.indexBg){
                             scrollStyle.background='url('+this.state.data.indexBg+') no-repeat center / cover';
                         }
-
                         return  <section className={'editqa-question-list-C '+ className} ref={'editqa-q-scroll'+q} key={q} style={scrollStyle}>
                                     <section style={{paddingBottom:60}}>
                                         <div className='editqa-q-title'>
@@ -355,7 +358,6 @@ componentWillMount() {
                                                         {this.arr[i]+"、"+item.content}
                                                     </div>
                                             })}
-
                                            {/* {this.props.myAnswer.length>=this.props.question.length-1 && <div onTouchTap={this.submitPaper.bind(this)} className={'editqa-submit-btn ' + (this.state.submit?'active':'')}>提交答卷</div>}
                                                                                        {this.props.myAnswer.length<this.props.question.length-1 && <div onTouchTap={this.doNext.bind(this)} className={'editqa-submit-btn ' + (this.state.submit?'active':'')}>下一题</div>}*/}
                                         </div>
@@ -450,7 +452,7 @@ componentWillMount() {
                                 <Input onFocus={()=>{this.setState({titleError:false})}} className={this.state.titleError?'editqa-title-error':''} type='textarea' onChange={e=>{currentQuestion.title= e.target.value ;this.forceUpdate()}} value={currentQuestion.title}/>
                                 您一共录入了<span>{currentQuestion.title.length}</span>个字
                             </section>
-                            <section style={{background:'url('+currentQuestion.img+') no-repeat center / cover'}}>
+                            <section style={{background:currentQuestion.img?'url('+currentQuestion.img+') no-repeat center / cover':'#fff'}}>
                                 {!currentQuestion.img && <img onClick={this.modifyQImg.bind(this)}  src='./static/images/uploadimg.jpg'/>}
                                 {currentQuestion.img&& <div onClick={()=>{currentQuestion.img= '';this.forceUpdate(()=>{window.obserable.trigger({type:'refreshQuestionScroll'})})}} className='editqa-q-img-remove'>
                                     <Icon type='delete'/>
@@ -588,7 +590,6 @@ componentWillMount() {
                                         </Col>
                                     </Row>              
                                 </section>
-
                                 <section className='editqa-my-custom'>
                                     <Row type='flex' gutter={20}>
                                         <Row span={4}>我的定制</Row>
@@ -598,7 +599,6 @@ componentWillMount() {
                                         <Row span={16} className='editqa-my-custom-tip'>此项请在指定人员下填写，否则可能会导致作品不能正常运行，默认为空</Row>
                                     </Row>
                                 </section>
-
                                 <section className='editqa-my-custom'>
                                     <Row type='flex' gutter={20}>
                                         <Row span={4}>信息收集</Row>
@@ -607,7 +607,6 @@ componentWillMount() {
                                         </Row>
                                     </Row>
                                 </section>
-
                                 <section className='editqa-score-setting'>
                                     <div>
                                         分数设置
@@ -622,7 +621,6 @@ componentWillMount() {
                                     <div>分数段</div>
                                     <div>称号</div>
                                 </section>
-
                                 {this.state.data.level.map((item,i)=>{
                                     return  <Row  key={i} type='flex' style={{textAlign:'center',margin:'10px'}}>
                                     <Col span={6}>
