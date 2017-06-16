@@ -60,6 +60,8 @@ import Layout  from 'antd/lib/layout';
 
 import Cascader  from 'antd/lib/cascader';
 
+import Popover  from 'antd/lib/popover';
+
 
 
 
@@ -69,4 +71,4 @@ import Cascader  from 'antd/lib/cascader';
 
 import moment  from 'moment';
 
-export default {Button,message,Input,Table,Modal,Form,Icon,Radio,Progress,Tabs,Card,DatePicker,moment,Select,Row,Col,Checkbox,Badge,Menu,Spin,Steps,notification,Tree,Popconfirm,Tag,Slider,InputNumber,Tooltip,Switch,Layout,Cascader};
+export default {Button,message,Input,Table,Modal,Form,Icon,Radio,Progress,Tabs,Card,DatePicker,moment,Select,Row,Col,Checkbox,Badge,Menu,Spin,Steps,notification,Tree,Popconfirm,Tag,Slider,InputNumber,Tooltip,Switch,Layout,Cascader,Popover};

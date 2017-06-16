@@ -40,6 +40,30 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	  
 	}
 
+	copyfile(options={}){//复制选中的文件
+
+		var s = options.that,
+			imgData = options.imgData,
+			fn = options.fn;
+		$.ajax({
+			url:window.baseUrl+'/share/copyfile',
+			data:{
+				getusersigid: s.getusersigid||options.getusersigid,
+				userid: s.userid || options.userid,
+				worksid:options.worksid || s.props.worksid,
+				fileurl:imgData.src,
+				dirname:'./assets/images/'
+			}
+		}).done((data)=>{
+			if(data.getret === 0 ){
+				fn && fn(imgData.src);
+			}else{
+				console.log(data)
+				message.error('复制图片失败');
+			}
+		});
+	}
+
 	loading(arr, fn, fnEnd){
         var len = arr.length;
         var count = 0;
@@ -161,8 +185,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 
 	validateUser(fn,that){
 		var s = this;
-
-		try{
+		try{	
 
 			 var params = JSON.parse(window.getCookie('login'));
 
@@ -388,6 +411,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			loading:this.loading,
 			ajaxFail:this.ajaxFail,
 			randomString:this.randomString,
+			copyfile:this.copyfile,
 			zmitiAjax:this.zmitiAjax
 			//fillFeilds:this.fillFeilds
 		}

@@ -1,0 +1,44 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
+.zmiti-clock-main-ui {
+  border-radius: 50%;
+  border: 5px solid #999;
+  position: relative; }
+  .zmiti-clock-main-ui span {
+    position: absolute;
+    width: 1px;
+    height: 5px;
+    top: 0;
+    left: 50%;
+    margin-left: -1px;
+    background: #999; }
+    .zmiti-clock-main-ui span:last-of-type {
+      -webkit-transform-origin: center bottom;
+      transform-origin: center bottom;
+      -webkit-transform: rotate(130deg);
+      transform: rotate(130deg); }
+      .zmiti-clock-main-ui span:last-of-type.active {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+        -webkit-animation: rotate linear 60s infinite;
+        animation: rotate linear 60s infinite; }
+
+@-webkit-keyframes rotate {
+  to {
+    -webkit-transform: rotate(360deg); } }
+
+/*# sourceMappingURL=index.css.map */

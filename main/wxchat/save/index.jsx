@@ -26,13 +26,22 @@ export default class WXSaveApp extends React.Component {
         getusersigid: s.props.getusersigid,
         userid: s.props.userid,
         onFinish(imgData){
-            window.obserable.trigger({
-		  		type:"modifyShareInfo",
-		  		data:{
-		  			name:'shareImg',
-		  			title:imgData.src
-		  		}
-		  	});
+
+        	s.props.copyfile({
+    			imgData,
+        	 	that:s,
+        	 	getusersigid:s.props.getusersigid,
+        	 	userid:s.props.userid,
+        	 	fn:src=>{
+		            window.obserable.trigger({
+				  		type:"modifyShareInfo",
+				  		data:{
+				  			name:'shareImg',
+				  			title:imgData.src
+				  		}
+				  	});
+                }
+        	});
         }
   	}
     return (
