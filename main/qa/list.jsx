@@ -142,7 +142,7 @@ class ZmitiQAListApp extends Component {
 
 	createWork(){
 		var s = this;
-		console.log(this.state.data.title);
+		
 		if(this.state.data.title.length <=0){
 			message.error('标题不能为空');
 			return;
@@ -155,6 +155,17 @@ class ZmitiQAListApp extends Component {
 				type = 1;//对应的是公司的作品。
 				break;
 		}
+		
+		//var data = s.state.data.question;
+		//data.question = [];
+
+		var data = {
+			question:[],
+			theme:'DANGJIAN',
+			duration:0,
+			title:this.state.data.title
+		};
+
 		$.ajax({
 			url:window.baseUrl+'/works/create_works/',
 			type:'post',
@@ -170,7 +181,7 @@ class ZmitiQAListApp extends Component {
 				workstate:0,//作品状态, 0，草稿,1，正常 ,2，已删除
 				imgurl:'',
 				worktypesign:type,//作品类型0:我的作品;1:公司作品;2,平台作品
-				datajson:JSON.stringify(s.state.data)
+				datajson:JSON.stringify(data)
 			},
 			success(data){
 				message[data.getret === 0?'success':'error'](data.getmsg);
