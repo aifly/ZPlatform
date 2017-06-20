@@ -74,23 +74,19 @@ class ZmitiWxChatListApp extends Component {
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
-            	s.copyfile({
-            	 	imgData,
-            	 	that:s,
-            	 	fn:src=>{
-	                	s.state.data.memberList.push({
-		                	id:s.randomString(),
-		                	head:imgData.src,
-		                	name:''
-		                });
+            	
 
-		                s.forceUpdate(()=>{
-		                	 window.obserable.trigger({
-			                	type:'refreshMemberList'
-			                });
-		                });
-	                }
-            	 });
+            	s.state.data.memberList.push({
+                	id:s.randomString(),
+                	head:imgData.src,
+                	name:''
+                });
+
+                s.forceUpdate(()=>{
+                	 window.obserable.trigger({
+	                	type:'refreshMemberList'
+	                });
+                });
                
             }
         };
@@ -211,6 +207,14 @@ class ZmitiWxChatListApp extends Component {
 							
 							message[dt.getret === 0?'success':'error'](data.getmsg);
 							if(dt.getret === 0){
+								s.state.data.memberList.map((item,i)=>{
+									s.copyfile({
+					            	 	imgData:item.head,
+					            	 	that:s,
+					            	 	worksid:data.worksid
+					            	 });	
+								})
+								
 								window.location.hash =  '/wxchat/'+ data.worksid+'/';
 							}
 						}
