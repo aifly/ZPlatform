@@ -51,7 +51,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 				getusersigid: s.getusersigid||options.getusersigid,
 				userid: s.userid || options.userid,
 				worksid:options.worksid || s.props.worksid,
-				fileurl:imgData.src,
+				fileurl:imgData.src || imgData,
 				dirname:'./assets/images/'
 			}
 		}).done((data)=>{
