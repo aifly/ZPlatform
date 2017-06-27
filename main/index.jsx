@@ -41,6 +41,7 @@ import ZmitiViewCustomUserListApp from './viewcustomuserlist/index.jsx';
 import ZmitiViewUserBookApp from './viewcustomuserbook/index.jsx';
 import ZmitiViewAnswerApp from './viewanswer/index.jsx';
 import Obserable from './static/libs/obserable.js';
+import ZmitiTrainingApp from './training/index.jsx';
 
 
 import {notification } from './commoncomponent/common.jsx';
@@ -91,6 +92,7 @@ class App extends React.Component{
 				{path: '/qa/',app:ZmitiQAListApp},
 				{path: '/qaedit/:id', app: ZmitiQAApp},
 				{path: '/viewanswer/(:title)/(:id)',app:ZmitiViewAnswerApp},
+				{path: '/training/(:title)',app:ZmitiTrainingApp},
 				
 		];
 		return (

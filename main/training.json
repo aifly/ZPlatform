@@ -1,0 +1,20 @@
+{
+    "getret": 0,
+    "getmsg": "",
+    "list": [
+        {
+		"realname":"黄晓明",
+		"gender":0,
+		"province": "山东",
+		"mobile":13812345678,
+		"rooms":"A201"
+        },
+	{
+		"realname":"Angelbaby",
+		"gender":1,
+		"province": "河北",
+		"mobile":13912345678,
+		"rooms":"A202"
+        }
+    ]
+}
