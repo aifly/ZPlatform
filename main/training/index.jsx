@@ -150,7 +150,7 @@ import MainUI from '../components/Main.jsx';
         var s=this;
         $.ajax({
             //url:window.baseUrl + 'weixin/get_userscorelist/',
-            url:"training/training.json",
+            url:"training/static/js/training.json",
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
