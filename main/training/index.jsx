@@ -23,6 +23,7 @@ import MainUI from '../components/Main.jsx';
             alldataSource:[],
             countNum:0,
             provinceName:[],
+            provinceText:'',
             modpostDialogVisible:false,
             realname:'',
             gender:0,
@@ -111,13 +112,13 @@ import MainUI from '../components/Main.jsx';
                     <div className="zmiti-training-line"></div>
                     <div className="hr20"></div>
                     <Row>
-                        <Col span={18}>
+                        <Col span={18} >
                             <Row>
-                                <Col span={18} className="zmiti-training-inputext" style={{width:240}}>
+                                <Col span={18} className="zmiti-training-inputext" style={{width:250}}>
                                     
                                     <Row>
                                         <Col span={14} style={{width:110}}>
-                                            <Select style={{width:100}} placeholder="省份" onChange={(value)=>{this.state.province=value;this.forceUpdate();}} value={this.state.province}>
+                                            <Select style={{width:100}} placeholder="省份" onChange={(value)=>{this.state.provinceText=value;this.forceUpdate();}} value={this.state.provinceText}>
                                                 <Option value="">---按省份---</Option>
                                             {
                                                 this.state.provinceName.map(function(item,index){
@@ -128,8 +129,8 @@ import MainUI from '../components/Main.jsx';
                                             }
                                             </Select>
                                         </Col>
-                                        <Col span={10} style={{width:130}}>
-                                            <Input style={{width:120}} placeholder="请输入名称" onChange={this.searchtext.bind(this)} />
+                                        <Col span={10} style={{width:140}}>
+                                            <Input style={{width:138}} placeholder="请输入名称" onChange={this.searchtext.bind(this)} />
                                         </Col>
                                     </Row>                                   
                                 </Col>
@@ -274,13 +275,21 @@ import MainUI from '../components/Main.jsx';
             this.state.dataSource = this.dataSource.filter((item)=>{
                 return  item.realname.indexOf(this.state.searchtext)>-1;
             });
+            this.state.countNum=this.state.dataSource.length;
             this.forceUpdate();
         })
     }
     //search
     searchbtn(){
         var s=this;
-        console.log(s.state.searchtext);
+        console.log(s.state.provinceText,s.state.searchtext);
+        this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+
+        this.state.dataSource = this.dataSource.filter((item)=>{
+            return  item.province.indexOf(s.state.provinceText)>-1 && item.realname.indexOf(this.state.searchtext)>-1;
+        });
+        this.state.countNum=this.state.dataSource.length;
+        this.forceUpdate();
 
         //console.log(s.state.searchtype+"..."+s.state.searchtext);
         
