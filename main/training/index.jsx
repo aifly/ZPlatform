@@ -22,6 +22,7 @@ import MainUI from '../components/Main.jsx';
             dataSource:[],
             alldataSource:[],
             countNum:0,
+            provinceName:[],
             modpostDialogVisible:false,
             realname:'',
             gender:0,
@@ -48,13 +49,13 @@ import MainUI from '../components/Main.jsx';
         const columns = [{
             title: '序号',
             dataIndex: 'key',
+            width:80,
             key: 'xx',                         
             render:(value,recorder,index)=>{
                 return <div>{index+1}</div>
             }
         },{
-            title: '昵称',
-            width:200,
+            title: '昵称',           
             dataIndex: 'realname',
             key: 'realname',
         },{
@@ -114,7 +115,7 @@ import MainUI from '../components/Main.jsx';
                             <Row>
                                 <Col span={8} className="zmiti-training-inputext">
                                     <div>
-                                        <Input placeholder="请输入名称或省份" onChange={this.searchtext.bind(this)} />
+                                        <Input placeholder="请输入名称" onChange={this.searchtext.bind(this)} />
                                     </div>                                   
                                 </Col>
                                 <Col span={16}>
@@ -154,10 +155,10 @@ import MainUI from '../components/Main.jsx';
                             label="性别"
                             hasFeedback
                             >
-                            <Input placeholder="性别" 
-                            value={this.state.gender}
-                            onChange={(e)=>{this.state.gender=e.target.value;this.forceUpdate();}}
-                            />
+                            <Select placeholder="性别" onChange={(value)=>{this.state.gender=value;this.forceUpdate();}} value={this.state.gender}>
+                                <Option value={0}>男</Option>
+                                <Option value={1}>女</Option>
+                            </Select>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -174,10 +175,15 @@ import MainUI from '../components/Main.jsx';
                             label="省份"
                             hasFeedback
                             >
-                            <Input placeholder="省份" 
-                            value={this.state.province}
-                            onChange={(e)=>{this.state.province=e.target.value;this.forceUpdate();}}
-                            />
+                            <Select placeholder="省份" onChange={(value)=>{this.state.province=value;this.forceUpdate();}} value={this.state.province}>
+                            {
+                                this.state.provinceName.map(function(item,index){
+                                    return (
+                                        <Option value={item}>{item}</Option>
+                                    )
+                                })
+                            }
+                            </Select>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -216,6 +222,7 @@ import MainUI from '../components/Main.jsx';
         var s=this;
        this.resizeMainHeight(this);
        s.bindNewdata();
+       s.getCascader();
        s.loadData();
     }
 
@@ -286,6 +293,28 @@ import MainUI from '../components/Main.jsx';
     //返回
     goback(){
         window.location='#/custom/'
+    }
+    //省份
+    getCascader(){
+        var s=this;
+        var userid = this.props.params.userid?this.props.params.userid:this.userid;
+        var provinceOptions=[];
+        $.ajax({
+            url:window.baseUrl+'travel/get_citylist',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+            },
+            success(data){
+                if(data.getret === 0){                    
+                    var provinceData=data.list[0].children;                    
+                    $.each(provinceData,function(index,item){
+                        s.state.provinceName.push(item.label);
+                    })
+                    s.forceUpdate();
+                }
+            }
+        })
     }
     //对话框新增加时
     trainform(){
