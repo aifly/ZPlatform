@@ -48,13 +48,13 @@ import MainUI from '../components/Main.jsx';
         const columns = [{
             title: '序号',
             dataIndex: 'key',
-            key: 'xx',
-            width:150,             
+            key: 'xx',                         
             render:(value,recorder,index)=>{
                 return <div>{index+1}</div>
             }
         },{
             title: '昵称',
+            width:200,
             dataIndex: 'realname',
             key: 'realname',
         },{
@@ -233,6 +233,7 @@ import MainUI from '../components/Main.jsx';
                 if(data.getret === 0){
                     //console.log(data.list);
                     s.state.dataSource=data.list;
+                    s.state.countNum=data.list.length;
                     s.state.loading=false;
                     s.forceUpdate();
                     console.log(this.url)    

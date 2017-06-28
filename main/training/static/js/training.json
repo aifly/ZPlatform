@@ -3,6 +3,7 @@
     "getmsg": "",
     "list": [
         {
+		"key":0,
 		"id":1001,
 		"realname":"黄晓明",
 		"gender":0,
@@ -11,6 +12,7 @@
 		"rooms":"A201"
         },
 	{
+		"key":1,
 		"id":1002,
 		"realname":"Angelbaby",
 		"gender":1,
