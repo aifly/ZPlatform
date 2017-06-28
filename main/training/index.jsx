@@ -113,12 +113,27 @@ import MainUI from '../components/Main.jsx';
                     <Row>
                         <Col span={18}>
                             <Row>
-                                <Col span={8} className="zmiti-training-inputext">
-                                    <div>
-                                        <Input placeholder="请输入名称" onChange={this.searchtext.bind(this)} />
-                                    </div>                                   
+                                <Col span={18} className="zmiti-training-inputext" style={{width:240}}>
+                                    
+                                    <Row>
+                                        <Col span={14} style={{width:110}}>
+                                            <Select style={{width:100}} placeholder="省份" onChange={(value)=>{this.state.province=value;this.forceUpdate();}} value={this.state.province}>
+                                                <Option value="">---按省份---</Option>
+                                            {
+                                                this.state.provinceName.map(function(item,index){
+                                                    return (
+                                                        <Option value={item}>{item}</Option>
+                                                    )
+                                                })
+                                            }
+                                            </Select>
+                                        </Col>
+                                        <Col span={10} style={{width:130}}>
+                                            <Input style={{width:120}} placeholder="请输入名称" onChange={this.searchtext.bind(this)} />
+                                        </Col>
+                                    </Row>                                   
                                 </Col>
-                                <Col span={16}>
+                                <Col span={6}>
                                     <div className="zmiti-training-serachbtn">
                                         <Button icon="search" onClick={this.searchbtn.bind(this)}>查询</Button>
                                     </div>                                     
@@ -248,26 +263,28 @@ import MainUI from '../components/Main.jsx';
             }
         });
     }
-    //select
-    searchtype(value){
-        var s=this;
-        s.state.searchtype=value;
-        
-        //s.getuserlists();
-        console.log(s.state.searchtype);
-    }
-    //text
+    //搜索
     searchtext(e){
-        var s = this;
-        s.state.searchtext=e.target.value;
-        this.forceUpdate();
+        var s=this;
+        this.setState({
+            searchtext:e.target.value
+        },()=>{
+            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+
+            this.state.dataSource = this.dataSource.filter((item)=>{
+                return  item.realname.indexOf(this.state.searchtext)>-1;
+            });
+            this.forceUpdate();
+        })
     }
-    //search 
+    //search
     searchbtn(){
         var s=this;
+        console.log(s.state.searchtext);
+
         //console.log(s.state.searchtype+"..."+s.state.searchtext);
         
-        if(s.state.searchtype*1===0){
+        /*if(s.state.searchtype*1===0){
             this.state.dataSource = this.dataSource.filter((item)=>{
                 return  item.realname.indexOf(this.state.searchtext)>-1;
             });
@@ -279,8 +296,9 @@ import MainUI from '../components/Main.jsx';
             });
             this.state.countNum=this.state.dataSource.length;
             s.forceUpdate(); 
-        }
-        
+        }*/
+
+
 
 
     }
