@@ -3,6 +3,7 @@
     "getmsg": "",
     "list": [
         {
+		"id":1001,
 		"realname":"黄晓明",
 		"gender":0,
 		"province": "山东",
@@ -10,6 +11,7 @@
 		"rooms":"A201"
         },
 	{
+		"id":1002,
 		"realname":"Angelbaby",
 		"gender":1,
 		"province": "河北",
