@@ -269,7 +269,7 @@ import MainUI from '../components/Main.jsx';
         var s=this;
         this.setState({
             searchtext:e.target.value
-        },()=>{
+        }/*,()=>{
             this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
 
             this.state.dataSource = this.dataSource.filter((item)=>{
@@ -277,7 +277,7 @@ import MainUI from '../components/Main.jsx';
             });
             this.state.countNum=this.state.dataSource.length;
             this.forceUpdate();
-        })
+        }*/)
     }
     //search
     searchbtn(){
@@ -290,26 +290,6 @@ import MainUI from '../components/Main.jsx';
         });
         this.state.countNum=this.state.dataSource.length;
         this.forceUpdate();
-
-        //console.log(s.state.searchtype+"..."+s.state.searchtext);
-        
-        /*if(s.state.searchtype*1===0){
-            this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.realname.indexOf(this.state.searchtext)>-1;
-            });
-            this.state.countNum=this.state.dataSource.length;            
-            s.forceUpdate();
-        }else{
-            this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.mobile.indexOf(this.state.searchtext)>-1;
-            });
-            this.state.countNum=this.state.dataSource.length;
-            s.forceUpdate(); 
-        }*/
-
-
-
-
     }
     //loading
     loadData(){   
