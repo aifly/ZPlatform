@@ -74,7 +74,7 @@ import MainUI from '../components/Main.jsx';
 
 componentWillMount() {
          
-        let {resizeMainHeight,validateUser,loginOut,randomString,copyfile} = this.props;
+        let {resizeMainHeight,validateUser,loginOut,randomString,copyfile,deepCopy} = this.props;
 
         resizeMainHeight(this); 
 
@@ -88,6 +88,7 @@ componentWillMount() {
         this.copyfile = copyfile;
         this.usertypesign = usertypesign;
         this.loginOut = loginOut;
+        this.deepCopy = deepCopy;
     }
 
     componentDidMount(){
@@ -1054,6 +1055,23 @@ componentWillMount() {
             });
         },150);
         var s = this;
+        var json = JSON.stringify(this.state.data);
+
+        json = JSON.parse(json);
+        json.isPublish = true;
+        json.loadingImg.forEach((item,i)=>{
+            if(item.search(/^http/)>-1 && item.split('assets').length>1){
+                json.loadingImg[i] ='./assets'+ item.split('assets')[1]
+            }
+        });
+        json.question.forEach((item,i)=>{
+            if(item.img){
+                if(item.search(/^http/)>-1 && item.split('assets').length>1){
+                    json.question[i].img ='./assets'+ item.split('assets')[1]
+                }     
+            }
+        });
+
         if(!this.state.isPublishing){
             this.setState({
                 isPublishing:true
@@ -1063,6 +1081,7 @@ componentWillMount() {
                 data:{
                     userid:s.userid,
                     getusersigid:s.getusersigid,
+                    datajson:JSON.stringify(json),
                     worksid:s.worksid
                 }
             }).done((data)=>{

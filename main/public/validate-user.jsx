@@ -40,6 +40,20 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	  
 	}
 
+	deepCopy(source){//对象的深copy
+
+		var copy = (source)=>{
+			var result={};
+			for (var key in source) {
+			      result[key] = typeof source[key]==='object'? copy(source[key]): source[key];
+			} 
+			return result; 
+		}
+
+		return copy(source);
+		
+	}
+
 	copyfile(options={}){//复制选中的文件
 
 		var s = options.that,
@@ -412,6 +426,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			ajaxFail:this.ajaxFail,
 			randomString:this.randomString,
 			copyfile:this.copyfile,
+			deepCopy:this.deepCopy,
 			zmitiAjax:this.zmitiAjax
 			//fillFeilds:this.fillFeilds
 		}
