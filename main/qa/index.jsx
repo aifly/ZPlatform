@@ -1081,7 +1081,7 @@ componentWillMount() {
                 data:{
                     userid:s.userid,
                     getusersigid:s.getusersigid,
-                    datajson:JSON.stringify(json),
+                    jsondata:JSON.stringify(json),
                     worksid:s.worksid
                 }
             }).done((data)=>{
