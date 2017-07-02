@@ -114,8 +114,10 @@ componentWillMount() {
             success(data){
 
                 if(data.getret === 0){
-
+                    console.log(data);
                     try{
+
+
 
                         s.state.data = JSON.parse(data.filecontent);
                         !s.state.data.theme && (s.state.data.theme = 'DANGJIAN');
@@ -127,7 +129,7 @@ componentWillMount() {
                         s.state.data.questionType  = s.state.data.questionType || 'single';
                         s.state.data.totalScore  = s.state.data.totalScore || 0;
                         s.state.data.level  = s.state.data.level || [{score:0,name:''}];
- 
+                        s.state.workstate = data.path.workstate;
                         s.forceUpdate(()=>{
 
                             s.state.data.question.map((item,i)=>{
@@ -392,6 +394,10 @@ componentWillMount() {
                     <aside onClick={this.publish.bind(this)}>
                         <div className={this.state.publishtap?'tap':''}>{this.state.isPublishing?<Icon type='loading'/>:'发布'}</div>
                     </aside>
+
+                    {this.state.workstate === window.workState.PUBLISHSED && <aside style={{fontSize:12}} onClick={this.unpublish.bind(this)}>
+                                            <div className={this.state.unpublishtap?'tap':''}>{this.state.unisPublishing?<Icon type='loading'/>:'撤销发布'}</div>
+                                        </aside>}
                 </section>
             </aside>
             <aside>
@@ -1043,7 +1049,39 @@ componentWillMount() {
             });
         },150)
     }
+    unpublish(){
+         this.setState({
+            unpublishtap:true
+        });
 
+        setTimeout(()=>{
+            this.setState({
+                unpublishtap:false
+            });
+        },150);
+        if(!this.state.unisPublishing){
+             this.setState({
+                unisPublishing:true
+            })
+            var s = this;
+            $.ajax({
+                url:window.baseUrl+'/works/reset_release_works/',
+                data:{
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    worksid:s.worksid
+                }
+            }).done(data=>{
+                if(data.getret === 0){
+                    message.success('撤销发布成功');
+                    this.setState({
+                        workstate:window.workState.DRAFT
+                    });
+                }
+            })
+        }
+        
+    }
     publish(){//发布
         this.setState({
             publishtap:true
@@ -1098,8 +1136,10 @@ componentWillMount() {
                     }).done((d)=>{
                         if(d.getret === 0){
                             s.setState({
-                                publishQrcodeUrl:d.qrcodeurl
-                            });                    }
+                                publishQrcodeUrl:d.qrcodeurl,
+                                workstate:window.workState.PUBLISHSED
+                            });                  
+                          }
                     });
                 }
                 s.forceUpdate();

@@ -16,4 +16,9 @@ window.Role = {
 
 }
 
+window.workState = {
+	PUBLISHSED:3,//作品状态,0 草稿 1正常 2已删除 3 发布 4 未发布,
+	DRAFT:0
+}
+
 window.MEETINGUSERLIST = ['xuchang','xinmeiti','huangqinghua','bmyuan'];//配置两会的页面哪些用户可以访问。
