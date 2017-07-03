@@ -78,7 +78,7 @@ class App extends React.Component{
 				{path: '/wxuserinfo/', app: ZmitiWXUserInfoApp},
 				{path: '/poetry/', app: ZmitiPoetryListApp},
 				{path: '/poetryedit/:id', app: ZmitiPoetryApp},
-				{path: '/tripost/(:id)', app: ZmitiTripostApp},
+				{path: '/tripost/(:title)/(:id)', app: ZmitiTripostApp},
 				{path: '/tripseason/(:id)', app: ZmitiTripseasonApp},
 				{path: '/triptraffic/(:id)',app:ZmitiTriptrafficApp},
 				{path: '/tripexpence/(:id)',app:ZmitiTripexpenceApp},
