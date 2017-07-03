@@ -15,13 +15,13 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import $ from 'jquery';
 
-class ZmitiTripostApp extends Component {
+class ZmitiTripReasonApp extends Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
 			setuserid:'',
-			selectedIndex:0,
+			selectedIndex:4,
 			mainHeight:document.documentElement.clientHeight-50,
 			modpostDialogVisible:false,
 			modpostEditDialogVisible:false,		
@@ -56,24 +56,21 @@ class ZmitiTripostApp extends Component {
 	render() {
 		var s =this;
 		const columns = [{
-            title: '职务名称',
+            title: '出差事由',
             dataIndex: 'jobname',
             key: 'jobname'
 
         },{
-            title: '职务级别',
+            title: '类别',
             dataIndex: 'level',
             key: 'level',
             render:(value,record,index)=>{
             	switch(value){
 					case 1:
-						return "普通职称";
+						return "出差只报首尾两天的补助";
 						break;
 					case 2:
-						return "中级职称";
-						break;
-					case 3:
-						return "高级职称";
+						return "出差天数补助全部报销";
 						break;
 				}
             }
@@ -108,37 +105,37 @@ class ZmitiTripostApp extends Component {
 			tags:['职务','淡旺季','交通费','差旅费','出差事由'],
 			mainHeight:this.state.mainHeight,
 			title:title,
-			selectedIndex: 0,
+			selectedIndex: 4,
 			rightType: "custom",
 			customRightComponent:<div className='tripost-main-ui' style={{height:this.state.mainHeight}}>
 				<div className='pad-10'>
 					<div className="zmiti-tripost-header">
 						<Row>
-							<Col span={8} className="zmiti-tripost-header-inner">职务-{this.state.companyname}</Col>
+							<Col span={8} className="zmiti-tripost-header-inner">出差事由-{this.state.companyname}</Col>
 							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={this.postform.bind(this)}>添加</Button></Col>
 						</Row>						
 					</div>
 					<div className="zmiti-tripost-line"></div>
 					<Row gutter={10} type='flex' className='tripost-search '>
-						<Col className="tripost-heigth45">职务名称：</Col>
-						<Col className="tripost-heigth45"><Input value={this.state.keyword} placeholder="职务名称" onChange={this.searchByKeyword.bind(this)}/></Col>
+						<Col className="tripost-heigth45">出差事由：</Col>
+						<Col className="tripost-heigth45"><Input value={this.state.keyword} placeholder="出差事由" onChange={this.searchByKeyword.bind(this)}/></Col>
 					</Row>
 					<Table bordered={true}
                                  onRowClick={(record,index,i)=>{this.getProductDetail(record,index,i)}}
                                  dataSource={this.state.dataSource} columns={columns} />
 				</div>
-				<Modal title="职务" visible={this.state.modpostDialogVisible}
+				<Modal title="出差事由" visible={this.state.modpostDialogVisible}
 					onOk={this.addProduct.bind(this)}
 					onCancel={()=>{this.setState({modpostDialogVisible:false})}}
                   >
                     <Form>
                       <FormItem
                         {...formItemLayout}
-                        label="职务名称"
+                        label="出差事由"
                         hasFeedback
                       >                        
                           
-                          <Input placeholder="职务名称" 
+                          <Input placeholder="出差事由" 
 							value={this.state.jobname}
 							onChange={(e)=>{this.state.jobname=e.target.value;this.forceUpdate();}}
                           />                      
@@ -148,10 +145,9 @@ class ZmitiTripostApp extends Component {
                         label="职务级别"
                         hasFeedback
                       >
-                          <Select placeholder="职务级别" onChange={(value)=>{this.state.level=value;this.forceUpdate();}} value={this.state.level}>
-                          	<Option value={1}>普通职称</Option>
-                          	<Option value={2}>中级职称</Option>
-                          	<Option value={3}>高级职称</Option>
+                          <Select placeholder="类别" onChange={(value)=>{this.state.level=value;this.forceUpdate();}} value={this.state.level}>
+                          	<Option value={1}>出差只报首尾两天的补助</Option>
+                          	<Option value={2}>出差天数补助全部报销</Option>
                           </Select>                     
                       </FormItem>
 
@@ -222,7 +218,8 @@ class ZmitiTripostApp extends Component {
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
-            url:window.baseUrl+'travel/get_joblist',//接口地址
+            //url:window.baseUrl+'travel/get_joblist',//接口地址
+            url:'tripreason/data.json',
             data:{
 				setuserid:userid,
 				userid:s.userid,
@@ -268,7 +265,7 @@ class ZmitiTripostApp extends Component {
             
             $.ajax({
                 type:'POST',
-                url:window.baseUrl + 'travel/edit_job/',
+                //url:window.baseUrl + 'travel/edit_job/',
                 data:params,
                 success(data){
                   message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -284,7 +281,7 @@ class ZmitiTripostApp extends Component {
         }else{
             $.ajax({
               type:'POST',
-              url:window.baseUrl + 'travel/add_job/',
+              //url:window.baseUrl + 'travel/add_job/',
               data:params,
               success(data){
                   message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -306,7 +303,7 @@ class ZmitiTripostApp extends Component {
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         
         $.ajax({
-            url:window.baseUrl+'travel/del_job/',
+            //url:window.baseUrl+'travel/del_job/',
             data:{
                 setuserid:userid,
                 userid:s.userid,
@@ -364,5 +361,5 @@ class ZmitiTripostApp extends Component {
     }
 }
 
-export default ZmitiValidateUser(ZmitiTripostApp);
+export default ZmitiValidateUser(ZmitiTripReasonApp);
 /*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/
