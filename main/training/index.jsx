@@ -22,21 +22,22 @@ import MainUI from '../components/Main.jsx';
             dataSource:[],
             alldataSource:[],
             countNum:0,
+            provinceData:[],
             provinceName:[],
             provinceText:'',
             modpostDialogVisible:false,
-            realname:'',
-            gender:0,
+            username:'',
+            sex:0,
             mobile:'',
-            province:'',
-            rooms:'',
+            cityid:'',
+            roomid:'',
         }
         this.currentId = -1;
     }
 
 
     render(){
-
+        var s=this;
         let  {validateUser,loginOut,resizeMainHeight} = this.props;
         var iNow = 0 ;
         validateUser(()=>{
@@ -57,12 +58,12 @@ import MainUI from '../components/Main.jsx';
             }
         },{
             title: '昵称',           
-            dataIndex: 'realname',
-            key: 'realname',
+            dataIndex: 'username',
+            key: 'username',
         },{
             title: '性别',
-            dataIndex: 'gender',
-            key: 'gender',
+            dataIndex: 'sex',
+            key: 'sex',
             width:80,
             render:function(text, record, index) {
                 if(text==0){
@@ -80,14 +81,23 @@ import MainUI from '../components/Main.jsx';
 
         },{
             title: '省份',
-            dataIndex: 'province',
-            key: 'province',
+            dataIndex: 'cityid',
+            key: 'cityid',
             width:160,
+            render:function(text,record,index){
+                var citynames="";
+                s.state.provinceData.map(function(item,index){          
+                    if(text===item.value){
+                        citynames=item.label;
+                    }
+                })
+                return citynames;                
+            }
 
         },{
             title: '房间号',
-            dataIndex: 'rooms',
-            key: 'rooms',
+            dataIndex: 'roomid',
+            key: 'roomid',
             width:160,
         },{
             title: '操作',
@@ -95,7 +105,7 @@ import MainUI from '../components/Main.jsx';
             key: '',
             width:160,
             render:(text,recoder,index)=>(
-                <span><Button onClick={this.editProduct.bind(this,recoder.id)}>编辑</Button> <Button onClick={this.delData.bind(this,recoder.id)}>删除</Button></span>              
+                <span><Button onClick={this.editProduct.bind(this,recoder.classid)}>编辑</Button> <Button onClick={this.delData.bind(this,recoder.classid)}>删除</Button></span>              
             )
         }]
 
@@ -106,7 +116,7 @@ import MainUI from '../components/Main.jsx';
                     <div className="zmiti-training-header">
                         <Row>
                             <Col span={8} className="zmiti-training-header-inner">文明网培训班</Col>
-                            <Col span={8} offset={8} className='zmiti-training-button-right'><Button type="primary" onClick={this.goback.bind(this)}><Icon type="left" />返回</Button><Button onClick={this.addProduct.bind(this)}>添加</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-training-button-right'><Button type="primary" onClick={this.goback.bind(this)}><Icon type="left" />返回</Button><Button onClick={this.trainform.bind(this)}>添加</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-training-line"></div>
@@ -120,13 +130,13 @@ import MainUI from '../components/Main.jsx';
                                         <Col span={14} style={{width:110}}>
                                             <Select style={{width:100}} placeholder="省份" onChange={(value)=>{this.state.provinceText=value;this.forceUpdate();}} value={this.state.provinceText}>
                                                 <Option value="">---按省份---</Option>
-                                            {
-                                                this.state.provinceName.map(function(item,index){
-                                                    return (
-                                                        <Option value={item}>{item}</Option>
-                                                    )
-                                                })
-                                            }
+                                                {
+                                                    this.state.provinceData.map(function(item,index){
+                                                        return (
+                                                            <Option value={item.value}>{item.label}</Option>
+                                                        )
+                                                    })
+                                                }
                                             </Select>
                                         </Col>
                                         <Col span={10} style={{width:140}}>
@@ -152,7 +162,7 @@ import MainUI from '../components/Main.jsx';
                     columns={columns} />
                 </div>
                 <Modal title="培训班" visible={this.state.modpostDialogVisible}
-                    onOk={this.trainform.bind(this)}
+                    onOk={this.addProduct.bind(this)}
                     onCancel={()=>{this.setState({modpostDialogVisible:false})}}
                   >
                     <Form>
@@ -162,8 +172,8 @@ import MainUI from '../components/Main.jsx';
                             hasFeedback
                             >
                             <Input placeholder="姓名" 
-                            value={this.state.realname}
-                            onChange={(e)=>{this.state.realname=e.target.value;this.forceUpdate();}}
+                            value={this.state.username}
+                            onChange={(e)=>{this.state.username=e.target.value;this.forceUpdate();}}
                             />
                         </FormItem>
                         <FormItem
@@ -171,7 +181,7 @@ import MainUI from '../components/Main.jsx';
                             label="性别"
                             hasFeedback
                             >
-                            <Select placeholder="性别" onChange={(value)=>{this.state.gender=value;this.forceUpdate();}} value={this.state.gender}>
+                            <Select placeholder="性别" onChange={(value)=>{this.state.sex=value;this.forceUpdate();}} value={this.state.sex}>
                                 <Option value={0}>男</Option>
                                 <Option value={1}>女</Option>
                             </Select>
@@ -191,11 +201,11 @@ import MainUI from '../components/Main.jsx';
                             label="省份"
                             hasFeedback
                             >
-                            <Select placeholder="省份" onChange={(value)=>{this.state.province=value;this.forceUpdate();}} value={this.state.province}>
+                            <Select placeholder="省份" onChange={(value)=>{this.state.cityid=value;this.forceUpdate();}} value={this.state.cityid}>
                             {
-                                this.state.provinceName.map(function(item,index){
+                                this.state.provinceData.map(function(item,index){
                                     return (
-                                        <Option value={item}>{item}</Option>
+                                        <Option value={item.value}>{item.label}</Option>
                                     )
                                 })
                             }
@@ -207,8 +217,8 @@ import MainUI from '../components/Main.jsx';
                             hasFeedback
                             >
                             <Input placeholder="房间号" 
-                            value={this.state.rooms}
-                            onChange={(e)=>{this.state.rooms=e.target.value;this.forceUpdate();}}
+                            value={this.state.roomid}
+                            onChange={(e)=>{this.state.roomid=e.target.value;this.forceUpdate();}}
                             />
                         </FormItem>
                     </Form>
@@ -236,25 +246,23 @@ import MainUI from '../components/Main.jsx';
     }
     componentDidMount(){
         var s=this;
-       this.resizeMainHeight(this);
-       s.bindNewdata();
-       s.getCascader();
-       s.loadData();
+        this.resizeMainHeight(this);
+        s.bindNewdata();
+        s.getCascader();
+        s.loadData();
     }
 
     //获取数据列表
     bindNewdata(){
         var s=this;
         $.ajax({
-            //url:window.baseUrl + 'weixin/get_userscorelist/',
-            url:"training/static/js/training.json",
+            url:window.baseUrl + 'wenming/get_wmclasslist/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
             },
             success(data){
                 if(data.getret === 0){
-                    //console.log(data.list);
                     s.state.dataSource=data.list;
                     s.state.countNum=data.list.length;
                     s.state.loading=false;
@@ -282,11 +290,12 @@ import MainUI from '../components/Main.jsx';
     //search
     searchbtn(){
         var s=this;
-        console.log(s.state.provinceText,s.state.searchtext);
+        
         this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
-
+        console.log(s.state.provinceText,s.state.searchtext);
         this.state.dataSource = this.dataSource.filter((item)=>{
-            return  item.province.indexOf(s.state.provinceText)>-1 && item.realname.indexOf(this.state.searchtext)>-1;
+            var cityid=item.cityid;
+            return cityid.indexOf(s.state.provinceText)>-1 && item.username.indexOf(this.state.searchtext)>-1;
         });
         this.state.countNum=this.state.dataSource.length;
         this.forceUpdate();
@@ -313,11 +322,8 @@ import MainUI from '../components/Main.jsx';
                 getusersigid:s.getusersigid,
             },
             success(data){
-                if(data.getret === 0){                    
-                    var provinceData=data.list[0].children;                    
-                    $.each(provinceData,function(index,item){
-                        s.state.provinceName.push(item.label);
-                    })
+                if(data.getret === 0){
+                    s.state.provinceData=data.list[0].children;
                     s.forceUpdate();
                 }
             }
@@ -326,31 +332,61 @@ import MainUI from '../components/Main.jsx';
     //对话框新增加时
     trainform(){
         var s=this;
+        this.currentId=-1;        
         if(this.currentId!==-1){//编辑
             s.setState({
-                modpostDialogVisible:false
-            });
-            s.bindNewdata();
+                modpostDialogVisible:true
+            }); 
         }else{//添加
             s.setState({
-                modpostDialogVisible:false
+                modpostDialogVisible:true,
+                username:'',
+                sex:0,
+                mobile:'',
+                cityid:'',
+                roomid:'',
             });
-            s.bindNewdata();
         }
+        s.forceUpdate();
     }
     addProduct(){//添加
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        this.currentId=-1;
-        this.setState({
-            modpostDialogVisible:true,
-            realname:'',
-            gender:0,
-            mobile:'',
-            province:'',
-            rooms:'',
-        })
-        console.log(this.currentId,'currentId');
+        var params = {
+            userid:this.userid,
+            getusersigid:this.getusersigid,
+            username:s.state.username,
+            sex:s.state.sex,
+            mobile:s.state.mobile,
+            cityid:s.state.cityid,
+            roomid:s.state.roomid,
+        }
+        if(this.currentId!==-1){//编辑
+            params.classid = this.currentId;
+            $.ajax({
+              url:window.baseUrl + 'wenming/edit_wmclass/',
+              data:params,
+              success(data){
+                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                  s.setState({
+                    modpostDialogVisible:false
+                  });
+                  s.bindNewdata();
+              }
+            });
+        }else{
+            $.ajax({
+              url:window.baseUrl + 'wenming/add_wmclass/',
+              data:params,
+              success(data){
+                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                  s.setState({
+                    modpostDialogVisible:false
+                  });
+                  s.bindNewdata();
+              }
+            });             
+        }
     }
     editProduct(id){//编辑
         
@@ -358,28 +394,42 @@ import MainUI from '../components/Main.jsx';
         this.currentId=id;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.each(this.state.dataSource,function(index,item){          
-            if(item.id===id){
+            if(item.classid===id){
                 s.setState({
                     modpostDialogVisible:true,
-                    realname:item.realname,
-                    gender:item.gender,
+                    username:item.username,
+                    sex:item.sex,
                     mobile:item.mobile,
-                    province:item.province,
-                    rooms:item.rooms
+                    cityid:item.cityid,
+                    roomid:item.roomid
                 })                              
-                //console.log(item.realname,s.state.realname);
             }
         })
-        console.log(this.currentId,'currentId');
     }
-    delData(id){//删除
+    delData(classid){//删除
+        var s=this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         var params = {
             userid:this.userid,
             getusersigid:this.getusersigid,
-            id:id,
+            classid:classid,
         }
-        console.log(id,'params-del');
+        $.ajax({
+            url:window.baseUrl+'wenming/del_wmclass/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                classid:classid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    message.success('删除成功！');
+                    setTimeout(()=>{
+                        s.bindNewdata();
+                    },2000)
+                }
+            }
+        })
     }
   
 }
