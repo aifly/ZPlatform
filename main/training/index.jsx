@@ -85,13 +85,14 @@ import MainUI from '../components/Main.jsx';
             key: 'cityid',
             width:160,
             render:function(text,record,index){
-                var citynames="";
+                /*var citynames="";
                 s.state.provinceData.map(function(item,index){          
                     if(text===item.value){
                         citynames=item.label;
                     }
                 })
-                return citynames;                
+                return citynames;*/
+                return text;              
             }
 
         },{
@@ -294,8 +295,7 @@ import MainUI from '../components/Main.jsx';
         this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
         console.log(s.state.provinceText,s.state.searchtext);
         this.state.dataSource = this.dataSource.filter((item)=>{
-            var cityid=item.cityid;
-            return cityid.indexOf(s.state.provinceText)>-1 && item.username.indexOf(this.state.searchtext)>-1;
+            return String(item.cityid).indexOf(s.state.provinceText)>-1 && item.username.indexOf(this.state.searchtext)>-1;
         });
         this.state.countNum=this.state.dataSource.length;
         this.forceUpdate();
