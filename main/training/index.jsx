@@ -85,14 +85,13 @@ import MainUI from '../components/Main.jsx';
             key: 'cityid',
             width:160,
             render:function(text,record,index){
-                /*var citynames="";
+                var citynames="";
                 s.state.provinceData.map(function(item,index){          
                     if(text===item.value){
                         citynames=item.label;
                     }
                 })
-                return citynames;*/
-                return text;              
+                return citynames;             
             }
 
         },{
@@ -130,7 +129,7 @@ import MainUI from '../components/Main.jsx';
                                     <Row>
                                         <Col span={14} style={{width:110}}>
                                             <Select style={{width:100}} placeholder="省份" onChange={(value)=>{this.state.provinceText=value;this.forceUpdate();}} value={this.state.provinceText}>
-                                                <Option value="">---按省份---</Option>
+                                                <Option value="">--全部--</Option>
                                                 {
                                                     this.state.provinceData.map(function(item,index){
                                                         return (
@@ -263,10 +262,10 @@ import MainUI from '../components/Main.jsx';
                 getusersigid:s.getusersigid,
             },
             success(data){
+                s.state.loading=false;
                 if(data.getret === 0){
                     s.state.dataSource=data.list;
-                    s.state.countNum=data.list.length;
-                    s.state.loading=false;
+                    s.state.countNum=data.list.length;                    
                     s.forceUpdate();
                     console.log(this.url)    
                 }
@@ -291,12 +290,28 @@ import MainUI from '../components/Main.jsx';
     //search
     searchbtn(){
         var s=this;
-        
-        this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+        $.ajax({
+            url:window.baseUrl + 'wenming/get_wmclasslist/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                username:s.state.searchtext
+            },
+            success(data){
+                if(data.getret === 0){
+                    s.state.dataSource=data.list;
+                    s.state.countNum=data.list.length;
+                    s.state.loading=false;
+                    s.forceUpdate();
+                    console.log(this.url)    
+                }
+            }
+        });
+/*        this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
         console.log(s.state.provinceText,s.state.searchtext);
         this.state.dataSource = this.dataSource.filter((item)=>{
-            return String(item.cityid).indexOf(s.state.provinceText)>-1 && item.username.indexOf(this.state.searchtext)>-1;
-        });
+            return item.username.indexOf(this.state.searchtext)>-1;
+        });*/
         this.state.countNum=this.state.dataSource.length;
         this.forceUpdate();
     }
