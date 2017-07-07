@@ -23,10 +23,27 @@ var config = {
         //'jquery':"$",
        // 'iscroll':'IScroll'
     },
+    
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin({
+      /*new webpack.optimize.CommonsChunkPlugin({
          name:"vendor",  
-      }),
+      }),*/
+        new webpack.optimize.CommonsChunkPlugin({
+           name:"vendor",  
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+          compress:{
+           warnings:false
+          },
+          mangle:{
+           except:['$super','$','exports','require']
+          }
+        }),
+        new webpack.DefinePlugin({
+          "process.env": { 
+             NODE_ENV: JSON.stringify("production") 
+           }
+        })
     ],
     module: {
         loaders: [{

@@ -5,7 +5,20 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
     <title>芸智媒后台</title>
     <link rel="stylesheet" type="text/css" href="../../static/css/antd.min.css">
-   
+    <style type="text/css">
+    	 .fr-separator{
+            display: none !important;
+        }
+        .fr-input-line label{
+            display: none !important;
+        }
+        .fr-popup.fr-active{
+            z-index:999999999 !important;
+        }
+        #linkList-1{
+            display:none;
+        }
+    </style>
 </head>
 <body>
 
@@ -17,5 +30,10 @@
 <script src='../static/libs/socket.io.js'></script>
  <script src='../config/config.js'></script>
 <script src="http://localhost:3000/admin.js"></script> 
+<!-- <script src="../static/editor/froala_editor.min.js"></script>
+<script src="../static/editor/align.min.js"></script>
+<script src="../static/editor/colors.min.js"></script>
+<script src="../static/editor/image.min.js"></script>
+<script src="../static/editor/link.min.js"></script>  -->
 </body>
 </html>
