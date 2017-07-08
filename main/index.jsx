@@ -92,7 +92,7 @@ class App extends React.Component{
 				{path: '/qa/',app:ZmitiQAListApp},
 				{path: '/qaedit/:id', app: ZmitiQAApp},
 				{path: '/viewanswer/(:title)/(:id)',app:ZmitiViewAnswerApp},
-				{path: '/training/(:title)',app:ZmitiTrainingApp},
+				{path: '/training/(:title)/(:id)',app:ZmitiTrainingApp},
 				{path: '/tripreason/',app:ZmitiTripReasonApp},
 				
 		];

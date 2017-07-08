@@ -31,6 +31,7 @@ import MainUI from '../components/Main.jsx';
             mobile:'',
             cityid:'',
             roomid:'',
+            notice:'',
         }
         this.currentId = -1;
     }
@@ -99,6 +100,11 @@ import MainUI from '../components/Main.jsx';
             dataIndex: 'roomid',
             key: 'roomid',
             width:160,
+        },{
+            title: '备注',
+            dataIndex: 'notice',
+            key: 'notice',
+            width:180,
         },{
             title: '操作',
             dataIndex: '',
@@ -219,6 +225,16 @@ import MainUI from '../components/Main.jsx';
                             <Input placeholder="房间号" 
                             value={this.state.roomid}
                             onChange={(e)=>{this.state.roomid=e.target.value;this.forceUpdate();}}
+                            />
+                        </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label="备注"
+                            hasFeedback
+                            >
+                            <Input placeholder="备注" 
+                            value={this.state.notice}
+                            onChange={(e)=>{this.state.notice=e.target.value;this.forceUpdate();}}
                             />
                         </FormItem>
                     </Form>
@@ -361,6 +377,7 @@ import MainUI from '../components/Main.jsx';
                 mobile:'',
                 cityid:'',
                 roomid:'',
+                notice:'',
             });
         }
         s.forceUpdate();
@@ -376,6 +393,7 @@ import MainUI from '../components/Main.jsx';
             mobile:s.state.mobile,
             cityid:s.state.cityid,
             roomid:s.state.roomid,
+            notice:s.state.notice,
         }
         if(this.currentId!==-1){//编辑
             params.classid = this.currentId;
@@ -417,7 +435,8 @@ import MainUI from '../components/Main.jsx';
                     sex:item.sex,
                     mobile:item.mobile,
                     cityid:item.cityid,
-                    roomid:item.roomid
+                    roomid:item.roomid,
+                    notice:item.notice,
                 })                              
             }
         })
