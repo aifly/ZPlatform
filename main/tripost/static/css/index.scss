@@ -52,9 +52,19 @@
 			@include transform(scale(1,.7));
 		}
 	}
+	.zmiti-tripost-button-right div{
+		float:right;
+		color:#000;
+		width:10px;
+		text-align:center;
+		margin-top: 5px;
+		margin-left:10px;
+		line-height:28px;
+	}
 	.zmiti-tripost-button-right button{
 		float:right;
 		margin-top: 5px;
+		margin-left:10px;
 	}
 	.zmiti-tripost-line{
 		height:15px;

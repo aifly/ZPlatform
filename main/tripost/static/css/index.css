@@ -13,9 +13,18 @@
       left: 0;
       -webkit-transform: scale(1, 0.7);
       transform: scale(1, 0.7); }
+  .tripost-main-ui .zmiti-tripost-button-right div {
+    float: right;
+    color: #000;
+    width: 10px;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 10px;
+    line-height: 28px; }
   .tripost-main-ui .zmiti-tripost-button-right button {
     float: right;
-    margin-top: 5px; }
+    margin-top: 5px;
+    margin-left: 10px; }
   .tripost-main-ui .zmiti-tripost-line {
     height: 15px;
     overflow: hidden;

@@ -21,7 +21,7 @@ class ZmitiTripReasonApp extends Component {
 		
 		this.state = {
 			setuserid:'',
-			selectedIndex:4,
+			selectedIndex:2,
 			mainHeight:document.documentElement.clientHeight-50,
 			modpostDialogVisible:false,
 			modpostEditDialogVisible:false,		
@@ -102,10 +102,10 @@ class ZmitiTripReasonApp extends Component {
 			userid:this.userid,
 			changeAccount:this.changeAccount.bind(this),
 			type:'custom-1',
-			tags:['职务','淡旺季','交通费','差旅费','出差事由'],
+			tags:['交通工具','差旅费','出差事由'],
 			mainHeight:this.state.mainHeight,
 			title:title,
-			selectedIndex: 4,
+			selectedIndex: 2,
 			rightType: "custom",
 			customRightComponent:<div className='tripost-main-ui' style={{height:this.state.mainHeight}}>
 				<div className='pad-10'>
@@ -170,14 +170,10 @@ class ZmitiTripReasonApp extends Component {
 
 	changeAccount(i){
         if(i*1===0){
-        	window.location.hash='tripost/出差宝/';            
+            window.location.hash='triptraffic/出差宝/'; //tripost/tripseason       
         }else if(i*1===1){
-            window.location.hash='tripseason/';
-        }else if(i*1===2){
-            window.location.hash='triptraffic/';
-        }else if(i*1===3){
             window.location.hash='tripexpence/';
-        }else if(i*1===4){
+        }else if(i*1===2){
             window.location.hash='tripreason/';
         }
 	}
