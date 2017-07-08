@@ -294,6 +294,7 @@ import MainUI from '../components/Main.jsx';
             url:window.baseUrl + 'wenming/get_wmclasslist/',
             data:{
                 userid:s.userid,
+                cityid:s.state.provinceText,
                 getusersigid:s.getusersigid,
                 username:s.state.searchtext
             },
