@@ -273,6 +273,7 @@ import MainUI from '../components/Main.jsx';
         var s=this;
         $.ajax({
             url:window.baseUrl + 'wenming/get_wmclasslist/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -308,6 +309,7 @@ import MainUI from '../components/Main.jsx';
         var s=this;
         $.ajax({
             url:window.baseUrl + 'wenming/get_wmclasslist/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 cityid:s.state.provinceText,
@@ -349,6 +351,7 @@ import MainUI from '../components/Main.jsx';
         var provinceOptions=[];
         $.ajax({
             url:window.baseUrl+'travel/get_citylist',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -399,6 +402,7 @@ import MainUI from '../components/Main.jsx';
             params.classid = this.currentId;
             $.ajax({
               url:window.baseUrl + 'wenming/edit_wmclass/',
+              type:window.ajaxType || 'get',
               data:params,
               success(data){
                   message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -412,6 +416,7 @@ import MainUI from '../components/Main.jsx';
             $.ajax({
               url:window.baseUrl + 'wenming/add_wmclass/',
               data:params,
+              type:window.ajaxType || 'get',
               success(data){
                   message[data.getret === 0 ? 'success':'error'](data.getmsg);
                   s.setState({
@@ -451,6 +456,7 @@ import MainUI from '../components/Main.jsx';
         }
         $.ajax({
             url:window.baseUrl+'wenming/del_wmclass/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,

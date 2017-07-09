@@ -75,6 +75,7 @@ export default class ZmitiHeader extends Component {
     	var s=  this;
 
     		$.ajax({
+                type:window.ajaxType || 'get',
     			url:window.baseUrl+'user/user_loginout/',
     			data:{
     				userid:s.props.userid,

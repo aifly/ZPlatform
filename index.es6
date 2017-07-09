@@ -884,6 +884,7 @@ window.addEventListener('load', ()=> {
                             }
                             $.ajax({
                                 url:data.baseUrl+'msg/send_msg',
+                                type:'POST',
                                 data:{
                                     type:'zmitilogout',
                                     content:JSON.stringify(opt),

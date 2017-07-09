@@ -149,6 +149,7 @@ class ZmitiRepertoryListApp extends Component {
         var s=this;
         $.ajax({
             url: window.baseUrl + 'datainfoclass/get_datainfo/',
+            type:window.ajaxType || 'get',
             data: {
                 userid: s.userid,
                 getusersigid: s.getusersigid,
@@ -156,7 +157,7 @@ class ZmitiRepertoryListApp extends Component {
                 setdatainfotype:0
             },
             success(data){
-              console.log(data,"图片列表");
+              //console.log(data,"图片列表");
               s.state.imgsData=data.allImgs;
               s.state.imgsNum=data.allImgs.length;
               s.forceUpdate();
@@ -166,9 +167,10 @@ class ZmitiRepertoryListApp extends Component {
     //del图片
     delImg(imgid){
       var s=this;
-      console.log(imgid);
+      //console.log(imgid);
         $.ajax({
             url: window.baseUrl + 'datainfoclass/resource_del/',
+            type:window.ajaxType || 'get',
             data: {
                 userid: s.userid,
                 getusersigid: s.getusersigid,
@@ -176,7 +178,7 @@ class ZmitiRepertoryListApp extends Component {
             },
             success(data){
               if(data.getret === 0){
-                console.log(data,"删除成功！");
+              //  console.log(data,"删除成功！");
                 s.getPersonalImg();
                 s.forceUpdate();
               }

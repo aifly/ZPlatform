@@ -234,6 +234,7 @@ class ZmitiViewQuestionApp extends Component {
         var s=this
 		$.ajax({
             url:window.baseUrl+'user/view_workorder',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -266,6 +267,7 @@ class ZmitiViewQuestionApp extends Component {
     	var s=this;
     	$.ajax({
             url:window.baseUrl+'user/get_userdetails/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -294,6 +296,7 @@ class ZmitiViewQuestionApp extends Component {
 		var s = this;
 		$.ajax({
             url:window.baseUrl+'user/view_workorder',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -349,7 +352,7 @@ class ZmitiViewQuestionApp extends Component {
         $.ajax({
 
             url: window.baseUrl + 'user/del_workorderfile/',
-
+            type:window.ajaxType || 'get',
             data: {
                 userid: s.userid,
                 getusersigid: s.getusersigid,
@@ -445,6 +448,7 @@ class ZmitiViewQuestionApp extends Component {
 		if(s.state.orderoperation=="关闭工单"){
             $.ajax({
                 url: window.baseUrl + 'user/close_workorder/',
+                type:window.ajaxType || 'get',
                 data: {
                     userid: s.userid,
                     getusersigid: s.getusersigid,
@@ -475,6 +479,7 @@ class ZmitiViewQuestionApp extends Component {
             $.ajax({
 
                 url: window.baseUrl + 'user/del_workorder/',
+                type:window.ajaxType || 'get',
 
                 data: {
                     userid: s.userid,

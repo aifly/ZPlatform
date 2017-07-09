@@ -260,6 +260,7 @@ class ZmitiMeetingApp extends Component {
 	deleteQuestion(qid){
 		var s = this;
 		$.ajax({
+			type:window.ajaxType || 'get',
 			url:window.baseUrl+'h5/del_question',
 			data:{
 				userid:s.userid,
@@ -297,6 +298,7 @@ class ZmitiMeetingApp extends Component {
 		var s = this;
 		$.ajax({
 			url:window.baseUrl+'h5/check_question',
+			type:window.ajaxType || 'get',
 			data:{
 				userid:s.userid,
 				getusersigid:s.getusersigid,
@@ -344,6 +346,7 @@ class ZmitiMeetingApp extends Component {
 		var s = this;
 		$.ajax({
 			url:window.baseUrl+ 'h5/check_switch/',
+			type:window.ajaxType || 'get',
 			data:{
 				productid:'957fdef3-fa98-11e6-beb7-c869cda336f9',
 				switch:e|0,
@@ -364,6 +367,7 @@ class ZmitiMeetingApp extends Component {
 			if(this.qid>-1){
 				$.ajax({
 					url:window.baseUrl+'h5/edit_question/',
+					type:window.ajaxType || 'get',
 					data:{
 						userid:s.userid,
 						getusersigid:s.getusersigid,
@@ -397,6 +401,7 @@ class ZmitiMeetingApp extends Component {
 			}else{
 				$.ajax({
 					url:window.baseUrl+'h5/add_question',
+					type:window.ajaxType || 'get',
 					data:{
 						sex:s.state.sex,
 						content:s.state.content,
@@ -451,6 +456,7 @@ class ZmitiMeetingApp extends Component {
 		//获取是否需要审核
 		$.ajax({
 			url:window.baseUrl+'h5/getcheckstatus/',
+			type:window.ajaxType || 'get',
 			data:{
 				userid:s.userid,
 				getusersigid:s.getusersigid,

@@ -224,6 +224,7 @@ try{
 
 	$.ajax({
 		url:window.baseUrl+'product/get_product/',
+		type:window.ajaxType || 'get',
 	    data:{
 	      userid:s.userid,
 	      getusersigid:s.getusersigid

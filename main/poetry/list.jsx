@@ -190,6 +190,7 @@ class ZmitiPoetryListApp extends Component {
 	deletePoetry(worksid,i){
 		var s = this;
 		$.ajax({
+			type:window.ajaxType || 'get',
 			url:window.baseUrl+'works/del_works/',
 			data:{
 				userid:s.userid,
@@ -407,6 +408,7 @@ class ZmitiPoetryListApp extends Component {
 
 		$.ajax({
 			url:window.baseUrl + 'works/get_worksinfo/',
+			type:window.ajaxType || 'get',
 			data:{
 				type:1000,
 				productid:s.productid,

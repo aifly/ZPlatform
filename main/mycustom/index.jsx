@@ -46,6 +46,7 @@ class ZmitiMycustomApp extends Component {
 		var s = this;
 		$.ajax({
 			url:'./mycustom/data.json',
+			type:window.ajaxType || 'get',
 			data:{},
 			success(data){
 				s.setState({

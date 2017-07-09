@@ -202,6 +202,7 @@ class ZmitiQAListApp extends Component {
 		var s = this;
 		$.ajax({
 			url:window.baseUrl+'works/del_works/',
+			type:window.ajaxType || 'get',
 			data:{
 				userid:s.userid,
 				getusersigid:s.getusersigid,
@@ -279,6 +280,7 @@ class ZmitiQAListApp extends Component {
 
 		$.ajax({
 			url:window.baseUrl + 'works/get_worksinfo/',
+			type:window.ajaxType || 'get',
 			data:{
 				type:1000,
 				userid:s.userid,

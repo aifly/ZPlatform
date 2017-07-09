@@ -191,9 +191,10 @@ class ZmitiPersonalAccApp extends React.Component{
           comment:'' //备注
         }
 
-        console.log(params);
+      
         $.ajax({
           url:window.baseUrl + 'user/edit_user/',
+          type:window.ajaxType || 'get',
           data:params,
           success(data){
             console.log(data);
@@ -467,6 +468,7 @@ class ZmitiPersonalAccApp extends React.Component{
       var userid = this.props.params.userid?this.props.params.userid:this.userid;
       $.ajax({
         url:window.baseUrl + 'user/edit_userpwd/',
+        type:window.ajaxType || 'get',
         data:{
           setolduserpwd:oldPwd,
           setnewuserpwd:newPwd,

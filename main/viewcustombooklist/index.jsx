@@ -215,6 +215,7 @@ import $ from 'jquery';
 						s.state.workdatatype=item.workdatatype;
 						$.ajax({
 					        url:window.baseUrl+'document/get_documentlist/',
+					        //type:window.ajaxType || 'get',
 					        data:{
 					          userid:s.userid,
 					          getusersigid:s.getusersigid,
@@ -234,6 +235,7 @@ import $ from 'jquery';
 		}else{
 			$.ajax({
 		        url:window.baseUrl+'book/get_booknamelist/',
+		        //type:window.ajaxType || 'get',
 		        data:{
 		          userid:s.userid,
 		          getusersigid:s.getusersigid,
@@ -256,6 +258,7 @@ import $ from 'jquery';
 		var s = this;
 		$.ajax({
             url:window.baseUrl+'book/get_bookclass/',
+            //type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -315,6 +318,7 @@ import $ from 'jquery';
 		var s = this;
 		$.ajax({
           url:window.baseUrl+ 'document/edit_book/',
+          //type:window.ajaxType || 'get',
           type:'GET',
           data:{
           	userid:s.userid,
@@ -348,6 +352,7 @@ import $ from 'jquery';
         formData.append('setupfile', this.refs['upload-file'].files[0]);       
         $.ajax({
           url:window.baseUrl+ 'upload/upload_file',
+          //type:window.ajaxType || 'get',
           type:'POST',
           data:formData,
           contentType: false,

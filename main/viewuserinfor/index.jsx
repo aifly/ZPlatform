@@ -345,6 +345,7 @@ class ZmitiViewUserInforApp extends Component {
         var s=this
         $.ajax({
             url:window.baseUrl+'company/edit_companyinfo',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -396,6 +397,7 @@ class ZmitiViewUserInforApp extends Component {
         var s=this
         $.ajax({
             url:window.baseUrl+'company/edit_companywx',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -478,6 +480,7 @@ class ZmitiViewUserInforApp extends Component {
 
         $.ajax({
 
+            type:window.ajaxType || 'get',
             url: window.baseUrl + 'user/del_workorderfile/',
 
             data: {
@@ -512,6 +515,7 @@ class ZmitiViewUserInforApp extends Component {
         var s=this;
         $.ajax({
             url:window.baseUrl+'user/get_departmentlist/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -596,6 +600,7 @@ class ZmitiViewUserInforApp extends Component {
             }
             $.ajax({
                 url:window.baseUrl+'company/edit_companyinfo',
+                type:window.ajaxType || 'get',
                 data:{
                     userid:s.userid,
                     getusersigid:s.getusersigid,
@@ -642,6 +647,7 @@ class ZmitiViewUserInforApp extends Component {
 
         $.ajax({
             url:window.baseUrl+'user/get_companydetail',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -698,6 +704,7 @@ class ZmitiViewUserInforApp extends Component {
         var s=this;
         $.ajax({
             url:window.baseUrl+'user/get_companywx',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -730,6 +737,7 @@ class ZmitiViewUserInforApp extends Component {
         var s=this;
         $.ajax({
             url:window.baseUrl+'user/get_companyworksnum',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -756,6 +764,7 @@ class ZmitiViewUserInforApp extends Component {
         var s=this;
         $.ajax({
             url:window.baseUrl+'product/get_product/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -782,6 +791,7 @@ class ZmitiViewUserInforApp extends Component {
         var s=this;
         $.ajax({
             url:window.baseUrl+'user/get_companytotalprice',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -822,6 +832,7 @@ class ZmitiViewUserInforApp extends Component {
         s.forceUpdate();
         $.ajax({
             url:window.baseUrl+'company/changer_companyadmin',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,

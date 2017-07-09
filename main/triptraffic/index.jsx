@@ -184,6 +184,7 @@ class ZmitiTriptrafficApp extends Component {
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
             url:window.baseUrl+'travel/get_trafficlist',//接口地址
+            type:window.ajaxType || 'get',
             data:{
 				setuserid:userid,
 				userid:s.userid,
@@ -218,6 +219,7 @@ class ZmitiTriptrafficApp extends Component {
         var s=this;
         $.ajax({
             url:window.baseUrl+'user/get_companydetail',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid
@@ -240,6 +242,7 @@ class ZmitiTriptrafficApp extends Component {
     
         $.ajax({
             url:window.baseUrl+'travel/get_trafficbase',
+            type:window.ajaxType || 'get',
             data:{
                 setuserid:userid,
                 userid:s.userid,
@@ -262,6 +265,7 @@ class ZmitiTriptrafficApp extends Component {
     
         $.ajax({
             url:window.baseUrl+'travel/get_joblist',
+            type:window.ajaxType || 'get',
             data:{
                 setuserid:userid,
                 userid:s.userid,
@@ -327,6 +331,7 @@ class ZmitiTriptrafficApp extends Component {
         var s = this;
         $.ajax({
             url:window.baseUrl+'travel/del_traffic/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,

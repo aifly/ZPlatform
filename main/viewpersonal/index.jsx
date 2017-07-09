@@ -544,6 +544,7 @@ class ZmitiViewPersonalApp extends Component {
         console.log(params);
         $.ajax({
           url:window.baseUrl + 'user/edit_user/',
+          type:window.ajaxType || 'get',
           data:params,
           success(data){
             console.log(data);
@@ -679,6 +680,7 @@ class ZmitiViewPersonalApp extends Component {
       var userid = this.props.params.userid?this.props.params.userid:this.userid;
       $.ajax({
         url:window.baseUrl + 'user/edit_user/',
+        type:window.ajaxType || 'get',
         data:{
           setuserid:userid,
           userid:s.userid,
@@ -724,7 +726,7 @@ class ZmitiViewPersonalApp extends Component {
         var s=this;
         $.ajax({
             url: window.baseUrl + 'datainfoclass/get_datainfo/',
-
+            type:window.ajaxType || 'get',
             data: {
                 userid: s.userid,
                 getusersigid: s.getusersigid,
@@ -747,6 +749,7 @@ class ZmitiViewPersonalApp extends Component {
         $.ajax({
 
             url: window.baseUrl + 'user/del_workorderfile/',
+            type:window.ajaxType || 'get',
 
             data: {
                 userid: s.userid,

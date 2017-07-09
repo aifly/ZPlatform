@@ -158,6 +158,7 @@ import $ from 'jquery';
 	getbooktype(){
 		var s = this;
 		$.ajax({
+			type:window.ajaxType || 'get',
             url:window.baseUrl+'book/get_bookclass/',
             data:{
                 userid:s.userid,

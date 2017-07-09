@@ -99,7 +99,7 @@ export default class ZmitiUploadDialog extends React.Component {
            
             $.ajax({//获取当前分类信息.
                 url: self.props.baseUrl + self.props.cateUrl + 'get_datainfo',
-                type: "get",
+                type:window.ajaxType || 'get',
                 data: params,
                 success(data){
 

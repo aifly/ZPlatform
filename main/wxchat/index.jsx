@@ -306,6 +306,7 @@ class ZmitiWxChatApp extends Component {
 		this.worksid = s.props.params.id;
 		$.ajax({
 			url:window.baseUrl + '/works/get_filecontent/',
+			type:window.ajaxType || 'get',
 			data:{
 				userid:s.userid,
 				getusersigid:s.getusersigid,

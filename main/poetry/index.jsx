@@ -381,6 +381,7 @@ class ZmitiPoetryApp extends Component {
 		}
 		$.ajax({
 			url:window.baseUrl + '/works/get_filecontent/',
+			type:window.ajaxType || 'get',
 			data:{
 				userid:s.userid,
 				getusersigid:s.getusersigid,

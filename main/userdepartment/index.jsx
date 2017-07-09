@@ -328,6 +328,7 @@ import 'antd/lib/cascader/style/css';*/
 		 let s = this;
 		 $.ajax({
 			 url: window.baseUrl + '/user/get_departmentlist/',//window.baseUrl+'/user/get_departmentlist/',//'http://localhost:90/12306/data.php',
+			 type:window.ajaxType || 'get',
 			 data: {
 				 userid: s.userid,
 				 getusersigid: s.getusersigid,

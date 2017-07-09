@@ -106,6 +106,7 @@ componentWillMount() {
 
         $.ajax({
             url:window.baseUrl + '/works/get_filecontent/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -1066,6 +1067,7 @@ componentWillMount() {
             var s = this;
             $.ajax({
                 url:window.baseUrl+'/works/reset_release_works/',
+                type:window.ajaxType || 'get',
                 data:{
                     userid:s.userid,
                     getusersigid:s.getusersigid,
@@ -1116,6 +1118,7 @@ componentWillMount() {
             })
             $.ajax({    
                 url:window.baseUrl + 'works/release_works/',
+                type:window.ajaxType || 'get',
                 data:{
                     userid:s.userid,
                     getusersigid:s.getusersigid,
@@ -1130,6 +1133,7 @@ componentWillMount() {
                     s.state.previewUrl = window.publishBaseUrl + data.url;
                     $.ajax({
                         url:window.baseUrl+'share/create_qrcode',
+                        type:window.ajaxType || 'get',
                         data:{
                             url:window.publishBaseUrl + data.url
                         }
