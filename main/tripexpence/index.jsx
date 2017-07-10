@@ -155,7 +155,7 @@ class ZmitiTripexpenceApp extends Component {
 			title:title,
 			selectedIndex: 1,
 			rightType: "custom",
-			customRightComponent:<div className='tripost-main-ui' style={{height:this.state.mainHeight}}>
+			customRightComponent:<div className='tripost-main-ui tripexpence-main-ui' style={{height:this.state.mainHeight}}>
 				<div className='pad-10'>
 					<div className="zmiti-tripost-header">
 						<Row>
@@ -217,6 +217,9 @@ class ZmitiTripexpenceApp extends Component {
 							value={this.state.hotelprice2}
 							onChange={(e)=>{this.state.hotelprice2=e.target.value;this.forceUpdate();}}
 							/>
+                            <div className="tripexpence-season">
+                                
+                            </div>
                         </FormItem>
                         <FormItem
 							{...formItemLayout}
@@ -288,7 +291,6 @@ class ZmitiTripexpenceApp extends Component {
             url:window.baseUrl+'travel/get_expenselist',//接口地址
             type:window.ajaxType || 'get',
             data:{
-				setuserid:userid,
 				userid:s.userid,
 				getusersigid:s.getusersigid
             },
@@ -302,6 +304,7 @@ class ZmitiTripexpenceApp extends Component {
             }
         })
     }
+
 
     //弹框
 	modifyaddpost(){
@@ -349,7 +352,8 @@ class ZmitiTripexpenceApp extends Component {
                   
                 }
             });
-            console.log(params,'edit_expense');
+            console.log(params,'edit_expense'); 
+
         }else{
             $.ajax({
               type:'POST',
