@@ -175,6 +175,7 @@ const { Header, Content } = Layout;
 
         var s=this
 		$.ajax({
+            type:window.ajaxType || 'get',
             url:window.baseUrl+'user/view_workorder',
             data:{
                 userid:s.userid,
@@ -206,6 +207,7 @@ const { Header, Content } = Layout;
     	var s=this;
 
     	$.ajax({
+            type:window.ajaxType || 'get',
             url:window.baseUrl+'user/get_userdetails/',
             data:{
                 userid:s.userid,
@@ -237,6 +239,7 @@ const { Header, Content } = Layout;
 	getworkorderlist(){
 		var s = this;
 		$.ajax({
+            type:window.ajaxType || 'get',
             url:window.baseUrl+'user/view_workorder',
             data:{
                 userid:s.userid,
@@ -315,6 +318,7 @@ const { Header, Content } = Layout;
 		var s = this;
 		if(s.state.orderoperation=="关闭工单"){
             $.ajax({
+                type:window.ajaxType || 'get',
                 url: window.baseUrl + 'user/close_workorder/',
                 data: {
                     userid: s.userid,

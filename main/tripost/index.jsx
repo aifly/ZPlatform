@@ -219,6 +219,7 @@ class ZmitiTripostApp extends Component {
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
             url:window.baseUrl+'travel/get_joblist',//接口地址
+            type:window.ajaxType || 'get',
             data:{
 				setuserid:userid,
 				userid:s.userid,
@@ -303,6 +304,7 @@ class ZmitiTripostApp extends Component {
         
         $.ajax({
             url:window.baseUrl+'travel/del_job/',
+            type:window.ajaxType || 'get',
             data:{
                 setuserid:userid,
                 userid:s.userid,
@@ -344,6 +346,7 @@ class ZmitiTripostApp extends Component {
     getCompanydetail(){
     	var s=this;
     	$.ajax({
+            type:window.ajaxType || 'get',
     		url:window.baseUrl+'user/get_companydetail',
     		data:{
     			userid:s.userid,

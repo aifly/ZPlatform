@@ -229,6 +229,7 @@ class ZmitiDatumApp extends Component {
         })
         
         $.ajax({
+            type:window.ajaxType || 'get',
             url:window.baseUrl+'document/get_documentlist',//接口地址
             data:{
                 userid:s.userid,
@@ -390,7 +391,7 @@ class ZmitiDatumApp extends Component {
             
             //提交
            $.ajax({
-              type:'GET',
+              type:window.ajaxType || 'get',
               url:window.baseUrl+'document/edit_documentclass',//接口地址
               data:{
                 userid:s.userid,

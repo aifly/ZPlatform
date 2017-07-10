@@ -157,6 +157,7 @@ class ZmitiRepertoryPerApp extends Component {
     getPersonalImg(){
         var s=this;
         $.ajax({
+            type:window.ajaxType || 'get',
             url: window.baseUrl + 'datainfoclass/get_datainfo/',
             data: {
                 userid: s.userid,

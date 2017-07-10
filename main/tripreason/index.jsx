@@ -216,6 +216,7 @@ class ZmitiTripReasonApp extends Component {
         $.ajax({
             //url:window.baseUrl+'travel/get_joblist',//接口地址
             url:'tripreason/data.json',
+            type:window.ajaxType || 'get',
             data:{
 				setuserid:userid,
 				userid:s.userid,
@@ -300,6 +301,7 @@ class ZmitiTripReasonApp extends Component {
         
         $.ajax({
             //url:window.baseUrl+'travel/del_job/',
+            type:window.ajaxType || 'get',
             data:{
                 setuserid:userid,
                 userid:s.userid,
@@ -342,6 +344,7 @@ class ZmitiTripReasonApp extends Component {
     	var s=this;
     	$.ajax({
     		url:window.baseUrl+'user/get_companydetail',
+            type:window.ajaxType || 'get',
     		data:{
     			userid:s.userid,
     			getusersigid:s.getusersigid

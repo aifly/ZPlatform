@@ -61,6 +61,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			fn = options.fn;
 		$.ajax({
 			url:window.baseUrl+'/share/copyfile',
+			type:window.ajaxType || 'get',
 			data:{
 				getusersigid: s.getusersigid||options.getusersigid,
 				userid: s.userid || options.userid,
@@ -123,6 +124,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
       });
       $.ajax({
         url:window.baseUrl+'product/get_product/',
+        type:window.ajaxType || 'get',
         data:{
           userid:s.userid,
           getusersigid:s.getusersigid
@@ -153,6 +155,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 
 	send(opt={}){
 		$.ajax({
+			type:window.ajaxType || 'get',
 			url:window.baseUrl+'msg/send_msg',
 			data:{
 				userid:opt.userid,
@@ -314,6 +317,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		let {$,userid,getusersigid,setuserid,sussess} = options;
 		$.ajax({
 			url:window.baseUrl+'/user/get_userdetails',
+			type:window.ajaxType || 'get',
 			data:{
 				userid:userid,
 				getusersigid:getusersigid,

@@ -230,6 +230,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
             $.ajax({
 
                 url: window.baseUrl + 'user/post_workorder',
+                type:window.ajaxType || 'get',
 
                 data: {
                     userid: s.userid,
@@ -272,6 +273,7 @@ class ZmitiWorkOrderQuestionApp extends Component {
         $.ajax({
 
             url: window.baseUrl + 'user/del_workorderfile/',
+            type:window.ajaxType || 'get',
 
             data: {
                 userid: s.userid,

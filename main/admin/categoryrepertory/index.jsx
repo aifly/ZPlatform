@@ -234,6 +234,7 @@ class ZmitiCategoryRepertoryApp extends Component {
         //console.log(this.currentId,"edit_document");
       }else{ 
         $.ajax({
+          type:window.ajaxType || 'get',
           url:window.baseUrl + 'datainfoclass/add_class_info/',//添加；等换接口
           data:params,
           success(data){

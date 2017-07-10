@@ -130,6 +130,7 @@ import MainUI from '../components/Main.jsx';
         //console.log(worksid,'worksid');
         $.ajax({
             url:window.baseUrl + 'weixin/get_customuserlist/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -194,7 +195,7 @@ import MainUI from '../components/Main.jsx';
         var customid=s.props.params.id;
         $.ajax({
             url:window.baseUrl+'custom/get_custom_list/',
-            type:"get",
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid

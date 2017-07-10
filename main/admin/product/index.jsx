@@ -324,6 +324,7 @@ import MainUI from '../components/main.jsx';
             tip:'正在删除数据...'
         });
         $.ajax({
+          type:window.ajaxType || 'get',
           url:window.baseUrl+'product/del_product/',
           data:{
             userid:s.userid,

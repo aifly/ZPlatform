@@ -217,6 +217,7 @@ class ZmitiListOrderApp extends Component {
         var keyWord=this.state.keyword;
         var s = this;
         $.ajax({
+            type:window.ajaxType || 'get',
             url:window.baseUrl+'user/get_workorder',
             data:{
                 userid:s.userid,
@@ -289,6 +290,7 @@ class ZmitiListOrderApp extends Component {
     bindNewdata(){
         var s=this
         $.ajax({
+            type:window.ajaxType || 'get',
             url:window.baseUrl+'user/get_workorder',
             data:{
                 userid:s.userid,

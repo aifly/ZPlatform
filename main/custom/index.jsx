@@ -128,7 +128,7 @@ class ZmitiCustomApp extends Component {
 		var s=  this;
 		$.ajax({
 			url:window.baseUrl+'custom/get_custom_list/',
-			type:"get",
+			type:window.ajaxType || 'get',
 			data:{
 				userid:s.userid,
 				getusersigid:s.getusersigid

@@ -256,9 +256,10 @@ class ZmitiInforListApp extends Component {
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
             url:window.baseUrl+'document/get_documentlist',//接口地址
+            type:window.ajaxType || 'get',
             data:{
-				userid:s.userid,
-				getusersigid:s.getusersigid,                
+		        		userid:s.userid,
+				        getusersigid:s.getusersigid,                
                 type:1,
                 searchword:'',
             },
@@ -342,6 +343,7 @@ class ZmitiInforListApp extends Component {
         
         $.ajax({
             url:window.baseUrl+'document/del_document/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,

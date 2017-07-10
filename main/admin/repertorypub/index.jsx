@@ -233,6 +233,7 @@ class ZmitiRepertoryPubApp extends Component {
         var datainfoclassid=this.props.params.id;
         //console.log(datainfoclassid);
         $.ajax({
+            type:window.ajaxType || 'get',  
             url: window.baseUrl + 'datainfoclass/get_datainfo/',
             data: {
                 userid: s.userid,
@@ -251,8 +252,9 @@ class ZmitiRepertoryPubApp extends Component {
     //del图片
     delImg(imgid){
       var s=this;
-      console.log(imgid);
+      //console.log(imgid);
         $.ajax({
+            type:window.ajaxType || 'get',
             url: window.baseUrl + 'datainfoclass/resource_del/',
             data: {
                 userid: s.userid,
@@ -368,7 +370,7 @@ class ZmitiRepertoryPubApp extends Component {
            
             //提交
            $.ajax({
-              type:'GET',
+              type:window.ajaxType || 'get',
               url:window.baseUrl+'document/edit_documentclass',//接口地址
               data:{
                 userid:s.userid,
@@ -395,6 +397,7 @@ class ZmitiRepertoryPubApp extends Component {
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         
         $.ajax({
+            type:window.ajaxType || 'get',
             url:window.baseUrl+'document/del_document/',
             data:{
                 userid:s.userid,

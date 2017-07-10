@@ -256,6 +256,7 @@ class ZmitiTripseasonApp extends Component {
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
             url:window.baseUrl+'travel/get_seasondatelist',//接口地址
+            type:window.ajaxType || 'get',
             data:{
                 setuserid:userid,
                 userid:s.userid,
@@ -323,6 +324,7 @@ class ZmitiTripseasonApp extends Component {
         var s=this;
         $.ajax({
             url:window.baseUrl+'user/get_companydetail',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid
@@ -346,6 +348,7 @@ class ZmitiTripseasonApp extends Component {
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
             url:window.baseUrl+'travel/del_seasondate/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -382,6 +385,7 @@ class ZmitiTripseasonApp extends Component {
         var provinceOptions=[];
         $.ajax({
             url:window.baseUrl+'travel/get_citylist',
+            type:window.ajaxType || 'get',
             data:{
                 setuserid:userid,
                 userid:s.userid,

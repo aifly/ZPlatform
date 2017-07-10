@@ -86,6 +86,7 @@ class ZmitiViewxChatApp extends Component {
         var s = this;
         $.ajax({
             url:window.baseUrl+'weixin/get_wxuserlist',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -144,6 +145,7 @@ class ZmitiViewxChatApp extends Component {
         var s = this;
         $.ajax({
             url:window.baseUrl+'user/del_workorder/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -172,6 +174,7 @@ class ZmitiViewxChatApp extends Component {
         var s=this
         $.ajax({
             url:window.baseUrl+'weixin/get_wxuserlist',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -206,6 +209,7 @@ class ZmitiViewxChatApp extends Component {
         var s = this;
         $.ajax({
             url:window.baseUrl+'weixin/getwxuserinfo',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,

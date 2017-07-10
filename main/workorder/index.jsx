@@ -209,6 +209,7 @@ class ZmitiWorkOrderApp extends Component {
         var s = this;
         $.ajax({
             url:window.baseUrl+'user/get_workorder',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -268,6 +269,7 @@ class ZmitiWorkOrderApp extends Component {
         var s = this;
         $.ajax({
             url:window.baseUrl+'user/del_workorder/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -296,6 +298,7 @@ class ZmitiWorkOrderApp extends Component {
         var s=this
         $.ajax({
             url:window.baseUrl+'user/get_workorder',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,

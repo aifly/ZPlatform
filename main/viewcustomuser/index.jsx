@@ -147,6 +147,7 @@ import MainUI from '../components/Main.jsx';
         //console.log(worksid,'worksid');
         $.ajax({
             url:window.baseUrl + 'book/get_userlist/',
+            type:window.ajaxType || 'get',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -218,6 +219,7 @@ import MainUI from '../components/Main.jsx';
         var customid=s.props.params.id;
         $.ajax({
             url:window.baseUrl+'custom/get_custom_list/',
+            type:window.ajaxType || 'get',
             type:"get",
             data:{
                 userid:s.userid,
