@@ -3,7 +3,7 @@ $baseColor:#d8271d;
 
 .zmiti-editor-main-ui{
 	@include displayFlex(row);
-	max-height: 446px;
+	
 	&>div{
 		flex:1;
 		-webkit-flex:1;
@@ -18,16 +18,27 @@ $baseColor:#d8271d;
 
 		.zmiti-editor-header{
 			@include pos(a);
-			width: 300px;
+			@include transform(translate3d(-50%,0,0) scale(.9));
+			top: 10%;
+			left: 50%;
+			overflow: hidden;
+			height: 82%;
+			border:3px solid #ccc;
 		}
 
 		.zmiti-editor-phone{
 			height: 100%;
-			@include pos(a);
-
 			text-align: center;
 			img{height: 100%;width:auto;}
 			margin: 0 auto;
+		}
+
+		&.zmiti-editor-preview{
+			@include displayFlex(row);
+			justify-content:center;
+			&>section{
+				width: 100%;
+			}
 		}
 	}
 }

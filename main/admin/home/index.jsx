@@ -7,7 +7,9 @@ export default class AdminIndex extends Component {
 		var props = {
 			onChange(editor){
  				console.log(editor.el.innerHTML);
-			}
+			},
+			height:500,
+			html:'12345'
 		}
 
 		var component = <div>

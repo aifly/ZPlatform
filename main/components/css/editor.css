@@ -20,8 +20,7 @@
   display: flex;
   display: -webkit-flex;
   -ms-flex-flow: row;
-      flex-flow: row;
-  max-height: 446px; }
+      flex-flow: row; }
   .zmiti-editor-main-ui > div {
     -webkit-box-flex: 1;
         -ms-flex: 1;
@@ -35,14 +34,31 @@
       -webkit-flex: 2; }
     .zmiti-editor-main-ui > div .zmiti-editor-header {
       position: absolute;
-      width: 300px; }
+      -webkit-transform: translate3d(-50%, 0, 0) scale(0.9);
+      transform: translate3d(-50%, 0, 0) scale(0.9);
+      top: 10%;
+      left: 50%;
+      overflow: hidden;
+      height: 82%;
+      border: 3px solid #ccc; }
     .zmiti-editor-main-ui > div .zmiti-editor-phone {
       height: 100%;
-      position: absolute;
       text-align: center;
       margin: 0 auto; }
       .zmiti-editor-main-ui > div .zmiti-editor-phone img {
         height: 100%;
         width: auto; }
+    .zmiti-editor-main-ui > div.zmiti-editor-preview {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      display: -webkit-flex;
+      -ms-flex-flow: row;
+          flex-flow: row;
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center; }
+      .zmiti-editor-main-ui > div.zmiti-editor-preview > section {
+        width: 100%; }
 
 /*# sourceMappingURL=editor.css.map */

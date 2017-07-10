@@ -58,7 +58,7 @@
   line-height: 32px;
 }
 .royal-theme.fr-box a.fr-floating-btn:hover {
-  background: #9365b8;
+  background: #363c40;
 }
 .royal-theme.fr-box a.fr-floating-btn:hover svg {
   fill: #ffffff;
@@ -742,7 +742,7 @@
 .royal-theme.fr-toolbar .fr-command.fr-btn.fr-active,
 .royal-theme.fr-popup .fr-command.fr-btn.fr-active {
   color: #ffffff;
-  background: #9365b8;
+  background: #363c40;
 }
 .royal-theme.fr-toolbar .fr-command.fr-btn.fr-dropdown.fr-selection,
 .royal-theme.fr-popup .fr-command.fr-btn.fr-dropdown.fr-selection {
@@ -830,7 +830,7 @@
 }
 .royal-theme.fr-toolbar.fr-mobile .fr-command.fr-blink,
 .royal-theme.fr-popup.fr-mobile .fr-command.fr-blink {
-  background: #9365b8;
+  background: #363c40;
 }
 .royal-theme .fr-command.fr-btn + .fr-dropdown-menu {
   right: auto;

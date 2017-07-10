@@ -6,18 +6,24 @@ export default class ZmitiEditor extends Component {
 	constructor(props) {
 		super(props);
 		  this.state = {
-		        phoneW:0
+		        phoneW:0,
+		        text:''
 		    }
 	}
 	
 	render() {
 		
 		 return <div className='zmiti-editor-main-ui'>
-		 	<div className='zmiti-editor-preview'>
-		 		<img style={{width:this.state.phoneW}} className='zmiti-editor-header' src='../static/images/wx-header.png'/>
-		 		<div className='zmiti-editor-phone'>
-		 			<img ref='phone' src={this.props.isAdmin?'../static/images/phone-bg.png':'./static/images/phone-bg.png'}/>
-		 		</div>
+		 	<div className='zmiti-editor-preview' style={{maxHeight:this.props.height+46||446}}>
+		 		<section>
+		 			<div className='zmiti-editor-phone'>
+			 			<img ref='phone' src={this.props.isAdmin?'../static/images/phone-bg.png':'./static/images/phone-bg.png'}/>
+			 		</div>
+			 		<div style={{width:this.state.phoneW}} className='zmiti-editor-header'>
+			 			<img  src='../static/images/wx-header.png'/>
+			 			<div  dangerouslySetInnerHTML={this.createMarkup()}></div>
+			 		</div>
+		 		</section>
 		 	</div> 
 			<div ref='zmiti-editor'>
 
@@ -25,39 +31,49 @@ export default class ZmitiEditor extends Component {
 		 </div>
 	}
 
-	componentDidMount() {
+	createMarkup(){
+		 return {__html:  this.state.text};
+	}
 
+	componentDidMount() {
+		var prefix = this.props.isAdmin?'../':'./';
 		var assets=[
 				{
 					type:'script',
-					src:'../static/editor/froala_editor.min.js',
+					src:prefix+'static/editor/froala_editor.min.js',
 				},{
 					type:'script',
-					src:'../static/editor/align.min.js',
+					src:prefix+'static/editor/align.min.js',
 				},{
 					type:'script',
-					src:'../static/editor/colors.min.js',
+					src:prefix+'static/editor/colors.min.js',
 				},{
 					type:'script',
-					src:'../static/editor/image.min.js',
+					src:prefix+'static/editor/image.min.js',
 				},{
 					type:'script',
-					src:'../static/editor/link.min.js',
+					src:prefix+'static/editor/link.min.js',
+				},{
+					type:'script',
+					src:prefix+'static/editor/table.min.js',
 				},{
 					type:'link',
 					src:'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'
 				},{
 					type:'link',
-					src:'../static/editor/css/froala_editor.css',
+					src:prefix+'static/editor/css/froala_editor.css',
 				},{
 					type:'link',
-					src:'../static/editor/css/colors.css',
+					src:prefix+'static/editor/css/colors.css',
 				},{
 					type:'link',
-					src:'../static/editor/css/froala_style.css',
+					src:prefix+'static/editor/css/froala_style.css',
 				},{
 					type:'link',
-					src:'../static/editor/css/royal.css',
+					src:prefix+'static/editor/css/royal.css',
+				},{
+					type:'link',
+					src:prefix+'static/editor/css/table.min.css',
 				}
 			];
 		
@@ -85,21 +101,28 @@ export default class ZmitiEditor extends Component {
 		setTimeout(()=>{
 			$(this.refs['zmiti-editor']).froalaEditor({
 		        theme: 'royal',
-		        height:400
+		        height:s.props.height||400
 		    }).on ('froalaEditor.contentChanged', function (e,editor) {
                 s.props.onChange && s.props.onChange(editor);
+                s.setState({
+                	text:editor.el.innerHTML
+                })
             });
 		},100)
 
-
-		this.refs['phone'].onload = function(e){
+		var img = new Image();
+		img.onload = function(){
 			setTimeout(()=>{
-				this.setState({
-					phoneW:this.width 
-				})
-			},100 )
+				s.setState({
+					phoneW:s.refs['phone'].width,
+					text:s.props.html||''
+				});
+				$('.fr-element.fr-view').html(s.props.html);
+			},100)
+			
 		}
-
+		img.src=this.refs['phone'].src;
+		
 	}
 
 	
