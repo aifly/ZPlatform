@@ -340,6 +340,8 @@ class ZmitiTripexpenceApp extends Component {
             success(data){
                 if(data.getret === 0){
 
+                    console.log(data.list[0].children);
+
                     s.setState({
                         cityList:data.list[0].children,
 
