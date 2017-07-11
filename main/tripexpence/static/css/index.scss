@@ -1,5 +1,31 @@
+@import "../../../public/css/base.scss";
 .tripexpence-main-ui{
 	overflow:auto;
+
+	.tripost-citylist-C{
+		@include pos(a);
+		background: #ccc;
+		left: 0;
+		@include transform(translate3d(100%,0,0));
+		top: 0;
+		z-index: 1000;
+		@include displayFlex(row);
+		&>section{
+
+
+			&:nth-of-type(1){
+
+				flex:none;
+				-webkit-flex:none;
+				width: 220px;
+
+			}
+			&:nth-of-type(2){
+				flex:5;
+				-webkit-flex:5;
+			}
+		}
+	}
 }
 .tripexpence-season{
 	display:block;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 
 
 export default class ZmitiScript extends Component {
@@ -10,34 +11,32 @@ export default class ZmitiScript extends Component {
 	}
 	
 	render() {
-
-
-		var component = <div></div>;
-
 		return <div>
-			{(this.props.assets||[]).map((item,i)=>{
-				if(item.type === 'link'){
-					return  <link key={i} rel="stylesheet" type="text/css" href={item.src} />
-				}
-				else{
-					return '';
-				}
-			})}
+			
 		</div>
 	}
 
 	componentDidMount() {
 		
-		var doc = document;
-		this.props.assets.map((item,i)=>{
+		var doc = document,
+			style="",
+			assets = this.props.assets,
+			body=$('body');
+			
+			assets.map((item,i)=>{
+				if(item.type === 'script'){
+					
+					var script = doc.createElement('script');
+					script.src= item.src;
+					script.type ='text/javascript';
 
-			if( item.type === 'script'){
-				$.ajax({
-					url:item.src
-				});
-			}
+					body.append(script);
+				}else if(item.type === 'link'){
+					style+='<link rel="stylesheet" type="text/css" href='+item.src+' \/>'
+				}
+			});
 
-		});
+			style && (document.getElementsByTagName('head')[0].innerHTML += style);
 
 	}
 

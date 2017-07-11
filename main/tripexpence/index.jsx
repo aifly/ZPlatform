@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import {Cascader, message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
+import {Cascader, message,Select,Modal,Form , Input,Button, Row,Checkbox, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 import { Link } from 'react-router';
@@ -13,6 +13,12 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 const FormItem = Form.Item;
 const Option = Select.Option;
 import $ from 'jquery';
+import echarts from 'echarts/lib/echarts';
+import 'echarts/lib/chart/map';
+
+import ZmitiScript from '../components/zmiti-script.jsx';
+
+import '../static/echarts/china';
 
 class ZmitiTripexpenceApp extends Component {
 	constructor(props) {
@@ -45,9 +51,11 @@ class ZmitiTripexpenceApp extends Component {
             inputValue: '',//省市
             defaultValue:[],//编辑时省市默认值
             options:[],
+            cityList:[],
             disabled:false,
+            currentCityId:1
 		};
-
+        this.viewW = document.documentElement.clientWidth;
 		this.currentId = -1;
 	}
     getProductDetail(record,index,e){
@@ -80,70 +88,23 @@ class ZmitiTripexpenceApp extends Component {
         this.forceUpdate();
     }
 	render() {
-		const columns = [{
-            title: '省份',
-            dataIndex: 'provname',
-            key: 'provname',
-            width:100
+		
 
-        },{
-            title: '城市',
-            dataIndex: 'cityname',
-            key: 'cityname'
-
-        },{
-            title: '职务',
-            dataIndex: 'jobname',
-            key: 'jobname'
-
-        },{
-            title: '住宿费',
-            dataIndex: 'hotelprice1',
-            key: 'hotelprice1'
-
-        },{
-            title: '旺季住宿费',
-            dataIndex: 'hotelprice2',
-            key: 'hotelprice2'
-
-        },{
-            title: '伙食费',
-            dataIndex: 'foodprice',
-            key: 'foodprice'
-
-        },{
-            title: '其它交通补助费',
-            dataIndex: 'othertraficprice',
-            key: 'othertraficprice'
-
-        },{
-            title: '其它补助费',
-            dataIndex: 'otherprice',
-            key: 'otherprice'
-
-        },{
-            title: '创建时间',
-            dataIndex: 'createtime',
-            key: 'createtime'
-
-        },  {
-            title: '操作',
-            dataIndex: '',
-            key: '',
-            width:150,
-            render:(text,recoder,index)=>(
-
-                <Button  onClick={this.delData.bind(this,recoder.expenseid)}> 删除</Button>
-                
-            )
-
-        }]
-
-        const formItemLayout = {
-           labelCol: {span: 6},
-           wrapperCol: {span: 14},
-        };
+       
 		var title = this.props.params.title || '出差宝';
+        let scriptList = {// <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+//       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+
+            assets:[
+              
+                {
+                    src:'../static/echarts/china.js',
+                    type:'script'
+                }
+               
+
+            ]
+        };
 
 		let props={
 			userList:this.state.userList,
@@ -155,107 +116,23 @@ class ZmitiTripexpenceApp extends Component {
 			title:title,
 			selectedIndex: 1,
 			rightType: "custom",
-			customRightComponent:<div className='tripost-main-ui tripexpence-main-ui' style={{height:this.state.mainHeight}}>
-				<div className='pad-10'>
-					<div className="zmiti-tripost-header">
-						<Row>
-							<Col span={8} className="zmiti-tripost-header-inner">差旅费-{this.state.companyname}</Col>
-							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={this.expenceform.bind(this)}>添加</Button><div>|</div><Button onClick={this.seasonlink.bind(this)}>淡旺季</Button><Button onClick={this.tripostlink.bind(this)}>职务</Button></Col>
-						</Row>					
-					</div>
-					<div className="zmiti-tripost-line"></div>
-					
-                    <Table bordered={true}
-                                 onRowClick={(record,index,i)=>{this.getProductDetail(record,index,i)}}
-                                 dataSource={this.state.dataSource} columns={columns} />
-				</div>
-				<Modal title="差旅费" visible={this.state.modpostDialogVisible}
-					onOk={this.addProduct.bind(this)}
-					onCancel={()=>{this.setState({modpostDialogVisible:false})}}
-                >
-                	<Form>
-						<FormItem
-                            {...formItemLayout}
-                            label="选择城市"
-                            hasFeedback
-                          >                        
-                              
-                          <Cascader disabled={this.state.disabled} value={this.state.defaultValue}   options={this.state.options} onChange={this.cityonChange.bind(this)} placeholder="选择城市" />
-                        </FormItem>
-                        <FormItem
-							{...formItemLayout}
-							label="职务"
-							hasFeedback
-							>
-							<Select placeholder="职务" onChange={(value)=>{this.state.jobid=value;this.forceUpdate();}} value={this.state.jobid}
-                          	>
-                          	{
-                                this.state.tripost.map((item,i)=> {
-	                                return(
-		                          		<option key={i} value={item.jobid}>{item.jobname}</option>
-		                          	)
-                            	})
-                            }
-                          	</Select> 
-                        </FormItem>
-						<FormItem
-							{...formItemLayout}
-							label="住宿费"
-							hasFeedback
-							>
-							<Input placeholder="住宿费" 
-							value={this.state.hotelprice1}
-							onChange={(e)=>{this.state.hotelprice1=e.target.value;this.forceUpdate();}}
-							/>
-                        </FormItem>
-                        <FormItem
-							{...formItemLayout}
-							label="旺季住宿费"
-							hasFeedback
-							>
-							<Input placeholder="旺季住宿费" 
-							value={this.state.hotelprice2}
-							onChange={(e)=>{this.state.hotelprice2=e.target.value;this.forceUpdate();}}
-							/>
-                            <div className="tripexpence-season">
-                                
-                            </div>
-                        </FormItem>
-                        <FormItem
-							{...formItemLayout}
-							label="伙食费"
-							hasFeedback
-							>
-							<Input placeholder="伙食费" 
-							value={this.state.foodprice}
-							onChange={(e)=>{this.state.foodprice=e.target.value;this.forceUpdate();}}
-							/>
-                        </FormItem>
-                        <FormItem
-							{...formItemLayout}
-							label="其它交通补助费"
-							hasFeedback
-							>
-							<Input placeholder="其它交通补助费" 
-							value={this.state.othertraficprice}
-							onChange={(e)=>{this.state.othertraficprice=e.target.value;this.forceUpdate();}}
-							/>
-                        </FormItem>
-                        <FormItem
-							{...formItemLayout}
-							label="其它补助费"
-							hasFeedback
-							>
-							<Input placeholder="其它补助费" 
-							value={this.state.otherprice}
-							onChange={(e)=>{this.state.otherprice=e.target.value;this.forceUpdate();}}
-							/>
-                        </FormItem>
-                    </Form>
-                </Modal>
-                
-				{this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddpost" {...userProps}></ZmitiUploadDialog>}
-                
+			customRightComponent:<div  className='tripost-main-ui tripexpence-main-ui' style={{height:this.state.mainHeight}}>
+                <div ref='tripexpence-main-ui' style={{width:'100%',height:'100%'}}></div>
+                <div className='tripost-citylist-C' style={{width:(this.viewW - window.mainLeftSize)||0,height:this.state.mainHeight}}>
+                    <section>
+
+                        <ul>
+                            {this.state.cityList.length>1&&this.state.cityList[this.state.currentCityId].children.map((item,i)=>{
+                                return <li key={i}>
+                                    <Checkbox
+                                        checked={this.state.checked}
+                                        onChange={()=>{this.setState({checked:!this.state.checked})}}
+                                      >{item.label}</Checkbox></li>
+                            })}
+                        </ul>
+                    </section>
+                    <section></section>
+                </div>
             </div>
 		}
   
@@ -462,10 +339,13 @@ class ZmitiTripexpenceApp extends Component {
             },
             success(data){
                 if(data.getret === 0){
+
                     s.setState({
-                        options:data.list[0].children,
+                        cityList:data.list[0].children,
+
+                        
                     })
-                    s.forceUpdate();
+                    
                 }
             }
         })
@@ -507,7 +387,76 @@ class ZmitiTripexpenceApp extends Component {
 		s.getCompanydetail();
 		s.getjobData();
         s.getCascader();
+       
+        
+        setTimeout(()=>{
+            s.initEcharts();
+        },100)
+        
+
+        
 	}
+
+    initEcharts(){
+        var s = this;
+        var myChart = echarts.init(this.refs['tripexpence-main-ui']);
+            var app = {},
+            option = null;
+            var locations = [{
+                name: '上海',
+                coord: [121.472644, 31.231706]
+            }, {
+                name: '北京',
+                coord: [116.405285, 39.904989]
+            }, {
+                name: '广东',
+                coord: [113.280637, 23.839463714285714]
+            }];
+            option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{b}'
+                },
+                series: [
+                    {
+                        name: '中国',
+                        type: 'map',
+                        mapType: 'china',
+                        selectedMode : 'single',
+                        label: {
+                            normal: {
+                                show: true
+                            },
+                            emphasis: {
+                                show: true
+                            }
+                        }
+                    }
+                ]
+            };
+
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+
+            myChart.on('click', function (params) {
+               var cityid = -1;
+               s.state.cityList.map((city,i)=>{
+                    if(params.name === city.label){
+                        cityid = city.value;
+                        return;
+                    }
+               });
+               if(cityid === -1){
+                return;
+               }
+               s.setState({
+                    currentCityId:cityid
+               });
+               console.log(params.name)
+              
+            });
+    }
 
 	componentWillMount() {
 

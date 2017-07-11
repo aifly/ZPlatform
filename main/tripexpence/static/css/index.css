@@ -1,5 +1,46 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
 .tripexpence-main-ui {
   overflow: auto; }
+  .tripexpence-main-ui .tripost-citylist-C {
+    position: absolute;
+    background: #ccc;
+    left: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    top: 0;
+    z-index: 1000;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -ms-flex-flow: row;
+        flex-flow: row; }
+    .tripexpence-main-ui .tripost-citylist-C > section:nth-of-type(1) {
+      -webkit-box-flex: 0;
+          -ms-flex: none;
+              flex: none;
+      -webkit-flex: none;
+      width: 220px; }
+    .tripexpence-main-ui .tripost-citylist-C > section:nth-of-type(2) {
+      -webkit-box-flex: 5;
+          -ms-flex: 5;
+              flex: 5;
+      -webkit-flex: 5; }
 
 .tripexpence-season {
   display: block; }
