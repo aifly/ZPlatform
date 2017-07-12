@@ -43,6 +43,7 @@ import ZmitiViewAnswerApp from './viewanswer/index.jsx';
 import Obserable from './static/libs/obserable.js';
 import ZmitiTrainingApp from './training/index.jsx';
 import ZmitiTripReasonApp from './tripreason/index.jsx';
+import ZmitiTripNoticeApp from './tripnotice/index.jsx';
 
 import {notification } from './commoncomponent/common.jsx';
 import $ from 'jquery';
@@ -94,6 +95,7 @@ class App extends React.Component{
 				{path: '/viewanswer/(:title)/(:id)',app:ZmitiViewAnswerApp},
 				{path: '/training/(:title)/(:id)',app:ZmitiTrainingApp},
 				{path: '/tripreason/',app:ZmitiTripReasonApp},
+				{path: 'tripnotice/',app:ZmitiTripNoticeApp}
 				
 		];
 		return (

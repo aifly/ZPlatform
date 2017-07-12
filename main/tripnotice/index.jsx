@@ -13,15 +13,17 @@ import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 const FormItem = Form.Item;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
+import ZmitiEditor from '../components/zmiti-editor.jsx';
+
 import $ from 'jquery';
 
-class ZmitiTripReasonApp extends Component {
+class ZmitiTripNoticeApp extends Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
 			setuserid:'',
-			selectedIndex:2,
+			selectedIndex:3,
 			mainHeight:document.documentElement.clientHeight-50,
 			modpostDialogVisible:false,
 			modpostEditDialogVisible:false,		
@@ -32,6 +34,7 @@ class ZmitiTripReasonApp extends Component {
 			setlevel:'',
 			dataSource:[],
 			jobid:'',
+            html:'',
 			keyword:'',
 			companyname:'',
 		};
@@ -56,7 +59,7 @@ class ZmitiTripReasonApp extends Component {
 	render() {
 		var s =this;
 		const columns = [{
-            title: '出差事由',
+            title: '注意事项',
             dataIndex: 'jobname',
             key: 'jobname'
 
@@ -97,6 +100,17 @@ class ZmitiTripReasonApp extends Component {
 
 		var title = this.props.params.title || '出差宝';
 
+        let editorProps ={
+            onChange(editor){
+                s.setState({
+                    html:editor.el.innerHTML
+                });
+            },
+            height:this.state.mainHeight/2,
+            html:this.state.html,
+            $,
+            isAdmin:false
+        }
 		let props={
 			userList:this.state.userList,
 			userid:this.userid,
@@ -105,56 +119,23 @@ class ZmitiTripReasonApp extends Component {
 			tags:['交通工具','差旅费','出差事由','注意事项'],
 			mainHeight:this.state.mainHeight,
 			title:title,
-			selectedIndex: 2,
+			selectedIndex:3,
 			rightType: "custom",
 			customRightComponent:<div className='tripost-main-ui' style={{height:this.state.mainHeight}}>
 				<div className='pad-10'>
 					<div className="zmiti-tripost-header">
 						<Row>
-							<Col span={8} className="zmiti-tripost-header-inner">出差事由-{this.state.companyname}</Col>
-							<Col span={8} offset={8} className='zmiti-tripost-button-right'><Button type='primary' onClick={this.postform.bind(this)}>添加</Button></Col>
+							<Col span={22} className="zmiti-tripost-header-inner">注意事项-{this.state.companyname}</Col>
+                            <Col><Button type='primary' size='large' onClick={this.addNotice.bind(this)} icon='file'>保存</Button></Col>
 						</Row>						
+                        
 					</div>
 					<div className="zmiti-tripost-line"></div>
-					<Row gutter={10} type='flex' className='tripost-search '>
-						<Col className="tripost-heigth45">出差事由：</Col>
-						<Col className="tripost-heigth45"><Input value={this.state.keyword} placeholder="出差事由" onChange={this.searchByKeyword.bind(this)}/></Col>
-					</Row>
-					<Table bordered={true}
-                                 onRowClick={(record,index,i)=>{this.getProductDetail(record,index,i)}}
-                                 dataSource={this.state.dataSource} columns={columns} />
 				</div>
-				<Modal title="出差事由" visible={this.state.modpostDialogVisible}
-					onOk={this.addProduct.bind(this)}
-					onCancel={()=>{this.setState({modpostDialogVisible:false})}}
-                  >
-                    <Form>
-                      <FormItem
-                        {...formItemLayout}
-                        label="出差事由"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="出差事由" 
-							value={this.state.jobname}
-							onChange={(e)=>{this.state.jobname=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="职务级别"
-                        hasFeedback
-                      >
-                          <Select placeholder="类别" onChange={(value)=>{this.state.level=value;this.forceUpdate();}} value={this.state.level}>
-                          	<Option value={1}>出差只报首尾两天的补助</Option>
-                          	<Option value={2}>出差天数补助全部报销</Option>
-                          </Select>                     
-                      </FormItem>
+                <ZmitiEditor {...editorProps} ></ZmitiEditor>
 
-                    </Form>
-                  </Modal>
-                  
-                  {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="modifyaddpost" {...userProps}></ZmitiUploadDialog>}
+
+				 
                   
 			</div>
 		}
@@ -167,6 +148,22 @@ class ZmitiTripReasonApp extends Component {
 			<MainUI component={mainComponent}></MainUI>
 		);
 	}
+
+
+    addNotice(){
+         $.ajax({
+                type:'POST',
+                url:window.baseUrl + 'travel/add_notice/',
+                data:{
+                    userid:this.userid,
+                    getusersigid:this.getusersigid,
+                    notice:'<style type="text/css">table td{background: #fff;}table{background: #ccc;}</style>' + this.state.html
+                },
+                success(data){
+                    message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                }
+            });
+    }
 
 	changeAccount(i){
         if(i*1===0){
@@ -184,6 +181,24 @@ class ZmitiTripReasonApp extends Component {
 		var s=  this;
 		s.bindNewdata();
 		s.getCompanydetail();
+
+        $.ajax({
+            url:window.baseUrl+'travel/search_notice/',
+            data:{
+                userid:this.userid,
+                getusersigid:this.getusersigid
+            }
+        }).done((data)=>{
+            if(data.getret === 0){
+                s.setState({
+                    html:data.notice
+                })
+            }
+            else{
+                message.error(data.getmsg);
+            }
+            
+        });
 	}	
 
 	componentWillMount() {
@@ -215,7 +230,7 @@ class ZmitiTripReasonApp extends Component {
 	bindNewdata(){
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        $.ajax({
+       /* $.ajax({
             //url:window.baseUrl+'travel/get_joblist',//接口地址
             url:'tripreason/data.json',
             type:window.ajaxType || 'get',
@@ -232,7 +247,7 @@ class ZmitiTripReasonApp extends Component {
                     s.forceUpdate();
                 }
             }
-        })
+        })*/
     }
 
 	//弹框
@@ -354,7 +369,8 @@ class ZmitiTripReasonApp extends Component {
     		success(data){
     			if(data.getret === 0){
     				s.setState({
-    					companyname:data.detail_info.companyname
+                        companyname:data.detail_info.companyname,
+    					companyid:data.detail_info.companyid,
     				})
     			}
     		}
@@ -362,5 +378,5 @@ class ZmitiTripReasonApp extends Component {
     }
 }
 
-export default ZmitiValidateUser(ZmitiTripReasonApp);
+export default ZmitiValidateUser(ZmitiTripNoticeApp);
 /*ReactDOM.render(<ZmitiCompanyApp></ZmitiCompanyApp>,document.getElementById('fly-main'));*/

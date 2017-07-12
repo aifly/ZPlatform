@@ -53,7 +53,12 @@ class ZmitiTripexpenceApp extends Component {
             options:[],
             cityList:[],
             disabled:false,
-            currentCityId:1
+            currentCityIndex:1,
+            currentCityId:-1,
+            transX:0,
+            transY:0,
+            showTable:true,
+            currentProv:'云南'
 		};
         this.viewW = document.documentElement.clientWidth;
 		this.currentId = -1;
@@ -63,7 +68,6 @@ class ZmitiTripexpenceApp extends Component {
         var defaultValue=new Array();
         defaultValue[0]=record.provid;
         defaultValue[1]=record.cityid;
-        console.log(record);
 
         this.currentId = record.expenseid;
         if(e.target.nodeName === "SPAN" || e.target.nodeName === 'BUTTON'){
@@ -92,47 +96,91 @@ class ZmitiTripexpenceApp extends Component {
 
        
 		var title = this.props.params.title || '出差宝';
-        let scriptList = {// <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
-//       <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
-
-            assets:[
-              
-                {
-                    src:'../static/echarts/china.js',
-                    type:'script'
+        
+        const columns = [{
+            title: '市',
+            dataIndex: 'cityname',
+            key: 'cityname',
+            render: (value, row, index) => {
+                const obj = {
+                  children: value,
+                  props: {},
+                };
+                console.log(row,value);
+                if (index === 0) {
+                   obj.props.rowSpan = 2;
                 }
-               
+                if (index === 1) {
+                   obj.props.rowSpan = 0;
+                }
+                return obj;
+              }
 
-            ]
-        };
+        },{
+            title: '职务',
+            dataIndex: 'jobname',
+            key: 'jobname',
+           
+
+        },{
+            title: '淡季住宿标准',
+            dataIndex: 'hotelprice1',
+            key: 'hotelprice1'
+
+        },  {
+            title: '旺季住宿标准',
+            dataIndex: 'hotelprice2',
+            key: 'hotelprice2'
+        },  {
+            title: '伙食费',
+            dataIndex: 'foodprice',
+            key: 'foodprice'
+        },  {
+            title: '交通补助',
+            dataIndex: 'othertraficprice',
+            key: 'othertraficprice'
+        }]
 
 		let props={
 			userList:this.state.userList,
 			userid:this.userid,
 			changeAccount:this.changeAccount.bind(this),
 			type:'custom-1',
-			tags:['交通工具','差旅费','出差事由'],
+			tags:['交通工具','差旅费','出差事由','注意事项'],
 			mainHeight:this.state.mainHeight,
 			title:title,
 			selectedIndex: 1,
 			rightType: "custom",
-			customRightComponent:<div  className='tripost-main-ui tripexpence-main-ui' style={{height:this.state.mainHeight}}>
-                <div ref='tripexpence-main-ui' style={{width:'100%',height:'100%'}}></div>
-                <div className='tripost-citylist-C' style={{width:(this.viewW - window.mainLeftSize)||0,height:this.state.mainHeight}}>
-                    <section>
-
-                        <ul>
-                            {this.state.cityList.length>1&&this.state.cityList[this.state.currentCityId].children.map((item,i)=>{
+			customRightComponent:<div  className=' tripexpence-main-ui' style={{height:this.state.mainHeight}}>
+                <section className={'tripexpence-map '+(this.state.showTable?'left':'')}>
+                  
+                    <div className="tripexpence-line"></div>
+              
+                    <div ref='tripexpence-main-ui' style={{width:'100%',height:this.state.mainHeight}}></div>
+                    <ul ref='city-C' className='tripexpence-citylist'  style={{transform:'translate3d('+(this.state.transX)+'px,'+this.state.transY+'px,0)'}}>
+                            {this.state.cityList.length>1 && this.state.currentCityIndex >-1 &&this.state.cityList[this.state.currentCityIndex].children.map((item,i)=>{
                                 return <li key={i}>
                                     <Checkbox
                                         checked={this.state.checked}
                                         onChange={()=>{this.setState({checked:!this.state.checked})}}
                                       >{item.label}</Checkbox></li>
                             })}
-                        </ul>
-                    </section>
-                    <section></section>
-                </div>
+                           {this.state.cityList.length>1 && this.state.currentCityIndex >-1 && <li onClick={this.next.bind(this)}>下一步</li>}
+                    </ul>
+                </section>
+                <section className={'tripexpence-table-C '+(this.state.showTable?'active':'')}>
+                     <div className="tripexpence-header pad-10">
+                        <Row>
+                            <Col span={22} className="tripexpence-header-inner"><span>{this.state.currentProv}</span>-差旅费</Col>
+                            <Col span={2}  className=''><Button type='primary' >返回</Button></Col>
+                        </Row>                      
+                        <div className="tripexpence-line"></div>
+                    </div>
+                    <Table bordered={true}
+                                
+                                 dataSource={this.state.dataSource} columns={columns} />
+                </section>
+                
             </div>
 		}
   
@@ -145,6 +193,12 @@ class ZmitiTripexpenceApp extends Component {
 		);
 	}
 
+    next(){
+        this.setState({
+            showTable:true
+        })
+    }
+
 	changeAccount(i){
         if(i*1===0){
             window.location.hash='triptraffic/出差宝/'; //tripost/tripseason       
@@ -152,6 +206,8 @@ class ZmitiTripexpenceApp extends Component {
             window.location.hash='tripexpence/';
         }else if(i*1===2){
             window.location.hash='tripreason/';
+        }else if(i*1===3){
+            window.location.hash='tripnotice/';
         }
 	}
     tripostlink(){
@@ -175,12 +231,18 @@ class ZmitiTripexpenceApp extends Component {
 
                 if(data.getret === 0){
                     //console.log(data,"信息列表");
-                    s.state.dataSource = data.list;
+                    s.state.dataSource = data.list.filter((item,i)=>{
+                        return item.provname === s.state.currentProv;
+                    });
+
+                    console.log(s.state.dataSource)
+                    
                     s.forceUpdate();
                 }
             }
         })
     }
+ 
 
 
     //弹框
@@ -339,14 +401,10 @@ class ZmitiTripexpenceApp extends Component {
             },
             success(data){
                 if(data.getret === 0){
-
-                    console.log(data.list[0].children);
-
+                   // console.log(data.list[0].children[1].children)
                     s.setState({
                         cityList:data.list[0].children,
-
-                        
-                    })
+                    });
                     
                 }
             }
@@ -394,13 +452,25 @@ class ZmitiTripexpenceApp extends Component {
         setTimeout(()=>{
             s.initEcharts();
         },100)
-        
+/*
+        $.ajax({
+            dataType:'jsonp',
+            url:"http://124.193.148.50:8017/_layouts/15/UBI.SharePoint.AppCenter/WrapperHandler/UBILogin.ashx?method=UserLogin&taken=123456789&LICD=2052&LoginSuc=false&UserName=admin&PassWord=admin1&jsonpCallback=callback",
+            data:{},
+            jsonp: "callback",
+            jsonpCallback: "callback",
+            success(data){
+                console.log(data);
+            }
+        })
+        */
 
         
 	}
 
     initEcharts(){
         var s = this;
+        this.lastCityId = this.lastCityId || -1;
         var myChart = echarts.init(this.refs['tripexpence-main-ui']);
             var app = {},
             option = null;
@@ -442,21 +512,78 @@ class ZmitiTripexpenceApp extends Component {
             }
 
             myChart.on('click', function (params) {
-               var cityid = -1;
+
+               console.log(params.name)
+            });
+            myChart.on('mouseover',(params)=>{
+               // console.log(params);
+                var cityid = -1,
+                    index = -1,
+                    currentProv='';
                s.state.cityList.map((city,i)=>{
                     if(params.name === city.label){
                         cityid = city.value;
+                        index = i;
+                        currentProv = city.label
                         return;
                     }
                });
-               if(cityid === -1){
-                return;
+               if(cityid === -1 || index === -1){
+                 return;
                }
+               s.lastCityId = cityid;
+
+
                s.setState({
-                    currentCityId:cityid
-               });
-               console.log(params.name)
-              
+                    currentCityIndex:index,
+                    currentProv
+
+                },()=>{
+
+                   var height = s.refs['city-C'].offsetHeight;
+
+                   var transY = params.event.offsetY-height;
+                   transY < 0 && (transY = 0);
+                    s.setState({
+                        currentCityIndex:index,
+                        transX:params.event.offsetX+2,
+                        transY
+                    });
+                });
+            });
+
+          
+            myChart.on('mouseout',(params)=>{
+                //console.log(params)
+                
+              setTimeout(()=>{
+                  var cityid = -1,
+                      index =-1;
+                   s.state.cityList.map((city,i)=>{
+                        if(params.name === city.label){
+                            cityid = city.value;
+                           index = i;
+                            return;
+                        }
+                   });
+                   if(cityid === -1){
+                      return;
+                   }
+                  
+                  
+                    if(cityid === s.lastCityId){
+                        console.log('out');
+                        s.setState({
+                           // currentCityIndex:-1,
+                        });
+                    }
+                    else{
+                        console.log('in');   
+                        //s.lastCityId = -1;
+                    }
+                    
+
+              },100)
             });
     }
 

@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import './css/editor.css';
 import ZmitiWxHeader from './wxheader/index.jsx';
 
+import '../static/editor/froala_editor.min';
+import '../static/editor/align.min';
+import '../static/editor/colors.min';
+import '../static/editor/font_family.min';
+import '../static/editor/link.min';
+import '../static/editor/table.min';
+
+
+
+
 export default class ZmitiEditor extends Component {
 	constructor(props) {
 		super(props);
@@ -39,24 +49,6 @@ export default class ZmitiEditor extends Component {
 		var prefix = this.props.isAdmin?'../':'./';
 		var assets=[
 				{
-					type:'script',
-					src:prefix+'static/editor/froala_editor.min.js',
-				},{
-					type:'script',
-					src:prefix+'static/editor/align.min.js',
-				},{
-					type:'script',
-					src:prefix+'static/editor/colors.min.js',
-				},{
-					type:'script',
-					src:prefix+'static/editor/image.min.js',
-				},{
-					type:'script',
-					src:prefix+'static/editor/link.min.js',
-				},{
-					type:'script',
-					src:prefix+'static/editor/table.min.js',
-				},{
 					type:'link',
 					src:'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css'
 				},{
@@ -76,16 +68,20 @@ export default class ZmitiEditor extends Component {
 					src:prefix+'static/editor/css/table.min.css',
 				}
 			];
+
+
+		var $ = window.$ || this.props.$;
 		
-		var iCount = 0,
-			doc = document,
+		var doc = document,
 			style="",
 			body=$('body');
+
+
 			
 
 			assets.forEach((item,i)=>{
 				if(item.type === 'script'){
-					iCount++;
+					
 					var script = doc.createElement('script');
 					script.src= item.src;
 					body.append(script);
