@@ -47,18 +47,19 @@ class ZmitiTripexpenceApp extends Component {
 			othertraficprice:'',//其它交通补助费
 			otherprice:'',//其它补助费
 			expenseid:'',
-			
+			jobList:[],
             inputValue: '',//省市
             defaultValue:[],//编辑时省市默认值
             options:[],
             cityList:[],
             disabled:false,
-            currentCityIndex:1,
+            currentCityIndex:-1,
             currentCityId:-1,
             transX:0,
             transY:0,
-            showTable:true,
-            currentProv:'云南'
+            showTable:false,
+            currentProv:'',
+            currentProvId:''
 		};
         this.viewW = document.documentElement.clientWidth;
 		this.currentId = -1;
@@ -95,7 +96,8 @@ class ZmitiTripexpenceApp extends Component {
 		
 
        
-		var title = this.props.params.title || '出差宝';
+		var title = this.props.params.title || '出差宝',
+            jobList = this.state.jobList;
         
         const columns = [{
             title: '市',
@@ -106,12 +108,10 @@ class ZmitiTripexpenceApp extends Component {
                   children: value,
                   props: {},
                 };
-                console.log(row,value);
-                if (index === 0) {
-                   obj.props.rowSpan = 2;
-                }
-                if (index === 1) {
-                   obj.props.rowSpan = 0;
+                if (index % jobList.length === 0) {
+                   obj.props.rowSpan = jobList.length;
+                }else{
+                   obj.props.rowSpan = 0; 
                 }
                 return obj;
               }
@@ -120,25 +120,35 @@ class ZmitiTripexpenceApp extends Component {
             title: '职务',
             dataIndex: 'jobname',
             key: 'jobname',
-           
-
         },{
             title: '淡季住宿标准',
             dataIndex: 'hotelprice1',
-            key: 'hotelprice1'
+            key: 'hotelprice1',
+            render:(text)=>{
+                return <span style={{color:text===0 ?'#f00':'#000'}}>{text}</span>
+            }
 
         },  {
             title: '旺季住宿标准',
             dataIndex: 'hotelprice2',
-            key: 'hotelprice2'
+            key: 'hotelprice2',
+            render:(text)=>{
+                return <span style={{color:text===0 ?'#f00':'#000'}}>{text}</span>
+            }
         },  {
             title: '伙食费',
             dataIndex: 'foodprice',
-            key: 'foodprice'
+            key: 'foodprice',
+            render:(text)=>{
+                return <span style={{color:text===0 ?'#f00':'#000'}}>{text}</span>
+            }
         },  {
             title: '交通补助',
             dataIndex: 'othertraficprice',
-            key: 'othertraficprice'
+            key: 'othertraficprice',
+            render:(text)=>{
+                return <span style={{color:text===0 ?'#f00':'#000'}}>{text}</span>
+            }
         }]
 
 		let props={
@@ -161,8 +171,8 @@ class ZmitiTripexpenceApp extends Component {
                             {this.state.cityList.length>1 && this.state.currentCityIndex >-1 &&this.state.cityList[this.state.currentCityIndex].children.map((item,i)=>{
                                 return <li key={i}>
                                     <Checkbox
-                                        checked={this.state.checked}
-                                        onChange={()=>{this.setState({checked:!this.state.checked})}}
+                                        checked={item.isChecked}
+                                        onChange={this.selectCity.bind(this,item)}
                                       >{item.label}</Checkbox></li>
                             })}
                            {this.state.cityList.length>1 && this.state.currentCityIndex >-1 && <li onClick={this.next.bind(this)}>下一步</li>}
@@ -172,13 +182,13 @@ class ZmitiTripexpenceApp extends Component {
                      <div className="tripexpence-header pad-10">
                         <Row>
                             <Col span={22} className="tripexpence-header-inner"><span>{this.state.currentProv}</span>-差旅费</Col>
-                            <Col span={2}  className=''><Button type='primary' >返回</Button></Col>
+                            <Col span={2}  className=''><Button type='primary' onClick={()=>{this.setState({showTable:false});this.addDataSource=[]}}>返回</Button></Col>
                         </Row>                      
                         <div className="tripexpence-line"></div>
                     </div>
-                    <Table bordered={true}
-                                
-                                 dataSource={this.state.dataSource} columns={columns} />
+                    <div className='pad-10'>
+                        <Table pagination={{defaultPageSize:this.state.jobList.length*3}} bordered={true} dataSource={this.state.dataSource} columns={columns} />
+                    </div>
                 </section>
                 
             </div>
@@ -193,9 +203,188 @@ class ZmitiTripexpenceApp extends Component {
 		);
 	}
 
+    selectCity(item){
+
+        item.isChecked=true;
+        var s = this;
+
+        this.addDataSource = this.addDataSource || [];
+        this.state.jobList.map((data,i)=>{
+            this.addDataSource.push({
+                cityid:item.value,
+                cityname:item.label,
+                companyid:this.state.companyid,
+                createtime:'',
+                expenseid:-1,
+                foodprice:0,
+                hotelprice1:0,
+                hotelprice2:0,
+                jobid:data.jobid,
+                jobname:data.jobname,
+                key:s.randomString(32),
+                level:data.level,
+                notes:data.notes,
+                otherprice:0,
+                othertraficprice:0,
+                overratio:0,
+                provid:this.state.currentProvId,
+                provname:this.state.currentProv
+            })    
+        });
+
+        /* var params = {
+            userid:this.userid,
+            getusersigid:this.getusersigid,  
+            setuserid:userid,          
+            provid:s.state.provid,//this.state.inputValue[0],
+            cityid:s.state.cityid,//this.state.inputValue[1],
+            jobid:s.state.jobid,
+            hotelprice1:s.state.hotelprice1,
+            hotelprice2:s.state.hotelprice2,
+            foodprice:s.state.foodprice,
+            othertraficprice:s.state.othertraficprice,
+            otherprice:s.state.otherprice,
+        }
+
+        $.ajax({
+          type:'POST',
+          url:window.baseUrl + 'travel/add_expense/',
+          data:params,
+          success(data){
+              message[data.getret === 0 ? 'success':'error'](data.getmsg);
+              s.setState({
+                modpostDialogVisible:false
+              });
+              s.bindNewdata();
+              console.log(this.url,'add_expense');
+          }
+        }); */
+        
+        this.forceUpdate();
+    }   
+
+    dataSort(){
+        var s = this;
+        s.state.dataSource = s.state.dataSource.sort(function(param1,param2){
+            return param1.cityname.localeCompare(param2.cityname);  //
+        })
+    }
+
     next(){
+        var s = this;
         this.setState({
-            showTable:true
+            showTable:true,
+        },()=>{
+            s.state.dataSource = s.defaultList.filter((item,i)=>{
+                return item.provname === s.state.currentProv;
+            });
+            s.state.dataSource.forEach((item,i)=>{
+                item.key = s.randomString(32);
+            });
+
+            var arr = [];
+
+            var dataSource = [];
+            s.state.dataSource.map((item,i)=>{
+                var isExists = false;
+               dataSource.map((data,k)=>{
+                    if(data.cityid === item.cityid){
+                        isExists = true;
+                    }
+               });
+               if(!isExists){
+                    dataSource.push(item);
+               }
+            });
+
+            s.state.dataSource.length  =0 ;
+            dataSource.forEach((data,k)=>{
+                s.state.jobList.map((item,i)=>{
+                     s.state.dataSource.push({
+                            cityid:data.cityid,
+                            cityname:data.cityname,
+                            companyid:data.companyid,
+                            createtime:data.createtime,
+                            expenseid:data.expenseid,
+                            foodprice:0,
+                            hotelprice1:0,
+                            hotelprice2:0,
+                            jobid:item.jobid,
+                            jobname:item.jobname,
+                            key:s.randomString(32),
+                            level:data.level,
+                            notes:data.notes,
+                            otherprice:0,
+                            othertraficprice:0,
+                            overratio:data.overratio,
+                            provid:data.provid,
+                            provname:data.provname
+                     })
+                });
+            });
+            s.defaultList.forEach((item,i)=>{
+                s.state.dataSource.forEach((data,k)=>{
+                    if(data.jobid === item.jobid &&　data.cityid === item.cityid){
+                        data.foodprice = item.foodprice;
+                        data.hotelprice1 = item.hotelprice1;
+                        data.hotelprice2 = item.hotelprice2;
+                        data.othertraficprice = item.othertraficprice;
+                        data.otherprice = item.otherprice;
+                    }
+                });
+            });
+           
+           s.state.dataSource = s.state.dataSource.concat(s.addDataSource||[]);
+           // s.state.dataSource = s.state.dataSource.concat(arr);
+
+
+           // s.state.dataSource= newData;
+            s.dataSort();
+            
+
+            s.forceUpdate();
+        });
+
+
+
+    }
+
+    inArrary(arr1,tuple){
+        var isExists = false;
+        var data = {};
+       
+        arr1.map((item,i)=>{
+            if(tuple.jobname==='普通'){
+                console.log(tuple.jobname , item.jobname)
+            }
+            if(tuple.jobid === item.jobid){
+                isExists = true;
+                data = item;
+            }
+
+        });
+        return {isExists,tuple,data};
+    }
+
+    loadJobList(){
+        var s = this;
+        var userid = this.props.params.userid?this.props.params.userid:this.userid;
+        $.ajax({
+            url:window.baseUrl+'travel/get_joblist',//接口地址
+            type:window.ajaxType || 'get',
+            data:{
+                setuserid:userid,
+                userid:s.userid,
+                getusersigid:s.getusersigid
+            },
+            success(data){
+
+                if(data.getret === 0){
+                    
+                    s.state.jobList = data.list;
+                    s.forceUpdate();
+                }
+            }
         })
     }
 
@@ -231,18 +420,28 @@ class ZmitiTripexpenceApp extends Component {
 
                 if(data.getret === 0){
                     //console.log(data,"信息列表");
-                    s.state.dataSource = data.list.filter((item,i)=>{
-                        return item.provname === s.state.currentProv;
-                    });
 
-                    console.log(s.state.dataSource)
+
+                    s.fillDataSouce(data);
                     
-                    s.forceUpdate();
+                    
                 }
             }
         })
     }
  
+    fillDataSouce(data){
+        var s = this;
+        s.defaultList = s.defaultList || data.list.concat([]);
+        s.state.dataSource = s.defaultList.filter((item,i)=>{
+            return item.provname === s.state.currentProv;
+        });
+
+        s.state.dataSource.forEach((item,i)=>{
+            item.key = s.randomString(32);
+        });
+        s.forceUpdate();
+    }
 
 
     //弹框
@@ -362,29 +561,7 @@ class ZmitiTripexpenceApp extends Component {
             }
         })
     }
-    //获取职务
-    getjobData(){
-        var s=this;
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
-    
-        $.ajax({
-            url:window.baseUrl+'travel/get_joblist',
-            type:window.ajaxType || 'get',
-            data:{
-                setuserid:userid,
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                companyid:s.companyid
-            },
-            success(data){
-                if(data.getret === 0){
-                    //console.log(data,"职务");
-                    s.state.tripost=data.list;
-                    s.forceUpdate();
-                }
-            }
-        })
-    }
+  
     //Cascader
     getCascader(){
         var s=this;
@@ -445,15 +622,16 @@ class ZmitiTripexpenceApp extends Component {
 		var s=  this;
 		s.bindNewdata();
 		s.getCompanydetail();
-		s.getjobData();
+		//s.getjobData();
         s.getCascader();
-       
+        s.loadJobList();//加载职务列表。
         
         setTimeout(()=>{
             s.initEcharts();
         },100)
-/*
-        $.ajax({
+
+      /*  $.ajax({
+            type:'post',
             dataType:'jsonp',
             url:"http://124.193.148.50:8017/_layouts/15/UBI.SharePoint.AppCenter/WrapperHandler/UBILogin.ashx?method=UserLogin&taken=123456789&LICD=2052&LoginSuc=false&UserName=admin&PassWord=admin1&jsonpCallback=callback",
             data:{},
@@ -512,8 +690,7 @@ class ZmitiTripexpenceApp extends Component {
             }
 
             myChart.on('click', function (params) {
-
-               console.log(params.name)
+                s.next();
             });
             myChart.on('mouseover',(params)=>{
                // console.log(params);
@@ -532,15 +709,27 @@ class ZmitiTripexpenceApp extends Component {
                  return;
                }
                s.lastCityId = cityid;
+             
 
 
                s.setState({
                     currentCityIndex:index,
-                    currentProv
+                    currentProv,
+                    currentProvId:cityid
 
                 },()=>{
 
                    var height = s.refs['city-C'].offsetHeight;
+
+
+                    s.fillDataSouce();
+                    s.state.cityList[index].children.forEach((item,i)=>{
+                        s.state.dataSource.forEach((data,k)=>{
+                            if(data.cityid === item.value){
+                                item.isChecked = true;
+                            }
+                        });
+                    });
 
                    var transY = params.event.offsetY-height;
                    transY < 0 && (transY = 0);
@@ -572,13 +761,11 @@ class ZmitiTripexpenceApp extends Component {
                   
                   
                     if(cityid === s.lastCityId){
-                        console.log('out');
                         s.setState({
                            // currentCityIndex:-1,
                         });
                     }
                     else{
-                        console.log('in');   
                         //s.lastCityId = -1;
                     }
                     
@@ -589,13 +776,14 @@ class ZmitiTripexpenceApp extends Component {
 
 	componentWillMount() {
 
-		let {resizeMainHeight,validateUser,loginOut} = this.props;
+		let {resizeMainHeight,validateUser,loginOut,randomString} = this.props;
 
 		resizeMainHeight(this);	
 		
 		let {username,userid,getusersigid} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
 		this.userid = userid;
-		this.getusersigid = getusersigid;
+        this.getusersigid = getusersigid;
+		this.randomString = randomString;
 
 		
 	}

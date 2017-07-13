@@ -105,7 +105,7 @@ class ZmitiTripostApp extends Component {
 			userid:this.userid,
 			changeAccount:this.changeAccount.bind(this),
 			type:'custom-1',
-			tags:['交通工具','差旅费','出差事由'],
+			tags:['交通工具','差旅费','出差事由','注意事项'],
 			mainHeight:this.state.mainHeight,
 			title:title,
 			selectedIndex: 100,
@@ -179,6 +179,8 @@ class ZmitiTripostApp extends Component {
             window.location.hash='tripexpence/';
         }else if(i*1===2){
             window.location.hash='tripreason/';
+        }else if(i*1===3){
+            window.location.hash='tripnotice/';
         }
 	}
 
