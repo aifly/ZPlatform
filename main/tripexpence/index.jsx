@@ -20,6 +20,8 @@ import ZmitiScript from '../components/zmiti-script.jsx';
 
 import '../static/echarts/china';
 
+import EditableCell from './editcell.jsx';
+
 class ZmitiTripexpenceApp extends Component {
 	constructor(props) {
 		super(props);
@@ -124,31 +126,48 @@ class ZmitiTripexpenceApp extends Component {
             title: '淡季住宿标准',
             dataIndex: 'hotelprice1',
             key: 'hotelprice1',
-            render:(text)=>{
-                return <span style={{color:text===0 ?'#f00':'#000'}}>{text}</span>
-            }
+
+            width:'16%',
+            render: (text, record, index) => (
+                <EditableCell
+                  value={text}
+                  onChange={this.onCellChange(index, 'name')}
+                />
+              )
 
         },  {
             title: '旺季住宿标准',
             dataIndex: 'hotelprice2',
             key: 'hotelprice2',
-            render:(text)=>{
-                return <span style={{color:text===0 ?'#f00':'#000'}}>{text}</span>
-            }
+            width:'16%',
+            render: (text, record, index) => (
+                <EditableCell
+                  value={text}
+                  onChange={this.onCellChange(index, 'name')}
+                />
+              )
         },  {
             title: '伙食费',
             dataIndex: 'foodprice',
             key: 'foodprice',
-            render:(text)=>{
-                return <span style={{color:text===0 ?'#f00':'#000'}}>{text}</span>
-            }
+            width:'16%',
+            render: (text, record, index) => (
+                <EditableCell
+                  value={text}
+                  onChange={this.onCellChange(index, 'name')}
+                />
+              )
         },  {
             title: '交通补助',
             dataIndex: 'othertraficprice',
             key: 'othertraficprice',
-            render:(text)=>{
-                return <span style={{color:text===0 ?'#f00':'#000'}}>{text}</span>
-            }
+            width:'16%',
+            render: (text, record, index) => (
+                <EditableCell
+                  value={text}
+                  onChange={this.onCellChange(index, 'name')}
+                />
+              )
         }]
 
 		let props={
@@ -229,36 +248,14 @@ class ZmitiTripexpenceApp extends Component {
                 overratio:0,
                 provid:this.state.currentProvId,
                 provname:this.state.currentProv
-            })    
+            });
+
+
+                
+
         });
 
-        /* var params = {
-            userid:this.userid,
-            getusersigid:this.getusersigid,  
-            setuserid:userid,          
-            provid:s.state.provid,//this.state.inputValue[0],
-            cityid:s.state.cityid,//this.state.inputValue[1],
-            jobid:s.state.jobid,
-            hotelprice1:s.state.hotelprice1,
-            hotelprice2:s.state.hotelprice2,
-            foodprice:s.state.foodprice,
-            othertraficprice:s.state.othertraficprice,
-            otherprice:s.state.otherprice,
-        }
-
-        $.ajax({
-          type:'POST',
-          url:window.baseUrl + 'travel/add_expense/',
-          data:params,
-          success(data){
-              message[data.getret === 0 ? 'success':'error'](data.getmsg);
-              s.setState({
-                modpostDialogVisible:false
-              });
-              s.bindNewdata();
-              console.log(this.url,'add_expense');
-          }
-        }); */
+       
         
         this.forceUpdate();
     }   
@@ -333,7 +330,34 @@ class ZmitiTripexpenceApp extends Component {
                     }
                 });
             });
-           
+           if(s.addDataSource){
+             s.addDataSource.map((item,i)=>{
+                 var userid = s.props.params.userid?s.props.params.userid:s.userid;
+
+                 var params = {
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,  
+                    setuserid:userid,          
+                    provid:s.state.currentProvId,//this.state.inputValue[0],
+                    cityid:item.cityid,//this.state.inputValue[1],
+                    jobid:item.jobid,
+                    hotelprice1:0,
+                    hotelprice2:0,
+                    foodprice:0,
+                    othertraficprice:0,
+                    otherprice:0,
+                }
+
+                $.ajax({
+                  type:'POST',
+                  url:window.baseUrl + 'travel/add_expense/',
+                  data:params,
+                  success(data){
+                     // message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                  }
+                }); 
+             })
+           }
            s.state.dataSource = s.state.dataSource.concat(s.addDataSource||[]);
            // s.state.dataSource = s.state.dataSource.concat(arr);
 
@@ -346,6 +370,12 @@ class ZmitiTripexpenceApp extends Component {
         });
 
 
+
+    }
+
+    onCellChange(){
+
+        
 
     }
 
@@ -690,62 +720,19 @@ class ZmitiTripexpenceApp extends Component {
             }
 
             myChart.on('click', function (params) {
+                s.mouseover(params);
                 s.next();
             });
             myChart.on('mouseover',(params)=>{
                // console.log(params);
-                var cityid = -1,
-                    index = -1,
-                    currentProv='';
-               s.state.cityList.map((city,i)=>{
-                    if(params.name === city.label){
-                        cityid = city.value;
-                        index = i;
-                        currentProv = city.label
-                        return;
-                    }
-               });
-               if(cityid === -1 || index === -1){
-                 return;
-               }
-               s.lastCityId = cityid;
-             
-
-
-               s.setState({
-                    currentCityIndex:index,
-                    currentProv,
-                    currentProvId:cityid
-
-                },()=>{
-
-                   var height = s.refs['city-C'].offsetHeight;
-
-
-                    s.fillDataSouce();
-                    s.state.cityList[index].children.forEach((item,i)=>{
-                        s.state.dataSource.forEach((data,k)=>{
-                            if(data.cityid === item.value){
-                                item.isChecked = true;
-                            }
-                        });
-                    });
-
-                   var transY = params.event.offsetY-height;
-                   transY < 0 && (transY = 0);
-                    s.setState({
-                        currentCityIndex:index,
-                        transX:params.event.offsetX+2,
-                        transY
-                    });
-                });
+               s.mouseover(params);
             });
 
           
             myChart.on('mouseout',(params)=>{
                 //console.log(params)
                 
-              setTimeout(()=>{
+             /* setTimeout(()=>{
                   var cityid = -1,
                       index =-1;
                    s.state.cityList.map((city,i)=>{
@@ -770,8 +757,62 @@ class ZmitiTripexpenceApp extends Component {
                     }
                     
 
-              },100)
+              },100)*/
             });
+    }
+
+    mouseover(params){
+        var s =  this;
+         var cityid = -1,
+                    index = -1,
+                    currentProv='',
+                    currentProvId=-1;
+
+
+
+               s.state.cityList.map((city,i)=>{
+                    if(params.name === city.label){
+                        cityid = city.value;
+                        index = i;
+                        currentProvId = city.value;
+                        currentProv = city.label
+                        return;
+                    }
+               });
+               if(cityid === -1 || index === -1){
+                 return;
+               }
+               s.lastCityId = cityid;
+             
+
+
+               s.setState({
+                    currentCityIndex:index,
+                    currentProv,
+                    currentProvId:currentProvId
+
+                },()=>{
+
+                   var height = s.refs['city-C'].offsetHeight;
+
+
+                    s.fillDataSouce();
+                    s.state.cityList[index].children.forEach((item,i)=>{
+                        s.state.dataSource.forEach((data,k)=>{
+                            if(data.cityid === item.value){
+                                item.isChecked = true;
+                            }
+                        });
+                    });
+
+                   var transY = params.event.offsetY-height;
+                   transY < 0 && (transY = 0);
+                    s.setState({
+                        currentCityIndex:index,
+                        transX:params.event.offsetX+2,
+                        transY
+                    });
+                });
     }
 
 	componentWillMount() {
