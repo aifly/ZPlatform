@@ -23,33 +23,33 @@ import '../static/echarts/china';
 import EditableCell from './editcell.jsx';
 
 class ZmitiTripexpenceApp extends Component {
-	constructor(props) {
-		super(props);
-		
-		this.state = {
-			setuserid:'',
-			selectedIndex:1,
-			mainHeight:document.documentElement.clientHeight-50,
-			mainHeight:document.documentElement.clientHeight-50,
-			modpostDialogVisible:false,
-			modpostEditDialogVisible:false,
-			companyid:'',
-			companyname:'',
-			dataSource:[],
-			transportid:'',
-			jobid:'',
-			transport:[],
-			tripost:[],
-			provid:'30',//省份id
-			cityid:'377',//城市id
-			jobid:'',//职务id
-			hotelprice1:'',//住宿费
-			hotelprice2:'',//旺季住宿费
-			foodprice:'',//伙食费
-			othertraficprice:'',//其它交通补助费
-			otherprice:'',//其它补助费
-			expenseid:'',
-			jobList:[],
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            setuserid:'',
+            selectedIndex:1,
+            mainHeight:document.documentElement.clientHeight-50,
+            mainHeight:document.documentElement.clientHeight-50,
+            modpostDialogVisible:false,
+            modpostEditDialogVisible:false,
+            companyid:'',
+            companyname:'',
+            dataSource:[],
+            transportid:'',
+            jobid:'',
+            transport:[],
+            tripost:[],
+            provid:'30',//省份id
+            cityid:'377',//城市id
+            jobid:'',//职务id
+            hotelprice1:'',//住宿费
+            hotelprice2:'',//旺季住宿费
+            foodprice:'',//伙食费
+            othertraficprice:'',//其它交通补助费
+            otherprice:'',//其它补助费
+            expenseid:'',
+            jobList:[],
             inputValue: '',//省市
             defaultValue:[],//编辑时省市默认值
             options:[],
@@ -63,10 +63,10 @@ class ZmitiTripexpenceApp extends Component {
             currentProv:'',
             currentProvId:'',
             seasonList:[],//淡旺季列表。
-		};
+        };
         this.viewW = document.documentElement.clientWidth;
-		this.currentId = -1;
-	}
+        this.currentId = -1;
+    }
     getProductDetail(record,index,e){
         var s=this;
         var defaultValue=new Array();
@@ -95,11 +95,11 @@ class ZmitiTripexpenceApp extends Component {
 
         this.forceUpdate();
     }
-	render() {
-		
+    render() {
+        
 
        
-		var title = this.props.params.title || '出差宝',
+        var title = this.props.params.title || '出差宝',
             jobList = this.state.jobList;
         
         const columns = [{
@@ -195,17 +195,17 @@ class ZmitiTripexpenceApp extends Component {
             
         }]
 
-		let props={
-			userList:this.state.userList,
-			userid:this.userid,
-			changeAccount:this.changeAccount.bind(this),
-			type:'custom-1',
-			tags:['交通工具','差旅费','出差事由','注意事项'],
-			mainHeight:this.state.mainHeight,
-			title:title,
-			selectedIndex: 1,
-			rightType: "custom",
-			customRightComponent:<div  className=' tripexpence-main-ui' style={{height:this.state.mainHeight}}>
+        let props={
+            userList:this.state.userList,
+            userid:this.userid,
+            changeAccount:this.changeAccount.bind(this),
+            type:'custom-1',
+            tags:['交通工具','差旅费','出差事由','注意事项'],
+            mainHeight:this.state.mainHeight,
+            title:title,
+            selectedIndex: 1,
+            rightType: "custom",
+            customRightComponent:<div  className=' tripexpence-main-ui' style={{height:this.state.mainHeight}}>
                 <section className={'tripexpence-map '+(this.state.showTable?'left':'')}>
                   
                     <div className="tripexpence-line"></div>
@@ -236,16 +236,16 @@ class ZmitiTripexpenceApp extends Component {
                 </section>
                 
             </div>
-		}
+        }
   
-		var mainComponent = <div>
-			<ZmitiUserList {...props}></ZmitiUserList>
-			
-		</div>;
-		return (
-			<MainUI component={mainComponent}></MainUI>
-		);
-	}
+        var mainComponent = <div>
+            <ZmitiUserList {...props}></ZmitiUserList>
+            
+        </div>;
+        return (
+            <MainUI component={mainComponent}></MainUI>
+        );
+    }
 
     edit(record,type,value){
         console.log(record);
@@ -649,7 +649,7 @@ class ZmitiTripexpenceApp extends Component {
         })
     }
 
-	changeAccount(i){
+    changeAccount(i){
         if(i*1===0){
             window.location.hash='triptraffic/出差宝/'; //tripost/tripseason       
         }else if(i*1===1){
@@ -659,7 +659,7 @@ class ZmitiTripexpenceApp extends Component {
         }else if(i*1===3){
             window.location.hash='tripnotice/';
         }
-	}
+    }
     tripostlink(){
         window.location="#/tripost/"
     }
@@ -667,15 +667,15 @@ class ZmitiTripexpenceApp extends Component {
         window.location="#/tripseason/"
     }
 
-	bindNewdata(){
+    bindNewdata(){
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
             url:window.baseUrl+'travel/get_expenselist',//接口地址
             type:window.ajaxType || 'get',
             data:{
-				userid:s.userid,
-				getusersigid:s.getusersigid
+                userid:s.userid,
+                getusersigid:s.getusersigid
             },
             success(data){
 
@@ -729,7 +729,7 @@ class ZmitiTripexpenceApp extends Component {
 
 
     //弹框
-	modifyaddpost(){
+    modifyaddpost(){
       var obserable=window.obserable;
          this.setState({
             showCredentialsDiolog:true
@@ -797,13 +797,13 @@ class ZmitiTripexpenceApp extends Component {
     delData(expenseid){
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
-    	$.ajax({
+        $.ajax({
             url:window.baseUrl+'travel/del_expense/',
             type:window.ajaxType || 'get',
             data:{
                 setuserid:userid,
-				userid:s.userid,
-				getusersigid:s.getusersigid,
+                userid:s.userid,
+                getusersigid:s.getusersigid,
                 expenseid:expenseid,
             },
             success(data){
@@ -902,11 +902,11 @@ class ZmitiTripexpenceApp extends Component {
         console.log(this.currentId,'currentId');
     }
 
-	componentDidMount() {
-		var s=  this;
-		s.bindNewdata();
-		s.getCompanydetail();
-		//s.getjobData();
+    componentDidMount() {
+        var s=  this;
+        s.bindNewdata();
+        s.getCompanydetail();
+        //s.getjobData();
         s.getCascader();
         s.loadJobList();//加载职务列表。
         s.loadSeasonData();//加载淡旺季列表。
@@ -915,7 +915,7 @@ class ZmitiTripexpenceApp extends Component {
             s.initEcharts();
         },100)
 
-	}
+    }
 
     initEcharts(){
         var s = this;
@@ -1059,19 +1059,19 @@ class ZmitiTripexpenceApp extends Component {
             });
     }
 
-	componentWillMount() {
+    componentWillMount() {
 
-		let {resizeMainHeight,validateUser,loginOut,randomString} = this.props;
+        let {resizeMainHeight,validateUser,loginOut,randomString} = this.props;
 
-		resizeMainHeight(this);	
-		
-		let {username,userid,getusersigid} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
-		this.userid = userid;
+        resizeMainHeight(this); 
+        
+        let {username,userid,getusersigid} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
+        this.userid = userid;
         this.getusersigid = getusersigid;
-		this.randomString = randomString;
+        this.randomString = randomString;
 
-		
-	}
+        
+    }
 
 }
 
