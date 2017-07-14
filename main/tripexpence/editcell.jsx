@@ -20,6 +20,7 @@ export default class EditableCell extends React.Component {
     if (this.props.onChange) {
       this.props.onChange(this.state.value);
     }
+    this.props.onEdit && this.props.onEdit(this.state.value);
   }
   edit() {
     this.setState({ editable: true });
