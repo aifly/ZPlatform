@@ -240,7 +240,7 @@ class ZmitiTripexpenceApp extends Component {
                            {this.state.cityList.length>1 && this.state.currentCityIndex >-1 && <li onClick={this.next.bind(this)}>下一步</li>}
                     </ul>
                 </section>
-                <section className={'tripexpence-table-C '+(this.state.showTable?'active':'')}>
+                <section style={{maxHeight:this.state.mainHeight,overflow:'auto'}} className={'tripexpence-table-C '+(this.state.showTable?'active':'')}>
                      <div className="tripexpence-header pad-10">
                         <Row>
                             <Col span={22} className="tripexpence-header-inner"><span>{this.state.currentProv}</span>-差旅费</Col>
