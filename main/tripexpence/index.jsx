@@ -181,6 +181,7 @@ class ZmitiTripexpenceApp extends Component {
             key: 'daterange',
             width:'30%',
             render: (value, row, index) => {
+                
                 const obj = {
                   children: value,
                    props: {},
@@ -189,6 +190,23 @@ class ZmitiTripexpenceApp extends Component {
                    obj.props.rowSpan = jobList.length;
                 }else{
                    obj.props.rowSpan = 0; 
+                }
+                if(value){
+                    obj.children = value.split('/').map((range,l)=>{
+                        return <div key={l}>
+                              <Row type='flex' justify={'space-around'}>
+                                    <Col span={18}><RangePicker  value={[moment(range.split(',')[0]), moment(range.split(',')[1])]} onChange={this.dateonChange.bind(this,l,row)} /></Col>
+                                    <Col span={6}>
+                                        <Button.Group>
+                                          {l === value.split('/').length-1 && <Button onClick={this.addSeason.bind(this,row,false)} type='primary'>+</Button>}
+                                          <Button type='primary' onClick={this.deleteSeason.bind(this,l,row)}>-</Button>
+                                        </Button.Group>
+                                    </Col>
+                                </Row>
+                            </div>
+                    })
+                }else{
+                    obj.children = <Button onClick={this.addSeason.bind(this,row,true)} type='primary'>+</Button>;
                 }
                 return obj;
               }
@@ -426,19 +444,14 @@ class ZmitiTripexpenceApp extends Component {
            s.state.dataSource.forEach((item,i)=>{
               s.state.seasonList.map((sea,k)=>{
                  if(item.cityid === sea.cityid){
-                   item.daterange =  sea.daterange.split('/').map((range,l)=>{
-                        if(range){
-                            return s.renderDateRangle(l,range,sea,s,item);
-                        }
-                        
-                        return <div key={l}>1</div>;
-                    });
+                   item.daterange =  sea.daterange;
                     item.daterange1 = sea.daterange;
                  }
               });
             
            });
-           s.state.dataSource.forEach((item,i)=>{
+
+           /*s.state.dataSource.forEach((item,i)=>{
                 if(!item.daterange){
                      var date = new  Date();
                     var year = date.getFullYear();
@@ -449,7 +462,7 @@ class ZmitiTripexpenceApp extends Component {
                     item.daterange = <Button onClick={this.addSeason.bind(s,null,!item.daterange,item)} type='primary'>+</Button>
                     item.daterange1 = range;
                 }
-           })
+           })*/
 
 
 
@@ -468,23 +481,17 @@ class ZmitiTripexpenceApp extends Component {
 
     }
 
-    deleteSeason(sea,index){
+    deleteSeason(index,sea){
        
-        console.log(sea);
+        
         var s = this;
+
         var ranges = sea.daterange.split('/');
         ranges.splice(index,1);
 
         sea.daterange = ranges.join('/');
         sea.daterange1 = ranges.join('/');
-        s.state.dataSource.forEach((item,i)=>{
-               item.daterange =  sea.daterange.split('/').map((range,l)=>{
-                if(range){
-                    return s.renderDateRangle(l,range,sea,s,item);
-                }
-                return <div key={l}>1</div>;
-            })
-        });
+      
 
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
               var params = {
@@ -496,9 +503,19 @@ class ZmitiTripexpenceApp extends Component {
                 provid:sea.provid,//this.state.provid,//
                 cityid:sea.cityid,//this.state.cityid,//
             }
+            var type = 'edit_seasondate';
+            if(!sea.daterange){
+                type = 'del_seasondate';
+                params = {
+                    userid:this.userid,
+                    getusersigid:this.getusersigid,
+                    provid:sea.provid,
+                    cityid:sea.cityid
+                }
+            }
             $.ajax({
               type:'POST',
-              url:window.baseUrl + 'travel/edit_seasondate',
+              url:window.baseUrl + 'travel/'+type,
               data:params,
               success(data){
                   message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -508,33 +525,29 @@ class ZmitiTripexpenceApp extends Component {
         this.forceUpdate();
     }
 
-    addSeason(sea,isNew,item){
-        var sea = sea || {};
+    addSeason(sea,isNew){
+
+
+ 
         var date = new  Date();
         var year = date.getFullYear();
         var month = date.getMonth()+1;
         var day = date.getDate();
         var startDate = year+'-'+month+'-'+day;
+        
         if(isNew){
-            sea.daterange = startDate+','+startDate;
-            sea.daterange1= startDate+','+startDate;
-           
+            sea.daterange  = startDate+','+startDate;
+            sea.daterange1 = startDate+','+startDate;
         }else{
-            sea.daterange+='/'+startDate+','+startDate;
-            sea.daterange1+='/'+startDate+','+startDate;
+            sea.daterange += "/"+startDate+','+startDate;
+            sea.daterange1+= '/'+startDate+','+startDate;
         }
-        sea.provid = item.provid;
-        sea.cityid = item.cityid;
+        
+        
         var s = this;
-        s.state.dataSource.forEach((item,i)=>{
-               item.daterange =  sea.daterange.split('/').map((range,l)=>{
-                if(range){
-                    return s.renderDateRangle(l,range,sea,s,item);
-                }
-                return <div key={l}>1</div>;
-            })
-        });
+        
         var type = isNew ? 'add_seasondate':'edit_seasondate';
+        //var type = 'edit_seasondate';
         
             var userid = this.props.params.userid?this.props.params.userid:this.userid;
               var params = {
@@ -542,7 +555,7 @@ class ZmitiTripexpenceApp extends Component {
                 setuserid:userid,
                 getusersigid:this.getusersigid,
                 seasontype:0,//0旺季1淡季
-                daterange:sea.daterange1,
+                daterange:sea.daterange,
                 provid:sea.provid,//this.state.provid,//
                 cityid:sea.cityid,//this.state.cityid,//
             }
@@ -562,31 +575,33 @@ class ZmitiTripexpenceApp extends Component {
 
     dateonChange(l,item,date,dateString){
 
+        
+      var arr = item.daterange.split('/');
+       arr[l] = dateString.join(',');
 
-       
-     
-        item.daterange1.split('/').splice(l,1,dateString.join(','));
-      
+       item.daterange = arr.join('/');
+
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
-              var params = {
-                userid:this.userid,
-                setuserid:userid,
-                getusersigid:this.getusersigid,
-                seasontype:0,//0旺季1淡季
-                daterange:item.daterange1,
-                provid:item.provid,//this.state.provid,//
-                cityid:item.cityid,//this.state.cityid,//
-            }
-           
-            $.ajax({
-              type:'POST',
-              url:window.baseUrl + 'travel/edit_seasondate',
-              data:params,
-              success(data){
-                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
-              }
-        }); 
+        var params = {
+            userid:this.userid,
+            setuserid:userid,
+            getusersigid:this.getusersigid,
+            seasontype:0,//0旺季1淡季
+            daterange:item.daterange,
+            provid:item.provid,//this.state.provid,//
+            cityid:item.cityid,//this.state.cityid,//
+        }
+
         this.forceUpdate();
+       
+        $.ajax({
+          type:'POST',
+          url:window.baseUrl + 'travel/edit_seasondate',
+          data:params,
+          success(data){
+              message[data.getret === 0 ? 'success':'error'](data.getmsg);
+          }
+        }); 
     }   
 
     onCellChange(){
@@ -597,7 +612,7 @@ class ZmitiTripexpenceApp extends Component {
 
         return <div key={l}>
                   <Row type='flex' justify={'space-around'}>
-                        <Col span={18}><RangePicker  value={[moment(range.split(',')[0]), moment(range.split(',')[1])]} onChange={this.dateonChange.bind(this,l,item)} /></Col>
+                        <Col span={18}><RangePicker  value={[moment(range.split(',')[0]), moment(range.split(',')[1])]} onChange={this.dateonChange.bind(this,l,item,sea)} /></Col>
                         <Col span={6}>
                             <Button.Group>
                               {l === sea.daterange.split('/').length-1 && <Button onClick={this.addSeason.bind(s,sea,false,item)} type='primary'>+</Button>}
@@ -774,7 +789,6 @@ class ZmitiTripexpenceApp extends Component {
                   
                 }
             });
-            console.log(params,'edit_expense'); 
 
         }else{
             $.ajax({
