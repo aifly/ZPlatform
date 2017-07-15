@@ -249,7 +249,7 @@ class ZmitiTripexpenceApp extends Component {
                         <div className="tripexpence-line"></div>
                     </div>
                     <div className='pad-10'>
-                        <Table pagination={{defaultPageSize:this.state.jobList.length*3}} bordered={true} dataSource={this.state.dataSource} columns={columns} />
+                        <Table pagination={{pageSize:this.state.jobList.length*3}} bordered={true} dataSource={this.state.dataSource} columns={columns} />
                     </div>
                 </section>
                 
