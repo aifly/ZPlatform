@@ -266,7 +266,6 @@ class ZmitiTripexpenceApp extends Component {
     }
 
     edit(record,type,value){
-        console.log(record);
         var s = this;
          var userid = s.props.params.userid?s.props.params.userid:s.userid;
         var params = {
@@ -631,7 +630,6 @@ class ZmitiTripexpenceApp extends Component {
        
         arr1.map((item,i)=>{
             if(tuple.jobname==='普通'){
-                console.log(tuple.jobname , item.jobname)
             }
             if(tuple.jobid === item.jobid){
                 isExists = true;
@@ -695,9 +693,7 @@ class ZmitiTripexpenceApp extends Component {
             success(data){
 
                 if(data.getret === 0){
-                    //console.log(data,"信息列表");
 
-                    console.log(data.list[0])
                     s.fillDataSouce(data);
                     
                     
@@ -722,7 +718,6 @@ class ZmitiTripexpenceApp extends Component {
                 if(data.getret === 0){
                     //console.log(data.list,"信息列表");
                     s.state.seasonList = data.list;
-                    console.log(data.list)
                    
                 }
             }
@@ -801,7 +796,6 @@ class ZmitiTripexpenceApp extends Component {
                     modpostDialogVisible:false
                   });
                   s.bindNewdata();
-                  console.log(this.url,'add_expense');
               }
             }); 
         }
@@ -876,7 +870,6 @@ class ZmitiTripexpenceApp extends Component {
             },
             success(data){
                 if(data.getret === 0){
-                   // console.log(data.list[0].children[1].children)
                     s.setState({
                         cityList:data.list[0].children,
                     });
@@ -892,7 +885,6 @@ class ZmitiTripexpenceApp extends Component {
         s.state.defaultValue=value;
         s.state.provid=value[0];
         s.state.cityid=value[1];
-        //console.log(s.state.provid,s.state.cityid);        
         s.forceUpdate();
     }
     //增加
@@ -913,7 +905,6 @@ class ZmitiTripexpenceApp extends Component {
             othertraficprice:'',
             otherprice:'',            
         })
-        console.log(this.currentId,'currentId');
     }
 
     componentDidMount() {
@@ -982,7 +973,6 @@ class ZmitiTripexpenceApp extends Component {
                 },100)
             });
             myChart.on('mouseover',(params)=>{
-               // console.log(params);
 
                !this.state.showTable && s.mouseover(params);
             });
