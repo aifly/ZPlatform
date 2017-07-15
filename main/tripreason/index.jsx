@@ -336,7 +336,7 @@ class ZmitiTripReasonApp extends Component {
         this.setState({
             modpostDialogVisible:true,
             tripname:'',
-            ptripcode:1
+            ptripcode:'1Aekq8x'
         })
         s.forceUpdate();
     }
@@ -345,7 +345,7 @@ class ZmitiTripReasonApp extends Component {
     	var s=this;
     	$.ajax({
     		url:window.baseUrl+'user/get_companydetail',
-            type:window.ajaxType || 'get',
+            type:'POST',
     		data:{
     			userid:s.userid,
     			getusersigid:s.getusersigid
