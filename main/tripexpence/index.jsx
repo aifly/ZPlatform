@@ -282,10 +282,14 @@ class ZmitiTripexpenceApp extends Component {
             otherprice:record.otherprice,
             expenseid:record.expenseid
         }
-        params[type] = value;
+        params[type] = value*1;
+
         
         var type = record.expenseid ? 'edit_expense':'add_expense';
-      
+        
+        console.log(params);
+        console.log(type);
+              
         $.ajax({
             type:'POST',
             url:window.baseUrl + 'travel/'+type,
@@ -308,7 +312,7 @@ class ZmitiTripexpenceApp extends Component {
                 cityname:item.label,
                 companyid:this.state.companyid,
                 createtime:'',
-                expenseid:-1,
+                expenseid:'',
                 foodprice:0,
                 hotelprice1:0,
                 hotelprice2:0,
@@ -432,7 +436,7 @@ class ZmitiTripexpenceApp extends Component {
                   url:window.baseUrl + 'travel/add_expense/',
                   data:params,
                   success(data){
-                     // message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                    //  message[data.getret === 0 ? 'success':'error'](data.getmsg);
                   }
                 }); 
              })
@@ -444,7 +448,6 @@ class ZmitiTripexpenceApp extends Component {
               s.state.seasonList.map((sea,k)=>{
                  if(item.cityid === sea.cityid){
                    item.daterange =  sea.daterange;
-                    item.daterange1 = sea.daterange;
                  }
               });
             
@@ -558,6 +561,7 @@ class ZmitiTripexpenceApp extends Component {
                 provid:sea.provid,//this.state.provid,//
                 cityid:sea.cityid,//this.state.cityid,//
             }
+
             $.ajax({
               type:'POST',
               url:window.baseUrl + 'travel/'+type,
