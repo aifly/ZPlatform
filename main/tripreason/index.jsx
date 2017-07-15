@@ -25,13 +25,13 @@ class ZmitiTripReasonApp extends Component {
 			mainHeight:document.documentElement.clientHeight-50,
 			modpostDialogVisible:false,
 			modpostEditDialogVisible:false,		
-			jobname:'',
-			level:1,
-			setjobid:'',
-			setjobname:'',
-			setlevel:'',
+			tripname:'',
+			ptripcode:'1Aekq8x',
+			settripcode:'',
+			settripname:'',
+			setptripcode:'',
 			dataSource:[],
-			jobid:'',
+			tripcode:'',
 			keyword:'',
 			companyname:'',
 		};
@@ -40,15 +40,15 @@ class ZmitiTripReasonApp extends Component {
 	}
     getProductDetail(record,index,e){
         var s=this;
-        this.currentId = record.jobid;
+        this.currentId = record.tripcode;
         if(e.target.nodeName === "SPAN" || e.target.nodeName === 'BUTTON'){
             return;//如果点击的是删除按钮，则不用弹出产品详情。
         }
         this.setState({
             modpostDialogVisible:true,
-            jobid:record.jobid,
-            jobname:record.jobname,
-            level:record.level,
+            tripcode:record.tripcode,
+            tripname:record.tripname,
+            ptripcode:record.ptripcode,
         })
 
         this.forceUpdate();
@@ -57,28 +57,28 @@ class ZmitiTripReasonApp extends Component {
 		var s =this;
 		const columns = [{
             title: '出差事由',
-            dataIndex: 'jobname',
-            key: 'jobname'
+            dataIndex: 'tripname',
+            key: 'tripname'
 
         },{
             title: '类别',
-            dataIndex: 'level',
-            key: 'level',
+            dataIndex: 'ptripcode',
+            key: 'ptripcode',
             render:(value,record,index)=>{
             	switch(value){
-					case 1:
-						return "出差只报首尾两天的补助";
+					case '1Aekq8x':
+						return "在途天数";
 						break;
-					case 2:
-						return "出差天数补助全部报销";
+					case 'h7Wmv3d':
+						return "自然天数";
 						break;
 				}
             }
 
         },{
             title: '创建时间',
-            dataIndex: 'creattime',
-            key: 'creattime'
+            dataIndex: 'createtime',
+            key: 'createtime'
 
         },  {
             title: '操作',
@@ -86,7 +86,7 @@ class ZmitiTripReasonApp extends Component {
             key: '',
             width:150,
             render:(text,recoder,index)=>(
-                <Button  onClick={this.delData.bind(this,recoder.jobid)}> 删除</Button>                
+                <Button  onClick={this.delData.bind(this,recoder.tripcode)}> 删除</Button>                
             )
 
         }]
@@ -136,18 +136,18 @@ class ZmitiTripReasonApp extends Component {
                       >                        
                           
                           <Input placeholder="出差事由" 
-							value={this.state.jobname}
-							onChange={(e)=>{this.state.jobname=e.target.value;this.forceUpdate();}}
+							value={this.state.tripname}
+							onChange={(e)=>{this.state.tripname=e.target.value;this.forceUpdate();}}
                           />                      
                       </FormItem>
                       <FormItem
                         {...formItemLayout}
-                        label="职务级别"
+                        label="类别"
                         hasFeedback
                       >
-                          <Select placeholder="类别" onChange={(value)=>{this.state.level=value;this.forceUpdate();}} value={this.state.level}>
-                          	<Option value={1}>出差只报首尾两天的补助</Option>
-                          	<Option value={2}>出差天数补助全部报销</Option>
+                          <Select placeholder="类别" onChange={(value)=>{this.state.ptripcode=value;this.forceUpdate();}} value={this.state.ptripcode}>
+                          	<Option value={'1Aekq8x'}>在途天数</Option>
+                          	<Option value={'h7Wmv3d'}>自然天数</Option>
                           </Select>                     
                       </FormItem>
 
@@ -206,7 +206,7 @@ class ZmitiTripReasonApp extends Component {
             this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
 
             this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.jobname.indexOf(this.state.keyword)>-1;
+                return  item.tripname.indexOf(this.state.keyword)>-1;
             });
             this.forceUpdate();
         })
@@ -216,9 +216,8 @@ class ZmitiTripReasonApp extends Component {
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
-            //url:window.baseUrl+'travel/get_joblist',//接口地址
-            url:'tripreason/data.json',
-            type:window.ajaxType || 'get',
+            url:window.baseUrl+'travel/search_businesstriplist',//接口地址
+            type:'POST',
             data:{
 				setuserid:userid,
 				userid:s.userid,
@@ -227,7 +226,7 @@ class ZmitiTripReasonApp extends Component {
             success(data){
 
                 if(data.getret === 0){
-                    console.log(data,"信息列表");
+                    //console.log(data,"信息列表");
                     s.state.dataSource = data.list;
                     s.forceUpdate();
                 }
@@ -255,16 +254,16 @@ class ZmitiTripReasonApp extends Component {
             userid:this.userid,
             getusersigid:this.getusersigid,  
             setuserid:userid,          
-            jobname:s.state.jobname,
-            level:s.state.level,
+            tripname:s.state.tripname,
+            ptripcode:s.state.ptripcode,
         }
 
         if(this.currentId!==-1){//编辑        
-            params.jobid = this.currentId;  
+            params.tripcode = this.currentId;  
             
             $.ajax({
                 type:'POST',
-                //url:window.baseUrl + 'travel/edit_job/',
+                url:window.baseUrl + 'travel/edit_businesstrip/',
                 data:params,
                 success(data){
                   message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -276,11 +275,11 @@ class ZmitiTripReasonApp extends Component {
                   
                 }
             });
-            console.log(params,'edit_job');
+
         }else{
             $.ajax({
               type:'POST',
-              //url:window.baseUrl + 'travel/add_job/',
+              url:window.baseUrl + 'travel/add_businesstrip/',
               data:params,
               success(data){
                   message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -288,7 +287,7 @@ class ZmitiTripReasonApp extends Component {
                     modpostDialogVisible:false
                   });
                   s.bindNewdata();
-                  console.log(this.url,'add_job');
+
               }
             }); 
         }
@@ -297,18 +296,18 @@ class ZmitiTripReasonApp extends Component {
 
 	
     //删除
-    delData(jobid){
+    delData(tripcode){
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         
         $.ajax({
-            //url:window.baseUrl+'travel/del_job/',
-            type:window.ajaxType || 'get',
+            url:window.baseUrl+'travel/del_businesstrip/',
+            type:'POST',
             data:{
                 setuserid:userid,
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                jobid:jobid,
+                tripcode:tripcode,
             },
             success(data){
                 if(data.getret === 0){
@@ -336,8 +335,8 @@ class ZmitiTripReasonApp extends Component {
         this.currentId=-1;
         this.setState({
             modpostDialogVisible:true,
-            jobname:'',
-            level:1
+            tripname:'',
+            ptripcode:1
         })
         s.forceUpdate();
     }
