@@ -36,6 +36,7 @@ export default class EditableCell extends React.Component {
                 value={value}
                 onChange={this.handleChange.bind(this)}
                 onPressEnter={this.check.bind(this)}
+                onBlur={this.check.bind(this)}
               />
               <Icon
                 type="check"
