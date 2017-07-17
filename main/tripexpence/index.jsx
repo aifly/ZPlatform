@@ -328,9 +328,6 @@ class ZmitiTripexpenceApp extends Component {
                 provname:this.state.currentProv
             });
 
-
-                
-
         });
 
        
@@ -433,15 +430,18 @@ class ZmitiTripexpenceApp extends Component {
 
                 $.ajax({
                   type:'POST',
+                  async: false,
                   url:window.baseUrl + 'travel/add_expense/',
                   data:params,
                   success(data){
+                     
                     //  message[data.getret === 0 ? 'success':'error'](data.getmsg);
                   }
                 }); 
              })
            }
-           
+
+
            s.state.dataSource = s.state.dataSource.concat(s.addDataSource||[]);
 
            s.state.dataSource.forEach((item,i)=>{
@@ -913,7 +913,7 @@ class ZmitiTripexpenceApp extends Component {
 
     componentDidMount() {
         var s=  this;
-        s.bindNewdata();
+         s.bindNewdata();
         s.getCompanydetail();
         //s.getjobData();
         s.getCascader();
