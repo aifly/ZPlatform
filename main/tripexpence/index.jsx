@@ -435,12 +435,12 @@ class ZmitiTripexpenceApp extends Component {
                   data:params,
                   success(data){
                      
+                     item.expenseid = data.key;
                     //  message[data.getret === 0 ? 'success':'error'](data.getmsg);
                   }
                 }); 
              })
            }
-
 
            s.state.dataSource = s.state.dataSource.concat(s.addDataSource||[]);
 
