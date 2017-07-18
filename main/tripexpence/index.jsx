@@ -294,7 +294,10 @@ class ZmitiTripexpenceApp extends Component {
         }
         params[type] = value*1;
         
-        var type1 = record.expenseid ? 'edit_expense':'add_expense';
+        var type1 = record.expenseid ? 'edit_expense':'edit_expense';
+
+
+
         
         $.ajax({
             type:'POST',
@@ -384,8 +387,7 @@ class ZmitiTripexpenceApp extends Component {
                     }
                });
                if(!isExists){
-                    item.expenseid = '';
-
+        
                     dataSource.push(item);
                }
             });
@@ -400,7 +402,7 @@ class ZmitiTripexpenceApp extends Component {
                             cityname:data.cityname,
                             companyid:data.companyid,
                             createtime:data.createtime,
-                            expenseid:'',
+                            expenseid:data.expenseid,
                             foodprice:0,
                             hotelprice1:0,
                             hotelprice2:0,
