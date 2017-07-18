@@ -266,6 +266,16 @@ class ZmitiTripexpenceApp extends Component {
     }
 
     edit(record,type,value){
+
+        if(isNaN(value*1)){
+            message.error('请输入数字');
+            return;
+        }
+        else if(value*1<0){
+            message.error('金额必须大于0');
+            return;
+        }
+
         var s = this;
          var userid = s.props.params.userid?s.props.params.userid:s.userid;
         var params = {

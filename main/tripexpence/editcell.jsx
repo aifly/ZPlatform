@@ -11,7 +11,7 @@ export default class EditableCell extends React.Component {
     }
   }
   handleChange(e) {
-    const value = e;
+    const value = e.target.value;
     this.setState({ value });
   }
   check(){
@@ -32,7 +32,7 @@ export default class EditableCell extends React.Component {
         {
           editable ?
             <div className="editable-cell-input-wrapper">
-              <InputNumber
+              <Input
                 value={value}
                 onChange={this.handleChange.bind(this)}
                 onPressEnter={this.check.bind(this)}
