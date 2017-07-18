@@ -283,24 +283,30 @@ class ZmitiTripexpenceApp extends Component {
             expenseid:record.expenseid
         }
         params[type] = value*1;
-
         
-       // var type = record.expenseid ? 'edit_expense':'add_expense';
+        var type1 = record.expenseid ? 'edit_expense':'add_expense';
         
         $.ajax({
             type:'POST',
-            url:window.baseUrl + 'travel/edit_expense',
+            url:window.baseUrl + 'travel/'+type1,
             data:params,
             success(data){
               s.state.dataSource.forEach((item,i)=>{
                 if(item.cityid === record.cityid && item.jobid === record.jobid){
-                    item[type] = value;
+                    item[type] = value*1;
                 }
+
                 s.forceUpdate();
-              })
+              });
+              s.defaultList.forEach((item,i)=>{
+                if(item.cityid === record.cityid && item.jobid === record.jobid){
+                    item[type] = value*1;
+                }
+              });
               message[data.getret === 0 ? 'success':'error'](data.getmsg);
             }
         });
+        window.s = this;
     }
 
     selectCity(item){

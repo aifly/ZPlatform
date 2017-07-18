@@ -1,6 +1,6 @@
 
 import React from 'react';
-import {Cascader, message,Input,Button, Row, Col,Popconfirm,DatePicker,Table ,Icon } from '../commoncomponent/common.jsx';
+import {Cascader, message,Input,Button,InputNumber, Row, Col,Popconfirm,DatePicker,Table ,Icon } from '../commoncomponent/common.jsx';
 
 export default class EditableCell extends React.Component {
   constructor(props) {
@@ -11,7 +11,7 @@ export default class EditableCell extends React.Component {
     }
   }
   handleChange(e) {
-    const value = e.target.value;
+    const value = e;
     this.setState({ value });
   }
   check(){
@@ -32,7 +32,7 @@ export default class EditableCell extends React.Component {
         {
           editable ?
             <div className="editable-cell-input-wrapper">
-              <Input
+              <InputNumber
                 value={value}
                 onChange={this.handleChange.bind(this)}
                 onPressEnter={this.check.bind(this)}
