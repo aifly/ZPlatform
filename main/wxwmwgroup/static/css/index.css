@@ -1,0 +1,39 @@
+.tripseason-main-ui {
+  overflow: auto; }
+  .tripseason-main-ui .zmiti-tripseason-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .tripseason-main-ui .zmiti-tripseason-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .tripseason-main-ui .zmiti-tripseason-button-right button {
+    float: right;
+    margin-top: 5px; }
+  .tripseason-main-ui .zmiti-tripseason-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .tripseason-main-ui .tripseason-heigth45 {
+    height: 45px;
+    line-height: 45px;
+    overflow: hidden; }
+  .tripseason-main-ui .tripseason-search {
+    margin: 15px 0; }
+
+.tripseason-seldate {
+  width: 100px;
+  float: left; }
+
+.tripseason-col3 {
+  float: left;
+  padding: 0 10px;
+  line-height: 30px; }
+
+/*# sourceMappingURL=index.css.map */

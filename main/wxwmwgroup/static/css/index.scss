@@ -1,0 +1,81 @@
+@mixin pos($v) {
+  @if
+  $v == a {
+  position: absolute;
+} @else if $v == r {
+  position: relative;
+} @else if $v == f {
+  position: fixed;
+}
+}
+@mixin transform($v) {
+  -webkit-transform: $v;
+  transform: $v;
+}
+
+@mixin transformOrigin($v) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+
+@mixin backgroundSize($v:cover) {
+  background-size: $v;
+}
+
+@mixin transition_transform($v) {
+  -webkit-transition: -webkit-transform $v;
+  transition: transform $v;
+}
+
+@mixin transform_origin($v:center) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+
+@mixin transition($v) {
+  -webkit-transition: $v;
+  transition: $v;
+}
+.tripseason-main-ui{
+	overflow:auto;
+	.zmiti-tripseason-header-inner{
+		padding-left: 8px;
+		margin-top: 10px;
+		@include pos(r);
+		&:before{
+			content: '';
+			@include pos(a);
+			width:2px;
+			height:100%;
+			background:#88B7E0 ;
+			left:0;
+			@include transform(scale(1,.7));
+		}
+	}
+	.zmiti-tripseason-button-right button{
+		float:right;
+		margin-top: 5px;
+	}
+	.zmiti-tripseason-line{
+		height:15px;
+		overflow: hidden;
+		border-bottom: 1px solid #dddddd;
+	}
+	.tripseason-heigth45{
+		height: 45px;
+	    line-height: 45px;
+	    overflow: hidden;
+	}
+	.tripseason-search {
+	    margin: 15px 0;
+	}	
+}
+.tripseason-seldate{
+	width:100px;
+	float:left;
+}
+.tripseason-col3{
+	float:left;
+	padding:0 10px;
+	line-height: 30px;
+}
