@@ -22,7 +22,7 @@ import $ from 'jquery';
 function generateTreeNodes(treeNode) {
   const arr = [];
   const key = treeNode.props.eventKey;
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 5; i++) {
     arr.push({ name: `leaf ${key}-${i}`, key: `${key}-${i}` });
   }
   return arr;
@@ -83,6 +83,8 @@ class ZmitwxWmwGroupApp extends Component {
         console.log('selected', info);
     }
     treeLoadData(treeNode){
+        var s = this;
+        //treeNode=s.state.treeData;
         return new Promise((resolve) => {
           setTimeout(() => {
             const treeData = [...this.state.treeData];
@@ -197,15 +199,7 @@ class ZmitwxWmwGroupApp extends Component {
         var s=  this;
         s.bindNewdata();
         s.getCompanydetail();
-        setTimeout(() => {
-          this.setState({
-            treeData: [
-              { name: 'pNode 01', key: '0-0' },
-              { name: 'pNode 02', key: '0-1' },
-              { name: 'pNode 03', key: '0-2', isLeaf: true },
-            ],
-          });
-        }, 100);
+        s.bindtreedata();
     }
 
     componentWillMount() {
@@ -216,7 +210,36 @@ class ZmitwxWmwGroupApp extends Component {
         this.getusersigid = getusersigid;  
         this.getProductList = getProductList;     
     }
-
+    bindtreedata(){
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/search_articleclass',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:'wx32e63224f58f2cb5',
+            },
+            success(data){
+                if(data.getret === 0){
+                    console.log(data.list,'mytree');
+                    var getreeArr= new Array();
+                    $.each(data.list,function(i,item){    
+                        //getreeArr.push({ name: item.classname, key: item.classid });
+                        getreeArr.push({ name: item.classname, key: item.autoid,classid:item.classid });
+                    })
+                    console.log(getreeArr,'getreeArr');
+                    setTimeout(() => {
+                      s.setState({
+                        treeData:getreeArr,
+                      });
+                    }, 100);
+                    s.forceUpdate();
+                }
+            }
+        })
+ 
+    }
     bindNewdata(){
         var s=this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
