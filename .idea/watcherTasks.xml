@@ -23,7 +23,7 @@
     <TaskOptions isEnabled="true">
       <option name="arguments" value="--no-cache --update $FileName$:$FileNameWithoutExtension$.css" />
       <option name="checkSyntaxErrors" value="true" />
-      <option name="description" />
+      <option name="description" value="" />
       <option name="exitCodeBehavior" value="ERROR" />
       <option name="fileExtension" value="scss" />
       <option name="immediateSync" value="true" />
@@ -33,53 +33,9 @@
         <array />
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="/usr/local/bin/scss" />
+      <option name="program" value="D:/Ruby23-x64/bin/sass.bat" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="true" />
-      <option name="workingDir" value="$FileDir$" />
-      <envs />
-    </TaskOptions>
-    <TaskOptions isEnabled="true">
-      <option name="arguments" value="$FileName$ -o $FileNameWithoutExtension$.min.css" />
-      <option name="checkSyntaxErrors" value="true" />
-      <option name="description" />
-      <option name="exitCodeBehavior" value="ERROR" />
-      <option name="fileExtension" value="css" />
-      <option name="immediateSync" value="true" />
-      <option name="name" value="YUI Compressor CSS" />
-      <option name="output" value="$FileNameWithoutExtension$.min.css" />
-      <option name="outputFilters">
-        <array />
-      </option>
-      <option name="outputFromStdout" value="false" />
-      <option name="program" value="$PROJECT_DIR$/../../../tools/yuicompressor-2.4.8.jar" />
-      <option name="scopeName" value="Project Files" />
-      <option name="trackOnlyRoot" value="true" />
-      <option name="workingDir" value="$FileDir$" />
-      <envs />
-    </TaskOptions>
-    <TaskOptions isEnabled="true">
-      <option name="arguments" value="--no-color $FileName$" />
-      <option name="checkSyntaxErrors" value="true" />
-      <option name="description" />
-      <option name="exitCodeBehavior" value="ERROR" />
-      <option name="fileExtension" value="less" />
-      <option name="immediateSync" value="true" />
-      <option name="name" value="Less" />
-      <option name="output" value="$FileNameWithoutExtension$.css" />
-      <option name="outputFilters">
-        <array>
-          <FilterInfo>
-            <option name="description" value="lessc error format" />
-            <option name="name" value="lessc" />
-            <option name="regExp" value="$MESSAGE$\Q in \E$FILE_PATH$\Q on line \E$LINE$\Q, column \E$COLUMN$" />
-          </FilterInfo>
-        </array>
-      </option>
-      <option name="outputFromStdout" value="true" />
-      <option name="program" value="/usr/local/bin/lessc" />
-      <option name="scopeName" value="Project Files" />
-      <option name="trackOnlyRoot" value="false" />
       <option name="workingDir" value="$FileDir$" />
       <envs />
     </TaskOptions>

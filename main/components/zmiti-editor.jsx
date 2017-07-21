@@ -36,7 +36,7 @@ export default class ZmitiEditor extends Component {
 		 		</section>
 		 	</div> 
 			<div ref='zmiti-editor'>
-
+				
 			</div>
 		 </div>
 	}

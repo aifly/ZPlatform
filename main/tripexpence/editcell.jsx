@@ -46,7 +46,7 @@ export default class EditableCell extends React.Component {
             </div>
             :
             <div className="editable-cell-text-wrapper">
-              {value || <span style={{color:'#f00'}}>0</span>}
+              {this.fmoney(value) || <span style={{color:'#f00'}}>0</span>}
               <Icon
                 type="edit"
                 className="editable-cell-icon"
@@ -57,4 +57,17 @@ export default class EditableCell extends React.Component {
       </div>
     );
   }
+  fmoney(s, n = 3){   
+       n = n > 0 && n <= 20 ? n : 2;   
+       s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";   
+       var l = s.split(".")[0].split("").reverse();
+       var r = s.split(".")[1];   
+       var t = "";   
+       for(var i = 0; i < l.length; i ++ )   
+       {   
+          t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");   
+       }   
+       return t.split("").reverse().join("") + "." + r;   
+  } 
+
 }

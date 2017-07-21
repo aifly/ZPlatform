@@ -45,6 +45,7 @@ import ZmitiTrainingApp from './training/index.jsx';
 import ZmitiTripReasonApp from './tripreason/index.jsx';
 import ZmitiTripNoticeApp from './tripnotice/index.jsx';
 import ZmitwxWmwGroupApp from './wxwmwgroup/index.jsx';
+import ZmitiWenmingApp from './wenming/index.jsx';
 
 import {notification } from './commoncomponent/common.jsx';
 import $ from 'jquery';
@@ -97,7 +98,8 @@ class App extends React.Component{
 				{path: '/training/(:title)/(:id)',app:ZmitiTrainingApp},
 				{path: '/tripreason/',app:ZmitiTripReasonApp},
 				{path: 'tripnotice/',app:ZmitiTripNoticeApp},
-				{path: 'wxwmwgroup/',app:ZmitwxWmwGroupApp}
+				{path: 'wxwmwgroup/',app:ZmitwxWmwGroupApp},
+				{path: 'wenming/(:title)/(:id)',app:ZmitiWenmingApp},
 				
 		];
 		return (

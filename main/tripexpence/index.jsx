@@ -16,7 +16,6 @@ import $ from 'jquery';
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/map';
 
-import ZmitiScript from '../components/zmiti-script.jsx';
 
 import '../static/echarts/china';
 
@@ -29,7 +28,6 @@ class ZmitiTripexpenceApp extends Component {
         this.state = {
             setuserid:'',
             selectedIndex:1,
-            mainHeight:document.documentElement.clientHeight-50,
             mainHeight:document.documentElement.clientHeight-50,
             modpostDialogVisible:false,
             modpostEditDialogVisible:false,
@@ -67,6 +65,7 @@ class ZmitiTripexpenceApp extends Component {
         this.viewW = document.documentElement.clientWidth;
         this.currentId = -1;
     }
+
     getProductDetail(record,index,e){
         var s=this;
         var defaultValue=new Array();
@@ -264,6 +263,7 @@ class ZmitiTripexpenceApp extends Component {
             <MainUI component={mainComponent}></MainUI>
         );
     }
+
 
     edit(record,type,value){
 
