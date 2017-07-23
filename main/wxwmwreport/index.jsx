@@ -121,7 +121,7 @@ class ZmitwxWmwReportApp extends Component {
 			                    						</div>
 			                    						<div className="zmiti-wmwreport-username">驹萌宝</div>
 
-			                    						<div className='zmiti-wmwreport-del'><Button icon="delete">删除</Button></div>
+			                    						<div className='zmiti-wmwreport-del'><Button icon="edit">编辑</Button><Button icon="delete">删除</Button></div>
 			                    						<div className='clearfix'></div>
 			                    						<div className="zmiti-wmwreport-des"><span className="zmiti-wmwreport-type">#好人365#</span>王金清是内蒙古包头黄河岸边一名普通的农民，从17岁时第一次下水救人，他就再也没有停下来，至今已救出180多条生命。每年黄河开河、封河时，他披星带月、风雨无阻地义务巡堤、帮人救人。2013年4月，王金清将黄河边附近的6位村民组织起来，成立了内蒙古首支黄河水上民间救援队——“王三黄河水上救援队”。从此，一群朴实的农民，在黄河岸边竖起了一面生命的安全屏障。<span className='zmiti-wmwreport-open'>展开全文<Icon type="down" /></span></div>
 			                    						<div>
@@ -157,14 +157,10 @@ class ZmitwxWmwReportApp extends Component {
 	                    						<div  className='zmiti-wmwreport-item'>
 		                    						<div className='zmiti-wmwreport-con'>
 														<div className='zmiti-wmwreport-imgs'>
-				                    						
 				                    							<img src="http://img2.duitang.com/uploads/item/201201/03/20120103124956_KtWQG.thumb.600_0.jpg" className="zmiti-wmwreport-face"/>
-				                    							
-				                    						
 			                    						</div>
 			                    						<div className="zmiti-wmwreport-username">驹萌宝</div>
-
-			                    						<div className='zmiti-wmwreport-del'><Button icon="delete">删除</Button></div>
+			                    						<div className='zmiti-wmwreport-del'><Button icon="edit">编辑</Button><Button icon="delete">删除</Button></div>
 			                    						<div className='clearfix'></div>
 			                    						<div className="zmiti-wmwreport-des"><span className="zmiti-wmwreport-type">#好人365#</span>王金清是内蒙古包头黄河岸边一名普通的农民，从17岁时第一次下水救人，他就再也没有停下来，至今已救出180多条生命。每年黄河开河、封河时，他披星带月、风雨无阻地义务巡堤、帮人救人。2013年4月，王金清将黄河边附近的6位村民组织起来，成立了内蒙古首支黄河水上民间救援队——“王三黄河水上救援队”。从此，一群朴实的农民，在黄河岸边竖起了一面生命的安全屏障。<span className='zmiti-wmwreport-open'>展开全文<Icon type="down" /></span></div>
 			                    						<div>

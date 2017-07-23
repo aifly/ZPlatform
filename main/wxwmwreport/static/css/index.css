@@ -76,9 +76,9 @@
     .wmwreport-main-ui .zmiti-wmwreport-del button {
       padding: 0;
       border: none;
-      background: none; }
-    .wmwreport-main-ui .zmiti-wmwreport-del i {
-      color: #ff0000; }
+      background: none;
+      margin-left: 20px;
+      color: #959595; }
   .wmwreport-main-ui .zmiti-wmwreport-message i {
     color: #108ee9; }
   .wmwreport-main-ui .zmiti-wmwreport-act {
