@@ -1,0 +1,170 @@
+@mixin pos($v) {
+  @if
+  $v == a {
+  position: absolute;
+} @else if $v == r {
+  position: relative;
+} @else if $v == f {
+  position: fixed;
+}
+}
+@mixin transform($v) {
+  -webkit-transform: $v;
+  transform: $v;
+}
+
+@mixin transformOrigin($v) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+
+@mixin backgroundSize($v:cover) {
+  background-size: $v;
+}
+
+@mixin transition_transform($v) {
+  -webkit-transition: -webkit-transform $v;
+  transition: transform $v;
+}
+
+@mixin transform_origin($v:center) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+
+@mixin transition($v) {
+  -webkit-transition: $v;
+  transition: $v;
+}
+@mixin borderadius($v){
+	border-radius: $v;
+	-webkit-border-radius:$v;
+	-moz-border-radius:$v;
+}
+.wmwreport-main-ui{
+	overflow:auto;
+	.zmiti-wmwreport-header-inner{
+		padding-left: 8px;
+		margin-top: 10px;
+		@include pos(r);
+		&:before{
+			content: '';
+			@include pos(a);
+			width:2px;
+			height:100%;
+			background:#88B7E0 ;
+			left:0;
+			@include transform(scale(1,.7));
+		}
+	}
+	.zmiti-wmwreport-button-right button{
+		float:right;
+		margin-top: 5px;
+	}
+	.zmiti-wmwreport-line{
+		height:15px;
+		overflow: hidden;
+		border-bottom: 1px solid #dddddd;
+	}
+	.wmwreport-heigth45{
+		height: 45px;
+	    line-height: 45px;
+	    overflow: hidden;
+	}
+	.wmwreport-search {
+	    margin: 15px 0;
+	}
+	.zmiti-wmwreport-list{
+		li{
+			padding:15px 0 0 0;
+		}
+		
+		table{
+			border:1px #ddd solid;
+			background-color: #f9f9f9;
+			td{
+				vertical-align: top;
+				padding:5px 10px;
+			}
+		}
+		.zmiti-wmwreport-time{
+			font-size:12px;
+			color:#959595;
+		}
+	}
+	.zmiti-wmwreport-del{
+		display:inline-block;
+		float:right;
+		button{
+			padding:0;
+			border:none;
+			background:none;
+		}
+		i{
+			color:#ff0000;
+		}
+	}
+	.zmiti-wmwreport-message{
+		i{
+			color:#108ee9;
+		}		
+	}
+	.zmiti-wmwreport-act{
+		button{
+			padding:0;
+			border:none;
+			background:none;
+			margin-left:20px;
+		}
+	}
+	.zmiti-wmwreport-adopt{
+		i{
+			color:#6db92c;
+		}
+	}
+	.zmiti-wmwreport-refuse{
+		i{
+			color:#f4654c;
+		}
+	}
+	.zmiti-wmwreport-face{
+		@include borderadius(50%);
+		width:50px;
+		height:50px;
+	}
+	.zmiti-wmwreport-username{
+		font-weight:bold;
+		color:#333;
+		display:inline-block;
+		float:left;
+	}
+	.zmiti-wmwreport-des{
+		color:#666;
+		margin-bottom: 10px;
+		.zmiti-wmwreport-type{
+			color:#108ee9;
+		}
+	}
+	.zmiti-wmwreport-open{
+		color:#eb7350;
+		cursor: pointer;
+	}
+	.zmiti-wmwreport-thumbnail{
+		width:100px;
+		height:100px;
+		margin-right:10px;
+		margin-bottom:10px;
+	}
+	.zmiti-wmwreport-left{
+		display:inline-block;
+		float:left;
+	}
+	.zmiti-wmwreport-right{
+		display:inline-block;
+		float:right;
+	}
+}
+.wmwreport-seldate{
+	width:100px;
+	float:left;
+}
