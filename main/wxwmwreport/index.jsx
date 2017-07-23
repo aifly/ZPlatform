@@ -69,8 +69,12 @@ class ZmitwxWmwReportApp extends Component {
                 <div className='pad-10'>
                     <div className="zmiti-wmwreport-header">
                         <Row>
-                            <Col span={8} className="zmiti-wmwreport-header-inner">数据审核-{this.state.companyname}</Col>
-                            <Col span={8} offset={8} className='zmiti-wmwreport-button-right'><Button type='primary' icon='upload' onClick={this.seasonform.bind(this)}>上报数据</Button></Col>
+                            <Col span={16} className="zmiti-wmwreport-header-inner">数据审核-{this.state.companyname}
+                            	<span className='zmiti-wmwreport-status'>
+                            		<span><a href='#'>已审</a></span>|<span className='zmiti-wmwreport-curr'><a href='#'>未审</a></span>
+                            	</span>
+                            </Col>
+                            <Col span={8} className='zmiti-wmwreport-button-right'><Button type='primary' icon='upload' onClick={this.seasonform.bind(this)}>上报数据</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-wmwreport-line"></div>
@@ -78,15 +82,20 @@ class ZmitwxWmwReportApp extends Component {
 	                    <span className="zmiti-wmwreport-all">
 	                    	<Checkbox onChange={onChange}>全选</Checkbox>
 	                    </span>
-	                    <span className="zmiti-wmwreport-category">
-	                    	<Select defaultValue="0" style={{ width: 100 }}>
-						      <Option value="0">-全部-</Option>
-						      <Option value="1">好人好事</Option>
-						      <Option value="2">身边文明事</Option>
-						      <Option value="3">文明播报</Option>
-						    </Select>
+	                    <span className="zmiti-wmwreport-allbtn">
+		                    <Button icon="delete">删除</Button>
+		                    <Button icon="check">通过审核</Button>
+		                    <Button icon="close">拒绝</Button>
 	                    </span>
 	                    <div className="zmiti-wmwreport-search">
+	                    	<span className="zmiti-wmwreport-category">
+		                    	<Select defaultValue="0" style={{ width: 100 }}>
+							      <Option value="0">-全部-</Option>
+							      <Option value="1">好人好事</Option>
+							      <Option value="2">身边文明事</Option>
+							      <Option value="3">文明播报</Option>
+							    </Select>
+		                    </span>
 	                    	<Search
 							    placeholder="内容文字"
 							    style={{ width: 200 }}

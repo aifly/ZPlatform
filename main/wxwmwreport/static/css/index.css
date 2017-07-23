@@ -15,7 +15,10 @@
       transform: scale(1, 0.7); }
   .wmwreport-main-ui .zmiti-wmwreport-button-right button {
     float: right;
-    margin-top: 5px; }
+    margin-top: 5px;
+    border: none;
+    background: none;
+    color: #108ee9; }
   .wmwreport-main-ui .zmiti-wmwreport-line {
     height: 15px;
     overflow: hidden;
@@ -26,11 +29,31 @@
     overflow: hidden; }
   .wmwreport-main-ui .wmwreport-search {
     margin: 15px 0; }
+  .wmwreport-main-ui .zmiti-wmwreport-status {
+    padding: 0 0 0 60px;
+    color: #000; }
+    .wmwreport-main-ui .zmiti-wmwreport-status a {
+      color: #646464; }
+    .wmwreport-main-ui .zmiti-wmwreport-status span {
+      margin: 0 20px; }
+  .wmwreport-main-ui .zmiti-wmwreport-curr {
+    color: #108ee9; }
+    .wmwreport-main-ui .zmiti-wmwreport-curr a {
+      color: #108ee9; }
   .wmwreport-main-ui .zmiti-wmwreport-tool {
     margin: 15px 0 0 0; }
+  .wmwreport-main-ui .zmiti-wmwreport-allbtn {
+    padding-left: 12px; }
+    .wmwreport-main-ui .zmiti-wmwreport-allbtn button {
+      margin-right: 20px;
+      border: none;
+      padding: 0;
+      background: none; }
   .wmwreport-main-ui .zmiti-wmwreport-search {
     float: right;
-    width: 202px; }
+    width: 312px; }
+  .wmwreport-main-ui .zmiti-wmwreport-category {
+    margin-right: 10px; }
   .wmwreport-main-ui .zmiti-wmwreport-list .zmiti-wmwreport-time {
     font-size: 12px;
     color: #959595; }

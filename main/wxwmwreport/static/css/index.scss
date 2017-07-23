@@ -60,6 +60,9 @@
 	.zmiti-wmwreport-button-right button{
 		float:right;
 		margin-top: 5px;
+		border:none;
+		background:none;
+		color:#108ee9;
 	}
 	.zmiti-wmwreport-line{
 		height:15px;
@@ -74,12 +77,40 @@
 	.wmwreport-search {
 	    margin: 15px 0;
 	}
+	.zmiti-wmwreport-status{
+		padding:0 0 0 60px;
+		color:#000;
+		a{
+			color:#646464;
+		}
+		span{			
+			margin:0 20px;
+		}
+	}
+	.zmiti-wmwreport-curr{
+		color:#108ee9;
+		a{
+			color:#108ee9;
+		}
+	}
 	.zmiti-wmwreport-tool{
 		margin:15px 0 0 0;
 	}
+	.zmiti-wmwreport-allbtn{
+		padding-left: 12px;
+		button{
+			margin-right:20px;
+			border:none;
+			padding:0;
+			background:none;
+		}
+	}
 	.zmiti-wmwreport-search{
 		float:right;
-		width:202px;
+		width:312px;
+	}
+	.zmiti-wmwreport-category{
+		margin-right:10px;
 	}
 	.zmiti-wmwreport-list{
 		.zmiti-wmwreport-time{
