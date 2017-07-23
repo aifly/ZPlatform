@@ -74,23 +74,34 @@
 	.wmwreport-search {
 	    margin: 15px 0;
 	}
+	.zmiti-wmwreport-tool{
+		margin:15px 0 0 0;
+	}
+	.zmiti-wmwreport-search{
+		float:right;
+		width:202px;
+	}
 	.zmiti-wmwreport-list{
-		li{
-			padding:15px 0 0 0;
-		}
-		
-		table{
-			border:1px #ddd solid;
-			background-color: #f9f9f9;
-			td{
-				vertical-align: top;
-				padding:5px 10px;
-			}
-		}
 		.zmiti-wmwreport-time{
 			font-size:12px;
 			color:#959595;
 		}
+	}
+	.zmiti-wmwreport-item{
+		border:1px #ddd solid;
+		background-color: #f9f9f9;
+		padding:5px 10px 5px 0;
+		margin:5px 0;
+	}
+	.zmiti-wmwreport-imgs{
+		width:65px;
+		position:absolute;
+		left:5px;
+		top:5px;
+	}
+	.zmiti-wmwreport-con{
+		position: relative;
+		padding:0 0 0 65px;
 	}
 	.zmiti-wmwreport-del{
 		display:inline-block;
@@ -110,6 +121,18 @@
 		}		
 	}
 	.zmiti-wmwreport-act{
+		position: relative;
+		padding-left:65px;
+		.zmiti-wmwreport-check{
+			position: absolute;
+			left:6px;
+			top:4px;
+			width:60px;
+			line-height: 1;
+			input{
+				float:left;
+			}
+		}
 		button{
 			padding:0;
 			border:none;
@@ -127,10 +150,16 @@
 			color:#f4654c;
 		}
 	}
-	.zmiti-wmwreport-face{
-		@include borderadius(50%);
+	.zmiti-wmwreport-select{
 		width:50px;
 		height:50px;
+		position: relative;
+		text-align:center;
+	}
+	.zmiti-wmwreport-face{
+		width:50px;
+		height:50px;
+		@include borderadius(50%);
 	}
 	.zmiti-wmwreport-username{
 		font-weight:bold;

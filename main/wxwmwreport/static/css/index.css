@@ -26,17 +26,27 @@
     overflow: hidden; }
   .wmwreport-main-ui .wmwreport-search {
     margin: 15px 0; }
-  .wmwreport-main-ui .zmiti-wmwreport-list li {
-    padding: 15px 0 0 0; }
-  .wmwreport-main-ui .zmiti-wmwreport-list table {
-    border: 1px #ddd solid;
-    background-color: #f9f9f9; }
-    .wmwreport-main-ui .zmiti-wmwreport-list table td {
-      vertical-align: top;
-      padding: 5px 10px; }
+  .wmwreport-main-ui .zmiti-wmwreport-tool {
+    margin: 15px 0 0 0; }
+  .wmwreport-main-ui .zmiti-wmwreport-search {
+    float: right;
+    width: 202px; }
   .wmwreport-main-ui .zmiti-wmwreport-list .zmiti-wmwreport-time {
     font-size: 12px;
     color: #959595; }
+  .wmwreport-main-ui .zmiti-wmwreport-item {
+    border: 1px #ddd solid;
+    background-color: #f9f9f9;
+    padding: 5px 10px 5px 0;
+    margin: 5px 0; }
+  .wmwreport-main-ui .zmiti-wmwreport-imgs {
+    width: 65px;
+    position: absolute;
+    left: 5px;
+    top: 5px; }
+  .wmwreport-main-ui .zmiti-wmwreport-con {
+    position: relative;
+    padding: 0 0 0 65px; }
   .wmwreport-main-ui .zmiti-wmwreport-del {
     display: inline-block;
     float: right; }
@@ -48,21 +58,37 @@
       color: #ff0000; }
   .wmwreport-main-ui .zmiti-wmwreport-message i {
     color: #108ee9; }
-  .wmwreport-main-ui .zmiti-wmwreport-act button {
-    padding: 0;
-    border: none;
-    background: none;
-    margin-left: 20px; }
+  .wmwreport-main-ui .zmiti-wmwreport-act {
+    position: relative;
+    padding-left: 65px; }
+    .wmwreport-main-ui .zmiti-wmwreport-act .zmiti-wmwreport-check {
+      position: absolute;
+      left: 6px;
+      top: 4px;
+      width: 60px;
+      line-height: 1; }
+      .wmwreport-main-ui .zmiti-wmwreport-act .zmiti-wmwreport-check input {
+        float: left; }
+    .wmwreport-main-ui .zmiti-wmwreport-act button {
+      padding: 0;
+      border: none;
+      background: none;
+      margin-left: 20px; }
   .wmwreport-main-ui .zmiti-wmwreport-adopt i {
     color: #6db92c; }
   .wmwreport-main-ui .zmiti-wmwreport-refuse i {
     color: #f4654c; }
+  .wmwreport-main-ui .zmiti-wmwreport-select {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    text-align: center; }
   .wmwreport-main-ui .zmiti-wmwreport-face {
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    width: 50px;
-    height: 50px; }
+    -moz-border-radius: 50%; }
   .wmwreport-main-ui .zmiti-wmwreport-username {
     font-weight: bold;
     color: #333;
