@@ -30,7 +30,7 @@ export default class ZmitiEditor extends Component {
 			 			<img ref='phone' src={this.props.isAdmin?'../static/images/phone-bg.png':'./static/images/phone-bg.png'}/>
 			 		</div>
 			 		<div style={{width:this.state.phoneW}} className='zmiti-editor-header'>
-			 			<img  src='../static/images/wx-header.png'/>
+			 			<img  src={this.props.isAdmin?'../static/images/wx-header.png':"./static/images/wx-header.png"}/>
 			 			<div  dangerouslySetInnerHTML={this.createMarkup()}></div>
 			 		</div>
 		 		</section>

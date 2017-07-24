@@ -1,68 +1,71 @@
 @import "../../../public/css/base.scss";
-a{
-	color:inherit;
+
+a {
+    color: inherit;
 }
-.wenming-header{
+.wenming-header {
     height: 52px;
     width: 100%;
     background: #fff;
     @include pos(r);
-    color:#767676;
-    &>span{
-    	@include pos(a);
-    	line-height: 52px;
-    	font-size: 18px;
-    	left: 20px;
+    color: #767676;
+
+    &>span {
+        @include pos(a);
+        line-height: 52px;
+        font-size: 18px;
+        left: 20px;
     }
+    ul {
+        width: 92*4px;
+        height: 100%;
+        @include displayFlex(row);
+        margin: 0 auto;
 
-    ul{
-    	width: 92*4px;
-    	height: 100%;
-    	@include displayFlex(row);
-    	margin: 0 auto;
-    	li{
-    		flex:1;
-    		-webkit-flex:1;
-    		line-height: 52px;
-    		text-align: center;
-    		font-size: 16px;
-    		@include pos(r);
-    		&.active{
-    			font-weight: bold;
-    			&:before{
-    				content:'';
-    				@include pos(a);
-    				width: 100%;
-    				height: 4px;
-    				background:#f4654c;
-    				left:0;
-    				bottom: 0;
+        li {
+            flex: 1;
+            -webkit-flex: 1;
+            line-height: 52px;
+            text-align: center;
+            font-size: 16px;
+            @include pos(r);
 
-    			}
-    		}
-    		&:after{
-    			content:'';
-    			@include pos(a);
-    			height: 30%;
-    			width: 1px;
-    			background: #999;
-    			right: 0;
-    			top: 35%;
-    		}
-    		&:last-of-type{
-    			&:after{
-    				display: none;
-    			}
-    		}
-    		a{
-    			display: block;
-    			width: 100%;
-    			height: 100%;
-    			&:hover{
-    				color:#f4654c;;
-    			}
-    		}
-    	}
+            &.active {
+                font-weight: bold;
 
+                &:before {
+                    content: '';
+                    @include pos(a);
+                    width: 100%;
+                    height: 4px;
+                    background: #f4654c;
+                    left: 0;
+                    bottom: 0;
+                }
+            }
+            &:after {
+                content: '';
+                @include pos(a);
+                height: 30%;
+                width: 1px;
+                background: #999;
+                right: 0;
+                top: 35%;
+            }
+            &:last-of-type {
+                &:after {
+                    display: none;
+                }
+            }
+            a {
+                display: block;
+                width: 100%;
+                height: 100%;
+
+                &:hover {
+                    color: #f4654c;
+                }
+            }
+        }
     }
 }
