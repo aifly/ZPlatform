@@ -1,12 +1,13 @@
 import './static/css/index.css';
 import React from 'react';
-import {Button} from '../commoncomponent/common.jsx';
+import {Button,notification} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
-import ZmitiWenmingHeaderApp from './header.jsx';
+import ZmitiWenmingAsideBarApp from './header.jsx';
+
 
 import MainUI from '../components/Main.jsx';
 import echarts from 'echarts/lib/echarts';
@@ -14,29 +15,67 @@ import 'echarts/lib/chart/map';
 
 import '../static/echarts/china';
 
+import IScroll from 'iscroll';
+
  class ZmitiWenmingApp extends React.Component{
     constructor(args){
         super(...args);
+
+        var list1 = [],
+            list2 = [];
+        for(var i = 0;i<50;i++){
+            list1.push({
+                    province:'北京',
+                    pv:100+i,
+                    report:153+i
+                });  
+            list2.push( {
+                    nickname:'智媒体',
+                    commentCount:111+i,
+                    report:23+i,
+                    headerimgurl:'./static/images/default-chat.jpg'
+                })
+        }
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
-           totalPV:'000,000,000'
+           totalPV:'000,000,000',
+           monthPV:0,
+           dayPV:0,
+           provinceRankingList:list1,
+           userRankingList:list2,
+           provincePVSort:'sort-down',
+           provinceReportSort:'',
+           userCommentSort:'sort-down',
+           userReportSort:''
         }
     }
 
     componentWillMount() {
+
         let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail,listen,send} = this.props;
         var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
             },this);
-            this.loginOut = loginOut;
-            this.listen = listen;
-            this.send = send;
-            this.popNotice = popNotice;
-            this.isSuperAdmin = isSuperAdmin;
-            this.isNormalAdmin = isNormalAdmin;
-            this.validateUserRole = validateUserRole;
-            this.getUserDetail = getUserDetail;
-            this.resizeMainHeight = resizeMainHeight;
+
+        var visit = false;
+        window.WENMING.VISITUSERS.forEach((item,i)=>{
+            if(item === username){
+                visit = true;
+                return;
+            }
+        });
+        if(!visit){
+            loginOut('您没有访问的权限',window.mainUrl,true);//不是hash跳转。location.href跳转
+        }
+        this.loginOut = loginOut;
+        this.listen = listen;
+        this.send = send;
+        this.popNotice = popNotice;
+        this.isSuperAdmin = isSuperAdmin;
+        this.isNormalAdmin = isNormalAdmin;
+        this.validateUserRole = validateUserRole;
+        this.getUserDetail = getUserDetail;
+        this.resizeMainHeight = resizeMainHeight;
     }
     componentDidMount(){
        this.resizeMainHeight(this);
@@ -45,8 +84,6 @@ import '../static/echarts/china';
         validateUser(()=>{
             loginOut();
         },this);
-
-
         resizeMainHeight(this);
         setTimeout(()=>{
             this.initEcharts();
@@ -55,9 +92,32 @@ import '../static/echarts/china';
         var worksid = 'wenming-login';
         this.worksid = worksid;
 
+
         this.socket();
 
         this.formatPV(localStorage.getItem('defaultcount'+this.worksid)*1||0);
+
+        this.request();
+
+        this.setScroll();
+
+       
+    }
+
+    setScroll(){
+
+        this.proviceScroll = new IScroll(this.refs['provice-scroller'],{
+            scrollbars:true,//显示滚动条
+            interactiveScrollbars:true,//允许用户拖动滚动条
+            mouseWheel:true,//启用鼠标滚轮。
+        });
+
+        this.userScroll = new IScroll(this.refs['user-scroller'],{
+            scrollbars:true,//显示滚动条
+            interactiveScrollbars:true,//允许用户拖动滚动条
+            mouseWheel:true,//启用鼠标滚轮。
+        });
+
 
     }
 
@@ -136,57 +196,70 @@ import '../static/echarts/china';
     }
 
 
+    userOnLine (username='智媒体用户',headerimgurl='http://www.zmiti.com/main/static/images/zmiti-logo.jpg'){
+        notification.config({
+            duration:5,
+
+        })
+        notification.open({
+            className:'wenming-online',
+            message: '上线提示',
+            description: username,
+            icon: <img src={headerimgurl}/>
+        });
+    }
+
+    report(username="智媒体用户",headerimgurl="http://www.zmiti.com/main/static/images/zmiti-logo.jpg",content="从医12年，刘廷涛心里裝得最多的是患者，做得最多的也是为患者。他把“大医..."){ 
+        notification.open({
+            duration:4,
+            message: '上报提示',
+            description: content,
+            btn : <div className='wenming-notification'>
+                <a href='#/wenmingdatacheck'>
+                    点击查看
+                </a>
+                <img src={headerimgurl}/>
+                <span className='zmiti-text-overflow'>{username}</span>
+            </div>
+        });
+    }
+
     socket(){
         var socket = io('http://socket.zmiti.com:2120');
         var worksid =   this.worksid;
         
         var s = this;
         socket.on(worksid, function(msg){
-                    if(!msg){
-                        return;
-                    }
-                    msg = msg.replace(/&quot;/g,"\"");
+            if(!msg){
+                return;
+            }
+            msg = msg.replace(/&quot;/g,"\"");
 
-                    var data = JSON.parse(msg);
-                  
+            var data = JSON.parse(msg);
+          
 
-                    console.log(data);
-                    var zmitiWx = {
-                        longitude:data.pos[0],
-                        latitude:data.pos[1],
-
-
-                    }
-                    s.getPos(data)
-
-                    return;
-                    
-                    
+            console.log(data);
+            var zmitiWx = {
+                longitude:data.pos[0],
+                latitude:data.pos[1],
 
 
-                  /*  var isAppend = true;
-                    window.userlist.map(function(item,i){
-                        if(item.nickname === nickname && item.headimgurl === headimgurl){
-                            isAppend = false;
-                        }
-                    });
-*/
-                    if(isAppend){
-                       /* window.userlist.push({nickname:nickname,headimgurl:headimgurl});
-                        //var personDom = '<div class="zmiti-user" style="top:'+Math.random()*50+'px"><img src='+headimgurl+' /><span>'+nickname+'</span></div>';
+            }
+            s.userOnLine(data.nickname||'智媒体用户',data.headimageurl||'http://www.zmiti.com/main/static/images/zmiti-logo.jpg');
+            s.getPos(data)
+        });
+        socket.on('wenming-report',(msg)=>{
+            if(!msg){
+                return;
+            }
+            msg = msg.replace(/&quot;/g,"\"");
 
-                        document.getElementById('box').innerHTML += personDom;
+            var data = JSON.parse(msg);
 
-                        var users = document.getElementById('box').querySelectorAll('.zmiti-user');
-                        $('#box .zmiti-user').on('webkitAnimationEnd',function(){
-                             setTimeout(()=>{
-                                $(this).remove();
-                                window.userlist.pop();
-                            },5000)
-                        });*/
-                    } 
-                    
-                });
+            this.report(data.nickname,data.headimageurl,data.content);
+
+
+        });
     }
 
 
@@ -196,52 +269,182 @@ import '../static/echarts/china';
 
     fillPV(){}
 
+    changeAccount(){
+
+    }
+
 
 
 
     render(){
 
 
-        var headerTitle = this.props.params.title;
+        var title = '身边文明事';
+
+        var props = {
+            title,
+            selectedIndex:0,
+            mainRight:<div className='wenming-main-ui' style={{height:this.state.mainHeight}}>
+                            <section>
+                                <aside className='wenming-map-C'>
+                                    <header  className='wenming-header'>
+                                        浏览量分布图
+                                    </header>
+                                    <section className='wenming-statistics'>
+                                        <aside ref='map'>
+
+                                        </aside>
+                                        <aside>
+                                            <div className='wenming-total-pv'>
+                                                总浏览量<span>{this.state.totalPV}</span>人
+                                            </div>
+                                            <div className='wenming-month-day-pv'>
+                                                <section>
+                                                    <div>
+                                                        <div>月浏览量</div>
+                                                        <div>{this.formatNumber(this.state.monthPV)}</div>
+                                                    </div>
+                                                </section>
+                                                <section>
+                                                    <div>
+                                                        <div>日浏览量</div>
+                                                        <div>{this.formatNumber(this.state.dayPV)}</div>
+                                                    </div>
+                                                </section>
+                                            </div>
+
+                                          
+                                            
+                                        </aside>
+                                    </section>
+                                </aside>
+                                <aside className='weniming-statistics-list'>
+                                    <section>
+                                        <header className='wenming-header'>
+                                            省排行榜
+                                        </header>
+                                        <section className='wenming-list-title'>
+                                            <div>排名</div>
+                                            <div>省份</div>
+                                            <div onClick={this.sortList.bind(this,'provincePVSort')} className={'wenming-sort '+this.state.provincePVSort}>浏览量</div>
+                                            <div onClick={this.sortList.bind(this,'provinceReportSort')} className={'wenming-sort ' + this.state.provinceReportSort}>上报</div>
+                                        </section>
+                                        <section className='wenming-ranking-list' ref='provice-scroller'>
+                                            <ul>
+                                                {this.state.provinceRankingList.map((item,i)=>{
+                                                    return <li key={i}>
+                                                        <div>{i+1}</div>
+                                                        <div>{item.province}</div>
+                                                        <div>{item.pv}</div>
+                                                        <div>{item.report}</div>
+                                                    </li>
+                                                })}
+                                            </ul>
+                                        </section>
+                                        <h2 style={{height:10}}></h2>
+                                    </section>
+                                    <section>
+                                        <header   className='wenming-header'>
+                                            个人排行榜
+                                        </header>
+                                       <section className='wenming-list-title'>
+                                            <div style={{opacity:1}}>头像</div>
+                                            <div>昵称</div>
+                                            <div onClick={this.sortList.bind(this,'userCommentSort')} className={'wenming-no-sort wenming-sort '+this.state.userCommentSort}>评论数</div>
+                                            <div onClick={this.sortList.bind(this,'userReportSort')} className={'wenming-no-sort wenming-sort ' + this.state.userReportSort}>上报</div>
+                                        </section>
+                                        <section className='wenming-ranking-list' ref='user-scroller'>
+                                            <ul>
+                                                {this.state.userRankingList.map((item,i)=>{
+                                                    return <li key={i}>
+                                                            <div><img src={item.headerimgurl}/></div>
+                                                            <div title={item.nickname} className='zmiti-text-overflow'>{item.nickname}</div>
+                                                            <div>{item.commentCount}</div>
+                                                            <div>{item.report}</div>
+                                                        </li>
+                                                })}
+                                            </ul>
+                                        </section>
+                                        <h2 style={{height:10}}></h2>
+                                    </section>
+                                </aside>
+                            </section>    
+
+                        </div>
+        }
+        var mainComponent = <div>
+            <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>
+            
+        </div>;
+        return (
+            <MainUI component={mainComponent}></MainUI>
+        );
         
-        var component = <div className='wenming-main-ui' style={{height:this.state.mainHeight}}>
-            <ZmitiWenmingHeaderApp title={headerTitle} id={1} cusId={this.props.params.id}></ZmitiWenmingHeaderApp>
-            <section>
-                <aside className='wenming-map-C'>
-                    <header>
-                        浏览量分布图
-                    </header>
-                    <section className='wenming-statistics'>
-                        <aside ref='map'>
-
-                        </aside>
-                        <aside>
-                            <div className='wenming-total-pv'>
-                                总浏览量<span>{this.state.totalPV}</span>人
-                            </div>
-                            <div className='wenming-month-day-pv'>
-                                <section>
-                                    
-                                </section>
-                                <section>
-                                    
-                                </section>
-                            </div>
-                            
-                        </aside>
-                    </section>
-                </aside>
-                <aside>
-                    <section></section>
-                    <section></section>
-                </aside>
-            </section>    
+        
+    }
 
 
-        </div>
-        return(
-            <MainUI component={component}></MainUI>
-        )
+    sortList(type,e){
+        e.preventDefault();
+
+        switch(type){
+            case "provincePVSort":
+                this.state.provincePVSort = this.state.provincePVSort === 'sort-down'?'sort-up':'sort-down';
+                this.state.provinceReportSort = '';
+
+                this.state.provinceRankingList = this.provinceRankingList.sort((a,b)=>{
+                    if(this.state.provincePVSort === 'sort-down'){
+                        return a.pv < b.pv;
+                    }else{
+                        return a.pv > b.pv;
+                    }
+                });
+
+            break;
+            case 'provinceReportSort':
+
+                this.state.provinceReportSort = this.state.provinceReportSort === 'sort-down'?'sort-up':'sort-down';
+                this.state.provincePVSort = '';
+
+                this.state.provinceRankingList = this.provinceRankingList.sort((a,b)=>{
+                    if(this.state.provinceReportSort === 'sort-down'){
+                        return a.report < b.report;
+                    }else{
+                        return a.report > b.report;
+                    }
+                });
+
+            
+            break;
+            case "userCommentSort":
+                this.state.userCommentSort = 'sort-up';///this.state.userCommentSort === 'sort-down'?'sort-up':'sort-down';
+                this.state.userReportSort = '';
+                if(this.state.userCommentSort === 'sort-up'){
+                    this.state.userRankingList = this.userRankingList.sort((a,b)=>{
+                       return a.commentCount < b.commentCount;
+                    });
+                }
+               
+            break;
+            case 'userReportSort':
+                this.state.userReportSort ='sort-up';// this.state.userReportSort === 'sort-down'?'sort-up':'sort-down';
+                this.state.userCommentSort = '';
+                 this.state.userRankingList = this.userRankingList.sort((a,b)=>{
+                    if(this.state.userReportSort === 'sort-up'){
+                        return a.report < b.report;
+                    }else{
+                        return a.report > b.report;
+                    }
+                });
+            break;
+
+        }
+
+        this.forceUpdate();
+
+
+        
+
     }
 
     formatPV(num = 8888){
@@ -302,6 +505,58 @@ import '../static/echarts/china';
             myChart.setOption(this.dataConfig(userData), false);
     }
 
+    request(){
+        $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/provincesort/',
+            data:{
+                appid:window.WENMING.XCXAPPID,
+                monthnum:3,
+                userid:this.userid,
+                getusersigid:this.getusersigid
+            }
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){
+                this.provinceRankingList = data.list.concat([]);
+                this.setState({
+                    provinceRankingList:data.list
+                },()=>{
+                    this.proviceScroll.refresh();
+                });
+
+            }
+        });
+
+        $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/usersort/',
+            data:{
+                appid:window.WENMING.XCXAPPID,
+                monthnum:3,
+                usernum:30,
+                userid:this.userid,
+                getusersigid:this.getusersigid
+            }
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){
+                console.log(data)
+                this.userRankingList = data.list.concat([]);
+                this.setState({
+                    userRankingList:data.list
+                },()=>{
+                    this.userScroll.refresh();
+                });
+
+            }
+        })
+    }
+
      dataConfig(userData){
         var s = this;
         return  {
@@ -350,7 +605,7 @@ import '../static/echarts/china';
                     }
                 },
                 center:[
-                   116.6308452923,39.4701180437
+                   100.6308452923,39.4701180437
                 ],
                 itemStyle: {
                     normal: {

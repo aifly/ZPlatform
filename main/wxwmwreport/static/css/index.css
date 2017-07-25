@@ -1,0 +1,144 @@
+.wmwreport-main-ui {
+  overflow: auto; }
+  .wmwreport-main-ui .zmiti-wmwreport-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .wmwreport-main-ui .zmiti-wmwreport-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .wmwreport-main-ui .zmiti-wmwreport-button-right button {
+    float: right;
+    margin-top: 5px;
+    border: none;
+    background: none;
+    color: #108ee9; }
+  .wmwreport-main-ui .zmiti-wmwreport-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .wmwreport-main-ui .wmwreport-heigth45 {
+    height: 45px;
+    line-height: 45px;
+    overflow: hidden; }
+  .wmwreport-main-ui .wmwreport-search {
+    margin: 15px 0; }
+  .wmwreport-main-ui .zmiti-wmwreport-status {
+    padding: 0 0 0 60px;
+    color: #000; }
+    .wmwreport-main-ui .zmiti-wmwreport-status a {
+      color: #646464; }
+    .wmwreport-main-ui .zmiti-wmwreport-status span {
+      margin: 0 20px; }
+  .wmwreport-main-ui .zmiti-wmwreport-curr {
+    color: #108ee9; }
+    .wmwreport-main-ui .zmiti-wmwreport-curr a {
+      color: #108ee9; }
+  .wmwreport-main-ui .zmiti-wmwreport-tool {
+    margin: 15px 0 0 0; }
+  .wmwreport-main-ui .zmiti-wmwreport-allbtn {
+    padding-left: 12px; }
+    .wmwreport-main-ui .zmiti-wmwreport-allbtn button {
+      margin-right: 20px;
+      border: none;
+      padding: 0;
+      background: none; }
+  .wmwreport-main-ui .zmiti-wmwreport-search {
+    float: right;
+    width: 312px; }
+  .wmwreport-main-ui .zmiti-wmwreport-category {
+    margin-right: 10px; }
+  .wmwreport-main-ui .zmiti-wmwreport-list .zmiti-wmwreport-time {
+    font-size: 12px;
+    color: #959595; }
+  .wmwreport-main-ui .zmiti-wmwreport-item {
+    border: 1px #ddd solid;
+    background-color: #f9f9f9;
+    padding: 5px 10px 5px 0;
+    margin: 5px 0; }
+  .wmwreport-main-ui .zmiti-wmwreport-imgs {
+    width: 65px;
+    position: absolute;
+    left: 5px;
+    top: 5px; }
+  .wmwreport-main-ui .zmiti-wmwreport-con {
+    position: relative;
+    padding: 0 0 0 65px; }
+  .wmwreport-main-ui .zmiti-wmwreport-del {
+    display: inline-block;
+    float: right; }
+    .wmwreport-main-ui .zmiti-wmwreport-del button {
+      padding: 0;
+      border: none;
+      background: none;
+      margin-left: 20px;
+      color: #959595; }
+  .wmwreport-main-ui .zmiti-wmwreport-message i {
+    color: #108ee9; }
+  .wmwreport-main-ui .zmiti-wmwreport-act {
+    position: relative;
+    padding-left: 65px; }
+    .wmwreport-main-ui .zmiti-wmwreport-act .zmiti-wmwreport-check {
+      position: absolute;
+      left: 6px;
+      top: 4px;
+      width: 60px;
+      line-height: 1; }
+      .wmwreport-main-ui .zmiti-wmwreport-act .zmiti-wmwreport-check input {
+        float: left; }
+    .wmwreport-main-ui .zmiti-wmwreport-act button {
+      padding: 0;
+      border: none;
+      background: none;
+      margin-left: 20px; }
+  .wmwreport-main-ui .zmiti-wmwreport-adopt i {
+    color: #6db92c; }
+  .wmwreport-main-ui .zmiti-wmwreport-refuse i {
+    color: #f4654c; }
+  .wmwreport-main-ui .zmiti-wmwreport-select {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    text-align: center; }
+  .wmwreport-main-ui .zmiti-wmwreport-face {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%; }
+  .wmwreport-main-ui .zmiti-wmwreport-username {
+    font-weight: bold;
+    color: #333;
+    display: inline-block;
+    float: left; }
+  .wmwreport-main-ui .zmiti-wmwreport-des {
+    color: #666;
+    margin-bottom: 10px; }
+    .wmwreport-main-ui .zmiti-wmwreport-des .zmiti-wmwreport-type {
+      color: #108ee9; }
+  .wmwreport-main-ui .zmiti-wmwreport-open {
+    color: #eb7350;
+    cursor: pointer; }
+  .wmwreport-main-ui .zmiti-wmwreport-thumbnail {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    margin-bottom: 10px; }
+  .wmwreport-main-ui .zmiti-wmwreport-left {
+    display: inline-block;
+    float: left; }
+  .wmwreport-main-ui .zmiti-wmwreport-right {
+    display: inline-block;
+    float: right; }
+
+.wmwreport-seldate {
+  width: 100px;
+  float: left; }
+
+/*# sourceMappingURL=index.css.map */

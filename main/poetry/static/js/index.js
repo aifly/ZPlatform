@@ -10,6 +10,7 @@ var ZmitiUtil = {
         var s = this;
         $.ajax({
             url:'http://api.zmiti.com/v2/count/get_worktimecount/',
+            type:"post",
             data:{
                 worksid:worksid
             }

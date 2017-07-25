@@ -45,7 +45,11 @@ import ZmitiTrainingApp from './training/index.jsx';
 import ZmitiTripReasonApp from './tripreason/index.jsx';
 import ZmitiTripNoticeApp from './tripnotice/index.jsx';
 import ZmitwxWmwGroupApp from './wxwmwgroup/index.jsx';
+import ZmitwxWmwReportApp from './wxwmwreport/index.jsx';
 import ZmitiWenmingApp from './wenming/index.jsx';
+import ZmitiWenmingDataCheckApp from './wenming/datacheck.jsx';
+import ZmitiWenmingReportApp from './wenming/report.jsx';
+import ZmitiWenmingSettingApp from './wenming/setting.jsx';
 
 import {notification } from './commoncomponent/common.jsx';
 import $ from 'jquery';
@@ -99,7 +103,11 @@ class App extends React.Component{
 				{path: '/tripreason/',app:ZmitiTripReasonApp},
 				{path: 'tripnotice/',app:ZmitiTripNoticeApp},
 				{path: 'wxwmwgroup/',app:ZmitwxWmwGroupApp},
-				{path: 'wenming/(:title)/(:id)',app:ZmitiWenmingApp},
+				{path: 'wxwmwreport/',app:ZmitwxWmwReportApp},
+				{path: '/wenming',app:ZmitiWenmingApp},
+				{path: '/wenmingdatacheck',app:ZmitiWenmingDataCheckApp},
+				{path: '/wenmingreport',app:ZmitiWenmingReportApp},
+				{path: '/wenmingsetting',app:ZmitiWenmingSettingApp},
 				
 		];
 		return (

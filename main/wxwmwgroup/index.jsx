@@ -75,6 +75,8 @@ class ZmitwxWmwGroupApp extends Component {
             dataSource:[],            
             companyname:'',
             companyid:'',
+            classname:'',
+            classename:'',
             treeData:[],
         };
         this.currentId = -1;
@@ -88,6 +90,7 @@ class ZmitwxWmwGroupApp extends Component {
         return new Promise((resolve) => {
           setTimeout(() => {
             const treeData = [...this.state.treeData];
+            console.log(treeData,'const')
             getNewTreeData(treeData, treeNode.props.eventKey, generateTreeNodes(treeNode), 2);
             this.setState({ treeData });
             resolve();
@@ -130,44 +133,46 @@ class ZmitwxWmwGroupApp extends Component {
                         </Row>                      
                     </div>
                     <div className="zmiti-tripseason-line"></div>
-                    <Tree onSelect={this.treeSelect.bind(this)} loadData={this.treeLoadData.bind(this)}>
-                    {treeNodes}
-                    </Tree>
-
+                    <div>
+                        <Tree onSelect={this.treeSelect.bind(this)} loadData={this.treeLoadData.bind(this)}>
+                        {treeNodes}
+                        </Tree>
+                    </div>
                 </div>
                 <Modal title="分类管理" visible={this.state.modpostDialogVisible}
                     onOk={this.addProduct.bind(this)}
-                    width={'600'}
+                    width='500'
                     onCancel={()=>{this.setState({modpostDialogVisible:false})}}
                   >
-                    <Form>
-                      
-
-                      <FormItem
-                        {...formItemLayout}
-                        label="类别"
-                        hasFeedback
-                      >
-                          <Row>
-                            <Col span={10}>
-                                tree
-                            </Col>
-                            <Col span={14}>con</Col>
-                          </Row>
-                          {
-
-                            /*
-                          <Select placeholder="类别" onChange={(value)=>{this.state.seasontype=value;this.forceUpdate();}} value={this.state.seasontype}>
-                            <Option value={0}>旺季</Option>
-                            <Option value={1}>淡季</Option>
-                          </Select>
-                          */
-                          }                  
-                      </FormItem>
-
-                      
-
-                    </Form>
+                    <Row>
+                        <Col span={10}>
+                            <div>tree</div>
+                        </Col>
+                        <Col span={14}>
+                            <Form>
+                              <FormItem
+                                {...formItemLayout}
+                                label="中文名称"
+                                hasFeedback
+                              > 
+                                <Input placeholder="中文名称" 
+                                    value={this.state.classname}
+                                    onChange={(e)=>{this.state.classname=e.target.value;this.forceUpdate();}}
+                                />
+                              </FormItem>
+                              <FormItem
+                                {...formItemLayout}
+                                label="英文名称"
+                                hasFeedback
+                              > 
+                                <Input placeholder="英文名称" 
+                                    value={this.state.classename}
+                                    onChange={(e)=>{this.state.classename=e.target.value;this.forceUpdate();}}
+                                />
+                              </FormItem>
+                            </Form>
+                        </Col>
+                    </Row>
                   </Modal>
 
                   
