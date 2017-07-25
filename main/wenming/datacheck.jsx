@@ -157,17 +157,10 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         setTimeout(()=>{
             this.scroll.refresh();
         },100)
+
+        this.request()
        
     }
-
-
-
-
-    changeAccount(){
-
-    }
-
-
 
 
     render(){
@@ -272,6 +265,51 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         this.setState({
             selectAll:!this.state.selectAll
         });
+
+    }
+
+    request(){
+
+         $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/search_articlelist/',
+            data:{
+                appid:window.WENMING.XCXAPPID,
+                userid:this.userid,
+                getusersigid:this.getusersigid,
+                status:0,
+                page:this.state.pageIndex,
+                pagenum:10
+            }
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){
+
+                this.state.uncheckList = [];
+                data.list.map((item,i)=>{
+                    var imgs = item.imageslist.split(',');
+                    if(!imgs[0]){
+                        imgs.shift();
+                    }
+                    this.state.uncheckList.push({
+                        nickname:item.nickname,
+                        headimgurl:item.headimgurl,
+                        date:item.createtime,
+                        content:item.content,
+                        imgs,
+                        ///videos:[],
+                        id:item.articlid,
+                    });
+                    this.state.allCount = data.countRow.countrows
+                    this.forceUpdate();
+
+                });
+
+                console.log(data);   
+            }
+        })
 
     }
     

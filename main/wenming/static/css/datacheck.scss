@@ -96,6 +96,10 @@
 
         ul {
             &>li {
+
+                &:last-of-type{
+                    background: transparent;
+                }
                 width: 98%;
                 margin: 10px auto;
                 background: #f6f6f6;

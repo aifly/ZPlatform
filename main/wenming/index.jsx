@@ -87,19 +87,19 @@ import IScroll from 'iscroll';
         resizeMainHeight(this);
         setTimeout(()=>{
             this.initEcharts();
+            var worksid = 'wenming-login';
+            this.worksid = worksid;
+
+
+            this.socket();
+
+            this.formatPV(localStorage.getItem('defaultcount'+this.worksid)*1||0);
+
+            this.request();
+
+            this.setScroll();
         },300);
 
-        var worksid = 'wenming-login';
-        this.worksid = worksid;
-
-
-        this.socket();
-
-        this.formatPV(localStorage.getItem('defaultcount'+this.worksid)*1||0);
-
-        this.request();
-
-        this.setScroll();
 
        
     }
@@ -184,7 +184,7 @@ import IScroll from 'iscroll';
                     var headimgurl = data.headimgurl;
                     
 
-                    s.myChart.setOption(s.dataConfig(s.userData), true);
+                    s.myChart.setOption(s.dataConfig(s.userData));
 
                     
                 }
@@ -485,10 +485,10 @@ import IScroll from 'iscroll';
             
 
             var userData = [
-                   // {name: "常德市", value: 1023,key:'asa'},
+                    {name: "常德市", value: 1023,key:'asa'},
                 ];
             var geoCoordMap = {
-                //"常德市":[111.7087330000,28.9399430000]
+                "常德市":[111.7087330000,28.9399430000]
             };
             this.userData = userData;
             this.geoCoordMap = geoCoordMap;
@@ -502,10 +502,12 @@ import IScroll from 'iscroll';
 
            this.myChart = myChart;
 
-            myChart.setOption(this.dataConfig(userData), false);
+            myChart.setOption(this.dataConfig(userData), true);
     }
 
     request(){
+
+        var s = this;
         $.ajax({
             type:'post',
             url:window.baseUrl+'weixinxcx/provincesort/',
@@ -545,7 +547,6 @@ import IScroll from 'iscroll';
                 data = JSON.parse(data);
             }
             if(data.getret === 0 ){
-                console.log(data)
                 this.userRankingList = data.list.concat([]);
                 this.setState({
                     userRankingList:data.list
@@ -554,7 +555,63 @@ import IScroll from 'iscroll';
                 });
 
             }
+        });
+
+
+        $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/totalpv/',
+            data:{
+                appid:window.WENMING.XCXAPPID,
+                userid:this.userid,
+                getusersigid:this.getusersigid
+            }
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){
+                this.state.monthPV = data.list.monthpv;
+                this.state.dayPV = data.list.daypv;
+                this.formatPV(data.list.totalpv);
+                localStorage.setItem('defaultcount'+ this.worksid,data.list.totalpv);
+            }
+        });
+
+        $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/userareatotalpv/',
+            data:{
+                appid:window.WENMING.XCXAPPID,
+                userid:this.userid,
+                getusersigid:this.getusersigid
+            }
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){
+
+                s.userData = [];
+                s.geoCoordMap = {};
+                data.list.map(function(item,i){
+                    if(item.provicename){
+                        s.userData.push({
+                            name:item.provicename,
+                            value:item.usercount
+                        });    
+                        s.geoCoordMap[item.provicename] = [item.longitude,item.latitude];
+                    }
+                    
+                    ///s.geoCoordMap = JSON.parse(s.geoCoordMap);
+                });
+                
+                localStorage.setItem('geoCoordMap'+this.worksid,JSON.stringify(s.geoCoordMap));
+                localStorage.setItem('userData'+this.worksid,JSON.stringify({userData:s.userData}));
+                s.myChart.setOption(s.dataConfig(s.userData), true);
+                            }
         })
+ 
     }
 
      dataConfig(userData){
@@ -625,7 +682,7 @@ import IScroll from 'iscroll';
                     symbol: '',
                     data:s.convertData(userData),
                     symbolSize: function(val){
-                         return val[2] / 100 ;//100
+                         return val[2] / 10 ;//100
                     },
                     label: {
                         normal: {
