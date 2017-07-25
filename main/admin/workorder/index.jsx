@@ -5,7 +5,7 @@ import { message,Select  } from '../../commoncomponent/common.jsx';
 let Option = Select.Option;
 import MainUI from '../components/main.jsx';
 import {ZmitiValidateUser} from '../../public/validate-user.jsx';
-
+import $ from 'jquery';
  class ZmitiWorkOrderApp extends Component {
 	constructor(props) {
 		super(props);

@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import './css/editor.css';
 import ZmitiWxHeader from './wxheader/index.jsx';
 
+
 import '../static/editor/froala_editor.min';
 import '../static/editor/align.min';
 import '../static/editor/colors.min';
 import '../static/editor/font_family.min';
 import '../static/editor/link.min';
 import '../static/editor/table.min';
-
-
 
 
 export default class ZmitiEditor extends Component {
@@ -94,6 +93,7 @@ export default class ZmitiEditor extends Component {
 
 		document.getElementsByTagName('head')[0].innerHTML += style;
 		var s = this;
+
 		setTimeout(()=>{
 			$(this.refs['zmiti-editor']).froalaEditor({
 		        theme: 'royal',

@@ -6,6 +6,7 @@ let Option = Select.Option;
 import MainUI from '../components/main.jsx';
 import {ZmitiValidateUser} from '../../public/validate-user.jsx';
 const Step = Steps.Step;
+import $ from 'jquery';
 const { Header, Content } = Layout;
  class ZmitiEditOrderApp extends Component {
 	constructor(props) {

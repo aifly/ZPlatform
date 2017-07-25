@@ -9,7 +9,7 @@ var Option = Select.Option;
 import MainUI from '../components/main.jsx';
 
 import {ZmitiValidateUser} from '../../public/validate-user.jsx';
-
+import $ from 'jquery';
 class ZmitiCompanyApp extends Component {
 	constructor(props) {
 		super(props);

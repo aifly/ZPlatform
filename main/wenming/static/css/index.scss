@@ -1,6 +1,40 @@
 @import "../../../public/css/base.scss";
 $height: 52px;
+$baseColor: #f4654c;
 
+.ant-notification-notice {
+	img {
+		width: 40px;
+		@include br();
+	}
+}
+.wenming-notification {
+	@include displayFlex(row);
+	width: 300px;
+
+	&>a, &>img, &>span {
+		display: block;
+		flex: 1;
+		-webkit-flex: 1;
+		height: 30px;
+		line-height: 30px;
+	}
+	&>span {
+		flex: none;
+		width: 90px;
+	}
+	&>a {
+		background: $baseColor;
+		text-align: center;
+		color: #fff;
+		@include br(4px);
+	}
+	&>img {
+		width: 30px;
+		flex: none;
+		margin: 0 10px 0 100px;
+	}
+}
 .wenming-main-ui {
 	@include displayFlex();
 	padding: 0 10px 0 10px;
@@ -25,7 +59,7 @@ $height: 52px;
 			height: 100%;
 			left: 0;
 			top: 0;
-			background: #f4654c;
+			background: $baseColor;
 		}
 	}
 	&>section {
@@ -74,7 +108,7 @@ $height: 52px;
 							text-align: center;
 							color: #fff;
 							font-size: 14px;
-							background: #f4654c;
+							background: $baseColor;
 							@include pos(r);
 							overflow: hidden;
 
@@ -106,7 +140,7 @@ $height: 52px;
 								}
 								flex: 1;
 								-webkit-flex: 1;
-								background: #f4654c;
+								background: $baseColor;
 
 								&:last-of-type {
 									margin-left: 10px;
@@ -164,6 +198,44 @@ $height: 52px;
 						-webkit-flex: 1;
 						text-align: center;
 					}
+					.wenming-sort {
+						@include pos(r);
+						cursor: pointer;
+
+						&.wenming-no-sort {
+							&:before {
+								top: 44%;
+							}
+							&:after {
+								display: none;
+							}
+						}
+						&.sort-up {
+							&:before {
+								border-bottom-color: #000;
+							}
+						}
+						&.sort-down {
+							&:after {
+								border-bottom-color: #000;
+							}
+						}
+						&:before, &:after {
+							content: '';
+							@include pos(a);
+							right: 5px;
+							top: 36%;
+							width: 0;
+							height: 0;
+							border-left: 5px solid transparent;
+							border-right: 5px solid transparent;
+							border-bottom: 5px solid #999;
+						}
+						&:after {
+							top: 50%;
+							@include transform(rotateX(180deg));
+						}
+					}
 				}
 				.wenming-ranking-list {
 					@include pos(r);
@@ -180,6 +252,10 @@ $height: 52px;
 							height: 40px;
 
 							div {
+								&:nth-of-type(2) {
+									max-width: 25%;
+									cursor: default;
+								}
 								flex: 1;
 								-webkit-flex: 1;
 							}

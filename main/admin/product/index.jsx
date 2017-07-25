@@ -14,6 +14,8 @@ import ZmitiOrderList from '../components/order.jsx';
 
 import MainUI from '../components/main.jsx';
 
+import $ from 'jquery';
+
  class ZmitiProductApp extends React.Component{
     constructor(args){
         super(...args);

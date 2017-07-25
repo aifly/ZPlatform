@@ -25,5 +25,6 @@ window.workState = {
 window.MEETINGUSERLIST = ['xuchang','xinmeiti','huangqinghua','bmyuan'];//配置两会的页面哪些用户可以访问。
 
 window.WENMING = {
-	VISITUSERS:['xuchang','wenmingzg','wmw_yangf','bmyuan']
+	VISITUSERS:['xuchang','wenmingzg','wmw_yangf','bmyuan'],
+	XCXAPPID:'wx32e63224f58f2cb5'
 }

@@ -6,6 +6,7 @@ import $ from 'jquery';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 
+
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
 var path = ['/wenming','/wenmingdatacheck','/wenmingreport','/wenmingsetting'];
