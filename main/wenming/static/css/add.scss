@@ -57,6 +57,18 @@ $baseColor: #f4654c;
 	.wenming-add-form{
 		padding:20px 0 0 0;
 	}
+	.wenming-add-uploadbtn{
+		width:102px;
+		height:32px;
+		overflow:hidden;
+		position: relative;
+		.wenming-add-file{
+			position: absolute;
+			left:0;
+			top:0;
+			opacity:0;
+		}
+	}
 	.ant-radio-group{
 		margin:6px 0 0 0;
 	}

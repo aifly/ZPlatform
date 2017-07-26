@@ -1,6 +1,6 @@
 import './static/css/add.css';
 import React from 'react';
-import {Upload,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio} from '../commoncomponent/common.jsx';
+import {message,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
@@ -28,8 +28,8 @@ const TextArea = Input;
            appid:'wx32e63224f58f2cb5',
            content:'',
            title:'',
-           wxopenid:'',
-           imageslist:'',
+           wxopenid:'oX4P90P4kCl3_5JLOYJyOx1bxISg',//oX4P90P4kCl3_5JLOYJyOx1bxISg//oSDVUs-aeHSvmJl9uk1Yq7iTeOyk
+           imageslist:[],
            source:'',
            type:'',
            ishost:0,
@@ -41,7 +41,7 @@ const TextArea = Input;
               name: 'xxx.png',
               status: 'done',
               url: 'http://www.baidu.com/xxx.png',
-            }]
+           }]
         }
           this.handleChange = (info) => {
             let fileList = info.fileList;
@@ -112,6 +112,32 @@ const TextArea = Input;
     }
 
     render(){
+        const uploadColumns=[{
+            title: '上传名称',
+            dataIndex: 'filename',
+            key: 'filename',
+        },{
+            title: '文件大小',
+            dataIndex: 'datainfosize',
+            key: 'datainfosize',
+       },{
+            title: '文件路径',
+            dataIndex: 'datainfourl',
+            key: 'datainfourl',
+            className:'hidden',
+        }, {
+            title: '文件密码',
+            dataIndex: 'setpwd',
+            key: 'setpwd',
+            className:'hidden',
+        },{
+            title: '操作',
+            dataIndex: 'operation',
+            key: 'operation',
+            render:(text,recoder,index)=>(
+                <span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,recoder,index)}> 删除</a></span>
+            )
+        }];
         const formItemLayout = {
           labelCol: {
             xs: { span: 24 },
@@ -135,7 +161,10 @@ const TextArea = Input;
           },
         };
         const fileListGroup = {
-          action: '//jsonplaceholder.typicode.com/posts/',
+          action: 'http://api.zmiti.com/v2/share/upload_file/',
+          data:{
+            uploadtype:1,
+          },
           onChange: this.handleChange,
           multiple: true,
         };
@@ -167,7 +196,6 @@ const TextArea = Input;
                                     <RadioGroup onChange={(e)=>{this.state.classid=e.target.value;this.forceUpdate();}} value={this.state.classid}>
                                         <Radio value={'9eGbMukZ'}>好人好事</Radio>
                                         <Radio value={'Q8MA1lH5'}>身边文明事</Radio>
-                                        <Radio value={'A7CZ1YE3'}>文明播报</Radio>
                                     </RadioGroup>
                                                       
                                 </FormItem>
@@ -213,12 +241,14 @@ const TextArea = Input;
                                 label="图片"
                                 hasFeedback
                                 >                        
-                                  
-      <Upload >
-        <Button>
-          <Icon type="upload" /> upload
-        </Button>
-      </Upload>                     
+<div className='wenming-add-uploadbtn'> 
+    <Button>
+        <Icon type="upload"  /> 上传图片
+    </Button>
+    <input className='wenming-add-file' ref="upload-file" onChange={this.uploadFile.bind(this)} type="file"/>
+</div>
+<Table columns={uploadColumns} dataSource={this.state.imageslist} showHeader={false} />                               
+                    
                                 </FormItem>
                                 <FormItem
                                 {...formItemLayout}
@@ -243,9 +273,10 @@ const TextArea = Input;
                                   />                      
                                 </FormItem>
                                 <FormItem {...tailFormItemLayout}>
-                                  <Button type="primary" htmlType="submit">提交</Button>
+                                  <Button type="primary" onClick={this.addProduct.bind(this)}>提交</Button>
                                 </FormItem>
                             </Form>
+
                         </div>
                     </div>
         }
@@ -259,7 +290,101 @@ const TextArea = Input;
         
         
     }
+    uploadFile(){//上传图片
 
+        let formData = new FormData(),
+            s = this;
+
+
+        formData.append('setupfile', this.refs['upload-file'].files[0]);
+        formData.append('uploadtype', 1);
+
+        $.ajax({
+            url:window.baseUrl+ 'share/upload_file',
+            type:'post',
+            data:formData,
+            contentType: false,
+            processData: false,
+            success(data){
+                data.getfileurl[0].key = s.props.randomString(8);
+                s.state.imageslist.push(data.getfileurl[0]);
+                s.forceUpdate();
+            }
+        })
+    }
+    delUploadfile(recoder,index){//删除图片
+
+        var s=this;
+
+        $.ajax({
+
+            url: window.baseUrl + 'user/del_workorderfile/',
+            type:window.ajaxType || 'get',
+
+            data: {
+                userid: s.userid,
+                getusersigid: s.getusersigid,
+                setpwd: recoder.setpwd,
+                filename: recoder.filename,
+            },
+            success(data){
+                s.state.imageslist.splice(index,1);
+                s.forceUpdate();
+
+            }
+        })
+    }
+    addProduct(){//添加
+        var s = this;
+        var userid = this.props.params.userid?this.props.params.userid:this.userid;
+        //判断是否有附件
+        var attachment:"";
+        if(s.state.imageslist.length>0) {
+            attachment=s.state.imageslist[0].datainfourl;
+            for(var i=1;i<s.state.imageslist.length;i++){
+                    attachment=attachment + "," +s.state.imageslist[i].datainfourl;
+            }
+        }
+        var params = {
+            userid:s.userid,
+            getusersigid:s.getusersigid,
+            classid:s.state.classid,
+            appid:s.state.appid,
+            content:s.state.content,    
+            title:s.state.title,
+            wxopenid:s.state.wxopenid,
+            imageslist:attachment,
+            source:s.state.source,
+            type:s.state.type,
+            ishost:s.state.ishost,
+            voidurl:s.state.voidurl,
+            longitude:s.state.longitude,
+            latitude:s.state.latitude,
+        }
+        $.ajax({
+            type:'POST',
+            url:window.baseUrl + 'weixinxcx/append_article/',
+            data:params,
+            success(data){
+                    message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                    s.setState({
+                        classid:'9eGbMukZ',
+                        appid:'wx32e63224f58f2cb5',
+                        content:'',
+                        title:'',
+                        wxopenid:'oSDVUs-aeHSvmJl9uk1Yq7iTeOyk',//
+                        imageslist:[],
+                        source:'',
+                        type:'',
+                        ishost:0,
+                        voidurl:'',
+                        longitude:'',
+                        latitude:'',
+                    })
+                
+            }
+        });
+    }
   
 }
 
