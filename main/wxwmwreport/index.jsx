@@ -33,7 +33,25 @@ class ZmitwxWmwReportApp extends Component {
             selectedIndex:100,
             mainHeight:document.documentElement.clientHeight-50,
             modpostDialogVisible:false,
-            dataSource:[],            
+            dataSource:[{
+				"wxopenid":"oX4P90P4kCl3_5JLOYJyOx1bxISg",
+				"content":"文明播报标题内容",
+				"voidurl":"#",
+				"imageslist":"http://api.zmiti.com/zmiti_ele/public/20170723/dd1a08d7ff651e22a5c8c481bc1a7a9a.jpg,http://api.zmiti.com/zmiti_ele/public/20170723/09afecd939dd2d84e3b7c49d8eda7bbf.jpg,http://api.zmiti.com/zmiti_ele/public/20170723/968592847529643e9874314084e9a6ca.jpg",
+				"classid":"9eGbMukZ",
+				"articlid":"34zU60xA",
+				"commentnum":"1345",
+				"createtime":"2017-07-23 16:19:36",
+			},{
+				"wxopenid":"oX4P90P4kCl3_5JLOYJyOx1bxISg",
+				"content":"易海明在3岁多时，不幸患上小儿麻痹症落下残疾，上学时常常收到老师和同学的帮助。如今已经57岁的易海明从2006年开始，牵头成立残疾人爱心车队，平常帮助老人小孩和行动不便的市民，高考时免费接送考生，他的白色残疾人辅助汽车，成了株洲大街上一道移动的风景。",
+				"voidurl":"#",
+				"imageslist":"http://img3.cache.netease.com/photo/0008/2017-07-21/CPS8D0K05BD20008.png",
+				"classid":"9eGbMukZ",
+				"articlid":"aiHPT9Ld",
+				"commentnum":"234",
+				"createtime":"2017-07-25 16:19:36",
+			}],            
             companyname:'',
             companyid:'',
             classname:'',
@@ -249,21 +267,22 @@ class ZmitwxWmwReportApp extends Component {
         var s=this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         /*$.ajax({
-            url:window.baseUrl+'travel/get_seasondatelist',
-            type:window.ajaxType || 'get',
+            //url:window.baseUrl+'travel/get_seasondatelist',
+            type:'post',
             data:{
-                setuserid:userid,
                 userid:s.userid,
-                getusersigid:s.getusersigid                
+                getusersigid:s.getusersigid              
             },
             success(data){
-
+            	console.log(data,'data');
                 if(data.getret === 0){
+                	
                     s.state.dataSource = data.list;
                     s.forceUpdate();
                 }
             }
         })*/
+        console.log(s.state.dataSource,'s.state.dataSource');
     }
     //
     addProduct(){//添加
