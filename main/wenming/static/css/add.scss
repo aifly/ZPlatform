@@ -56,6 +56,14 @@ $baseColor: #f4654c;
 	}
 	.wenming-add-form{
 		padding:20px 0 0 0;
+		textarea{
+			width:100%;
+			box-sizing:border-box;
+			padding: 6px 7px;
+			resize:none;
+			border-color: #2db7f5;
+			border-radius: 3px;
+		}
 	}
 	.wenming-add-uploadbtn{
 		width:102px;
@@ -69,6 +77,7 @@ $baseColor: #f4654c;
 			opacity:0;
 		}
 	}
+
 	.ant-radio-group{
 		margin:6px 0 0 0;
 	}

@@ -61,6 +61,13 @@
     border-bottom: 1px solid #dddddd; }
   .wenming-add-main-ui .wenming-add-form {
     padding: 20px 0 0 0; }
+    .wenming-add-main-ui .wenming-add-form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 6px 7px;
+      resize: none;
+      border-color: #2db7f5;
+      border-radius: 3px; }
   .wenming-add-main-ui .wenming-add-uploadbtn {
     width: 102px;
     height: 32px;

@@ -31,7 +31,7 @@ const TextArea = Input;
            wxopenid:'oX4P90P4kCl3_5JLOYJyOx1bxISg',//oX4P90P4kCl3_5JLOYJyOx1bxISg//oSDVUs-aeHSvmJl9uk1Yq7iTeOyk
            imageslist:[],
            source:'',
-           type:'',
+           type:3,
            ishost:0,
            voidurl:'',
            longitude:'',
@@ -199,7 +199,20 @@ const TextArea = Input;
                                     </RadioGroup>
                                                       
                                 </FormItem>
-
+                                <FormItem
+                                {...formItemLayout}
+                                label="类型"
+                                hasFeedback
+                                >                        
+                                  
+                                  
+                                    <RadioGroup onChange={(e)=>{this.state.type=e.target.value;this.forceUpdate();}} value={this.state.type}>
+                                        <Radio value={3}>文字</Radio>
+                                        <Radio value={1}>图片</Radio>
+                                        <Radio value={2}>视频</Radio>
+                                    </RadioGroup>
+                                                      
+                                </FormItem>
                                 <FormItem
                                 {...formItemLayout}
                                 label="标题"
@@ -218,14 +231,14 @@ const TextArea = Input;
                                 hasFeedback
                                 >                        
                                   
-                                  <textArea placeholder="内容" 
+                                  <textArea rows='5' placeholder="内容" 
                                     value={this.state.content}
                                     onChange={(e)=>{this.state.content=e.target.value;this.forceUpdate();}}
                                   />                    
                                 </FormItem>
                                 <FormItem
                                 {...formItemLayout}
-                                label="类型"
+                                label="推荐"
                                 hasFeedback
                                 >                        
                                   
@@ -375,7 +388,7 @@ const TextArea = Input;
                         wxopenid:'oSDVUs-aeHSvmJl9uk1Yq7iTeOyk',//
                         imageslist:[],
                         source:'',
-                        type:'',
+                        type:3,
                         ishost:0,
                         voidurl:'',
                         longitude:'',
