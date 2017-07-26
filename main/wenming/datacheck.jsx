@@ -1,6 +1,6 @@
 import './static/css/datacheck.css';
 import React from 'react';
-import {Button,Icon,Checkbox,Input,Row,Col,Pagination} from '../commoncomponent/common.jsx';
+import {Button,Icon,Checkbox,Input,Row,Col,Pagination,Popconfirm,message,Menu, Dropdown} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
@@ -22,89 +22,24 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
            selectAll:false,
-           allCount:500,
+           allCount:1,
            pageIndex:1,
 
-           uncheckList:[
-              {
-                nickname:'智媒体',
-                headimgurl:defaulturl,
-                date:'7月20日 20：07',
-                content:'郑爽做好人好事！在酒店大堂，看见有人提着沉重行李，郑爽跑上前主动为人开门，小小举动好暖心！ ​',
-                imgs:[
-                    './static/images/wenming/1.jpg',
-                    './static/images/wenming/2.jpg',
-                    './static/images/wenming/3.jpg',
-                    './static/images/wenming/1.png',
-                    './static/images/wenming/2.png',
-                    './static/images/wenming/3.png', 
-                    './static/images/wenming/1.jpg',
-                    './static/images/wenming/2.jpg',
-                    './static/images/wenming/3.jpg',
-                ],
-                videos:[],
-                id:1,
-              },{
-                nickname:'智媒体',
-                headimgurl:defaulturl,
-                date:'7月20日 20：07',
-                content:'郑爽做好人好事！在酒店大堂，看见有人提着沉重行李，郑爽跑上前主动为人开门，小小举动好暖心！ ​',
-                imgs:[
-                    './static/images/wenming/1.jpg',
-                    './static/images/wenming/2.jpg',
-                    './static/images/wenming/3.jpg',
-                ],
-                videos:[],
-                id:1,
-              },{
-                nickname:'智媒体',
-                headimgurl:defaulturl,
-                date:'7月20日 20：07',
-                content:'郑爽做好人好事！在酒店大堂，看见有人提着沉重行李，郑爽跑上前主动为人开门，小小举动好暖心！ ​',
-                imgs:[
-                    './static/images/wenming/1.png',
-                    './static/images/wenming/2.png',
-                    './static/images/wenming/3.png',
-                ],
-                videos:[],
-                id:1,
-              },{
-                nickname:'智媒体',
-                headimgurl:defaulturl,
-                date:'7月20日 20：07',
-                content:'郑爽做好人好事！在酒店大堂，看见有人提着沉重行李，郑爽跑上前主动为人开门，小小举动好暖心！ ​',
-                imgs:[
-                    './static/images/wenming/1.jpg',
-                    './static/images/wenming/2.jpg',
-                    './static/images/wenming/3.jpg',
-                ],
-                videos:[],
-                id:1,
-              },{
-                nickname:'智媒体',
-                headimgurl:defaulturl,
-                date:'7月20日 20：07',
-                content:'郑爽做好人好事！在酒店大堂，看见有人提着沉重行李，郑爽跑上前主动为人开门，小小举动好暖心！ ​',
-                imgs:[
-                    './static/images/wenming/1.png',
-                    './static/images/wenming/2.png',
-                    './static/images/wenming/3.png',
-                ],
-                videos:[],
-                id:1,
-              },{
-                nickname:'智媒体',
-                headimgurl:defaulturl,
-                date:'7月20日 20：07',
-                content:'郑爽做好人好事！在酒店大堂，看见有人提着沉重行李，郑爽跑上前主动为人开门，小小举动好暖心！ ​',
-                imgs:[
-                    './static/images/wenming/1.jpg',
-                    './static/images/wenming/2.jpg',
-                    './static/images/wenming/3.jpg',
-                ],
-                videos:[],
-                id:1,
-              }
+           currentPicIndex:-1,
+
+
+           currentViewPic:'',
+
+           currentDeleteIndex:-1,
+
+           status:-1,
+
+           typeList:[],
+
+           classname:'全部',
+
+           dataSource:[
+              
            ]
         }
     }
@@ -148,6 +83,17 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         resizeMainHeight(this);
 
 
+        window.addEventListener('keydown',(e)=>{
+            switch(e.keyCode){
+                case 27://ESC
+                this.setState({
+                    currentViewPic:''
+                })
+                break;
+            }
+        })
+
+
         this.scroll = new IScroll(this.refs['wenming-datacheck-list'],{
             scrollbars:true,//显示滚动条
             interactiveScrollbars:true,//允许用户拖动滚动条
@@ -158,7 +104,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             this.scroll.refresh();
         },100)
 
-        this.request()
+        this.request();
+
        
     }
 
@@ -168,20 +115,50 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
         var title = '身边文明事';
 
+
+        var showBatchbars = false;
+        this.state.dataSource.map((item,i)=>{
+            if(item.checked){
+                showBatchbars = true;
+            }
+        });
+        var menu = (
+             <Menu>
+                <Menu.Item >
+                    <a onClick={this.loadArticleByType.bind(this,'','全部')} href="javascript:">全部</a>
+                </Menu.Item>
+                {this.state.typeList.map((item,i)=>{
+                    return <Menu.Item key={i}>
+                        <a  onClick={this.loadArticleByType.bind(this,item.classid,item.classname)} href="javascript:">{item.classname}</a>
+                    </Menu.Item>
+                })}
+                    
+              </Menu>)
         var props = {
             title,
             selectedIndex:1,
             mainRight:<div className='wenming-datacheck-main-ui' style={{height:this.state.mainHeight}}>
                         <header className='wenming-datacheck-header'>
                             <div>数据审核-{title}</div>   
-                            <div><span>已审</span> | <span>未审</span></div>   
+                            <div><span onClick={this.loadArticle.bind(this,1)} className={this.state.status===0?'':'active'}>已审</span> | <span onClick={this.loadArticle.bind(this,0)} className={this.state.status===0?'active':''}>未审</span></div>   
                             <div><a href='#'><Icon type="upload"/>上报数据</a></div>   
                         </header>
                         <section className='wenming-datacheck-bar'>
                             <div>
                                 <Checkbox onChange={this.selectAll.bind(this)} checked={this.state.selectAll}>全选</Checkbox>
-                                <div className='wenming-del'>删除</div>
-                                <div>分类</div>
+                                
+                               {showBatchbars && <Popconfirm onConfirm={this.batchDelete.bind(this)} placement="top" title="删除后数据将无法恢复，确定要删除吗？" okText="确定" cancelText="取消">
+                                                                   <div className='wenming-del'><Icon type='delete'/>批量删除</div>
+                                                               </Popconfirm>}
+                                {showBatchbars && this.state.status === 0 && <div onClick={this.batchChecked.bind(this,'pass')} className='wenming-datacheck-batchcheck'><Icon type="check-circle" />批量审核通过</div>}
+                                {showBatchbars && this.state.status === 0 && <div onClick={this.batchChecked.bind(this,'unpass')} className='wenming-datacheck-unpass'><Icon type="close-circle" />拒绝通过审核</div>}
+                                <div>
+                                     <Dropdown overlay={menu}>
+                                        <a className="ant-dropdown-link" href="javascript:">
+                                          {this.state.classname} <Icon style={{color:'#108ee9'}}  type="down" />
+                                        </a>
+                                      </Dropdown>
+                                </div>
                             </div>
                             <div>
                                 <Row type='flex'>
@@ -193,8 +170,40 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                         </section>
                         <section className='wenming-datacheck-list' ref='wenming-datacheck-list'>
                             <ul>
-                                {this.state.uncheckList.map((item,i)=>{
-                                    return <li key={i}>
+                                {this.state.dataSource.map((item,i)=>{
+                                    var className='';
+
+                                    if(this.state.status === 1){
+                                        if(item.status === 1){
+                                            className += ' pass';
+                                        }else if(item.status === 2){
+                                            className += 'unpass';
+                                        }
+                                        
+                                    }
+                                    if(this.state.currentDeleteIndex===i){
+                                        className+= ' wenming-datacheck-item-delete'
+                                    }
+                                    
+                                    
+                                    //item.content = item.content.length > 120 ? item.content.substring(0,120)+'...':item.content;
+                                    if( item.content.length > 120 ){
+                                        if(!item.showAll){
+                                            item.content = item.defaultContent.substring(0,120)+'...';
+                                        }
+                                        else{
+                                            item.content = item.defaultContent
+                                        }
+                                    }
+                                    var showMore = item.defaultContent.length > 120? <a 
+                                        onClick={()=>{item.showAll = !item.showAll;this.forceUpdate(()=>{this.scroll.refresh()})}}
+                                         href='javascript:;'
+                                         >
+                                         {!item.showAll?'展开全文 ':'收起'}
+                                         <Icon type="down" />
+                                         </a>:""
+                                  //item.content.length > 120 &&  console.log(item.content,item.defaultContent);
+                                    return <li key={i} className={className}>
                                         <aside>
                                             <Checkbox checked={item.checked} onChange={()=>{item.checked=!item.checked;this.state.selectAll = false;this.forceUpdate();}}></Checkbox>
                                         </aside>
@@ -205,30 +214,34 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                             <section className='wenming-datacheck-item-main-content'>
                                                 <h2>{item.nickname}</h2>
                                                 <div className='wenming-datacheck-date'>{item.date}</div>
-                                                <div className='wenming-datacheck-content'>{item.content}</div>
+                                                <div className='wenming-datacheck-content'>{item.content}{showMore}</div>
                                                 <ol>
                                                     {item.imgs.map((img,k)=>{
-                                                        return <li key={k} style={{background:'url('+img+') no-repeat center center / cover'}}></li>
+                                                        return <li onClick={this.viewPic.bind(this,i,k)} key={k} style={{cursor:'url(./static/images/big.cur),auto',background:'url('+img+') no-repeat center center / cover'}}></li>
                                                     })}
                                                 </ol>
                                                 <section className='wenming-datacheck-operator'>
                                                     <div>
                                                         {item.videos && item.videos.length>0 && <div><Icon type="video-camera" /> 查看视频</div>}
-                                                        {/*<div><Icon type="message" /> 查看评论 ({item.comments}条)</div>*/}
-                                                        <div><Checkbox>推荐</Checkbox></div>
-                                                        <div>
-                                                            
-                                                            <Icon className='wenming-pass' type="check-circle" /> 通过审核
-                                                        </div>
-                                                        <div>
+                                                        {item.status === 1 && <div><Icon type="message" /> 查看评论 ({item.comments}条)</div>}
+                                                        {item.isHost===0 && <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐</Checkbox></div>}
+                                                        {item.isHost===1 && <div><Checkbox checked={item.isHost} >推荐</Checkbox></div>}
+                                                        {item.status === 0 && <div onClick={this.checkedArticle.bind(this,item,'pass',i)}>
+                                                           <Icon className='wenming-pass' type="check-circle" /> 通过审核
+                                                        </div>}
+                                                        {item.status === 0 && <div onClick={this.checkedArticle.bind(this,item,'unpass',i)}>
                                                             <Icon className='wenming-unpass' type="close-circle" /> 拒绝通过审核
-                                                        </div>
+                                                        </div>}
                                                     </div>
                                                 </section>
                                             </section>
                                         </aside>
                                         <aside>
-                                            <div onClick={this.delete.bind(this,i)}><Icon type='delete'/> 删除</div>
+
+                                         <Popconfirm onConfirm={this.delete.bind(this,i,item.id)} placement="leftTop" title="删除后数据将无法恢复，确定要删除吗？" okText="确定" cancelText="取消">
+                                                <div><Icon type='delete'/> 删除</div>
+                                          </Popconfirm>
+                                            
                                         </aside>
                                     </li>;
                                 })}
@@ -236,8 +249,18 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                             </ul>
                         </section>
                         <section className='wenming-pagination' style={{height:40}}>
-                            <Pagination showQuickJumper defaultCurrent={this.state.pageIndex} total={this.state.allCount} onChange={()=>{}} />
+                            <Pagination showQuickJumper defaultCurrent={this.state.pageIndex} total={this.state.allCount} onChange={this.loadMoreArticle.bind(this)} />
                         </section>
+                        {this.state.currentViewPic && <div className='wenming-mask'>
+                            <aside onClick={()=>{this.setState({currentViewPic:''})}}></aside>
+                            <div>
+                                <img src={this.state.currentViewPic} />
+                                <section onClick={this.viewPrev.bind(this)} style={{cursor:'url(./static/images/pic_prev.cur),auto'}}></section>
+                                <section onClick={()=>{this.setState({currentViewPic:''})}} style={{cursor:'url(./static/images/small.cur),auto'}}></section>
+                                <section onClick={this.viewNext.bind(this)} style={{cursor:'url(./static/images/pic_next.cur),auto'}}></section>
+                            </div>
+                            <aside onClick={()=>{this.setState({currentViewPic:''})}}></aside>
+                        </div>}
                     </div>
         }
         var mainComponent = <div>
@@ -251,15 +274,218 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         
     }
 
-    delete(index){
-        this.state.uncheckList.splice(index,1);
-        this.forceUpdate(()=>{
-            this.scroll.refresh();
+    loadArticleByType(id,name){
+       
+      
+        this.setState({
+            classid:id,
+            classname:name
+        },()=>{
+            this.loadArticle(this.state.status);
+        })
+    }
+
+    viewNext(){
+        this.setState({
+            currentPicIndex:this.state.currentPicIndex+1,
+            currentViewPic:this.state.dataSource[this.currentRow].imgs[this.state.currentPicIndex+1]
+        })
+    }
+
+    viewPrev(){
+        this.setState({
+            currentPicIndex:this.state.currentPicIndex-1,
+            currentViewPic:this.state.dataSource[this.currentRow].imgs[this.state.currentPicIndex-1]
+        })
+    }
+
+
+
+    viewPic(i,k){
+        this.currentRow = i;
+        this.setState({
+            currentPicIndex:k,
+            currentViewPic:this.state.dataSource[i].imgs[k]
+        })
+    }
+
+
+    batchDelete(){
+        var arr = [];
+
+        this.state.dataSource.map((item,i)=>{
+            if(item.checked){
+                arr.push(item.id);
+
+            }
         });
+        
+        if(arr.length<=0){
+            message.error('请选择您要删除的文章~~');
+            return;
+        }
+        this.delete(-1,arr.join(','));
+
+
+    }
+
+    delete(index,articleids){
+
+        //
+
+        this.state.currentDeleteIndex = index;
+        this.forceUpdate(()=>{
+           
+        });
+
+        $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/del_articles/',
+            data:{
+                appid:window.WENMING.XCXAPPID,
+                userid:this.userid,
+                getusersigid:this.getusersigid,
+                articleids:articleids
+            }
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){
+
+                if(index>-1){
+                    setTimeout(()=>{
+                        this.state.dataSource.splice(index,1);
+                        this.state.currentDeleteIndex = -1;
+                        this.state.allCount = this.state.allCount -1;
+                        this.forceUpdate(()=>{
+                            this.scroll.refresh();
+                        });
+                    },500)
+
+                }else{
+                     setTimeout(()=>{
+                         articleids.split(",").map((id,i)=>{
+                            this.state.dataSource.map((d,k)=>{
+                                if(d.id === id){
+                                    this.state.dataSource.splice(k,1);
+                                }
+                            })
+                        });
+
+                        this.state.allCount = this.state.allCount -articleids.split(",").length;
+                        this.forceUpdate(()=>{
+                            this.scroll.refresh();
+                        });
+                    },500)
+                   
+                }
+            }
+        })
+
+       
+    }
+
+    batchChecked(type){
+        
+        var status = 1;
+        switch(type){
+            case 'pass':
+            break;
+            case 'unpass':
+            status = 2;
+            break;
+        }
+
+        var arr = [];
+
+        this.state.dataSource.map((item,i)=>{
+            if(item.checked){
+                arr.push(item.id);
+                this.checkedArticle(item,type,i); 
+
+            }
+        });
+        message.success('操作成功~~');
+        if(arr.length<=0){
+            message.error('请选择您要审核的文章~~');
+            return;
+        }
+        
+    }
+
+    checkedArticle(item,type,index){
+
+        this.state.currentDeleteIndex = index;
+        this.forceUpdate();
+        var status = 1;
+        switch(type){
+            case "pass"://审核通过 
+                if(item.recommend){//是推荐
+                     $.ajax({
+                        type:'post',
+                        url:window.baseUrl+'weixinxcx/hot_articles/',
+                        data:{
+                            appid:window.WENMING.XCXAPPID,
+                            userid:this.userid,
+                            getusersigid:this.getusersigid,
+                            articleids:item.id
+                        }
+                    }).done((data)=>{
+                        if(typeof data === 'string'){
+                            data = JSON.parse(data);
+                        }
+                        if(data.getret === 0 ){
+                            message.success('推荐成功');
+                        }
+                    })
+                }
+
+            break;
+            case 'unpass'://审核不通过 
+                status = 2;
+            break;
+        } 
+
+        $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/look_articles//',
+            data:{
+                appid:window.WENMING.XCXAPPID,
+                userid:this.userid,
+                getusersigid:this.getusersigid,
+                articleids:item.id,
+                status           
+            }
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){
+
+               if(index>-1){
+                 setTimeout(()=>{
+                    this.state.dataSource.forEach((item,i)=>{
+                        item.recommend = false;
+                    })
+                    this.state.dataSource.splice(index,1)
+                    this.state.currentDeleteIndex = -1;
+                    this.forceUpdate(()=>{
+                        this.scroll.refresh();
+                    });
+                },500)
+             }else{
+                 
+             }
+            }
+        })
+
+
+       
     }
 
     selectAll(){
-        this.state.uncheckList.forEach((item,i)=>{
+        this.state.dataSource.forEach((item,i)=>{
             item.checked = !this.state.selectAll;
         })
         this.setState({
@@ -268,18 +494,88 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
     }
 
-    request(){
+    loadMoreArticle(e){//分页
+        this.setState({
+            pageIndex:e
+        },()=>{
+            this.loadArticle(this.state.status);
+        })
+    }
 
-         $.ajax({
-            type:'post',
-            url:window.baseUrl+'weixinxcx/search_articlelist/',
-            data:{
+    loadArticle(index){
+        
+         this.setState({
+            status:index
+         });
+
+         var data = {
                 appid:window.WENMING.XCXAPPID,
                 userid:this.userid,
                 getusersigid:this.getusersigid,
-                status:0,
+                status:index,
                 page:this.state.pageIndex,
                 pagenum:10
+            }
+            if(this.state.classid){
+                data.classid = this.state.classid;
+            }
+            console.log(this.state.classid);
+         $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/search_articlelist/',
+            data
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){
+                console.log(data);
+                this.state.dataSource = [];
+
+                data.list.map((item,i)=>{
+                    var imgs = item.imageslist.split(',');
+                    if(!imgs[0]){
+                        imgs.shift();
+                    }
+                    this.state.dataSource.push({
+                        nickname:item.nickname,
+                        headimgurl:item.headimgurl,
+                        date:item.createtime,
+                        content:item.content,
+                        defaultContent:item.content,
+                        comments:item.commentnum,
+                        imgs,
+                        isHost:item.ishost,
+                        status:item.status,
+                        ///videos:[],
+                        id:item.articlid,
+                    });
+                });
+
+                  this.state.allCount = data.countRow.countrows
+             
+
+                this.forceUpdate(()=>{
+                    this.scroll.refresh();
+                });
+            }
+        })
+    }
+
+
+
+    request(){
+
+       this.loadArticle(0);
+
+
+          $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/search_articleclass',
+            data:{
+                appid:window.WENMING.XCXAPPID,
+                userid:this.userid,
+                getusersigid:this.getusersigid
             }
         }).done((data)=>{
             if(typeof data === 'string'){
@@ -287,27 +583,10 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             }
             if(data.getret === 0 ){
 
-                this.state.uncheckList = [];
-                data.list.map((item,i)=>{
-                    var imgs = item.imageslist.split(',');
-                    if(!imgs[0]){
-                        imgs.shift();
-                    }
-                    this.state.uncheckList.push({
-                        nickname:item.nickname,
-                        headimgurl:item.headimgurl,
-                        date:item.createtime,
-                        content:item.content,
-                        imgs,
-                        ///videos:[],
-                        id:item.articlid,
-                    });
-                    this.state.allCount = data.countRow.countrows
-                    this.forceUpdate();
-
-                });
-
-                console.log(data);   
+              
+                this.setState({
+                    typeList:data.list
+                })
             }
         })
 

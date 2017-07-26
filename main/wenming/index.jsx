@@ -647,7 +647,7 @@ import IScroll from 'iscroll';
                 max: 500,
                 calculable: true,
                 inRange: {
-                    color: ['#f4e6a2',  '#c0464e']
+                    color: ['#ff684e',  '#d32000']
                 },
                 textStyle: {
                     color: '#fff'
@@ -670,7 +670,7 @@ import IScroll from 'iscroll';
                         borderColor: '#999'//地图边框颜色。
                     },
                     emphasis: {
-                        areaColor: '#f4654c'
+                        areaColor: '#ffef98'
                     }
                 }
             },
@@ -682,7 +682,7 @@ import IScroll from 'iscroll';
                     symbol: '',
                     data:s.convertData(userData),
                     symbolSize: function(val){
-                         return val[2] / 10 ;//100
+                         return val[2] ;//100
                     },
                     label: {
                         normal: {

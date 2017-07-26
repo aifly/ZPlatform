@@ -1,10 +1,61 @@
-@import "../../../public/css/base.scss";
+﻿@import "../../../public/css/base.scss";
 
 .wenming-datacheck-main-ui {
     width: 100%;
     overflow: hidden;
     @include displayFlex();
 
+    .wenming-mask {
+        @include pos(a);
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .6);
+        z-index: 10000;
+
+        img {
+            width: auto;
+            height: auto;
+        }
+        div {
+            @include pos(a);
+            left: 50%;
+            top: 50%;
+            z-index: 13;
+            @include transform(translate3d(-50%, -50%, 0));
+
+            &>section {
+                z-index: 22;
+                @include pos(a);
+                width: 33.3%;
+                height: 100%;
+                left: 0;
+                top: 0;
+
+                &:nth-of-type(2) {
+                    left: 33%;
+                }
+                &:nth-of-type(3) {
+                    left: auto;
+                    right: 0;
+                }
+            }
+        }
+        aside {
+            width: 50%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 10;
+            @include pos(a);
+
+            &:nth-of-type(2) {
+                left: auto;
+                right: 0;
+            }
+        }
+    }
     &>header.wenming-datacheck-header {
         height: 50px;
         width: 98%;
@@ -15,6 +66,10 @@
         text-indent: 1em;
         @include pos(r);
 
+        span.active {
+            color: #88b7e0;
+            font-weight: bold;
+        }
         &:after {
             content: "";
             width: 100%;
@@ -59,7 +114,19 @@
         line-height: 50px;
         width: 98%;
         margin: 0 auto;
+        @include pos(r);
+        z-index: 10;
 
+        &:after {
+            content: '';
+            @include pos(a);
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 1px;
+            z-index: 0;
+            box-shadow: 0 0 5px rgba(0, 0, 0, .1) inset;
+        }
         &>div {
             flex: 1;
             -webkit-flex: 1;
@@ -75,7 +142,27 @@
                     &.wenming-del {
                         margin: 0 20px;
                         color: #88b7e0;
+
+                        i {
+                            color: red;
+                        }
                     }
+                }
+            }
+            i {
+                color: #6db92c;
+                font-size: 18px;
+                margin-right: 4px;
+            }
+            .wenming-datacheck-batchcheck {
+                margin-right: 20px;
+                vertical-align: bottom;
+            }
+            .wenming-datacheck-unpass {
+                margin-right: 20px;
+
+                i {
+                    color: #f4654c;
                 }
             }
             input {
@@ -96,13 +183,48 @@
 
         ul {
             &>li {
+                border: 1px solid #ddd;
 
-                &:last-of-type{
+                &.pass, &.unpass {
+                    @include pos(r);
+                    border-color: #6db92c;
+                    overflow: hidden;
+
+                    &:before {
+                        content: '已通过';
+                        @include pos(a);
+                        background: #6db92c;
+                        color: #fff;
+                        height: 20px;
+                        left: 0;
+                        width: 90px;
+                        height: 50px;
+                        text-align: center;
+                        line-height: 70px;
+                        font-size: 12px;
+                        top: 0;
+                        @include transform(translate3d(-35px, -15px, 0) rotate(-45deg));
+                    }
+                }
+                &.unpass {
+                    border-color: #f4654c;
+
+                    &:before {
+                        content: '未通过';
+                        background: #f4654c;
+                    }
+                }
+                &.wenming-datacheck-item-delete {
+                    @include transition(.5s opacity);
+                    opacity: 0;
+                    overflow: hidden;
+                }
+                &:last-of-type {
                     background: transparent;
                 }
                 width: 98%;
                 margin: 10px auto;
-                background: #f6f6f6;
+                background: #f9f9f9;
                 @include displayFlex(row);
                 padding: 10px 0;
 
@@ -114,7 +236,7 @@
 
                         .ant-checkbox-wrapper {
                             @include pos(r);
-                            top: 50%;
+                            top: 40%;
                             left: 10%;
                         }
                     }
@@ -153,6 +275,10 @@
                             }
                             .wenming-datacheck-content {
                                 font-size: 14px;
+
+                                a {
+                                    font-size: 12px;
+                                }
                             }
                             ol {
                                 max-width: 660px;
