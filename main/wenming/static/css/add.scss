@@ -1,0 +1,85 @@
+@import "../../../public/css/base.scss";
+$height: 52px;
+$baseColor: #f4654c;
+
+
+
+.wenming-add-main-ui {
+	@include displayFlex();
+	padding: 0 10px 0 10px;
+	background: #ffffff;
+	box-sizing: border-box;
+
+	header.wenming-header {
+		width: 100%;
+		height: $height;
+		background: #fff;
+		margin: 10px auto 1px;
+		@include pos(r);
+		line-height: $height;
+		color: #000;
+		font-size: 16px;
+		text-indent: 20px;
+
+		&:before {
+			content: "";
+			@include pos(a);
+			width: 4px;
+			height: 100%;
+			left: 0;
+			top: 0;
+			background: $baseColor;
+		}
+	}
+	.wenming-add-header-inner{
+		padding-left: 8px;
+		margin-top: 10px;
+		@include pos(r);
+		&:before{
+			content: '';
+			@include pos(a);
+			width:2px;
+			height:100%;
+			background:#88B7E0 ;
+			left:0;
+			@include transform(scale(1,.7));
+		}
+	}
+	.wenming-add-button-right button{
+		float:right;
+		margin-top: 5px;
+	}
+	.wenming-add-line{
+		height:15px;
+		overflow: hidden;
+		border-bottom: 1px solid #dddddd;
+	}
+	.wenming-add-form{
+		padding:20px 0 0 0;
+		textarea{
+			width:100%;
+			box-sizing:border-box;
+			padding: 6px 7px;
+			resize:none;
+			border-color: #2db7f5;
+			border-radius: 3px;
+		}
+	}
+	.wenming-add-uploadbtn{
+		width:102px;
+		height:32px;
+		overflow:hidden;
+		position: relative;
+		.wenming-add-file{
+			position: absolute;
+			left:0;
+			top:0;
+			opacity:0;
+		}
+	}
+
+	.ant-radio-group{
+		margin:6px 0 0 0;
+	}
+
+}

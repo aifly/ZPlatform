@@ -62,7 +62,9 @@ import Cascader  from 'antd/lib/cascader';
 
 import Popover  from 'antd/lib/popover';
 
-import Pagination from 'antd/lib/pagination'
+import Pagination from 'antd/lib/pagination';
+
+import Upload   from 'antd/lib/upload';
 
 import Dropdown from 'antd/lib/dropdown'
 
@@ -74,4 +76,6 @@ import Dropdown from 'antd/lib/dropdown'
 
 import moment  from 'moment';
 
+
 export default {Button,message,Input,Table,Modal,Form,Icon,Radio,Progress,Tabs,Card,DatePicker,moment,Select,Row,Col,Checkbox,Badge,Menu,Spin,Steps,notification,Tree,Popconfirm,Tag,Slider,InputNumber,Tooltip,Switch,Layout,Cascader,Popover,Pagination,Dropdown};
+
