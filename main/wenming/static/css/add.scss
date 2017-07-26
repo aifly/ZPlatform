@@ -1,0 +1,35 @@
+@import "../../../public/css/base.scss";
+$height: 52px;
+$baseColor: #f4654c;
+
+
+
+.wenming-add-main-ui {
+	@include displayFlex();
+	padding: 0 10px 0 10px;
+	background: #f0f0f0;
+	box-sizing: border-box;
+
+	header.wenming-header {
+		width: 100%;
+		height: $height;
+		background: #fff;
+		margin: 10px auto 1px;
+		@include pos(r);
+		line-height: $height;
+		color: #000;
+		font-size: 16px;
+		text-indent: 20px;
+
+		&:before {
+			content: "";
+			@include pos(a);
+			width: 4px;
+			height: 100%;
+			left: 0;
+			top: 0;
+			background: $baseColor;
+		}
+	}
+
+}
