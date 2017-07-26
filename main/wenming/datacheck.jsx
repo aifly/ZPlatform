@@ -34,6 +34,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
            status:-1,
 
+           voidurl:'',
+
            typeList:[],
 
            classname:'全部',
@@ -87,7 +89,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             switch(e.keyCode){
                 case 27://ESC
                 this.setState({
-                    currentViewPic:''
+                    currentViewPic:'',
+                    voidurl :''
                 })
                 break;
             }
@@ -140,7 +143,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             mainRight:<div className='wenming-datacheck-main-ui' style={{height:this.state.mainHeight}}>
                         <header className='wenming-datacheck-header'>
                             <div>数据审核-{title}</div>   
-                            <div><span onClick={this.loadArticle.bind(this,1)} className={this.state.status===0?'':'active'}>已审</span> | <span onClick={this.loadArticle.bind(this,0)} className={this.state.status===0?'active':''}>未审</span></div>   
+                            <div><span onClick={this.getCheckedData.bind(this,1)}  className={this.state.status===0?'':'active'}>已审</span> | <span onClick={this.getCheckedData.bind(this,0)} className={this.state.status===0?'active':''}>未审</span></div>   
                             <div><a href='#'><Icon type="upload"/>上报数据</a></div>   
                         </header>
                         <section className='wenming-datacheck-bar'>
@@ -200,7 +203,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                          href='javascript:;'
                                          >
                                          {!item.showAll?'展开全文 ':'收起'}
-                                         <Icon type="down" />
+                                         <Icon type={!item.showAll?"down":'up'} />
                                          </a>:""
                                   //item.content.length > 120 &&  console.log(item.content,item.defaultContent);
                                     return <li key={i} className={className}>
@@ -219,17 +222,18 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                                     {item.imgs.map((img,k)=>{
                                                         return <li onClick={this.viewPic.bind(this,i,k)} key={k} style={{cursor:'url(./static/images/big.cur),auto',background:'url('+img+') no-repeat center center / cover'}}></li>
                                                     })}
+                                                    {this.state.voidurl  && <li onClick={this.viewVideo.bind(this,item.voidurl )}><Icon type="play-circle-o" /></li>}
                                                 </ol>
                                                 <section className='wenming-datacheck-operator'>
                                                     <div>
                                                         {item.videos && item.videos.length>0 && <div><Icon type="video-camera" /> 查看视频</div>}
                                                         {item.status === 1 && <div><Icon type="message" /> 查看评论 ({item.comments}条)</div>}
-                                                        {item.isHost===0 && <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐</Checkbox></div>}
-                                                        {item.isHost===1 && <div><Checkbox checked={item.isHost} >推荐</Checkbox></div>}
-                                                        {item.status === 0 && <div onClick={this.checkedArticle.bind(this,item,'pass',i)}>
+                                                        {this.state.status === 0 &&  <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐</Checkbox></div>}
+                                                        {this.state.status === 1 && item.status !==2  && <div><Checkbox onChange={this.recommentArticle.bind(this,item)} checked={item.isHost} >推荐</Checkbox></div>}
+                                                        {item.status*1 === 0 && <div onClick={this.checkedArticle.bind(this,item,'pass',i)}>
                                                            <Icon className='wenming-pass' type="check-circle" /> 通过审核
                                                         </div>}
-                                                        {item.status === 0 && <div onClick={this.checkedArticle.bind(this,item,'unpass',i)}>
+                                                        {item.status*1 === 0 && <div onClick={this.checkedArticle.bind(this,item,'unpass',i)}>
                                                             <Icon className='wenming-unpass' type="close-circle" /> 拒绝通过审核
                                                         </div>}
                                                     </div>
@@ -261,6 +265,18 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                             </div>
                             <aside onClick={()=>{this.setState({currentViewPic:''})}}></aside>
                         </div>}
+
+                        {this.state.voidurl  && <div className='wenming-mask'>
+                            <aside onClick={()=>{this.setState({voidurl:''})}}></aside>
+                            <div>
+                                <video width={800} height={600} controls src={this.state.voidurl}></video>
+                                <section onClick={()=>{this.setState({voidurl:''})}}></section>
+                                <section>
+                                </section>
+                                <section onClick={()=>{this.setState({voidurl:''})}}></section>
+                            </div>
+                            <aside onClick={()=>{this.setState({currentViewPic:''})}}></aside>
+                        </div>}
                     </div>
         }
         var mainComponent = <div>
@@ -272,6 +288,45 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         );
         
         
+    }
+
+    getCheckedData(index){
+        this.setState({
+            pageIndex:1
+        })
+        this.loadArticle(index);
+    }
+
+    recommentArticle(item){
+        //item.isHost = true;
+        var ishot = 1;
+        if(item.isHost){//取消推荐
+            ishot = 0;
+        }
+        else {//推荐.
+            
+        }
+
+        $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/hot_articles/',
+            data:{
+                appid:window.WENMING.XCXAPPID,
+                userid:this.userid,
+                getusersigid:this.getusersigid,
+                articleids:item.id,
+                ishot
+            }
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){
+                item.isHost = !item.isHost;
+                this.forceUpdate();
+                message.success(ishot?"推荐成功":'取消推荐成功');
+            }
+        })
     }
 
     loadArticleByType(id,name){
@@ -299,6 +354,11 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         })
     }
 
+    viewVideo(voidurl){
+      this.setState({
+           voidurl
+      });
+    }
 
 
     viewPic(i,k){
@@ -429,7 +489,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                             appid:window.WENMING.XCXAPPID,
                             userid:this.userid,
                             getusersigid:this.getusersigid,
-                            articleids:item.id
+                            articleids:item.id,
+                            ishot:1
                         }
                     }).done((data)=>{
                         if(typeof data === 'string'){
@@ -498,11 +559,13 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         this.setState({
             pageIndex:e
         },()=>{
-            this.loadArticle(this.state.status);
+            this.loadArticle(this.state.status,e);
         })
     }
 
-    loadArticle(index){
+    loadArticle(index,e){
+
+
         
          this.setState({
             status:index
@@ -512,14 +575,13 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 appid:window.WENMING.XCXAPPID,
                 userid:this.userid,
                 getusersigid:this.getusersigid,
-                status:index,
+                status:index===1?'1,2':0,
                 page:this.state.pageIndex,
                 pagenum:10
             }
             if(this.state.classid){
                 data.classid = this.state.classid;
             }
-            console.log(this.state.classid);
          $.ajax({
             type:'post',
             url:window.baseUrl+'weixinxcx/search_articlelist/',
@@ -529,9 +591,9 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 data = JSON.parse(data);
             }
             if(data.getret === 0 ){
-                console.log(data);
+                
                 this.state.dataSource = [];
-
+                console.log(data);
                 data.list.map((item,i)=>{
                     var imgs = item.imageslist.split(',');
                     if(!imgs[0]){
@@ -540,11 +602,12 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                     this.state.dataSource.push({
                         nickname:item.nickname,
                         headimgurl:item.headimgurl,
-                        date:item.createtime,
+                        date:item.looktime,
                         content:item.content,
                         defaultContent:item.content,
                         comments:item.commentnum,
                         imgs,
+                        voidurl:item.voidurl ,
                         isHost:item.ishost,
                         status:item.status,
                         ///videos:[],
