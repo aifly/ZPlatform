@@ -7,7 +7,7 @@ $baseColor: #f4654c;
 .wenming-add-main-ui {
 	@include displayFlex();
 	padding: 0 10px 0 10px;
-	background: #f0f0f0;
+	background: #ffffff;
 	box-sizing: border-box;
 
 	header.wenming-header {
@@ -30,6 +30,35 @@ $baseColor: #f4654c;
 			top: 0;
 			background: $baseColor;
 		}
+	}
+	.wenming-add-header-inner{
+		padding-left: 8px;
+		margin-top: 10px;
+		@include pos(r);
+		&:before{
+			content: '';
+			@include pos(a);
+			width:2px;
+			height:100%;
+			background:#88B7E0 ;
+			left:0;
+			@include transform(scale(1,.7));
+		}
+	}
+	.wenming-add-button-right button{
+		float:right;
+		margin-top: 5px;
+	}
+	.wenming-add-line{
+		height:15px;
+		overflow: hidden;
+		border-bottom: 1px solid #dddddd;
+	}
+	.wenming-add-form{
+		padding:20px 0 0 0;
+	}
+	.ant-radio-group{
+		margin:6px 0 0 0;
 	}
 
 }

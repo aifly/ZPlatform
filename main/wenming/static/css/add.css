@@ -19,7 +19,7 @@
   display: -webkit-flex;
   flex-flow: column;
   padding: 0 10px 0 10px;
-  background: #f0f0f0;
+  background: #ffffff;
   box-sizing: border-box; }
   .wenming-add-main-ui header.wenming-header {
     width: 100%;
@@ -39,5 +39,29 @@
       left: 0;
       top: 0;
       background: #f4654c; }
+  .wenming-add-main-ui .wenming-add-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .wenming-add-main-ui .wenming-add-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .wenming-add-main-ui .wenming-add-button-right button {
+    float: right;
+    margin-top: 5px; }
+  .wenming-add-main-ui .wenming-add-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .wenming-add-main-ui .wenming-add-form {
+    padding: 20px 0 0 0; }
+  .wenming-add-main-ui .ant-radio-group {
+    margin: 6px 0 0 0; }
 
 /*# sourceMappingURL=add.css.map */
