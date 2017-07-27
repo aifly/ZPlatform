@@ -552,7 +552,7 @@ export default class ZmitiUploadDialog extends React.Component {
                     }
                     else {
                         option.index = s.state.currentCate;
-                        if(self.state.type === 1){//非图片
+                        if(s.state.type === 1){//非图片
                             option.src = './static/images/music.png';
                         }
                         s.state.ajaxData[s.state.current][s.state.currentCate].parentName.imgs.push(option);
@@ -564,6 +564,11 @@ export default class ZmitiUploadDialog extends React.Component {
                 }
 
                 s.state.uploadLoading = false;
+                if(s.state.type === 2){//视频 
+                    s.state.allData[s.state.current].imgs.forEach((item,i)=>{
+                        item.imgSrc = './static/images/video1.png';
+                    });
+                 }
                 s.forceUpdate(()=>{
                     s.picScroll.refresh();//上传成功后，重新刷新列表
                 });

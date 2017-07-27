@@ -162,13 +162,15 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                         </a>
                                       </Dropdown>
                                 </div>
+                                {this.state.status === 1 && <div style={{marginLeft:30}}>
+                                        <Checkbox>审核通过的</Checkbox><Checkbox>审核不通过的</Checkbox><Checkbox>已推荐的</Checkbox><Checkbox>未推荐的</Checkbox>
+                                </div>}
                             </div>
                             <div>
                                 <Row type='flex'>
                                     <Col span={20}><Input type='text' /></Col>
                                     <Col span={4}><Button type='primary'><Icon type='search'/></Button></Col>
                                 </Row>
-                                
                             </div>
                         </section>
                         <section className='wenming-datacheck-list' ref='wenming-datacheck-list'>
@@ -188,24 +190,24 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                         className+= ' wenming-datacheck-item-delete'
                                     }
                                     
+                                    var len = 80;
                                     
-                                    //item.content = item.content.length > 120 ? item.content.substring(0,120)+'...':item.content;
-                                    if( item.content.length > 120 ){
+                                    if( item.content.length > len ){
                                         if(!item.showAll){
-                                            item.content = item.defaultContent.substring(0,120)+'...';
+                                            item.content = item.defaultContent.substring(0,len)+'...';
                                         }
                                         else{
                                             item.content = item.defaultContent
                                         }
                                     }
-                                    var showMore = item.defaultContent.length > 120? <a 
+                                    var showMore = item.defaultContent.length > len? <a  className='wenming-expand'
                                         onClick={()=>{item.showAll = !item.showAll;this.forceUpdate(()=>{this.scroll.refresh()})}}
                                          href='javascript:;'
                                          >
                                          {!item.showAll?'展开全文 ':'收起'}
                                          <Icon type={!item.showAll?"down":'up'} />
                                          </a>:""
-                                  //item.content.length > 120 &&  console.log(item.content,item.defaultContent);
+                                  //item.content.length > len &&  console.log(item.content,item.defaultContent);
                                     return <li key={i} className={className}>
                                         <aside>
                                             <Checkbox checked={item.checked} onChange={()=>{item.checked=!item.checked;this.state.selectAll = false;this.forceUpdate();}}></Checkbox>
@@ -217,7 +219,10 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                             <section className='wenming-datacheck-item-main-content'>
                                                 <h2>{item.nickname}</h2>
                                                 <div className='wenming-datacheck-date'>{item.date}</div>
-                                                <div className='wenming-datacheck-content'>{item.content}{showMore}</div>
+                                                <div className='wenming-datacheck-content'>
+                                                    <div dangerouslySetInnerHTML={this.createMarkup(item.content,showMore)}></div>
+                                                    {showMore}
+                                                </div>
                                                 <ol>
                                                     {item.imgs.map((img,k)=>{
                                                         return <li onClick={this.viewPic.bind(this,i,k)} key={k} style={{cursor:'url(./static/images/big.cur),auto',background:'url('+img+') no-repeat center center / cover'}}></li>
@@ -269,7 +274,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                         {this.state.voidurl  && <div className='wenming-mask'>
                             <aside onClick={()=>{this.setState({voidurl:''})}}></aside>
                             <div>
-                                <video width={800} height={600} controls src={this.state.voidurl}></video>
+                                <video autoPlay width={800} height={600} controls src={this.state.voidurl}></video>
                                 <section onClick={()=>{this.setState({voidurl:''})}}></section>
                                 <section>
                                 </section>
@@ -291,6 +296,11 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
     }
 
 
+    createMarkup(item){
+         return {__html:item};
+    }
+
+   
 
     getCheckedData(index){
         this.setState({

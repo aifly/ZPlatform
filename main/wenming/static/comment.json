@@ -1,0 +1,44 @@
+//获取评论列表接口
+{
+    "nickname":"",
+    "headimgurl":"",
+	"list":[
+	   {
+            "articleid":"articleid",
+            "articleContent":"文章内容文章内容文章内容文章内容文章内容",
+            "comments":[
+                {
+                    "content":"评论内容评论内容评论内容评论内容",
+                    "imgs":[
+                        "./static/images/wenming/1.jpg",
+                        "./static/images/wenming/1.jpg"
+                    ],
+                    "Id":"评论的id",
+                    "audio":{
+                        "url":"音频评论的音频地址",
+                        "duration":"19s"
+                    }
+                }
+            ]
+       },
+       {
+            "articleid":"articleid",
+            "articleContent":"文章内容文章内容文章内容文章内容文章内容",
+            "comments":[
+                {
+                    "content":"评论内容评论内容评论内容评论内容",
+                    "imgs":[
+                        "./static/images/wenming/1.jpg",
+                        "./static/images/wenming/1.jpg"
+                    ],
+                    "Id":"评论的id",
+                    "audio":{
+                        "url":"音频评论的音频地址",
+                        "duration":"19s"
+                    }
+                }
+            ]
+       }
+	]
+}
+
