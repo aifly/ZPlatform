@@ -338,6 +338,7 @@ const TextArea = Input;
                         longitude:'',
                         latitude:'',
                     })
+                    s.forceUpdate();
                 
             }
         });
