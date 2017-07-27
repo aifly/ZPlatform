@@ -27,6 +27,7 @@ const TextArea = Input;
            showCredentialsDiolog:false,
            classid:'A7CZ1YE3',
            appid:window.WENMING.XCXAPPID,
+           imgshow:'none',
            content:'',
            title:'',
            wxopenid:'zhongguowenmingwang',//oX4P90P4kCl3_5JLOYJyOx1bxISg//oSDVUs-aeHSvmJl9uk1Yq7iTeOyk
@@ -169,6 +170,7 @@ const TextArea = Input;
             getusersigid: s.getusersigid,
             onFinish(imgData){
                 s.state.imageslist = imgData.src;
+                s.state.imgshow='block';
                 s.forceUpdate();
             },
             title,
@@ -221,13 +223,18 @@ const TextArea = Input;
                                 hasFeedback
                                 >                        
                                   
-                                    <Button onClick={this.changePortrait.bind(this)}>选择图片</Button>                 
-                                    <div className='wenming-reportadd-imgs'>
-                                        <img src={this.state.imageslist}/>
-                                        <div className='wenming-reportadd-delimgs'>
-                                            <Button shape="circle" icon="delete" />
-                                        </div>
-                                    </div>
+                                    <Button onClick={this.changePortrait.bind(this)}>选择图片</Button> 
+                                    
+                                        
+                                       <div className='wenming-reportadd-imgs' style={{display:this.state.imgshow}}>
+                                            <img src={this.state.imageslist}/>
+                                            <div className='wenming-reportadd-delimgs'>
+                                                <Button shape="circle" icon="delete" onClick={this.delpic.bind(this)} />
+                                            </div>
+                                        </div> 
+                                        
+                                                  
+                                    
                                 </FormItem>
                                 <FormItem
                                 {...formItemLayout}
@@ -277,6 +284,13 @@ const TextArea = Input;
     goback(){
         window.location='#/wenmingreport';
     }
+    //删除图片
+    delpic(){
+        var s = this;
+        s.state.imageslist='';
+        s.state.imgshow='none';
+        s.forceUpdate();
+    }
     //更换图片
     changePortrait(){
 
@@ -294,14 +308,6 @@ const TextArea = Input;
     addProduct(){//添加
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        //判断是否有附件
-        var attachment="";
-        /*if(s.state.imageslist.length>0) {
-            attachment=s.state.imageslist[0].datainfourl;
-            for(var i=1;i<s.state.imageslist.length;i++){
-                    attachment=attachment + "," +s.state.imageslist[i].datainfourl;
-            }
-        }*/
         var params = {
             userid:s.userid,
             getusersigid:s.getusersigid,
