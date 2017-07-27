@@ -125,11 +125,6 @@ const TextArea = Input;
             dataIndex: 'datainfourl',
             key: 'datainfourl',
             className:'hidden',
-        }, {
-            title: '文件密码',
-            dataIndex: 'setpwd',
-            key: 'setpwd',
-            className:'hidden',
         },{
             title: '操作',
             dataIndex: 'operation',
@@ -173,16 +168,20 @@ const TextArea = Input;
 
         var props = {
             title,
-            selectedIndex:1,
+            selectedIndex:100,
             mainRight:<div className='wenming-add-main-ui' style={{height:this.state.mainHeight}}>
                         <div className="wenming-add-header">
                             <Row>
                                 <Col span={16} className="wenming-add-header-inner">上报数据-身边文明事
                                     
                                 </Col>
-                                <Col span={8} className='wenming-add-button-right'><Button type='primary'>返回</Button></Col>
-                            </Row>                      
+                                <Col span={8} className='wenming-add-button-right'>
+                                <Button type='primary' onClick={this.goback.bind(this)}>返回</Button>
+                                </Col>
+                            </Row>  
+                            <div className='clearfix'></div>                    
                         </div>
+                        <div className='hr10'></div>
                         <div className="wenming-add-line"></div>
                         <div className='wenming-add-form'>
                              <Form>
@@ -213,17 +212,7 @@ const TextArea = Input;
                                     </RadioGroup>
                                                       
                                 </FormItem>
-                                <FormItem
-                                {...formItemLayout}
-                                label="标题"
-                                hasFeedback
-                                >                        
-                                  
-                                  <Input placeholder="标题" 
-                                    value={this.state.title}
-                                    onChange={(e)=>{this.state.title=e.target.value;this.forceUpdate();}}
-                                  />                      
-                                </FormItem>
+
 
                                 <FormItem
                                 {...formItemLayout}
@@ -272,7 +261,9 @@ const TextArea = Input;
                                   <Input placeholder="视频地址" 
                                     value={this.state.voidurl}
                                     onChange={(e)=>{this.state.voidurl=e.target.value;this.forceUpdate();}}
-                                  />                      
+                                  />
+                                  <div className='hr10'></div>
+                                  <input className='wenming-add-videofile' accept="audio/mp4,video/mp4" ref="upload-video" onChange={this.uploadVideo.bind(this)} type="file"/>                    
                                 </FormItem>
                                 <FormItem
                                 {...formItemLayout}
@@ -302,6 +293,32 @@ const TextArea = Input;
         );
         
         
+    }
+    goback(){
+        window.location='#/wenmingdatacheck'
+    }
+    uploadVideo(){//上传视频
+
+        let formData = new FormData(),
+            s = this;
+
+
+        formData.append('setupfile', this.refs['upload-video'].files[0]);
+        formData.append('uploadtype', 1);
+
+        $.ajax({
+            url:window.baseUrl+ 'share/upload_file',
+            type:'post',
+            data:formData,
+            contentType: false,
+            processData: false,
+            success(data){
+                data.getfileurl[0].key = s.props.randomString(8);
+                console.log(data.getfileurl[0].datainfourl,'data.getfileurl[0]');
+                s.state.voidurl=data.getfileurl[0].datainfourl;
+                s.forceUpdate();
+            }
+        })
     }
     uploadFile(){//上传图片
 
