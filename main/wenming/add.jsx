@@ -181,7 +181,6 @@ const TextArea = Input;
                             </Row>  
                             <div className='clearfix'></div>                    
                         </div>
-                        <div className='hr10'></div>
                         <div className="wenming-add-line"></div>
                         <div className='wenming-add-form'>
                              <Form>

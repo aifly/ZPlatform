@@ -1,6 +1,7 @@
-import './static/css/index.css';
+import './static/css/report.css';
 import React from 'react';
-import {Button} from '../commoncomponent/common.jsx';
+
+import {message,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
@@ -74,9 +75,18 @@ import IScroll from 'iscroll';
         var props = {
             title,
             selectedIndex:2,
-            mainRight:<div className='wenming-datacheck-main-ui' style={{height:this.state.mainHeight}}>
-                        文明播报
-                    </div>
+            mainRight:<div className='wenming-report-main-ui' style={{height:this.state.mainHeight}}>
+                        <div className="wenming-report-header">
+                            <Row>
+                                <Col span={16} className="wenming-report-header-inner">文明播报-身边文明事
+                                    
+                                </Col>
+                                <Col span={8} className='wenming-report-button-right'>
+                                </Col>
+                            </Row>                   
+                        </div>
+                        <div className="wenming-report-line"></div>    
+            </div>
         }
         var mainComponent = <div>
             <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>
@@ -91,20 +101,6 @@ import IScroll from 'iscroll';
 
     
 
-    formatNumber(s, n = 3){   
-           n = n > 0 && n <= 20 ? n : 2;   
-           s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";   
-           var l = s.split(".")[0].split("").reverse(),   
-           r = s.split(".")[1];   
-            var  t = "";   
-           for(var i = 0; i < l.length; i ++ )   
-           {   
-              t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");   
-           }   
-           return t.split("").reverse().join("");   
-    } 
-
-   
 
   
 }
