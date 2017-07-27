@@ -10,7 +10,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 
 import MainUI from '../components/Main.jsx';
-
+import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
 import IScroll from 'iscroll';
 const Option = Select.Option;
@@ -18,30 +18,25 @@ const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const TextArea = Input;
- class ZmitiWenmingAddApp extends React.Component{
+ class ZmitiWenmingReportaddApp extends React.Component{
     constructor(args){
         super(...args);
 
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
-           classid:'9eGbMukZ',
+           showCredentialsDiolog:false,
+           classid:'A7CZ1YE3',
            appid:window.WENMING.XCXAPPID,
            content:'',
            title:'',
            wxopenid:'oX4P90P4kCl3_5JLOYJyOx1bxISg',//oX4P90P4kCl3_5JLOYJyOx1bxISg//oSDVUs-aeHSvmJl9uk1Yq7iTeOyk
-           imageslist:[],
+           imageslist:'',
            source:'',
            type:3,
            ishost:0,
            voidurl:'',
            longitude:'',
            latitude:'',
-           fileList: [{
-              uid: -1,
-              name: 'xxx.png',
-              status: 'done',
-              url: 'http://www.baidu.com/xxx.png',
-           }]
         }
           this.handleChange = (info) => {
             let fileList = info.fileList;
@@ -102,9 +97,9 @@ const TextArea = Input;
        this.resizeMainHeight(this);
        let  {validateUser,loginOut,resizeMainHeight} = this.props;
         var iNow = 0 ;
-        validateUser(()=>{
-            loginOut();
-        },this);
+        var {userid, getusersigid, companyid,username,isover,usertypesign,capacitied,capacity,endDate}=validateUser(()=>{
+          loginOut();
+       },this);
 
 
         resizeMainHeight(this);
@@ -112,6 +107,17 @@ const TextArea = Input;
     }
 
     render(){
+        var s =this;
+        const { disabled } = s.state;
+        const userProps ={
+            documentbaseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+                s.state.userData.credentials.push({src:imgData.src});
+                s.forceUpdate();
+            }
+        }
         const uploadColumns=[{
             title: '上传名称',
             dataIndex: 'filename',
@@ -155,24 +161,22 @@ const TextArea = Input;
             },
           },
         };
-        const fileListGroup = {
-          action: 'http://api.zmiti.com/v2/share/upload_file/',
-          data:{
-            uploadtype:1,
-          },
-          onChange: this.handleChange,
-          multiple: true,
-        };
 
         var title = '身边文明事';
 
         var props = {
+            userid:s.userid,
+            getusersigid: s.getusersigid,
+            onFinish(imgData){
+                s.state.imageslist = imgData.src;
+                s.forceUpdate();
+            },
             title,
             selectedIndex:100,
             mainRight:<div className='wenming-add-main-ui' style={{height:this.state.mainHeight}}>
                         <div className="wenming-add-header">
                             <Row>
-                                <Col span={16} className="wenming-add-header-inner">上报数据-身边文明事
+                                <Col span={16} className="wenming-add-header-inner">添加-文明播报
                                     
                                 </Col>
                                 <Col span={8} className='wenming-add-button-right'>
@@ -186,31 +190,16 @@ const TextArea = Input;
                              <Form>
                                 <FormItem
                                 {...formItemLayout}
-                                label="分类"
+                                label="标题"
                                 hasFeedback
                                 >                        
                                   
-                                  
-                                    <RadioGroup onChange={(e)=>{this.state.classid=e.target.value;this.forceUpdate();}} value={this.state.classid}>
-                                        <Radio value={'9eGbMukZ'}>好人好事</Radio>
-                                        <Radio value={'Q8MA1lH5'}>身边文明事</Radio>
-                                    </RadioGroup>
-                                                      
+                                  <Input placeholder="标题" 
+                                    value={this.state.title}
+                                    onChange={(e)=>{this.state.title=e.target.value;this.forceUpdate();}}
+                                  />                      
                                 </FormItem>
-                                <FormItem
-                                {...formItemLayout}
-                                label="类型"
-                                hasFeedback
-                                >                        
-                                  
-                                  
-                                    <RadioGroup onChange={(e)=>{this.state.type=e.target.value;this.forceUpdate();}} value={this.state.type}>
-                                        <Radio value={3}>文字</Radio>
-                                        <Radio value={1}>图片</Radio>
-                                        <Radio value={2}>视频</Radio>
-                                    </RadioGroup>
-                                                      
-                                </FormItem>
+
 
 
                                 <FormItem
@@ -223,6 +212,28 @@ const TextArea = Input;
                                     value={this.state.content}
                                     onChange={(e)=>{this.state.content=e.target.value;this.forceUpdate();}}
                                   />                    
+                                </FormItem>
+                                
+
+                                <FormItem
+                                {...formItemLayout}
+                                label="图片"
+                                hasFeedback
+                                >                        
+                                  
+                                    <Button onClick={this.changePortrait.bind(this)}>选择图片</Button>                 
+                                    <img src={this.state.imageslist}/>
+                                </FormItem>
+                                <FormItem
+                                {...formItemLayout}
+                                label="来源"
+                                hasFeedback
+                                >                        
+                                  
+                                  <Input placeholder="来源" 
+                                    value={this.state.source}
+                                    onChange={(e)=>{this.state.source=e.target.value;this.forceUpdate();}}
+                                  />                      
                                 </FormItem>
                                 <FormItem
                                 {...formItemLayout}
@@ -237,44 +248,6 @@ const TextArea = Input;
                                     </RadioGroup>
                                                       
                                 </FormItem>
-                                <FormItem
-                                {...formItemLayout}
-                                label="图片"
-                                hasFeedback
-                                >                        
-<div className='wenming-add-uploadbtn'> 
-    <Button>
-        <Icon type="upload"  /> 上传图片
-    </Button>
-    <input className='wenming-add-file' ref="upload-file" onChange={this.uploadFile.bind(this)} type="file"/>
-</div>
-<Table columns={uploadColumns} dataSource={this.state.imageslist} showHeader={false} />                               
-                    
-                                </FormItem>
-                                <FormItem
-                                {...formItemLayout}
-                                label="视频地址"
-                                hasFeedback
-                                >                        
-                                  
-                                  <Input placeholder="视频地址" 
-                                    value={this.state.voidurl}
-                                    onChange={(e)=>{this.state.voidurl=e.target.value;this.forceUpdate();}}
-                                  />
-                                  <div className='hr10'></div>
-                                  <input className='wenming-add-videofile' accept="audio/mp4,video/mp4" ref="upload-video" onChange={this.uploadVideo.bind(this)} type="file"/>                    
-                                </FormItem>
-                                <FormItem
-                                {...formItemLayout}
-                                label="来源"
-                                hasFeedback
-                                >                        
-                                  
-                                  <Input placeholder="来源" 
-                                    value={this.state.source}
-                                    onChange={(e)=>{this.state.source=e.target.value;this.forceUpdate();}}
-                                  />                      
-                                </FormItem>
                                 <FormItem {...tailFormItemLayout}>
                                   <Button type="primary" onClick={this.addProduct.bind(this)}>提交</Button>
                                 </FormItem>
@@ -282,8 +255,11 @@ const TextArea = Input;
 
                         </div>
                     </div>
+                    
         }
         var mainComponent = <div>
+            {!this.state.showCredentialsDiolog && <ZmitiUploadDialog id="personAcc" {...props}></ZmitiUploadDialog>}
+        
             <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>
             
         </div>;
@@ -294,86 +270,33 @@ const TextArea = Input;
         
     }
     goback(){
-        window.location='#/wenmingdatacheck'
+        window.location='#/wenmingreport';
     }
-    uploadVideo(){//上传视频
+    //更换图片
+    changePortrait(){
 
-        let formData = new FormData(),
-            s = this;
-
-
-        formData.append('setupfile', this.refs['upload-video'].files[0]);
-        formData.append('uploadtype', 1);
-
-        $.ajax({
-            url:window.baseUrl+ 'share/upload_file',
-            type:'post',
-            data:formData,
-            contentType: false,
-            processData: false,
-            success(data){
-                data.getfileurl[0].key = s.props.randomString(8);
-                console.log(data.getfileurl[0].datainfourl,'data.getfileurl[0]');
-                s.state.voidurl=data.getfileurl[0].datainfourl;
-                s.forceUpdate();
-            }
+        var obserable=window.obserable;
+        this.setState({
+          showCredentialsDiolog:false
+        },()=>{
+          obserable.trigger({
+              type:'showModal',
+              data:{type:0,id:'personAcc'}
+          })  
         })
-    }
-    uploadFile(){//上传图片
-
-        let formData = new FormData(),
-            s = this;
-
-
-        formData.append('setupfile', this.refs['upload-file'].files[0]);
-        formData.append('uploadtype', 1);
-
-        $.ajax({
-            url:window.baseUrl+ 'share/upload_file',
-            type:'post',
-            data:formData,
-            contentType: false,
-            processData: false,
-            success(data){
-                data.getfileurl[0].key = s.props.randomString(8);
-                s.state.imageslist.push(data.getfileurl[0]);
-                s.forceUpdate();
-            }
-        })
-    }
-    delUploadfile(recoder,index){//删除图片
-
-        var s=this;
-
-        $.ajax({
-
-            url: window.baseUrl + 'user/del_workorderfile/',
-            type:window.ajaxType || 'get',
-
-            data: {
-                userid: s.userid,
-                getusersigid: s.getusersigid,
-                setpwd: recoder.setpwd,
-                filename: recoder.filename,
-            },
-            success(data){
-                s.state.imageslist.splice(index,1);
-                s.forceUpdate();
-
-            }
-        })
+        
     }
     addProduct(){//添加
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         //判断是否有附件
         var attachment="";
-        if(s.state.imageslist.length>0) {
+        /*if(s.state.imageslist.length>0) {
             attachment=s.state.imageslist[0].datainfourl;
             for(var i=1;i<s.state.imageslist.length;i++){
                     attachment=attachment + "," +s.state.imageslist[i].datainfourl;
             }
-        }
+        }*/
         var params = {
             userid:s.userid,
             getusersigid:s.getusersigid,
@@ -382,7 +305,7 @@ const TextArea = Input;
             content:s.state.content,    
             title:s.state.title,
             wxopenid:s.state.wxopenid,
-            imageslist:attachment,
+            imageslist:s.state.imageslist,
             source:s.state.source,
             type:s.state.type,
             ishost:s.state.ishost,
@@ -397,7 +320,7 @@ const TextArea = Input;
             success(data){
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
                     s.setState({
-                        classid:'9eGbMukZ',
+                        classid:s.state.classid,
                         appid:window.WENMING.XCXAPPID,
                         content:'',
                         title:'',
@@ -417,4 +340,4 @@ const TextArea = Input;
   
 }
 
-export default ZmitiValidateUser(ZmitiWenmingAddApp);
+export default ZmitiValidateUser(ZmitiWenmingReportaddApp);
