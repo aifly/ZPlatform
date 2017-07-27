@@ -18,13 +18,14 @@ const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const TextArea = Input;
- class ZmitiWenmingReportaddApp extends React.Component{
+class ZmitiWenmingReportaddApp extends React.Component{
     constructor(args){
         super(...args);
 
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
            showCredentialsDiolog:false,
+           articlid:'',//this.props.params.id
            classid:'A7CZ1YE3',
            appid:window.WENMING.XCXAPPID,
            imgshow:'none',
@@ -104,6 +105,7 @@ const TextArea = Input;
 
 
         resizeMainHeight(this);
+        this.editdata();
        
     }
 
@@ -199,14 +201,7 @@ const TextArea = Input;
                                 {...formItemLayout}
                                 label="内容"
                                 hasFeedback
-                                >                        
-                                  {
-
-                                 /*
-                                  <textArea rows='5' placeholder="内容" 
-                                    value={this.state.content}
-                                    onChange={(e)=>{this.state.content=e.target.value;this.forceUpdate();}}
-                                  /> */} 
+                                >  
                                   <ZmitiEditor {...editorProps} ></ZmitiEditor>                   
                                 </FormItem>
                                 
@@ -342,6 +337,12 @@ const TextArea = Input;
                 
             }
         });
+    }
+    //编辑
+    editdata(id){
+        var s = this;
+        id=this.props.params.id;
+        console.log(id,'params.id');
     }
   
 }
