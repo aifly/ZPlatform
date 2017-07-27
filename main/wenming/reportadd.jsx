@@ -11,7 +11,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 import MainUI from '../components/Main.jsx';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
-
+import ZmitiEditor from '../components/zmiti-editor.jsx';
 import IScroll from 'iscroll';
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -119,27 +119,7 @@ const TextArea = Input;
                 s.forceUpdate();
             }
         }
-        const uploadColumns=[{
-            title: '上传名称',
-            dataIndex: 'filename',
-            key: 'filename',
-        },{
-            title: '文件大小',
-            dataIndex: 'datainfosize',
-            key: 'datainfosize',
-       },{
-            title: '文件路径',
-            dataIndex: 'datainfourl',
-            key: 'datainfourl',
-            className:'hidden',
-        },{
-            title: '操作',
-            dataIndex: 'operation',
-            key: 'operation',
-            render:(text,recoder,index)=>(
-                <span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,recoder,index)}> 删除</a></span>
-            )
-        }];
+        
         const formItemLayout = {
           labelCol: {
             xs: { span: 24 },
@@ -164,7 +144,18 @@ const TextArea = Input;
         };
 
         var title = '身边文明事';
-
+        let editorProps ={
+            onChange(editor){
+                s.setState({
+                    content:editor.el.innerHTML
+                });
+            },
+            height:this.state.mainHeight/2,
+            html:this.state.content,
+            $,
+            isAdmin:false,
+            showPreview:false,
+        }
         var props = {
             userid:s.userid,
             getusersigid: s.getusersigid,
@@ -209,11 +200,14 @@ const TextArea = Input;
                                 label="内容"
                                 hasFeedback
                                 >                        
-                                  
+                                  {
+
+                                 /*
                                   <textArea rows='5' placeholder="内容" 
                                     value={this.state.content}
                                     onChange={(e)=>{this.state.content=e.target.value;this.forceUpdate();}}
-                                  />                    
+                                  /> */} 
+                                  <ZmitiEditor {...editorProps} ></ZmitiEditor>                   
                                 </FormItem>
                                 
 
