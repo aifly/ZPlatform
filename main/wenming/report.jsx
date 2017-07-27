@@ -25,6 +25,7 @@ import IScroll from 'iscroll';
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
            appid:'wx32e63224f58f2cb5',
+           total:0,
            dataSource:[],
         } 
         
@@ -86,15 +87,16 @@ import IScroll from 'iscroll';
             key: 'imageslist',
             width:130,
             render:(value,recoder,index)=>{
-               if(recoder.imageUrl!=''){
-                return <img className='wenming-report-thumbnail' src={recoder.imageUrl}/>
-               } 
+                if(recoder.imageUrl!=''){
+                    return <img className='wenming-report-thumbnail' src={recoder.imageUrl}/>
+                }                
+                              
             }
 
         },{
             title: '更新时间',
-            dataIndex: 'pagetime',
-            key: 'pagetime',
+            dataIndex: 'looktime',
+            key: 'looktime',
             render:(text,recoder,index)=>{
                 var d=new Date(text);
                 return text;//this.formatDate(d);
@@ -126,11 +128,23 @@ import IScroll from 'iscroll';
                                 <Col span={8} className='wenming-report-button-right'>
                                     <Button type='primary' onClick={this.goadd.bind(this)}>添加</Button>
                                 </Col>
-                            </Row>                   
+                            </Row>
+                            <div className="clearfix"></div>                 
                         </div>
+                        
                         <div className="wenming-report-line"></div>
                         <div className='hr15'></div>
-                        <Table bordered={true} dataSource={this.state.dataSource} columns={columns} />  
+                        <div className='wenming-report-datalist'>
+                            <Table bordered={true} dataSource={this.state.dataSource} columns={columns} 
+                                pagination={{
+                                   defaultCurrent:1,
+                                   defaultPageSize:8,
+                                   total:this.state.total
+                                }}
+                             />
+                            <div className="clearfix"></div>
+                        </div>
+
             </div>
         }
         var mainComponent = <div>
@@ -164,14 +178,15 @@ import IScroll from 'iscroll';
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                appid:'wx32e63224f58f2cb5',
-                pagenum:10,
+                appid:s.state.appid,
+                //pagetime:0,
+                pagenum:500,
             },
-            success(data){
-                    
-                    s.state.dataSource=data.result;
-                    console.log(data.result,'data.result');
-                    s.forceUpdate();
+            success(data){                    
+                s.state.dataSource=data.result;
+                s.state.total=data.result.length;
+                console.log(s.state.total,'data.result');
+                s.forceUpdate();
                 
             }
         });

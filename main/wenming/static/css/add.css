@@ -82,4 +82,18 @@
   .wenming-add-main-ui .ant-radio-group {
     margin: 6px 0 0 0; }
 
+.wenming-reportadd-imgs {
+  position: relative; }
+  .wenming-reportadd-imgs .wenming-reportadd-delimgs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: rgba(0,0,0, 0.7); */ }
+    .wenming-reportadd-imgs .wenming-reportadd-delimgs .ant-btn {
+      position: absolute;
+      right: 10px;
+      top: 10px; }
+
 /*# sourceMappingURL=add.css.map */

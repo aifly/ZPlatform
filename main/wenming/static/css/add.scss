@@ -84,3 +84,19 @@ $baseColor: #f4654c;
 	}
 
 }
+.wenming-reportadd-imgs{
+	position: relative;
+	.wenming-reportadd-delimgs{
+		position: absolute;
+		top:0;
+		left:0;
+		width:100%;
+		height:100%;
+		/* background-color: rgba(0,0,0, 0.7); */
+		.ant-btn{
+			position: absolute;
+			right:10px;
+			top:10px;
+		}
+	}
+}

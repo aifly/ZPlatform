@@ -28,7 +28,7 @@ const TextArea = Input;
            appid:window.WENMING.XCXAPPID,
            content:'',
            title:'',
-           wxopenid:'oX4P90P4kCl3_5JLOYJyOx1bxISg',//oX4P90P4kCl3_5JLOYJyOx1bxISg//oSDVUs-aeHSvmJl9uk1Yq7iTeOyk
+           wxopenid:'zhongguowenmingwang',
            imageslist:[],
            source:'',
            type:3,
@@ -401,7 +401,7 @@ const TextArea = Input;
                         appid:window.WENMING.XCXAPPID,
                         content:'',
                         title:'',
-                        wxopenid:'oSDVUs-aeHSvmJl9uk1Yq7iTeOyk',//
+                        wxopenid:'zhongguowenmingwang',//
                         imageslist:[],
                         source:'',
                         type:3,

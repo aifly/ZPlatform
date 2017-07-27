@@ -11,7 +11,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 import MainUI from '../components/Main.jsx';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
-
+import ZmitiEditor from '../components/zmiti-editor.jsx';
 import IScroll from 'iscroll';
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -27,9 +27,10 @@ const TextArea = Input;
            showCredentialsDiolog:false,
            classid:'A7CZ1YE3',
            appid:window.WENMING.XCXAPPID,
+           imgshow:'none',
            content:'',
            title:'',
-           wxopenid:'oX4P90P4kCl3_5JLOYJyOx1bxISg',//oX4P90P4kCl3_5JLOYJyOx1bxISg//oSDVUs-aeHSvmJl9uk1Yq7iTeOyk
+           wxopenid:'zhongguowenmingwang',//oX4P90P4kCl3_5JLOYJyOx1bxISg//oSDVUs-aeHSvmJl9uk1Yq7iTeOyk
            imageslist:'',
            source:'',
            type:3,
@@ -118,27 +119,7 @@ const TextArea = Input;
                 s.forceUpdate();
             }
         }
-        const uploadColumns=[{
-            title: '上传名称',
-            dataIndex: 'filename',
-            key: 'filename',
-        },{
-            title: '文件大小',
-            dataIndex: 'datainfosize',
-            key: 'datainfosize',
-       },{
-            title: '文件路径',
-            dataIndex: 'datainfourl',
-            key: 'datainfourl',
-            className:'hidden',
-        },{
-            title: '操作',
-            dataIndex: 'operation',
-            key: 'operation',
-            render:(text,recoder,index)=>(
-                <span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,recoder,index)}> 删除</a></span>
-            )
-        }];
+        
         const formItemLayout = {
           labelCol: {
             xs: { span: 24 },
@@ -163,12 +144,24 @@ const TextArea = Input;
         };
 
         var title = '身边文明事';
-
+        let editorProps ={
+            onChange(editor){
+                s.setState({
+                    content:editor.el.innerHTML
+                });
+            },
+            height:this.state.mainHeight/2,
+            html:this.state.content,
+            $,
+            isAdmin:false,
+            showPreview:false,
+        }
         var props = {
             userid:s.userid,
             getusersigid: s.getusersigid,
             onFinish(imgData){
                 s.state.imageslist = imgData.src;
+                s.state.imgshow='block';
                 s.forceUpdate();
             },
             title,
@@ -207,11 +200,14 @@ const TextArea = Input;
                                 label="内容"
                                 hasFeedback
                                 >                        
-                                  
+                                  {
+
+                                 /*
                                   <textArea rows='5' placeholder="内容" 
                                     value={this.state.content}
                                     onChange={(e)=>{this.state.content=e.target.value;this.forceUpdate();}}
-                                  />                    
+                                  /> */} 
+                                  <ZmitiEditor {...editorProps} ></ZmitiEditor>                   
                                 </FormItem>
                                 
 
@@ -221,8 +217,18 @@ const TextArea = Input;
                                 hasFeedback
                                 >                        
                                   
-                                    <Button onClick={this.changePortrait.bind(this)}>选择图片</Button>                 
-                                    <img src={this.state.imageslist}/>
+                                    <Button onClick={this.changePortrait.bind(this)}>选择图片</Button> 
+                                    
+                                        
+                                       <div className='wenming-reportadd-imgs' style={{display:this.state.imgshow}}>
+                                            <img src={this.state.imageslist}/>
+                                            <div className='wenming-reportadd-delimgs'>
+                                                <Button shape="circle" icon="delete" onClick={this.delpic.bind(this)} />
+                                            </div>
+                                        </div> 
+                                        
+                                                  
+                                    
                                 </FormItem>
                                 <FormItem
                                 {...formItemLayout}
@@ -272,6 +278,13 @@ const TextArea = Input;
     goback(){
         window.location='#/wenmingreport';
     }
+    //删除图片
+    delpic(){
+        var s = this;
+        s.state.imageslist='';
+        s.state.imgshow='none';
+        s.forceUpdate();
+    }
     //更换图片
     changePortrait(){
 
@@ -289,14 +302,6 @@ const TextArea = Input;
     addProduct(){//添加
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        //判断是否有附件
-        var attachment="";
-        /*if(s.state.imageslist.length>0) {
-            attachment=s.state.imageslist[0].datainfourl;
-            for(var i=1;i<s.state.imageslist.length;i++){
-                    attachment=attachment + "," +s.state.imageslist[i].datainfourl;
-            }
-        }*/
         var params = {
             userid:s.userid,
             getusersigid:s.getusersigid,
@@ -324,7 +329,7 @@ const TextArea = Input;
                         appid:window.WENMING.XCXAPPID,
                         content:'',
                         title:'',
-                        wxopenid:'oSDVUs-aeHSvmJl9uk1Yq7iTeOyk',//
+                        wxopenid:'zhongguowenmingwang',//
                         imageslist:[],
                         source:'',
                         type:3,
@@ -333,6 +338,7 @@ const TextArea = Input;
                         longitude:'',
                         latitude:'',
                     })
+                    s.forceUpdate();
                 
             }
         });
