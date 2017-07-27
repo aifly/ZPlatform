@@ -25,7 +25,7 @@ const TextArea = Input;
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
            classid:'9eGbMukZ',
-           appid:'wx32e63224f58f2cb5',
+           appid:window.WENMING.XCXAPPID,
            content:'',
            title:'',
            wxopenid:'oX4P90P4kCl3_5JLOYJyOx1bxISg',//oX4P90P4kCl3_5JLOYJyOx1bxISg//oSDVUs-aeHSvmJl9uk1Yq7iTeOyk
@@ -398,7 +398,7 @@ const TextArea = Input;
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
                     s.setState({
                         classid:'9eGbMukZ',
-                        appid:'wx32e63224f58f2cb5',
+                        appid:window.WENMING.XCXAPPID,
                         content:'',
                         title:'',
                         wxopenid:'oSDVUs-aeHSvmJl9uk1Yq7iTeOyk',//
