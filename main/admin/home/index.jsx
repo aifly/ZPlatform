@@ -14,6 +14,7 @@ export default class AdminIndex extends Component {
 		var s = this;
         let editorProps ={
             onChange(editor){
+            	console.log(editor.el.innerHTML)
                 s.setState({
                     html:editor.el.innerHTML
                 });

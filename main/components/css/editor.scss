@@ -1,42 +1,47 @@
 @import '../../public/css/base.scss';
-$baseColor:#d8271d;
+$baseColor: #d8271d;
 
-.zmiti-editor-main-ui{
+.zmiti-editor-main-ui {
 	@include displayFlex(row);
-	
-	&>div{
-		flex:1;
-		-webkit-flex:1;
+
+	&>div {
+		flex: 1;
+		-webkit-flex: 1;
 		@include pos(r);
-		&:nth-of-type(1){
 
+		&:nth-of-type(1) {
 		}
-		&:nth-of-type(2){
-			flex:2;
-			-webkit-flex:2;
+		&:nth-of-type(2) {
+			flex: 2;
+			-webkit-flex: 2;
 		}
-
-		.zmiti-editor-header{
+		.zmiti-editor-header {
 			@include pos(a);
-			@include transform(translate3d(-50%,0,0) scale(.9));
+			@include transform(translate3d(-50%, 0, 0) scale(.9));
 			top: 10%;
 			left: 50%;
 			overflow: hidden;
 			height: 82%;
-			border:3px solid #ccc;
+			border: 3px solid #ccc;
 		}
-
-		.zmiti-editor-phone{
+		.zmiti-editor-phone {
 			height: 100%;
 			text-align: center;
-			img{height: 100%;width:auto;}
+
+			img {
+				height: 100%;
+				width: auto;
+			}
 			margin: 0 auto;
 		}
-
-		&.zmiti-editor-preview{
+		&.zmiti-editor-preview {
+			&.hide {
+				display: none;
+			}
 			@include displayFlex(row);
-			justify-content:center;
-			&>section{
+			justify-content: center;
+
+			&>section {
 				width: 100%;
 			}
 		}

@@ -1,153 +1,166 @@
 @import "../../../public/css/base.scss";
 
+@at-root.zmiti-media-upload {
+	width: 80px;
+	height: 80px;
+	background: #fff;
+	@include displayFlex();
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	margin: 20px 0;
 
-.wxchat-talk-C{
-	width:100%;
+	&>div {
+		i {
+			display: block;
+			font-size: 40px;
+		}
+	}
+}
+.wxchat-talk-C {
+	width: 100%;
 	height: 300px;
-	.wxchat-talk-type-scroll{
-		width:100%;
+
+	.wxchat-talk-type-scroll {
+		width: 100%;
 		height: 90px;
 	}
-
-	.wxchat-talk-line{
+	.wxchat-talk-line {
 		width: 100%;
 		height: 4px;
 		background-color: #fff;
 		margin: 20px 0;
 	}
-	.wxchat-talk-type-list{
-
+	.wxchat-talk-type-list {
 		@include displayFlex(row);
-		li{
-			flex:1;
+
+		li {
+			flex: 1;
 			height: 90px;
 			text-align: center;
 			@include transition(.2s);
 			cursor: pointer;
 			border-right: 1px solid #dfe2e8;
-			&:last-of-type{
+
+			&:last-of-type {
 				border-right: 1px solid transparent;
 			}
-			&.active{
+			&.active {
 				background-color: #ccc;
-				box-shadow: 0 0 10px rgba(0,0,0,.4) inset;
+				box-shadow: 0 0 10px rgba(0, 0, 0, .4) inset;
 				@include br(5px);
 			}
-			&:hover{
+			&:hover {
 				background-color: #ccc;
-				box-shadow: 0 0 10px rgba(0,0,0,.4) inset;
+				box-shadow: 0 0 10px rgba(0, 0, 0, .4) inset;
 				@include br(5px);
 			}
-			div{
+			div {
 				@include pos(r);
-				top:15px;
-				img{
-					width:40px;
+				top: 15px;
+
+				img {
+					width: 40px;
 					vertical-align: middle;
 				}
 			}
 		}
 	}
-
-	.wxchat-talk-text-input-C{
-		width:100%;
+	.wxchat-talk-text-input-C {
+		width: 100%;
 		height: 100px;
-		.wxchat-talk-text-input-area{
+
+		.wxchat-talk-text-input-area {
 			margin: 0 0 20px 0;
-			textarea{
-				width:100%;
-				border:none;
+
+			textarea {
+				width: 100%;
+				border: none;
 				outline: none;
-				resize:none;
+				resize: none;
 				padding: 10px;
 				background-color: transparent;
 			}
-			border:1px solid #2db7f5;
+			border: 1px solid #2db7f5;
 			@include br(4px);
 
-			.wxchat-talk-face{
+			.wxchat-talk-face {
 				text-align: right;
 				width: 100%;
-				img{
-					width:30px;
-				}
 
+				img {
+					width: 30px;
+				}
 			}
 			background-color: #fff;
 		}
 	}
-
-
-	.wxchat-talk-img-C{
+	.wxchat-talk-img-C {
 		@include pos(r);
 
-		&:hover{
-			.wxchat-talk-mask{
-				opacity:1;
-			}	
+		&:hover {
+			.wxchat-talk-mask {
+				opacity: 1;
+			}
 		}
-		.wxchat-talk-mask{
-			opacity:0;
+		.wxchat-talk-mask {
+			opacity: 0;
 			@include transition(.5s);
 			@include pos(a);
-			width:100%;
+			width: 100%;
 			height: 100%;
-			background-color: rgba(0,0,0,.5);
+			background-color: rgba(0, 0, 0, .5);
 			left: 0;
-			top:0;
+			top: 0;
 			font-size: 40px;
-			color:#fff;
+			color: #fff;
 			text-align: center;
-			i{
+
+			i {
 				cursor: pointer;
 				@include pos(a);
-				top:50%;
-				@include transform(translate3d(-50%,-50%,0));
+				top: 50%;
+				@include transform(translate3d(-50%, -50%, 0));
 			}
-
 		}
 	}
-
-	.wxchat-talk-lik-C{
-		textarea{
-			width:100%;
-			resize:none;
+	.wxchat-talk-lik-C {
+		textarea {
+			width: 100%;
+			resize: none;
 			padding: 6px;
 			margin-top: 10px;
-			border-color:#2db7f5;
+			border-color: #2db7f5;
 			@include br(4px);
 			height: 96px;
 		}
-
 	}
-
-	.wxchat-link-img-C{
-
-		&:hover{
-			&:before{
-				content:'';
+	.wxchat-link-img-C {
+		&:hover {
+			&:before {
+				content: '';
 				@include pos(a);
 				@include transition(.5s);
 				left: 0;
-				top:0;
-				width:100%;
+				top: 0;
+				width: 100%;
 				height: 100%;
-				background: rgba(0,0,0,.5);
+				background: rgba(0, 0, 0, .5);
 			}
-			.wxchat-delete-link-img{
+			.wxchat-delete-link-img {
 				display: block;
 			}
 		}
 	}
-	.wxchat-delete-link-img{
-      font-size: 30px;
-      color:#fff;;
-      display: none;
-      cursor: pointer;
-      @include pos(a);
-      left: 50%;
-      top: 50%;
-      margin-left: -15px;
-      margin-top: -15px;
-    }
+	.wxchat-delete-link-img {
+		font-size: 30px;
+		color: #fff;
+		display: none;
+		cursor: pointer;
+		@include pos(a);
+		left: 50%;
+		top: 50%;
+		margin-left: -15px;
+		margin-top: -15px;
+	}
 }

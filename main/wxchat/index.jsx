@@ -84,6 +84,7 @@ class ZmitiWxChatApp extends Component {
             	s.copyfile({
             	 	imgData,
             	 	that:s,
+            	 	worksid:s.worksid,
             	 	fn:src=>{
 	                 s.state.data.memberList.push({
 	                	id:s.props.randomString(8),
@@ -110,6 +111,7 @@ class ZmitiWxChatApp extends Component {
 
             	 s.copyfile({
             	 	imgData,
+            	 	worksid:s.worksid,
             	 	that:s,
             	 	fn:src=>{
 	                	s.state.data.talk[s.state.currentTalkIndex].linkObj.img = src;
@@ -129,6 +131,7 @@ class ZmitiWxChatApp extends Component {
         		 s.copyfile({
             	 	imgData,
             	 	that:s,
+            	 	worksid:s.worksid,
             	 	fn:src=>{
 		                s.state.data.background  = src;
 		    			s.forceUpdate();
@@ -146,6 +149,7 @@ class ZmitiWxChatApp extends Component {
             	 s.copyfile({
             	 	imgData,
             	 	that:s,
+            	 	worksid:s.worksid,
             	 	fn:src=>{
 		                s.state.data.myHeadImg = imgData.src;
 		            	s.state.isShowReplaceMyHeadImg= false;
@@ -168,6 +172,7 @@ class ZmitiWxChatApp extends Component {
             	 s.copyfile({
             	 	imgData,
             	 	that:s,
+            	 	worksid:s.worksid,
             	 	fn:src=>{
 	                	s.state.data.talk[s.state.currentTalkIndex].img = imgData.src;
         	
@@ -183,6 +188,53 @@ class ZmitiWxChatApp extends Component {
             
             }
         } 
+		const  addMusicProps = {//添加音频
+        	baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+
+            	console.log(imgData);
+            	 s.copyfile({
+            	 	imgData,
+            	 	that:s,
+            	 	worksid:s.worksid,
+            	 	fn:src=>{
+	                	s.state.data.talk[s.state.currentTalkIndex].audioSrc = imgData.src;
+	                	s.state.data.talk[s.state.currentTalkIndex].text = '';
+		            	s.state.isAddMusic= false;
+
+		            	s.forceUpdate(()=>{
+							window.obserable.trigger({type:'refreshTalkBodyScroll'});
+		            	})
+	                }
+            	 });
+            }
+        } 
+
+        const  addVideoProps = {//添加视频
+        	baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+
+            	 
+            	 s.copyfile({
+            	 	imgData,
+            	 	that:s,
+            	 	worksid:s.worksid,
+            	 	fn:src=>{
+	                	s.state.data.talk[s.state.currentTalkIndex].videoSrc = imgData.src;
+
+		            	s.state.isAddVideo= false;
+		            	s.state.data.talk[s.state.currentTalkIndex].text = '';
+		            	s.forceUpdate(()=>{
+		            		window.obserable.trigger({type:'refreshTalkBodyScroll'});
+		            	})
+	                }
+            	 });
+            }
+        } 
 
         const editHeadProps = {
         	baseUrl: window.baseUrl,
@@ -196,6 +248,7 @@ class ZmitiWxChatApp extends Component {
             	 s.copyfile({
             	 	imgData,
             	 	that:s,
+            	 	worksid:s.worksid,
             	 	fn:src=>{
 	                	s.state.data.talk.forEach((item,i)=>{
 		            	if(s.state.data.memberList[s.state.currentEditIndex].id === item.id){
@@ -237,6 +290,8 @@ class ZmitiWxChatApp extends Component {
 
 			{this.state.isShowReplaceMyHeadImg && <ZmitiUploadDialog id={'repalcemyheadimg'} {...repalcemyheadimgProps}></ZmitiUploadDialog>}
 			{this.state.isShowReplaceTalkImg && <ZmitiUploadDialog id={'isShowReplaceTalkImg'} {...replaceTalkImgProps}></ZmitiUploadDialog>}
+			{this.state.isAddMusic && <ZmitiUploadDialog id={'addMusic'} {...addMusicProps}></ZmitiUploadDialog>}
+			{this.state.isAddVideo && <ZmitiUploadDialog id={'addVideo'} {...addVideoProps}></ZmitiUploadDialog>}
 			{this.state.isShowBackgroundDialog && <ZmitiUploadDialog id={'showBackgroundDialog'} {...backgroundProps}></ZmitiUploadDialog>}
 			{this.state.isShowLinkDialog && <ZmitiUploadDialog id={'showLinkDialog'} {...linkProps}></ZmitiUploadDialog>}
 		</div>
@@ -481,6 +536,29 @@ class ZmitiWxChatApp extends Component {
 					data:{type:0,id:'isShowReplaceTalkImg'}
   				})
   			})
+  		});
+
+  		window.obserable.on('addMusic',()=>{//替换图片。
+  			this.setState({
+  				isAddMusic:true
+  			},()=>{
+	  			window.obserable.trigger({
+					type:'showModal',
+					data:{type:1,id:'addMusic'}
+	  			})
+			})
+  		});
+
+  		window.obserable.on('addVideo',()=>{//替换图片。
+  			this.setState({
+  				isAddVideo:true
+  			},()=>{
+
+	  			window.obserable.trigger({
+					type:'showModal',
+					data:{type:2,id:'addVideo'}
+	  			})
+			})
   		});
 
   		window.obserable.on('deleteTalkImg',()=>{

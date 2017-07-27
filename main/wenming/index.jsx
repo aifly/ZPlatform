@@ -682,7 +682,7 @@ import IScroll from 'iscroll';
                     symbol: '',
                     data:s.convertData(userData),
                     symbolSize: function(val){
-                         return val[2] ;//100
+                         return val[2] /10 ;//100
                     },
                     label: {
                         normal: {

@@ -122,10 +122,16 @@ export default class ZmitiUploadDialog extends React.Component {
 
                     self.state.allData[self.state.current].imgs = self.state.allData[self.state.current].imgs.concat(d.allImgs);
 
-                    console.log('-----------')
+                   
                     if(self.state.type === 1){//音频
                         self.state.allData[self.state.current].imgs.forEach((item,i)=>{
                             item.imgSrc = './static/images/music.png';
+                        });
+                    }
+
+                    if(self.state.type === 2){//视频 
+                        self.state.allData[self.state.current].imgs.forEach((item,i)=>{
+                            item.imgSrc = './static/images/video1.png';
                         });
                     }
                     

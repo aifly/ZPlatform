@@ -7,6 +7,7 @@ import '../static/editor/froala_editor.min';
 import '../static/editor/align.min';
 import '../static/editor/colors.min';
 import '../static/editor/font_family.min';
+import '../static/editor/font_size.min';
 import '../static/editor/link.min';
 import '../static/editor/table.min';
 
@@ -23,7 +24,7 @@ export default class ZmitiEditor extends Component {
 	render() {
 		
 		 return <div className='zmiti-editor-main-ui'>
-		 	<div className='zmiti-editor-preview' style={{maxHeight:this.props.height+46||446}}>
+		 	<div className={'zmiti-editor-preview '+(this.props.showPreview?' ':' hide')} style={{maxHeight:this.props.height+46||446}}>
 		 		<section>
 		 			<div className='zmiti-editor-phone'>
 			 			<img ref='phone' src={this.props.isAdmin?'../static/images/phone-bg.png':'./static/images/phone-bg.png'}/>
@@ -125,5 +126,6 @@ export default class ZmitiEditor extends Component {
 }
 
 ZmitiEditor.defaultProps = {
-	isAdmin : true
+	isAdmin : true,
+	showPreview:true
 }

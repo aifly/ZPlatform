@@ -84,9 +84,21 @@ export default class WXTalkContentApp extends React.Component {
 					<div style={{height:40}}></div>
 				</div>}
 				{this.state.current === 2 && <div>
+          <div className='zmiti-media-upload' onClick={this.addMusic.bind(this)}>
+             <div>
+               <Icon type="plus"/>
+               <div>上传音频</div>
+             </div>
+          </div>
 					<Input addonBefore='添加音频URL' value={this.props.data.talk[this.props.currentTalkIndex]&& this.props.data.talk[this.props.currentTalkIndex].audioSrc} onChange={this.modifyCurrentTalkAudio.bind(this)} type='text' placeholder='http://www.'/>
 				</div>}
 				{this.state.current === 3 && <div>
+          <div className='zmiti-media-upload' onClick={this.addVideo.bind(this)}>
+             <div>
+               <Icon type="plus"/>
+               <div>上传视频</div>
+             </div>
+          </div>
 					<Input addonBefore='添加视频URL' value={this.props.data.talk[this.props.currentTalkIndex] && this.props.data.talk[this.props.currentTalkIndex].videoSrc} onChange={this.modifyCurrentTalkVideo.bind(this)} type='text' placeholder='http://www.'/>
 				</div>}
 				{this.state.current === 4 && <div>
@@ -189,6 +201,17 @@ export default class WXTalkContentApp extends React.Component {
   	})
   }
 
+  addMusic(){
+    window.obserable.trigger({
+      type:'addMusic'
+    })
+  } 
+
+   addVideo(){
+    window.obserable.trigger({
+      type:'addVideo'
+    })
+  }
 
   modifyTalkImg(){
   	window.obserable.trigger({

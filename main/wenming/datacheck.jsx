@@ -1,6 +1,6 @@
 import './static/css/datacheck.css';
 import React from 'react';
-import {Button,Icon,Checkbox,Input,Row,Col,Pagination,Popconfirm,message,Menu, Dropdown} from '../commoncomponent/common.jsx';
+import {Button,Icon,Checkbox,Input,Row,Col,Pagination,Popconfirm,message,Menu, Dropdown,Switch} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
@@ -143,8 +143,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             mainRight:<div className='wenming-datacheck-main-ui' style={{height:this.state.mainHeight}}>
                         <header className='wenming-datacheck-header'>
                             <div>数据审核-{title}</div>   
-                            <div><span onClick={this.getCheckedData.bind(this,1)}  className={this.state.status===0?'':'active'}>已审</span> | <span onClick={this.getCheckedData.bind(this,0)} className={this.state.status===0?'active':''}>未审</span></div>   
-                            <div><a href='#'><Icon type="upload"/>上报数据</a></div>   
+                            <div><Switch onChange={this.getCheckedData.bind(this)} checkedChildren="已审" unCheckedChildren="未审" /></div>
+                            <div><a href='#/wenmingadd'><Icon type="upload"/>上报数据</a></div>   
                         </header>
                         <section className='wenming-datacheck-bar'>
                             <div>
@@ -222,7 +222,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                                     {item.imgs.map((img,k)=>{
                                                         return <li onClick={this.viewPic.bind(this,i,k)} key={k} style={{cursor:'url(./static/images/big.cur),auto',background:'url('+img+') no-repeat center center / cover'}}></li>
                                                     })}
-                                                    {this.state.voidurl  && <li onClick={this.viewVideo.bind(this,item.voidurl )}><Icon type="play-circle-o" /></li>}
+                                                    {item.voidurl  && <li onClick={this.viewVideo.bind(this,item.voidurl )}><Icon type="play-circle-o" /></li>}
                                                 </ol>
                                                 <section className='wenming-datacheck-operator'>
                                                     <div>
@@ -275,7 +275,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                 </section>
                                 <section onClick={()=>{this.setState({voidurl:''})}}></section>
                             </div>
-                            <aside onClick={()=>{this.setState({currentViewPic:''})}}></aside>
+                            <aside onClick={()=>{this.setState({voidurl:''})}}></aside>
                         </div>}
                     </div>
         }
@@ -290,11 +290,16 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         
     }
 
+
+
     getCheckedData(index){
         this.setState({
             pageIndex:1
+        },()=>{
+            console.log(index*1);
+            this.loadArticle(index*1);
         })
-        this.loadArticle(index);
+        
     }
 
     recommentArticle(item){
@@ -564,12 +569,12 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
     }
 
     loadArticle(index,e){
-
-
         
          this.setState({
             status:index
          });
+
+
 
          var data = {
                 appid:window.WENMING.XCXAPPID,
@@ -590,10 +595,10 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             if(typeof data === 'string'){
                 data = JSON.parse(data);
             }
+
             if(data.getret === 0 ){
                 
                 this.state.dataSource = [];
-                console.log(data);
                 data.list.map((item,i)=>{
                     var imgs = item.imageslist.split(',');
                     if(!imgs[0]){
@@ -622,6 +627,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                     this.scroll.refresh();
                 });
             }
+        },()=>{
+
         })
     }
 

@@ -58,6 +58,8 @@
       -webkit-box-pack: center;
           -ms-flex-pack: center;
               justify-content: center; }
+      .zmiti-editor-main-ui > div.zmiti-editor-preview.hide {
+        display: none; }
       .zmiti-editor-main-ui > div.zmiti-editor-preview > section {
         width: 100%; }
 
