@@ -167,7 +167,7 @@ import IScroll from 'iscroll';
         return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
     }
     goadd(){
-        window.location='#/wenmingreportadd'
+        window.location='#/wenmingreportadd/0'
     }
 
     bindNewdata(){
@@ -185,7 +185,7 @@ import IScroll from 'iscroll';
             success(data){                    
                 s.state.dataSource=data.result;
                 s.state.total=data.result.length;
-                console.log(s.state.total,'data.result');
+                console.log(data.result,'data.result');
                 s.forceUpdate();
                 
             }
@@ -194,6 +194,7 @@ import IScroll from 'iscroll';
     //编辑
     editData(articlid){
         var s = this;
+        window.location='#/wenmingreportadd/'+id;
     }
     //删除
     delData(articlid){
