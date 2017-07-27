@@ -51,6 +51,7 @@ import ZmitiWenmingDataCheckApp from './wenming/datacheck.jsx';
 import ZmitiWenmingReportApp from './wenming/report.jsx';
 import ZmitiWenmingSettingApp from './wenming/setting.jsx';
 import ZmitiWenmingAddApp from './wenming/add.jsx';
+import ZmitiWenmingReportaddApp from './wenming/reportadd.jsx';
 import {notification } from './commoncomponent/common.jsx';
 import $ from 'jquery';
 
@@ -107,6 +108,7 @@ class App extends React.Component{
 				{path: '/wenming',app:ZmitiWenmingApp},
 				{path: '/wenmingdatacheck',app:ZmitiWenmingDataCheckApp},
 				{path: '/wenmingreport',app:ZmitiWenmingReportApp},
+				{path: '/wenmingreportadd',app:ZmitiWenmingReportaddApp},
 				{path: '/wenmingsetting',app:ZmitiWenmingSettingApp},
 				{path: '/wenmingadd/',app:ZmitiWenmingAddApp},
 				

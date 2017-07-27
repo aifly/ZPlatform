@@ -24,7 +24,10 @@ import IScroll from 'iscroll';
 
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
-        }
+           appid:'wx32e63224f58f2cb5',
+           dataSource:[],
+        } 
+        
     }
 
     componentWillMount() {
@@ -55,6 +58,7 @@ import IScroll from 'iscroll';
         this.resizeMainHeight = resizeMainHeight;
     }
     componentDidMount(){
+        var s = this;
        this.resizeMainHeight(this);
        let  {validateUser,loginOut,resizeMainHeight} = this.props;
         var iNow = 0 ;
@@ -64,13 +68,51 @@ import IScroll from 'iscroll';
 
 
         resizeMainHeight(this);
-       
+        s.bindNewdata();
     }
 
     render(){
 
 
         var title = '身边文明事';
+        const columns = [{
+            title: '标题',
+            dataIndex: 'title',
+            key: 'title'
+
+        },{
+            title: '图片',
+            dataIndex: 'imageslist',
+            key: 'imageslist',
+            width:130,
+            render:(value,recoder,index)=>{
+               if(recoder.imageUrl!=''){
+                return <img className='wenming-report-thumbnail' src={recoder.imageUrl}/>
+               } 
+            }
+
+        },{
+            title: '更新时间',
+            dataIndex: 'pagetime',
+            key: 'pagetime',
+            render:(text,recoder,index)=>{
+                var d=new Date(text);
+                return text;//this.formatDate(d);
+            }
+
+        },  {
+            title: '操作',
+            dataIndex: '',
+            key: '',
+            width:150,
+            render:(text,recoder,index)=>(
+                <div className='wenming-report-actbtn'>
+                    <Button onClick={this.editData.bind(this,recoder.articlid)}> 编辑</Button>
+                    <Button onClick={this.delData.bind(this,recoder.articlid)}> 删除</Button> 
+                </div>               
+            )
+
+        }]
 
         var props = {
             title,
@@ -82,10 +124,13 @@ import IScroll from 'iscroll';
                                     
                                 </Col>
                                 <Col span={8} className='wenming-report-button-right'>
+                                    <Button type='primary' onClick={this.goadd.bind(this)}>添加</Button>
                                 </Col>
                             </Row>                   
                         </div>
-                        <div className="wenming-report-line"></div>    
+                        <div className="wenming-report-line"></div>
+                        <div className='hr15'></div>
+                        <Table bordered={true} dataSource={this.state.dataSource} columns={columns} />  
             </div>
         }
         var mainComponent = <div>
@@ -98,9 +143,73 @@ import IScroll from 'iscroll';
         
         
     }
+    formatDate(now){ 
+        var year=now.getYear(); 
+        var month=now.getMonth()+1; 
+        var date=now.getDate(); 
+        var hour=now.getHours(); 
+        var minute=now.getMinutes(); 
+        var second=now.getSeconds(); 
+        return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
+    }
+    goadd(){
+        window.location='#/wenmingreportadd'
+    }
 
-    
-
+    bindNewdata(){
+        var s = this;
+        $.ajax({
+            type:'POST',
+            url:window.baseUrl + 'weixinxcx/get_wmbb/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:'wx32e63224f58f2cb5',
+                pagenum:10,
+            },
+            success(data){
+                    
+                    s.state.dataSource=data.result;
+                    console.log(data.result,'data.result');
+                    s.forceUpdate();
+                
+            }
+        });
+    }
+    //编辑
+    editData(articlid){
+        var s = this;
+    }
+    //删除
+    delData(articlid){
+        var s = this;
+        /*$.ajax({
+            url:window.baseUrl+'',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                articlid:articlid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    message.success('删除成功！');
+                    setTimeout(()=>{
+                        s.bindNewdata();
+                    },2000)
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(()=>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data.getmsg);
+                }
+            }
+        })*/
+    }
 
   
 }

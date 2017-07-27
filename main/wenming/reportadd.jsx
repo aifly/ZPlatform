@@ -18,7 +18,7 @@ const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const TextArea = Input;
- class ZmitiWenmingAddApp extends React.Component{
+ class ZmitiWenmingReportaddApp extends React.Component{
     constructor(args){
         super(...args);
 
@@ -172,7 +172,7 @@ const TextArea = Input;
             mainRight:<div className='wenming-add-main-ui' style={{height:this.state.mainHeight}}>
                         <div className="wenming-add-header">
                             <Row>
-                                <Col span={16} className="wenming-add-header-inner">上报数据-身边文明事
+                                <Col span={16} className="wenming-add-header-inner">文明播报-身边文明事
                                     
                                 </Col>
                                 <Col span={8} className='wenming-add-button-right'>
@@ -294,7 +294,7 @@ const TextArea = Input;
         
     }
     goback(){
-        window.location='#/wenmingdatacheck'
+        window.location='#/wenmingreport'
     }
     uploadVideo(){//上传视频
 
@@ -417,4 +417,4 @@ const TextArea = Input;
   
 }
 
-export default ZmitiValidateUser(ZmitiWenmingAddApp);
+export default ZmitiValidateUser(ZmitiWenmingReportaddApp);

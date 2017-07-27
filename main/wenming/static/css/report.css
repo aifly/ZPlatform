@@ -69,6 +69,8 @@
       resize: none;
       border-color: #2db7f5;
       border-radius: 3px; }
+  .wenming-report-main-ui .wenming-report-actbtn button {
+    margin: 0 5px; }
   .wenming-report-main-ui .wenming-report-uploadbtn {
     width: 102px;
     height: 32px;
@@ -79,6 +81,9 @@
       left: 0;
       top: 0;
       opacity: 0; }
+  .wenming-report-main-ui .wenming-report-thumbnail {
+    width: 120px;
+    height: 90px; }
   .wenming-report-main-ui .ant-radio-group {
     margin: 6px 0 0 0; }
 

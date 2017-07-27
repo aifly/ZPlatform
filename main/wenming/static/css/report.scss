@@ -66,6 +66,11 @@ $baseColor: #f4654c;
 			border-radius: 3px;
 		}
 	}
+	.wenming-report-actbtn{
+		button{
+			margin:0 5px;
+		}
+	}
 	.wenming-report-uploadbtn{
 		width:102px;
 		height:32px;
@@ -77,6 +82,10 @@ $baseColor: #f4654c;
 			top:0;
 			opacity:0;
 		}
+	}
+	.wenming-report-thumbnail{
+		width:120px;
+		height:90px;
 	}
 
 	.ant-radio-group{
