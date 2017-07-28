@@ -676,8 +676,9 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 data.status = index===1?'1,2':0
             }
             if(this.state.classid){
-                data.classid = this.state.classid;
+                //data.classid = this.state.classid;
             }
+            console.log(data);
              $.ajax({
                 type:'post',
                 url:window.baseUrl+'weixinxcx/get_articlecomment/',
@@ -710,7 +711,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                         });
                     });
 
-                      this.state.allCount = data.countRow.countrows
+                     //this.state.allCount = data.countRow.countrows
                     
 
 

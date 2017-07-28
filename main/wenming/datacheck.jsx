@@ -186,7 +186,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                             </div>
                             <div>
                                 <Row type='flex'>
-                                    <Col span={20}><Input onKeyDown={this.loadArticleByKeywords.bind(this)} type='text' value={this.state.keywords} onChange={e=>{this.setState({keywords:e.target.value})}} /></Col>
+                                    <Col span={20}><Input type='text' value={this.state.keywords} onChange={e=>{this.setState({keywords:e.target.value})}} /></Col>
                                     <Col span={4}><Button type='primary' onClick={this.loadArticleByKeywords.bind(this)}><Icon type='search'/></Button></Col>
                                 </Row>
                             </div>
@@ -684,11 +684,11 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
             }
             else{
-                data.status = index===1?'1,2':0
+              data.status = index===1?'1,2':0
             }
-
+ 
             if(this.state.keywords && this.state.loadByKeyWords){
-                data.content = this.state.keywords;
+                data.keyword = this.state.keywords;
             }
 
             if(this.state.classid){
@@ -728,6 +728,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                         });
                     });
                     this.state.loadByKeyWords = false;
+                    var rows = typeof data.countRow === 'nnumber'? data.countRow:data.countRow.countrows
                     this.state.allCount = data.countRow.countrows
                  
 
