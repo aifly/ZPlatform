@@ -107,7 +107,9 @@
         top: 10px; }
 
 .wenming-reportadd-imgs {
-  position: relative; }
+  position: relative;
+  width: 300px;
+  margin-top: 10px; }
   .wenming-reportadd-imgs .wenming-reportadd-delimgs {
     position: absolute;
     top: 0;

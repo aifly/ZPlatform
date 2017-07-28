@@ -290,7 +290,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
         
 
         if(articlid!=0){//编辑
-            params.articleid=articlid;
+            params.articlid=articlid;
             //console.log(articlid,'params.id');
             console.log(s.state.classid,'文章分类');         
             $.ajax({
