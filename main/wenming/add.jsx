@@ -11,7 +11,8 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 import MainUI from '../components/Main.jsx';
 
-
+import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
+import ZmitiEditor from '../components/zmiti-editor.jsx';
 import IScroll from 'iscroll';
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -29,46 +30,16 @@ const TextArea = Input;
            content:'',
            title:'',
            wxopenid:'zhongguowenmingwang',
-           imageslist:[],
+           imageslist:'',
            source:'',
            type:3,
            ishost:0,
            voidurl:'',
            longitude:'',
            latitude:'',
-           fileList: [{
-              uid: -1,
-              name: 'xxx.png',
-              status: 'done',
-              url: 'http://www.baidu.com/xxx.png',
-           }]
+           fileList:[]
         }
-          this.handleChange = (info) => {
-            let fileList = info.fileList;
 
-            // 1. Limit the number of uploaded files
-            //    Only to show two recent uploaded files, and old ones will be replaced by the new
-            fileList = fileList.slice(-2);
-
-            // 2. read from response and show file link
-            fileList = fileList.map((file) => {
-              if (file.response) {
-                // Component will show file.url as link
-                file.url = file.response.url;
-              }
-              return file;
-            });
-
-            // 3. filter successfully uploaded files according to response from server
-            fileList = fileList.filter((file) => {
-              if (file.response) {
-                return file.response.status === 'success';
-              }
-              return true;
-            });
-
-            this.setState({ fileList });
-          }
     }
 
     componentWillMount() {
@@ -112,27 +83,7 @@ const TextArea = Input;
     }
 
     render(){
-        const uploadColumns=[{
-            title: '上传名称',
-            dataIndex: 'filename',
-            key: 'filename',
-        },{
-            title: '文件大小',
-            dataIndex: 'datainfosize',
-            key: 'datainfosize',
-       },{
-            title: '文件路径',
-            dataIndex: 'datainfourl',
-            key: 'datainfourl',
-            className:'hidden',
-        },{
-            title: '操作',
-            dataIndex: 'operation',
-            key: 'operation',
-            render:(text,recoder,index)=>(
-                <span className="workorder-del"><a href="javascript:void(0);" onClick={this.delUploadfile.bind(this,recoder,index)}> 删除</a></span>
-            )
-        }];
+        var s =this;
         const formItemLayout = {
           labelCol: {
             xs: { span: 24 },
@@ -155,18 +106,33 @@ const TextArea = Input;
             },
           },
         };
-        const fileListGroup = {
-          action: 'http://api.zmiti.com/v2/share/upload_file/',
-          data:{
-            uploadtype:1,
-          },
-          onChange: this.handleChange,
-          multiple: true,
-        };
+
 
         var title = '身边文明事';
-
+        let editorProps ={
+            onChange(editor){
+                s.setState({
+                    content:editor.el.innerHTML
+                });
+            },
+            height:this.state.mainHeight/2,
+            html:this.state.content,
+            $,
+            isAdmin:false,
+            showPreview:false,
+        }
         var props = {
+            userid:s.userid,
+            getusersigid: s.getusersigid,
+            onFinish(imgData){
+                //s.state.imageslist = imgData.src;
+                s.state.fileList.push(imgData.src);                
+                s.state.imageslist=s.state.fileList.join();
+                //s.state.imgshow='block';
+                s.forceUpdate();
+                console.log(s.state.fileList,'s.state.fileList');
+                console.log(s.state.imageslist,'s.state.imageslist');
+            },
             title,
             selectedIndex:100,
             mainRight:<div className='wenming-add-main-ui' style={{height:this.state.mainHeight}}>
@@ -219,10 +185,7 @@ const TextArea = Input;
                                 hasFeedback
                                 >                        
                                   
-                                  <textArea rows='5' placeholder="内容" 
-                                    value={this.state.content}
-                                    onChange={(e)=>{this.state.content=e.target.value;this.forceUpdate();}}
-                                  />                    
+                                  <ZmitiEditor {...editorProps} ></ZmitiEditor>                    
                                 </FormItem>
                                 <FormItem
                                 {...formItemLayout}
@@ -241,14 +204,22 @@ const TextArea = Input;
                                 {...formItemLayout}
                                 label="图片"
                                 hasFeedback
-                                >                        
-<div className='wenming-add-uploadbtn'> 
-    <Button>
-        <Icon type="upload"  /> 上传图片
-    </Button>
-    <input className='wenming-add-file' ref="upload-file" onChange={this.uploadFile.bind(this)} type="file"/>
-</div>
-<Table columns={uploadColumns} dataSource={this.state.imageslist} showHeader={false} />                               
+                                >
+                                <Button onClick={this.changePortrait.bind(this)}>选择图片</Button>
+                                <div className='wenming-add-imgs5' >
+                                     
+                                    <ul>
+                                        {this.state.fileList.map((item,i)=>{
+                                            return <li><img src={item}/>
+                                                <div className='wenming-reportadd-delimgs'>
+                                                    <Button shape="circle" icon="delete" onClick={this.delpic.bind(this,i)} />
+                                                </div>
+                                            </li>
+                                        })}
+                                    </ul>
+                                    <div className='clearfix'></div>
+                                </div>                       
+                               
                     
                                 </FormItem>
                                 <FormItem
@@ -284,6 +255,8 @@ const TextArea = Input;
                     </div>
         }
         var mainComponent = <div>
+            {!this.state.showCredentialsDiolog && <ZmitiUploadDialog id="personAcc" {...props}></ZmitiUploadDialog>}
+        
             <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>
             
         </div>;
@@ -319,61 +292,32 @@ const TextArea = Input;
             }
         })
     }
-    uploadFile(){//上传图片
+    //更换图片
+    changePortrait(){
 
-        let formData = new FormData(),
-            s = this;
-
-
-        formData.append('setupfile', this.refs['upload-file'].files[0]);
-        formData.append('uploadtype', 1);
-
-        $.ajax({
-            url:window.baseUrl+ 'share/upload_file',
-            type:'post',
-            data:formData,
-            contentType: false,
-            processData: false,
-            success(data){
-                data.getfileurl[0].key = s.props.randomString(8);
-                s.state.imageslist.push(data.getfileurl[0]);
-                s.forceUpdate();
-            }
+        var obserable=window.obserable;
+        this.setState({
+          showCredentialsDiolog:false
+        },()=>{
+          obserable.trigger({
+              type:'showModal',
+              data:{type:0,id:'personAcc'}
+          })  
         })
+        
     }
-    delUploadfile(recoder,index){//删除图片
-
-        var s=this;
-
-        $.ajax({
-
-            url: window.baseUrl + 'user/del_workorderfile/',
-            type:window.ajaxType || 'get',
-
-            data: {
-                userid: s.userid,
-                getusersigid: s.getusersigid,
-                setpwd: recoder.setpwd,
-                filename: recoder.filename,
-            },
-            success(data){
-                s.state.imageslist.splice(index,1);
-                s.forceUpdate();
-
-            }
-        })
+    //删除图片
+    delpic(i){
+        var s = this;
+        //s.state.imageslist='';
+        //s.state.imgshow='none';
+        console.log(i,'del');
+        s.state.fileList.splice(i,1);
+        s.forceUpdate();
     }
     addProduct(){//添加
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        //判断是否有附件
-        var attachment="";
-        if(s.state.imageslist.length>0) {
-            attachment=s.state.imageslist[0].datainfourl;
-            for(var i=1;i<s.state.imageslist.length;i++){
-                    attachment=attachment + "," +s.state.imageslist[i].datainfourl;
-            }
-        }
         var params = {
             userid:s.userid,
             getusersigid:s.getusersigid,
@@ -382,7 +326,7 @@ const TextArea = Input;
             content:s.state.content,    
             title:s.state.title,
             wxopenid:s.state.wxopenid,
-            imageslist:attachment,
+            imageslist:s.state.imageslist,
             source:s.state.source,
             type:s.state.type,
             ishost:s.state.ishost,

@@ -24,7 +24,8 @@ import IScroll from 'iscroll';
 
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
-           appid:'wx32e63224f58f2cb5',
+           appid:window.WENMING.XCXAPPID,
+           classid:'A7CZ1YE3',
            total:0,
            dataSource:[],
         } 
@@ -87,8 +88,8 @@ import IScroll from 'iscroll';
             key: 'imageslist',
             width:130,
             render:(value,recoder,index)=>{
-                if(recoder.imageUrl!=''){
-                    return <img className='wenming-report-thumbnail' src={recoder.imageUrl}/>
+                if(recoder.imageslist!=''){
+                    return <img className='wenming-report-thumbnail' src={recoder.imageslist}/>
                 }                
                               
             }
@@ -174,18 +175,20 @@ import IScroll from 'iscroll';
         var s = this;
         $.ajax({
             type:'POST',
-            url:window.baseUrl + 'weixinxcx/get_wmbb/',
+            url:window.baseUrl + 'weixinxcx/search_articlelist/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
                 appid:s.state.appid,
-                //pagetime:0,
-                pagenum:500,
+                classid:s.state.classid,
+                status:1,
+                pagenum:200,
+                page:1,
             },
             success(data){                    
-                s.state.dataSource=data.result;
-                s.state.total=data.result.length;
-                console.log(data.result,'data.result');
+                s.state.dataSource=data.list;
+                s.state.total=data.countRow.countrows;
+                console.log(data.list,'data.result');
                 s.forceUpdate();
                 
             }
@@ -194,18 +197,19 @@ import IScroll from 'iscroll';
     //编辑
     editData(articlid){
         var s = this;
-        window.location='#/wenmingreportadd/'+id;
+        window.location='#/wenmingreportadd/'+articlid;
     }
     //删除
     delData(articlid){
         var s = this;
-        /*$.ajax({
-            url:window.baseUrl+'',
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/del_articles/',
             type:'POST',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                articlid:articlid,
+                articleids:articlid,
+                appid:s.state.appid,
             },
             success(data){
                 if(data.getret === 0){
@@ -224,7 +228,7 @@ import IScroll from 'iscroll';
                     message.error(data.getmsg);
                 }
             }
-        })*/
+        })
     }
 
   

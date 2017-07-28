@@ -14,14 +14,14 @@
   word-wrap: break-word;
   word-break: break-all; }
 
-.wenming-add-main-ui {
+.wenming-setting-main-ui {
   display: flex;
   display: -webkit-flex;
   flex-flow: column;
   padding: 0 10px 0 10px;
   background: #ffffff;
   box-sizing: border-box; }
-  .wenming-add-main-ui header.wenming-header {
+  .wenming-setting-main-ui header.setting-header {
     width: 100%;
     height: 52px;
     background: #fff;
@@ -31,7 +31,7 @@
     color: #000;
     font-size: 16px;
     text-indent: 20px; }
-    .wenming-add-main-ui header.wenming-header:before {
+    .wenming-setting-main-ui header.setting-header:before {
       content: "";
       position: absolute;
       width: 4px;
@@ -39,11 +39,11 @@
       left: 0;
       top: 0;
       background: #f4654c; }
-  .wenming-add-main-ui .wenming-add-header-inner {
+  .wenming-setting-main-ui .wenming-setting-header-inner {
     padding-left: 8px;
     margin-top: 10px;
     position: relative; }
-    .wenming-add-main-ui .wenming-add-header-inner:before {
+    .wenming-setting-main-ui .wenming-setting-header-inner:before {
       content: '';
       position: absolute;
       width: 2px;
@@ -52,74 +52,49 @@
       left: 0;
       -webkit-transform: scale(1, 0.7);
       transform: scale(1, 0.7); }
-  .wenming-add-main-ui .wenming-add-button-right button {
+  .wenming-setting-main-ui .wenming-setting-button-right button {
     float: right;
     margin-top: 5px; }
-  .wenming-add-main-ui .wenming-add-line {
+  .wenming-setting-main-ui .wenming-setting-line {
     clear: both;
     height: 15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd; }
-  .wenming-add-main-ui .wenming-add-form {
+  .wenming-setting-main-ui .wenming-setting-form {
     padding: 20px 0 0 0; }
-    .wenming-add-main-ui .wenming-add-form textarea {
+    .wenming-setting-main-ui .wenming-setting-form textarea {
       width: 100%;
       box-sizing: border-box;
       padding: 6px 7px;
       resize: none;
       border-color: #2db7f5;
       border-radius: 3px; }
-  .wenming-add-main-ui .wenming-add-uploadbtn {
+  .wenming-setting-main-ui .wenming-setting-actbtn button {
+    margin: 0 5px; }
+  .wenming-setting-main-ui .wenming-setting-uploadbtn {
     width: 102px;
     height: 32px;
     overflow: hidden;
     position: relative; }
-    .wenming-add-main-ui .wenming-add-uploadbtn .wenming-add-file {
+    .wenming-setting-main-ui .wenming-setting-uploadbtn .wenming-add-file {
       position: absolute;
       left: 0;
       top: 0;
       opacity: 0; }
-  .wenming-add-main-ui .ant-radio-group {
-    margin: 6px 0 0 0; }
-
-.wenming-add-imgs5 {
-  margin: 5px 0 0 0; }
-  .wenming-add-imgs5 ul li {
+  .wenming-setting-main-ui .wenming-setting-thumbnail {
     width: 120px;
     height: 90px;
-    border: 1px #cccccc solid;
-    display: inline-block;
-    overflow: hidden;
-    margin-right: 10px;
-    position: relative; }
-    .wenming-add-imgs5 ul li img {
-      max-width: 120px;
-      max-height: 90px; }
-    .wenming-add-imgs5 ul li .wenming-reportadd-delimgs {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%; }
-      .wenming-add-imgs5 ul li .wenming-reportadd-delimgs .ant-btn {
-        position: absolute;
-        right: 10px;
-        top: 10px; }
+    clear: both;
+    position: relative;
+    zoom: 1;
+    box-sizing: border-box; }
+  .wenming-setting-main-ui .ant-radio-group {
+    margin: 6px 0 0 0; }
+  .wenming-setting-main-ui .wenming-setting-datalist {
+    clear: both;
+    position: relative;
+    zoom: 1; }
+  .wenming-setting-main-ui .hr15 {
+    width: 100%; }
 
-.wenming-reportadd-imgs {
-  position: relative;
-  width: 300px;
-  margin-top: 10px; }
-  .wenming-reportadd-imgs .wenming-reportadd-delimgs {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* background-color: rgba(0,0,0, 0.7); */ }
-    .wenming-reportadd-imgs .wenming-reportadd-delimgs .ant-btn {
-      position: absolute;
-      right: 10px;
-      top: 10px; }
-
-/*# sourceMappingURL=add.css.map */
+/*# sourceMappingURL=setting.css.map */
