@@ -1,6 +1,6 @@
-import './static/css/index.css';
+import './static/css/setting.css';
 import React from 'react';
-import {Button} from '../commoncomponent/common.jsx';
+import {message,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
@@ -10,10 +10,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 
 import MainUI from '../components/Main.jsx';
-import echarts from 'echarts/lib/echarts';
-import 'echarts/lib/chart/map';
 
-import '../static/echarts/china';
 
 import IScroll from 'iscroll';
 
@@ -23,6 +20,7 @@ import IScroll from 'iscroll';
 
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
+           appid:window.WENMING.XCXAPPID,
         }
     }
 
@@ -74,8 +72,20 @@ import IScroll from 'iscroll';
         var props = {
             title,
             selectedIndex:3,
-            mainRight:<div className='wenming-datacheck-main-ui' style={{height:this.state.mainHeight}}>
-                        通用设置
+            mainRight:<div className='wenming-setting-main-ui' style={{height:this.state.mainHeight}}>
+                        
+                        <div className="wenming-setting-header">
+                            <Row>
+                                <Col span={16} className="wenming-setting-header-inner">通用设置-身边文明事
+                                    
+                                </Col>
+                                <Col span={8} className='wenming-setting-button-right'>
+                                    
+                                </Col>
+                            </Row>
+                            <div className="clearfix"></div>                 
+                        </div>
+                        <div className="wenming-setting-line"></div>
                     </div>
         }
         var mainComponent = <div>
@@ -91,18 +101,7 @@ import IScroll from 'iscroll';
 
     
 
-    formatNumber(s, n = 3){   
-           n = n > 0 && n <= 20 ? n : 2;   
-           s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";   
-           var l = s.split(".")[0].split("").reverse(),   
-           r = s.split(".")[1];   
-            var  t = "";   
-           for(var i = 0; i < l.length; i ++ )   
-           {   
-              t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");   
-           }   
-           return t.split("").reverse().join("");   
-    } 
+
 
    
 

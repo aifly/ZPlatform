@@ -25,10 +25,10 @@ class ZmitiWenmingReportaddApp extends React.Component{
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
            showCredentialsDiolog:false,
-           articlid:'',//this.props.params.id
            classid:'A7CZ1YE3',
            appid:window.WENMING.XCXAPPID,
            imgshow:'none',
+           articleid:'',
            content:'',
            title:'',
            wxopenid:'zhongguowenmingwang',//oX4P90P4kCl3_5JLOYJyOx1bxISg//oSDVUs-aeHSvmJl9uk1Yq7iTeOyk
@@ -40,32 +40,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
            longitude:'',
            latitude:'',
         }
-          this.handleChange = (info) => {
-            let fileList = info.fileList;
-
-            // 1. Limit the number of uploaded files
-            //    Only to show two recent uploaded files, and old ones will be replaced by the new
-            fileList = fileList.slice(-2);
-
-            // 2. read from response and show file link
-            fileList = fileList.map((file) => {
-              if (file.response) {
-                // Component will show file.url as link
-                file.url = file.response.url;
-              }
-              return file;
-            });
-
-            // 3. filter successfully uploaded files according to response from server
-            fileList = fileList.filter((file) => {
-              if (file.response) {
-                return file.response.status === 'success';
-              }
-              return true;
-            });
-
-            this.setState({ fileList });
-          }
+        this.currentId = -1;
     }
 
     componentWillMount() {
@@ -105,7 +80,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
 
 
         resizeMainHeight(this);
-        this.editdata();
+        this.getArticle();
        
     }
 
@@ -171,7 +146,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
             mainRight:<div className='wenming-add-main-ui' style={{height:this.state.mainHeight}}>
                         <div className="wenming-add-header">
                             <Row>
-                                <Col span={16} className="wenming-add-header-inner">添加-文明播报
+                                <Col span={16} className="wenming-add-header-inner">文明播报
                                     
                                 </Col>
                                 <Col span={8} className='wenming-add-button-right'>
@@ -297,6 +272,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
     addProduct(){//添加
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
+        var articlid=this.props.params.id;
         var params = {
             userid:s.userid,
             getusersigid:s.getusersigid,
@@ -304,45 +280,87 @@ class ZmitiWenmingReportaddApp extends React.Component{
             appid:s.state.appid,
             content:s.state.content,    
             title:s.state.title,
-            wxopenid:s.state.wxopenid,
+            //wxopenid:s.state.wxopenid,
             imageslist:s.state.imageslist,
             source:s.state.source,
             type:s.state.type,
             ishost:s.state.ishost,
             voidurl:s.state.voidurl,
-            longitude:s.state.longitude,
-            latitude:s.state.latitude,
         }
-        $.ajax({
-            type:'POST',
-            url:window.baseUrl + 'weixinxcx/append_article/',
-            data:params,
-            success(data){
+        
+
+        if(articlid!=0){//编辑
+            params.articleid=articlid;
+            //console.log(articlid,'params.id');
+            console.log(s.state.classid,'文章分类');         
+            $.ajax({
+                type:'POST',
+                url:window.baseUrl + 'weixinxcx/edit_articles/',
+                data:params,
+                success(data){
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
-                    s.setState({
-                        classid:s.state.classid,
-                        appid:window.WENMING.XCXAPPID,
-                        content:'',
-                        title:'',
-                        wxopenid:'zhongguowenmingwang',//
-                        imageslist:[],
-                        source:'',
-                        type:3,
-                        ishost:0,
-                        voidurl:'',
-                        longitude:'',
-                        latitude:'',
-                    })
-                    s.forceUpdate();
-                
-            }
-        });
+                    s.forceUpdate();                  
+                }
+            }); 
+        }else{
+            //添加
+            $.ajax({
+                type:'POST',
+                url:window.baseUrl + 'weixinxcx/add_articles/',
+                data:params,
+                success(data){
+                        message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                        s.setState({
+                            classid:s.state.classid,
+                            appid:window.WENMING.XCXAPPID,
+                            content:'',
+                            title:'',
+                            imageslist:[],
+                            source:'',
+                            type:3,
+                            ishost:0,
+                            voidurl:'',
+                            imgshow:'none',
+                        })
+                        s.forceUpdate();
+                    
+                }
+            }); 
+        }
     }
     //编辑
-    editdata(id){
+    getArticle(articlid){
         var s = this;
-        id=this.props.params.id;
-        console.log(id,'params.id');
+        articlid=this.props.params.id;
+        
+        //获取文章
+        if(articlid!=0){
+            $.ajax({
+                type:'POST',
+                url:window.baseUrl + 'weixinxcx/get_detialwmbb/',
+                data:{
+                   articlid:articlid 
+                },
+                success(data){
+                        s.setState({
+                            title:data.result.title,
+                            content:data.result.content,                        
+                            imageslist:data.result.imageUrl,
+                            source:data.result.source,
+                            articleid:articlid,
+                        })
+                        if(data.result.imageUrl!=''){
+                            s.setState({
+                               imgshow:'block', 
+                            })
+                        }
+                        console.log(data.result,'data')
+                        s.forceUpdate();
+                    
+                }
+            });            
+        }
+
     }
   
 }
