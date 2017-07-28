@@ -100,8 +100,13 @@ class ZmitiWxChatApp extends Component {
 	                });
 	                }
             	 });
-               
+            },
+            onCancel(){
+            	s.setState({
+            		showUserHeadProps:false
+            	})
             }
+
         };
         const linkProps = {
             baseUrl: window.baseUrl,
@@ -119,6 +124,11 @@ class ZmitiWxChatApp extends Component {
 	                }
             	 });
               
+            },
+            onCancel(){
+            	s.setState({
+            		isShowLinkDialog:false
+            	})
             }
         };
 
@@ -137,7 +147,12 @@ class ZmitiWxChatApp extends Component {
 		    			s.forceUpdate();
 	                }
             	 });
-            }	
+            },
+            onCancel(){
+            	s.setState({
+            		isShowBackgroundDialog:false
+            	})
+            }
         }
 
         const repalcemyheadimgProps ={
@@ -160,6 +175,11 @@ class ZmitiWxChatApp extends Component {
 	                }
             	 });
             	
+            },
+            onCancel(){
+            	s.setState({
+            		isShowReplaceMyHeadImg:false
+            	})
             }
         }
 
@@ -186,8 +206,13 @@ class ZmitiWxChatApp extends Component {
 	                }
             	 });
             
+            },
+            onCancel(){
+            	s.setState({
+            		isShowReplaceTalkImg:false
+            	})
             }
-        } 
+        };
 		const  addMusicProps = {//添加音频
         	baseUrl: window.baseUrl,
             getusersigid: s.getusersigid,
@@ -209,6 +234,11 @@ class ZmitiWxChatApp extends Component {
 		            	})
 	                }
             	 });
+            },
+            onCancel(){
+            	s.setState({
+            		isAddMusic:false
+            	})
             }
         } 
 
@@ -233,6 +263,11 @@ class ZmitiWxChatApp extends Component {
 		            	})
 	                }
             	 });
+            },
+            onCancel(){
+            	s.setState({
+            		isAddVideo:false
+            	})
             }
         } 
 
@@ -261,6 +296,11 @@ class ZmitiWxChatApp extends Component {
             	 });
 
             	
+            },
+            onCancel(){
+            	s.setState({
+            		currentEditIndex:-1
+            	})
             }
         }
 
@@ -283,7 +323,7 @@ class ZmitiWxChatApp extends Component {
 			<WXEntryApp {...this.state} {...data}></WXEntryApp>			
 			<WXEditApp {...this.state} {...data}></WXEditApp>
 			<WXSaveApp {...this.state} {...data} userid={this.userid} getusersigid={this.getusersigid}></WXSaveApp>
-			<ZmitiUploadDialog id={this.state.currentDialogName} {...userHeadProps}></ZmitiUploadDialog>
+			{this.state.showUserHeadProps&&<ZmitiUploadDialog id={this.state.currentDialogName} {...userHeadProps}></ZmitiUploadDialog>}
 
 			{this.state.currentEditIndex !== -1 && <ZmitiUploadDialog id={'memberList-'+ this.state.currentEditIndex} {...editHeadProps}></ZmitiUploadDialog>}
 
@@ -325,10 +365,15 @@ class ZmitiWxChatApp extends Component {
 
 	uploadHead(){
 		var obserable=window.obserable;
-		obserable.trigger({
-		  type:'showModal',
-		  data:{type:0,id:'wxchat-members-head'}
-		});
+		this.setState({
+			showUserHeadProps:true
+		},()=>{
+			obserable.trigger({
+			  type:'showModal',
+			  data:{type:0,id:'wxchat-members-head'}
+			});	
+		})
+		
 	}
 
 

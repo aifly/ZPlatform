@@ -66,8 +66,7 @@ import Pagination from 'antd/lib/pagination';
 
 import Upload   from 'antd/lib/upload';
 
-import Dropdown from 'antd/lib/dropdown'
-
+import Dropdown from 'antd/lib/dropdown';
 
 
 

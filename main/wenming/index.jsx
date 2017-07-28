@@ -16,7 +16,7 @@ import 'echarts/lib/chart/map';
 import '../static/echarts/china';
 
 import IScroll from 'iscroll';
-
+var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
  class ZmitiWenmingApp extends React.Component{
     constructor(args){
         super(...args);
@@ -44,6 +44,7 @@ import IScroll from 'iscroll';
            provinceRankingList:list1,
            userRankingList:list2,
            provincePVSort:'sort-down',
+           allPV:0,
            provinceReportSort:'',
            userCommentSort:'sort-down',
            userReportSort:''
@@ -163,22 +164,26 @@ import IScroll from 'iscroll';
                             value:1
                          });
                     }
-                    s.defaultCount = localStorage.getItem('defaultcount'+ worksid) || 0;
+                    //s.defaultCount = localStorage.getItem('defaultcount'+ worksid) || 0;
+                    s.defaultCount = s.state.allPV;
                     s.defaultCount++;
 
+                    s.state.monthPV = s.state.monthPV + 1 ;
+                    s.state.dayPV = s.state.dayPV +1;
                     s.formatPV(s.defaultCount);
 
-                    localStorage.setItem('defaultcount'+ worksid,s.defaultCount);
+
+                   // localStorage.setItem('defaultcount'+ worksid,s.defaultCount);
                     s.pv++;
-                    localStorage.setItem('pv'+ worksid,s.pv);
-                    localStorage.setItem('uv'+ worksid,s.uv);
+                    //localStorage.setItem('pv'+ worksid,s.pv);
+                   // localStorage.setItem('uv'+ worksid,s.uv);
 
                     s.fillUVPV();
 
                     s.fillPV();
 
-                    localStorage.setItem('geoCoordMap'+worksid,JSON.stringify(s.geoCoordMap));
-                    localStorage.setItem('userData'+worksid,JSON.stringify({userData:s.userData}));
+                   // localStorage.setItem('geoCoordMap'+worksid,JSON.stringify(s.geoCoordMap));
+                    //localStorage.setItem('userData'+worksid,JSON.stringify({userData:s.userData}));
                     
                     var nickname = data.nickname;
                     var headimgurl = data.headimgurl;
@@ -196,7 +201,7 @@ import IScroll from 'iscroll';
     }
 
 
-    userOnLine (username='智媒体用户',headerimgurl='http://www.zmiti.com/main/static/images/zmiti-logo.jpg'){
+    userOnLine (username='智媒体用户',headerimgurl=defaulturl){
         notification.config({
             duration:5,
 
@@ -245,7 +250,7 @@ import IScroll from 'iscroll';
 
 
             }
-            s.userOnLine(data.nickname||'智媒体用户',data.headimageurl||'http://www.zmiti.com/main/static/images/zmiti-logo.jpg');
+            s.userOnLine(data.nickname||'智媒体用户',data.headimageurl||defaulturl);
             s.getPos(data)
         });
         socket.on('wenming-report',(msg)=>{
@@ -357,7 +362,7 @@ import IScroll from 'iscroll';
                                             <ul>
                                                 {this.state.userRankingList.map((item,i)=>{
                                                     return <li key={i}>
-                                                            <div><img src={item.headerimgurl}/></div>
+                                                            <div><img src={item.headerimgurl||defaulturl}/></div>
                                                             <div title={item.nickname} className='zmiti-text-overflow'>{item.nickname}</div>
                                                             <div>{item.commentCount}</div>
                                                             <div>{item.report}</div>
@@ -383,8 +388,23 @@ import IScroll from 'iscroll';
         
     }
 
+    sortBy  (filed, rev, primer) {
+        rev = (rev) ? -1 : 1;
+        return function (a, b) {
+            a = a[filed];
+            b = b[filed];
+            if (typeof (primer) != 'undefined') {
+                a = primer(a);
+                b = primer(b);
+            }
+            if (a < b) { return rev * -1; }
+            if (a > b) { return rev * 1; }
+            return 1;
+        }
+    }
 
     sortList(type,e){
+        window.ss = this;
         e.preventDefault();
 
         switch(type){
@@ -392,13 +412,7 @@ import IScroll from 'iscroll';
                 this.state.provincePVSort = this.state.provincePVSort === 'sort-down'?'sort-up':'sort-down';
                 this.state.provinceReportSort = '';
 
-                this.state.provinceRankingList = this.provinceRankingList.sort((a,b)=>{
-                    if(this.state.provincePVSort === 'sort-down'){
-                        return a.pv < b.pv;
-                    }else{
-                        return a.pv > b.pv;
-                    }
-                });
+                this.state.provinceRankingList.sort(this.sortBy('pv',this.state.provincePVSort === 'sort-down',parseInt))
 
             break;
             case 'provinceReportSort':
@@ -406,13 +420,7 @@ import IScroll from 'iscroll';
                 this.state.provinceReportSort = this.state.provinceReportSort === 'sort-down'?'sort-up':'sort-down';
                 this.state.provincePVSort = '';
 
-                this.state.provinceRankingList = this.provinceRankingList.sort((a,b)=>{
-                    if(this.state.provinceReportSort === 'sort-down'){
-                        return a.report < b.report;
-                    }else{
-                        return a.report > b.report;
-                    }
-                });
+               this.state.provinceRankingList.sort(this.sortBy('report',this.state.provinceReportSort === 'sort-down',parseInt))
 
             
             break;
@@ -420,9 +428,7 @@ import IScroll from 'iscroll';
                 this.state.userCommentSort = 'sort-up';///this.state.userCommentSort === 'sort-down'?'sort-up':'sort-down';
                 this.state.userReportSort = '';
                 if(this.state.userCommentSort === 'sort-up'){
-                    this.state.userRankingList = this.userRankingList.sort((a,b)=>{
-                       return a.commentCount < b.commentCount;
-                    });
+                    this.state.userRankingList.sort(this.sortBy('commentCount',false,parseInt))
                 }
                
             break;
@@ -431,9 +437,7 @@ import IScroll from 'iscroll';
                 this.state.userCommentSort = '';
                  this.state.userRankingList = this.userRankingList.sort((a,b)=>{
                     if(this.state.userReportSort === 'sort-up'){
-                        return a.report < b.report;
-                    }else{
-                        return a.report > b.report;
+                         this.state.userRankingList.sort(this.sortBy('report',false,parseInt))
                     }
                 });
             break;
@@ -485,17 +489,17 @@ import IScroll from 'iscroll';
             
 
             var userData = [
-                    {name: "常德市", value: 1023,key:'asa'},
+                  //  {name: "常德市", value: 1023,key:'asa'},
                 ];
             var geoCoordMap = {
-                "常德市":[111.7087330000,28.9399430000]
+                //"常德市":[111.7087330000,28.9399430000]
             };
             this.userData = userData;
             this.geoCoordMap = geoCoordMap;
 
 
-              geoCoordMap = localStorage.getItem('geoCoordMap'+worksid) || '{}';
-            geoCoordMap = JSON.parse(geoCoordMap);
+              //geoCoordMap = localStorage.getItem('geoCoordMap'+worksid) || '{}';
+            //geoCoordMap = JSON.parse(geoCoordMap);
 
             var userArr = localStorage.getItem('userData'+worksid)||'{}';
                 userData = JSON.parse(userArr).userData || [];
@@ -547,6 +551,7 @@ import IScroll from 'iscroll';
                 data = JSON.parse(data);
             }
             if(data.getret === 0 ){
+                console.log(data)
                 this.userRankingList = data.list.concat([]);
                 this.setState({
                     userRankingList:data.list
@@ -573,6 +578,7 @@ import IScroll from 'iscroll';
             if(data.getret === 0 ){
                 this.state.monthPV = data.list.monthpv;
                 this.state.dayPV = data.list.daypv;
+                this.state.allPV = data.list.totalpv;
                 this.formatPV(data.list.totalpv);
                 localStorage.setItem('defaultcount'+ this.worksid,data.list.totalpv);
             }

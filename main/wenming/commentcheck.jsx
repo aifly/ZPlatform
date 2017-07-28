@@ -36,8 +36,6 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
            currentWhere:{},
 
-           keywords:'',
-
            status:-1,
 
            voidurl:'',
@@ -134,11 +132,11 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         var menu = (
              <Menu>
                 <Menu.Item >
-                    <a onClick={this.loadArticleByType.bind(this,'','全部')} href="javascript:">全部</a>
+                    <a onClick={this.loadCommentByType.bind(this,'','全部')} href="javascript:">全部</a>
                 </Menu.Item>
                 {this.state.typeList.map((item,i)=>{
                     return <Menu.Item key={i}>
-                        <a  onClick={this.loadArticleByType.bind(this,item.classid,item.classname)} href="javascript:">{item.classname}</a>
+                        <a  onClick={this.loadCommentByType.bind(this,item.classid,item.classname)} href="javascript:">{item.classname}</a>
                     </Menu.Item>
                 })}
                     
@@ -153,7 +151,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         ];
         var props = {
             title,
-            selectedIndex:1,
+            selectedIndex:2,
             mainRight:<div className='wenming-datacheck-main-ui' style={{height:this.state.mainHeight}}>
                         <header className='wenming-datacheck-header'>
                             <div>数据审核-{title}</div>   
@@ -177,7 +175,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                       </Dropdown>
                                 </div>
                                 {this.state.status === 1 && <div style={{marginLeft:30}}>
-                                    <RadioGroup options={plainOptions} onChange={this.loadArticleByClass.bind(this)} value={this.state.tab }>
+                                    <RadioGroup options={plainOptions} onChange={this.loadCommentByClass.bind(this)} value={this.state.tab }>
                                         {plainOptions.map((item,i)=>{
                                             return <Radio key={i} value={item.value}>{item.label}</Radio>
                                         })}
@@ -186,8 +184,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                             </div>
                             <div>
                                 <Row type='flex'>
-                                    <Col span={20}><Input onKeyDown={this.loadArticleByKeywords.bind(this)} type='text' value={this.state.keywords} onChange={e=>{this.setState({keywords:e.target.value})}} /></Col>
-                                    <Col span={4}><Button type='primary' onClick={this.loadArticleByKeywords.bind(this)}><Icon type='search'/></Button></Col>
+                                    <Col span={20}><Input type='text' /></Col>
+                                    <Col span={4}><Button type='primary'><Icon type='search'/></Button></Col>
                                 </Row>
                             </div>
                         </section>
@@ -232,13 +230,13 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                         </aside>
                                         <aside className='wenming-datacheck-item-C'>
                                             <section className='wenming-datacheck-item-head'>
-                                                <img src={item.headimgurl||defaulturl}/>
+                                                <img src={item.headimgurl}/>
                                             </section>
                                             <section className='wenming-datacheck-item-main-content'>
                                                 <h2>{item.nickname}</h2>
                                                 <div className='wenming-datacheck-date'>{item.date}</div>
                                                 <div className='wenming-datacheck-content'>
-                                                    <div dangerouslySetInnerHTML={this.createMarkup(item.content)}></div>
+                                                    <div dangerouslySetInnerHTML={this.createMarkup(item.content,showMore)}></div>
                                                     {showMore}
                                                 </div>
                                                 <ol>
@@ -313,17 +311,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         
     }
 
-    loadArticleByKeywords(){
-        this.setState({
-            loadByKeyWords:true
-        },()=>{
-            this.loadArticle(this.state.status);
-        })
-        
-    }
 
-
-    loadArticleByClass(e){
+    loadCommentByClass(e){
         var arr = e.target.value.split('-');
         
 
@@ -334,7 +323,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 this.setState({
                     currentWhere:{}
                 },()=>{
-                    this.loadArticle(this.state.status);
+                    this.loadComment(this.state.status);
                 })
                 
                 return;
@@ -359,7 +348,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                     value
                 }
             },()=>{
-                this.loadArticle(this.state.status,undefined,{
+                this.loadComment(this.state.status,undefined,{
                     type,
                     value
                 })
@@ -385,7 +374,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         this.setState({
             pageIndex:1
         },()=>{
-            this.loadArticle(index*1);
+            this.loadComment(index*1);
         })
         
     }
@@ -422,14 +411,14 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         })
     }
 
-    loadArticleByType(id,name){
+    loadCommentByType(id,name){
        
       
         this.setState({
             classid:id,
             classname:name
         },()=>{
-            this.loadArticle(this.state.status);
+            this.loadComment(this.state.status);
         })
     }
 
@@ -652,11 +641,11 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         this.setState({
             pageIndex:e
         },()=>{
-            this.loadArticle(this.state.status,e);
+            this.loadComment(this.state.status,e);
         })
     }
 
-    loadArticle(index,e){
+    loadComment(index,e,other){
 
 
          
@@ -686,25 +675,18 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             else{
                 data.status = index===1?'1,2':0
             }
-
-            if(this.state.keywords && this.state.loadByKeyWords){
-                data.content = this.state.keywords;
-            }
-
             if(this.state.classid){
                 data.classid = this.state.classid;
             }
-
-            console.log(data)
              $.ajax({
                 type:'post',
-                url:window.baseUrl+'weixinxcx/search_articlelist/',
+                url:window.baseUrl+'weixinxcx/get_articlecomment/',
                 data
             }).done((data)=>{
                 if(typeof data === 'string'){
                     data = JSON.parse(data);
                 }
-                console.log(data)
+                console.log(data);      
                 if(data.getret === 0 ){
                     this.state.dataSource = [];
                     data.list.map((item,i)=>{
@@ -727,13 +709,14 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                             id:item.articlid,
                         });
                     });
-                    this.state.loadByKeyWords = false;
-                    this.state.allCount = data.countRow.countrows
-                 
 
-                    this.forceUpdate(()=>{
+                      this.state.allCount = data.countRow.countrows
+                    
+
+
+                    /*this.forceUpdate(()=>{
                         this.scroll.refresh();
-                    });
+                    });*/
                 }
             },()=>{
 
@@ -752,7 +735,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
     request(){
 
-       this.loadArticle(0);
+       this.loadComment(0);
 
 
           $.ajax({

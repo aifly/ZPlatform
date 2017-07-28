@@ -66,6 +66,7 @@ export default class ZmitiUploadDialog extends React.Component {
             visible: false
         });
         $('.zmiti-img-figure-C .figcaption').removeClass('active');
+        this.props.onCancel && this.props.onCancel(this.imgData);
         this.imgData = undefined;
     }
 
@@ -73,6 +74,7 @@ export default class ZmitiUploadDialog extends React.Component {
         if (this.props.id !== data.id) {
             return;
         }
+
 
         this.type = data.type;
         this.target = data.target;
@@ -95,7 +97,6 @@ export default class ZmitiUploadDialog extends React.Component {
                     "setdatainfoclassid": self.state.defaultIds[self.state.current]
                 };
 
-                console.log(params)
            
             $.ajax({//获取当前分类信息.
                 url: self.props.baseUrl + self.props.cateUrl + 'get_datainfo',

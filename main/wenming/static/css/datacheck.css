@@ -279,7 +279,8 @@
             color: #999; }
           .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content .wenming-datacheck-content {
             font-size: 14px;
-            max-width: 79%; }
+            max-width: 79%;
+            word-break: break-all; }
             .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content .wenming-datacheck-content a {
               font-size: 12px; }
           .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content ol {

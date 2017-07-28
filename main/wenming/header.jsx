@@ -9,7 +9,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-var path = ['/wenming','/wenmingdatacheck','/wenmingreport','/wenmingsetting'];
+var path = ['/wenming','/wenmingdatacheck','/wenmingcommentcheck','/wenmingreport','/wenmingsetting'];
 
  class ZmitiWenmingAsideBarApp extends React.Component{
     constructor(args){
@@ -44,7 +44,7 @@ var path = ['/wenming','/wenmingdatacheck','/wenmingreport','/wenmingsetting'];
             userid:this.userid,
             changeAccount:this.changeAccount.bind(this),
             type:'custom-1',
-            tags:['首页','数据审核','文明播报','通用设置'],
+            tags:['首页','数据审核','评论审核','文明播报','通用设置'],
             mainHeight:this.state.mainHeight,
             title:title,
             selectedIndex: this.props.selectedIndex,

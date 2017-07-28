@@ -1,13 +1,20 @@
 //获取评论列表接口
 {
-    "nickname":"",
-    "headimgurl":"",
+  
 	"list":[
 	   {
+            
             "articleid":"articleid",
+            "title":"",
             "articleContent":"文章内容文章内容文章内容文章内容文章内容",
+            "imgs":[
+                "图片的路径",
+            ],
+            "videourl":"",
             "comments":[
                 {
+                    "nickname":"",
+                    "headimgurl":"",
                     "content":"评论内容评论内容评论内容评论内容",
                     "imgs":[
                         "./static/images/wenming/1.jpg",
@@ -20,12 +27,19 @@
                     }
                 }
             ]
-       },
-       {
+       },{
+            
             "articleid":"articleid",
+            "title":"",
             "articleContent":"文章内容文章内容文章内容文章内容文章内容",
+            "imgs":[
+                "图片的路径",
+            ],
+            "videourl":"",
             "comments":[
                 {
+                    "nickname":"",
+                    "headimgurl":"",
                     "content":"评论内容评论内容评论内容评论内容",
                     "imgs":[
                         "./static/images/wenming/1.jpg",
@@ -39,6 +53,7 @@
                 }
             ]
        }
+       
 	]
 }
 
