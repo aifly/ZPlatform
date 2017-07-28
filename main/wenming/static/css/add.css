@@ -82,6 +82,30 @@
   .wenming-add-main-ui .ant-radio-group {
     margin: 6px 0 0 0; }
 
+.wenming-add-imgs5 {
+  margin: 5px 0 0 0; }
+  .wenming-add-imgs5 ul li {
+    width: 120px;
+    height: 90px;
+    border: 1px #cccccc solid;
+    display: inline-block;
+    overflow: hidden;
+    margin-right: 10px;
+    position: relative; }
+    .wenming-add-imgs5 ul li img {
+      max-width: 120px;
+      max-height: 90px; }
+    .wenming-add-imgs5 ul li .wenming-reportadd-delimgs {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%; }
+      .wenming-add-imgs5 ul li .wenming-reportadd-delimgs .ant-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px; }
+
 .wenming-reportadd-imgs {
   position: relative; }
   .wenming-reportadd-imgs .wenming-reportadd-delimgs {

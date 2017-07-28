@@ -84,6 +84,37 @@ $baseColor: #f4654c;
 	}
 
 }
+.wenming-add-imgs5{
+	margin:5px 0 0 0;
+	ul{
+		
+	    li{
+	    	width:120px;
+	    	height:90px;
+	    	border:1px #cccccc solid;
+	    	display: inline-block;
+	    	overflow:hidden;
+	    	margin-right:10px;
+	    	position: relative;
+	    	img{
+	    		max-width:120px;
+	    		max-height:90px;
+	    	}
+	    	.wenming-reportadd-delimgs{
+				position: absolute;
+				top:0;
+				left:0;
+				width:100%;
+				height:100%;
+				.ant-btn{
+					position: absolute;
+					right:10px;
+					top:10px;
+				}
+			}
+	    }
+	}
+}
 .wenming-reportadd-imgs{
 	position: relative;
 	.wenming-reportadd-delimgs{
