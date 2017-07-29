@@ -119,7 +119,7 @@ import IScroll from 'iscroll';
 
         var props = {
             title,
-            selectedIndex:2,
+            selectedIndex:3,
             mainRight:<div className='wenming-report-main-ui' style={{height:this.state.mainHeight}}>
                         <div className="wenming-report-header">
                             <Row>
@@ -168,7 +168,7 @@ import IScroll from 'iscroll';
         return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
     }
     goadd(){
-        window.location='#/wenmingreportadd/0'
+        window.location='#/wenmingreportadd/'
     }
 
     bindNewdata(){

@@ -90,11 +90,36 @@
     box-sizing: border-box; }
   .wenming-setting-main-ui .ant-radio-group {
     margin: 6px 0 0 0; }
-  .wenming-setting-main-ui .wenming-setting-datalist {
-    clear: both;
-    position: relative;
-    zoom: 1; }
+  .wenming-setting-main-ui .wenming-setting-classlist {
+    clear: both; }
+    .wenming-setting-main-ui .wenming-setting-classlist li {
+      padding: 0 60px 0 0;
+      position: relative;
+      margin: 3px 0;
+      zoom: 1; }
+      .wenming-setting-main-ui .wenming-setting-classlist li .wenming-setting-classact {
+        position: absolute;
+        right: 0;
+        top: 0; }
+      .wenming-setting-main-ui .wenming-setting-classlist li .ant-btn:not(.ant-btn-circle):not(.ant-btn-circle-outline).ant-btn-icon-only {
+        padding: 0; }
+      .wenming-setting-main-ui .wenming-setting-classlist li button {
+        background: none;
+        border: none;
+        padding: 0;
+        width: auto;
+        height: auto;
+        margin: 0 5px; }
   .wenming-setting-main-ui .hr15 {
     width: 100%; }
+  .wenming-setting-main-ui .wenming-setting-textleft {
+    text-align: left; }
+  .wenming-setting-main-ui .wenming-setting-textright {
+    text-align: right; }
+  .wenming-setting-main-ui .wenming-setting-table {
+    margin: 0 20px; }
+    .wenming-setting-main-ui .wenming-setting-table td {
+      padding: 8px 5px;
+      vertical-align: top; }
 
 /*# sourceMappingURL=setting.css.map */
