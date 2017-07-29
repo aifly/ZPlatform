@@ -356,6 +356,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
                             content:data.detial.content,                        
                             imageslist:data.detial.imageslist,
                             source:data.detial.source,
+                            ishost:data.detial.ishost,
                             articleid:articlid,
                         })
                         if(data.detial.imageslist!=''){

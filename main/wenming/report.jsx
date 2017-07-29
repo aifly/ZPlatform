@@ -168,7 +168,7 @@ import IScroll from 'iscroll';
         return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
     }
     goadd(){
-        window.location='#/wenmingreportadd/0'
+        window.location='#/wenmingreportadd/'
     }
 
     bindNewdata(){

@@ -1,6 +1,6 @@
 import './static/css/setting.css';
 import React from 'react';
-import {message,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio} from '../commoncomponent/common.jsx';
+import {Switch,message,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
@@ -21,6 +21,8 @@ import IScroll from 'iscroll';
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
            appid:window.WENMING.XCXAPPID,
+           datacheck:true,//数据审核
+           messagecheck:true,//评论审核
         }
     }
 
@@ -61,6 +63,7 @@ import IScroll from 'iscroll';
 
 
         resizeMainHeight(this);
+        this.bindtreedata();
        
     }
 
@@ -117,7 +120,31 @@ import IScroll from 'iscroll';
                                     <tr>
                                         <td>数据审核</td>
                                         <td></td>
+                                        <td>
+                                            <div>
+                                            <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.datacheck.bind(this)} defaultChecked={this.state.datacheck} />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>评论审核</td>
                                         <td></td>
+                                        <td>
+                                            <div>
+                                            <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.messagecheck.bind(this)} defaultChecked={this.state.messagecheck} />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>栏目设置</td>
+                                        <td></td>
+                                        <td>
+                                            <div>
+                                                <ul>
+                                                    <li></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -134,7 +161,39 @@ import IScroll from 'iscroll';
         
         
     }
-
+    //数据审核
+    datacheck(checked){
+        
+        console.log(checked,'datacheck');
+    }
+    //评论审核
+    messagecheck(checked){
+        
+        console.log(checked,'messagecheck');
+    }
+    //栏目
+    bindtreedata(){
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/search_articleclass',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:s.state.appid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    console.log(data.list,'mytree');
+                    data.list.map((item,i)=>{
+                        return console.log(item.classname,'classname');
+                    })
+                    s.forceUpdate();
+                }
+            }
+        })
+ 
+    }
     
 
 
