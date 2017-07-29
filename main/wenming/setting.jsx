@@ -24,8 +24,9 @@ import IScroll from 'iscroll';
            mainHeight:document.documentElement.clientHeight-50,
            appid:window.WENMING.XCXAPPID,
            modpostDialogVisible:false,
-           datacheck:true,//数据审核
+           datacheck:false,//数据审核
            messagecheck:true,//评论审核
+           settinglist:[],
            classlist:[],
            classname:'',
            classename:'',
@@ -70,10 +71,9 @@ import IScroll from 'iscroll';
             loginOut();
         },this);
 
-
         resizeMainHeight(this);
         this.bindtreedata();
-       
+        this.getsetting();       
     }
 
     render(){
@@ -115,7 +115,7 @@ import IScroll from 'iscroll';
                                         <td></td>
                                         <td>
                                             <div>
-                                            <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.datacheck.bind(this)} defaultChecked={this.state.datacheck} />
+                                            <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.datacheck.bind(this)} checked={this.state.datacheck} />
                                             </div>
                                         </td>
                                     </tr>
@@ -124,7 +124,7 @@ import IScroll from 'iscroll';
                                         <td></td>
                                         <td>
                                             <div>
-                                            <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.messagecheck.bind(this)} defaultChecked={this.state.messagecheck} />
+                                            <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.messagecheck.bind(this)} checked={this.state.messagecheck} />
                                             </div>
                                         </td>
                                     </tr>
@@ -208,16 +208,7 @@ import IScroll from 'iscroll';
         
         
     }
-    //数据审核
-    datacheck(checked){
-        
-        console.log(checked,'datacheck');
-    }
-    //评论审核
-    messagecheck(checked){
-        
-        console.log(checked,'messagecheck');
-    }
+    
     //栏目
     bindtreedata(){
         var s = this;
@@ -231,7 +222,7 @@ import IScroll from 'iscroll';
             },
             success(data){
                 if(data.getret === 0){
-                    console.log(data.list,'mytree');
+                    //console.log(data.list,'mytree');
                     s.state.classlist=data.list;                    
                     s.forceUpdate();
                 }
@@ -331,6 +322,119 @@ import IScroll from 'iscroll';
             modpostDialogVisible:true,
         })
         s.forceUpdate();
+    }
+    //获取配置
+    getsetting(){
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/get_xcxconfilist',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:s.state.appid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    console.log(data,'setting');
+                    s.state.settinglist=data.list; 
+                    data.list.map((item,i)=>{
+
+                        switch(item.configid){
+                            case 'baffc85a':
+                                if(item.switch==0){
+                                    s.state.datacheck=false;
+                                }else{
+                                    s.state.datacheck=true;
+                                    
+                                    s.forceUpdate();
+                                }
+                            break;
+                            case 'baffb7f4':
+                                if(item.switch==0){
+                                    s.state.messagecheck=false;
+                                }else{
+                                    s.state.messagecheck=true;
+                                    
+                                    s.forceUpdate();
+                                }
+                            break;
+
+                        }
+                    })                  
+                    
+                }          
+                          
+            }
+        }) 
+    }
+    //开关
+    openCheck(checked){
+       console.log(checked,'datacheck'); 
+    }
+    //数据审核
+    datacheck(checked){ 
+        var s = this;      
+        //console.log(checked,'datacheck');
+        var configid='baffc85a';
+        var value='';
+        if(checked==true){
+            value=1;
+        }else{
+            value=0;
+        }
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/edit_xcxconfig/',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:s.state.appid,
+                configid:configid,
+                switch:value,
+            },
+            success(data){
+                message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                //console.log(value,checked,'value');
+                s.state.datacheck=checked;
+                s.getsetting();            
+                s.forceUpdate();          
+            }
+        }) 
+    }
+    //评论审核
+    messagecheck(checked){
+        var s = this; 
+        var configid='baffb7f4';
+        console.log(checked,'messagecheck');
+        var value='';
+        if(checked==true){
+            value=1;
+        }else{
+            value=0;
+        }
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/edit_xcxconfig/',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:s.state.appid,
+                configid:configid,
+                switch:value,
+            },
+            success(data){
+                message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                //console.log(value,checked,'value');
+                s.state.messagecheck=checked;
+                s.getsetting();            
+                s.forceUpdate();          
+            }
+        }) 
+    }
+    //修改配置
+    editsetting(){
+
     }
 
     
