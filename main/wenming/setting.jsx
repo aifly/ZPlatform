@@ -43,16 +43,7 @@ import IScroll from 'iscroll';
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
             },this);
 
-        var visit = false;
-        window.WENMING.VISITUSERS.forEach((item,i)=>{
-            if(item === username){
-                visit = true;
-                return;
-            }
-        });
-        if(!visit){
-            loginOut('您没有访问的权限',window.mainUrl,true);//不是hash跳转。location.href跳转
-        }
+        
         this.loginOut = loginOut;
         this.listen = listen;
         this.send = send;
