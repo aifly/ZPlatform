@@ -12,6 +12,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 import MainUI from '../components/Main.jsx';
 import IScroll from 'iscroll';
+import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import ZmitiEditor from '../components/zmiti-editor.jsx';
 class ZmitiWenmingAboutApp extends React.Component{
     constructor(args){
@@ -20,7 +21,9 @@ class ZmitiWenmingAboutApp extends React.Component{
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
            appid:window.WENMING.XCXAPPID,
-           pageid:'',
+           imgshow:'none',
+           pageid:'gywm',
+           imageurl:'',
            content:'钟宜龙带领民兵剿匪，为了逼土匪现身，他和战士们用了火攻，没想到一场大火',
         } 
         
@@ -69,8 +72,17 @@ class ZmitiWenmingAboutApp extends React.Component{
 
     render(){
 
-
+        var s =this;
         var title = '身边文明事';
+        const userProps ={
+            documentbaseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+                s.state.userData.credentials.push({src:imgData.src});
+                s.forceUpdate();
+            }
+        }
         let editorProps ={
             onChange(editor){
                 s.setState({
@@ -84,6 +96,13 @@ class ZmitiWenmingAboutApp extends React.Component{
             showPreview:false,
         }
         var props = {
+            userid:s.userid,
+            getusersigid: s.getusersigid,
+            onFinish(imgData){
+                s.state.imageurl = imgData.src;
+                s.state.imgshow='block';
+                s.forceUpdate();
+            },
             title,
             selectedIndex:5,
             mainRight:<div className='wenming-report-main-ui' style={{height:this.state.mainHeight}}>
@@ -103,13 +122,25 @@ class ZmitiWenmingAboutApp extends React.Component{
                         <div className='hr15'></div>
                         <div className='wenming-about-datalist'>
                             <ZmitiEditor {...editorProps} ></ZmitiEditor>
+                            <div className="hr10"></div>
+                            <Button onClick={this.changePortrait.bind(this)}>选择图片</Button>                                    
+                                        
+                            <div className='wenming-reportadd-imgs' style={{display:this.state.imgshow}}>
+                                <img src={this.state.imageurl}/>
+                                <div className='wenming-reportadd-delimgs'>
+                                    <Button shape="circle" icon="delete" onClick={this.delpic.bind(this)} />
+                                </div>
+                            </div>
                             <div className="hr15"></div>
                             <Button type='primary' onClick={this.editData.bind(this)}>保存</Button>
+                            <div className="hr15"></div>
                         </div>
 
             </div>
         }
         var mainComponent = <div>
+            {!this.state.showCredentialsDiolog && <ZmitiUploadDialog id="personAcc" {...props}></ZmitiUploadDialog>}
+        
             <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>
             
         </div>;
@@ -124,9 +155,9 @@ class ZmitiWenmingAboutApp extends React.Component{
 
     bindNewdata(){
         var s = this;
-        /*$.ajax({
+        $.ajax({
             type:'POST',
-            url:window.baseUrl + 'weixinxcx/search_articlelist/',
+            url:window.baseUrl + 'weixinxcx/get_signpage/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -134,16 +165,62 @@ class ZmitiWenmingAboutApp extends React.Component{
                 pageid:s.state.pageid,
             },
             success(data){                    
-                
-                console.log(data.list,'data.result');
-                s.forceUpdate();
+                if(data.getret === 0){
+                    console.log(data.result,'data.result');
+                    s.setState({
+                        content:data.result.content,
+                        imageurl:data.result.imageurl,
+                        imgshow:'block',
+                    })
+                    s.forceUpdate();
+                }
                 
             }
-        });*/
+        });
     }
     //编辑
-    editData(articlid){
+    editData(pageid){
         var s = this;
+        pageid=s.state.pageid;
+        $.ajax({
+            type:'POST',
+            url:window.baseUrl + 'weixinxcx/edit_singpage/',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:s.state.appid,
+                pageid:s.state.pageid,
+                imageurl:s.state.imageurl,
+                content:s.state.content,
+            },
+            success(data){
+                //console.log(data,'data.result');
+                message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                s.bindNewdata();
+                s.forceUpdate();           
+            }
+        });
+        
+    }
+    //删除图片
+    delpic(){
+        var s = this;
+        s.state.imageurl='';
+        s.state.imgshow='none';
+        s.forceUpdate();
+    }
+    //更换图片
+    changePortrait(){
+
+        var obserable=window.obserable;
+        this.setState({
+          showCredentialsDiolog:false
+        },()=>{
+          obserable.trigger({
+              type:'showModal',
+              data:{type:0,id:'personAcc'}
+          })  
+        })
         
     }
 }
