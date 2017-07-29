@@ -68,7 +68,25 @@ import IScroll from 'iscroll';
 
 
         var title = '身边文明事';
-
+        const columns = [{
+          title: 'Address',
+          dataIndex: 'address',
+          key: 'address',
+        }, {
+          title: 'Action',
+          key: 'action',
+          render: (text, record) => (
+            <span>
+              <a href="#">Action 一 {record.name}</a>
+              <span className="ant-divider" />
+              <a href="#">Delete</a>
+              <span className="ant-divider" />
+              <a href="#" className="ant-dropdown-link">
+                More actions <Icon type="down" />
+              </a>
+            </span>
+          ),
+        }];
         var props = {
             title,
             selectedIndex:4,
@@ -86,6 +104,24 @@ import IScroll from 'iscroll';
                             <div className="clearfix"></div>                 
                         </div>
                         <div className="wenming-setting-line"></div>
+                        <div>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>名称</th>
+                                        <th></th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>数据审核</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
         }
         var mainComponent = <div>

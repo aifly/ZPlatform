@@ -286,7 +286,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
             appid:s.state.appid,
             content:s.state.content,    
             title:s.state.title,
-            //wxopenid:s.state.wxopenid,
+            wxopenid:s.state.wxopenid,
             imageslist:s.state.imageslist,
             source:s.state.source,
             type:s.state.type,
