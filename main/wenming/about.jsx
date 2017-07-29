@@ -191,7 +191,7 @@ class ZmitiWenmingAboutApp extends React.Component{
                 appid:s.state.appid,
                 pageid:s.state.pageid,
                 imageurl:s.state.imageurl,
-                content:s.state.content,
+                content:s.delHtmlTag(s.state.content),
             },
             success(data){
                 //console.log(data,'data.result');
@@ -220,9 +220,13 @@ class ZmitiWenmingAboutApp extends React.Component{
               type:'showModal',
               data:{type:0,id:'personAcc'}
           })  
-        })
-        
+        })        
     }
+    //过滤
+    delHtmlTag(str) {
+        return str.replace(/<[^>]+>/g, "");//去掉所有的html标记
+    }
+
 }
 
 export default ZmitiValidateUser(ZmitiWenmingAboutApp);
