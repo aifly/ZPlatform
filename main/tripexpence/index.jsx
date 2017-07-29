@@ -1099,6 +1099,20 @@ class ZmitiTripexpenceApp extends Component {
         this.getusersigid = getusersigid;
         this.randomString = randomString;
 
+        var visit = false;
+        window.MENUCONFIG.map((item,i)=>{
+            if(item.key === 'tripexpence'){
+                item.VISITUSERS.forEach((vis)=>{
+                    if(vis === username){
+                        visit = true;
+                    }
+                })
+            }
+        });
+        if(!visit){
+            loginOut('您没有访问的权限',window.mainUrl,true);//不是hash跳转。location.href跳转
+        }
+
         
     }
 

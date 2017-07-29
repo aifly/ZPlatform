@@ -170,6 +170,24 @@ class MainUI extends React.Component {
         ]
 
         var configMenus =window.globalMenus;
+
+        
+        window.MENUCONFIG.map((item,i)=>{
+            configMenus.forEach((menu,k)=>{
+                if(item.key === menu.key){
+                    var exists = false;            
+                    item.VISITUSERS.forEach((vis,h)=>{
+                        if(vis === this.username){
+                            exists = true;
+                        }
+                    });
+                    if(!exists){
+                        configMenus.splice(k,1);
+                    }
+                }
+            })
+        });
+
         var headerProps = {
             usertypesign:this.state.usertypesign,
             currentAcc:this.state.username,

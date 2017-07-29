@@ -55,6 +55,8 @@ import ZmitiWenmingReportaddApp from './wenming/reportadd.jsx';
 
 import ZmitiWenmingCommentCheckApp from './wenming/commentcheck.jsx'
 
+import ZmitiWenmingCommentDetailApp from './wenming/commentdetail.jsx'
+
 
 import {notification } from './commoncomponent/common.jsx';
 import $ from 'jquery';
@@ -116,6 +118,7 @@ class App extends React.Component{
 				{path: '/wenmingsetting',app:ZmitiWenmingSettingApp},
 				{path: '/wenmingadd',app:ZmitiWenmingAddApp},
 				{path: '/wenmingcommentcheck',app:ZmitiWenmingCommentCheckApp},
+				{path: '/commentdetail/:id',app:ZmitiWenmingCommentDetailApp},
 				
 		];
 		return (

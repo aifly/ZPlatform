@@ -135,6 +135,8 @@
       height: 1px;
       z-index: 0;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) inset; }
+    .wenming-datacheck-main-ui .wenming-datacheck-bar.wenming-detail-bar:after {
+      display: none; }
     .wenming-datacheck-main-ui .wenming-datacheck-bar > div {
       -webkit-box-flex: 1;
           -ms-flex: 1;
@@ -215,6 +217,9 @@
           top: 0;
           -webkit-transform: translate3d(-35px, -15px, 0) rotate(-45deg);
           transform: translate3d(-35px, -15px, 0) rotate(-45deg); }
+      .wenming-datacheck-main-ui .wenming-datacheck-list ul > li:last-of-type {
+        background: transparent;
+        border: none; }
       .wenming-datacheck-main-ui .wenming-datacheck-list ul > li.unpass {
         border-color: #f4654c; }
         .wenming-datacheck-main-ui .wenming-datacheck-list ul > li.unpass:before {
@@ -225,9 +230,6 @@
         transition: 0.5s opacity;
         opacity: 0;
         overflow: hidden; }
-      .wenming-datacheck-main-ui .wenming-datacheck-list ul > li:last-of-type {
-        background: transparent;
-        border: none; }
       .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside:nth-of-type(1) {
         width: 70px;
         text-align: center;
@@ -303,6 +305,11 @@
                 width: 100%;
                 height: 100%;
                 font-size: 100px; }
+              .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content ol li:last-of-type span {
+                text-decoration: underline;
+                color: #007aff;
+                cursor: pointer;
+                font-size: 20px; }
           .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content .wenming-datacheck-operator {
             display: -webkit-box;
             display: -ms-flexbox;

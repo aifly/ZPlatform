@@ -59,16 +59,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
             },this);
 
-        var visit = false;
-        window.WENMING.VISITUSERS.forEach((item,i)=>{
-            if(item === username){
-                visit = true;
-                return;
-            }
-        });
-        if(!visit){
-            loginOut('您没有访问的权限',window.mainUrl,true);//不是hash跳转。location.href跳转
-        }
+       
         this.loginOut = loginOut;
         this.listen = listen;
         this.send = send;
@@ -225,6 +216,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                          {!item.showAll?'展开全文 ':'收起'}
                                          <Icon type={!item.showAll?"down":'up'} />
                                          </a>:""
+
                                   //item.content.length > len &&  console.log(item.content,item.defaultContent);
                                     return <li key={i} className={className}>
                                         <aside>
@@ -250,7 +242,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                                 <section className='wenming-datacheck-operator'>
                                                     <div>
                                                         {item.videos && item.videos.length>0 && <div><Icon type="video-camera" /> 查看视频</div>}
-                                                        {item.status === 1 && <div><Icon type="message" /> 查看评论 ({item.comments}条)</div>}
+                                                        {item.status === 1 && false && <div><a href={'#/commentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
                                                         {this.state.status === 0 &&  <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐</Checkbox></div>}
                                                         {this.state.status === 1 && item.status !==2  && <div><Checkbox onChange={this.recommentArticle.bind(this,item)} checked={item.isHost} >推荐</Checkbox></div>}
                                                         {item.status*1 === 0 && <div onClick={this.checkedArticle.bind(this,item,'pass',i)}>
@@ -272,7 +264,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                         </aside>
                                     </li>;
                                 })}
-                                <li style={{height:40}}></li>
+                                <li style={{height:40,  background: 'transparent',border:'none'}}></li>
                             </ul>
                         </section>
                         <section className='wenming-pagination' style={{height:40}}>
@@ -624,6 +616,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                     })
                     this.state.dataSource.splice(index,1)
                     this.state.currentDeleteIndex = -1;
+                    this.state.allCount = this.state.allCount -1;
                     this.forceUpdate(()=>{
                         this.scroll.refresh();
                     });

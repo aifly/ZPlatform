@@ -51,6 +51,10 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         }
     }
 
+    componentWillUnmount(){
+        this.unload = true;
+    }
+
     componentWillMount() {
 
         let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail,listen,send} = this.props;
@@ -58,16 +62,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
             },this);
 
-        var visit = false;
-        window.WENMING.VISITUSERS.forEach((item,i)=>{
-            if(item === username){
-                visit = true;
-                return;
-            }
-        });
-        if(!visit){
-            loginOut('您没有访问的权限',window.mainUrl,true);//不是hash跳转。location.href跳转
-        }
+       
         this.loginOut = loginOut;
         this.listen = listen;
         this.send = send;
@@ -79,6 +74,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         this.resizeMainHeight = resizeMainHeight;
     }
     componentDidMount(){
+       this.unload = false;
        this.resizeMainHeight(this);
        let  {validateUser,loginOut,resizeMainHeight} = this.props;
         var iNow = 0 ;
@@ -170,6 +166,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
                     s.state.monthPV = s.state.monthPV + 1 ;
                     s.state.dayPV = s.state.dayPV +1;
+                    s.forceUpdate();
                     s.formatPV(s.defaultCount);
 
 
@@ -230,14 +227,17 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
     }
 
     socket(){
+
+        
         var socket = io('http://socket.zmiti.com:2120');
         var worksid =   this.worksid;
         
         var s = this;
         socket.on(worksid, function(msg){
-            if(!msg){
+            if(!msg||s.unload){
                 return;
             }
+
             msg = msg.replace(/&quot;/g,"\"");
 
             var data = JSON.parse(msg);

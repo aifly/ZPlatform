@@ -15,7 +15,7 @@ import MainUI from '../components/Main.jsx';
 
 import IScroll from 'iscroll';
 var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
- class ZmitiWenmingDataCheckApp extends React.Component{
+ class ZmitiWenmingCommentDetailApp extends React.Component{
     constructor(args){
         super(...args);
 
@@ -32,15 +32,13 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
            currentDeleteIndex:-1,
 
-           currentDeleteCommentIndex:-1,
-
            tab:'all',
 
            currentWhere:{},
 
            status:0,
 
-           pageSize:10,
+           pageSize:1,
 
            voidurl:'',
 
@@ -121,11 +119,9 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
         var showBatchbars = false;
         this.state.dataSource.map((item,i)=>{
-            item.comments.map((com,k)=>{
-                if(com.checked){
-                     showBatchbars = true;
-                }
-            })
+            if(item.checked){
+                showBatchbars = true;
+            }
         });
         var menu = (
              <Menu>
@@ -148,42 +144,16 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         ];
         var props = {
             title,
-            selectedIndex:2,
+            selectedIndex:67,
             mainRight:<div className='wenming-datacheck-main-ui' style={{height:this.state.mainHeight}}>
                         <header className='wenming-datacheck-header'>
-                            <div>评论审核-{title}</div>   
-                            <div><Switch onChange={this.getCheckedData.bind(this)} checkedChildren="已审" unCheckedChildren="未审" /></div>
+                            <div>数据审核-{title}</div>   
+                            <div></div>
                             <div><a href='#/wenmingadd'><Icon type="upload"/>上报数据</a></div>   
                         </header>
-                        <section className='wenming-datacheck-bar'>
-                            <div>
-                                <Checkbox onChange={this.selectAll.bind(this)} checked={this.state.selectAll}>全选</Checkbox>
-                                
-                               {showBatchbars && <Popconfirm onConfirm={this.batchDelete.bind(this)} placement="top" title="删除后数据将无法恢复，确定要删除吗？" okText="确定" cancelText="取消">
-                                                                   <div className='wenming-del'><Icon type='delete'/>批量删除</div>
-                                                               </Popconfirm>}
-                                {showBatchbars && this.state.status === 0 && <div onClick={this.batchChecked.bind(this,'pass')} className='wenming-datacheck-batchcheck'><Icon type="check-circle" />批量审核通过</div>}
-                                {showBatchbars && this.state.status === 0 && <div onClick={this.batchChecked.bind(this,'unpass')} className='wenming-datacheck-unpass'><Icon type="close-circle" />拒绝通过审核</div>}
-                                <div>
-                                   {/*  <Dropdown overlay={menu}>
-                                        <a className="ant-dropdown-link" href="javascript:">
-                                          {this.state.classname} <Icon style={{color:'#108ee9'}}  type="down" />
-                                        </a>
-                                      </Dropdown>*/}
-                                </div>
-                                {this.state.status === 1 && <div style={{marginLeft:30}}>
-                                   { <RadioGroup options={plainOptions} onChange={this.loadCommentByClass.bind(this)} value={this.state.tab }>
-                                       {plainOptions.map((item,i)=>{
-                                           return <Radio key={i} value={item.value}>{item.label}</Radio>
-                                       })}
-                                   </RadioGroup>}
-                                </div>}
-                            </div>
-                            <div>
-                                <Row type='flex'>
-                                    <Col span={20}><Input value={this.state.keyword} onChange={e=>{this.setState({keyword:e.target.value})}} type='text' /></Col>
-                                    <Col span={4}><Button type='primary'><Icon type='search'/></Button></Col>
-                                </Row>
+                        <section className='wenming-datacheck-bar wenming-detail-bar'>
+                            <div className=''>
+                                <span>数据审核 > 查看评论</span>
                             </div>
                         </section>
                         <section className='wenming-datacheck-list' ref='wenming-datacheck-list'>
@@ -203,7 +173,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                                 }
                                                 
                                             }
-                                            if(this.state.currentDeleteIndex===i && this.state.currentDeleteCommentIndex === k){
+                                            if(this.state.currentDeleteIndex===i){
                                                 className+= ' wenming-datacheck-item-delete'
                                             }
                                             
@@ -245,7 +215,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                                  </a>:""
                                             return <li key={k} className={className}>
                                                     <aside>
-                                                        <Checkbox checked={item.checked} onChange={()=>{item.checked=!item.checked;this.state.selectAll = false;this.forceUpdate();}}></Checkbox>
+                                                        <Checkbox checked={datalist.checked} onChange={()=>{datalist.checked=!datalist.checked;this.state.selectAll = false;this.forceUpdate();}}></Checkbox>
                                                     </aside>
                                                     <aside className='wenming-datacheck-item-C'>
                                                         <section className='wenming-datacheck-item-head'>
@@ -469,14 +439,14 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
     viewNext(){
         this.setState({
             currentPicIndex:this.state.currentPicIndex+1,
-            currentViewPic:this.state.dataSource[this.currentRow].imageslist[this.state.currentPicIndex+1]
+            currentViewPic:this.state.dataSource[this.currentRow].imgs[this.state.currentPicIndex+1]
         })
     }
 
     viewPrev(){
         this.setState({
             currentPicIndex:this.state.currentPicIndex-1,
-            currentViewPic:this.state.dataSource[this.currentRow].imageslist[this.state.currentPicIndex-1]
+            currentViewPic:this.state.dataSource[this.currentRow].imgs[this.state.currentPicIndex-1]
         })
     }
 
@@ -498,12 +468,9 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
     viewPic(i,k){
         this.currentRow = i;
-        if(this.state.dataSource[i]){
-            this.setState({
-                currentViewPic:this.state.dataSource[i].comments[k].commentimg
-            })    
-        }
-        
+        this.setState({
+            currentViewPic:this.state.dataSource[i].comments[k].commentimg
+        })
     }
 
 
@@ -511,20 +478,17 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         var arr = [];
 
         this.state.dataSource.map((item,i)=>{
-            item.comments.map((com,k)=>{
-                if(com.checked){
-                    arr.push(com.commentid);
-                    this.delete(i,k,com.commentid);
-                }
-            });
-            
+            if(item.checked){
+                arr.push(item.id);
+
+            }
         });
         
         if(arr.length<=0){
             message.error('请选择您要删除的文章~~');
             return;
         }
-        
+        this.delete(-1,arr.join(','));
 
 
     }
@@ -533,8 +497,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
         //
 
-        this.state.currentDeleteIndex = index;
-        this.state.currentDeleteCommentIndex = k;
+        this.state.currentDeleteIndex = k;
         this.forceUpdate(()=>{
            
         });
@@ -553,15 +516,33 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 data = JSON.parse(data);
             }
             if( data.getret === 0 ){
-                 setTimeout(()=>{
-                    this.state.dataSource[index].comments.splice(k,1);
-                    this.state.currentDeleteIndex = -1;
-                    this.state.currentDeleteCommentIndex = -1;
-                    this.state.allCount = this.state.allCount -1;
-                    this.forceUpdate(()=>{
-                        this.scroll.refresh();
-                    });
-                },500)
+                if(index>-1){
+                    setTimeout(()=>{
+                        this.state.dataSource[k].comments.splice(index,1);
+                        this.state.currentDeleteIndex = -1;
+                        this.state.allCount = this.state.allCount -1;
+                        this.forceUpdate(()=>{
+                            this.scroll.refresh();
+                        });
+                    },500)
+
+                }else{
+                     setTimeout(()=>{
+                         articleids.split(",").map((id,i)=>{
+                            this.state.dataSource.map((d,k)=>{
+                                if(d.id === id){
+                                    this.state.dataSource.splice(k,1);
+                                }
+                            })
+                        });
+
+                        this.state.allCount = this.state.allCount - articleids.split(",").length;
+                        this.forceUpdate(()=>{
+                            this.scroll.refresh();
+                        });
+                    },500)
+                   
+                }
             }
         })
 
@@ -582,16 +563,12 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         var arr = [];
 
         this.state.dataSource.map((item,i)=>{
-            item.comments.map((com,k)=>{
-                if(com.checked){
-                    arr.push(com.commentid);
-                   this.checkedComment(com,type,i,k);
-                }
-            })
-            
+            if(item.checked){
+                arr.push(item.id);
+                this.checkedComment(item,type,i); 
+            }
         });
-       
-
+        message.success('操作成功~~');
         if(arr.length<=0){
             message.error('请选择您要审核的文章~~');
             return;
@@ -601,9 +578,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
     checkedComment(item,type,index,k){
 
-       
         this.state.currentDeleteIndex = index;
-        this.state.currentDeleteCommentIndex = k;
         this.forceUpdate();
         var status = 1;
         switch(type){
@@ -629,18 +604,23 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             if(typeof data === 'string'){
                 data = JSON.parse(data);
             }
-
             if(data.getret === 0 ){
-                message.success('审核成功');
+
+               if(index>-1){
+                 message.success('审核成功');
                  setTimeout(()=>{
-                    this.state.dataSource[index].comments.splice(k,1);
+                    if(k){
+                        this.state.dataSource[k].comments.splice(index,1);
+                    }
                     this.state.currentDeleteIndex = -1;
-                    this.state.currentDeleteCommentIndex = -1;
                     this.state.allCount = this.state.allCount -1;
                     this.forceUpdate(()=>{
                         this.scroll.refresh();
                     });
                 },500)
+             }else{
+                 
+             }
             }
         })
 
@@ -650,9 +630,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
     selectAll(){
         this.state.dataSource.forEach((item,i)=>{
-            item.comments.forEach((com,k)=>{
-                com.checked = !this.state.selectAll;
-            })
+            item.checked = !this.state.selectAll;
         })
         this.setState({
             selectAll:!this.state.selectAll
@@ -688,9 +666,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 pagenum:this.state.pageSize
             }
             if(this.state.currentWhere.type){
-                if(this.state.status === 1){
-                    data[this.state.currentWhere.type] = this.state.currentWhere.value;
-                }
+                
+                data[this.state.currentWhere.type] = this.state.currentWhere.value;
                 if(this.state.currentWhere.type !== 'status'){
                   data.status = 1;    
                 }
@@ -702,6 +679,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             if(this.state.classid){
                 //data.classid = this.state.classid;
             }
+            console.log(data);
              $.ajax({
                 type:'post',
                 url:window.baseUrl+'weixinxcx/get_articlecomment/',
@@ -724,6 +702,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                             com.defaultCommenttxt = com.commenttxt;
                         })
                     });
+                    console.log(data)
                     this.state.dataSource = data.list;
 
                     this.state.allCount = data.countRow.countrows
@@ -789,4 +768,4 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
   
 }
 
-export default ZmitiValidateUser(ZmitiWenmingDataCheckApp);
+export default ZmitiValidateUser(ZmitiWenmingCommentDetailApp);
