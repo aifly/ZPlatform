@@ -106,18 +106,12 @@ import IScroll from 'iscroll';
                             <div className="clearfix"></div>                 
                         </div>
                         <div className="wenming-setting-line"></div>
-                        <div>
+                        <div className='hr10'></div>
+                        <div className='wenming-setting-table'>
                             <table>
-                                <thead>
-                                    <tr>
-                                        <th>名称</th>
-                                        <th></th>
-                                        <th>操作</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                     <tr>
-                                        <td>数据审核</td>
+                                        <td width={80}>数据审核：</td>
                                         <td></td>
                                         <td>
                                             <div>
@@ -126,7 +120,7 @@ import IScroll from 'iscroll';
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>评论审核</td>
+                                        <td>评论审核：</td>
                                         <td></td>
                                         <td>
                                             <div>
@@ -135,7 +129,7 @@ import IScroll from 'iscroll';
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>栏目设置</td>
+                                        <td>栏目设置：</td>
                                         <td></td>
                                         <td>
                                             <div className='wenming-setting-classlist'>                                                
@@ -260,38 +254,6 @@ import IScroll from 'iscroll';
         
         if(this.currentId!==-1){//edit
             params.classid=this.currentId;
-            //console.log(this.currentId,'edit-classid');
-            /*
-            $.ajax({
-                url:window.baseUrl+'weixinxcx/search_articleclass',
-                type:'POST',
-                data:{
-                    userid:s.userid,
-                    getusersigid:s.getusersigid,
-                    appid:s.state.appid,
-                },
-                success(data){
-                    if(data.getret === 0){
-                        console.log(data,'data-data');
-                        data.list.map((item,i)=>{
-                            if(item.classid==params.classid){
-                                console.log(item.classname,'classname');
-                                s.setState({
-                                    //classid:item.classid,
-                                    classname:item.classname,
-                                    classename:item.classename,
-                                    parentclassid:item.parentclassid,
-                                    gettype:item.gettype,
-                                })
-                                s.forceUpdate();
-                            }
-                            
-                        })
-                    }
-                }
-            })
-            */
-
             $.ajax({
                 url:window.baseUrl+'weixinxcx/edit_articleclass/',
                 type:'POST',
@@ -346,21 +308,16 @@ import IScroll from 'iscroll';
     editype(classid){
         var s=this;
         this.currentId=classid;
-        this.setState({
-            modpostDialogVisible:true,
-        })
-        //console.log(classid,'edit-classid');
         this.state.classlist.map((item,i)=>{
             if(item.classid==classid){
                 console.log(item.classname,'classname');
                 s.setState({
-                    //classid:item.classid,
                     classname:item.classname,
                     classename:item.classename,
                     parentclassid:item.parentclassid,
                     gettype:item.gettype,
-                })
-               
+                    modpostDialogVisible:true,
+                })               
             }
             
         })

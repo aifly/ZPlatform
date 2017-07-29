@@ -93,8 +93,9 @@
   .wenming-setting-main-ui .wenming-setting-classlist {
     clear: both; }
     .wenming-setting-main-ui .wenming-setting-classlist li {
-      padding: 0 30px 0 0;
+      padding: 0 60px 0 0;
       position: relative;
+      margin: 3px 0;
       zoom: 1; }
       .wenming-setting-main-ui .wenming-setting-classlist li .wenming-setting-classact {
         position: absolute;
@@ -107,8 +108,17 @@
         border: none;
         padding: 0;
         width: auto;
-        height: auto; }
+        height: auto;
+        margin: 0 5px; }
   .wenming-setting-main-ui .hr15 {
     width: 100%; }
+  .wenming-setting-main-ui .wenming-setting-textleft {
+    text-align: left; }
+  .wenming-setting-main-ui .wenming-setting-table {
+    width: 600px;
+    margin: 0 auto; }
+    .wenming-setting-main-ui .wenming-setting-table td {
+      padding: 8px 5px;
+      vertical-align: top; }
 
 /*# sourceMappingURL=setting.css.map */
