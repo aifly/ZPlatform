@@ -185,7 +185,9 @@ const TextArea = Input;
                                 hasFeedback
                                 >                        
                                   
-                                  <ZmitiEditor {...editorProps} ></ZmitiEditor>                    
+                                  <textarea rows={5}
+                                    onChange={(e)=>{this.state.content=e.target.value;this.forceUpdate();}} value={this.state.content}
+                                  />                   
                                 </FormItem>
                                 <FormItem
                                 {...formItemLayout}
