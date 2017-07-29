@@ -179,7 +179,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                    </RadioGroup>}
                                 </div>}
                             </div>
-                            <div>
+                            <div hidden>
                                 <Row type='flex'>
                                     <Col span={20}><Input value={this.state.keyword} onChange={e=>{this.setState({keyword:e.target.value})}} type='text' /></Col>
                                     <Col span={4}><Button type='primary'><Icon type='search'/></Button></Col>
@@ -540,6 +540,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         });
 
         $.ajax({
+            async: false,
             type:'post',
             url:window.baseUrl+'weixinxcx/del_articlecomment/',
             data:{
@@ -553,15 +554,18 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 data = JSON.parse(data);
             }
             if( data.getret === 0 ){
-                 setTimeout(()=>{
-                    this.state.dataSource[index].comments.splice(k,1);
-                    this.state.currentDeleteIndex = -1;
-                    this.state.currentDeleteCommentIndex = -1;
-                    this.state.allCount = this.state.allCount -1;
-                    this.forceUpdate(()=>{
-                        this.scroll.refresh();
-                    });
-                },500)
+               this.state.dataSource[index].comments.splice(k,1);
+                this.state.currentDeleteIndex = -1;
+                this.state.dataSource.forEach((item,k)=>{
+                    item.comments.forEach((com,i)=>{
+                        item.checked = false;
+                    })
+                })
+                this.state.currentDeleteCommentIndex = -1;
+                this.state.allCount = this.state.allCount -1;
+                this.forceUpdate(()=>{
+                    this.scroll.refresh();
+                });
             }
         })
 
@@ -617,6 +621,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
         $.ajax({
             type:'post',
+            async: false,
             url:window.baseUrl+'weixinxcx/look_articlecomment/',
             data:{
                 appid:window.WENMING.XCXAPPID,
@@ -634,6 +639,11 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 message.success('审核成功');
                  setTimeout(()=>{
                     this.state.dataSource[index].comments.splice(k,1);
+                    this.state.dataSource.forEach((item,k)=>{
+                        item.comments.forEach((com,i)=>{
+                            item.checked = false;
+                        })
+                    })
                     this.state.currentDeleteIndex = -1;
                     this.state.currentDeleteCommentIndex = -1;
                     this.state.allCount = this.state.allCount -1;
