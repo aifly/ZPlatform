@@ -11,7 +11,9 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 import MainUI from '../components/Main.jsx';
 
-
+const FormItem = Form.Item;
+const RadioButton = Radio.Button;
+const RadioGroup = Radio.Group;
 import IScroll from 'iscroll';
 
  class ZmitiWenmingSettingApp extends React.Component{
@@ -21,9 +23,16 @@ import IScroll from 'iscroll';
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
            appid:window.WENMING.XCXAPPID,
+           modpostDialogVisible:false,
            datacheck:true,//数据审核
            messagecheck:true,//评论审核
+           classlist:[],
+           classname:'',
+           classename:'',
+           parentclassid:'',
+           gettype:'',
         }
+        this.currentId = -1;
     }
 
     componentWillMount() {
@@ -71,25 +80,15 @@ import IScroll from 'iscroll';
 
 
         var title = '身边文明事';
-        const columns = [{
-          title: 'Address',
-          dataIndex: 'address',
-          key: 'address',
-        }, {
-          title: 'Action',
-          key: 'action',
-          render: (text, record) => (
-            <span>
-              <a href="#">Action 一 {record.name}</a>
-              <span className="ant-divider" />
-              <a href="#">Delete</a>
-              <span className="ant-divider" />
-              <a href="#" className="ant-dropdown-link">
-                More actions <Icon type="down" />
-              </a>
-            </span>
-          ),
-        }];
+        const formItemLayout = {
+           labelCol: {span: 6},
+           wrapperCol: {span: 14},
+        };
+        const radioStyle = {
+          display: 'block',
+          height: '30px',
+          lineHeight: '30px',
+        };
         var props = {
             title,
             selectedIndex:4,
@@ -139,17 +138,71 @@ import IScroll from 'iscroll';
                                         <td>栏目设置</td>
                                         <td></td>
                                         <td>
-                                            <div>
+                                            <div className='wenming-setting-classlist'>                                                
                                                 <ul>
-                                                    <li></li>
+                                                    {this.state.classlist.map((item,i)=>{
+                                                        return <li>
+                                                                <div className='wenming-setting-classname'>{item.classname}</div>
+                                                                <div className='wenming-setting-classact'>
+                                                                    <Button icon="edit" />
+                                                                    <Button icon="close" onClick={this.deletetype.bind(this,item.classid)} />
+                                                                </div>
+                                                            </li>
+                                                    })}                                                   
                                                 </ul>
+                                                <div className='wenming-setting-classact'>
+                                                    <Button onClick={this.postform.bind(this)}><Icon type="folder-add" />增加</Button>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
+                        <Modal title="栏目设置" visible={this.state.modpostDialogVisible}
+                            onOk={this.addtype.bind(this)}
+                            onCancel={()=>{this.setState({modpostDialogVisible:false})}}
+                        >
+                            <Form>
+                              <FormItem
+                                {...formItemLayout}
+                                label="名称"
+                                hasFeedback
+                              >                        
+                                  
+                                  <Input placeholder="栏目名称" 
+                                    value={this.state.classname}
+                                    onChange={(e)=>{this.state.classname=e.target.value;this.forceUpdate();}}
+                                  />                      
+                              </FormItem>
+                              <FormItem
+                                {...formItemLayout}
+                                label="英文名称"
+                                hasFeedback
+                              >                        
+                                  
+                                  <Input placeholder="栏目英文名称" 
+                                    value={this.state.classename}
+                                    onChange={(e)=>{this.state.classename=e.target.value;this.forceUpdate();}}
+                                  />                      
+                              </FormItem>
+                              <FormItem
+                                {...formItemLayout}
+                                label="展示方式"
+                                hasFeedback
+                              >                        
+                                  
+                                <RadioGroup onChange={(e)=>{this.state.gettype=e.target.value;this.forceUpdate();}} value={this.state.gettype}>
+                                    <Radio  style={radioStyle} value={0}>只首页调用</Radio>
+                                    <Radio  style={radioStyle} value={1}>子页调用</Radio>
+                                    <Radio  style={radioStyle} value={2}>首页与子页都可调用</Radio>
+                                </RadioGroup>                     
+                              </FormItem>
+                            </Form>
+                      </Modal>
                     </div>
+                    
+                    
         }
         var mainComponent = <div>
             <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>
@@ -185,15 +238,65 @@ import IScroll from 'iscroll';
             success(data){
                 if(data.getret === 0){
                     console.log(data.list,'mytree');
-                    data.list.map((item,i)=>{
-                        return console.log(item.classname,'classname');
-                    })
+                    s.state.classlist=data.list;                    
                     s.forceUpdate();
                 }
             }
-        })
- 
+        }) 
     }
+    //添加栏目
+    addtype(){
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/add_articleclass/',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:s.state.appid,
+                classname:s.state.classname,
+                classename:s.state.classename,
+                gettype:s.state.gettype,
+            },
+            success(data){
+                message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                //console.log(data,'add-mytree');
+                s.setState({
+                    modpostDialogVisible:false,
+                })
+                s.bindtreedata();                
+                s.forceUpdate();                
+            }
+        }) 
+    }
+    //删除栏目
+    deletetype(classid){
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/del_articleclass/',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:s.state.appid,
+                classid:classid,
+            },
+            success(data){
+                message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                s.bindtreedata();                
+                s.forceUpdate();          
+            }
+        }) 
+    }
+    postform(){
+        var s=this;
+        this.currentId=-1;
+        this.setState({
+            modpostDialogVisible:true,
+        })
+        s.forceUpdate();
+    }
+
     
 
 
