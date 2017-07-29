@@ -144,7 +144,7 @@ import IScroll from 'iscroll';
                                                         return <li>
                                                                 <div className='wenming-setting-classname'>{item.classname}</div>
                                                                 <div className='wenming-setting-classact'>
-                                                                    <Button icon="edit" />
+                                                                    <Button icon="edit" onClick={this.editype.bind(this,item.classid)}/>
                                                                     <Button icon="close" onClick={this.deletetype.bind(this,item.classid)} />
                                                                 </div>
                                                             </li>
@@ -244,30 +244,83 @@ import IScroll from 'iscroll';
             }
         }) 
     }
-    //添加栏目
+    //栏目
     addtype(){
         var s = this;
-        $.ajax({
-            url:window.baseUrl+'weixinxcx/add_articleclass/',
-            type:'POST',
-            data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                appid:s.state.appid,
-                classname:s.state.classname,
-                classename:s.state.classename,
-                gettype:s.state.gettype,
-            },
-            success(data){
-                message[data.getret === 0 ? 'success':'error'](data.getmsg);
-                //console.log(data,'add-mytree');
-                s.setState({
-                    modpostDialogVisible:false,
-                })
-                s.bindtreedata();                
-                s.forceUpdate();                
-            }
-        }) 
+        //
+        var params={
+            userid:s.userid,
+            getusersigid:s.getusersigid,
+            appid:s.state.appid,
+            classname:s.state.classname,
+            classename:s.state.classename,
+            gettype:s.state.gettype,
+            parentclassid:s.state.parentclassid,
+        }
+        
+        if(this.currentId!==-1){//edit
+            params.classid=this.currentId;
+            //console.log(this.currentId,'edit-classid');
+            /*
+            $.ajax({
+                url:window.baseUrl+'weixinxcx/search_articleclass',
+                type:'POST',
+                data:{
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    appid:s.state.appid,
+                },
+                success(data){
+                    if(data.getret === 0){
+                        console.log(data,'data-data');
+                        data.list.map((item,i)=>{
+                            if(item.classid==params.classid){
+                                console.log(item.classname,'classname');
+                                s.setState({
+                                    //classid:item.classid,
+                                    classname:item.classname,
+                                    classename:item.classename,
+                                    parentclassid:item.parentclassid,
+                                    gettype:item.gettype,
+                                })
+                                s.forceUpdate();
+                            }
+                            
+                        })
+                    }
+                }
+            })
+            */
+
+            $.ajax({
+                url:window.baseUrl+'weixinxcx/edit_articleclass/',
+                type:'POST',
+                data:params,
+                success(data){
+                    message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                    s.setState({
+                        modpostDialogVisible:false,
+                    })
+                    s.bindtreedata();                
+                    s.forceUpdate();            
+                }
+            })
+        }else{
+            //add
+            $.ajax({
+                url:window.baseUrl+'weixinxcx/add_articleclass/',
+                type:'POST',
+                data:params,
+                success(data){
+                    message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                    s.setState({
+                        modpostDialogVisible:false,
+                    })
+                    s.bindtreedata();                
+                    s.forceUpdate();            
+                }
+            })
+        }
     }
     //删除栏目
     deletetype(classid){
@@ -288,6 +341,32 @@ import IScroll from 'iscroll';
             }
         }) 
     }
+    
+    //edit
+    editype(classid){
+        var s=this;
+        this.currentId=classid;
+        this.setState({
+            modpostDialogVisible:true,
+        })
+        //console.log(classid,'edit-classid');
+        this.state.classlist.map((item,i)=>{
+            if(item.classid==classid){
+                console.log(item.classname,'classname');
+                s.setState({
+                    //classid:item.classid,
+                    classname:item.classname,
+                    classename:item.classename,
+                    parentclassid:item.parentclassid,
+                    gettype:item.gettype,
+                })
+               
+            }
+            
+        })
+        s.forceUpdate();  
+    }
+    //dialog
     postform(){
         var s=this;
         this.currentId=-1;
