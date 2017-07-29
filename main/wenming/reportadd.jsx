@@ -177,7 +177,13 @@ class ZmitiWenmingReportaddApp extends React.Component{
                                 label="内容"
                                 hasFeedback
                                 >  
-                                  <ZmitiEditor {...editorProps} ></ZmitiEditor>                   
+                                  <table>
+                                    <tr>
+                                    <td>
+                                    <ZmitiEditor {...editorProps} ></ZmitiEditor>
+                                    </td>
+                                    </tr>
+                                  </table>               
                                 </FormItem>
                                 
 
@@ -337,24 +343,27 @@ class ZmitiWenmingReportaddApp extends React.Component{
         if(articlid!=0){
             $.ajax({
                 type:'POST',
-                url:window.baseUrl + 'weixinxcx/get_detialwmbb/',
+                url:window.baseUrl + 'weixinxcx/get_articledetial/',
                 data:{
-                   articlid:articlid 
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    appid:s.state.appid,
+                    articlid:articlid 
                 },
                 success(data){
                         s.setState({
-                            title:data.result.title,
-                            content:data.result.content,                        
-                            imageslist:data.result.imageUrl,
-                            source:data.result.source,
+                            title:data.detial.title,
+                            content:data.detial.content,                        
+                            imageslist:data.detial.imageslist,
+                            source:data.detial.source,
                             articleid:articlid,
                         })
-                        if(data.result.imageUrl!=''){
+                        if(data.detial.imageslist!=''){
                             s.setState({
                                imgshow:'block', 
                             })
                         }
-                        console.log(data.result,'data')
+                        //console.log(data.detial,'data');
                         s.forceUpdate();
                     
                 }

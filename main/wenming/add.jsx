@@ -233,6 +233,14 @@ const TextArea = Input;
                                     onChange={(e)=>{this.state.voidurl=e.target.value;this.forceUpdate();}}
                                   />
                                   <div className='hr10'></div>
+                                  {
+                                    /*
+<div>
+                                    <Button onClick={this.addVideo.bind(this)}>选择视频</Button>
+                                  </div>
+                                    */
+                                  }
+                                  
                                   <input className='wenming-add-videofile' accept="audio/mp4,video/mp4" ref="upload-video" onChange={this.uploadVideo.bind(this)} type="file"/>                    
                                 </FormItem>
                                 <FormItem
@@ -268,6 +276,12 @@ const TextArea = Input;
     }
     goback(){
         window.location='#/wenmingdatacheck'
+    }
+    //video
+    addVideo(){
+        window.obserable.trigger({
+            type:'addVideo'
+        })
     }
     uploadVideo(){//上传视频
 

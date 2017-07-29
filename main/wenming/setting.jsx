@@ -71,7 +71,7 @@ import IScroll from 'iscroll';
 
         var props = {
             title,
-            selectedIndex:3,
+            selectedIndex:4,
             mainRight:<div className='wenming-setting-main-ui' style={{height:this.state.mainHeight}}>
                         
                         <div className="wenming-setting-header">
