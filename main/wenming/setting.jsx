@@ -111,7 +111,7 @@ import IScroll from 'iscroll';
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td width={80}>数据审核：</td>
+                                        <td width={120}><div className='wenming-setting-textright'>数据自动审核：</div></td>
                                         <td></td>
                                         <td>
                                             <div>
@@ -120,7 +120,7 @@ import IScroll from 'iscroll';
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>评论审核：</td>
+                                        <td><div className='wenming-setting-textright'>评论自动审核：</div></td>
                                         <td></td>
                                         <td>
                                             <div>
@@ -129,7 +129,7 @@ import IScroll from 'iscroll';
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>栏目设置：</td>
+                                        <td><div className='wenming-setting-textright'>栏目设置：</div></td>
                                         <td></td>
                                         <td>
                                             <div className='wenming-setting-classlist'>                                                

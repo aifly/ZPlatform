@@ -114,6 +114,8 @@
     width: 100%; }
   .wenming-setting-main-ui .wenming-setting-textleft {
     text-align: left; }
+  .wenming-setting-main-ui .wenming-setting-textright {
+    text-align: right; }
   .wenming-setting-main-ui .wenming-setting-table {
     margin: 0 20px; }
     .wenming-setting-main-ui .wenming-setting-table td {
