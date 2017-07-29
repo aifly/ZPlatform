@@ -336,7 +336,7 @@ import IScroll from 'iscroll';
             },
             success(data){
                 if(data.getret === 0){
-                    console.log(data,'setting');
+                    //console.log(data,'setting');
                     s.state.settinglist=data.list; 
                     data.list.map((item,i)=>{
 
@@ -367,10 +367,6 @@ import IScroll from 'iscroll';
                           
             }
         }) 
-    }
-    //开关
-    openCheck(checked){
-       console.log(checked,'datacheck'); 
     }
     //数据审核
     datacheck(checked){ 

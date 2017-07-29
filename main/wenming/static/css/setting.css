@@ -115,8 +115,7 @@
   .wenming-setting-main-ui .wenming-setting-textleft {
     text-align: left; }
   .wenming-setting-main-ui .wenming-setting-table {
-    width: 600px;
-    margin: 0 auto; }
+    margin: 0 20px; }
     .wenming-setting-main-ui .wenming-setting-table td {
       padding: 8px 5px;
       vertical-align: top; }
