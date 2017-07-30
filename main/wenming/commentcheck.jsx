@@ -32,6 +32,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
            currentDeleteIndex:-1,
 
+           currentCommentIndex:0,
+
            currentDeleteCommentIndex:-1,
 
            tab:'all',
@@ -258,7 +260,11 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                                                 {showMore}
                                                             </div>
                                                             <ol>
-                                                                {item.commentimg && <li onClick={this.viewPic.bind(this,i,k)}  style={{cursor:'url(./static/images/big.cur),auto',background:'url('+item.commentimg+') no-repeat center center / cover'}}></li>}
+                                                                {
+                                                                    item.commentimg && item.commentimg.split(',').map((img,m)=>{
+                                                                        return <li key={m} onClick={this.viewPic.bind(this,i,k,m)}  style={{cursor:'url(./static/images/big.cur),auto',background:'url('+img+') no-repeat center center / cover'}}></li>
+                                                                    })
+                                                                }
                                                             </ol>
 
                                                             <div style={{maxWidth:'50%'}}>
@@ -467,17 +473,32 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
     }
 
     viewNext(){
-        this.setState({
-            currentPicIndex:this.state.currentPicIndex+1,
-            currentViewPic:this.state.dataSource[this.currentRow].imageslist[this.state.currentPicIndex+1]
-        })
+        if(this.currentType === 'article'){
+            this.setState({
+                currentPicIndex:this.state.currentPicIndex+1,
+                currentViewPic:this.state.dataSource[this.currentRow].imageslist[this.state.currentPicIndex+1]
+            })
+        }else{
+            this.setState({
+                currentPicIndex:this.state.currentPicIndex+1,
+                currentViewPic:this.state.dataSource[this.currentRow].comments[this.state.currentCommentIndex].commentimg.split(',')[[this.state.currentPicIndex+1]]
+            })
+        }
     }
 
     viewPrev(){
-        this.setState({
-            currentPicIndex:this.state.currentPicIndex-1,
-            currentViewPic:this.state.dataSource[this.currentRow].imageslist[this.state.currentPicIndex-1]
-        })
+        if(this.currentType === 'article'){
+            this.setState({
+                currentPicIndex:this.state.currentPicIndex-1,
+                currentViewPic:this.state.dataSource[this.currentRow].imageslist[this.state.currentPicIndex-1]
+            })
+        }else{
+            this.setState({
+                currentPicIndex:this.state.currentPicIndex-1,
+                currentViewPic:this.state.dataSource[this.currentRow].comments[this.state.currentCommentIndex].commentimg.split(',')[[this.state.currentPicIndex-1]]
+            })
+        }
+
     }
 
     viewVideo(voidurl){
@@ -488,6 +509,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
 
     viewArticlePic(i,k){
+        this.currentType = 'article';
         this.currentRow = i;
         this.setState({
             currentPicIndex:k,
@@ -496,11 +518,14 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
     }
 
 
-    viewPic(i,k){
+    viewPic(i,k,m){
+        this.currentType = 'comment';
         this.currentRow = i;
         if(this.state.dataSource[i]){
             this.setState({
-                currentViewPic:this.state.dataSource[i].comments[k].commentimg
+                currentPicIndex:m,
+                currentCommentIndex:k,
+                currentViewPic:this.state.dataSource[i].comments[k].commentimg.split(',')[m]
             })    
         }
         

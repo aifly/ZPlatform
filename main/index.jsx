@@ -119,7 +119,7 @@ class App extends React.Component{
 				{path: '/wenmingadd',app:ZmitiWenmingAddApp},
 				{path: '/wenmingabout',app:ZmitiWenmingAboutApp},
 				{path: '/wenmingcommentcheck',app:ZmitiWenmingCommentCheckApp},
-				{path: '/commentdetail/:id',app:ZmitiWenmingCommentDetailApp},
+				{path: '/wenmingcommentdetail/:id',app:ZmitiWenmingCommentDetailApp},
 				
 		];
 		return (

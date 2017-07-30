@@ -242,7 +242,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                                 <section className='wenming-datacheck-operator'>
                                                     <div>
                                                         {item.videos && item.videos.length>0 && <div><Icon type="video-camera" /> 查看视频</div>}
-                                                        {item.status === 1 && false && <div><a href={'#/commentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
+                                                        {item.status === 1 && <div><a href={'#/wenmingcommentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
                                                         {this.state.status === 0 &&  <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐</Checkbox></div>}
                                                         {this.state.status === 1 && item.status !==2  && <div><Checkbox onChange={this.recommentArticle.bind(this,item)} checked={item.isHost} >推荐</Checkbox></div>}
                                                         {item.status*1 === 0 && <div onClick={this.checkedArticle.bind(this,item,'pass',i)}>
