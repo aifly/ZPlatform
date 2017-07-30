@@ -17,7 +17,8 @@ import 'echarts/lib/chart/map';
 import '../static/echarts/china';
 
 import IScroll from 'iscroll';
-
+const Search = Input.Search;
+const FormItem = Form.Item;
  class ZmitiWenmingReportApp extends React.Component{
     constructor(args){
         super(...args);
@@ -29,6 +30,7 @@ import IScroll from 'iscroll';
            total:0,
            pageIndex:1,
            pagenum:3,
+           titleIndex:'',
            dataSource:[],
         }
     }
@@ -69,6 +71,16 @@ import IScroll from 'iscroll';
 
         var s = this;
         var title = '身边文明事';
+        const formItemLayout = {
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 8 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 16 },
+          },
+        };
         const columns = [{
             title: '标题',
             dataIndex: 'title',
@@ -126,6 +138,22 @@ import IScroll from 'iscroll';
                         </div>
                         
                         <div className="wenming-report-line"></div>
+                        <div className='hr15'></div>                        
+                        <Row>
+                            <Col span={6} className='wenming-report-label'>搜索：</Col>
+                            <Col span={18}>                                    
+                                <Search
+                                placeholder="输入文章内容"
+                                style={{ width: 200 }}
+                                onSearch={function(value){                                    
+                                    s.state.titleIndex=value;
+                                    //console.log(s.state.titleIndex,'titleIndex')
+                                    s.forceUpdate();
+                                    s.bindNewdata(value);
+                                }}
+                                />
+                            </Col>
+                        </Row>                        
                         <div className='hr15'></div>
                         <div className='wenming-report-datalist'>
                             <Table bordered={true} dataSource={this.state.dataSource} columns={columns} 
@@ -167,7 +195,7 @@ import IScroll from 'iscroll';
     goadd(){
         window.location='#/wenmingreportadd/'
     }
-    bindNewdata(){//getData        
+    bindNewdata(title){//getData     
         var s = this;
         $.ajax({
             type:'POST',
@@ -180,6 +208,7 @@ import IScroll from 'iscroll';
                 status:1,
                 pagenum:s.state.pagenum,
                 page:s.state.pageIndex,
+                keyword:title,
             },
             success(data){                    
                 s.state.dataSource=data.list;

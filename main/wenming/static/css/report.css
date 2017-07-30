@@ -96,5 +96,9 @@
     zoom: 1; }
   .wenming-report-main-ui .hr15 {
     width: 100%; }
+  .wenming-report-main-ui .wenming-report-label {
+    width: 50px;
+    line-height: 1.5;
+    text-align: right; }
 
 /*# sourceMappingURL=report.css.map */

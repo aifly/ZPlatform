@@ -40,7 +40,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
            longitude:'',
            latitude:'',
         }
-        this.currentId = -1;
+        this.currentId =undefined;
     }
 
     componentWillMount() {
@@ -270,6 +270,8 @@ class ZmitiWenmingReportaddApp extends React.Component{
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         var articlid=this.props.params.id;
+        this.currentId=this.props.params.id;
+        console.log(this.currentId,'this.currentId');
         var params = {
             userid:s.userid,
             getusersigid:s.getusersigid,
@@ -286,7 +288,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
         }
         
 
-        if(articlid!=0){//编辑
+        if(this.currentId!==undefined){//编辑
             params.articlid=articlid;
             //console.log(articlid,'params.id');
             console.log(s.state.classid,'文章分类');         
@@ -307,31 +309,20 @@ class ZmitiWenmingReportaddApp extends React.Component{
                 data:params,
                 success(data){
                         message[data.getret === 0 ? 'success':'error'](data.getmsg);
-                        s.setState({
-                            classid:s.state.classid,
-                            appid:window.WENMING.XCXAPPID,
-                            content:'',
-                            title:'',
-                            imageslist:[],
-                            source:'',
-                            type:3,
-                            ishost:0,
-                            voidurl:'',
-                            imgshow:'none',
-                        })
+                        window.location='#/wenmingreport';
                         s.forceUpdate();
                     
                 }
             }); 
         }
     }
-    //编辑
+    //获取文章
     getArticle(articlid){
         var s = this;
         articlid=this.props.params.id;
+        console.log(articlid,'title');
         
-        //获取文章
-        if(articlid!=0){
+        if(articlid!==undefined){
             $.ajax({
                 type:'POST',
                 url:window.baseUrl + 'weixinxcx/get_articledetial/',
@@ -360,6 +351,9 @@ class ZmitiWenmingReportaddApp extends React.Component{
                     
                 }
             });            
+        }else{
+            this.currentId=undefined;
+            this.forceUpdate();
         }
 
     }
