@@ -27,9 +27,10 @@ import IScroll from 'iscroll';
            appid:window.WENMING.XCXAPPID,
            classid:'A7CZ1YE3',
            total:0,
+           pageIndex:1,
+           pagenum:3,
            dataSource:[],
-        } 
-        
+        }
     }
 
     componentWillMount() {
@@ -66,7 +67,7 @@ import IScroll from 'iscroll';
 
     render(){
 
-
+        var s = this;
         var title = '身边文明事';
         const columns = [{
             title: '标题',
@@ -129,9 +130,14 @@ import IScroll from 'iscroll';
                         <div className='wenming-report-datalist'>
                             <Table bordered={true} dataSource={this.state.dataSource} columns={columns} 
                                 pagination={{
-                                   defaultCurrent:1,
-                                   defaultPageSize:8,
-                                   total:this.state.total
+                                   defaultCurrent:s.state.pageIndex,
+                                   defaultPageSize:s.state.pagenum,
+                                   total:s.state.total,
+                                   onChange:function(page){                                    
+                                    s.state.pageIndex=page;
+                                    s.bindNewdata();
+                                    s.forceUpdate();
+                                   }
                                 }}
                              />
                             <div className="clearfix"></div>
@@ -161,8 +167,7 @@ import IScroll from 'iscroll';
     goadd(){
         window.location='#/wenmingreportadd/'
     }
-
-    bindNewdata(){
+    bindNewdata(){//getData        
         var s = this;
         $.ajax({
             type:'POST',
@@ -173,15 +178,14 @@ import IScroll from 'iscroll';
                 appid:s.state.appid,
                 classid:s.state.classid,
                 status:1,
-                pagenum:200,
-                page:1,
+                pagenum:s.state.pagenum,
+                page:s.state.pageIndex,
             },
             success(data){                    
                 s.state.dataSource=data.list;
                 s.state.total=data.countRow.countrows;
-                console.log(data.list,'data.result');
-                s.forceUpdate();
-                
+                //console.log(data.list,this.url,'data.result');
+                s.forceUpdate();                
             }
         });
     }
@@ -208,15 +212,6 @@ import IScroll from 'iscroll';
                     setTimeout(()=>{
                         s.bindNewdata();
                     },2000)
-                }
-                else if(data.getret === -3){
-                    message.error('您没有访问的权限,2秒后跳转到首页');
-                    setTimeout(()=>{
-                        location.href='/';
-                    },2000)
-                }
-                else{
-                    message.error(data.getmsg);
                 }
             }
         })

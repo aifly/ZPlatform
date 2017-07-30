@@ -157,7 +157,7 @@ class ZmitiWenmingAboutApp extends React.Component{
             },
             success(data){                    
                 if(data.getret === 0){
-                    console.log(data.result,'data.result');
+                    //console.log(data.result,'data.result');
                     s.setState({
                         content:data.result.content,
                         imageurl:data.result.imageurl,
