@@ -37,7 +37,9 @@ const TextArea = Input;
            voidurl:'',
            longitude:'',
            latitude:'',
-           fileList:[]
+           fileList:[],
+           isAddImage:false,
+           isAddVideo:false,
         }
 
     }
@@ -70,6 +72,24 @@ const TextArea = Input;
 
 
         resizeMainHeight(this);
+        window.s = this;
+        window.obserable.on('addImage',()=>{
+            this.setState({isAddImage:true},()=>{
+                window.obserable.trigger({
+                    type:'showModal',
+                    data:{type:0,id:'addImage'}
+                });
+            });
+        });
+        window.obserable.on('addVideo',()=>{
+            this.setState({isAddVideo:true},()=>{
+                window.obserable.trigger({
+                    type:'showModal',
+                    data:{type:2,id:'addVideo'}
+                });
+            });
+        });
+
        
     }
 
@@ -112,6 +132,22 @@ const TextArea = Input;
             isAdmin:false,
             showPreview:false,
         }
+        const addVideoProps = {//添加视频
+            baseUrl: window.baseUrl,
+            getusersigid: s.getusersigid,
+            userid: s.userid,
+            onFinish(imgData){
+                 s.state.voidurl = imgData.src;
+                 s.forceUpdate();
+            },
+            onCancel(){
+                s.setState({
+                    isAddVideo:false,
+                    isAddImage:true
+                })
+            }
+        } 
+
         var props = {
             userid:s.userid,
             getusersigid: s.getusersigid,
@@ -123,6 +159,12 @@ const TextArea = Input;
                 s.forceUpdate();
                 console.log(s.state.fileList,'s.state.fileList');
                 console.log(s.state.imageslist,'s.state.imageslist');
+            },
+            onCancel(){
+                s.setState({
+                    isAddImage:false,
+                    isAddVideo:true,
+                })
             },
             title,
             selectedIndex:100,
@@ -198,7 +240,7 @@ const TextArea = Input;
                                 label="图片"
                                 hasFeedback
                                 >
-                                <Button onClick={this.changePortrait.bind(this)}>选择图片</Button>
+                                <Button onClick={this.addImage.bind(this)}>选择图片</Button>
                                 <div className='wenming-add-imgs5' >
                                      
                                     <ul>
@@ -219,22 +261,13 @@ const TextArea = Input;
                                 {...formItemLayout}
                                 label="视频地址"
                                 hasFeedback
-                                >                        
+                                >   
                                   
-                                  <Input placeholder="视频地址" 
-                                    value={this.state.voidurl}
+                                <Button onClick={this.addVideo.bind(this)}>选择视频</Button>
+                                <div className='hr10'></div>
+                                <Input addonBefore='添加视频URL' value={this.state.voidurl}
                                     onChange={(e)=>{this.state.voidurl=e.target.value;this.forceUpdate();}}
-                                  />
-                                  <div className='hr10'></div>
-                                  {
-                                    /*
-<div>
-                                    <Button onClick={this.addVideo.bind(this)}>选择视频</Button>
-                                  </div>
-                                    */
-                                  }
-                                  
-                                  <input className='wenming-add-videofile' accept="audio/mp4,video/mp4" ref="upload-video" onChange={this.uploadVideo.bind(this)} type="file"/>                    
+                                    type='text' placeholder='http://www.'/>                             
                                 </FormItem>
                                 <FormItem
                                 {...formItemLayout}
@@ -256,8 +289,9 @@ const TextArea = Input;
                     </div>
         }
         var mainComponent = <div>
-            {!this.state.showCredentialsDiolog && <ZmitiUploadDialog id="personAcc" {...props}></ZmitiUploadDialog>}
-        
+            {!this.state.isAddImage && this.state.isAddVideo && <ZmitiUploadDialog id="addImage" {...props}></ZmitiUploadDialog>}
+            {!this.state.isAddVideo && this.state.isAddImage && <ZmitiUploadDialog id={'addVideo'} {...addVideoProps}></ZmitiUploadDialog>}  
+            
             <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>
             
         </div>;
@@ -271,11 +305,7 @@ const TextArea = Input;
         window.location='#/wenmingdatacheck'
     }
     //video
-    addVideo(){
-        window.obserable.trigger({
-            type:'addVideo'
-        })
-    }
+    
     uploadVideo(){//上传视频
 
         let formData = new FormData(),
@@ -300,18 +330,33 @@ const TextArea = Input;
         })
     }
     //更换图片
-    changePortrait(){
-
+    addImage(){
+        console.log('addImage');
         var obserable=window.obserable;
         this.setState({
-          showCredentialsDiolog:false
+          isAddImage:false,
+          isAddVideo:true,
         },()=>{
           obserable.trigger({
               type:'showModal',
-              data:{type:0,id:'personAcc'}
+              data:{type:0,id:'addImage'}
           })  
         })
         
+    }
+    //更好视频
+    addVideo(){
+        console.log('addVideo');
+        var obserable=window.obserable;
+        this.setState({
+          isAddVideo:false,
+          isAddImage:true,
+        },()=>{
+          obserable.trigger({
+              type:'showModal',
+              data:{type:2,id:'addVideo'}
+          })  
+        })
     }
     //删除图片
     delpic(i){
