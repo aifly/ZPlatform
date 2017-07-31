@@ -123,7 +123,8 @@ import IScroll from 'iscroll';
                                     <div className='wenming-setting-classlist'>                                                
                                         <ul>
                                             {this.state.classlist.map((item,i)=>{
-                                                return <li key={i}>
+                                                if(item.classname!=='文明播报'){
+                                                    return <li key={i}>
                                                         <div className='wenming-setting-classname'>{item.classname}</div>
                                                         <div className='wenming-setting-classact'>
                                                             <Button icon="edit" onClick={this.editype.bind(this,item.classid)}/>
@@ -131,8 +132,8 @@ import IScroll from 'iscroll';
                                                                 <Button icon="close"/>
                                                             </Popconfirm>
                                                         </div>
-
                                                     </li>
+                                                }    
                                             })}                                                   
                                         </ul>
 
