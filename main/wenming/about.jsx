@@ -80,7 +80,7 @@ class ZmitiWenmingAboutApp extends React.Component{
                     content:editor.el.innerHTML
                 });
             },
-            height:this.state.mainHeight/2,
+            height:200,
             html:this.state.content,
             $,
             isAdmin:false,

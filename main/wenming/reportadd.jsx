@@ -118,7 +118,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
                     content:editor.el.innerHTML
                 });
             },
-            height:this.state.mainHeight/2,
+            height:200,
             html:this.state.content,
             $,
             isAdmin:false,
@@ -168,13 +168,9 @@ class ZmitiWenmingReportaddApp extends React.Component{
                                 label="内容"
                                 hasFeedback
                                 >  
-                                  <table>
-                                    <tr>
-                                    <td>
+                                  <div className='wenming-add-editor'>
                                     <ZmitiEditor {...editorProps} ></ZmitiEditor>
-                                    </td>
-                                    </tr>
-                                  </table>               
+                                  </div>                
                                 </FormItem>
                                 
 
