@@ -95,7 +95,7 @@
     .wenming-setting-main-ui .wenming-setting-classlist li {
       padding: 0 60px 0 0;
       position: relative;
-      margin: 3px 0;
+      margin: 0 0 8px 0;
       zoom: 1; }
       .wenming-setting-main-ui .wenming-setting-classlist li .wenming-setting-classact {
         position: absolute;
@@ -121,5 +121,7 @@
     .wenming-setting-main-ui .wenming-setting-table td {
       padding: 8px 5px;
       vertical-align: top; }
+  .wenming-setting-main-ui .wenming-setting-leftpane {
+    width: 125px; }
 
 /*# sourceMappingURL=setting.css.map */

@@ -101,7 +101,7 @@ $baseColor: #f4654c;
 		li{
 			padding:0 60px 0 0;
 			position: relative;
-			margin:3px 0;
+			margin:0 0 8px 0;
 			zoom:1;			
 			.wenming-setting-classact{
 				position: absolute;
@@ -136,6 +136,9 @@ $baseColor: #f4654c;
 			padding:8px 5px;
 			vertical-align: top;
 		}
+	}
+	.wenming-setting-leftpane{
+		width:125px;
 	}
 
 }

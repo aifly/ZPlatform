@@ -1,6 +1,6 @@
 import './static/css/setting.css';
 import React from 'react';
-import {Switch,message,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio} from '../commoncomponent/common.jsx';
+import {Popconfirm,Switch,message,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
@@ -99,50 +99,50 @@ import IScroll from 'iscroll';
                         <div className="wenming-setting-line"></div>
                         <div className='hr10'></div>
                         <div className='wenming-setting-table'>
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <td width={120}><div className='wenming-setting-textright'>数据自动审核：</div></td>
-                                        <td></td>
-                                        <td>
-                                            <div>
-                                            <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.datacheck.bind(this)} checked={this.state.datacheck} />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><div className='wenming-setting-textright'>评论自动审核：</div></td>
-                                        <td></td>
-                                        <td>
-                                            <div>
-                                            <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.messagecheck.bind(this)} checked={this.state.messagecheck} />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td><div className='wenming-setting-textright'>栏目设置：</div></td>
-                                        <td></td>
-                                        <td>
-                                            <div className='wenming-setting-classlist'>                                                
-                                                <ul>
-                                                    {this.state.classlist.map((item,i)=>{
-                                                        return <li>
-                                                                <div className='wenming-setting-classname'>{item.classname}</div>
-                                                                <div className='wenming-setting-classact'>
-                                                                    <Button icon="edit" onClick={this.editype.bind(this,item.classid)}/>
-                                                                    <Button icon="close" onClick={this.deletetype.bind(this,item.classid)} />
-                                                                </div>
-                                                            </li>
-                                                    })}                                                   
-                                                </ul>
-                                                <div className='wenming-setting-classact'>
-                                                    <Button onClick={this.postform.bind(this)}><Icon type="folder-add" />增加</Button>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <Row>
+                                <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>数据自动审核：</div></Col>
+                                <Col span={16}>
+                                    <div>
+                                    <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.datacheck.bind(this)} checked={this.state.datacheck} />
+                                    </div>
+                                </Col>
+                            </Row>
+                            <div className='hr15'></div>
+                            <Row>
+                                <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>评论自动审核：</div></Col>
+                                <Col span={16}>
+                                    <div>
+                                    <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.messagecheck.bind(this)} checked={this.state.messagecheck} />
+                                    </div>
+                                </Col>
+                            </Row>
+                            <div className='hr15'></div>
+                            <Row>
+                                <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>栏目设置：</div></Col>
+                                <Col span={16}>
+                                    <div className='wenming-setting-classlist'>                                                
+                                        <ul>
+                                            {this.state.classlist.map((item,i)=>{
+                                                return <li key={i}>
+                                                        <div className='wenming-setting-classname'>{item.classname}</div>
+                                                        <div className='wenming-setting-classact'>
+                                                            <Button icon="edit" onClick={this.editype.bind(this,item.classid)}/>
+                                                            <Popconfirm title="如果确定删除的话，同步会把当前栏目的所有数据删除" onConfirm={this.delConfirm.bind(this,item.classid)} okText="Yes" cancelText="No">
+                                                                <Button icon="close"/>
+                                                            </Popconfirm>
+                                                        </div>
+
+                                                    </li>
+                                            })}                                                   
+                                        </ul>
+
+                                        <div className='wenming-setting-classact'>
+                                            <Button onClick={this.postform.bind(this)}><Icon type="folder-add" />增加</Button>
+                                        </div>
+                                    </div>
+                                </Col>
+                            </Row>
+                            
                         </div>
                         <Modal title="栏目设置" visible={this.state.modpostDialogVisible}
                             onOk={this.addtype.bind(this)}
@@ -265,6 +265,25 @@ import IScroll from 'iscroll';
                 }
             })
         }
+    }
+    //确认删除
+    delConfirm(classid){
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/del_articleclass/',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:s.state.appid,
+                classid:classid,
+            },
+            success(data){
+                message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                s.bindtreedata();                
+                s.forceUpdate();          
+            }
+        })
     }
     //删除栏目
     deletetype(classid){
