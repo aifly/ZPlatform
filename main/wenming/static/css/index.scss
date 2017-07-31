@@ -197,6 +197,10 @@ $baseColor: #f4654c;
 						flex: 1;
 						-webkit-flex: 1;
 						text-align: center;
+						&:nth-of-type(2){
+							flex: 2;
+							-webkit-flex:2;
+						}
 					}
 					.wenming-sort {
 						@include pos(r);
@@ -204,7 +208,7 @@ $baseColor: #f4654c;
 
 						&.wenming-no-sort {
 							&:after {
-								top: 44%;
+								top: 46%;
 								border-bottom-color: #999;
 							}
 							&:before {
@@ -224,7 +228,7 @@ $baseColor: #f4654c;
 						&:before, &:after {
 							content: '';
 							@include pos(a);
-							right: 5px;
+							right: 0px;
 							top: 36%;
 							width: 0;
 							height: 0;

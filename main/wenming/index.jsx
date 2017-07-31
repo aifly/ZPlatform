@@ -37,7 +37,7 @@ var unload = false;
            provincePVSort:'sort-down',
            allPV:0,
            provinceReportSort:'',
-           userCommentSort:'',
+           userCommentSort:'sort-down',
            userReportSort:''
         }
     }
@@ -412,17 +412,17 @@ var unload = false;
             break;
             case "userCommentSort":
                 this.setState({
+                    userCommentSort:'sort-down',
+                    userReportSort:'',
                     userRankingList:this.userRankingList
                 });
-                /*this.state.userCommentSort = 'sort-down';///this.state.userCommentSort === 'sort-down'?'sort-up':'sort-down';
-                this.state.userReportSort = '';
-                if(this.state.userCommentSort === 'sort-down'){
-                    this.state.userRankingList.sort(this.sortBy('commentCount',true,parseInt))
-                }*/
+                
                
             break;
             case 'userReportSort':
                 this.setState({
+                    userCommentSort:'',
+                    userReportSort:'sort-down',
                     userRankingList:this.userRankingList1
                 });
 
