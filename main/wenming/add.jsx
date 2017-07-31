@@ -41,6 +41,8 @@ const TextArea = Input;
            isAddImage:false,
            isAddVideo:false,
            classlist:[],
+           selectimage:'',
+           selectvideo:'',
         }
 
     }
@@ -139,6 +141,9 @@ const TextArea = Input;
             userid: s.userid,
             onFinish(imgData){
                  s.state.voidurl = imgData.src;
+                 s.state.type=2;
+                 console.log(s.state.type,'视频');                 
+                 s.state.selectimage='none';
                  s.forceUpdate();
             },
             onCancel(){
@@ -153,6 +158,9 @@ const TextArea = Input;
             getusersigid: s.getusersigid,
             onFinish(imgData){
                 //imgnum.push(imgData.src);
+                s.state.type=1;
+                //s.state.voidurl='';
+                console.log(s.state.type,'图片');
                 if(s.state.fileList.length<5){
                     s.state.fileList.push(imgData.src);
                 }else{
@@ -160,7 +168,8 @@ const TextArea = Input;
                 }
                              
                 s.state.imageslist=s.state.fileList.join();
-                //s.state.imgshow='block';
+
+                s.state.selectvideo='none';
                 s.forceUpdate();
                 
                 //console.log(s.state.fileList,'s.state.fileList');
@@ -206,21 +215,6 @@ const TextArea = Input;
                                     </RadioGroup>
                                                       
                                 </FormItem>
-                                <FormItem
-                                {...formItemLayout}
-                                label="类型"
-                                hasFeedback
-                                >                        
-                                  
-                                  
-                                    <RadioGroup onChange={(e)=>{this.state.type=e.target.value;this.forceUpdate();}} value={this.state.type}>
-                                        <Radio value={3}>文字</Radio>
-                                        <Radio value={1}>图片</Radio>
-                                        <Radio value={2}>视频</Radio>
-                                    </RadioGroup>
-                                                      
-                                </FormItem>
-
 
                                 <FormItem
                                 {...formItemLayout}
@@ -245,51 +239,43 @@ const TextArea = Input;
                                     </RadioGroup>
                                                       
                                 </FormItem>
-                                <FormItem
-                                {...formItemLayout}
-                                label="图片"
-                                hasFeedback
-                                >
-                                <Button onClick={this.addImage.bind(this)}>选择图片</Button>
-                                <div className='wenming-add-imgs5' >
-                                     
-                                    <ul>
-                                        {this.state.fileList.map((item,i)=>{
-                                            return <li key={i}><img src={item}/>
-                                                <div className='wenming-reportadd-delimgs'>
-                                                    <Button shape="circle" icon="delete" onClick={this.delpic.bind(this,i)} />
-                                                </div>
-                                            </li>
-                                        })}
-                                    </ul>
-                                    <div className='clearfix'></div>
-                                </div>                       
-                               
-                    
-                                </FormItem>
-                                <FormItem
-                                {...formItemLayout}
-                                label="视频地址"
-                                hasFeedback
-                                >   
-                                  
-                                <Button onClick={this.addVideo.bind(this)}>选择视频</Button>
-                                <div className='hr10'></div>
-                                <Input addonBefore='添加视频URL' value={this.state.voidurl}
-                                    onChange={(e)=>{this.state.voidurl=e.target.value;this.forceUpdate();}}
-                                    type='text' placeholder='http://www.'/>                             
-                                </FormItem>
-                                <FormItem
-                                {...formItemLayout}
-                                label="来源"
-                                hasFeedback
-                                >                        
-                                  
-                                  <Input placeholder="来源" 
-                                    value={this.state.source}
-                                    onChange={(e)=>{this.state.source=e.target.value;this.forceUpdate();}}
-                                  />                      
-                                </FormItem>
+                                <div className='wenming-add-selectimg' style={{display:this.state.selectimage}}>
+                                    <FormItem
+                                    {...formItemLayout}
+                                    label="图片"
+                                    hasFeedback
+                                    >
+                                    <Button onClick={this.addImage.bind(this)}>选择图片</Button>
+                                    <div className='wenming-add-imgs5' >
+                                         
+                                        <ul>
+                                            {this.state.fileList.map((item,i)=>{
+                                                return <li key={i}><img src={item}/>
+                                                    <div className='wenming-reportadd-delimgs'>
+                                                        <Button shape="circle" icon="delete" onClick={this.delpic.bind(this,i)} />
+                                                    </div>
+                                                </li>
+                                            })}
+                                        </ul>
+                                        <div className='clearfix'></div>
+                                    </div>
+                                    </FormItem>
+                                </div>
+                                <div className='wenming-add-selectvideo' style={{display:this.state.selectvideo}}>
+                                    <FormItem
+                                    {...formItemLayout}
+                                    label="视频地址"
+                                    hasFeedback
+                                    >   
+                                      
+                                    <Button onClick={this.addVideo.bind(this)}>选择视频</Button>
+                                    <div className='hr10'></div>
+                                    <Input addonBefore='添加视频URL' value={this.state.voidurl}
+                                        onChange={this.videourls.bind(this)}
+                                        type='text' placeholder='http://www.'/>                             
+                                    </FormItem>
+                                </div>
+                                
                                 <FormItem {...tailFormItemLayout}>
                                   <Button type="primary" onClick={this.addProduct.bind(this)}>提交</Button>
                                 </FormItem>
@@ -354,7 +340,7 @@ const TextArea = Input;
         })
         
     }
-    //更好视频
+    //更换视频
     addVideo(){
         console.log('addVideo');
         var obserable=window.obserable;
@@ -368,13 +354,29 @@ const TextArea = Input;
           })  
         })
     }
+    //视频地址
+    videourls(e){
+        var s = this;
+        s.state.voidurl=e.target.value;
+        //console.log(s.state.voidurl,'video-url');
+        if(s.state.voidurl.length<1){
+            s.state.selectimage='block';
+            s.state.type=3;
+        }
+        console.log(s.state.type,'恢复默认');
+        s.forceUpdate();
+    }
     //删除图片
     delpic(i){
         var s = this;
-        //s.state.imageslist='';
-        //s.state.imgshow='none';
-        console.log(i,'del');
+        //console.log(i,'del');
         s.state.fileList.splice(i,1);
+        if(s.state.fileList.length<1){
+            console.log('没有图片了');
+            s.state.type=3;
+            s.state.selectvideo='block';
+        }
+        console.log(s.state.type,'恢复默认');
         s.forceUpdate();
     }
     addProduct(){//添加
@@ -402,13 +404,13 @@ const TextArea = Input;
             data:params,
             success(data){
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
-                    s.setState({
-                        classid:'9eGbMukZ',
+                    s.setState({                        
                         appid:window.WENMING.XCXAPPID,
                         content:'',
                         title:'',
                         wxopenid:'zhongguowenmingwang',//
-                        imageslist:[],
+                        imageslist:'',
+                        fileList:[],
                         source:'',
                         type:3,
                         ishost:0,
@@ -416,6 +418,8 @@ const TextArea = Input;
                         longitude:'',
                         latitude:'',
                     })
+                    s.bindtreedata();
+                    s.forceUpdate();
                 
             }
         });
@@ -433,8 +437,10 @@ const TextArea = Input;
             },
             success(data){
                 if(data.getret === 0){
-                    //console.log(data.list,'mytree');
-                    s.state.classlist=data.list;                    
+                    
+                    s.state.classlist=data.list;
+                    s.state.classid=data.list[0].classid;
+                    console.log(s.state.classid,'mytree');             
                     s.forceUpdate();
                 }
             }
