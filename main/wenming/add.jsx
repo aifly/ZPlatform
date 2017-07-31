@@ -146,19 +146,24 @@ const TextArea = Input;
                     isAddImage:true
                 })
             }
-        } 
-
+        }
         var props = {
             userid:s.userid,
             getusersigid: s.getusersigid,
             onFinish(imgData){
-                //s.state.imageslist = imgData.src;
-                s.state.fileList.push(imgData.src);                
+                //imgnum.push(imgData.src);
+                if(s.state.fileList.length<5){
+                    s.state.fileList.push(imgData.src);
+                }else{
+                    message.warning('最多只能添加5张图片');
+                }
+                             
                 s.state.imageslist=s.state.fileList.join();
                 //s.state.imgshow='block';
                 s.forceUpdate();
-                console.log(s.state.fileList,'s.state.fileList');
-                console.log(s.state.imageslist,'s.state.imageslist');
+                
+                //console.log(s.state.fileList,'s.state.fileList');
+                //console.log(s.state.imageslist,'s.state.imageslist');
             },
             onCancel(){
                 s.setState({
@@ -245,7 +250,7 @@ const TextArea = Input;
                                      
                                     <ul>
                                         {this.state.fileList.map((item,i)=>{
-                                            return <li><img src={item}/>
+                                            return <li key={i}><img src={item}/>
                                                 <div className='wenming-reportadd-delimgs'>
                                                     <Button shape="circle" icon="delete" onClick={this.delpic.bind(this,i)} />
                                                 </div>
