@@ -268,7 +268,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                                                     })
                                                                 }
                                                             </ol>
-
+                                                            <div>{item.createtime}</div>
                                                             <div style={{maxWidth:'50%'}}>
                                                                 <span style={{color:'#0099cc'}}>来自：</span>
                                                                 <div dangerouslySetInnerHTML={this.createMarkup(datalist.content)}></div>

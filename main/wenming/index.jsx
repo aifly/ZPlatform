@@ -16,7 +16,10 @@ import 'echarts/lib/chart/map';
 import '../static/echarts/china';
 
 import IScroll from 'iscroll';
-var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
+var defaulturl= 'http://www.zmti.com/main/static/images/zmiti-logo.jpg';
+
+var unload = false;
+
  class ZmitiWenmingApp extends React.Component{
     constructor(args){
         super(...args);
@@ -40,11 +43,11 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
     }
 
     componentWillUnmount(){
-        this.unload = true;
+         this.unmout = true;
     }
 
     componentWillMount() {
-
+        this.unmout = false;
         let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail,listen,send} = this.props;
         var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
@@ -62,7 +65,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         this.resizeMainHeight = resizeMainHeight;
     }
     componentDidMount(){
-       this.unload = this.unload || false;
+
        this.resizeMainHeight(this);
        let  {validateUser,loginOut,resizeMainHeight} = this.props;
         var iNow = 0 ;
@@ -74,9 +77,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             this.initEcharts();
             var worksid = 'wenming-login';
             this.worksid = worksid;
-
-            if(!this.unload){
-                this.unload = true;
+            if(!unload){
+                unload = true;
                 this.socket();
             }
 
@@ -108,7 +110,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
     }
 
-      getPos(data){
+    getPos(data){
         var s = this;
 
         var worksid = this.worksid;
@@ -133,7 +135,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
                     var address = (addressComponent.city[0]||addressComponent.province)+addressComponent.district;
                     
-                
+                   
 
                     if(s.geoCoordMap[address]){//存在
                         s.userData.forEach(function(item,i){
@@ -151,12 +153,9 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                          });
                     }
                     //s.defaultCount = localStorage.getItem('defaultcount'+ worksid) || 0;
-                    s.defaultCount = s.state.allPV+1;
-                 
+                    
 
-                    s.state.monthPV = s.state.monthPV + 1 ;
-                    s.state.dayPV = s.state.dayPV +1;
-                    s.formatPV(s.state.allPV+1);
+                    s.request();
 
 
                    // localStorage.setItem('defaultcount'+ worksid,s.defaultCount);
@@ -456,7 +455,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             arr[pvLen-i-1] = item;
            //this.state.totalPV[pvLen-i-1] = item;
         });
-        this.state.allPV = num;
+       // this.state.allPV = num;
+        
         this.state.totalPV = arr.join('');
         this.forceUpdate();
 
@@ -505,7 +505,9 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
     }
 
     request(){
-
+        if(this.unmout){
+            return;
+        }
         var s = this;
         $.ajax({
             type:'post',
