@@ -362,8 +362,13 @@ const TextArea = Input;
         if(s.state.voidurl.length<1){
             s.state.selectimage='block';
             s.state.type=3;
+            console.log(s.state.type,'恢复默认');
+        }else{
+            s.state.selectimage='none';
+            s.state.type=2;
+            console.log(s.state.type,'图片');
         }
-        console.log(s.state.type,'恢复默认');
+        
         s.forceUpdate();
     }
     //删除图片
@@ -417,6 +422,8 @@ const TextArea = Input;
                         voidurl:'',
                         longitude:'',
                         latitude:'',
+                        selectimage:'block',
+                        selectvideo:'block',
                     })
                     s.bindtreedata();
                     s.forceUpdate();
