@@ -88,6 +88,10 @@
     position: relative;
     zoom: 1;
     box-sizing: border-box; }
+  .wenming-report-main-ui .wenming-report-thumbimg {
+    width: 120px;
+    height: 90px;
+    overflow: hidden; }
   .wenming-report-main-ui .ant-radio-group {
     margin: 6px 0 0 0; }
   .wenming-report-main-ui .wenming-report-datalist {

@@ -93,7 +93,7 @@ const FormItem = Form.Item;
             width:130,
             render:(value,recoder,index)=>{
                 if(recoder.imageslist!=''){
-                    return <img className='wenming-report-thumbnail' src={recoder.imageslist}/>
+                    return <div className='wenming-report-thumbimg'><img src={recoder.imageslist}/></div>
                 }                
                               
             }
