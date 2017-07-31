@@ -25,7 +25,7 @@ const TextArea = Input;
 
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
-           classid:'9eGbMukZ',
+           classid:'',
            appid:window.WENMING.XCXAPPID,
            content:'',
            title:'',
@@ -40,6 +40,7 @@ const TextArea = Input;
            fileList:[],
            isAddImage:false,
            isAddVideo:false,
+           classlist:[],
         }
 
     }
@@ -89,7 +90,7 @@ const TextArea = Input;
                 });
             });
         });
-
+        this.bindtreedata();
        
     }
 
@@ -196,8 +197,12 @@ const TextArea = Input;
                                   
                                   
                                     <RadioGroup onChange={(e)=>{this.state.classid=e.target.value;this.forceUpdate();}} value={this.state.classid}>
-                                        <Radio value={'9eGbMukZ'}>好人好事</Radio>
-                                        <Radio value={'Q8MA1lH5'}>身边文明事</Radio>
+                                       {this.state.classlist.map((item,i)=>{
+                                            if(item.classname!=='文明播报'){
+                                               return <Radio key={i} value={item.classid}>{item.classname}</Radio> 
+                                            }
+                                            
+                                        })}  
                                     </RadioGroup>
                                                       
                                 </FormItem>
@@ -414,6 +419,26 @@ const TextArea = Input;
                 
             }
         });
+    }
+    //栏目
+    bindtreedata(){
+        var s = this;
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/search_articleclass',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:s.state.appid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    //console.log(data.list,'mytree');
+                    s.state.classlist=data.list;                    
+                    s.forceUpdate();
+                }
+            }
+        }) 
     }
   
 }
