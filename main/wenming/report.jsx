@@ -211,10 +211,29 @@ const FormItem = Form.Item;
                 keyword:title,
             },
             success(data){                    
-                s.state.dataSource=data.list;
+                //s.state.dataSource=data.list;
                 s.state.total=data.countRow.countrows;
                 //console.log(data.list,this.url,'data.result');
-                s.forceUpdate();                
+                data.list.map((item,key)=>{
+                    s.state.dataSource.push({
+                        articlid:item.articlid,
+                        classid:item.classid,
+                        autoid:item.autoid,
+                        commentnum:item.commentnum,
+                        content:item.content,
+                        createtime:item.createtime,
+                        imageslist:item.imageslist,
+                        ishost:item.ishost,
+                        looktime:item.looktime,
+                        pagetime:item.pagetime,
+                        status:item.status,
+                        title:item.title,
+                        type:item.type,
+                        key:key,
+                    })
+                })
+                s.forceUpdate(); 
+                console.log(s.state.dataSource,'s.state.dataSource');            
             }
         });
     }
@@ -244,9 +263,7 @@ const FormItem = Form.Item;
                 }
             }
         })
-    }
-
-  
+    } 
 }
 
 export default ZmitiValidateUser(ZmitiWenmingReportApp);
