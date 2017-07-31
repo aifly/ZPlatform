@@ -24,7 +24,7 @@ class ZmitiWenmingAboutApp extends React.Component{
            imgshow:'none',
            pageid:'gywm',
            imageurl:'',
-           content:'钟宜龙带领民兵剿匪，为了逼土匪现身，他和战士们用了火攻，没想到一场大火',
+           content:'',
         } 
         
     }

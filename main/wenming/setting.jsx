@@ -127,7 +127,7 @@ import IScroll from 'iscroll';
                                                         <div className='wenming-setting-classname'>{item.classname}</div>
                                                         <div className='wenming-setting-classact'>
                                                             <Button icon="edit" onClick={this.editype.bind(this,item.classid)}/>
-                                                            <Popconfirm title="如果确定删除的话，同步会把当前栏目的所有数据删除" onConfirm={this.delConfirm.bind(this,item.classid)} okText="Yes" cancelText="No">
+                                                            <Popconfirm title="如果确定删除的话，同步会把当前栏目的所有数据删除" onConfirm={this.delConfirm.bind(this,item.classid)} okText="确定" cancelText="取消">
                                                                 <Button icon="close"/>
                                                             </Popconfirm>
                                                         </div>
