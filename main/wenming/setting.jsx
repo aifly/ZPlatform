@@ -25,7 +25,7 @@ import IScroll from 'iscroll';
            appid:window.WENMING.XCXAPPID,
            modpostDialogVisible:false,
            datacheck:false,//数据审核
-           messagecheck:true,//评论审核
+           messagecheck:false,//评论审核
            settinglist:[],
            classlist:[],
            classname:'',
