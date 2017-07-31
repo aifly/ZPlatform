@@ -233,7 +233,7 @@ const FormItem = Form.Item;
                     })
                 })
                 s.forceUpdate(); 
-                console.log(s.state.dataSource,'s.state.dataSource');            
+                //console.log(s.state.dataSource,'s.state.dataSource');            
             }
         });
     }
