@@ -175,7 +175,7 @@ class ZmitiTripexpenceApp extends Component {
                 />
               )
         },  {
-            title: '淡旺季',
+            title: '旺季',
             dataIndex: 'daterange',
             key: 'daterange',
             width:'30%',

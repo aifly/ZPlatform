@@ -46,6 +46,8 @@ export default class ZmitiEditor extends Component {
 	}
 
 	componentDidMount() {
+
+
 		var prefix = this.props.isAdmin?'../':'./';
 		var assets=[
 				{
@@ -110,6 +112,7 @@ export default class ZmitiEditor extends Component {
 		var img = new Image();
 		img.onload = function(){
 			setTimeout(()=>{
+				$('.royal-theme a[href="https://www.froala.com/wysiwyg-editor?k=u"]').remove();
 				s.setState({
 					phoneW:s.refs['phone'].width,
 					text:s.props.html||''

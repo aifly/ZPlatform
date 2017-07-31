@@ -23,19 +23,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
         var list1 = [],
             list2 = [];
-        for(var i = 0;i<50;i++){
-            list1.push({
-                    province:'北京',
-                    pv:100+i,
-                    report:153+i
-                });  
-            list2.push( {
-                    nickname:'智媒体',
-                    commentCount:111+i,
-                    report:23+i,
-                    headerimgurl:'./static/images/default-chat.jpg'
-                })
-        }
+        
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
            totalPV:'000,000,000',
@@ -46,7 +34,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
            provincePVSort:'sort-down',
            allPV:0,
            provinceReportSort:'',
-           userCommentSort:'sort-down',
+           userCommentSort:'',
            userReportSort:''
         }
     }
@@ -74,7 +62,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         this.resizeMainHeight = resizeMainHeight;
     }
     componentDidMount(){
-       this.unload = false;
+       this.unload = this.unload || false;
        this.resizeMainHeight(this);
        let  {validateUser,loginOut,resizeMainHeight} = this.props;
         var iNow = 0 ;
@@ -87,8 +75,10 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             var worksid = 'wenming-login';
             this.worksid = worksid;
 
-
-            this.socket();
+            if(!this.unload){
+                this.unload = true;
+                this.socket();
+            }
 
             this.formatPV(localStorage.getItem('defaultcount'+this.worksid)*1||0);
 
@@ -161,13 +151,12 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                          });
                     }
                     //s.defaultCount = localStorage.getItem('defaultcount'+ worksid) || 0;
-                    s.defaultCount = s.state.allPV;
-                    s.defaultCount++;
+                    s.defaultCount = s.state.allPV+1;
+                 
 
                     s.state.monthPV = s.state.monthPV + 1 ;
                     s.state.dayPV = s.state.dayPV +1;
-                    s.forceUpdate();
-                    s.formatPV(s.defaultCount);
+                    s.formatPV(s.state.allPV+1);
 
 
                    // localStorage.setItem('defaultcount'+ worksid,s.defaultCount);
@@ -175,9 +164,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                     //localStorage.setItem('pv'+ worksid,s.pv);
                    // localStorage.setItem('uv'+ worksid,s.uv);
 
-                    s.fillUVPV();
-
-                    s.fillPV();
+                    
 
                    // localStorage.setItem('geoCoordMap'+worksid,JSON.stringify(s.geoCoordMap));
                     //localStorage.setItem('userData'+worksid,JSON.stringify({userData:s.userData}));
@@ -234,7 +221,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         
         var s = this;
         socket.on(worksid, function(msg){
-            if(!msg||s.unload){
+            if(!msg){
                 return;
             }
 
@@ -339,7 +326,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                                                 {this.state.provinceRankingList.map((item,i)=>{
                                                     return <li key={i}>
                                                         <div>{i+1}</div>
-                                                        <div>{item.province}</div>
+                                                        <div title={item.province} className='zmiti-text-overflow'>{item.province}</div>
                                                         <div>{item.pv}</div>
                                                         <div>{item.report}</div>
                                                     </li>
@@ -425,21 +412,28 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             
             break;
             case "userCommentSort":
-                this.state.userCommentSort = 'sort-up';///this.state.userCommentSort === 'sort-down'?'sort-up':'sort-down';
+                this.setState({
+                    userRankingList:this.userRankingList
+                });
+                /*this.state.userCommentSort = 'sort-down';///this.state.userCommentSort === 'sort-down'?'sort-up':'sort-down';
                 this.state.userReportSort = '';
-                if(this.state.userCommentSort === 'sort-up'){
-                    this.state.userRankingList.sort(this.sortBy('commentCount',false,parseInt))
-                }
+                if(this.state.userCommentSort === 'sort-down'){
+                    this.state.userRankingList.sort(this.sortBy('commentCount',true,parseInt))
+                }*/
                
             break;
             case 'userReportSort':
-                this.state.userReportSort ='sort-up';// this.state.userReportSort === 'sort-down'?'sort-up':'sort-down';
-                this.state.userCommentSort = '';
-                 this.state.userRankingList = this.userRankingList.sort((a,b)=>{
-                    if(this.state.userReportSort === 'sort-up'){
-                         this.state.userRankingList.sort(this.sortBy('report',false,parseInt))
-                    }
+                this.setState({
+                    userRankingList:this.userRankingList1
                 });
+
+                /*this.state.userReportSort ='sort-down';// this.state.userReportSort === 'sort-down'?'sort-up':'sort-down';
+                this.state.userCommentSort = '';
+                if(this.state.userReportSort === 'sort-down'){
+
+                    this.state.userRankingList.sort(this.sortBy('report',true,parseInt))
+
+                }*/
             break;
 
         }
@@ -462,6 +456,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             arr[pvLen-i-1] = item;
            //this.state.totalPV[pvLen-i-1] = item;
         });
+        this.state.allPV = num;
         this.state.totalPV = arr.join('');
         this.forceUpdate();
 
@@ -553,6 +548,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             if(data.getret === 0 ){
                 console.log(data)
                 this.userRankingList = data.list.concat([]);
+                this.userRankingList1 = (data.list1||[]).concat([])
                 this.setState({
                     userRankingList:data.list
                 },()=>{
@@ -688,7 +684,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                     symbol: '',
                     data:s.convertData(userData),
                     symbolSize: function(val){
-                         return val[2] /10 ;//100
+                         return val[2] /50 ;//100
                     },
                     label: {
                         normal: {

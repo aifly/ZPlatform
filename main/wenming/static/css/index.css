@@ -243,9 +243,10 @@
           .wenming-main-ui > section .weniming-statistics-list > section .wenming-list-title .wenming-sort {
             position: relative;
             cursor: pointer; }
-            .wenming-main-ui > section .weniming-statistics-list > section .wenming-list-title .wenming-sort.wenming-no-sort:before {
-              top: 44%; }
             .wenming-main-ui > section .weniming-statistics-list > section .wenming-list-title .wenming-sort.wenming-no-sort:after {
+              top: 44%;
+              border-bottom-color: #999; }
+            .wenming-main-ui > section .weniming-statistics-list > section .wenming-list-title .wenming-sort.wenming-no-sort:before {
               display: none; }
             .wenming-main-ui > section .weniming-statistics-list > section .wenming-list-title .wenming-sort.sort-up:before {
               border-bottom-color: #000; }
@@ -288,8 +289,11 @@
                       flex: 1;
               -webkit-flex: 1; }
               .wenming-main-ui > section .weniming-statistics-list > section .wenming-ranking-list ul li div:nth-of-type(2) {
-                max-width: 25%;
-                cursor: default; }
+                cursor: default;
+                -webkit-box-flex: 2;
+                    -ms-flex: 2;
+                        flex: 2;
+                -webkit-flex: 2; }
             .wenming-main-ui > section .weniming-statistics-list > section .wenming-ranking-list ul li img {
               width: 30px;
               height: 30px;

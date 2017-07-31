@@ -62,6 +62,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
            		}
            ]
         }
+
+        this.viewW = document.documentElement.clientWidth;
     }
 
     componentWillMount() {
@@ -288,7 +290,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                         {this.state.currentViewPic && <div className='wenming-mask'>
                             <aside onClick={()=>{this.setState({currentViewPic:''})}}></aside>
                             <div>
-                                <img src={this.state.currentViewPic} />
+                                <img style={{maxHeight:this.state.mainHeight-100,maxWidth:this.viewW-window.mainLeftSize}}  src={this.state.currentViewPic} />
                                 <section onClick={this.viewPrev.bind(this)} style={{cursor:'url(./static/images/pic_prev.cur),auto'}}></section>
                                 <section onClick={()=>{this.setState({currentViewPic:''})}} style={{cursor:'url(./static/images/small.cur),auto'}}></section>
                                 <section onClick={this.viewNext.bind(this)} style={{cursor:'url(./static/images/pic_next.cur),auto'}}></section>
@@ -299,7 +301,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                         {this.state.voidurl  && <div className='wenming-mask'>
                             <aside onClick={()=>{this.setState({voidurl:''})}}></aside>
                             <div>
-                                <video autoPlay width={800} height={600} controls src={this.state.voidurl}></video>
+                                <video autoPlay width={(this.viewW-window.mainLeftSize)/2} height={this.state.mainHeight/2}  controls src={this.state.voidurl}></video>
                                 <section onClick={()=>{this.setState({voidurl:''})}}></section>
                                 <section>
                                 </section>

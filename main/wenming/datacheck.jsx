@@ -25,6 +25,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
            allCount:1,
            pageIndex:1,
 
+           pageSize:10,
+
            currentPicIndex:-1,
 
 
@@ -50,6 +52,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
               
            ]
         }
+
+        this.viewW = document.documentElement.clientWidth;
     }
 
     componentWillMount() {
@@ -268,12 +272,12 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                             </ul>
                         </section>
                         <section className='wenming-pagination' style={{height:40}}>
-                            <Pagination showQuickJumper current={this.state.pageIndex} total={this.state.allCount} onChange={this.loadMoreArticle.bind(this)} />
+                            <Pagination showQuickJumper current={this.state.pageIndex} pageSize={this.state.pageSize} total={this.state.allCount} onChange={this.loadMoreArticle.bind(this)} />
                         </section>
                         {this.state.currentViewPic && <div className='wenming-mask'>
                             <aside onClick={()=>{this.setState({currentViewPic:''})}}></aside>
                             <div>
-                                <img src={this.state.currentViewPic} />
+                                <img style={{maxHeight:this.state.mainHeight-100,maxWidth:this.viewW-window.mainLeftSize}}  src={this.state.currentViewPic} />
                                 <section onClick={this.viewPrev.bind(this)} style={{cursor:'url(./static/images/pic_prev.cur),auto'}}></section>
                                 <section onClick={()=>{this.setState({currentViewPic:''})}} style={{cursor:'url(./static/images/small.cur),auto'}}></section>
                                 <section onClick={this.viewNext.bind(this)} style={{cursor:'url(./static/images/pic_next.cur),auto'}}></section>
@@ -284,7 +288,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                         {this.state.voidurl  && <div className='wenming-mask'>
                             <aside onClick={()=>{this.setState({voidurl:''})}}></aside>
                             <div>
-                                <video autoPlay width={800} height={600} controls src={this.state.voidurl}></video>
+                                <video autoPlay width={(this.viewW-window.mainLeftSize)/2} height={this.state.mainHeight/2} controls src={this.state.voidurl}></video>
                                 <section onClick={()=>{this.setState({voidurl:''})}}></section>
                                 <section>
                                 </section>
@@ -497,16 +501,17 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 data = JSON.parse(data);
             }
             if(data.getret === 0 ){
+                 setTimeout(()=>{
+                    this.state.currentDeleteIndex = -1;
+                    //this.state.allCount = this.state.allCount -1;
+                    this.forceUpdate(()=>{
+                        this.scroll.refresh();
+                        this.loadArticle(this.state.status);
+                    });
+                },500)
+                /*if(index>-1){
 
-                if(index>-1){
-                    setTimeout(()=>{
-                        this.state.dataSource.splice(index,1);
-                        this.state.currentDeleteIndex = -1;
-                        this.state.allCount = this.state.allCount -1;
-                        this.forceUpdate(()=>{
-                            this.scroll.refresh();
-                        });
-                    },500)
+                   
 
                 }else{
                      setTimeout(()=>{
@@ -524,7 +529,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                         });
                     },500)
                    
-                }
+                }*/
             }
         })
 
@@ -666,7 +671,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 getusersigid:this.getusersigid,
                 
                 page:this.state.pageIndex,
-                pagenum:10
+                pagenum:this.state.pageSize
             }
             if(this.state.currentWhere.type){
                 

@@ -203,10 +203,11 @@ $baseColor: #f4654c;
 						cursor: pointer;
 
 						&.wenming-no-sort {
-							&:before {
-								top: 44%;
-							}
 							&:after {
+								top: 44%;
+								border-bottom-color: #999;
+							}
+							&:before {
 								display: none;
 							}
 						}
@@ -253,8 +254,9 @@ $baseColor: #f4654c;
 
 							div {
 								&:nth-of-type(2) {
-									max-width: 25%;
 									cursor: default;
+									flex: 2;
+									-webkit-flex: 2;
 								}
 								flex: 1;
 								-webkit-flex: 1;

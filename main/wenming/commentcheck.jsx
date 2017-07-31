@@ -54,6 +54,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
               
            ]
         }
+
+        this.viewW = document.documentElement.clientWidth;
     }
 
     componentWillMount() {
@@ -330,7 +332,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                         {this.state.currentViewPic && <div className='wenming-mask'>
                             <aside onClick={()=>{this.setState({currentViewPic:''})}}></aside>
                             <div>
-                                <img src={this.state.currentViewPic} />
+                                <img style={{maxHeight:this.state.mainHeight-100,maxWidth:this.viewW-window.mainLeftSize}}  src={this.state.currentViewPic} />
                                 <section onClick={this.viewPrev.bind(this)} style={{cursor:'url(./static/images/pic_prev.cur),auto'}}></section>
                                 <section onClick={()=>{this.setState({currentViewPic:''})}} style={{cursor:'url(./static/images/small.cur),auto'}}></section>
                                 <section onClick={this.viewNext.bind(this)} style={{cursor:'url(./static/images/pic_next.cur),auto'}}></section>
@@ -341,7 +343,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                         {this.state.voidurl  && <div className='wenming-mask'>
                             <aside onClick={()=>{this.setState({voidurl:''})}}></aside>
                             <div>
-                                <video autoPlay width={800} height={600} controls src={this.state.voidurl}></video>
+                                <video autoPlay width={(this.viewW-window.mainLeftSize)/2} height={this.state.mainHeight/2}  controls src={this.state.voidurl}></video>
                                 <section onClick={()=>{this.setState({voidurl:''})}}></section>
                                 <section>
                                 </section>
@@ -579,17 +581,22 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 data = JSON.parse(data);
             }
             if( data.getret === 0 ){
-               this.state.dataSource[index].comments.splice(k,1);
                 this.state.currentDeleteIndex = -1;
+                this.state.currentDeleteCommentIndex = -1;
+               
+
+               this.state.dataSource[index].comments.splice(k,1);
+                
                 this.state.dataSource.forEach((item,k)=>{
                     item.comments.forEach((com,i)=>{
                         item.checked = false;
                     })
                 })
-                this.state.currentDeleteCommentIndex = -1;
+                
                 this.state.allCount = this.state.allCount -1;
                 this.forceUpdate(()=>{
                     this.scroll.refresh();
+                    this.loadComment(this.state.status);
                 });
             }
         })
@@ -732,11 +739,12 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
             }
             else{
-                data.status = index === 1 ? '1,2':0;
+                data.status = index === 1 ? 1:0;
             }
             if(this.state.classid){
                 //data.classid = this.state.classid;
             }
+            console.log(data)
              $.ajax({
                 type:'post',
                 url:window.baseUrl+'weixinxcx/get_articlecomment/',
@@ -747,6 +755,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                 }
              
                 if(data.getret === 0 ){
+                    console.log(data)
                     data.list.map((item,i)=>{
                         var imgs = item.imageslist.split(',');
                         if(!imgs[0]){
