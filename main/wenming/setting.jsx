@@ -146,7 +146,7 @@ import IScroll from 'iscroll';
                         </div>
                         <Modal title="栏目设置" visible={this.state.modpostDialogVisible}
                             onOk={this.addtype.bind(this)}
-                            onCancel={()=>{this.setState({modpostDialogVisible:false})}}
+                            onCancel={this.closedialog.bind(this)}
                         >
                             <Form>
                               <FormItem
@@ -244,6 +244,10 @@ import IScroll from 'iscroll';
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
                     s.setState({
                         modpostDialogVisible:false,
+                        classname:'',
+                        classename:'',
+                        gettype:'',
+                        parentclassid:'',
                     })
                     s.bindtreedata();                
                     s.forceUpdate();            
@@ -259,12 +263,28 @@ import IScroll from 'iscroll';
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
                     s.setState({
                         modpostDialogVisible:false,
+                        classname:'',
+                        classename:'',
+                        gettype:'',
+                        parentclassid:'',
                     })
                     s.bindtreedata();                
                     s.forceUpdate();            
                 }
             })
         }
+    }
+    //关闭dialog
+    closedialog(){
+        var s =this;
+        s.setState({
+            modpostDialogVisible:false,
+            classname:'',
+            classename:'',
+            gettype:'',
+            parentclassid:'',
+        })
+        s.forceUpdate(); 
     }
     //确认删除
     delConfirm(classid){
@@ -438,16 +458,6 @@ import IScroll from 'iscroll';
             }
         }) 
     }
-    //修改配置
-    editsetting(){
-
-    }
-
-    
-
-
-
-   
 
   
 }
