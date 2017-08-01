@@ -54,6 +54,30 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 		
 	}
 
+	copyfileto(options){//
+
+
+		$.ajax({
+			url:window.baseUrl+'/share/copyfile',
+			type:window.ajaxType || 'get',
+			data:{
+				getusersigid:options.getusersigid,
+				userid:options.userid,
+				fileurl:options.fileurl,
+				isover:options.isover,
+				dirname:options.dirname||""
+			}
+		}).done((data)=>{
+			if(data.getret === 0 ){
+				options.success &&options.success(data.filename);
+			}else{
+				console.log(data)
+				message.error('复制图片失败');
+			}
+		});
+
+	}
+
 	copyfile(options={}){//复制选中的文件
 
 		var s = options.that,
@@ -430,6 +454,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 			ajaxFail:this.ajaxFail,
 			randomString:this.randomString,
 			copyfile:this.copyfile,
+			copyfileto:this.copyfileto,
 			deepCopy:this.deepCopy,
 			zmitiAjax:this.zmitiAjax
 			//fillFeilds:this.fillFeilds

@@ -505,7 +505,6 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                     this.state.currentDeleteIndex = -1;
                     //this.state.allCount = this.state.allCount -1;
                     this.forceUpdate(()=>{
-                        this.scroll.refresh();
                         this.loadArticle(this.state.status);
                     });
                 },500)
@@ -573,6 +572,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             case "pass"://审核通过 
                 if(item.recommend){//是推荐
                      $.ajax({
+                        async:false,
                         type:'post',
                         url:window.baseUrl+'weixinxcx/hot_articles/',
                         data:{
@@ -614,21 +614,8 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             }
             if(data.getret === 0 ){
 
-               if(index>-1){
-                 setTimeout(()=>{
-                    this.state.dataSource.forEach((item,i)=>{
-                        item.recommend = false;
-                    })
-                    this.state.dataSource.splice(index,1)
-                    this.state.currentDeleteIndex = -1;
-                    this.state.allCount = this.state.allCount -1;
-                    this.forceUpdate(()=>{
-                        this.scroll.refresh();
-                    });
-                },500)
-             }else{
-                 
-             }
+                this.loadArticle(this.state.status);
+               
             }
         })
 
