@@ -58,7 +58,7 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 
 
 		$.ajax({
-			url:window.baseUrl+'/share/copyfile',
+			url:window.baseUrl+'/share/copyfileto',
 			type:window.ajaxType || 'get',
 			data:{
 				getusersigid:options.getusersigid,

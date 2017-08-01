@@ -31,12 +31,12 @@ class ZmitiWenmingAboutApp extends React.Component{
 
     componentWillMount() {
 
-        let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail,listen,send} = this.props;
+        let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail,listen,send,copyfileto} = this.props;
         var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
             },this);
 
-     
+        this.copyfileto=copyfileto;
         this.loginOut = loginOut;
         this.listen = listen;
         this.send = send;
@@ -90,9 +90,23 @@ class ZmitiWenmingAboutApp extends React.Component{
             userid:s.userid,
             getusersigid: s.getusersigid,
             onFinish(imgData){
-                s.state.imageurl = imgData.src;
-                s.state.imgshow='block';
-                s.forceUpdate();
+                var imgDatasrc=imgData.src;
+                s.copyfileto({
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    fileurl:imgDatasrc,
+                    isover:0,
+                    dirname:'wx_xcx',
+                    success(fileurl){
+                        s.state.imageurl=fileurl;
+                        console.log(fileurl,'新图片');
+                        s.state.imgshow='block';
+                        s.forceUpdate();
+                    }
+                })
+                //s.state.imageurl = imgData.src;
+                //s.state.imgshow='block';
+                //s.forceUpdate();
             },
             title,
             selectedIndex:5,

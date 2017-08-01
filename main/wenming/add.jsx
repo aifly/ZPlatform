@@ -49,12 +49,12 @@ const TextArea = Input;
 
     componentWillMount() {
 
-        let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail,listen,send} = this.props;
+        let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail,listen,send,copyfileto} = this.props;
         var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
                 loginOut('登录失效，请重新登录',window.loginUrl,false);
             },this);
 
-        
+        this.copyfileto=copyfileto;
         this.loginOut = loginOut;
         this.listen = listen;
         this.send = send;
@@ -140,11 +140,22 @@ const TextArea = Input;
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
-                 s.state.voidurl = imgData.src;
-                 s.state.type=2;
-                 console.log(s.state.type,'视频');                 
-                 s.state.selectimage='none';
-                 s.forceUpdate();
+                var imgDatasrc=imgData.src;
+                s.copyfileto({
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    fileurl:imgDatasrc,
+                    isover:0,
+                    dirname:'wx_xcx',
+                    success(fileurl){
+                        s.state.voidurl=fileurl;
+                        //console.log(fileurl,'新video');
+                        s.state.type=2;
+                        //console.log(s.state.type,'视频');                 
+                        s.state.selectimage='none';
+                        s.forceUpdate();
+                    }
+                })
             },
             onCancel(){
                 s.setState({
@@ -157,12 +168,23 @@ const TextArea = Input;
             userid:s.userid,
             getusersigid: s.getusersigid,
             onFinish(imgData){
-                //imgnum.push(imgData.src);
                 s.state.type=1;
-                //s.state.voidurl='';
-                console.log(s.state.type,'图片');
+                //console.log(s.state.type,'图片');
+                var imgDatasrc=imgData.src;
                 if(s.state.fileList.length<5){
-                    s.state.fileList.push(imgData.src);
+                    s.copyfileto({
+                        userid:s.userid,
+                        getusersigid:s.getusersigid,
+                        fileurl:imgDatasrc,
+                        isover:0,
+                        dirname:'wx_xcx',
+                        success(fileurl){
+                            s.state.fileList.push(fileurl);
+                            console.log(fileurl,'新图片');
+                            s.forceUpdate();
+                        }
+                    })
+                    
                 }else{
                     message.warning('最多只能添加5张图片');
                 }
@@ -405,7 +427,7 @@ const TextArea = Input;
         }
         $.ajax({
             type:'POST',
-            url:window.baseUrl + 'weixinxcx/append_article/',
+            url:window.baseUrl + 'weixinxcx/add_articles/',
             data:params,
             success(data){
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -420,8 +442,6 @@ const TextArea = Input;
                         type:3,
                         ishost:0,
                         voidurl:'',
-                        longitude:'',
-                        latitude:'',
                         selectimage:'block',
                         selectvideo:'block',
                     })
