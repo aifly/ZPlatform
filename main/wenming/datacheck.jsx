@@ -503,6 +503,7 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
             if(data.getret === 0 ){
                  setTimeout(()=>{
                     this.state.currentDeleteIndex = -1;
+                    this.state.selectAll = false;
                     //this.state.allCount = this.state.allCount -1;
                     this.forceUpdate(()=>{
                         this.loadArticle(this.state.status);

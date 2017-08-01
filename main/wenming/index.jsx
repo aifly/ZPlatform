@@ -193,7 +193,7 @@ var unload = false;
             className:'wenming-online',
             message: '上线提示',
             description: username,
-            icon: <img src={headerimgurl}/>
+            icon: <img src={headerimgurl||defaulturl}/>
         });
     }
 
