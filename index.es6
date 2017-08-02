@@ -984,7 +984,7 @@ window.addEventListener('load', ()=> {
 
             let company = 1;
             $(".fly-get-code").on("click", ()=> {//发送验证码。
-                let reg = /^0?1[3|4|5|8][0-9]\d{8}$/,
+                let reg = /^0?1[3|4|5|8|7][0-9]\d{8}$/,
                     emailReg=  /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
 
                 var value = $('input[name="reg-email"]').val();
@@ -1079,7 +1079,7 @@ window.addEventListener('load', ()=> {
                 dd.validcode = $('input[name="reg-tel"]').val();
 
                 let pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/,
-                    reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+                    reg = /^0?1[3|4|5|7|8][0-9]\d{8}$/;
 
 
                 if (dd.username.length <= 0 || dd.username.length > 18) {
@@ -1317,14 +1317,13 @@ window.addEventListener('load', ()=> {
             });
 
             let pattern = /^([\.a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/,
-                reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+                reg = /^0?1[3|4|5|7|8][0-9]\d{8}$/;
             $('input[name="reg-email"]').on('focus', (e)=> {
                 this.removeChecked();
                 $(e.target).parents('.fly-reg-input').removeClass('error');
                 $(e.target).val().length <= 0 && $(e.target).siblings('.mark').addClass('blur');
             }).on('blur', (e)=> {
                 if (!pattern.test($(e.target).val().trim()) && !reg.test($(e.target).val().trim())) {
-
                     $(e.target).parents('.fly-reg-input').addClass("error");
                     this.removeErrorInfo($(e.target).parents('.fly-reg-input'))
                     successArr.remove("email");
@@ -1337,7 +1336,6 @@ window.addEventListener('load', ()=> {
 
 
             $(".fly-input").on("blur", ()=> {
-                console.log(company)
                 $('.btn-begin-reg')[successArr.length === (company === 1 ? 6 : 7) ? "removeClass" : "addClass"]('disabled')
             });
 
@@ -1353,6 +1351,7 @@ window.addEventListener('load', ()=> {
 
         removeChecked(){
             $('#green').removeAttr('checked');
+            $('.btn-begin-reg').addClass('disabled')
         },
 
         checkReg(){
