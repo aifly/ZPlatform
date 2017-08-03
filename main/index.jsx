@@ -54,6 +54,7 @@ import ZmitiWenmingAddApp from './wenming/add.jsx';
 import ZmitiWenmingReportaddApp from './wenming/reportadd.jsx';
 import ZmitiWenmingAboutApp from './wenming/about.jsx';
 import ZmitiWenmingPersonalRankApp from './wenming/personal.jsx';
+import ZmitiWenmingProvinceRankApp from './wenming/province.jsx';
 import ZmitiWenmingCommentCheckApp from './wenming/commentcheck.jsx';
 
 import ZmitiWenmingCommentDetailApp from './wenming/commentdetail.jsx';
@@ -120,6 +121,7 @@ class App extends React.Component{
 				{path: '/wenmingadd',app:ZmitiWenmingAddApp},
 				{path: '/wenmingabout',app:ZmitiWenmingAboutApp},
 				{path: '/wenmingpersonal',app:ZmitiWenmingPersonalRankApp},
+				{path: '/wenmingprovince',app:ZmitiWenmingProvinceRankApp},
 				{path: '/wenmingcommentcheck',app:ZmitiWenmingCommentCheckApp},
 				{path: '/wenmingcommentdetail/:id',app:ZmitiWenmingCommentDetailApp},
 				

@@ -11,9 +11,8 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 
 import MainUI from '../components/Main.jsx';
-import IScroll from 'iscroll';
 
-class ZmitiWenmingPersonalRankApp extends React.Component{
+class ZmitiWenmingProvinceRankApp extends React.Component{
     constructor(args){
         super(...args);
 
@@ -62,20 +61,20 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
         sortedInfo = sortedInfo || {};
         filteredInfo = filteredInfo || {};
         const columns = [{
-            title: '头像',
-            dataIndex: 'headerimgurl',
-            key: 'headerimgurl',
+            title: '排名',
+            dataIndex: 'i',
+            key: 'i',
             render:(text,record,index)=>{
-                return <div className='wenming-ranking-imgs'><img src={text}/></div>
+                return record.key
             }
         }, {
-            title: '昵称',
-            dataIndex: 'nickname',
-            key: 'nickname',
+            title: '省份',
+            dataIndex: 'province',
+            key: 'province',
         }, {
-            title: '评论数',
-            dataIndex: 'commentCount',
-            key: 'commentCount',
+            title: '浏览量',
+            dataIndex: 'pv',
+            key: 'pv',
             onFilter:(value,record)=>value*1===record.commentCount,
             sorter:(a,b)=>a.commentCount-b.commentCount,
         }, {
@@ -97,7 +96,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             mainRight:<div className='wenming-ranking-main-ui' style={{height:this.state.mainHeight}}>
                         <div className="wenming-ranking-header">
                             <Row>
-                                <Col span={16} className="wenming-ranking-header-inner">个人排行榜-身边文明事
+                                <Col span={16} className="wenming-ranking-header-inner">省份排行榜-身边文明事
                                     
                                 </Col>
                                 <Col span={8} className='wenming-ranking-button-right'>
@@ -134,11 +133,10 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
         var s = this;
         $.ajax({
             type:'post',
-            url:window.baseUrl+'weixinxcx/usersort/',
+            url:window.baseUrl+'weixinxcx/provincesort/',
             data:{
                 appid:window.WENMING.XCXAPPID,
                 monthnum:3,
-                usernum:500,
                 userid:s.userid,
                 getusersigid:s.getusersigid
             }
@@ -149,11 +147,10 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             if(data.getret === 0 ){     
                 data.list.map((item,i)=>{
                    s.state.dataSource.push({
-                    commentCount:item.commentCount,
-                    headerimgurl:item.headerimgurl,
-                    nickname:item.nickname,
+                    province:item.province,
+                    pv:item.pv,
                     report:item.report,
-                    key:i,
+                    key:i+1,
                    })
                 })
                 s.forceUpdate();
@@ -166,4 +163,4 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
 
 }
 
-export default ZmitiValidateUser(ZmitiWenmingPersonalRankApp);
+export default ZmitiValidateUser(ZmitiWenmingProvinceRankApp);
