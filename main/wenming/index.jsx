@@ -573,6 +573,7 @@ var unload = false;
             if(typeof data === 'string'){
                 data = JSON.parse(data);
             }
+            console.log(data)
             if(data.getret === 0 ){
                 this.state.monthPV = data.list.monthpv;
                 this.state.dayPV = data.list.daypv;
