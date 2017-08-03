@@ -20,19 +20,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
         this.state = {
             mainHeight:document.documentElement.clientHeight-50,
             appid:window.WENMING.XCXAPPID,
-            dataSource:[{
-              key: '1',
-              headerimgurl: '胡彦斌',
-              nickname: '胡彦斌',
-              commentCount: 32,
-              report: 50
-            }, {
-              key: '2',
-              headerimgurl: '胡彦斌',
-              nickname: '胡彦斌',
-              commentCount: 13,
-              report: 54
-            }],
+            dataSource:[],
         } 
         
     }
@@ -158,13 +146,17 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             if(typeof data === 'string'){
                 data = JSON.parse(data);
             }
-            if(data.getret === 0 ){
-                console.log(data)
-                this.setState({
-                    dataSource:data.list
-                });
+            if(data.getret === 0 ){     
+                data.list.map((item,i)=>{
+                   s.state.dataSource.push({
+                    commentCount:item.commentCount,
+                    headerimgurl:item.headerimgurl,
+                    nickname:item.nickname,
+                    report:item.report,
+                    key:i,
+                   })
+                })
                 s.forceUpdate();
-
             }
         });
     }
