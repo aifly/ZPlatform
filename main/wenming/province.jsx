@@ -93,7 +93,7 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
             userid:s.userid,
             getusersigid: s.getusersigid,
             title,
-            mainRight:<div className='wenming-ranking-main-ui' style={{height:this.state.mainHeight}}>
+            mainRight:<div className='wenming-ranking-main-ui'>
                         <div className="wenming-ranking-header">
                             <Row>
                                 <Col span={16} className="wenming-ranking-header-inner">省份排行榜-身边文明事
@@ -144,7 +144,8 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
             if(typeof data === 'string'){
                 data = JSON.parse(data);
             }
-            if(data.getret === 0 ){     
+            if(data.getret === 0 ){ 
+                //console.log(data.list);
                 data.list.map((item,i)=>{
                    s.state.dataSource.push({
                     province:item.province,
