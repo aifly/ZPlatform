@@ -26,6 +26,7 @@ import IScroll from 'iscroll';
            modpostDialogVisible:false,
            datacheck:false,//数据审核
            messagecheck:false,//评论审核
+           noticecheck:false,
            settinglist:[],
            classlist:[],
            classname:'',
@@ -113,6 +114,15 @@ import IScroll from 'iscroll';
                                 <Col span={16}>
                                     <div>
                                     <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.messagecheck.bind(this)} checked={this.state.messagecheck} />
+                                    </div>
+                                </Col>
+                            </Row>
+                            <div className='hr15'></div>
+                            <Row>
+                                <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>文明播报：</div></Col>
+                                <Col span={16}>
+                                    <div>
+                                    <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.noticecheck.bind(this)} checked={this.state.noticecheck} />
                                     </div>
                                 </Col>
                             </Row>
@@ -390,6 +400,15 @@ import IScroll from 'iscroll';
                                     s.forceUpdate();
                                 }
                             break;
+                            case 'sae4c56a':
+                                if(item.switch==0){
+                                    s.state.noticecheck=false;
+                                }else{
+                                    s.state.noticecheck=true;
+                                    
+                                    s.forceUpdate();
+                                }
+                            break;
 
                         }
                     })                  
@@ -459,7 +478,36 @@ import IScroll from 'iscroll';
             }
         }) 
     }
-
+    //文明播报
+    noticecheck(checked){
+        var s = this; 
+        var configid='sae4c56a';
+        console.log(checked,'noticecheck');
+        var value='';
+        if(checked==true){
+            value=1;
+        }else{
+            value=0;
+        }
+        $.ajax({
+            url:window.baseUrl+'weixinxcx/edit_xcxconfig/',
+            type:'POST',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:s.state.appid,
+                configid:configid,
+                switch:value,
+            },
+            success(data){
+                message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                //console.log(value,checked,'value');
+                s.state.noticecheck=checked;
+                s.getsetting();            
+                s.forceUpdate();          
+            }
+        }) 
+    }
   
 }
 
