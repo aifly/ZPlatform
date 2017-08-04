@@ -75,14 +75,14 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
             title: '浏览量',
             dataIndex: 'pv',
             key: 'pv',
-            onFilter:(value,record)=>value*1===record.commentCount,
-            sorter:(a,b)=>a.commentCount-b.commentCount,
+            onFilter:(value,record)=>value*1===record.pv,
+            sorter:(a,b)=>a.pv-b.pv,
         }, {
             title: '上报数',
             dataIndex: 'report',
             key: 'report',
             onFilter:(value,record)=>value*1===record.report,
-            sorter:(a,b)=>a.commentCount-b.report,
+            sorter:(a,b)=>a.report-b.report,
         }];
 
         var s =this;
@@ -145,7 +145,7 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
                 data = JSON.parse(data);
             }
             if(data.getret === 0 ){ 
-                //console.log(data.list);
+                console.log(data.list);
                 data.list.map((item,i)=>{
                    s.state.dataSource.push({
                     province:item.province,

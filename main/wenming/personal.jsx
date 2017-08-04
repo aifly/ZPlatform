@@ -83,7 +83,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             dataIndex: 'report',
             key: 'report',
             onFilter:(value,record)=>value*1===record.report,
-            sorter:(a,b)=>a.commentCount-b.report,
+            sorter:(a,b)=>a.report-b.report,
         }];
 
         var s =this;
