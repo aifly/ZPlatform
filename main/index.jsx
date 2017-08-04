@@ -58,6 +58,7 @@ import ZmitiWenmingProvinceRankApp from './wenming/province.jsx';
 import ZmitiWenmingCommentCheckApp from './wenming/commentcheck.jsx';
 
 import ZmitiWenmingCommentDetailApp from './wenming/commentdetail.jsx';
+import ZmitiBoardroomApp from './boardroom/index.jsx';
 
 
 import {notification } from './commoncomponent/common.jsx';
@@ -124,6 +125,7 @@ class App extends React.Component{
 				{path: '/wenmingprovince',app:ZmitiWenmingProvinceRankApp},
 				{path: '/wenmingcommentcheck',app:ZmitiWenmingCommentCheckApp},
 				{path: '/wenmingcommentdetail/:id',app:ZmitiWenmingCommentDetailApp},
+				{path: '/boardroom',app:ZmitiBoardroomApp},
 				
 		];
 		return (

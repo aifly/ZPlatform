@@ -39,5 +39,9 @@ window.MENUCONFIG = [
 	{
 		key:'tripexpence',
 		VISITUSERS:['zgrmyh']		
-	}
+	},
+	{
+		key:'boardroom',
+		VISITUSERS:['xuchang']
+	},
 ];
