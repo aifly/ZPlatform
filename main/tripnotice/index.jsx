@@ -184,6 +184,7 @@ class ZmitiTripNoticeApp extends Component {
 
         $.ajax({
             url:window.baseUrl+'travel/search_notice/',
+            type:'POST',
             data:{
                 userid:this.userid,
                 getusersigid:this.getusersigid
