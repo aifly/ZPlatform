@@ -23,17 +23,12 @@ class ZmitiTripSettingApp extends Component {
 			setuserid:'',
 			selectedIndex:100,
 			mainHeight:document.documentElement.clientHeight-50,
-			modpostDialogVisible:false,
-			modpostEditDialogVisible:false,		
-			jobname:'',
-			level:1,
-			setjobid:'',
-			setjobname:'',
-			setlevel:'',
-			dataSource:[],
-			jobid:'',
-			keyword:'',
 			companyname:'',
+            companyid:'',
+            title:'',
+            versionCode:'',
+            versionName:'',
+            apkUrl:'',
 		};
 
 		
@@ -70,39 +65,60 @@ class ZmitiTripSettingApp extends Component {
 					<div className="zmiti-setting-line"></div>
 					<div className='hr15'></div>
 					<div className='zmiti-tripsetting-form'>
-                        
                         <Row>
-                            <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>名称：</div></Col>
+                            <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>公司编号：</div></Col>
                             <Col span={16}>
-                                <Input placeholder="Basic usage" />
+                                <Input 
+                                    value={this.state.companyid}
+                                    onChange={(e)=>{this.state.companyid=e.target.value;this.forceUpdate();}}
+                                />
                             </Col>
                         </Row>
                         <div className='hr15'></div>
                         <Row>
-                            <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>用户版本号：</div></Col>
+                            <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>应用名称：</div></Col>
                             <Col span={16}>
-                                <Input placeholder="Basic usage" />
+                                <Input 
+                                    value={this.state.title}
+                                    onChange={(e)=>{this.state.title=e.target.value;this.forceUpdate();}}
+                                />
                             </Col>
                         </Row>
                         <div className='hr15'></div>
                         <Row>
-                            <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>软件版本号：</div></Col>
+                            <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>应用code号：</div></Col>
                             <Col span={16}>
-                                <Input placeholder="Basic usage" />
+                                <Input 
+                                    value={this.state.versionCode}
+                                    onChange={(e)=>{this.state.versionCode=e.target.value;this.forceUpdate();}}
+                                />
+                            </Col>
+                        </Row>
+                        <div className='hr15'></div>
+                        <Row>
+                            <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>应用版本号：</div></Col>
+                            <Col span={16}>
+                                <Input 
+                                    value={this.state.versionName}
+                                    onChange={(e)=>{this.state.versionName=e.target.value;this.forceUpdate();}}
+                                />
                             </Col>
                         </Row>
                         <div className='hr15'></div>
                         <Row>
                             <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>安装包：</div></Col>
                             <Col span={16}>
-                                <Input placeholder="Basic usage" />
+                                <Input 
+                                    value={this.state.apkUrl}
+                                    onChange={(e)=>{this.state.apkUrl=e.target.value;this.forceUpdate();}}
+                                />
                             </Col>
                         </Row>
                         <div className='hr15'></div>
                         <Row>
                             <Col span={8} className='wenming-setting-leftpane'></Col>
                             <Col span={16}>
-                                 <Button type="primary" htmlType="submit">提交</Button>
+                                 <Button type="primary" >提交</Button>
                             </Col>
                         </Row>
 

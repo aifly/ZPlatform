@@ -102,7 +102,7 @@ class ZmitiTripReasonApp extends Component {
 			userid:this.userid,
 			changeAccount:this.changeAccount.bind(this),
 			type:'custom-1',
-			tags:['交通工具','差旅费','出差事由','注意事项','设置'],
+			tags:['交通工具','差旅费','出差事由','注意事项'],
 			mainHeight:this.state.mainHeight,
 			title:title,
 			selectedIndex: 2,

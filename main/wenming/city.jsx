@@ -181,7 +181,7 @@ class ZmitiWenmingCityRankApp extends React.Component{
                 data = JSON.parse(data);
             }
             if(data.getret === 0 ){ 
-                console.log(data.list);
+                //console.log(data.list);
                 data.list.map((item,i)=>{                	
                    if(item.provincecode==provinceid){
                    	s.state.province=item.province;
@@ -193,7 +193,7 @@ class ZmitiWenmingCityRankApp extends React.Component{
     }
     //goback
     goback(){
-    	window.location='#/wenmingprovince'
+    	window.location='#/wenming'
     }
 
 
