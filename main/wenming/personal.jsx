@@ -9,7 +9,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import ZmitiWenmingAsideBarApp from './header.jsx';
 
-
+const Search = Input.Search;
 import MainUI from '../components/Main.jsx';
 import IScroll from 'iscroll';
 
@@ -21,6 +21,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             mainHeight:document.documentElement.clientHeight-50,
             appid:window.WENMING.XCXAPPID,
             dataSource:[],
+            keyword:'',
         } 
         
     }
@@ -62,6 +63,13 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
         sortedInfo = sortedInfo || {};
         filteredInfo = filteredInfo || {};
         const columns = [{
+            title: '序号',
+            dataIndex: 'i',
+            key: 'i',
+            render:(text,record,index)=>{
+                return record.key
+            }
+        },{
             title: '头像',
             dataIndex: 'headerimgurl',
             key: 'headerimgurl',
@@ -107,6 +115,21 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
                             <div className="clearfix"></div>
                         </div>
                         <div className='wenming-ranking-line'></div>
+                        <div className='hr15'></div>                        
+                        <Row>
+                            <Col span={6} className='wenming-ranking-label'>搜索：</Col>
+                            <Col span={18}>                                    
+                                <Search
+                                placeholder="输入昵称"
+                                style={{ width: 200 }}
+                                onSearch={function(value){                                   
+                                    console.log(value,'value');
+                                    s.searchByKeyword(value);
+                                    //s.forceUpdate();   
+                                }}
+                                />
+                            </Col>
+                        </Row>  
                         <div className="hr10"></div>
                         <div>
                             <Table dataSource={this.state.dataSource} columns={columns} />
@@ -138,7 +161,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             data:{
                 appid:window.WENMING.XCXAPPID,
                 monthnum:3,
-                usernum:500,
+                usernum:200,
                 userid:s.userid,
                 getusersigid:s.getusersigid
             }
@@ -153,7 +176,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
                     headerimgurl:item.headerimgurl,
                     nickname:item.nickname,
                     report:item.report,
-                    key:i,
+                    key:i+1,
                    })
                 })
                 s.forceUpdate();
@@ -161,7 +184,16 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
         });
     }
 
+    //search
+    searchByKeyword(value){       
+        this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
 
+        this.state.dataSource = this.dataSource.filter((item)=>{
+            return  item.nickname.indexOf(value)>-1;
+        });
+        this.forceUpdate();
+        
+    }
 
 
 }

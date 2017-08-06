@@ -72,13 +72,18 @@ $baseColor: #f4654c;
 		}
 	}
 	.wenming-ranking-imgs{
-		width:60px;
+		width:40px;
+		height:40px;
 		img{
 			border-radius: 50%;
 			-webkit-border-radius: 50%;
 			-ms-border-radius: 50%;
-		}
-		
+		}		
+	}
+	.wenming-ranking-label{
+		width:50px;
+		line-height: 28px;
+		text-align: right;
 	}
 
 
