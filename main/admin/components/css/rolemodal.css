@@ -1,0 +1,45 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
+.role-list {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: -webkit-flex;
+  -ms-flex-flow: row;
+      flex-flow: row;
+  -webkit-flex-wrap: wrap; }
+  .role-list li {
+    width: 40%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    display: -webkit-flex;
+    -ms-flex-flow: row;
+        flex-flow: row;
+    height: 40px;
+    line-height: 40px;
+    text-align: center; }
+    .role-list li:hover {
+      background: #eee; }
+    .role-list li:nth-of-type(2n) {
+      margin-left: 15%; }
+    .role-list li > aside {
+      -webkit-box-flex: 1;
+          -ms-flex: 1;
+              flex: 1; }
+/*# sourceMappingURL=rolemodal.css.map */

@@ -1,10 +1,15 @@
 import './static/css/index.css';
 import React from 'react';
-import {Button,notification} from '../commoncomponent/common.jsx';
+import {
+    Button,
+    notification
+} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
-import {ZmitiValidateUser} from '../public/validate-user.jsx';
+import {
+    ZmitiValidateUser
+} from '../public/validate-user.jsx';
 
 import ZmitiWenmingAsideBarApp from './header.jsx';
 
@@ -16,44 +21,62 @@ import 'echarts/lib/chart/map';
 import '../static/echarts/china';
 
 import IScroll from 'iscroll';
-var defaulturl= 'http://www.zmti.com/main/static/images/zmiti-logo.jpg';
+var defaulturl = 'http://www.zmti.com/main/static/images/zmiti-logo.jpg';
 
 var unload = false;
 
- class ZmitiWenmingApp extends React.Component{
-    constructor(args){
+class ZmitiWenmingApp extends React.Component {
+    constructor(args) {
         super(...args);
 
         var list1 = [],
             list2 = [];
-        
+
         this.state = {
-           mainHeight:document.documentElement.clientHeight-50,
-           totalPV:'000,000,000',
-           monthPV:0,
-           dayPV:0,
-           provinceRankingList:list1,
-           userRankingList:list2,
-           provincePVSort:'sort-down',
-           allPV:0,
-           provinceReportSort:'',
-           userCommentSort:'sort-down',
-           userReportSort:''
+            mainHeight: document.documentElement.clientHeight - 50,
+            totalPV: '000,000,000',
+            monthPV: 0,
+            dayPV: 0,
+            provinceRankingList: list1,
+            userRankingList: list2,
+            provincePVSort: 'sort-down',
+            allPV: 0,
+            provinceReportSort: '',
+            userCommentSort: 'sort-down',
+            userReportSort: ''
         }
     }
 
-    componentWillUnmount(){
-         this.unmout = true;
+    componentWillUnmount() {
+        this.unmout = true;
     }
 
     componentWillMount() {
         this.unmout = false;
-        let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail,listen,send} = this.props;
-        var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
-                loginOut('登录失效，请重新登录',window.loginUrl,false);
-            },this);
+        let {
+            resizeMainHeight,
+            popNotice,
+            validateUser,
+            loginOut,
+            validateUserRole,
+            isSuperAdmin,
+            isNormalAdmin,
+            getUserDetail,
+            listen,
+            send
+        } = this.props;
+        var {
+            userid,
+            getusersigid,
+            companyid,
+            username,
+            isover,
+            usertypesign
+        } = validateUser(() => {
+            loginOut('登录失效，请重新登录', window.loginUrl, false);
+        }, this);
 
-       
+
         this.loginOut = loginOut;
         this.listen = listen;
         this.send = send;
@@ -64,66 +87,70 @@ var unload = false;
         this.getUserDetail = getUserDetail;
         this.resizeMainHeight = resizeMainHeight;
     }
-    componentDidMount(){
+    componentDidMount() {
 
-       this.resizeMainHeight(this);
-       let  {validateUser,loginOut,resizeMainHeight} = this.props;
-        var iNow = 0 ;
-        validateUser(()=>{
+        this.resizeMainHeight(this);
+        let {
+            validateUser,
+            loginOut,
+            resizeMainHeight
+        } = this.props;
+        var iNow = 0;
+        validateUser(() => {
             loginOut();
-        },this);
+        }, this);
         resizeMainHeight(this);
-        setTimeout(()=>{
+        setTimeout(() => {
             this.initEcharts();
             var worksid = 'wenming-login';
             this.worksid = worksid;
-            if(!unload){
+            if (!unload) {
                 unload = true;
                 this.socket();
             }
 
-            this.formatPV(localStorage.getItem('defaultcount'+this.worksid)*1||0);
+            this.formatPV(localStorage.getItem('defaultcount' + this.worksid) * 1 || 0);
 
             this.request();
 
             this.setScroll();
-        },300);
+        }, 300);
 
-
-       
-    }
-
-    setScroll(){
-
-        this.proviceScroll = new IScroll(this.refs['provice-scroller'],{
-            scrollbars:true,//显示滚动条
-            interactiveScrollbars:true,//允许用户拖动滚动条
-            mouseWheel:true,//启用鼠标滚轮。
-        });
-
-        this.userScroll = new IScroll(this.refs['user-scroller'],{
-            scrollbars:true,//显示滚动条
-            interactiveScrollbars:true,//允许用户拖动滚动条
-            mouseWheel:true,//启用鼠标滚轮。
-        });
 
 
     }
 
-    getPos(data){
+    setScroll() {
+
+        this.proviceScroll = new IScroll(this.refs['provice-scroller'], {
+            scrollbars: true, //显示滚动条
+            interactiveScrollbars: true, //允许用户拖动滚动条
+            mouseWheel: true, //启用鼠标滚轮。
+        });
+
+        this.userScroll = new IScroll(this.refs['user-scroller'], {
+            scrollbars: true, //显示滚动条
+            interactiveScrollbars: true, //允许用户拖动滚动条
+            mouseWheel: true, //启用鼠标滚轮。
+        });
+
+
+    }
+
+    getPos(data) {
         var s = this;
 
         var worksid = this.worksid;
 
-         $.ajax({
-            url:`http://restapi.amap.com/v3/geocode/regeo?key=10df4af5d9266f83b404c007534f0001&location=${data.pos[0]},${data.pos[1]}&poitype=&radius=100&extensions=base&batch=false&roadlevel=1`+'',
-            type:'get',
-            error(){
+        $.ajax({
+            url: `http://restapi.amap.com/v3/geocode/regeo?key=10df4af5d9266f83b404c007534f0001&location=${data.pos[0]},${data.pos[1]}&poitype=&radius=100&extensions=base&batch=false&roadlevel=1` + '',
+            type: 'get',
+            error() {
 
             },
-            success(d){
-                if(d.status === '1' && d.infocode === '10000'){
-                    
+            success(d) {
+                if (d.status === '1' && d.infocode === '10000') {
+
                     var addressComponent = d.regeocode.addressComponent;
                     /*var opt = {
                         type:'map',
@@ -133,76 +160,74 @@ var unload = false;
                         headimgurl:headimgurl
                     }*/
 
-                    var address = (addressComponent.city[0]||addressComponent.province)+addressComponent.district;
-                    
-                   
+                    var address = (addressComponent.city[0] || addressComponent.province) + addressComponent.district;
 
-                    if(s.geoCoordMap[address]){//存在
-                        s.userData.forEach(function(item,i){
-                            if(item.name === address){
+
+
+                    if (s.geoCoordMap[address]) { //存在
+                        s.userData.forEach(function(item, i) {
+                            if (item.name === address) {
                                 item.value++;
                             }
                         });
-                        
-                    }
-                    else{
-                         s.geoCoordMap[address] = data.pos;
-                         s.userData.push({
-                            name:address,
-                            value:1
-                         });
+
+                    } else {
+                        s.geoCoordMap[address] = data.pos;
+                        s.userData.push({
+                            name: address,
+                            value: 1
+                        });
                     }
                     //s.defaultCount = localStorage.getItem('defaultcount'+ worksid) || 0;
-                    
+
 
                     s.request();
 
 
-                   // localStorage.setItem('defaultcount'+ worksid,s.defaultCount);
+                    // localStorage.setItem('defaultcount'+ worksid,s.defaultCount);
                     s.pv++;
                     //localStorage.setItem('pv'+ worksid,s.pv);
-                   // localStorage.setItem('uv'+ worksid,s.uv);
+                    // localStorage.setItem('uv'+ worksid,s.uv);
 
-                    
 
-                   // localStorage.setItem('geoCoordMap'+worksid,JSON.stringify(s.geoCoordMap));
+
+                    // localStorage.setItem('geoCoordMap'+worksid,JSON.stringify(s.geoCoordMap));
                     //localStorage.setItem('userData'+worksid,JSON.stringify({userData:s.userData}));
-                    
+
                     var nickname = data.nickname;
                     var headimgurl = data.headimgurl;
-                    
+
 
                     s.myChart.setOption(s.dataConfig(s.userData));
 
-                    
+
+                } else {
+
                 }
-                else{
-                   
-                }
-            }                                   
+            }
         })
     }
 
 
-    userOnLine (username='智媒体用户',headerimgurl=defaulturl){
+    userOnLine(username = '智媒体用户', headerimgurl = defaulturl) {
         notification.config({
-            duration:5,
+            duration: 5,
 
         })
         notification.open({
-            className:'wenming-online',
+            className: 'wenming-online',
             message: '上线提示',
             description: username,
             icon: <img src={headerimgurl||defaulturl}/>
         });
     }
 
-    report(username="智媒体用户",headerimgurl="http://www.zmiti.com/main/static/images/zmiti-logo.jpg",content="从医12年，刘廷涛心里裝得最多的是患者，做得最多的也是为患者。他把“大医..."){ 
+    report(username = "智媒体用户", headerimgurl = "http://www.zmiti.com/main/static/images/zmiti-logo.jpg", content = "从医12年，刘廷涛心里裝得最多的是患者，做得最多的也是为患者。他把“大医...") {
         notification.open({
-            duration:4,
+            duration: 4,
             message: '上报提示',
             description: content,
-            btn : <div className='wenming-notification'>
+            btn: <div className='wenming-notification'>
                 <a href='#/wenmingdatacheck'>
                     点击查看
                 </a>
@@ -212,70 +237,68 @@ var unload = false;
         });
     }
 
-    socket(){
+    socket() {
 
-        
+
         var socket = io('http://socket.zmiti.com:2120');
-        var worksid =   this.worksid;
-        
+        var worksid = this.worksid;
+
         var s = this;
-        socket.on(worksid, function(msg){
-            if(!msg){
+        socket.on(worksid, function(msg) {
+            if (!msg) {
                 return;
             }
 
-            msg = msg.replace(/&quot;/g,"\"");
+            msg = msg.replace(/&quot;/g, "\"");
 
             var data = JSON.parse(msg);
-          
 
-            console.log(data);
+
             var zmitiWx = {
-                longitude:data.pos[0],
-                latitude:data.pos[1],
+                longitude: data.pos[0],
+                latitude: data.pos[1],
 
 
             }
-            s.userOnLine(data.nickname||'智媒体用户',data.headimageurl||defaulturl);
+            s.userOnLine(data.nickname || '智媒体用户', data.headimageurl || defaulturl);
             s.getPos(data)
         });
-        socket.on('wenming-report',(msg)=>{
-            if(!msg){
+        socket.on('wenming-report', (msg) => {
+            if (!msg) {
                 return;
             }
-            msg = msg.replace(/&quot;/g,"\"");
+            msg = msg.replace(/&quot;/g, "\"");
 
             var data = JSON.parse(msg);
 
-            this.report(data.nickname,data.headimageurl,data.content);
+            this.report(data.nickname, data.headimageurl, data.content);
 
 
         });
     }
 
 
-    fillUVPV(){
+    fillUVPV() {
 
     }
 
-    fillPV(){}
+    fillPV() {}
 
-    changeAccount(){
+    changeAccount() {
 
     }
 
 
 
-
-    render(){
+    render() {
 
 
         var title = '身边文明事';
 
         var props = {
             title,
-            selectedIndex:0,
-            mainRight:<div className='wenming-main-ui' style={{height:this.state.mainHeight}}>
+            selectedIndex: 0,
+            mainRight: <div className='wenming-main-ui' style={{height:this.state.mainHeight}}>
                             <section>
                                 <aside className='wenming-map-C'>
                                     <header  className='wenming-header'>
@@ -324,10 +347,12 @@ var unload = false;
                                             <ul>
                                                 {this.state.provinceRankingList.map((item,i)=>{
                                                     return <li key={i}>
-                                                        <div>{i+1}</div>
-                                                        <div title={item.province} className='zmiti-text-overflow'>{item.province}</div>
-                                                        <div>{item.pv}</div>
-                                                        <div>{item.report}</div>
+                                                        <a href={'#/wenmingcity/'+item.provincecode}>
+                                                            <div>{i+1}</div>
+                                                            <div title={item.province} className='zmiti-text-overflow'>{item.province}</div>
+                                                            <div>{item.pv}</div>
+                                                            <div>{item.report}</div>
+                                                        </a>
                                                     </li>
                                                 })}
                                             </ul>
@@ -348,10 +373,12 @@ var unload = false;
                                             <ul>
                                                 {this.state.userRankingList.map((item,i)=>{
                                                     return <li key={i}>
-                                                            <div><img src={item.headerimgurl||defaulturl}/></div>
-                                                            <div title={item.nickname} className='zmiti-text-overflow'>{item.nickname}</div>
-                                                            <div>{item.commentCount}</div>
-                                                            <div>{item.report}</div>
+                                                            <a href={'#/wenmingpersonal/'}>
+                                                                <div><img src={item.headerimgurl||defaulturl}/></div>
+                                                                <div title={item.nickname} className='zmiti-text-overflow'>{item.nickname}</div>
+                                                                <div>{item.commentCount}</div>
+                                                                <div>{item.report}</div>
+                                                            </a>
                                                         </li>
                                                 })}
                                             </ul>
@@ -370,60 +397,64 @@ var unload = false;
         return (
             <MainUI component={mainComponent}></MainUI>
         );
-        
-        
+
+
     }
 
-    sortBy  (filed, rev, primer) {
+    sortBy(filed, rev, primer) {
         rev = (rev) ? -1 : 1;
-        return function (a, b) {
+        return function(a, b) {
             a = a[filed];
             b = b[filed];
-            if (typeof (primer) != 'undefined') {
+            if (typeof(primer) != 'undefined') {
                 a = primer(a);
                 b = primer(b);
             }
-            if (a < b) { return rev * -1; }
-            if (a > b) { return rev * 1; }
+            if (a < b) {
+                return rev * -1;
+            }
+            if (a > b) {
+                return rev * 1;
+            }
             return 1;
         }
     }
 
-    sortList(type,e){
+    sortList(type, e) {
         window.ss = this;
         e.preventDefault();
 
-        switch(type){
+        switch (type) {
             case "provincePVSort":
-                this.state.provincePVSort = this.state.provincePVSort === 'sort-down'?'sort-up':'sort-down';
+                this.state.provincePVSort = this.state.provincePVSort === 'sort-down' ? 'sort-up' : 'sort-down';
                 this.state.provinceReportSort = '';
 
-                this.state.provinceRankingList.sort(this.sortBy('pv',this.state.provincePVSort === 'sort-down',parseInt))
+                this.state.provinceRankingList.sort(this.sortBy('pv', this.state.provincePVSort === 'sort-down', parseInt))
 
-            break;
+                break;
             case 'provinceReportSort':
 
-                this.state.provinceReportSort = this.state.provinceReportSort === 'sort-down'?'sort-up':'sort-down';
+                this.state.provinceReportSort = this.state.provinceReportSort === 'sort-down' ? 'sort-up' : 'sort-down';
                 this.state.provincePVSort = '';
 
-               this.state.provinceRankingList.sort(this.sortBy('report',this.state.provinceReportSort === 'sort-down',parseInt))
+                this.state.provinceRankingList.sort(this.sortBy('report', this.state.provinceReportSort === 'sort-down', parseInt))
 
-            
-            break;
+
+                break;
             case "userCommentSort":
                 this.setState({
-                    userCommentSort:'sort-down',
-                    userReportSort:'',
-                    userRankingList:this.userRankingList
+                    userCommentSort: 'sort-down',
+                    userReportSort: '',
+                    userRankingList: this.userRankingList
                 });
-                
-               
-            break;
+
+
+                break;
             case 'userReportSort':
                 this.setState({
-                    userCommentSort:'',
-                    userReportSort:'sort-down',
-                    userRankingList:this.userRankingList1
+                    userCommentSort: '',
+                    userReportSort: 'sort-down',
+                    userRankingList: this.userRankingList1
                 });
 
                 /*this.state.userReportSort ='sort-down';// this.state.userReportSort === 'sort-down'?'sort-up':'sort-down';
@@ -433,100 +464,103 @@ var unload = false;
                     this.state.userRankingList.sort(this.sortBy('report',true,parseInt))
 
                 }*/
-            break;
+                break;
 
         }
 
         this.forceUpdate();
 
 
-        
 
     }
 
-    formatPV(num = 8888){
-        var n = num+'';
+    formatPV(num = 8888) {
+        var n = num + '';
         var _len = n.length;
         var pvLen = this.state.totalPV.length;
         var number = this.formatNumber(num);
         //1,234
         var arr = this.state.totalPV.split('');
-        number.split('').reverse().map((item,i)=>{
-            arr[pvLen-i-1] = item;
-           //this.state.totalPV[pvLen-i-1] = item;
+        number.split('').reverse().map((item, i) => {
+            arr[pvLen - i - 1] = item;
+            //this.state.totalPV[pvLen-i-1] = item;
         });
-       // this.state.allPV = num;
-        
+        // this.state.allPV = num;
+
         this.state.totalPV = arr.join('');
         this.forceUpdate();
 
 
     }
 
-    formatNumber(s, n = 3){   
-           n = n > 0 && n <= 20 ? n : 2;   
-           s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";   
-           var l = s.split(".")[0].split("").reverse(),   
-           r = s.split(".")[1];   
-            var  t = "";   
-           for(var i = 0; i < l.length; i ++ )   
-           {   
-              t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");   
-           }   
-           return t.split("").reverse().join("");   
-    } 
+    formatNumber(s, n = 3) {
+        n = n > 0 && n <= 20 ? n : 2;
+        s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+        var l = s.split(".")[0].split("").reverse(),
+            r = s.split(".")[1];
+        var t = "";
+        for (var i = 0; i < l.length; i++) {
+            t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+        }
+        return t.split("").reverse().join("");
+    }
 
-    initEcharts(){
+    initEcharts() {
         var s = this;
         var worksid = this.worksid;
         this.lastCityId = this.lastCityId || -1;
         var myChart = echarts.init(this.refs['map']);
-            
-
-            var userData = [
-                  //  {name: "常德市", value: 1023,key:'asa'},
-                ];
-            var geoCoordMap = {
-                //"常德市":[111.7087330000,28.9399430000]
-            };
-            this.userData = userData;
-            this.geoCoordMap = geoCoordMap;
 
 
-              //geoCoordMap = localStorage.getItem('geoCoordMap'+worksid) || '{}';
-            //geoCoordMap = JSON.parse(geoCoordMap);
+        var userData = [
+            /*  {
+                name: "常德市",
+                value: 1023,
+                key: 'asa'
+            },*/
+        ];
+        var geoCoordMap = {
+            //"常德市": [111.7087330000, 28.9399430000]
+        };
+        this.userData = userData;
+        this.geoCoordMap = geoCoordMap;
 
-            var userArr = localStorage.getItem('userData'+worksid)||'{}';
-                userData = JSON.parse(userArr).userData || [];
 
-           this.myChart = myChart;
+        //geoCoordMap = localStorage.getItem('geoCoordMap'+worksid) || '{}';
+        //geoCoordMap = JSON.parse(geoCoordMap);
 
-            myChart.setOption(this.dataConfig(userData), true);
+        //var userArr = localStorage.getItem('userData' + worksid) || '{}';
+        // userData = JSON.parse(userArr).userData || [];
+
+        this.myChart = myChart;
+
+        myChart.setOption(this.dataConfig(userData), true);
+
     }
 
-    request(){
-        if(this.unmout){
+    request() {
+        if (this.unmout) {
             return;
         }
         var s = this;
         $.ajax({
-            type:'post',
-            url:window.baseUrl+'weixinxcx/provincesort/',
-            data:{
-                appid:window.WENMING.XCXAPPID,
-                monthnum:3,
-                userid:this.userid,
-                getusersigid:this.getusersigid
+            type: 'post',
+            url: window.baseUrl + 'weixinxcx/provincesort/',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                monthnum: 3,
+                userid: this.userid,
+                getusersigid: this.getusersigid
             }
-        }).done((data)=>{
-            if(typeof data === 'string'){
+        }).done((data) => {
+            if (typeof data === 'string') {
                 data = JSON.parse(data);
             }
-            if(data.getret === 0 ){
+            if (data.getret === 0) {
                 this.provinceRankingList = data.list.concat([]);
                 this.setState({
-                    provinceRankingList:data.list
-                },()=>{
+                    provinceRankingList: data.list
+                }, () => {
                     this.proviceScroll.refresh();
                 });
 
@@ -534,26 +568,25 @@ var unload = false;
         });
 
         $.ajax({
-            type:'post',
-            url:window.baseUrl+'weixinxcx/usersort/',
-            data:{
-                appid:window.WENMING.XCXAPPID,
-                monthnum:3,
-                usernum:30,
-                userid:this.userid,
-                getusersigid:this.getusersigid
+            type: 'post',
+            url: window.baseUrl + 'weixinxcx/usersort/',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                monthnum: 3,
+                usernum: 30,
+                userid: this.userid,
+                getusersigid: this.getusersigid
             }
-        }).done((data)=>{
-            if(typeof data === 'string'){
+        }).done((data) => {
+            if (typeof data === 'string') {
                 data = JSON.parse(data);
             }
-            if(data.getret === 0 ){
-                console.log(data)
+            if (data.getret === 0) {
                 this.userRankingList = data.list.concat([]);
-                this.userRankingList1 = (data.list1||[]).concat([])
+                this.userRankingList1 = (data.list1 || []).concat([])
                 this.setState({
-                    userRankingList:data.list
-                },()=>{
+                    userRankingList: data.list
+                }, () => {
                     this.userScroll.refresh();
                 });
 
@@ -562,87 +595,88 @@ var unload = false;
 
 
         $.ajax({
-            type:'post',
-            url:window.baseUrl+'weixinxcx/totalpv/',
-            data:{
-                appid:window.WENMING.XCXAPPID,
-                userid:this.userid,
-                getusersigid:this.getusersigid
+            type: 'post',
+            url: window.baseUrl + 'weixinxcx/totalpv/',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                userid: this.userid,
+                getusersigid: this.getusersigid
             }
-        }).done((data)=>{
-            if(typeof data === 'string'){
+        }).done((data) => {
+            if (typeof data === 'string') {
                 data = JSON.parse(data);
             }
-            console.log(data)
-            if(data.getret === 0 ){
+            if (data.getret === 0) {
                 this.state.monthPV = data.list.monthpv;
                 this.state.dayPV = data.list.daypv;
                 this.state.allPV = data.list.totalpv;
                 this.formatPV(data.list.totalpv);
-                localStorage.setItem('defaultcount'+ this.worksid,data.list.totalpv);
+                localStorage.setItem('defaultcount' + this.worksid, data.list.totalpv);
             }
         });
 
         $.ajax({
-            type:'post',
-            url:window.baseUrl+'weixinxcx/userareatotalpv/',
-            data:{
-                appid:window.WENMING.XCXAPPID,
-                userid:this.userid,
-                getusersigid:this.getusersigid
+            type: 'post',
+            url: window.baseUrl + 'weixinxcx/userareatotalpv/',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                userid: this.userid,
+                getusersigid: this.getusersigid
             }
-        }).done((data)=>{
-            if(typeof data === 'string'){
+        }).done((data) => {
+            if (typeof data === 'string') {
                 data = JSON.parse(data);
             }
-            if(data.getret === 0 ){
+            if (data.getret === 0) {
 
                 s.userData = [];
                 s.geoCoordMap = {};
-                data.list.map(function(item,i){
-                    if(item.provicename){
+                data.list.map(function(item, i) {
+                    if (item.provicename) {
                         s.userData.push({
-                            name:item.provicename,
-                            value:item.usercount
-                        });    
-                        s.geoCoordMap[item.provicename] = [item.longitude,item.latitude];
+                            name: item.provicename,
+                            value: item.usercount
+                        });
+                        s.geoCoordMap[item.provicename] = [item.longitude, item.latitude];
                     }
-                    
+
                     ///s.geoCoordMap = JSON.parse(s.geoCoordMap);
                 });
-                
-                localStorage.setItem('geoCoordMap'+this.worksid,JSON.stringify(s.geoCoordMap));
-                localStorage.setItem('userData'+this.worksid,JSON.stringify({userData:s.userData}));
+
+                localStorage.setItem('geoCoordMap' + this.worksid, JSON.stringify(s.geoCoordMap));
+                localStorage.setItem('userData' + this.worksid, JSON.stringify({
+                    userData: s.userData
+                }));
                 s.myChart.setOption(s.dataConfig(s.userData), true);
-                            }
+            }
         })
- 
+
     }
 
-     dataConfig(userData){
+    dataConfig(userData) {
         var s = this;
-        return  {
+        return {
             backgroundColor: 'transparent',
             title: {
                 text: '',
                 subtext: '',
                 sublink: '',
-                x:'center',
+                x: 'center',
                 textStyle: {
                     color: '#fff'
                 }
             },
             tooltip: {
                 trigger: 'item',
-                formatter: function (params) {
+                formatter: function(params) {
                     return params.name + ' : ' + params.value[2];
                 }
             },
             legend: {
                 orient: 'vertical',
                 y: 'top',
-                x:'left',
-                data:[''],
+                x: 'left',
+                data: [''],
                 textStyle: {
                     color: '#fff'
                 }
@@ -652,7 +686,7 @@ var unload = false;
                 max: 500,
                 calculable: true,
                 inRange: {
-                    color: ['#ff684e',  '#d32000']
+                    color: ['#ff684e', '#d32000']
                 },
                 textStyle: {
                     color: '#fff'
@@ -666,53 +700,51 @@ var unload = false;
                         show: true
                     }
                 },
-                center:[
-                   100.6308452923,39.4701180437
+                center: [
+                    100.6308452923, 39.4701180437
                 ],
                 itemStyle: {
                     normal: {
-                        areaColor: '#f5f5f5',//地图的背景颜色 
-                        borderColor: '#999'//地图边框颜色。
+                        areaColor: '#f5f5f5', //地图的背景颜色 
+                        borderColor: '#999' //地图边框颜色。
                     },
                     emphasis: {
                         areaColor: '#ffef98'
                     }
                 }
             },
-            series: [
-                {
-                    name: '',
-                    type: 'effectScatter',
-                    coordinateSystem: 'geo',
-                    symbol: '',
-                    data:s.convertData(userData),
-                    symbolSize: function(val){
-                         return val[2] /50 ;//100
+            series: [{
+                name: '',
+                type: 'effectScatter',
+                coordinateSystem: 'geo',
+                symbol: '',
+                data: s.convertData(userData),
+                symbolSize: function(val) {
+                    return val[2] / 50; //100
+                },
+                label: {
+                    normal: {
+                        show: false
                     },
-                    label: {
-                        normal: {
-                            show: false
-                        },
-                        emphasis: {
-                            show:false
-                        }
+                    emphasis: {
+                        show: false
+                    }
+                },
+                itemStyle: {
+                    emphasis: {
+                        borderColor: 'transparent',
+                        borderWidth: 3,
+                        color: '#f90'
                     },
-                    itemStyle: {
-                        emphasis: {
-                            borderColor: 'transparent',
-                            borderWidth: 3,
-                            color:'#f90'
-                        },
-                        normal: {
-                            color: '#f90'
-                        }
+                    normal: {
+                        color: '#f90'
                     }
                 }
-            ]
+            }]
         };
     }
 
-    convertData(data){
+    convertData(data) {
         var res = [];
         for (var i = 0; i < data.length; i++) {
             var geoCoord = this.geoCoordMap[data[i].name];
@@ -726,7 +758,7 @@ var unload = false;
 
         return res;
     }
-  
+
 }
 
 export default ZmitiValidateUser(ZmitiWenmingApp);

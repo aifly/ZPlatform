@@ -1,0 +1,26 @@
+@import '../../../public/css/base.scss';
+
+.role-list {
+	width: 100%;
+	@include displayFlex(row);
+	-webkit-flex-wrap: wrap;
+
+	li {
+		width: 40%;
+		@include displayFlex(row);
+		height: 40px;
+		line-height: 40px;
+		text-align: center;
+
+		&:hover {
+			background: #eee;
+		}
+		&:nth-of-type(2n) {
+			margin-left: 15%;
+		}
+		&>aside {
+			-webkit-flex: 1;
+			flex: 1;
+		}
+	}
+}
