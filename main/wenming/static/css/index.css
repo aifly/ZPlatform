@@ -71,6 +71,10 @@
     color: #000;
     font-size: 16px;
     text-indent: 20px; }
+    .wenming-main-ui header.wenming-header a {
+      color: inherit; }
+      .wenming-main-ui header.wenming-header a:hover {
+        color: #f4654c; }
     .wenming-main-ui header.wenming-header:before {
       content: "";
       position: absolute;

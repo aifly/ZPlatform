@@ -361,7 +361,7 @@ class ZmitiWenmingApp extends React.Component {
                                     </section>
                                     <section>
                                         <header   className='wenming-header'>
-                                            个人排行榜
+                                            <a href='#/wenmingpersonal/'>个人排行榜</a>
                                         </header>
                                        <section className='wenming-list-title'>
                                             <div style={{opacity:1}}>头像</div>
@@ -373,7 +373,7 @@ class ZmitiWenmingApp extends React.Component {
                                             <ul>
                                                 {this.state.userRankingList.map((item,i)=>{
                                                     return <li key={i}>
-                                                            <a href={'#/wenmingpersonal/'}>
+                                                            <a href="javascript:void(0)" style={{cursor:'default'}}>
                                                                 <div><img src={item.headerimgurl||defaulturl}/></div>
                                                                 <div title={item.nickname} className='zmiti-text-overflow'>{item.nickname}</div>
                                                                 <div>{item.commentCount}</div>
