@@ -448,9 +448,13 @@ class ZmitiWenmingApp extends React.Component {
                     userRankingList: this.userRankingList
                 });
 
+                this.requestUserRank('userCommentSort');
+
 
                 break;
             case 'userReportSort':
+
+                this.requestUserRank('userReportSort');
                 this.setState({
                     userCommentSort: '',
                     userReportSort: 'sort-down',
@@ -538,35 +542,7 @@ class ZmitiWenmingApp extends React.Component {
 
     }
 
-    request() {
-        if (this.unmout) {
-            return;
-        }
-        var s = this;
-        $.ajax({
-            type: 'post',
-            url: window.baseUrl + 'weixinxcx/provincesort/',
-            data: {
-                appid: window.WENMING.XCXAPPID,
-                monthnum: 3,
-                userid: this.userid,
-                getusersigid: this.getusersigid
-            }
-        }).done((data) => {
-            if (typeof data === 'string') {
-                data = JSON.parse(data);
-            }
-            if (data.getret === 0) {
-                this.provinceRankingList = data.list.concat([]);
-                this.setState({
-                    provinceRankingList: data.list
-                }, () => {
-                    this.proviceScroll.refresh();
-                });
-
-            }
-        });
-
+    requestUserRank(type = 'userCommentSort') {
         $.ajax({
             type: 'post',
             url: window.baseUrl + 'weixinxcx/usersort/',
@@ -585,13 +561,48 @@ class ZmitiWenmingApp extends React.Component {
                 this.userRankingList = data.list.concat([]);
                 this.userRankingList1 = (data.list1 || []).concat([])
                 this.setState({
-                    userRankingList: data.list
+                    userRankingList: type === 'userCommentSort' ? data.list : data.list1
                 }, () => {
                     this.userScroll.refresh();
                 });
 
             }
         });
+    }
+
+    request() {
+        if (this.unmout) {
+            return;
+        }
+        var s = this;
+        $.ajax({
+            type: 'post',
+            url: window.baseUrl + 'weixinxcx/provincesort/',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                monthnum: 3,
+                userid: this.userid,
+                getusersigid: this.getusersigid
+            }
+        }).done((data) => {
+            if (typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            console.log(data)
+            if (data.getret === 0) {
+                this.provinceRankingList = data.list.concat([]);
+                this.setState({
+                    provinceRankingList: data.list
+                }, () => {
+                    this.proviceScroll.refresh();
+                });
+
+            }
+        });
+
+
+        this.requestUserRank();
+
 
 
         $.ajax({

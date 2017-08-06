@@ -341,6 +341,21 @@
                                 clear: both;
                                 margin-top: 10px;
 
+                                .wenming-sentiment {
+                                    i {
+                                        font-size: 18px;
+
+                                        &.frown {
+                                            color: #5a908d;
+                                        }
+                                        &.meh {
+                                            color: #000
+                                        }
+                                        &.smile {
+                                            color: #f2aa10;
+                                        }
+                                    }
+                                }
                                 &>div {
                                     @include displayFlex(row);
 
