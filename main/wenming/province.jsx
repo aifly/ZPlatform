@@ -62,7 +62,7 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
         sortedInfo = sortedInfo || {};
         filteredInfo = filteredInfo || {};
         const columns = [{
-            title: '排名',
+            title: '序号',
             dataIndex: 'i',
             key: 'i',
             render:(text,record,index)=>{
