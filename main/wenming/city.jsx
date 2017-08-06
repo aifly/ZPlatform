@@ -1,6 +1,5 @@
 import './static/css/ranking.css';
 import React from 'react';
-import { Link } from 'react-router';
 
 import {message,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio} from '../commoncomponent/common.jsx';
 
@@ -13,7 +12,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 import MainUI from '../components/Main.jsx';
 
-class ZmitiWenmingProvinceRankApp extends React.Component{
+class ZmitiWenmingCityRankApp extends React.Component{
     constructor(args){
         super(...args);
 
@@ -21,6 +20,7 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
             mainHeight:document.documentElement.clientHeight-50,
             appid:window.WENMING.XCXAPPID,
             dataSource:[],
+            province:'',
         } 
         
     }
@@ -55,6 +55,7 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
 
         resizeMainHeight(this);
         s.bindNewdata();
+        s.getprovince();
     }
 
     render(){
@@ -69,13 +70,9 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
                 return record.key
             }
         }, {
-            title: '省份',
-            dataIndex: 'province',
-            key: 'province',
-            render:(text,record,index)=>{
-                return <div><Link to={'/wenmingcity/'+record.provincecode}>{text}</Link>
-                </div>
-            }
+            title: '市',
+            dataIndex: 'city',
+            key: 'city',
         }, {
             title: '浏览量',
             dataIndex: 'pv',
@@ -101,11 +98,11 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
             mainRight:<div className='wenming-ranking-main-ui'>
                         <div className="wenming-ranking-header">
                             <Row>
-                                <Col span={16} className="wenming-ranking-header-inner">省份排行榜-身边文明事
+                                <Col span={16} className="wenming-ranking-header-inner">{this.state.province}-身边文明事
                                     
                                 </Col>
                                 <Col span={8} className='wenming-ranking-button-right'>
-                                    
+                                    <Button icon="left" onClick={this.goback.bind(this)}>返回</Button>
                                 </Col>
                             </Row>
                             <div className="clearfix"></div>
@@ -136,6 +133,40 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
 
     bindNewdata(){
         var s = this;
+        var provinceid=this.props.params.id;
+        $.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/citysort/',
+            data:{                
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                appid:window.WENMING.XCXAPPID,
+                provincecode:provinceid,
+                monthnum:3,
+            }
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){ 
+                console.log(data.list);
+                data.list.map((item,i)=>{
+                   s.state.dataSource.push({
+                    city:item.city,
+                    pv:item.pv,
+                    report:item.report,
+                    key:i+1,
+                   })
+                })
+                s.forceUpdate();
+            }
+        });
+    }
+
+    //获取省份
+    getprovince(){
+        var s = this;
+        var provinceid=this.props.params.id;
         $.ajax({
             type:'post',
             url:window.baseUrl+'weixinxcx/provincesort/',
@@ -151,18 +182,18 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
             }
             if(data.getret === 0 ){ 
                 console.log(data.list);
-                data.list.map((item,i)=>{
-                   s.state.dataSource.push({
-                    province:item.province,
-                    pv:item.pv,
-                    report:item.report,
-                    provincecode:item.provincecode,
-                    key:i+1,
-                   })
+                data.list.map((item,i)=>{                	
+                   if(item.provincecode==provinceid){
+                   	s.state.province=item.province;
+                   }
                 })
                 s.forceUpdate();
             }
         });
+    }
+    //goback
+    goback(){
+    	window.location='#/wenmingprovince'
     }
 
 
@@ -170,4 +201,4 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
 
 }
 
-export default ZmitiValidateUser(ZmitiWenmingProvinceRankApp);
+export default ZmitiValidateUser(ZmitiWenmingCityRankApp);
