@@ -123,8 +123,8 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
                                 placeholder="输入昵称"
                                 style={{ width: 200 }}
                                 onSearch={function(value){                                   
-                                    console.log(value,'value');
-                                    s.searchByKeyword(value);
+                                    //console.log(value,'value');
+                                    s.getpersonal(value);
                                     //s.forceUpdate();   
                                 }}
                                 />
@@ -155,6 +155,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
 
     bindNewdata(){
         var s = this;
+        s.state.dataSource=[];
         $.ajax({
             type:'post',
             url:window.baseUrl+'weixinxcx/usersort/',
@@ -185,14 +186,41 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
     }
 
     //search
-    searchByKeyword(value){       
-        this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+    getpersonal(value){
+        var s = this;
+        s.state.dataSource=[];
+        console.log(value);
+        if(value==''){
+            s.bindNewdata();
+        }else{
+            $.ajax({
+                type:'POST',
+                url:window.baseUrl + 'weixinxcx/personcount/',
+                data:{
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    appid:s.state.appid,
+                    nickname:value
+                },
+                success(data){
+                    if(data.getret === 0){
+                        console.log(data,'personal');
+                        //s.state.dataSource=data.list;
+                        data.list.map((item,i)=>{
+                            s.state.dataSource.push({
+                                commentCount:item.commentCount,
+                                headerimgurl:item.headerimgurl,
+                                nickname:item.nickname,
+                                report:item.report,
+                                key:i+1,
+                            })
+                        })
+                        s.forceUpdate();
+                    }
+                }
+            })            
+        }
 
-        this.state.dataSource = this.dataSource.filter((item)=>{
-            return  item.nickname.indexOf(value)>-1;
-        });
-        this.forceUpdate();
-        
     }
 
 

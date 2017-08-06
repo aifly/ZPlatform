@@ -43,6 +43,7 @@ import ZmitiViewAnswerApp from './viewanswer/index.jsx';
 import Obserable from './static/libs/obserable.js';
 import ZmitiTrainingApp from './training/index.jsx';
 import ZmitiTripReasonApp from './tripreason/index.jsx';
+import ZmitiTripSettingApp from './tripsetting/index.jsx';
 import ZmitiTripNoticeApp from './tripnotice/index.jsx';
 import ZmitwxWmwGroupApp from './wxwmwgroup/index.jsx';
 import ZmitwxWmwReportApp from './wxwmwreport/index.jsx';
@@ -113,6 +114,7 @@ class App extends React.Component{
 				{path: '/training/(:title)/(:id)',app:ZmitiTrainingApp},
 				{path: '/tripreason/',app:ZmitiTripReasonApp},
 				{path: 'tripnotice/',app:ZmitiTripNoticeApp},
+				{path: 'tripsetting/',app:ZmitiTripSettingApp},
 				{path: 'wxwmwgroup/',app:ZmitwxWmwGroupApp},
 				{path: 'wxwmwreport/',app:ZmitwxWmwReportApp},
 				{path: '/wenming',app:ZmitiWenmingApp},

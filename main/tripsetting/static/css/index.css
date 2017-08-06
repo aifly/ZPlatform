@@ -1,0 +1,39 @@
+.zmiti-tripsetting-main-ui {
+  overflow: auto; }
+  .zmiti-tripsetting-main-ui .zmiti-setting-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .zmiti-tripsetting-main-ui .zmiti-setting-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .zmiti-tripsetting-main-ui .zmiti-setting-button-right div {
+    float: right;
+    color: #000;
+    width: 10px;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 10px;
+    line-height: 28px; }
+  .zmiti-tripsetting-main-ui .zmiti-setting-button-right button {
+    float: right;
+    margin-top: 5px;
+    margin-left: 10px; }
+  .zmiti-tripsetting-main-ui .zmiti-setting-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .zmiti-tripsetting-main-ui .wenming-setting-textleft {
+    text-align: left; }
+  .zmiti-tripsetting-main-ui .wenming-setting-textright {
+    text-align: right; }
+  .zmiti-tripsetting-main-ui .wenming-setting-leftpane {
+    width: 125px; }
+
+/*# sourceMappingURL=index.css.map */
