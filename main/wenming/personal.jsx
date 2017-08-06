@@ -189,7 +189,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
     getpersonal(value){
         var s = this;
         s.state.dataSource=[];
-        console.log(value);
+        //console.log(value);
         if(value==''){
             s.bindNewdata();
         }else{
