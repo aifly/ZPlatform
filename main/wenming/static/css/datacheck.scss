@@ -308,7 +308,7 @@
                             }
                             ol {
                                 clear: both;
-                                max-width: 660px;
+                                min-width: 660px;
                                 @include displayFlex(row);
                                 -webkit-flex-wrap: wrap;
 
@@ -341,21 +341,6 @@
                                 clear: both;
                                 margin-top: 10px;
 
-                                .wenming-sentiment {
-                                    i {
-                                        font-size: 18px;
-
-                                        &.frown {
-                                            color: #5a908d;
-                                        }
-                                        &.meh {
-                                            color: #000
-                                        }
-                                        &.smile {
-                                            color: #f2aa10;
-                                        }
-                                    }
-                                }
                                 &>div {
                                     @include displayFlex(row);
 
@@ -375,8 +360,20 @@
                     &:nth-of-type(3) {
                         width: 100px;
 
-                        &>div {
+                        &>div.wenming-datacheck-delete {
                             cursor: pointer;
+                            @include pos(a);
+                            top: 10px;
+                        }
+                        @include pos(r);
+
+                        .wenming-sentiment {
+                            @include pos(a);
+                            left: -50px;
+
+                            img {
+                                width: 40px;
+                            }
                         }
                     }
                 }
@@ -511,7 +508,7 @@
                                 }
                                 ol {
                                     clear: both;
-                                    max-width: 660px;
+                                    min-width: 660px;
                                     @include displayFlex(row);
                                     -webkit-flex-wrap: wrap;
 
@@ -546,7 +543,7 @@
         }
         ol {
             clear: both;
-            max-width: 660px;
+            min-width: 660px;
             @include displayFlex(row);
             -webkit-flex-wrap: wrap;
 

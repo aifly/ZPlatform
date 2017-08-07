@@ -275,18 +275,18 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                     if(item.sentiment*1 === 0){
                                         sentiment = {
                                             type:'frown',
-                                            name:'消极'
+                                            name:'消极的'
                                         };
                                     }
                                     else if(item.sentiment*1 === 1){
                                         sentiment = {
                                             type:'meh',
-                                            name:'中性'
+                                            name:'中性的'
                                         }
                                     }else if(item.sentiment*1 === 2){
                                         sentiment = {
                                             type:'smile',
-                                            name:'积极'
+                                            name:'积极的'
                                         }
                                     }
 
@@ -314,7 +314,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                 </ol>
                                                 <section className='wenming-datacheck-operator'>
                                                     <div>
-                                                        {item.sentiment && <div className='wenming-sentiment'><Icon className={sentiment.type} type={sentiment.type} /> {sentiment.name}</div>}
+                                                        
                                                         {item.status === 1 && <div><a href={'#/wenmingcommentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
                                                         {this.state.status === 0 &&  <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐</Checkbox></div>}
                                                         {this.state.status === 1 && item.status !==2  && <div><Checkbox onChange={this.recommentArticle.bind(this,item)} checked={item.isHost} >推荐</Checkbox></div>}
@@ -329,10 +329,10 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                             </section>
                                         </aside>
                                         <aside>
-
-                                         <Popconfirm onConfirm={this.delete.bind(this,i,item.id)} placement="leftTop" title="删除后数据将无法恢复，确定要删除吗？" okText="确定" cancelText="取消">
-                                                <div><Icon type='delete'/> 删除</div>
-                                          </Popconfirm>
+                                            {item.sentiment && <div className='wenming-sentiment' title={sentiment.name}><img src={'./static/images/'+sentiment.type+'.png'}/></div>}
+                                            <Popconfirm onConfirm={this.delete.bind(this,i,item.id)} placement="leftTop" title="删除后数据将无法恢复，确定要删除吗？" okText="确定" cancelText="取消">
+                                                  <div className='wenming-datacheck-delete'><Icon type='delete'/> 删除</div>
+                                            </Popconfirm>
                                             
                                         </aside>
                                     </li>;

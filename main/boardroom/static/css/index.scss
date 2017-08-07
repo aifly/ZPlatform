@@ -1,6 +1,31 @@
 @import "../../../public/css/base.scss";
 
 .board-main-ui {
+	&>section {
+		@include pos(r);
+		left: 100px;
+		top: 100px;
+		@include pos(a);
+
+		&>div {
+			width: 2px;
+			height: 30px;
+			background: #999;
+			@include pos(a);
+			left: 50%;
+			margin-left: -1px;
+			top: -30px;
+
+			span {
+				@include pos(a);
+				width: 10px;
+				height: 10px;
+				background: #44cb83;
+				left: -4px;
+				@include br();
+			}
+		}
+	}
 	ul {
 		width: 162px;
 		@include displayFlex(row);
@@ -8,7 +33,6 @@
 		box-sizing: border-box;
 		border-left: 1px solid #999;
 		border-top: 1px solid #999;
-		margin: 100px;
 		//@include transform(rotate(25deg));
 
 		li {

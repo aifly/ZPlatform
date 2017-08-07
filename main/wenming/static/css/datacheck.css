@@ -287,7 +287,7 @@
               font-size: 12px; }
           .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content ol {
             clear: both;
-            max-width: 660px;
+            min-width: 660px;
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -322,14 +322,6 @@
                     justify-content: flex-end;
             clear: both;
             margin-top: 10px; }
-            .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content .wenming-datacheck-operator .wenming-sentiment i {
-              font-size: 18px; }
-              .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content .wenming-datacheck-operator .wenming-sentiment i.frown {
-                color: #5a908d; }
-              .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content .wenming-datacheck-operator .wenming-sentiment i.meh {
-                color: #000; }
-              .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content .wenming-datacheck-operator .wenming-sentiment i.smile {
-                color: #f2aa10; }
             .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside.wenming-datacheck-item-C .wenming-datacheck-item-main-content .wenming-datacheck-operator > div {
               display: -webkit-box;
               display: -ms-flexbox;
@@ -346,9 +338,17 @@
                   -webkit-transform: scale(1.1);
                   transform: scale(1.1); }
       .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside:nth-of-type(3) {
-        width: 100px; }
-        .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside:nth-of-type(3) > div {
-          cursor: pointer; }
+        width: 100px;
+        position: relative; }
+        .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside:nth-of-type(3) > div.wenming-datacheck-delete {
+          cursor: pointer;
+          position: absolute;
+          top: 10px; }
+        .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside:nth-of-type(3) .wenming-sentiment {
+          position: absolute;
+          left: -50px; }
+          .wenming-datacheck-main-ui .wenming-datacheck-list ul > li > aside:nth-of-type(3) .wenming-sentiment img {
+            width: 40px; }
   .wenming-datacheck-main-ui .wenming-article-detail-list {
     -webkit-box-flex: 1;
         -ms-flex: 1;
@@ -477,7 +477,7 @@
                   width: 100px; }
             .wenming-datacheck-main-ui .wenming-article-detail-list > div > aside:nth-of-type(2) .wenming-detail-comment-list ul li ol {
               clear: both;
-              max-width: 660px;
+              min-width: 660px;
               display: -webkit-box;
               display: -ms-flexbox;
               display: flex;
@@ -502,7 +502,7 @@
                   font-size: 20px; }
     .wenming-datacheck-main-ui .wenming-article-detail-list ol {
       clear: both;
-      max-width: 660px;
+      min-width: 660px;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;

@@ -14,6 +14,26 @@
   word-wrap: break-word;
   word-break: break-all; }
 
+.board-main-ui > section {
+  position: relative;
+  left: 100px;
+  top: 100px;
+  position: absolute; }
+  .board-main-ui > section > div {
+    width: 2px;
+    height: 30px;
+    background: #999;
+    position: absolute;
+    left: 50%;
+    margin-left: -1px;
+    top: -30px; }
+    .board-main-ui > section > div span {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #44cb83;
+      left: -4px;
+      border-radius: 50%; }
 .board-main-ui ul {
   width: 162px;
   display: -webkit-box;
@@ -25,8 +45,7 @@
   -webkit-flex-wrap: wrap;
   box-sizing: border-box;
   border-left: 1px solid #999;
-  border-top: 1px solid #999;
-  margin: 100px; }
+  border-top: 1px solid #999; }
   .board-main-ui ul li {
     box-sizing: border-box;
     width: 20px;
