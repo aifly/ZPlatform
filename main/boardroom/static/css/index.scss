@@ -3,11 +3,12 @@
 .board-main-ui {
 	&>section {
 		@include pos(r);
-		left: 100px;
-		top: 100px;
+		left: 300px;
+		top: 300px;
 		@include pos(a);
 
 		&>div {
+			display: none;
 			width: 2px;
 			height: 30px;
 			background: #999;
@@ -25,22 +26,39 @@
 				@include br();
 			}
 		}
-	}
-	ul {
-		width: 162px;
-		@include displayFlex(row);
-		-webkit-flex-wrap: wrap;
-		box-sizing: border-box;
-		border-left: 1px solid #999;
-		border-top: 1px solid #999;
-		//@include transform(rotate(25deg));
-
-		li {
+		ul {
+			width: 162px;
+			@include displayFlex(row);
+			-webkit-flex-wrap: wrap;
 			box-sizing: border-box;
-			width: 20px;
-			height: 20px;
-			border-right: 1px solid #999;
-			border-bottom: 1px solid #999;
+			border-left: 1px solid #999;
+			border-top: 1px solid #999;
+			//@include transform(rotate(25deg));
+
+			li {
+				box-sizing: border-box;
+				width: 60px;
+				height: 30px;
+				line-height: 30px;
+				outline: none;
+				max-width: 60px;
+				text-align: center;
+				border-right: 1px solid #999;
+				border-bottom: 1px solid #999;
+				-webkit-user-select: none;
+				cursor: default;
+				@include pos(r);
+
+				input {
+					text-align: center;
+					@include pos(a);
+					width: 100%;
+					height: 100%;
+					left: 0;
+					top: 0;
+					border: 1px solid #f00;
+				}
+			}
 		}
 	}
 }

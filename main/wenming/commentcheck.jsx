@@ -584,7 +584,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             item.comments.map((com, k) => {
                 if (com.checked) {
                     arr.push(com.commentid);
-                    this.delete(i, k, com.commentid);
+                    this.delete(i, k, com.commentid, false);
                 }
             });
 
@@ -599,15 +599,10 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
     }
 
-    delete(index, k, articleids) {
+    delete(index, k, articleids, showMsg = true) {
 
         //
 
-        this.state.currentDeleteIndex = index;
-        this.state.currentDeleteCommentIndex = k;
-        this.forceUpdate(() => {
-
-        });
 
         $.ajax({
             async: false,
@@ -624,6 +619,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 data = JSON.parse(data);
             }
             if (data.getret === 0) {
+                showMsg && message.success('删除成功');
+
                 this.loadComment(this.state.status)
             }
         })
@@ -648,12 +645,11 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             item.comments.map((com, k) => {
                 if (com.checked) {
                     arr.push(com.commentid);
-                    this.checkedComment(com, type, i, k);
+                    this.checkedComment(com, type, i, k, false);
                 }
             })
 
         });
-        message.success('审核成功');
 
         if (arr.length <= 0) {
             message.error('请选择您要审核的文章~~');
@@ -662,11 +658,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
     }
 
-    checkedComment(item, type, index, k) {
+    checkedComment(item, type, index, k, showMsg = true) {
 
 
-        this.state.currentDeleteIndex = index;
-        this.state.currentDeleteCommentIndex = k;
         this.forceUpdate();
         var status = 1;
         switch (type) {
@@ -696,20 +690,10 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
             if (data.getret === 0) {
 
-                setTimeout(() => {
-                    this.state.dataSource[index].comments.splice(k, 1);
-                    this.state.dataSource.forEach((item, k) => {
-                        item.comments.forEach((com, i) => {
-                            item.checked = false;
-                        })
-                    })
-                    this.state.currentDeleteIndex = -1;
-                    this.state.currentDeleteCommentIndex = -1;
-                    this.forceUpdate(() => {
+                this.loadComment(this.state.status);
 
-                    });
-                    this.loadComment(this.state.status);
-                }, 500)
+                showMsg && message.success('审核成功');
+
             }
         })
 

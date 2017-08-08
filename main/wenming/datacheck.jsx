@@ -550,10 +550,6 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         //
 
-        this.state.currentDeleteIndex = index;
-        this.forceUpdate(() => {
-
-        });
 
         $.ajax({
             type: 'post',
@@ -569,35 +565,30 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 data = JSON.parse(data);
             }
             if (data.getret === 0) {
-                setTimeout(() => {
-                        this.state.currentDeleteIndex = -1;
-                        this.state.selectAll = false;
-                        //this.state.allCount = this.state.allCount -1;
-                        this.forceUpdate(() => {
-                            this.loadArticle(this.state.status);
+                this.loadArticle(this.state.status);
+                message.success('删除成功');
+
+                /*if(index>-1){
+
+                   
+
+                }else{
+                     setTimeout(()=>{
+                         articleids.split(",").map((id,i)=>{
+                            this.state.dataSource.map((d,k)=>{
+                                if(d.id === id){
+                                    this.state.dataSource.splice(k,1);
+                                }
+                            })
                         });
-                    }, 500)
-                    /*if(index>-1){
 
-                       
-
-                    }else{
-                         setTimeout(()=>{
-                             articleids.split(",").map((id,i)=>{
-                                this.state.dataSource.map((d,k)=>{
-                                    if(d.id === id){
-                                        this.state.dataSource.splice(k,1);
-                                    }
-                                })
-                            });
-
-                            this.state.allCount = this.state.allCount -articleids.split(",").length;
-                            this.forceUpdate(()=>{
-                                this.scroll.refresh();
-                            });
-                        },500)
-                       
-                    }*/
+                        this.state.allCount = this.state.allCount -articleids.split(",").length;
+                        this.forceUpdate(()=>{
+                            this.scroll.refresh();
+                        });
+                    },500)
+                   
+                }*/
             }
         })
 
@@ -620,11 +611,11 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         this.state.dataSource.map((item, i) => {
             if (item.checked) {
                 arr.push(item.id);
-                this.checkedArticle(item, type, i);
+                this.checkedArticle(item, type, i, false);
 
             }
         });
-        message.success('操作成功~~');
+
         if (arr.length <= 0) {
             message.error('请选择您要审核的文章~~');
             return;
@@ -632,10 +623,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
     }
 
-    checkedArticle(item, type, index) {
+    checkedArticle(item, type, index, showMsg = true) {
 
-        this.state.currentDeleteIndex = index;
-        this.forceUpdate();
         var status = 1;
         switch (type) {
             case "pass": //审核通过 
@@ -682,6 +671,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 data = JSON.parse(data);
             }
             if (data.getret === 0) {
+
+                showMsg && message.success('审核成功');
 
                 this.loadArticle(this.state.status);
 

@@ -1,12 +1,28 @@
 import './static/css/datacheck.css';
 import React from 'react';
-import {Button,Icon,Checkbox,Input,Row,Col,Pagination,Popconfirm,message,Menu, Dropdown,Switch,Radio} from '../commoncomponent/common.jsx';
+import {
+    Button,
+    Icon,
+    Checkbox,
+    Input,
+    Row,
+    Col,
+    Pagination,
+    Popconfirm,
+    message,
+    Menu,
+    Dropdown,
+    Switch,
+    Radio
+} from '../commoncomponent/common.jsx';
 const RadioGroup = Radio.Group;
 import $ from 'jquery';
 
 
 
-import {ZmitiValidateUser} from '../public/validate-user.jsx';
+import {
+    ZmitiValidateUser
+} from '../public/validate-user.jsx';
 
 import ZmitiWenmingAsideBarApp from './header.jsx';
 
@@ -14,53 +30,51 @@ import MainUI from '../components/Main.jsx';
 
 
 import IScroll from 'iscroll';
-var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
- class ZmitiWenmingCommentDetailApp extends React.Component{
-    constructor(args){
+var defaulturl = 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
+class ZmitiWenmingCommentDetailApp extends React.Component {
+    constructor(args) {
         super(...args);
 
         this.state = {
-           mainHeight:document.documentElement.clientHeight-50,
-           selectAll:false,
-           allCount:1,
-           pageIndex:1,
+            mainHeight: document.documentElement.clientHeight - 50,
+            selectAll: false,
+            allCount: 1,
+            pageIndex: 1,
 
-           currentPicIndex:0,
+            currentPicIndex: 0,
 
 
-           currentViewPic:'',
+            currentViewPic: '',
 
-           currentDeleteIndex:-1,
+            currentDeleteIndex: -1,
 
-           tab:'all',
+            tab: 'all',
 
-           currentCommentIndex:-1,
+            currentCommentIndex: -1,
 
-           currentWhere:{},
+            currentWhere: {},
 
-           status:0,
+            status: 0,
 
-           pageSize:10,
+            pageSize: 10,
 
-           voidurl:'',
+            voidurl: '',
 
-           loadingState:[
+            loadingState: [
                 '加载更多',
                 'down'
-           ],
+            ],
 
-           isMore:false,
+            isMore: false,
 
-           typeList:[],
+            typeList: [],
 
-           classname:'全部',
+            classname: '全部',
 
-           dataSource:[
-           		{
-           			content:'',
-           			defaultContent:''
-           		}
-           ]
+            dataSource: [{
+                content: '',
+                defaultContent: ''
+            }]
         }
 
         this.viewW = document.documentElement.clientWidth;
@@ -68,12 +82,30 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
     componentWillMount() {
 
-        let {resizeMainHeight,popNotice,validateUser,loginOut,validateUserRole,isSuperAdmin,isNormalAdmin,getUserDetail,listen,send} = this.props;
-        var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
-                loginOut('登录失效，请重新登录',window.loginUrl,false);
-            },this);
+        let {
+            resizeMainHeight,
+            popNotice,
+            validateUser,
+            loginOut,
+            validateUserRole,
+            isSuperAdmin,
+            isNormalAdmin,
+            getUserDetail,
+            listen,
+            send
+        } = this.props;
+        var {
+            userid,
+            getusersigid,
+            companyid,
+            username,
+            isover,
+            usertypesign
+        } = validateUser(() => {
+            loginOut('登录失效，请重新登录', window.loginUrl, false);
+        }, this);
 
-       
+
         this.loginOut = loginOut;
         this.listen = listen;
         this.send = send;
@@ -84,61 +116,65 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         this.getUserDetail = getUserDetail;
         this.resizeMainHeight = resizeMainHeight;
     }
-    componentDidMount(){
-       this.resizeMainHeight(this);
-       let  {validateUser,loginOut,resizeMainHeight} = this.props;
-        var iNow = 0 ;
-        validateUser(()=>{
+    componentDidMount() {
+        this.resizeMainHeight(this);
+        let {
+            validateUser,
+            loginOut,
+            resizeMainHeight
+        } = this.props;
+        var iNow = 0;
+        validateUser(() => {
             loginOut();
-        },this);
+        }, this);
 
 
         resizeMainHeight(this);
 
 
-        window.addEventListener('keydown',(e)=>{
-            switch(e.keyCode){
-                case 27://ESC
-                this.setState({
-                    currentViewPic:'',
-                    voidurl :''
-                })
-                break;
+        window.addEventListener('keydown', (e) => {
+            switch (e.keyCode) {
+                case 27: //ESC
+                    this.setState({
+                        currentViewPic: '',
+                        voidurl: ''
+                    })
+                    break;
             }
         })
 
 
-        this.scroll = new IScroll(this.refs['wenming-datacheck-list'],{
-            scrollbars:true,//显示滚动条
-            interactiveScrollbars:true,//允许用户拖动滚动条
-            mouseWheel:true,//启用鼠标滚轮。
-            preventDefault:false
+        this.scroll = new IScroll(this.refs['wenming-datacheck-list'], {
+            scrollbars: true, //显示滚动条
+            interactiveScrollbars: true, //允许用户拖动滚动条
+            mouseWheel: true, //启用鼠标滚轮。
+            preventDefault: false
         });
 
-        setTimeout(()=>{
+        setTimeout(() => {
             this.scroll.refresh();
-        },2000)
+        }, 2000)
 
         this.request();
 
-       
+
     }
 
 
-    render(){
+    render() {
 
 
         var title = '身边文明事';
 
 
         var showBatchbars = false;
-        this.state.dataSource.map((item,i)=>{
-            if(item.checked){
+        this.state.dataSource.map((item, i) => {
+            if (item.checked) {
                 showBatchbars = true;
             }
         });
         var menu = (
-             <Menu>
+            <Menu>
                 <Menu.Item >
                     <a onClick={this.loadArticleByIdByType.bind(this,'','全部')} href="javascript:">全部</a>
                 </Menu.Item>
@@ -150,38 +186,43 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                     
               </Menu>)
 
-        var plainOptions = [
-            { label: '全部', value: 'all' },
-            { label: '审核通过', value: 1 },
-            { label: '未审核', value: 0 }
-            
+        var plainOptions = [{
+                label: '全部',
+                value: 'all'
+            }, {
+                label: '审核通过',
+                value: 1
+            }, {
+                label: '未审核',
+                value: 0
+            }
+
         ];
 
-        var dataSource = this.state.dataSource[0]||{}
+        var dataSource = this.state.dataSource[0] || {}
 
 
-         var len = 80;
-                                            
-        if( dataSource.content.length > len ){
-            if(!dataSource.showAll){
-                dataSource.content = dataSource.defaultContent.substring(0,len)+'...';
-            }
-            else{
+        var len = 80;
+
+        if (dataSource.content.length > len) {
+            if (!dataSource.showAll) {
+                dataSource.content = dataSource.defaultContent.substring(0, len) + '...';
+            } else {
                 dataSource.content = dataSource.defaultContent
             }
         }
-        var showMore = dataSource.defaultContent.length > len? <a  className='wenming-expand'
+        var showMore = dataSource.defaultContent.length > len ? <a  className='wenming-expand'
             onClick={()=>{dataSource.showAll = !dataSource.showAll;this.forceUpdate(()=>{this.scroll&&this.scroll.refresh()})}}
              href='javascript:;'
              >
              {!dataSource.showAll?'查看全部 ':'收起'}
              <Icon type={!dataSource.showAll?"down":'up'} />
-             </a>:""
+             </a> : ""
 
         var props = {
             title,
-            selectedIndex:67,
-            mainRight:<div className='wenming-datacheck-main-ui' style={{height:this.state.mainHeight}}>
+            selectedIndex: 67,
+            mainRight: <div className='wenming-datacheck-main-ui' style={{height:this.state.mainHeight}}>
                         <header className='wenming-datacheck-header'>
                             <div>数据审核-{title}</div>   
                             <div></div>
@@ -318,297 +359,287 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
         return (
             <MainUI component={mainComponent}></MainUI>
         );
-        
-        
+
+
     }
 
-    filterComents(val){
+    filterComents(val) {
         this.setState({
-            tab:val.target.value
+            tab: val.target.value
         })
-        this.defaultCom =  this.defaultCom || this.state.dataSource[0].comments.concat([]);
-        this.state.dataSource[0].comments =  this.defaultCom.filter((item,i)=>{
-            if(val.target.value === 'all'){
+        this.defaultCom = this.defaultCom || this.state.dataSource[0].comments.concat([]);
+        this.state.dataSource[0].comments = this.defaultCom.filter((item, i) => {
+            if (val.target.value === 'all') {
 
                 return true;
+            } else {
+                return item.status === val.target.value * 1;
             }
-            else{
-                return item.status === val.target.value*1;
-            }
-        }) ;
-        this.forceUpdate(()=>{
+        });
+        this.forceUpdate(() => {
             this.scroll.refresh();
         });
     }
 
 
 
-    createMarkup(item){
-         return {__html:item};
+    createMarkup(item) {
+        return {
+            __html: item
+        };
     }
 
-   
 
-    getCheckedData(index){
+
+    getCheckedData(index) {
         this.setState({
-            pageIndex:1
-        },()=>{
-            this.loadArticleById(index*1);
+            pageIndex: 1
+        }, () => {
+            this.loadArticleById(index * 1);
         })
-        
+
     }
 
-    recommentArticle(item){
+    recommentArticle(item) {
         //item.isHost = true;
         var ishot = 1;
-        if(item.isHost){//取消推荐
+        if (item.isHost) { //取消推荐
             ishot = 0;
-        }
-        else {//推荐.
-            
+        } else { //推荐.
+
         }
 
         $.ajax({
-            type:'post',
-            url:window.baseUrl+'weixinxcx/hot_articles/',
-            data:{
-                appid:window.WENMING.XCXAPPID,
-                userid:this.userid,
-                getusersigid:this.getusersigid,
-                articleids:item.id,
+            type: 'post',
+            url: window.baseUrl + 'weixinxcx/hot_articles/',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                userid: this.userid,
+                getusersigid: this.getusersigid,
+                articleids: item.id,
                 ishot
             }
-        }).done((data)=>{
-            if(typeof data === 'string'){
+        }).done((data) => {
+            if (typeof data === 'string') {
                 data = JSON.parse(data);
             }
-            if(data.getret === 0 ){
+            if (data.getret === 0) {
                 item.isHost = !item.isHost;
                 this.forceUpdate();
-                message.success(ishot?"推荐成功":'取消推荐成功');
+                message.success(ishot ? "推荐成功" : '取消推荐成功');
             }
         })
     }
 
-    loadArticleByIdByType(id,name){
-       
-      
+    loadArticleByIdByType(id, name) {
+
+
         this.setState({
-            classid:id,
-            classname:name
-        },()=>{
+            classid: id,
+            classname: name
+        }, () => {
             this.loadArticleById(this.state.status);
         })
     }
 
-    viewNext(){
+    viewNext() {
 
-        if(this.currentType === 'comment'){
+        if (this.currentType === 'comment') {
             this.setState({
-                currentPicIndex:this.state.currentPicIndex+1,
-                currentViewPic:this.state.dataSource[0].comments[this.state.currentCommentIndex].commentimg.split(',')[this.state.currentPicIndex+1]
+                currentPicIndex: this.state.currentPicIndex + 1,
+                currentViewPic: this.state.dataSource[0].comments[this.state.currentCommentIndex].commentimg.split(',')[this.state.currentPicIndex + 1]
             })
-        }else{
+        } else {
             this.setState({
-                currentPicIndex:this.state.currentPicIndex+1,
-                currentViewPic:this.state.dataSource[0].imageslist.split(',')[this.state.currentPicIndex+1]
+                currentPicIndex: this.state.currentPicIndex + 1,
+                currentViewPic: this.state.dataSource[0].imageslist.split(',')[this.state.currentPicIndex + 1]
             })
         }
-        
+
     }
 
-    viewPrev(){
-       if(this.currentType === 'comment'){
+    viewPrev() {
+        if (this.currentType === 'comment') {
             this.setState({
-                currentPicIndex:this.state.currentPicIndex-1,
-                currentViewPic:this.state.dataSource[0].comments[this.state.currentCommentIndex].commentimg.split(',')[this.state.currentPicIndex-1]
+                currentPicIndex: this.state.currentPicIndex - 1,
+                currentViewPic: this.state.dataSource[0].comments[this.state.currentCommentIndex].commentimg.split(',')[this.state.currentPicIndex - 1]
             })
-        }else{
+        } else {
             this.setState({
-                currentPicIndex:this.state.currentPicIndex-1,
-                currentViewPic:this.state.dataSource[0].imageslist.split(',')[this.state.currentPicIndex-1]
+                currentPicIndex: this.state.currentPicIndex - 1,
+                currentViewPic: this.state.dataSource[0].imageslist.split(',')[this.state.currentPicIndex - 1]
             })
         }
-        
+
 
     }
- 
-    viewArticlePic(i){
+
+    viewArticlePic(i) {
         this.currentType = 'article';
         this.currentRow = 0;
         this.setState({
-            currentPicIndex:i,
-            currentViewPic:this.state.dataSource[0].imageslist.split(',')[i]
+            currentPicIndex: i,
+            currentViewPic: this.state.dataSource[0].imageslist.split(',')[i]
         })
     }
 
 
-    viewPic(m,i){
+    viewPic(m, i) {
 
         this.currentType = 'comment';
 
         this.currentRow = m;
 
         this.setState({
-            currentCommentIndex:i,
-            currentPicIndex:m,
-            currentViewPic:this.state.dataSource[0].comments[i].commentimg.split(',')[m]
+            currentCommentIndex: i,
+            currentPicIndex: m,
+            currentViewPic: this.state.dataSource[0].comments[i].commentimg.split(',')[m]
         })
     }
 
 
 
-    delete(index,articleids){
+    delete(index, articleids) {
 
         //
 
-        this.state.currentDeleteIndex = index;
-        this.forceUpdate(()=>{
-           
-        });
-
-        $.ajax({
-            type:'post',
-            url:window.baseUrl+'weixinxcx/del_articlecomment/',
-            data:{
-                appid:window.WENMING.XCXAPPID,
-                userid:this.userid,
-                getusersigid:this.getusersigid,
-                commentid:articleids
-            }
-        }).done((data)=>{
-            if(typeof data === 'string'){
-                data = JSON.parse(data);
-            }
-            if( data.getret === 0 ){
-                message.success("删除成功");
-                if(index>-1){
-                    setTimeout(()=>{
-                        this.state.dataSource[0].comments.splice(index,1);
-                        this.state.currentDeleteIndex = -1;
-                        this.state.allCount = this.state.allCount -1;
-                        this.forceUpdate(()=>{
-                            this.scroll.refresh();
-                        });
-                    },500)
-
-                }
-            }
+        this.setState({
+            currentDeleteIndex: index
         })
 
-       
+
+        $.ajax({
+            type: 'post',
+            url: window.baseUrl + 'weixinxcx/del_articlecomment/',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                userid: this.userid,
+                getusersigid: this.getusersigid,
+                commentid: articleids
+            }
+        }).done((data) => {
+            if (typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            if (data.getret === 0) {
+                message.success("删除成功");
+
+                this.state.dataSource[0].comments.splice(index, 1);
+                this.state.currentDeleteIndex = -1;
+                this.forceUpdate();
+            }
+        })
     }
 
 
-    checkedComment(item,type,index){
-        if(item.status === 1){
+    checkedComment(item, type, index) {
+        if (item.status === 1) {
             return;
         }
 
         this.state.currentDeleteIndex = index;
         this.forceUpdate();
         var status = 1;
-        switch(type){
-            case "pass"://审核通过
+        switch (type) {
+            case "pass": //审核通过
 
-            break;
-            case 'unpass'://审核不通过 
+                break;
+            case 'unpass': //审核不通过 
                 status = 2;
-            break;
-        } 
+                break;
+        }
 
         $.ajax({
-            type:'post',
-            url:window.baseUrl+'weixinxcx/look_articlecomment/',
-            data:{
-                appid:window.WENMING.XCXAPPID,
-                userid:this.userid,
-                getusersigid:this.getusersigid,
-                commentid:item.commentid,
-                status           
+            type: 'post',
+            url: window.baseUrl + 'weixinxcx/look_articlecomment/',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                userid: this.userid,
+                getusersigid: this.getusersigid,
+                commentid: item.commentid,
+                status
             }
-        }).done((data)=>{
-            if(typeof data === 'string'){
+        }).done((data) => {
+            if (typeof data === 'string') {
                 data = JSON.parse(data);
             }
-            if(data.getret === 0 ){
+            if (data.getret === 0) {
 
-               if(index>-1){
-                 message.success('审核成功');
-                 setTimeout(()=>{
-                    this.state.dataSource[0].comments[index].status = status;
-                    this.state.currentDeleteIndex = -1;
-                    
-                    this.forceUpdate(()=>{
-                        this.scroll.refresh();
-                    });
-                },500)
-             }else{
-                 
-             }
+                if (index > -1) {
+                    message.success('审核成功');
+                    setTimeout(() => {
+                        this.state.dataSource[0].comments[index].status = status;
+                        this.state.currentDeleteIndex = -1;
+
+                        this.forceUpdate(() => {
+                            this.scroll.refresh();
+                        });
+                    }, 500)
+                } else {
+
+                }
             }
         })
 
 
-       
+
     }
 
- 
-   
 
-    loadMore(){
-        if(this.state.loadingState[0]==='没有更多了'){
+
+    loadMore() {
+        if (this.state.loadingState[0] === '没有更多了') {
             return;
         }
         this.setState({
-            pageIndex:this.state.pageIndex+1,
-            loadingState:['加载中...','loading']
-        },()=>{
-            this.loadArticleById(this.state.status,this.state.pageIndex);
-        })   
+            pageIndex: this.state.pageIndex + 1,
+            loadingState: ['加载中...', 'loading']
+        }, () => {
+            this.loadArticleById(this.state.status, this.state.pageIndex);
+        })
     }
 
-    loadArticleById(index,e,other){
+    loadArticleById(index, e, other) {
 
 
-    	var articlid = this.props.params.id;
+        var articlid = this.props.params.id;
 
-         
-         var state = {
-            status:index
-         }
-         if(!e){
+
+        var state = {
+            status: index
+        }
+        if (!e) {
             state.pageIndex = 1;
-         }
-         this.setState(state,()=>{
-             var data = {
-                appid:window.WENMING.XCXAPPID,
-                userid:this.userid,
-                pagenum:this.state.pageSize,
-                page:this.state.pageIndex,
-                getusersigid:this.getusersigid,
-            	articlid
+        }
+        this.setState(state, () => {
+            var data = {
+                appid: window.WENMING.XCXAPPID,
+                userid: this.userid,
+                pagenum: this.state.pageSize,
+                page: this.state.pageIndex,
+                getusersigid: this.getusersigid,
+                articlid
             }
-                        
-             $.ajax({
-                type:'post',
-                url:window.baseUrl+'weixinxcx/get_articlecomment/',
+
+            $.ajax({
+                type: 'post',
+                url: window.baseUrl + 'weixinxcx/get_articlecomment/',
                 data
-            }).done((data)=>{
-                if(typeof data === 'string'){
+            }).done((data) => {
+                if (typeof data === 'string') {
                     data = JSON.parse(data);
                 }
-             	
-             	
-                if(data.getret === 0 ){
-                    if(data.list.length<=0){
+
+
+                if (data.getret === 0) {
+                    if (data.list.length <= 0) {
                         this.setState({
-                            loadingState:['没有更多了','frown-o']
+                            loadingState: ['没有更多了', 'frown-o']
                         })
                         return;
-                    }	
-                    data.list.forEach((item,i)=>{
-                    	item.defaultContent = item.content;
+                    }
+                    data.list.forEach((item, i) => {
+                        item.defaultContent = item.content;
                     })
                     this.state.dataSource = data.list;
                     this.defaultComments = this.defaultComments || [];
@@ -618,12 +649,14 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
                     this.state.dataSource[0].comments = this.defaultComments;
 
                     this.state.allCount = data.countRow.countrows;
-                    loadingState:['加载更多','down']
-                    this.forceUpdate(()=>{
-                       this.scroll.refresh();
+                    loadingState: ['加载更多', 'down']
+                    this.forceUpdate(() => {
+                        this.scroll.refresh();
                     });
+
+
                 }
-            },()=>{
+            }, () => {
 
             })
         });
@@ -631,51 +664,49 @@ var defaulturl= 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
 
 
 
-    request(){
+    request() {
 
-       this.loadArticleById(0);
+        this.loadArticleById(0);
 
 
-          $.ajax({
-            type:'post',
-            url:window.baseUrl+'weixinxcx/search_articleclass',
-            data:{
-                appid:window.WENMING.XCXAPPID,
-                userid:this.userid,
-                getusersigid:this.getusersigid
+        $.ajax({
+            type: 'post',
+            url: window.baseUrl + 'weixinxcx/search_articleclass',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                userid: this.userid,
+                getusersigid: this.getusersigid
             }
-        }).done((data)=>{
-            if(typeof data === 'string'){
+        }).done((data) => {
+            if (typeof data === 'string') {
                 data = JSON.parse(data);
             }
-            if(data.getret === 0 ){
+            if (data.getret === 0) {
 
-              
+
                 this.setState({
-                    typeList:data.list
+                    typeList: data.list
                 })
             }
         })
 
     }
-    
 
-    formatNumber(s, n = 3){   
-           n = n > 0 && n <= 20 ? n : 2;   
-           s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";   
-           var l = s.split(".")[0].split("").reverse(),   
-           r = s.split(".")[1];   
-            var  t = "";   
-           for(var i = 0; i < l.length; i ++ )   
-           {   
-              t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");   
-           }   
-           return t.split("").reverse().join("");   
-    } 
 
-   
+    formatNumber(s, n = 3) {
+        n = n > 0 && n <= 20 ? n : 2;
+        s = parseFloat((s + "").replace(/[^\d\.-]/g, "")).toFixed(n) + "";
+        var l = s.split(".")[0].split("").reverse(),
+            r = s.split(".")[1];
+        var t = "";
+        for (var i = 0; i < l.length; i++) {
+            t += l[i] + ((i + 1) % 3 == 0 && (i + 1) != l.length ? "," : "");
+        }
+        return t.split("").reverse().join("");
+    }
 
-  
+
+
 }
 
 export default ZmitiValidateUser(ZmitiWenmingCommentDetailApp);
