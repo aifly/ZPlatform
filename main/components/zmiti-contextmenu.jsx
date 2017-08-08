@@ -18,7 +18,7 @@ export default class ZmitiContextmenu extends Component {
 				{this.state.showMenu&&<ul>
 			{
 				this.props.menus.map((item, i) => {
-					return <li key={i} onClick={()=>{window.obserable.trigger({type:'toggleContextmenu',data:false});item.fn(i)}}>
+					return <li key={i} onMouseOver={()=>{item.mouseover()}} onMouseOut={()=>{item.mouseout()}}  onClick={()=>{window.obserable.trigger({type:'toggleContextmenu',data:false});item.fn(i)}}>
 										  		{item.type} {item.name}
 										  	</li>
 				})

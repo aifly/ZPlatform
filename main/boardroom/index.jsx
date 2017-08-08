@@ -36,6 +36,7 @@ class ZmitiBoardroomApp extends React.Component {
             mainHeight: document.documentElement.clientHeight - 50,
             menuLeft: 0,
             menuTop: 0,
+            currentType:'col',//row or col
             currentSeatIndex: -1,
             list: {
                 cols: 5,
@@ -143,76 +144,164 @@ class ZmitiBoardroomApp extends React.Component {
 
                     this.state.list.rows = this.state.list.rows + 1;
                     this.forceUpdate()
-
-
+                },
+                mouseover:()=>{
+                    this.setState({
+                        currentType : 'row'
+                    });
+                },
+                mouseout:()=>{
+                    this.setState({
+                        currentType : ''
+                    });
                 }
-            }, {
-                name: "在下面插入一行",
-                type: <Icon type="plus-circle-o" />,
-                fn: (i) => {
+                }, {
+                    name: "在下面插入一行",
+                    type: <Icon type="plus-circle-o" />,
+                    fn: (i) => {
 
-                    var row = ((this.state.currentSeatIndex + this.state.list.cols) / this.state.list.cols) | 0;
-
-
-                    var index = (this.state.list.cols) * row;
+                        var row = ((this.state.currentSeatIndex + this.state.list.cols) / this.state.list.cols) | 0;
 
 
+                        var index = (this.state.list.cols) * row;
 
-                    var arr = this.state.list.data.slice(0, index);
 
 
-                    var arr2 = [];
-                    for (var i = 0; i < this.state.list.cols; i++) {
-                        arr2.push({
-                            name: '***'
-                        })
+                        var arr = this.state.list.data.slice(0, index);
+
+
+                        var arr2 = [];
+                        for (var i = 0; i < this.state.list.cols; i++) {
+                            arr2.push({
+                                name: '***'
+                            })
+                        }
+
+                        var arr3 = this.state.list.data.slice(index);
+
+                        var result = arr.concat(arr2, arr3);
+
+                        this.state.list.data = result;
+
+                        this.state.list.rows = this.state.list.rows + 1;
+                        this.forceUpdate()
+                    },
+                    mouseover:()=>{
+                        this.setState({
+                            currentType : 'row'
+                        });
+                    },
+                    mouseout:()=>{
+                        this.setState({
+                            currentType : ''
+                        });
                     }
-
-                    var arr3 = this.state.list.data.slice(index);
-
-                    var result = arr.concat(arr2, arr3);
-
-                    this.state.list.data = result;
-
-                    this.state.list.rows = this.state.list.rows + 1;
-                    this.forceUpdate()
-                }
-            }, {
-                name: "删除当前行",
-                type: <Icon type="delete" />,
-                fn: (i) => {
-                    var row = ((this.state.currentSeatIndex) / this.state.list.cols) | 0;
+                }, {
+                    name: "删除当前行",
+                    type: <Icon type="delete" />,
+                    fn: (i) => {
+                        var row = ((this.state.currentSeatIndex) / this.state.list.cols) | 0;
 
 
-                    var index = (this.state.list.cols) * row;
+                        var index = (this.state.list.cols) * row;
 
 
 
-                    for (var i = 0; i < this.state.list.cols; i++) {
-                        this.state.list.data.splice(index, 1);
+                        for (var i = 0; i < this.state.list.cols; i++) {
+                            this.state.list.data.splice(index, 1);
+                        }
+
+                        this.state.list.rows = this.state.list.rows - 1;
+                        this.forceUpdate()
+                    },
+                    mouseover:()=>{
+                        this.setState({
+                            currentType : 'row'
+                        });
+                    },
+                    mouseout:()=>{
+                        this.setState({
+                            currentType : ''
+                        });
                     }
-
-                    this.state.list.rows = this.state.list.rows - 1;
-                    this.forceUpdate()
-                }
-            }, , {
-                name: "在左侧插入一列",
-                type: <Icon type="plus-circle" />,
-                fn: (i) => {
-                    var row = ((this.state.currentSeatIndex) % this.state.list.cols) | 0;
+                },{
+                    name: "在左侧插入一列",
+                    type: <Icon type="plus-circle" />,
+                    fn: (i) => {
+                        var row = ((this.state.currentSeatIndex) % this.state.list.cols) | 0;
 
 
-                    console.log(row);
-                    this.state.list.rows = this.state.list.rows + 1;
-                    for (var i = 0; i < this.state.list.rows; i++) {
-                        this.state.list.data.splice((row + i) * this.state.list.cols, 0, {
-                            name: '^^^'
-                        })
+                        console.log(row);
+                        for (var i = 0; i < this.state.list.rows; i++) {
+                            this.state.list.data.splice((i) * this.state.list.cols+i+row, 0, {
+                                name: '^^^'
+                            })
+                        }
+                        this.state.list.cols = this.state.list.cols + 1;
+
+                        this.forceUpdate();
+                    },
+                    mouseover:()=>{
+                        this.setState({
+                            currentType : 'col'
+                        });
+                    },
+                    mouseout:()=>{
+                        this.setState({
+                            currentType : ''
+                        });
                     }
+                },{
+                    name: "在右侧插入一列",
+                    type: <Icon type="plus-circle-o" />,
+                    fn: (i) => {
+                        var row = ((this.state.currentSeatIndex) % this.state.list.cols) | 0;
 
-                    this.forceUpdate();
+
+                        console.log(row);
+                        for (var i = 0; i < this.state.list.rows; i++) {
+                            this.state.list.data.splice((i) * this.state.list.cols+i+row+1, 0, {
+                                name: '==='
+                            })
+                        }
+                        this.state.list.cols = this.state.list.cols + 1;
+
+                        this.forceUpdate();
+                    }, mouseover:()=>{
+                        this.setState({
+                            currentType : 'col'
+                        });
+                    },
+                    mouseout:()=>{
+                        this.setState({
+                            currentType : ''
+                        });
+                    }
+                },{
+                    name: "删除当前列",
+                    type: <Icon type="delete" />,
+                    fn: (i) => {
+                        var row = ((this.state.currentSeatIndex) % this.state.list.cols) | 0;
+
+                        console.log(row);
+                        for (var i = 0; i < this.state.list.rows; i++) {
+                            this.state.list.data.splice((i) * this.state.list.cols-i+row, 1)
+                        }
+                        this.state.list.cols = this.state.list.cols - 1;
+
+                        this.forceUpdate();
+                    }, mouseover:()=>{
+                        this.setState({
+                            currentType : 'col'
+                        });
+                    },
+                    mouseout:()=>{
+                        this.setState({
+                            currentType : ''
+                        });
+                    }
                 }
-            }]
+            ]
         }
 
 
@@ -222,7 +311,30 @@ class ZmitiBoardroomApp extends React.Component {
                 <ul style={{width:60*this.state.list.cols+1}}>
                 {
                     this.state.list.data.map((item, i) => {
-                          return <li  onContextMenu={this.onContextMenu.bind(this,i)} title={this.state.list.data[i].name?this.state.list.data[i].name:''} className='zmiti-text-overflow' key={i} onMouseDown={this.addEdit.bind(this,i)}>
+                          var backColor = '#fff';
+                        if(this.state.currentType === 'row'){
+                            var row = ((this.state.currentSeatIndex + this.state.list.cols) / this.state.list.cols) | 0;
+
+                            var idx = ((i + this.state.list.cols)/this.state.list.cols)|0;
+
+                            if(idx === row){
+                                backColor = '#eee';
+                            }else{
+                                backColor = '#fff'
+                            }
+                        }
+                        else if(this.state.currentType === 'col'){
+                             var row = ((this.state.currentSeatIndex) % this.state.list.cols);
+
+                            var idx = ((i + this.state.list.cols)/this.state.list.cols)|0;
+                              
+                            if(i % this.state.list.cols === row){
+                                    backColor = '#eee';
+                            }else{
+                                backColor = '#fff'
+                            }
+                        }
+                          return <li style={{backgroundColor:backColor}}  onContextMenu={this.onContextMenu.bind(this,i)} title={this.state.list.data[i].name?this.state.list.data[i].name:''} className='zmiti-text-overflow' key={i} onMouseUp={this.addEdit.bind(this,i)}>
                             {!this.state.list.data[i].edit&&<span>{this.state.list.data[i].name}</span>}
                             {this.state.list.data[i].edit &&<input data-id={'input-'+i} ref={'input-'+i} value={this.state.list.data[i].name} onChange={e=>{this.state.list.data[i].name = e.target.value;this.forceUpdate()}} />}
                         </li>
@@ -244,6 +356,7 @@ class ZmitiBoardroomApp extends React.Component {
 
 
         this.setState({
+            currentType:'',
             currentSeatIndex: index,
             menuLeft: Math.min(this.viewW - 150, e.pageX),
             menuTop: Math.min(e.pageY, this.viewH - 150)
@@ -264,7 +377,7 @@ class ZmitiBoardroomApp extends React.Component {
             item.edit = false;
         })
 
-
+        this.state.currentType = '';
         this.state.list.data[i].edit = true;
 
         this.forceUpdate(() => {
@@ -332,9 +445,9 @@ class ZmitiBoardroomApp extends React.Component {
 
         stage.on('mousedown', ev => {
 
-            /*if (ev.target.nodeName !== 'LI' && ev.target.nodeName !== 'UL') {
+            if (ev.target.nodeName === 'INPUT') {
                 return;
-            }*/
+            }
 
             var offsetX = stage[0].offsetLeft;
             var offsetY = stage[0].offsetTop;
