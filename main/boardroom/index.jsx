@@ -36,8 +36,9 @@ class ZmitiBoardroomApp extends React.Component {
             mainHeight: document.documentElement.clientHeight - 50,
             menuLeft: 0,
             menuTop: 0,
-            currentType:'col',//row or col
+            currentType: 'col', //row or col
             currentSeatIndex: -1,
+            backColor: "transparent",
             list: {
                 cols: 5,
                 rows: 12,
@@ -142,166 +143,182 @@ class ZmitiBoardroomApp extends React.Component {
 
                     this.state.list.data = result;
 
+                    this.state.backColor = 'transparent';
+
                     this.state.list.rows = this.state.list.rows + 1;
                     this.forceUpdate()
                 },
-                mouseover:()=>{
+                mouseover: () => {
                     this.setState({
-                        currentType : 'row'
+                        currentType: 'row',
+                        backColor: '#eee'
                     });
                 },
-                mouseout:()=>{
+                mouseout: () => {
                     this.setState({
-                        currentType : ''
+                        currentType: '',
+                        backColor: 'transparent'
                     });
                 }
-                }, {
-                    name: "在下面插入一行",
-                    type: <Icon type="plus-circle-o" />,
-                    fn: (i) => {
+            }, {
+                name: "在下面插入一行",
+                type: <Icon type="plus-circle-o" />,
+                fn: (i) => {
 
-                        var row = ((this.state.currentSeatIndex + this.state.list.cols) / this.state.list.cols) | 0;
-
-
-                        var index = (this.state.list.cols) * row;
+                    var row = ((this.state.currentSeatIndex + this.state.list.cols) / this.state.list.cols) | 0;
 
 
+                    var index = (this.state.list.cols) * row;
 
-                        var arr = this.state.list.data.slice(0, index);
 
 
-                        var arr2 = [];
-                        for (var i = 0; i < this.state.list.cols; i++) {
-                            arr2.push({
-                                name: '***'
-                            })
-                        }
+                    var arr = this.state.list.data.slice(0, index);
 
-                        var arr3 = this.state.list.data.slice(index);
 
-                        var result = arr.concat(arr2, arr3);
-
-                        this.state.list.data = result;
-
-                        this.state.list.rows = this.state.list.rows + 1;
-                        this.forceUpdate()
-                    },
-                    mouseover:()=>{
-                        this.setState({
-                            currentType : 'row'
-                        });
-                    },
-                    mouseout:()=>{
-                        this.setState({
-                            currentType : ''
-                        });
+                    var arr2 = [];
+                    for (var i = 0; i < this.state.list.cols; i++) {
+                        arr2.push({
+                            name: '***'
+                        })
                     }
-                }, {
-                    name: "删除当前行",
-                    type: <Icon type="delete" />,
-                    fn: (i) => {
-                        var row = ((this.state.currentSeatIndex) / this.state.list.cols) | 0;
 
+                    var arr3 = this.state.list.data.slice(index);
 
-                        var index = (this.state.list.cols) * row;
+                    var result = arr.concat(arr2, arr3);
 
-
-
-                        for (var i = 0; i < this.state.list.cols; i++) {
-                            this.state.list.data.splice(index, 1);
-                        }
-
-                        this.state.list.rows = this.state.list.rows - 1;
-                        this.forceUpdate()
-                    },
-                    mouseover:()=>{
-                        this.setState({
-                            currentType : 'row'
-                        });
-                    },
-                    mouseout:()=>{
-                        this.setState({
-                            currentType : ''
-                        });
-                    }
-                },{
-                    name: "在左侧插入一列",
-                    type: <Icon type="plus-circle" />,
-                    fn: (i) => {
-                        var row = ((this.state.currentSeatIndex) % this.state.list.cols) | 0;
-
-
-                        console.log(row);
-                        for (var i = 0; i < this.state.list.rows; i++) {
-                            this.state.list.data.splice((i) * this.state.list.cols+i+row, 0, {
-                                name: '^^^'
-                            })
-                        }
-                        this.state.list.cols = this.state.list.cols + 1;
-
-                        this.forceUpdate();
-                    },
-                    mouseover:()=>{
-                        this.setState({
-                            currentType : 'col'
-                        });
-                    },
-                    mouseout:()=>{
-                        this.setState({
-                            currentType : ''
-                        });
-                    }
-                },{
-                    name: "在右侧插入一列",
-                    type: <Icon type="plus-circle-o" />,
-                    fn: (i) => {
-                        var row = ((this.state.currentSeatIndex) % this.state.list.cols) | 0;
-
-
-                        console.log(row);
-                        for (var i = 0; i < this.state.list.rows; i++) {
-                            this.state.list.data.splice((i) * this.state.list.cols+i+row+1, 0, {
-                                name: '==='
-                            })
-                        }
-                        this.state.list.cols = this.state.list.cols + 1;
-
-                        this.forceUpdate();
-                    }, mouseover:()=>{
-                        this.setState({
-                            currentType : 'col'
-                        });
-                    },
-                    mouseout:()=>{
-                        this.setState({
-                            currentType : ''
-                        });
-                    }
-                },{
-                    name: "删除当前列",
-                    type: <Icon type="delete" />,
-                    fn: (i) => {
-                        var row = ((this.state.currentSeatIndex) % this.state.list.cols) | 0;
-
-                        console.log(row);
-                        for (var i = 0; i < this.state.list.rows; i++) {
-                            this.state.list.data.splice((i) * this.state.list.cols-i+row, 1)
-                        }
-                        this.state.list.cols = this.state.list.cols - 1;
-
-                        this.forceUpdate();
-                    }, mouseover:()=>{
-                        this.setState({
-                            currentType : 'col'
-                        });
-                    },
-                    mouseout:()=>{
-                        this.setState({
-                            currentType : ''
-                        });
-                    }
+                    this.state.list.data = result;
+                    this.state.backColor = 'transparent';
+                    this.state.list.rows = this.state.list.rows + 1;
+                    this.forceUpdate()
+                },
+                mouseover: () => {
+                    this.setState({
+                        currentType: 'row',
+                        backColor: '#eee'
+                    });
+                },
+                mouseout: () => {
+                    this.setState({
+                        currentType: '',
+                        backColor: 'transparent'
+                    });
                 }
-            ]
+            }, {
+                name: "删除当前行",
+                type: <Icon type="delete" />,
+                fn: (i) => {
+                    var row = ((this.state.currentSeatIndex) / this.state.list.cols) | 0;
+
+
+                    var index = (this.state.list.cols) * row;
+
+
+
+                    for (var i = 0; i < this.state.list.cols; i++) {
+                        this.state.list.data.splice(index, 1);
+                    }
+                    this.state.backColor = 'transparent';
+                    this.state.list.rows = this.state.list.rows - 1;
+                    this.forceUpdate()
+                },
+                mouseover: () => {
+                    this.setState({
+                        currentType: 'row',
+                        backColor: '#f00'
+                    });
+                },
+                mouseout: () => {
+                    this.setState({
+                        currentType: '',
+                        backColor: 'transparent'
+                    });
+                }
+            }, {
+                name: "在左侧插入一列",
+                type: <Icon type="plus-circle" />,
+                fn: (i) => {
+                    var row = ((this.state.currentSeatIndex) % this.state.list.cols) | 0;
+
+
+                    console.log(row);
+                    for (var i = 0; i < this.state.list.rows; i++) {
+                        this.state.list.data.splice((i) * this.state.list.cols + i + row, 0, {
+                            name: '^^^'
+                        })
+                    }
+                    this.state.backColor = 'transparent';
+                    this.state.list.cols = this.state.list.cols + 1;
+
+                    this.forceUpdate();
+                },
+                mouseover: () => {
+                    this.setState({
+                        currentType: 'col',
+                        backColor: '#eee'
+                    });
+                },
+                mouseout: () => {
+                    this.setState({
+                        currentType: '',
+                        backColor: 'transparent'
+                    });
+                }
+            }, {
+                name: "在右侧插入一列",
+                type: <Icon type="plus-circle-o" />,
+                fn: (i) => {
+                    var row = ((this.state.currentSeatIndex) % this.state.list.cols) | 0;
+
+
+                    console.log(row);
+                    for (var i = 0; i < this.state.list.rows; i++) {
+                        this.state.list.data.splice((i) * this.state.list.cols + i + row + 1, 0, {
+                            name: '==='
+                        })
+                    }
+                    this.state.list.cols = this.state.list.cols + 1;
+                    this.state.backColor = 'transparent';
+                    this.forceUpdate();
+                },
+                mouseover: () => {
+                    this.setState({
+                        currentType: 'col',
+                        backColor: '#eee'
+                    });
+                },
+                mouseout: () => {
+                    this.setState({
+                        currentType: '',
+                        backColor: 'transparent'
+                    });
+                }
+            }, {
+                name: "删除当前列",
+                type: <Icon type="delete" />,
+                fn: (i) => {
+                    var row = ((this.state.currentSeatIndex) % this.state.list.cols) | 0;
+
+                    console.log(row);
+                    for (var i = 0; i < this.state.list.rows; i++) {
+                        this.state.list.data.splice((i) * this.state.list.cols - i + row, 1)
+                    }
+                    this.state.list.cols = this.state.list.cols - 1;
+                    this.state.backColor = 'transparent';
+                    this.forceUpdate();
+                },
+                mouseover: () => {
+                    this.setState({
+                        currentType: 'col',
+                        backColor: '#f00'
+                    });
+                },
+                mouseout: () => {
+                    this.setState({
+                        currentType: '',
+                        backColor: 'transparent'
+                    });
+                }
+            }]
         }
 
 
@@ -318,7 +335,7 @@ class ZmitiBoardroomApp extends React.Component {
                             var idx = ((i + this.state.list.cols)/this.state.list.cols)|0;
 
                             if(idx === row){
-                                backColor = '#eee';
+                                backColor = this.state.backColor;
                             }else{
                                 backColor = '#fff'
                             }
@@ -329,7 +346,7 @@ class ZmitiBoardroomApp extends React.Component {
                             var idx = ((i + this.state.list.cols)/this.state.list.cols)|0;
                               
                             if(i % this.state.list.cols === row){
-                                    backColor = '#eee';
+                                backColor = this.state.backColor;
                             }else{
                                 backColor = '#fff'
                             }
@@ -356,7 +373,8 @@ class ZmitiBoardroomApp extends React.Component {
 
 
         this.setState({
-            currentType:'',
+            currentType: '',
+            backColor: 'transparent',
             currentSeatIndex: index,
             menuLeft: Math.min(this.viewW - 150, e.pageX),
             menuTop: Math.min(e.pageY, this.viewH - 150)
