@@ -395,6 +395,7 @@ class ZmitiBoardroomApp extends React.Component {
             item.edit = false;
         })
 
+        this.state.currentSeatIndex = i;
         this.state.currentType = '';
         this.state.list.data[i].edit = true;
 
@@ -483,6 +484,23 @@ class ZmitiBoardroomApp extends React.Component {
                 $(document).off('mousemove mouseup');
             });
         })
+
+
+        $(window).on('keydown', (e) => {
+            if (e.keyCode === 9) { //tab键
+                e.preventDefault();
+                if (this.state.currentSeatIndex > -1) {
+                    if (this.state.currentSeatIndex >= this.state.list.rows * this.state.list.cols - 1) {
+                        this.state.currentSeatIndex = -1;
+                    }
+                    this.setState({
+                        currentSeatIndex: this.state.currentSeatIndex + 1
+                    }, () => {
+                        this.addEdit(this.state.currentSeatIndex);
+                    })
+                }
+            };
+        });
 
 
 
