@@ -1,13 +1,24 @@
 import React from 'react';
 import './scss/zmiti-panel.css';
 
-import { Tabs, InputNumber,Icon,Modal,Select, Button} from '../../../commoncomponent/common.jsx';
+import {
+    Tabs,
+    InputNumber,
+    Icon,
+    Modal,
+    Select,
+    Button
+} from '../../../commoncomponent/common.jsx';
 const TabPane = Tabs.TabPane;
 const Option = Select.Option;
 
-import {utilMethods, _$, $$} from '../../../utilMethod.es6';
+import {
+    utilMethods,
+    _$,
+    $$
+} from '../../../utilMethod.es6';
 import PubSub from '../js/pubsub';
-import  $ from 'jquery';
+import $ from 'jquery';
 import IScroll from 'iScroll';
 
 export default class ZmitiPanel extends React.Component {
@@ -24,15 +35,15 @@ export default class ZmitiPanel extends React.Component {
             current: 0,
             width: 500,
             height: 500,
-            visible:false,
-            imageType:"image/png",
+            visible: false,
+            imageType: "image/png",
             currentMethod: 'renderRect',
             dataUrl: '#',
             isLocked: false,
-            showDownload: true,//显示下载按钮
+            showDownload: true, //显示下载按钮
             picMargin: 2,
-            showPanel:true,
-            scale: -1,//当前图片缩放的比例
+            showPanel: true,
+            scale: -1, //当前图片缩放的比例
         }
     }
 
@@ -54,12 +65,15 @@ export default class ZmitiPanel extends React.Component {
             height: value
         };
 
-        if (this.state.scale > -1) {//等比缩放的
+        if (this.state.scale > -1) { //等比缩放的
             state.width = value * this.state.scale;
             PubSub.publish('setCanvasWidth', state.height);
         }
-        this.setState(state, ()=> {
-            PubSub.publish('renderCanvas', {method: this.state.currentMethod, marginSize: this.state.picMargin});
+        this.setState(state, () => {
+            PubSub.publish('renderCanvas', {
+                method: this.state.currentMethod,
+                marginSize: this.state.picMargin
+            });
         });
     }
 
@@ -77,16 +91,19 @@ export default class ZmitiPanel extends React.Component {
             state.height = value / this.state.scale;
             PubSub.publish('setCanvasHeight', state.height);
         }
-        s.setState(state, ()=> {
-            PubSub.publish('renderCanvas', {method: this.state.currentMethod, marginSize: this.state.picMargin});
+        s.setState(state, () => {
+            PubSub.publish('renderCanvas', {
+                method: this.state.currentMethod,
+                marginSize: this.state.picMargin
+            });
         });
     }
 
     render() {
 
         let moulds = [{
-                type: 1,
-                html: <div style={{boxSizing:'border-box',background:'#ff99c1','border':'1px solid #ccc',padding:2}}
+            type: 1,
+            html: <div style={{boxSizing:'border-box',background:'#ff99c1','border':'1px solid #ccc',padding:2}}
                     className={"p-mould p-mould-single " + (this.state.currentMethod === 'renderRect' ? 'active' : '')}
                     data-size="500*500"
                     data-method="renderRect"
@@ -94,10 +111,9 @@ export default class ZmitiPanel extends React.Component {
                     <aside></aside>
                     <aside></aside>
                 </div>
-            },
-            {
-                type: 2,
-                html: <div
+        }, {
+            type: 2,
+            html: <div
                     className={"p-mould p-mould-left-right " + (this.state.currentMethod === 'renderRectLeftRight' ? 'active' : '')}
                     data-size="1000*500"
                     data-method="renderRectLeftRight"
@@ -106,90 +122,88 @@ export default class ZmitiPanel extends React.Component {
                     <aside></aside>
                     <aside></aside>
                 </div>
-            },
-            {
-                type: 2,
-                html: <div
+        }, {
+            type: 2,
+            html: <div
                     className={"p-mould p-mould-top-bottom " + (this.state.currentMethod === 'renderRectUpDown' ? 'active' : '')}
                     data-size="1000*500" data-method="renderRectUpDown"
                     key='renderRectUpDown'>
                     <aside></aside>
                     <aside></aside>
                 </div>
-            },
-            {
-                type: 2,
-                html: <div
+        }, {
+            type: 2,
+            html: <div
+                    style={{background:'url(./static/images/m.png) no-repeat center/ contain'}}
                     className={"p-mould p-mould-tilt " + (this.state.currentMethod === 'renderRectTilt' ? 'active' : '')}
                     data-size="1000*500" data-method="renderRectTilt"
                     key='renderRectTilt'>
                 </div>
-            },
-            {
-                type: 2,
-                html: <div
+        }, {
+            type: 2,
+            html: <div
+                    style={{background:'url(./static/images/m1.png) no-repeat center/ contain'}}
                     className={"p-mould p-mould-bessel " + (this.state.currentMethod === 'renderRectBessel' ? 'active' : '')}
                     data-size="500*800" data-method="renderRectBessel"
                     key='renderRectBessel'>
                 </div>
-            },
-            {
-                type: 3,
-                html: <div
+        }, {
+            type: 3,
+            html: <div
+                    style={{background:'url(./static/images/m2.png) no-repeat center/ contain'}}
                     className={"p-mould p-mould-three1 " + (this.state.currentMethod === 'renderRectThree1' ? 'active' : '')}
                     data-size="1000*500" data-method="renderRectThree1"
                     key='renderRectThree1'>
                 </div>
-            },
-            {
-                type: 3,
-                html: <div
+        }, {
+            type: 3,
+            html: <div
+                    style={{background:'url(./static/images/m2-1.png) no-repeat center/ contain'}}
                     className={"p-mould p-mould-three2 " + (this.state.currentMethod === 'renderRectThree2' ? 'active' : '')}
                     data-size="500*500" data-method="renderRectThree2"
                     key='renderRectThree2'>
                 </div>
-            },
-            {
-                type: 3,
-                html: <div
+        }, {
+            type: 3,
+            html: <div
+                    style={{background:'url(./static/images/m2-2.png) no-repeat center/ contain'}}
                     className={"p-mould p-mould-three3 " + (this.state.currentMethod === 'renderRectThree3' ? 'active' : '')}
                     data-size="500*500" data-method="renderRectThree3"
                     key='renderRectThree3'>
                 </div>
-            },
-            {
-                type: 4,
-                html: <div
+        }, {
+            type: 4,
+            html: <div
+                    style={{background:'url(./static/images/m4.png) no-repeat center/ contain'}}
                     className={"p-mould p-mould-four1 " + (this.state.currentMethod === 'renderRectFour1' ? 'active' : '')}
                     data-size="1000*500" data-method="renderRectFour1"
                     key='renderRectFour1'>
                 </div>
-            },
-            {
-                type: 4,
-                html: <div
+        }, {
+            type: 4,
+            html: <div
+                    style={{background:'url(./static/images/m3.png) no-repeat center/ contain'}}
                     className={"p-mould p-mould-four2 " + (this.state.currentMethod === 'renderRectFour2' ? 'active' : '')}
                     data-size="600*600" data-method="renderRectFour2"
                     key='renderRectFour2'>
                 </div>
-            },
-            {
-                type: 4,
-                html: <div
+        }, {
+            type: 4,
+            html: <div
+                    style={{background:'url(./static/images/m5.png) no-repeat center/ contain'}}
                     className={"p-mould p-mould-four3 " + (this.state.currentMethod === 'renderRectFour3' ? 'active' : '')}
                     data-size="600*600" data-method="renderRectFour3"
                     key='renderRectFour3'>
                 </div>
-            },
-            {
-                type: 4,
-                html: <div
+        }, {
+            type: 4,
+            html: <div
+                    style={{background:'url(./static/images/m6.png) no-repeat center/ contain'}}
                     className={"p-mould p-mould-four4 " + (this.state.currentMethod === 'renderRectFour4' ? 'active' : '')}
                     data-size="600*600" data-method="renderRectFour4"
                     key='renderRectFour4'>
                 </div>
-            }
-        ];
+        }];
 
         return (
             <div className={'zmiti-panel-ui '+ (this.state.showPanel?'':'active')} ref="panel" style={{height: this.props.mainHeight}}>
@@ -324,17 +338,19 @@ export default class ZmitiPanel extends React.Component {
         )
     }
 
-    selectImageType(e){
+    selectImageType(e) {
         this.setState({
-            imageType:e
+            imageType: e
         });
     }
 
 
     downloadImg() {
         ///  let imgPathURL = window.ZmitiState.toDataURL();
-        
-        window.obserable.trigger({type:'removeDashShape'});//移除虚线框
+
+        window.obserable.trigger({
+            type: 'removeDashShape'
+        }); //移除虚线框
 
         this.setState({
             dataUrl: document.getElementsByTagName('canvas')[0].toDataURL(this.state.imageType)
@@ -352,32 +368,35 @@ export default class ZmitiPanel extends React.Component {
 
         this.setState({
             picMargin: size
-        }, ()=> {
+        }, () => {
 
-            PubSub.publish('renderCanvas', {method: this.state.currentMethod, marginSize: size});
+            PubSub.publish('renderCanvas', {
+                method: this.state.currentMethod,
+                marginSize: size
+            });
         })
     }
 
     componentWillMount() {
-        window.obserable.on('getPicmMargin', ()=> {
+        window.obserable.on('getPicmMargin', () => {
             return this.state.picMargin;
         });
     }
 
     componentDidMount() {
-          var iScroll = new IScroll(this.refs['scroll'],{
-                scrollbars:true,//显示滚动条
-                interactiveScrollbars:true,//允许用户拖动滚动条
-                mouseWheel:true,//启用鼠标滚轮。
-             });
+        var iScroll = new IScroll(this.refs['scroll'], {
+            scrollbars: true, //显示滚动条
+            interactiveScrollbars: true, //允许用户拖动滚动条
+            mouseWheel: true, //启用鼠标滚轮。
+        });
 
-          window.obserable.on('getCurrentMehtod',()=>{
+        window.obserable.on('getCurrentMehtod', () => {
             return this.state.currentMethod;
-          })
+        })
 
     }
 
-    lockedScale() {//解锁、锁定比例
+    lockedScale() { //解锁、锁定比例
         var locked = this.state.isLocked;
         var state = {
             isLocked: !locked
@@ -385,8 +404,7 @@ export default class ZmitiPanel extends React.Component {
 
         if (!locked) {
             state.scale = this.state.width / this.state.height;
-        }
-        else {
+        } else {
             state.scale = -1;
         }
         this.setState(state);
@@ -400,7 +418,7 @@ export default class ZmitiPanel extends React.Component {
                 scale: scale * 1,
                 isLocked: true,
                 height: this.state.width / scale
-            }, ()=> {
+            }, () => {
                 window.obserable.trigger({
                     type: 'setCanvasHeight',
                     data: this.state.width / scale
@@ -409,7 +427,10 @@ export default class ZmitiPanel extends React.Component {
                     type: 'setCanvasWidth',
                     data: this.state.width
                 });
-                PubSub.publish('renderCanvas', {method: this.state.currentMethod, marginSize: this.state.picMargin});
+                PubSub.publish('renderCanvas', {
+                    method: this.state.currentMethod,
+                    marginSize: this.state.picMargin
+                });
             });
         }
     }
@@ -419,8 +440,7 @@ export default class ZmitiPanel extends React.Component {
         let target = null;
         if (e.target.classList.contains('p-mould')) {
             target = e.target;
-        }
-        else if (e.target.parentNode.classList.contains('p-mould')) {
+        } else if (e.target.parentNode.classList.contains('p-mould')) {
             target = e.target.parentNode;
         }
         this.lastTarget = this.lastTarget || null;
@@ -449,7 +469,10 @@ export default class ZmitiPanel extends React.Component {
             this.setState({
                 currentMethod: method
             });
-            PubSub.publish('renderCanvas', {method, marginSize: this.state.picMargin});
+            PubSub.publish('renderCanvas', {
+                method,
+                marginSize: this.state.picMargin
+            });
 
             PubSub.publish('getMethod', method);
 
@@ -461,7 +484,7 @@ export default class ZmitiPanel extends React.Component {
     closePanel() {
 
         this.setState({
-            showPanel:!this.state.showPanel
+            showPanel: !this.state.showPanel
         })
 
         /* this.open = !this.open;

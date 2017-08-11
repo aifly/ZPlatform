@@ -2,620 +2,555 @@ html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h
   padding: 0;
   margin: 0;
 }
-
 a {
   text-decoration: none;
 }
-
 li {
   list-style: none;
 }
-
 html, body {
   height: 100%;
 }
-
 img {
   border: none;
   vertical-align: top;
   width: 100%;
   height: auto;
 }
-
 input, textarea {
   outline: none;
 }
-
 @mixin pos($v) {
   @if
   $v == a {
     position: absolute;
-    } @else if $v == r {
-      position: relative;
-      } @else if $v == f {
-        position: fixed;
-      }
-    }
+  }
+  @else if $v == r {
+    position: relative;
+  }
+  @else if $v == f {
+    position: fixed;
+  }
+}
+@mixin br($v:50%) {
+  border-radius: $v;
+}
+@mixin opacity($v:0) {
+  opacity: $v;
+}
+@mixin transform($v) {
+  -webkit-transform: $v;
+  transform: $v;
+}
+@mixin transformOrigin($v) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+@mixin backgroundSize($v:cover) {
+  background-size: $v;
+}
+@mixin transition_transform($v) {
+  -webkit-transition: -webkit-transform $v;
+  transition: transform $v;
+}
+@mixin transform_origin($v:center) {
+  -webkit-transform-origin: $v;
+  transform-origin: $v;
+}
+@mixin transition($v) {
+  -webkit-transition: $v;
+  transition: $v;
+}
+@mixin transitionTimingFunction($v:cubic-bezier(1, -0.025, 1, 0.865)) {
+  -webkit-transition-timing-function: $v;
+  transition-timing-function: $v;
+}
+@mixin transform($v) {
+  -webkit-transform: $v;
+  transform: $v;
+}
+@mixin background($bg) {
+  background: $bg;
+}
+@mixin backgroundSize($v:cover) {
+  background-size: $v;
+}
+@mixin animation($v) {
+  -webkit-animation: $v;
+  animation: $v;
+}
+@mixin transform3d {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  perspective: 800px;
+  -webkit-perspective: 800px;
+}
+@mixin displayBox($v) {
+  display: -webkit-box;
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
+  -webkit-box-orient: $v;
+}
+@mixin fly-h-gradient-line {
+  background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, .2)), color-stop(0.5, rgba(204, 204, 204, 1)), to(rgba(204, 204, 204, .2)));
+  background: -moz-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
+  background: -ms-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
+}
+@mixin fly-v-gradient-line($minOpacity:.2, $maxOpacity:1) {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, $minOpacity)), color-stop(0.5, rgba(204, 204, 204, $maxOpacity)), to(rgba(204, 204, 204, $minOpacity)));
+  background: -moz-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
+  background: -ms-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
+}
+@mixin displayFlex($v:column) {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: $v;
+}
+body {
+  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  height: 100%;
+  overflow: hidden;
+}
+$baseColor: #99071e;
+$activeColor: #d8271c;
 
-    @mixin br($v:50%) {
-      border-radius: $v;
-    }
+.zmiti-panel-ui {
+  @include transform3d();
 
-    @mixin opacity($v:0) {
-      opacity: $v;
-    }
+  .zmiti-panel-bar, .zmiti-download-bar {
+    @include pos(a);
+    left: 100%;
+    top: 50px;
+    width: 24px;
+    padding: 10px 0;
+    background: #dfdfdf;
+    cursor: pointer;
+    text-align: center;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-left: 1px solid #fff;
+    -webkit-user-select: none;
+    color: #333;
 
-    @mixin transform($v) {
-      -webkit-transform: $v;
-      transform: $v;
-    }
-
-    @mixin transformOrigin($v) {
-      -webkit-transform-origin: $v;
-      transform-origin: $v;
-    }
-
-    @mixin backgroundSize($v:cover) {
-      background-size: $v;
-    }
-
-    @mixin transition_transform($v) {
-      -webkit-transition: -webkit-transform $v;
-      transition: transform $v;
-    }
-
-    @mixin transform_origin($v:center) {
-      -webkit-transform-origin: $v;
-      transform-origin: $v;
-    }
-
-    @mixin transition($v) {
-      -webkit-transition: $v;
-      transition: $v;
-    }
-
-    @mixin transitionTimingFunction($v:cubic-bezier(1, -0.025, 1, 0.865)
-
-      )
-    {
-      -webkit-transition-timing-function: $v;
-      transition-timing-function: $v;
-    }
-
-    @mixin transform($v) {
-      -webkit-transform: $v;
-      transform: $v;
-    }
-
-    @mixin background($bg) {
-      background: $bg;
-    }
-
-    @mixin backgroundSize($v:cover) {
-      background-size: $v;
-    }
-
-    @mixin animation($v) {
-      -webkit-animation: $v;
-      animation: $v;
-    }
-
-    @mixin transform3d {
-      -webkit-transform-style: preserve-3d;
-      transform-style: preserve-3d;
-      perspective: 800px;
-      -webkit-perspective: 800px;
-    }
-
-    @mixin displayBox($v) {
-      display: -webkit-box;
-      -webkit-box-align: center;
-      -webkit-box-pack: center;
-      -webkit-box-orient: $v;
-    }
-
-    @mixin fly-h-gradient-line {
-      background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, .2)), color-stop(0.5, rgba(204, 204, 204, 1)), to(rgba(204, 204, 204, .2)));
-      background: -moz-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
-      background: -ms-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
-    }
-
-    @mixin fly-v-gradient-line($minOpacity:.2,$maxOpacity:1) {
-      background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, $minOpacity)), color-stop(0.5, rgba(204, 204, 204, $maxOpacity)), to(rgba(204, 204, 204, $minOpacity)));
-      background: -moz-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
-      background: -ms-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
-    }
-
-    @mixin displayFlex($v:column) {
-      display: flex;
-      display: -webkit-flex;
-      flex-flow: $v;
-    }
-
-    body {
-      font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
-      font-size: 14px;
-      height: 100%;
-      overflow: hidden;
-    }
-
-    $baseColor:#99071e;
-
-    $activeColor:#d8271c;
-    .zmiti-panel-ui{
-      @include transform3d();
-      
-      .zmiti-panel-bar,.zmiti-download-bar{
-         @include pos(a);
-         left:100%;
-         top:50px;
-         width:24px;
-         padding:10px 0;
-         background:#dfdfdf;
-         cursor:pointer;
-         text-align: center;
-         border-top-right-radius: 5px;
-         border-bottom-right-radius: 5px;
-         border-left: 1px solid #fff;
-         -webkit-user-select:none;
-         color:#333;
-
-        span{
-
-          $size:6px;
-          width:$size;
-          height:$size;
-          @include br(50%);
-          border:1px solid #fff;
-          background:#fff;
-          display:inline-block;;
-          @include pos(a);
-          left:2px;
-          top:6px;
-          &:nth-of-type(2){
-            top:72px;
-          }
-        }
-        &:before,&:after{
-          content:'';
-          @include pos(a);
-          left:-3px;
-          top:8px;
-          @include br(2px);
-          width: 8px;
-          height:2px;
-          z-index: 1;
-          background:#8a9395;
-        }
-        &:after{
-          top:74px;
-        }
-      }
-      .zmiti-download-bar{
-        @include transformOrigin(left);
-        backface-visibility: hidden;
-        @include transition_transform(.5s .3s);
-        &.active{
-          @include transform(rotateY(80deg));
-        }
-        top:160px;
-        a{
-          color:#333;
-        }
-        span{
-          &:nth-of-type(2){
-            top:114px;
-          }
-        }
-        &:after{
-          top:116px;
-        }
-          
-
-      }
-      @include transitionTimingFunction(cubic-bezier(0, 1.75, 0.48, 0.89));
-      @include transition(.3s);
-      &.active{
-       //  opacity:0;
-       //  z
-        z-index: 0;
-         @include transform(translate3d(-100%,0,0));
-
-         .zmiti-panel-bar,.zmiti-download-bar{
-            background:#404458;
-            color:#fff;
-            i,a{color:#fff !important;}
-
-         }
-      }
+    span {
+      $size: 6px;
+      width: $size;
+      height: $size;
+      @include br(50%);
+      border: 1px solid #fff;
+      background: #fff;
+      display: inline-block;
       @include pos(a);
-      left:0;
-      top:0;
-      width:300px;
-      
+      left: 2px;
+      top: 6px;
 
-     .ant-tabs-nav .ant-tabs-tab-inner, .ant-tabs-tab-inner{
-      color:#333 !important;
-     }
-     .ant-tabs-tab-active{
-        .ant-tabs-tab-inner{
-          color:$baseColor !important;;
-        }
-     }
-
-    }
-    .zmiti-panel-title{
-      width:300px;
-      height:50px;
-      overflow:hidden;
-      line-height:50px;
-      background: #f5f5f5;
-      text-align: center;
-      span{
-        color:#666;
-        font-size:1vw;
-        display: inline-block;
-        vertical-align: middle;
-      }
-      span:nth-of-type(1){
-        width:26px;
-        height:26px;
-        //border:1px solid #fff;
-        
-        @include pos(r);
-       /*  &:before,&:after{
-         content:'';
-         @include pos(a);
-         width:1px;
-         height:100%;
-         background-color: #fff;
-         left:50%;
-         @include transform(rotate(10deg));
-       }
-       &:after{
-         height:1px;
-         width:50%;
-         top:50%;
-         left:0;
-       } */
-      }
-
-
-    }
-
-    .p-mould-C{
-      @include displayFlex(row);
-      flex-grow: 1;
-      flex-wrap: wrap;
-    }
-    $mouldColor1:#ff99c1;
-    $mouldColor2:#ffdb71;
-    $mouldColor3:yellowgreen;
-    $mouldColor4:#f90;
-    .p-mould{
-      width:54px;
-      height:54px;
-      border:1px solid #ccc;
-      margin:5px 10px ;
-      @include pos(r);
-      box-sizing: border-box;
-      cursor: pointer;
-
-      &.active{
-        border-color: $baseColor !important;;
+      &:nth-of-type(2) {
+        top: 64px;
       }
     }
+    &:before, &:after {
+      content: '';
+      @include pos(a);
+      left: -3px;
+      top: 8px;
+      @include br(2px);
+      width: 8px;
+      height: 2px;
+      z-index: 1;
+      background: #8a9395;
+    }
+    &:after {
+      top: 66px;
+    }
+  }
+  .zmiti-download-bar {
+    @include transformOrigin(left);
+    backface-visibility: hidden;
+    @include transition_transform(.5s .3s);
 
-    .p-mould-left-right{
-      aside{
-        @include pos(a);
-        &:nth-of-type(1){
-          left:1px;
-          top:1px;
-          bottom:1px;
-          right:50%;
-          background: $mouldColor1;
-          border-right:1px solid #fff;
-        }
-        &:nth-of-type(2){
-          left:50%;
-          top:1px;
-          bottom:1px;
-          right:1px;
-          background: $mouldColor2;
-        }
+    &.active {
+      @include transform(rotateY(80deg));
+    }
+    top: 160px;
+
+    a {
+      color: #333;
+    }
+    span {
+      &:nth-of-type(2) {
+        top: 100px;
       }
     }
-    .p-mould-tilt{
+    &:after {
+      top: 102px;
+    }
+  }
+  @include transitionTimingFunction(cubic-bezier(0, 1.75, 0.48, 0.89));
+  @include transition(.3s);
 
-      background:url("../../images/m.png") no-repeat center;
-    }
-    .p-mould-bessel{
-      background:url("../../images/m1.png") no-repeat center;
-    }
-    .p-mould-three1{
-      background:url("../../images/m2.png") no-repeat center;
-    }
-    .p-mould-three2{
-      background:url("../../images/m2-1.png") no-repeat center;
-    }
-    .p-mould-three3{
-      background:url("../../images/m2-2.png") no-repeat center;
-    }
-    .p-mould-four1{
-      background:url("../../images/m4.png") no-repeat center;
-    }
-    .p-mould-four2{
-      background:url("../../images/m3.png") no-repeat center;
-    }
-    .p-mould-four3{
-      background:url("../../images/m5.png") no-repeat center;
-    }
-    .p-mould-four4{
-      background:url("../../images/m6.png") no-repeat center;
-    }
+  &.active {
+    //  opacity: 0;
+    //  z
+    z-index: 0;
+    @include transform(translate3d(-100%, 0, 0));
 
-    .p-mould-top-bottom{
-      aside{
-        @include pos(a);
-        &:nth-of-type(1){
-          left:1px;
-          top:1px;
-          bottom:50%;
-          right:1px;
-          background: $mouldColor1;
-          border-bottom:1px solid #fff;
-        }
-        &:nth-of-type(2){
-          left:1px;
-          top:50%;
-          bottom:1px;
-          right:1px;
-          background: $mouldColor2;
-        }
+    .zmiti-panel-bar, .zmiti-download-bar {
+      background: #404458;
+      color: #fff;
+
+      i, a {
+        color: #fff !important;
       }
     }
+  }
+  @include pos(a);
+  left: 0;
+  top: 0;
+  width: 300px;
 
-    .zmiti-panel-type-C{
-      width:100%;
-      ul{
-        border-bottom: 1px solid #ccc;
-        @include displayFlex(row);
-      }
-
-      li{
-        width:40px;
-        line-height:30px;
-        margin:5px 5px 0 5px;
-        text-align: center;
-        cursor: pointer;
-        &.active{
-      //background:#60c645;
-      color:$activeColor;
-      border-bottom:1px solid $activeColor;
+  .ant-tabs-nav .ant-tabs-tab-inner, .ant-tabs-tab-inner {
+    color: #333 !important;
+  }
+  .ant-tabs-tab-active {
+    .ant-tabs-tab-inner {
+      color: $baseColor !important;
     }
   }
 }
-
-.z-puzzle-header{
-  width:100%;
-  height:90px;
-  background:#dfdfdf;
+.zmiti-panel-title {
+  width: 300px;
+  height: 50px;
+  overflow: hidden;
+  line-height: 50px;
+  background: #f5f5f5;
   text-align: center;
-  article{
+
+  span {
+    color: #666;
+    font-size: 1vw;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  span:nth-of-type(1) {
+    width: 26px;
+    height: 26px;
+    //border: 1px solid #fff;
+    @include pos(r);
+
+    /*  &:before,&:after{
+      content:'';
+      @include pos(a);
+      width:1px;
+      height:100%;
+      background-color: #fff;
+      left:50%;
+      @include transform(rotate(10deg));
+    }
+    &:after{
+      height:1px;
+      width:50%;
+      top:50%;
+      left:0;
+    } */
+  }
+}
+.p-mould-C {
+  @include displayFlex(row);
+  flex-grow: 1;
+  flex-wrap: wrap;
+}
+$mouldColor1:#ff99c1;
+$mouldColor2:#ffdb71;
+$mouldColor3:yellowgreen;
+$mouldColor4:#f90;
+
+.p-mould {
+  width: 54px;
+  height: 54px;
+  border: 1px solid #ccc;
+  margin: 5px 10px;
+  @include pos(r);
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &.active {
+    border-color: $baseColor !important;
+  }
+}
+.p-mould-left-right {
+  aside {
+    @include pos(a);
+
+    &:nth-of-type(1) {
+      left: 1px;
+      top: 1px;
+      bottom: 1px;
+      right: 50%;
+      background: $mouldColor1;
+      border-right: 1px solid #fff;
+    }
+    &:nth-of-type(2) {
+      left: 50%;
+      top: 1px;
+      bottom: 1px;
+      right: 1px;
+      background: $mouldColor2;
+    }
+  }
+}
+.p-mould-top-bottom {
+  aside {
+    @include pos(a);
+
+    &:nth-of-type(1) {
+      left: 1px;
+      top: 1px;
+      bottom: 50%;
+      right: 1px;
+      background: $mouldColor1;
+      border-bottom: 1px solid #fff;
+    }
+    &:nth-of-type(2) {
+      left: 1px;
+      top: 50%;
+      bottom: 1px;
+      right: 1px;
+      background: $mouldColor2;
+    }
+  }
+}
+.zmiti-panel-type-C {
+  width: 100%;
+
+  ul {
+    border-bottom: 1px solid #ccc;
+    @include displayFlex(row);
+  }
+  li {
+    width: 40px;
+    line-height: 30px;
+    margin: 5px 5px 0 5px;
+    text-align: center;
+    cursor: pointer;
+
+    &.active {
+      //background: #60c645;
+      color: $activeColor;
+      border-bottom: 1px solid $activeColor;
+    }
+  }
+}
+.z-puzzle-header {
+  width: 100%;
+  height: 90px;
+  background: #dfdfdf;
+  text-align: center;
+
+  article {
     @include displayFlex(row);
     justify-content: center;
     align-items: center;
     padding-top: 1vw;
   }
-  .z-puzzle-width{
-    margin-right:10px;
+  .z-puzzle-width {
+    margin-right: 10px;
   }
-  .z-puzzle-height{
-    margin-left:10px;
+  .z-puzzle-height {
+    margin-left: 10px;
   }
-  .z-puzzle-lock{
-    $size:30px;
-    width:$size;
-    height:$size;
-    background-color:#d2d2d2 !important;  
+  .z-puzzle-lock {
+    $size: 30px;
+    width: $size;
+    height: $size;
+    background-color: #d2d2d2 !important;
     margin-left: 20px;
-    cursor:pointer;
+    cursor: pointer;
     @include br(5px);
     @include pos(r);
-    span{
-      margin:6px auto;
-      display:block;
-      width:17px;
-      height:17px;
+
+    span {
+      margin: 6px auto;
+      display: block;
+      width: 17px;
+      height: 17px;
     }
-    &:hover div{
+    &:hover div {
       @include transform(scale(1));
     }
-    div{
+    div {
       @include transitionTimingFunction();
       @include transition(.2s);
       @include transformOrigin(70% bottom);
-      width:80px;
+      width: 80px;
       @include pos(a);
-      left:-40px;
-      top:-190%;
-      background:#5c5c5c;
-      color:#fff;
-      padding:4px;
+      left: -40px;
+      top: -190%;
+      background: #5c5c5c;
+      color: #fff;
+      padding: 4px;
       @include br(4px);
       @include transform(scale(0));
-      &:before{
-        content:'';
-        width:10px;
-        height:10px;
+
+      &:before {
+        content: '';
+        width: 10px;
+        height: 10px;
         @include br(2px);
-        background:inherit;
+        background: inherit;
         @include transform(rotate(45deg));
         @include pos(a);
-        top:90%;
-        left:60%;
+        top: 90%;
+        left: 60%;
       }
-
     }
-    
-
   }
-
-  .z-puzzle-scale{//比例
-    width:90%;
-    margin:10px auto;
+  .z-puzzle-scale {
+    //比例
+    width: 90%;
+    margin: 10px auto;
     @include displayFlex(horizontal);
-    li{
-      flex-grow:1;
-      &:first-of-type{
-        text-align:left;
+
+    li {
+      flex-grow: 1;
+
+      &:first-of-type {
+        text-align: left;
       }
-      &:not(:first-of-type){
+      &:not(:first-of-type) {
         @include br(2px);
-        cursor:pointer;
-        margin:0 3px;
-        background:#FFF;
-        &.active{
-          background:$activeColor;
-          color:#fff;
+        cursor: pointer;
+        margin: 0 3px;
+        background: #FFF;
+
+        &.active {
+          background: $activeColor;
+          color: #fff;
         }
       }
     }
   }
-
-
 }
+.z-puzzle-download {
+  margin-top: 6;
+  @include transition_transform(.2s);
+  @include pos(a);
+  bottom: 0;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
 
-.z-puzzle-download{
-    margin-top:6;
-    @include transition_transform(.2s);
-    @include pos(a);
-    bottom:0;
-    text-align:center;
-    height:40px;
-    line-height: 40px;
-    width:100%;
-    a{
-      display:block;
-      width:100%;
-      color:#fff;
-      height:100%;
-      background:#8a9395;
-    }
+  a {
+    display: block;
+    width: 100%;
+    color: #fff;
+    height: 100%;
+    background: #8a9395;
   }
-
-.zmiti-panel-body{
-  border-top:1px dashed #fff;
+}
+.zmiti-panel-body {
+  border-top: 1px dashed #fff;
   background: #dfdfdf;
-  height:90%;
+  height: 90%;
   @include transition(height 500ms);
   @include pos(r);
-  
-
 }
-
-
-
-.zmiti-panel-ui.close{
-  height:14vh;
+.zmiti-panel-ui.close {
+  height: 14vh;
   overflow: hidden;
-
 }
-
-.zmiti-close{
-  font-size:20px;
-  padding:0 8px;
+.zmiti-close {
+  font-size: 20px;
+  padding: 0 8px;
   float: right;
-  margin-right:10px;
-  cursor:pointer;
-  height:100%;
+  margin-right: 10px;
+  cursor: pointer;
+  height: 100%;
   @include displayFlex();
   justify-content: center;
   overflow: hidden;
   @include transition_transform(.2s);
-  &.scroll{
-    @include transform(translate3d(-5px,0,0));
 
+  &.scroll {
+    @include transform(translate3d(-5px, 0, 0));
   }
-  li{
-    width:20px;
-    height:2px;
+  li {
+    width: 20px;
+    height: 2px;
     @include br(2px);
-    background:#999;
-    margin:2px 0;
+    background: #999;
+    margin: 2px 0;
     @include transition_transform(.33s);
-    &.scroll{
-     @include transform(translate3d(-50px,0,0));
-   }
-   &.close1{
-    @include transform(rotate(45deg) translate3d(0,10px,0))
-  }
-  &.close2{
-    @include transform(rotate(-45deg) translate3d(-1px,-9px,0));
-  }
-}
-}
 
-.zmiti-panel-C{
-  width:100%;
-  height:190px;
+    &.scroll {
+      @include transform(translate3d(-50px, 0, 0));
+    }
+    &.close1 {
+      @include transform(rotate(45deg) translate3d(0, 10px, 0))
+    }
+    &.close2 {
+      @include transform(rotate(-45deg) translate3d(-1px, -9px, 0));
+    }
+  }
+}
+.zmiti-panel-C {
+  width: 100%;
+  height: 190px;
   @include displayFlex(row);
   flex-wrap: wrap;
-  items-align:center;
+  items-align: center;
 }
-
-.z-puzzle-border-style{
-  width:100%;
-  height:50px;
+.z-puzzle-border-style {
+  width: 100%;
+  height: 50px;
   line-height: 50px;
-  text-align:center;
-  background:#f5f5f5;
-  font-size:1vw;
+  text-align: center;
+  background: #f5f5f5;
+  font-size: 1vw;
 }
-.z-puzzle-pic-margin{
+.z-puzzle-pic-margin {
   @include displayFlex(row);
-  width:90%;
-  margin:10px auto;
-  .z-puzzle-size{
-    width:70%;
+  width: 90%;
+  margin: 10px auto;
+
+  .z-puzzle-size {
+    width: 70%;
     @include displayFlex(row);
-    justify-content:center;
-    .active{
-      span{
-        color:#fff;
-        background:$activeColor;  
+    justify-content: center;
+
+    .active {
+      span {
+        color: #fff;
+        background: $activeColor;
       }
     }
-    aside{
-      flex-grow:1;
-      text-align:center;
+    aside {
+      flex-grow: 1;
+      text-align: center;
       @include pos(r);
-      &:nth-of-type(2n){
-        &:before{
-          content:'';
-          width:43px;
+
+      &:nth-of-type(2n) {
+        &:before {
+          content: '';
+          width: 43px;
           @include pos(a);
-          left:-10px;
-          top:9px;
-          height:10px;
-          background:#c9c9c9;
+          left: -10px;
+          top: 9px;
+          height: 10px;
+          background: #c9c9c9;
         }
       }
     }
-    span{
-      display:inline-block;
-      $size:28px;
-      width:$size;
-      height:$size;
-      line-height: $size ;
+    span {
+      display: inline-block;
+      $size: 28px;
+      width: $size;
+      height: $size;
+      line-height: $size;
       @include br(50%);
-      background:#c9c9c9;
-      cursor:pointer;
-     
+      background: #c9c9c9;
+      cursor: pointer;
     }
-
   }
 }
-
-

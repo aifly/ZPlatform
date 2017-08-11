@@ -80,7 +80,9 @@
 
 .z-puzzle-imgscale {
   -webkit-transition: -webkit-transform 0.2s;
+  transition: -webkit-transform 0.2s;
   transition: transform 0.2s;
+  transition: transform 0.2s, -webkit-transform 0.2s;
   width: 280px;
   background: #dfdfdf;
   height: 150px;
@@ -127,7 +129,9 @@
       line-height: 30px;
       cursor: pointer;
       -webkit-transition: -webkit-transform 0.1s;
-      transition: transform 0.1s; }
+      transition: -webkit-transform 0.1s;
+      transition: transform 0.1s;
+      transition: transform 0.1s, -webkit-transform 0.1s; }
       .z-puzzle-imgscale h3 span:hover {
         color: #99071e; }
   .z-puzzle-imgscale .z-puzzle-delete {

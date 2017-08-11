@@ -2,409 +2,375 @@
   @if
   $v == a {
     position: absolute;
-  } @else if $v == r {
+  }
+  @else if $v == r {
     position: relative;
-  } @else if $v == f {
+  }
+  @else if $v == f {
     position: fixed;
   }
 }
-
 @mixin br($v:50%) {
   border-radius: $v;
 }
-
 @mixin opacity($v:0) {
   opacity: $v;
 }
-
 @mixin transform($v) {
   -webkit-transform: $v;
   transform: $v;
 }
-
 @mixin transformOrigin($v) {
   -webkit-transform-origin: $v;
   transform-origin: $v;
 }
-
 @mixin backgroundSize($v:cover) {
   background-size: $v;
 }
-
 @mixin transition_transform($v) {
   -webkit-transition: -webkit-transform $v;
   transition: transform $v;
 }
-
 @mixin transform_origin($v:center) {
   -webkit-transform-origin: $v;
   transform-origin: $v;
 }
-
 @mixin transition($v) {
   -webkit-transition: $v;
   transition: $v;
 }
-
-@mixin transitionTimingFunction($v:cubic-bezier(1, -0.025, 1, 0.865)
-
-)
-{
+@mixin transitionTimingFunction($v:cubic-bezier(1, -0.025, 1, 0.865)) {
   -webkit-transition-timing-function: $v;
   transition-timing-function: $v;
 }
-
 @mixin transform($v) {
   -webkit-transform: $v;
   transform: $v;
 }
-
 @mixin background($bg) {
   background: $bg;
 }
-
 @mixin backgroundSize($v:cover) {
   background-size: $v;
 }
-
 @mixin animation($v) {
   -webkit-animation: $v;
   animation: $v;
 }
-
 @mixin transform3d {
   -webkit-transform-style: preserve-3d;
   transform-style: preserve-3d;
   perspective: 800px;
   -webkit-perspective: 800px;
 }
-
 @mixin displayBox($v) {
   display: -webkit-box;
   -webkit-box-align: center;
   -webkit-box-pack: center;
   -webkit-box-orient: $v;
 }
-
 @mixin fly-h-gradient-line {
   background: -webkit-gradient(linear, left top, right top, from(rgba(204, 204, 204, .2)), color-stop(0.5, rgba(204, 204, 204, 1)), to(rgba(204, 204, 204, .2)));
   background: -moz-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
   background: -ms-linear-gradient(left, rgba(204, 204, 204, .2), rgba(204, 204, 204, 1) 50%, rgba(204, 204, 204, .2));
 }
-
-@mixin fly-v-gradient-line($minOpacity:.2,$maxOpacity:1) {
+@mixin fly-v-gradient-line($minOpacity:.2, $maxOpacity:1) {
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(204, 204, 204, $minOpacity)), color-stop(0.5, rgba(204, 204, 204, $maxOpacity)), to(rgba(204, 204, 204, $minOpacity)));
   background: -moz-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
   background: -ms-linear-gradient(top, rgba(204, 204, 204, $minOpacity), rgba(204, 204, 204, $maxOpacity) 50%, rgba(204, 204, 204, $minOpacity));
 }
-
 @mixin displayFlex($v:column) {
   display: flex;
   display: -webkit-flex;
   flex-flow: $v;
 }
-
-.z-puzzle-stage{
-  width:100vw;
-  height:94vh;
+.z-puzzle-stage {
+  width: 100vw;
+  height: 94vh;
   @include pos(r);
-  
-  .z-puzzle-drag{
-    width:10px;
-    height:10px;
-    //background:red;
+
+  .z-puzzle-drag {
+    width: 10px;
+    height: 10px;
+    //background: red;
     @include pos(a);
   }
-
-  .z-puzzle-canvas-C{
-    width:100%;
-    height:100%;
-    overflow:hidden;
+  .z-puzzle-canvas-C {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
     @include transitionTimingFunction();
     @include pos(f);
-    canvas{
+
+    canvas {
       @include pos(a);
       z-index: 1;
       padding: 1px;
-      box-shadow: 0 0 1px 3px rgba(255,255,255,1),0 0 7px 6px rgba(0,0,0,.5);
+      box-shadow: 0 0 1px 3px rgba(255, 255, 255, 1), 0 0 7px 6px rgba(0, 0, 0, .5);
     }
   }
-
-  .z-puzzle-download{
+  .z-puzzle-download {
     @include pos(a);
-    left:400px;
-    top:100px;
+    left: 400px;
+    top: 100px;
   }
 }
-
-.z-puzzle-operator{
+.z-puzzle-operator {
   @include pos(f);
-  right:0;
-  top:30vh; 
-  cursor:pointer;
-  background-color:#919191;
-  border-top-left-radius:4px;
-  border-bottom-left-radius:4px;
-  &:before,&:after{
-    content:'';
-    display:inline-block;
-    width:0;
-    height:0;
-    
+  right: 0;
+  top: 30vh;
+  cursor: pointer;
+  background-color: #919191;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+
+  &:before, &:after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
     border-bottom: 10px solid #919191;
     border-left: 10px solid transparent;
     @include pos(a);
-    top:-10px;
-    right:0;
+    top: -10px;
+    right: 0;
   }
-  &:after{
-    top:100%;
-    border:none;
-     border-top: 10px solid #919191;
+  &:after {
+    top: 100%;
+    border: none;
+    border-top: 10px solid #919191;
     border-left: 10px solid transparent;
   }
-  li{
-    color:#bdbdbd;
-    padding:10px;
-    border-bottom:1px solid #bdbdbd;
-    width:90%;
-    margin:0 auto;
-    text-align:center;
-    font-size:24px;
+  li {
+    color: #bdbdbd;
+    padding: 10px;
+    border-bottom: 1px solid #bdbdbd;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 24px;
 
-    &:hover span:before{
-      
-      background:#fff !important;
+    &:hover span:before {
+      background: #fff !important;
     }
-    &:last-of-type{
-      border:none;
+    &:last-of-type {
+      border: none;
     }
-
-    &:hover i{
-      color:#fff;
+    &:hover i {
+      color: #fff;
     }
-
-    i,span{
+    i, span {
       @include transition(.2s);
     }
-  
-     
-    &:not(:first-of-type){
-      span{
+    &:not(:first-of-type) {
+      span {
         @include pos(r);
       }
-      span:before{
-        content:'';
+      span:before {
+        content: '';
         @include pos(a);
-        width:20px;
-        height:2px;
-        background:#bdbdbd;
-        $size:74%;
-        left:$size;
-        top:$size;
+        width: 20px;
+        height: 2px;
+        background: #bdbdbd;
+        $size: 74%;
+        left: $size;
+        top: $size;
         @include transformOrigin(left);
         @include transform(rotate(55deg));
       }
     }
   }
 }
-
-
-.z-puzzle-imgscale{
-  
-  
+.z-puzzle-imgscale {
   @include transition_transform(.2s);
 
-  &.active{
-    @include transform(translate3d(100%,0,0));
-     .zmiti-imgscale-bar{
-        background:#404458;
-        color:#fff;
-        i,a{color:#fff !important;}
-     }
+  &.active {
+    @include transform(translate3d(100%, 0, 0));
 
+    .zmiti-imgscale-bar {
+      background: #404458;
+      color: #fff;
 
+      i, a {
+        color: #fff !important;
+      }
+    }
   }
-  width:280px;;
-  background:#dfdfdf;
-  height:150px;
-  border:1px solid #dfdfdf;
-  border-top:none;
+  width: 280px;
+  background: #dfdfdf;
+  height: 150px;
+  border: 1px solid #dfdfdf;
+  border-top: none;
   @include br(2px);
   @include pos(f);
-  right:0;
-  top:52px;
-  label{
-    margin-left: 6px;
-    font-size:16px;
+  right: 0;
+  top: 52px;
 
+  label {
+    margin-left: 6px;
+    font-size: 16px;
   }
-  .ant-slider{
-      border-color:#dfdfdf;
-      &:hover{
-        border-color:none !important;
-      }
+  .ant-slider {
+    border-color: #dfdfdf;
+
+    &:hover {
+      border-color: none !important;
+    }
   }
-  .ant-slider-handle{
-    border-color:#fff;
-    &:hover{
-      border-color:#fff !important;;
+  .ant-slider-handle {
+    border-color: #fff;
+
+    &:hover {
+      border-color: #fff !important;
     }
   }
   .ant-slider-track {
-    background-color:#fff;
+    background-color: #fff;
   }
-  h3{
-    height:30px;
+  h3 {
+    height: 30px;
     line-height: 30px;
-    text-align:center;
-    font-weight:normal;
-    background:#f5f5f5;
-    span{
-      @include pos(a);
-      right:0;
-      font-size:24px;
-      width:30px;
-      height:30px;
-      text-align:center;
-      line-height: 30px;
-      cursor:pointer;
+    text-align: center;
+    font-weight: normal;
+    background: #f5f5f5;
 
+    span {
+      @include pos(a);
+      right: 0;
+      font-size: 24px;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      line-height: 30px;
+      cursor: pointer;
       @include transition_transform(.1s);
-      &:hover{
-        color:#99071e;
+
+      &:hover {
+        color: #99071e;
       }
     }
   }
-
-  .z-puzzle-delete{
-    $deleteW:30px;
-    $deleteH:27px;
-    background:#fff;
+  .z-puzzle-delete {
+    $deleteW: 30px;
+    $deleteH: 27px;
+    background: #fff;
     margin-left: 10px;
-    width:$deleteW;
-    height:$deleteH;
-    //border:1px solid #fcc6c6;
-    box-sizing:border-box;
+    width: $deleteW;
+    height: $deleteH;
+    //border: 1px solid #fcc6c6;
+    box-sizing: border-box;
     @include pos(r);
     @include br(4px);
-    cursor:pointer;
-    &:hover div{
-      background:#ea5252;
+    cursor: pointer;
 
+    &:hover div {
+      background: #ea5252;
     }
-    div{
+    div {
       @include pos(a);
-      height:2px;
-      width:2px;
-      top:12px;
+      height: 2px;
+      width: 2px;
+      top: 12px;
       margin-left: -1px;
       @include transition(.2s);
-      background:#ff9393; //;
-      @include br(1px);;
-      &.z-puzzle-line1{
-        width:8px;
-        left:($deleteW - 6) / 2;
-        top:4px;
-      }
-      &.z-puzzle-line2{
-        width:15px;
-        left:($deleteW - 12) / 2;
-        top:7px;
-      }
-      &.z-puzzle-line3{
-        
-        width:11px;
-        left:($deleteW - 8) / 2;
-        top:10px;
+      background: #ff9393;
+      //;
+      @include br(1px);
 
+      &.z-puzzle-line1 {
+        width: 8px;
+        left: ($deleteW - 6) / 2;
+        top: 4px;
       }
-      &.z-puzzle-line4{
-        width:10px;
-        left:($deleteW - 8) / 2;
-        top:20px;
+      &.z-puzzle-line2 {
+        width: 15px;
+        left: ($deleteW - 12) / 2;
+        top: 7px;
       }
-      $left : 11px;
-      &.z-puzzle-vline1{
-        height:10px;
-        left:$left;
+      &.z-puzzle-line3 {
+        width: 11px;
+        left: ($deleteW - 8) / 2;
+        top: 10px;
       }
-      &.z-puzzle-vline2{
-        height:10px;
-        left:$left + 3;   
+      &.z-puzzle-line4 {
+        width: 10px;
+        left: ($deleteW - 8) / 2;
+        top: 20px;
       }
-      &.z-puzzle-vline3{
-        height:10px;
-        left:$left + 6;   
-      }
-      &.z-puzzle-vline4{
-        height:10px;
-        left:$left + 9;   
-      }
+      $left: 11px;
 
+      &.z-puzzle-vline1 {
+        height: 10px;
+        left: $left;
+      }
+      &.z-puzzle-vline2 {
+        height: 10px;
+        left: $left + 3;
+      }
+      &.z-puzzle-vline3 {
+        height: 10px;
+        left: $left + 6;
+      }
+      &.z-puzzle-vline4 {
+        height: 10px;
+        left: $left + 9;
+      }
     }
   }
+  .zmiti-imgscale-bar {
+    @include pos(a);
+    left: -24px;
+    top: 30px;
+    width: 24px;
+    padding: 10px 0;
+    background: #dfdfdf;
+    cursor: pointer;
+    text-align: center;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-right: 1px solid #fff;
+    -webkit-user-select: none;
+    color: #333;
 
-  
+    span {
+      $size: 6px;
+      width: $size;
+      height: $size;
+      @include br(50%);
+      border: 1px solid #fff;
+      background: #fff;
+      display: inline-block;
+      @include pos(a);
+      left: 14px;
+      top: 6px;
 
-      .zmiti-imgscale-bar{
-         @include pos(a);
-         left:-24px;
-         top:30px;
-         width:24px;
-         padding:10px 0;
-         background:#dfdfdf;
-         cursor:pointer;
-         text-align: center;
-         border-top-left-radius: 5px;
-         border-bottom-left-radius: 5px;
-         border-right:1px solid #fff;
-         -webkit-user-select:none;
-         color:#333;
-        
-        span{
-
-          $size:6px;
-          width:$size;
-          height:$size;
-          @include br(50%);
-          border:1px solid #fff;
-          background:#fff;
-          display:inline-block;;
-          @include pos(a);
-          left:14px;
-          top:6px;
-          &:nth-of-type(2){
-            top:72px;
-          }
-        }
-        &:before,&:after{
-          content:'';
-          @include pos(a);
-          left:18px;
-          top:8px;
-          @include br(2px);
-          width: 8px;
-          height:2px;
-          z-index: 1;
-          background:#8a9395;
-        }
-        &:after{
-          top:74px;
-        }
+      &:nth-of-type(2) {
+        top: 62px;
       }
-
-
-      .z-puzzle-reset{
-        $size:28px;
-        height:$size;
-        width:$size;
-        @include br(4px);
-        padding:2px;
-        cursor:pointer;
-        background:#fff;
-        @include pos(r);
-      }
-
+    }
+    &:before, &:after {
+      content: '';
+      @include pos(a);
+      left: 18px;
+      top: 8px;
+      @include br(2px);
+      width: 8px;
+      height: 2px;
+      z-index: 1;
+      background: #8a9395;
+    }
+    &:after {
+      top: 64px;
+    }
+  }
+  .z-puzzle-reset {
+    $size: 28px;
+    height: $size;
+    width: $size;
+    @include br(4px);
+    padding: 2px;
+    cursor: pointer;
+    background: #fff;
+    @include pos(r);
+  }
 }
-
