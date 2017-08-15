@@ -1,7 +1,140 @@
 @import "../../../public/css/base.scss";
 
 .board-main-ui {
-	&>section {
+	.board-main-C {
+		height: 100%;
+		@include displayFlex(row);
+		@include pos(r);
+
+		&>aside {
+			&:nth-of-type(1) {
+				width: 200px;
+				@include pos(a);
+				z-index: 10;
+				left: 40px;
+				top: 60px;
+				background: #000;
+				height: 200px;
+				text-align: center;
+				@include displayFlex();
+				justify-content: flex-start;
+				align-items: center;
+
+				&>div {
+					cursor: pointer;
+					width: 30px;
+					height: 24px;
+					margin: 10px 0;
+					@include pos(r);
+
+					&.active {
+						background: #fff;
+						@include br(3px);
+
+						i {
+							color: #000;
+						}
+						&:after {
+							background: #000;
+							margin-left: -4px;
+							bottom: 2px;
+						}
+					}
+					&:after {
+						content: '';
+						width: 2px;
+						height: 10px;
+						@include pos(a);
+						background: #fff;
+						bottom: 0px;
+						margin-left: -2px;
+						@include transformOrigin(top);
+						@include transform(rotate(-40deg));
+					}
+				}
+				section {
+					cursor: pointer;
+
+					&.active {
+						background: #fff;
+
+						&>span {
+							@include transform(rotate(-28deg) scale(.8));
+
+							&:before {
+								border-bottom-color: #000;
+							}
+							&:after {
+								background: #000;
+							}
+						}
+					}
+					width: 30px;
+					height: 22px;
+					margin: 10px 0;
+					text-align: center;
+
+					span {
+						@include transform(rotate(-28deg));
+						@include pos(r);
+						$size: 6px;
+						display: block;
+						height: 100%;
+
+						&:before, &:after {
+							content: '';
+							@include pos(a);
+							width: 0;
+							height: 0;
+							left: 10px;
+							border-left: $size solid transparent;
+							border-right: $size solid transparent;
+							border-bottom: $size*2 solid #fff;
+						}
+						&:after {
+							width: 2px;
+							height: 10px;
+							background: #fff;
+							border: none;
+							bottom: 0;
+							left: 15px;
+						}
+					}
+				}
+				i {
+					color: #fff;
+				}
+				ul {
+					cursor: move;
+					width: 31px;
+					@include displayFlex(row);
+					-webkit-flex-wrap: wrap;
+					flex-wrap: wrap;
+					border-left: 1px solid #fff;
+					border-top: 1px solid #fff;
+
+					li {
+						width: 10px;
+						border-right: 1px solid #fff;
+						border-bottom: 1px solid #fff;
+						height: 10px;
+					}
+				}
+			}
+			&:nth-of-type(2) {
+				overflow: hidden;
+				flex: 1;
+				-webkit-flex: 1;
+				@include pos(r);
+				box-shadow: 0 0 10px rgba(0, 0, 0, .5) inset;
+
+				.board-main-stage {
+					@include pos(a);
+				}
+			}
+		}
+	}
+	section.board-seat {
 		@include pos(r);
 		left: 300px;
 		top: 300px;

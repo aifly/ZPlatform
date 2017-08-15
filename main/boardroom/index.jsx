@@ -23,7 +23,9 @@ import IScroll from 'iscroll';
 import ZmitiContextmenu from '../components/zmiti-contextmenu.jsx';
 
 
-var unload = false;
+
+var toolbarWidth = 50;
+
 
 class ZmitiBoardroomApp extends React.Component {
     constructor(args) {
@@ -36,8 +38,12 @@ class ZmitiBoardroomApp extends React.Component {
             mainHeight: document.documentElement.clientHeight - 50,
             menuLeft: 0,
             menuTop: 0,
+            toolbarWidth: toolbarWidth,
+            stageWidth: document.documentElement.clientWidth - window.mainLeftSize - toolbarWidth,
+            stageHeight: document.documentElement.clientHeight - 50,
             currentType: 'col', //row or col
             currentSeatIndex: -1,
+            mouseType: 'plus',
             backColor: "transparent",
             list: {
                 cols: 5,
@@ -321,44 +327,63 @@ class ZmitiBoardroomApp extends React.Component {
             }]
         }
 
-
         var mainComponent = <div className='board-main-ui' ref='board-main-ui'>
-            <section ref='seat'>
-                <div><span ref='down' style={{cursor:'url(./static/images/rotate.ico) 10 10 ,default'}}></span></div>
-                <ul style={{width:60*this.state.list.cols+1}}>
-                {
-                    this.state.list.data.map((item, i) => {
-                          var backColor = '#fff';
-                        if(this.state.currentType === 'row'){
-                            var row = ((this.state.currentSeatIndex + this.state.list.cols) / this.state.list.cols) | 0;
+            <section className='board-main-C' style={{height:this.state.mainHeight}}>
+                <aside style={{width:this.state.toolbarWidth}}>
+                    <div onClick={()=>{this.setState({mouseType:'plus'})}} className={this.state.mouseType === 'plus'?'active':''}><Icon type={this.state.mouseType === 'plus'?"plus-circle":'plus-circle-o'} /></div>
+                    <div onClick={()=>{this.setState({mouseType:'minus'})}} className={this.state.mouseType === 'minus'?'active':''}><Icon type={this.state.mouseType === 'minus'?"minus-circle":'minus-circle-o'} /></div>
+                    <section  onClick={()=>{this.setState({mouseType:'default'})}}  className={this.state.mouseType === 'default'?'active':''}>
+                        <span></span>
+                    </section>
+                    <ul draggable='true'>
+                        <li></li><li></li><li></li>
+                        <li></li><li></li><li></li>
+                    </ul>
+                </aside>
+                <aside>
+        <section className='board-main-stage' style={{width:this.state.stageWidth,height:this.state.stageHeight}}>
+                        <section ref='seat' className='board-seat'>
+                            <div><span ref='down' style={{cursor:'url(./static/images/rotate.ico) 10 10 ,default'}}></span></div>
+                            <ul style={{width:60*this.state.list.cols+1}}>
+                            {
+                                this.state.list.data.map((item, i) => {
+                                      var backColor = '#fff';
+                                    if(this.state.currentType === 'row'){
+                                        var row = ((this.state.currentSeatIndex + this.state.list.cols) / this.state.list.cols) | 0;
 
-                            var idx = ((i + this.state.list.cols)/this.state.list.cols)|0;
+                                        var idx = ((i + this.state.list.cols)/this.state.list.cols)|0;
 
-                            if(idx === row){
-                                backColor = this.state.backColor;
-                            }else{
-                                backColor = '#fff'
-                            }
-                        }
-                        else if(this.state.currentType === 'col'){
-                             var row = ((this.state.currentSeatIndex) % this.state.list.cols);
+                                        if(idx === row){
+                                            backColor = this.state.backColor;
+                                        }else{
+                                            backColor = '#fff'
+                                        }
+                                    }
+                                    else if(this.state.currentType === 'col'){
+                                         var row = ((this.state.currentSeatIndex) % this.state.list.cols);
 
-                            var idx = ((i + this.state.list.cols)/this.state.list.cols)|0;
-                              
-                            if(i % this.state.list.cols === row){
-                                backColor = this.state.backColor;
-                            }else{
-                                backColor = '#fff'
-                            }
-                        }
-                          return <li style={{backgroundColor:backColor}}  onContextMenu={this.onContextMenu.bind(this,i)} title={this.state.list.data[i].name?this.state.list.data[i].name:''} className='zmiti-text-overflow' key={i} onMouseUp={this.addEdit.bind(this,i)}>
-                            {!this.state.list.data[i].edit&&<span>{this.state.list.data[i].name}</span>}
-                            {this.state.list.data[i].edit &&<input data-id={'input-'+i} ref={'input-'+i} value={this.state.list.data[i].name} onChange={e=>{this.state.list.data[i].name = e.target.value;this.forceUpdate()}} />}
-                        </li>
-                    })
-                } 
-                </ul>
+                                        var idx = ((i + this.state.list.cols)/this.state.list.cols)|0;
+                                          
+                                        if(i % this.state.list.cols === row){
+                                            backColor = this.state.backColor;
+                                        }else{
+                                            backColor = '#fff'
+                                        }
+                                    }
+                                      return <li style={{backgroundColor:backColor}}  onContextMenu={this.onContextMenu.bind(this,i)} title={this.state.list.data[i].name?this.state.list.data[i].name:''} className='zmiti-text-overflow' key={i} onMouseUp={this.addEdit.bind(this,i)}>
+                                        {!this.state.list.data[i].edit&&<span>{this.state.list.data[i].name}</span>}
+                                        {this.state.list.data[i].edit &&<input data-id={'input-'+i} ref={'input-'+i} value={this.state.list.data[i].name} onChange={e=>{this.state.list.data[i].name = e.target.value;this.forceUpdate()}} />}
+                                    </li>
+                                })
+                            } 
+                            </ul>
+                        </section>        
+                    </section>
+                    
+                </aside>    
             </section>
+            
+            
             <ZmitiContextmenu {...data}></ZmitiContextmenu>
         </div>;
         return (
@@ -431,7 +456,6 @@ class ZmitiBoardroomApp extends React.Component {
                 var ox = mouseX - offsetX + containerOffset.offsetWidth / 2; //cx,cy为圆心
                 var oy = mouseY - offsetY - containerOffset.offsetHeight / 2 + 30;
                 var to = Math.abs(ox / oy);
-                console.log(ox, oy);
 
                 angle = Math.atan(to) / (Math.PI) * 180; //鼠标相对于旋转中心的角度
                 if (ox < 0 && oy < 0) //相对在左上角，第四象限，js中坐标系是从左上角开始的，这里的象限是正常坐标系
