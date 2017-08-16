@@ -8,116 +8,123 @@
 
 		&>aside {
 			&:nth-of-type(1) {
-				width: 200px;
-				@include pos(a);
-				z-index: 10;
-				left: 40px;
-				top: 60px;
-				background: #000;
-				height: 200px;
+				width: 100px;
+				background: #a2a1a1;
+				height: 100%;
 				text-align: center;
-				@include displayFlex();
-				justify-content: flex-start;
-				align-items: center;
 
-				&>div {
-					cursor: pointer;
-					width: 30px;
-					height: 24px;
-					margin: 10px 0;
-					@include pos(r);
+				&>aside {
+					@include displayFlex(row);
+					justify-content: center;
+					align-items: flex-start;
+					-webkit-flex-wrap: wrap;
 
-					&.active {
-						background: #fff;
-						@include br(3px);
-
-						i {
-							color: #000;
-						}
-						&:after {
-							background: #000;
-							margin-left: -4px;
-							bottom: 2px;
-						}
+					&>div, &>section, &>ul {
+						width: 30px;
+						height: 30px;
+						margin: 10px;
 					}
-					&:after {
-						content: '';
-						width: 2px;
-						height: 10px;
-						@include pos(a);
-						background: #fff;
-						bottom: 0px;
-						margin-left: -2px;
-						@include transformOrigin(top);
-						@include transform(rotate(-40deg));
-					}
-				}
-				section {
-					cursor: pointer;
+					&>div {
+						cursor: pointer;
+						@include pos(r);
 
-					&.active {
-						background: #fff;
+						&.active {
+							background: #fff;
+							@include br(3px);
 
-						&>span {
-							@include transform(rotate(-28deg) scale(.8));
-
-							&:before {
-								border-bottom-color: #000;
+							i {
+								color: #000;
 							}
 							&:after {
 								background: #000;
 							}
 						}
-					}
-					width: 30px;
-					height: 22px;
-					margin: 10px 0;
-					text-align: center;
-
-					span {
-						@include transform(rotate(-28deg));
-						@include pos(r);
-						$size: 6px;
-						display: block;
-						height: 100%;
-
-						&:before, &:after {
-							content: '';
-							@include pos(a);
-							width: 0;
-							height: 0;
-							left: 10px;
-							border-left: $size solid transparent;
-							border-right: $size solid transparent;
-							border-bottom: $size*2 solid #fff;
-						}
 						&:after {
+							content: '';
 							width: 2px;
 							height: 10px;
+							@include pos(a);
 							background: #fff;
-							border: none;
-							bottom: 0;
-							left: 15px;
+							bottom: 5px;
+							margin-left: -3px;
+							@include transformOrigin(top);
+							@include transform(rotate(-36deg));
 						}
 					}
-				}
-				i {
-					color: #fff;
-				}
-				ul {
-					cursor: move;
-					width: 31px;
-					@include displayFlex(row);
-					-webkit-flex-wrap: wrap;
-					flex-wrap: wrap;
-					border-left: 1px solid #fff;
-					border-top: 1px solid #fff;
+					section {
+						cursor: pointer;
 
-					li {
-						width: 10px;
-						border-right: 1px solid #fff;
-						border-bottom: 1px solid #fff;
-						height: 10px;
+						&.board-print, &.board-save, &.board-download {
+							font-size: 20px;
+						}
+						&.board-download {
+						}
+						&.board-print {
+							@include displayFlex();
+							justify-content: center;
+						}
+						&.active {
+							background: #fff;
+
+							&>span {
+								@include transform(rotate(-28deg) scale(.8));
+
+								&:before {
+									border-bottom-color: #000;
+								}
+								&:after {
+									background: #000;
+								}
+							}
+						}
+						text-align: center;
+
+						span {
+							@include transform(rotate(-28deg));
+							@include pos(r);
+							$size: 6px;
+							display: block;
+							height: 100%;
+
+							&:before, &:after {
+								content: '';
+								@include pos(a);
+								width: 0;
+								height: 0;
+								left: 10px;
+								border-left: $size solid transparent;
+								border-right: $size solid transparent;
+								border-bottom: $size*2 solid #fff;
+							}
+							&:after {
+								width: 2px;
+								height: 10px;
+								background: #fff;
+								border: none;
+								bottom: 7px;
+								left: 15px;
+							}
+						}
+					}
+					i {
+						color: #fff;
+					}
+					ul {
+						cursor: move;
+						@include displayFlex(row);
+						-webkit-flex-wrap: wrap;
+						flex-wrap: wrap;
+						border-left: 1px solid #fff;
+						border-top: 1px solid #fff;
+						width: 28px;
+						@include transform(scale(.7));
+
+						li {
+							width: 9px;
+							border-right: 1px solid #fff;
+							border-bottom: 1px solid #fff;
+							height: 9px;
+						}
 					}
 				}
 			}
@@ -130,15 +137,55 @@
 
 				.board-main-stage {
 					@include pos(a);
+					left: 0;
+					top: 0;
+				}
+			}
+			&:nth-of-type(3) {
+				width: 220px;
+				color: #fff;
+				@include pos(a);
+				right: 0;
+				top: 0;
+				height: 100%;
+				background: #797d86;
+
+				ul {
+					padding-bottom: 40px;
+
+					li {
+						&:nth-of-type(1) {
+							background: #42475a;
+							color: #fff;
+							text-align: center;
+							line-height: 40px;
+							height: 40px;
+							display: block;
+						}
+						@include displayFlex(row);
+
+						&>div {
+							margin: 10px 0 0px 20px;
+
+							&:nth-of-type(1) {
+								width: 40px;
+								height: 40px;
+								border: 1px solid #fff;
+							}
+							&:nth-of-type(2) {
+								flex: 1;
+								-webkit-flex: 1;
+							}
+						}
+					}
 				}
 			}
 		}
 	}
 	section.board-seat {
-		@include pos(r);
-		left: 300px;
-		top: 300px;
 		@include pos(a);
+		left: 0;
+		top: 0;
 
 		&>div {
 			display: none;

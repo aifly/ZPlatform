@@ -1,0 +1,34 @@
+{
+	"getret": 0,
+	"list": [{
+		"cols": 5,
+		"rows": 12,
+		"style": {
+			"left": 10,
+			"top": 100
+		},
+		"data": [
+
+		]
+	}, {
+		"cols": 6,
+		"rows": 10,
+		"style": {
+			"left": 10,
+			"top": 100
+		},
+		"data": [
+
+		]
+	}, {
+		"cols": 8,
+		"rows": 6,
+		"data": [
+
+		],
+		"style": {
+			"left": 10,
+			"top": 100
+		}
+	}]
+}
