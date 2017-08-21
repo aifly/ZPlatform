@@ -37,10 +37,10 @@ class ZmitiWenmingApp extends React.Component {
             totalPV: '000,000,000',
             monthPV: 0,
             dayPV: 0,
+            allPV: 0,
             provinceRankingList: list1,
             userRankingList: list2,
             provincePVSort: 'sort-down',
-            allPV: 0,
             provinceReportSort: '',
             userCommentSort: 'sort-down',
             userReportSort: ''
@@ -49,10 +49,15 @@ class ZmitiWenmingApp extends React.Component {
 
     componentWillUnmount() {
         this.unmout = true;
+        unload = true;
+        this.totalpvAjax && this.totalpvAjax.abort();
+        this.userareatotalpv && this.userareatotalpv.abort();
+
     }
 
     componentWillMount() {
         this.unmout = false;
+        unload = false;
         let {
             resizeMainHeight,
             popNotice,
@@ -104,15 +109,10 @@ class ZmitiWenmingApp extends React.Component {
             this.initEcharts();
             var worksid = 'wenming-login';
             this.worksid = worksid;
-            if (!unload) {
-                unload = true;
-                this.socket();
-            }
 
-            this.formatPV(localStorage.getItem('defaultcount' + this.worksid) * 1 || 0);
-
+            this.socket();
+            /// this.formatPV(localStorage.getItem('defaultcount' + this.worksid) * 1 || 0);
             this.request();
-
             this.setScroll();
         }, 300);
 
@@ -181,7 +181,8 @@ class ZmitiWenmingApp extends React.Component {
                     //s.defaultCount = localStorage.getItem('defaultcount'+ worksid) || 0;
 
 
-                    s.request();
+
+                    s.getVisit();
 
 
                     // localStorage.setItem('defaultcount'+ worksid,s.defaultCount);
@@ -244,11 +245,10 @@ class ZmitiWenmingApp extends React.Component {
         var worksid = this.worksid;
 
         var s = this;
-        socket.on(worksid, function(msg) {
+        var socketEvent = function(msg) {
             if (!msg) {
                 return;
             }
-
             msg = msg.replace(/&quot;/g, "\"");
 
             var data = JSON.parse(msg);
@@ -257,13 +257,17 @@ class ZmitiWenmingApp extends React.Component {
             var zmitiWx = {
                 longitude: data.pos[0],
                 latitude: data.pos[1],
-
-
             }
+
             s.userOnLine(data.nickname || '智媒体用户', data.headimageurl || defaulturl);
             s.getPos(data)
-        });
-        socket.on('wenming-report', (msg) => {
+        }
+
+        socket.off(worksid);
+
+        socket.on(worksid, socketEvent);
+
+        var reportEvent = (msg) => {
             if (!msg) {
                 return;
             }
@@ -273,8 +277,10 @@ class ZmitiWenmingApp extends React.Component {
 
             this.report(data.nickname, data.headimageurl, data.content);
 
+        }
 
-        });
+        socket.off('wenming-report');
+        socket.on('wenming-report', reportEvent);
     }
 
 
@@ -288,12 +294,11 @@ class ZmitiWenmingApp extends React.Component {
 
     }
 
-
-
     render() {
 
 
         var title = '身边文明事';
+
 
         var props = {
             title,
@@ -316,7 +321,7 @@ class ZmitiWenmingApp extends React.Component {
                                                 <section>
                                                     <div>
                                                         <div>月浏览量</div>
-                                                        <div>{this.formatNumber(this.state.monthPV)}</div>
+                                                        <div ref='month'>{this.formatNumber(this.state.monthPV)}</div>
                                                     </div>
                                                 </section>
                                                 <section>
@@ -570,42 +575,10 @@ class ZmitiWenmingApp extends React.Component {
         });
     }
 
-    request() {
-        if (this.unmout) {
-            return;
-        }
+    getVisit() {
         var s = this;
-        $.ajax({
-            type: 'post',
-            url: window.baseUrl + 'weixinxcx/provincesort/',
-            data: {
-                appid: window.WENMING.XCXAPPID,
-                monthnum: 3,
-                userid: this.userid,
-                getusersigid: this.getusersigid
-            }
-        }).done((data) => {
-            if (typeof data === 'string') {
-                data = JSON.parse(data);
-            }
-            console.log(data)
-            if (data.getret === 0) {
-                this.provinceRankingList = data.list.concat([]);
-                this.setState({
-                    provinceRankingList: data.list
-                }, () => {
-                    this.proviceScroll.refresh();
-                });
 
-            }
-        });
-
-
-        this.requestUserRank();
-
-
-
-        $.ajax({
+        this.totalpvAjax = $.ajax({
             type: 'post',
             url: window.baseUrl + 'weixinxcx/totalpv/',
             data: {
@@ -618,6 +591,7 @@ class ZmitiWenmingApp extends React.Component {
                 data = JSON.parse(data);
             }
             if (data.getret === 0) {
+                /**/
                 this.state.monthPV = data.list.monthpv;
                 this.state.dayPV = data.list.daypv;
                 this.state.allPV = data.list.totalpv;
@@ -626,7 +600,8 @@ class ZmitiWenmingApp extends React.Component {
             }
         });
 
-        $.ajax({
+
+        this.userareatotalpv = $.ajax({
             type: 'post',
             url: window.baseUrl + 'weixinxcx/userareatotalpv/',
             data: {
@@ -661,6 +636,41 @@ class ZmitiWenmingApp extends React.Component {
                 s.myChart.setOption(s.dataConfig(s.userData), true);
             }
         })
+    }
+
+    request() {
+
+        var s = this;
+        $.ajax({
+            type: 'post',
+            url: window.baseUrl + 'weixinxcx/provincesort/',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                monthnum: 3,
+                userid: this.userid,
+                getusersigid: this.getusersigid
+            }
+        }).done((data) => {
+            if (typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            if (data.getret === 0) {
+                this.provinceRankingList = data.list.concat([]);
+                this.setState({
+                    provinceRankingList: data.list
+                }, () => {
+                    this.proviceScroll.refresh();
+                });
+
+            }
+        });
+
+
+        this.requestUserRank();
+
+        this.getVisit();
+
+
 
     }
 
