@@ -1,6 +1,15 @@
-import React, { Component } from 'react';
+import React, {
+	Component
+} from 'react';
 
-import { message,Row,Col,Input,Button } from '../commoncomponent/common.jsx';
+import {
+	message,
+	Row,
+	Col,
+	Input,
+	Button,
+	Modal
+} from '../commoncomponent/common.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
@@ -12,7 +21,9 @@ import MainUI from '../components/Main.jsx';
 
 import $ from 'jquery';
 
-import {ZmitiValidateUser} from '../public/validate-user.jsx';
+import {
+	ZmitiValidateUser
+} from '../public/validate-user.jsx';
 
 import WXEntryApp from './entry/index.jsx';
 import WXEditApp from './edit/index.jsx';
@@ -21,32 +32,32 @@ import WXSaveApp from './save/index.jsx';
 class ZmitiWxChatApp extends Component {
 	constructor(props) {
 		super(props);
-		
-		this.state = {
-			currentEditIndex:-1,
-			mainHeight:document.documentElement.clientHeight - 50,
-			currentDialogName:'wxchat-members-head',
-			isShowReplaceMyHeadImg:false,
-			isShowBackgroundDialog:false,
-			isEntry:1,//是否进入编辑状态
-			currentTalkIndex:0,
-			data:{
-				shareTitle:'',//分享标题
-				shareDesc:'',//分享描述
-				shareImg:'',//分享图片300.jpg;
-				background:'',//聊天背景图片
-				bgSound:'',//背景音乐
-				username:'',
-				myHeadImg:'',
-				groupName:'',//群名称
-				title:'2017两会',
-				viewpath:'',//预览地址
-				memberList:[
-					
-				],
-				talk:[
 
-					
+		this.state = {
+			currentEditIndex: -1,
+			mainHeight: document.documentElement.clientHeight - 50,
+			currentDialogName: 'wxchat-members-head',
+			isShowReplaceMyHeadImg: false,
+			isShowBackgroundDialog: false,
+			isEntry: 1, //是否进入编辑状态
+			currentTalkIndex: 0,
+			data: {
+				shareTitle: '', //分享标题
+				shareDesc: '', //分享描述
+				shareImg: '', //分享图片300.jpg;
+				background: '', //聊天背景图片
+				bgSound: '', //背景音乐
+				username: '',
+				myHeadImg: '',
+				groupName: '', //群名称
+				title: '2017两会',
+				viewpath: '', //预览地址
+				memberList: [
+
+				],
+				talk: [
+
+
 
 					/*{
 						isMe:false,
@@ -63,259 +74,265 @@ class ZmitiWxChatApp extends Component {
 					}*/
 				]
 			}
-		}; 
+		};
 	}
 
-	
+
 
 	render() {
 		var mainStyle = {
-			background:'url(./static/images/wxtalk-bg.png) repeat center',
+			background: 'url(./static/images/wxtalk-bg.png) repeat center',
 		}
 
 		var s = this;
 
 		const userHeadProps = {
-            baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
+			baseUrl: window.baseUrl,
+			getusersigid: s.getusersigid,
+			userid: s.userid,
+			onFinish(imgData) {
 
-            	s.copyfile({
-            	 	imgData,
-            	 	that:s,
-            	 	worksid:s.worksid,
-            	 	fn:src=>{
-	                 s.state.data.memberList.push({
-	                	id:s.props.randomString(8),
-	                	head:imgData.src,
-	                	name:''
-	                });
+				s.copyfile({
+					imgData,
+					that: s,
+					worksid: s.worksid,
+					fn: src => {
+						s.state.data.memberList.push({
+							id: s.props.randomString(8),
+							head: imgData.src,
+							name: ''
+						});
 
-	                s.forceUpdate(()=>{
-	                	 window.obserable.trigger({
-		                	type:'refreshMemberList'
-		                })
-	                	
-	                });
-	                }
-            	 });
-            },
-            onCancel(){
-            	s.setState({
-            		showUserHeadProps:false
-            	})
-            }
+						s.forceUpdate(() => {
+							window.obserable.trigger({
+								type: 'refreshMemberList'
+							})
 
-        };
-        const linkProps = {
-            baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
+						});
+					}
+				});
+			},
+			onCancel() {
+				s.setState({
+					showUserHeadProps: false
+				})
+			}
 
-            	 s.copyfile({
-            	 	imgData,
-            	 	worksid:s.worksid,
-            	 	that:s,
-            	 	fn:src=>{
-	                	s.state.data.talk[s.state.currentTalkIndex].linkObj.img = src;
-		    			s.forceUpdate();
-	                }
-            	 });
-              
-            },
-            onCancel(){
-            	s.setState({
-            		isShowLinkDialog:false
-            	})
-            }
-        };
+		};
+		const linkProps = {
+			baseUrl: window.baseUrl,
+			getusersigid: s.getusersigid,
+			userid: s.userid,
+			onFinish(imgData) {
 
-        const backgroundProps = {
-        	baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
-        		 
-        		 s.copyfile({
-            	 	imgData,
-            	 	that:s,
-            	 	worksid:s.worksid,
-            	 	fn:src=>{
-		                s.state.data.background  = src;
-		    			s.forceUpdate();
-	                }
-            	 });
-            },
-            onCancel(){
-            	s.setState({
-            		isShowBackgroundDialog:false
-            	})
-            }
-        }
+				s.copyfile({
+					imgData,
+					worksid: s.worksid,
+					that: s,
+					fn: src => {
+						s.state.data.talk[s.state.currentTalkIndex].linkObj.img = src;
+						s.forceUpdate();
+					}
+				});
 
-        const repalcemyheadimgProps ={
-        	baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
+			},
+			onCancel() {
+				s.setState({
+					isShowLinkDialog: false
+				})
+			}
+		};
 
-            	 s.copyfile({
-            	 	imgData,
-            	 	that:s,
-            	 	worksid:s.worksid,
-            	 	fn:src=>{
-		                s.state.data.myHeadImg = imgData.src;
-		            	s.state.isShowReplaceMyHeadImg= false;
-		            	s.state.data.talk.forEach((item,i)=>{
-		            		item.isMe && (item.head = imgData.src);
-		            	});
-		            	s.forceUpdate()
-	                }
-            	 });
-            	
-            },
-            onCancel(){
-            	s.setState({
-            		isShowReplaceMyHeadImg:false
-            	})
-            }
-        }
+		const backgroundProps = {
+			baseUrl: window.baseUrl,
+			getusersigid: s.getusersigid,
+			userid: s.userid,
+			onFinish(imgData) {
 
-        const  replaceTalkImgProps = {//替换聊天中的图片
-        	baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
+				s.copyfile({
+					imgData,
+					that: s,
+					worksid: s.worksid,
+					fn: src => {
+						s.state.data.background = src;
+						s.forceUpdate();
+					}
+				});
+			},
+			onCancel() {
+				s.setState({
+					isShowBackgroundDialog: false
+				})
+			}
+		}
 
-            	 s.copyfile({
-            	 	imgData,
-            	 	that:s,
-            	 	worksid:s.worksid,
-            	 	fn:src=>{
-	                	s.state.data.talk[s.state.currentTalkIndex].img = imgData.src;
-        	
-		            	s.state.data.talk[s.state.currentTalkIndex].text = '';
+		const repalcemyheadimgProps = {
+			baseUrl: window.baseUrl,
+			getusersigid: s.getusersigid,
+			userid: s.userid,
+			onFinish(imgData) {
 
-		            	s.state.isShowReplaceTalkImg= false;
+				s.copyfile({
+					imgData,
+					that: s,
+					worksid: s.worksid,
+					fn: src => {
+						s.state.data.myHeadImg = imgData.src;
+						s.state.isShowReplaceMyHeadImg = false;
+						s.state.data.talk.forEach((item, i) => {
+							item.isMe && (item.head = imgData.src);
+						});
+						s.forceUpdate()
+					}
+				});
 
-		            	s.forceUpdate(()=>{
-		            		window.obserable.trigger({type:'refreshTalkBodyScroll'});
-		            	})
-	                }
-            	 });
-            
-            },
-            onCancel(){
-            	s.setState({
-            		isShowReplaceTalkImg:false
-            	})
-            }
-        };
-		const  addMusicProps = {//添加音频
-        	baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
+			},
+			onCancel() {
+				s.setState({
+					isShowReplaceMyHeadImg: false
+				})
+			}
+		}
 
-            	console.log(imgData);
-            	 s.copyfile({
-            	 	imgData,
-            	 	that:s,
-            	 	worksid:s.worksid,
-            	 	fn:src=>{
-	                	s.state.data.talk[s.state.currentTalkIndex].audioSrc = imgData.src;
-	                	s.state.data.talk[s.state.currentTalkIndex].text = '';
-		            	s.state.isAddMusic= false;
+		const replaceTalkImgProps = { //替换聊天中的图片
+			baseUrl: window.baseUrl,
+			getusersigid: s.getusersigid,
+			userid: s.userid,
+			onFinish(imgData) {
 
-		            	s.forceUpdate(()=>{
-							window.obserable.trigger({type:'refreshTalkBodyScroll'});
-		            	})
-	                }
-            	 });
-            },
-            onCancel(){
-            	s.setState({
-            		isAddMusic:false
-            	})
-            }
-        } 
+				s.copyfile({
+					imgData,
+					that: s,
+					worksid: s.worksid,
+					fn: src => {
+						s.state.data.talk[s.state.currentTalkIndex].img = imgData.src;
 
-        const  addVideoProps = {//添加视频
-        	baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
+						s.state.data.talk[s.state.currentTalkIndex].text = '';
 
-            	 
-            	 s.copyfile({
-            	 	imgData,
-            	 	that:s,
-            	 	worksid:s.worksid,
-            	 	fn:src=>{
-	                	s.state.data.talk[s.state.currentTalkIndex].videoSrc = imgData.src;
+						s.state.isShowReplaceTalkImg = false;
 
-		            	s.state.isAddVideo= false;
-		            	s.state.data.talk[s.state.currentTalkIndex].text = '';
-		            	s.forceUpdate(()=>{
-		            		window.obserable.trigger({type:'refreshTalkBodyScroll'});
-		            	})
-	                }
-            	 });
-            },
-            onCancel(){
-            	s.setState({
-            		isAddVideo:false
-            	})
-            }
-        } 
+						s.forceUpdate(() => {
+							window.obserable.trigger({
+								type: 'refreshTalkBodyScroll'
+							});
+						})
+					}
+				});
 
-        const editHeadProps = {
-        	baseUrl: window.baseUrl,
-            getusersigid: s.getusersigid,
-            userid: s.userid,
-            onFinish(imgData){
-            	if(s.state.currentEditIndex === -1){
-            		return;
-            	}
+			},
+			onCancel() {
+				s.setState({
+					isShowReplaceTalkImg: false
+				})
+			}
+		};
+		const addMusicProps = { //添加音频
+			baseUrl: window.baseUrl,
+			getusersigid: s.getusersigid,
+			userid: s.userid,
+			onFinish(imgData) {
 
-            	 s.copyfile({
-            	 	imgData,
-            	 	that:s,
-            	 	worksid:s.worksid,
-            	 	fn:src=>{
-	                	s.state.data.talk.forEach((item,i)=>{
-		            	if(s.state.data.memberList[s.state.currentEditIndex].id === item.id){
-		            			item.head = imgData.src;
-		            		}
-		            	});
-		            	s.state.data.memberList[s.state.currentEditIndex].head = imgData.src;
-		                s.forceUpdate();
-	                }
-            	 });
+				console.log(imgData);
+				s.copyfile({
+					imgData,
+					that: s,
+					worksid: s.worksid,
+					fn: src => {
+						s.state.data.talk[s.state.currentTalkIndex].audioSrc = imgData.src;
+						s.state.data.talk[s.state.currentTalkIndex].text = '';
+						s.state.isAddMusic = false;
 
-            	
-            },
-            onCancel(){
-            	s.setState({
-            		currentEditIndex:-1
-            	})
-            }
-        }
+						s.forceUpdate(() => {
+							window.obserable.trigger({
+								type: 'refreshTalkBodyScroll'
+							});
+						})
+					}
+				});
+			},
+			onCancel() {
+				s.setState({
+					isAddMusic: false
+				})
+			}
+		}
+
+		const addVideoProps = { //添加视频
+			baseUrl: window.baseUrl,
+			getusersigid: s.getusersigid,
+			userid: s.userid,
+			onFinish(imgData) {
 
 
-        var data ={
-        	modifyTitle:this.modifyTitle.bind(this),
-        	uploadHead:this.uploadHead.bind(this),
-        	modifyUserName:this.modifyUserName.bind(this),
-        	entryEdit:this.entryEdit.bind(this),
-        	modifyGroupName:this.modifyGroupName.bind(this),
-        	loading:this.props.loading,
-        	copyfile:this.copyfile.bind(this),
-        	worksid:this.worksid
+				s.copyfile({
+					imgData,
+					that: s,
+					worksid: s.worksid,
+					fn: src => {
+						s.state.data.talk[s.state.currentTalkIndex].videoSrc = imgData.src;
 
-        }
+						s.state.isAddVideo = false;
+						s.state.data.talk[s.state.currentTalkIndex].text = '';
+						s.forceUpdate(() => {
+							window.obserable.trigger({
+								type: 'refreshTalkBodyScroll'
+							});
+						})
+					}
+				});
+			},
+			onCancel() {
+				s.setState({
+					isAddVideo: false
+				})
+			}
+		}
+
+		const editHeadProps = {
+			baseUrl: window.baseUrl,
+			getusersigid: s.getusersigid,
+			userid: s.userid,
+			onFinish(imgData) {
+				if (s.state.currentEditIndex === -1) {
+					return;
+				}
+
+				s.copyfile({
+					imgData,
+					that: s,
+					worksid: s.worksid,
+					fn: src => {
+						s.state.data.talk.forEach((item, i) => {
+							if (s.state.data.memberList[s.state.currentEditIndex].id === item.id) {
+								item.head = imgData.src;
+							}
+						});
+						s.state.data.memberList[s.state.currentEditIndex].head = imgData.src;
+						s.forceUpdate();
+					}
+				});
+
+
+			},
+			onCancel() {
+				s.setState({
+					currentEditIndex: -1
+				})
+			}
+		}
+
+
+		var data = {
+			modifyTitle: this.modifyTitle.bind(this),
+			uploadHead: this.uploadHead.bind(this),
+			modifyUserName: this.modifyUserName.bind(this),
+			entryEdit: this.entryEdit.bind(this),
+			modifyGroupName: this.modifyGroupName.bind(this),
+			loading: this.props.loading,
+			copyfile: this.copyfile.bind(this),
+			worksid: this.worksid
+
+		}
 
 
 		var component = <div className='wxchat-main-ui' style={mainStyle}>
@@ -334,13 +351,29 @@ class ZmitiWxChatApp extends Component {
 			{this.state.isAddVideo && <ZmitiUploadDialog id={'addVideo'} {...addVideoProps}></ZmitiUploadDialog>}
 			{this.state.isShowBackgroundDialog && <ZmitiUploadDialog id={'showBackgroundDialog'} {...backgroundProps}></ZmitiUploadDialog>}
 			{this.state.isShowLinkDialog && <ZmitiUploadDialog id={'showLinkDialog'} {...linkProps}></ZmitiUploadDialog>}
+
+
+			 <Modal 
+                title="发布后访问地址"
+                footer={''}
+                width={500}
+                onCancel={()=>{this.setState({previewUrl:''})}}
+		visible = {
+			this.state.previewUrl ? true : false
+		}
+                >
+                {this.state.previewUrl && <div style={{textAlign:'center'}}>
+                    <div>{this.state.previewUrl}</div>
+                    {this.state.publishQrcodeUrl && <img style={{width:300}} src={this.state.publishQrcodeUrl}/>}</div>}
+                
+            </Modal>
 		</div>
 		return (
 			<MainUI component={component}></MainUI>
 		);
 	}
 
-	modifyUserName(e,i){
+	modifyUserName(e, i) {
 
 
 
@@ -348,52 +381,66 @@ class ZmitiWxChatApp extends Component {
 		this.forceUpdate();
 	}
 
-	entryEdit(){
+	entryEdit() {
 
 		//创建or更新作品
 		//
 		//
-		
+
 
 
 		this.setState({
-			isEntry:true
+			isEntry: true
 		});
 	}
 
-	 
 
-	uploadHead(){
-		var obserable=window.obserable;
+
+	uploadHead() {
+		var obserable = window.obserable;
 		this.setState({
-			showUserHeadProps:true
-		},()=>{
+			showUserHeadProps: true
+		}, () => {
 			obserable.trigger({
-			  type:'showModal',
-			  data:{type:0,id:'wxchat-members-head'}
-			});	
+				type: 'showModal',
+				data: {
+					type: 0,
+					id: 'wxchat-members-head'
+				}
+			});
 		})
-		
+
 	}
 
 
-	modifyTitle(e){
+	modifyTitle(e) {
 		this.state.data.title = e.target.value;
 		this.forceUpdate();
 	}
 
-	modifyGroupName(val){
+	modifyGroupName(val) {
 		this.state.data.groupName = val;
 		this.forceUpdate();
 	}
 
 	componentWillMount() {
-		
-		let {resizeMainHeight,validateUser,loginOut,copyfile} = this.props;
 
-		resizeMainHeight(this);	
-		
-		let {userid,getusersigid,usertypesign} = validateUser(()=>{loginOut(undefined,undefined,false);},this);
+		let {
+			resizeMainHeight,
+			validateUser,
+			loginOut,
+			copyfile
+		} = this.props;
+
+		resizeMainHeight(this);
+
+		let {
+			userid,
+			getusersigid,
+			usertypesign
+		} = validateUser(() => {
+			loginOut(undefined, undefined, false);
+		}, this);
 		this.userid = userid;
 		this.copyfile = copyfile;
 		this.getusersigid = getusersigid;
@@ -405,130 +452,140 @@ class ZmitiWxChatApp extends Component {
 		var s = this;
 		this.worksid = s.props.params.id;
 		$.ajax({
-			url:window.baseUrl + '/works/get_filecontent/',
-			type:window.ajaxType || 'get',
-			data:{
-				userid:s.userid,
-				getusersigid:s.getusersigid,
-				worksid:s.worksid,
+			url: window.baseUrl + '/works/get_filecontent/',
+			type: window.ajaxType || 'get',
+			data: {
+				userid: s.userid,
+				getusersigid: s.getusersigid,
+				worksid: s.worksid,
 			},
-			success(data){
-				if(data.getret === 0){
-					
+			success(data) {
+				if (data.getret === 0) {
+
 					s.state.data = JSON.parse(data.filecontent);
-					s.state.data.talk.forEach((item,i)=>{
-						if(!item.linkObj){
+					s.state.data.talk.forEach((item, i) => {
+						if (!item.linkObj) {
 							item.linkObj = {};
 						}
 					});
 					s.state.viewpath = data.path.viewpath;
-					s.forceUpdate(()=>{
+					s.forceUpdate(() => {
 						window.obserable.trigger({
-							type:'refreshMemberScroll'
+							type: 'refreshMemberScroll'
 						})
-						
-						s.props.loading(s.state.data.loadingImg|| [],null,()=>{
-							
-		  					window.obserable.trigger({
-					  			type:'refreshTalkBodyScroll'
-					  		})
-		  				})
+
+						s.props.loading(s.state.data.loadingImg || [], null, () => {
+
+							window.obserable.trigger({
+								type: 'refreshTalkBodyScroll'
+							})
+						})
 					});
 
-					
+
 				}
 			}
 		})
 
-		
+
 
 		window.s = this;
-		window.obserable.on('setMainMember',(i)=>{//设置群主
-			if(i===0){
+		window.obserable.on('setMainMember', (i) => { //设置群主
+			if (i === 0) {
 				return;
 			}
 			var mainMember = this.state.data.memberList[0];
-			this.state.data.memberList[0] = this.state.data.memberList.splice(i,1)[0];
-			this.state.data.memberList.splice(i,0,mainMember)
-			
+			this.state.data.memberList[0] = this.state.data.memberList.splice(i, 1)[0];
+			this.state.data.memberList.splice(i, 0, mainMember)
+
 			this.forceUpdate();
 		});
 
 
-		window.obserable.on('replaceHead',(i)=>{//替换头像
+		window.obserable.on('replaceHead', (i) => { //替换头像
 
-			this.setState({currentEditIndex:i},()=>{
-				
+			this.setState({
+				currentEditIndex: i
+			}, () => {
+
 				window.obserable.trigger({
-				  type:'showModal',
-				  data:{type:0,id:'memberList-'+i}
+					type: 'showModal',
+					data: {
+						type: 0,
+						id: 'memberList-' + i
+					}
 				});
 			});
 
 
 		});
 
-		window.obserable.on('deleteMember',(i)=>{//删除成员
-			if(this.state.data.memberList.length<=2){
+		window.obserable.on('deleteMember', (i) => { //删除成员
+			if (this.state.data.memberList.length <= 2) {
 				message.error('聊天成员最少为2个');
 				return;
 			}
-			this.state.data.memberList.splice(i,1);
-			this.forceUpdate(()=>{
+			this.state.data.memberList.splice(i, 1);
+			this.forceUpdate(() => {
 				window.obserable.trigger({
-					type:'refreshMemberList'
+					type: 'refreshMemberList'
 				});
 
 			});
 		});
-		
-		window.obserable.on('repalceMyHeadImg',()=>{
-			this.setState({isShowReplaceMyHeadImg:true},()=>{
+
+		window.obserable.on('repalceMyHeadImg', () => {
+			this.setState({
+				isShowReplaceMyHeadImg: true
+			}, () => {
 				window.obserable.trigger({
-					type:'showModal',
-					data:{type:0,id:'repalcemyheadimg'}
+					type: 'showModal',
+					data: {
+						type: 0,
+						id: 'repalcemyheadimg'
+					}
 				});
 			});
 		});
 
-		window.obserable.on('modifyCurrentTalk',data=>{//输入框改变时。
+		window.obserable.on('modifyCurrentTalk', data => { //输入框改变时。
 			this.state.data.talk[this.state.currentTalkIndex].text = data;
-			this.state.data.talk[this.state.currentTalkIndex].img = '';//清空聊天图片
-			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};//清空聊天图片
+			this.state.data.talk[this.state.currentTalkIndex].img = ''; //清空聊天图片
+			this.state.data.talk[this.state.currentTalkIndex].linkObj = {}; //清空聊天图片
 			this.forceUpdate();
 			this.timer && clearTimeout(this.timer);
-			this.timer = setTimeout(()=>{
-				window.obserable.trigger({type:'refreshTalkBodyScroll'});
-			},370);
+			this.timer = setTimeout(() => {
+				window.obserable.trigger({
+					type: 'refreshTalkBodyScroll'
+				});
+			}, 370);
 		});
 
-		window.obserable.on('modifyCurrentIndex',data=>{ //设置当前的聊天记录。
+		window.obserable.on('modifyCurrentIndex', data => { //设置当前的聊天记录。
 			this.setState({
-				currentTalkIndex:data
+				currentTalkIndex: data
 			});
 
-			var type= 0;
-			if(this.state.data.talk[data].img){
-				type= 1;
-			}else if(this.state.data.talk[data].audioSrc){
-				type= 2;
-			}
-			else if(this.state.data.talk[data].videoSrc){
-				type= 3;
-			}
-			else if(this.state.data.talk[data].linkObj.img || this.state.data.talk[data].linkObj.title || this.state.data.talk[data].linkObj.href ||this.state.data.talk[data].linkObj.desc){
-				type= 4;
+			var type = 0;
+			if (this.state.data.talk[data].img) {
+				type = 1;
+			} else if (this.state.data.talk[data].audioSrc) {
+				type = 2;
+			} else if (this.state.data.talk[data].videoSrc) {
+				type = 3;
+			} else if (this.state.data.talk[data].linkObj.img || this.state.data.talk[data].linkObj.title || this.state.data.talk[data].linkObj.href || this.state.data.talk[data].linkObj.desc) {
+				type = 4;
 			}
 
 
 			window.obserable.trigger({
-				type:'changeTalkType',
-				data:type
+				type: 'changeTalkType',
+				data: type
 			})
 		});
 
-		window.obserable.on('setCurrentTalk',data=>{//设置聊天的内容和头像
-			if(!this.state.data.talk[this.state.currentTalkIndex]){
+		window.obserable.on('setCurrentTalk', data => { //设置聊天的内容和头像
+			if (!this.state.data.talk[this.state.currentTalkIndex]) {
 				return;
 			}
 			this.state.data.talk[this.state.currentTalkIndex].head = this.state.data.memberList[data].head;
@@ -539,214 +596,293 @@ class ZmitiWxChatApp extends Component {
 
 		});
 
-		window.obserable.on('addTalk',()=>{//
+		window.obserable.on('addTalk', () => { //
 			var talk = {
-				isMe:false,
-				id:-1,
-				head:'',
-				name:'xxx',
-				text:'',
-				linkObj:{}
+				isMe: false,
+				id: -1,
+				head: '',
+				name: 'xxx',
+				text: '',
+				linkObj: {}
 			}
 
-			this.state.data.talk.splice(this.state.currentTalkIndex+1,0,talk);
-			this.state.currentTalkIndex = this.state.currentTalkIndex+1;
-			this.forceUpdate(()=>{
+			this.state.data.talk.splice(this.state.currentTalkIndex + 1, 0, talk);
+			this.state.currentTalkIndex = this.state.currentTalkIndex + 1;
+			this.forceUpdate(() => {
 				this.timer && clearTimeout(this.timer);
-				this.timer = setTimeout(()=>{
-					window.obserable.trigger({type:'refreshTalkBodyScroll'});
-				},370);
+				this.timer = setTimeout(() => {
+					window.obserable.trigger({
+						type: 'refreshTalkBodyScroll'
+					});
+				}, 370);
 			});
 		});
 
 
-		window.obserable.on("setTalkIsMe",()=>{//设置当前的聊天内容为我。
+		window.obserable.on("setTalkIsMe", () => { //设置当前的聊天内容为我。
 			this.state.data.talk[this.state.currentTalkIndex].id = -1;
 			this.state.data.talk[this.state.currentTalkIndex].isMe = true;
 			this.state.data.talk[this.state.currentTalkIndex].head = this.state.data.myHeadImg;
 			this.forceUpdate();
-  		});
+		});
 
-  		window.obserable.on('modifyCurrentTalkHref',(data)=>{//更新当前聊天的链接。
-  			this.state.data.talk[this.state.currentTalkIndex].href = data;
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyTalkImg',()=>{//替换图片。
-  			this.setState({
-  				isShowReplaceTalkImg:true
-  			},()=>{
-  				window.obserable.trigger({
-  					type:'showModal',
-					data:{type:0,id:'isShowReplaceTalkImg'}
-  				})
-  			})
-  		});
-
-  		window.obserable.on('addMusic',()=>{//替换图片。
-  			this.setState({
-  				isAddMusic:true
-  			},()=>{
-	  			window.obserable.trigger({
-					type:'showModal',
-					data:{type:1,id:'addMusic'}
-	  			})
-			})
-  		});
-
-  		window.obserable.on('addVideo',()=>{//替换图片。
-  			this.setState({
-  				isAddVideo:true
-  			},()=>{
-
-	  			window.obserable.trigger({
-					type:'showModal',
-					data:{type:2,id:'addVideo'}
-	  			})
-			})
-  		});
-
-  		window.obserable.on('deleteTalkImg',()=>{
-  			var s = this;
-  			s.state.data.talk[s.state.currentTalkIndex].img = null;
-        	s.forceUpdate()
-  		});
-
-  		window.obserable.on('deleteTalk',(i)=>{
-  			if(this.state.data.talk.length<=1){
-  				message.error('至少得有一个聊天记录');
-  				return;
-  			}
-
-  			this.state.currentTalkIndex = this.state.data.talk.length - 2;
-  			this.forceUpdate();
-
-  			this.state.data.talk.splice(i,1);
-
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyUserName',data=>{
-  			this.state.data.username = data;
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyBackground',(data)=>{
-  			this.setState({
-  				isShowBackgroundDialog:true
-  			},()=>{
-  				window.obserable.trigger({
-  					type:"showModal",
-  					data:{
-  						type:0,
-  						id:'showBackgroundDialog'
-  					}
-  				})
-  			});
-  		});
-
-  		window.obserable.on('deleteBackground',()=>{
-  			this.state.data.background = '';//清除背景图片
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyBgSound',(e)=>{
-  			this.state.data.bgSound = e;//添加背景音乐
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('deleteBgSound',(e)=>{
-  			this.state.data.bgSound = '';//添加背景音乐
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('backtoedit',()=>{//返回编辑
-  			this.setState({
-  				isEntry:1
-  			});
-
-  			window.obserable.trigger({
-  				type:'save'
-  			})
-  		});
-
-  		window.obserable.on('modifyShareInfo',(data)=>{//分享标题,描述
-  			this.state.data[data.name] = data.title;
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on("save",()=>{
-  			this.state.isEntry = 2;
-  			var s = this;
-  			if(this.state.data.memberList.length<=1){
-  				message.error('聊天的人数不能少于两人');
-  				return;
-  			}
-  			s.filterLoadingImg(s.state.data);
-  			s.state.data.loadingImg = s.loadingImg;//把所有的资源图片统一加到页面上。
+		window.obserable.on('modifyCurrentTalkHref', (data) => { //更新当前聊天的链接。
+			this.state.data.talk[this.state.currentTalkIndex].href = data;
 			this.forceUpdate();
-  			$.ajax({
-  				url:window.baseUrl+'/works/update_works/',
-  				type:'post',
-  				data:{
-  					worksid:s.worksid,
-  					userid:s.userid,
-  					getusersigid:s.getusersigid,
-  					datajson:JSON.stringify(s.state.data),
-  					worksname:s.state.data.title,
-  					workstag:'',
-  					workico:s.state.data.shareImg
-  				},
-  				success(data){
-  					
-  					message[data.getret === 0?'success':'error'](data.getmsg);
-  				}
+		});
 
-  			})
-
-  		});
-
-  		window.obserable.on('modifyCurrentTalkAudio',(data)=>{
-  			this.state.data.talk[this.state.currentTalkIndex].audioSrc = data;
-  			this.state.data.talk[this.state.currentTalkIndex].text = '';
-  			this.state.data.talk[this.state.currentTalkIndex].img = '';
-  			this.state.data.talk[this.state.currentTalkIndex].videoSrc ='';
-  			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyCurrentTalkVideo',(data)=>{
-  			this.state.data.talk[this.state.currentTalkIndex].videoSrc = data;
-  			this.state.data.talk[this.state.currentTalkIndex].text = '';
-  			this.state.data.talk[this.state.currentTalkIndex].img = '';
-  			this.state.data.talk[this.state.currentTalkIndex].audioSrc ='';
-  			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};
-  			this.forceUpdate(()=>{
-  				this.timer && clearTimeout(this.timer);
-				this.timer = setTimeout(()=>{
-					window.obserable.trigger({type:'refreshTalkBodyScroll'});
-				},370);
-  			});
-  		});
-
-  		window.obserable.on('modifyLink',(data)=>{
-  			this.state.data.talk[this.state.currentTalkIndex].videoSrc = '';
-  			this.state.data.talk[this.state.currentTalkIndex].text = '';
-  			this.state.data.talk[this.state.currentTalkIndex].img = '';
-  			this.state.data.talk[this.state.currentTalkIndex].audioSrc ='';
-  			this.state.data.talk[this.state.currentTalkIndex].linkObj[data.name] = data.value;
-  			this.forceUpdate();
-  		});
-
-  		window.obserable.on('modifyLinkImg',()=>{
+		window.obserable.on('modifyTalkImg', () => { //替换图片。
 			this.setState({
-				isShowLinkDialog:true
-			},()=>{
+				isShowReplaceTalkImg: true
+			}, () => {
 				window.obserable.trigger({
-					type:'showModal',
-					data:{
-						type:0,
-						id:'showLinkDialog'
+					type: 'showModal',
+					data: {
+						type: 0,
+						id: 'isShowReplaceTalkImg'
+					}
+				})
+			})
+		});
+
+		window.obserable.on('addMusic', () => { //替换图片。
+			this.setState({
+				isAddMusic: true
+			}, () => {
+				window.obserable.trigger({
+					type: 'showModal',
+					data: {
+						type: 1,
+						id: 'addMusic'
+					}
+				})
+			})
+		});
+
+		window.obserable.on('addVideo', () => { //替换图片。
+			this.setState({
+				isAddVideo: true
+			}, () => {
+
+				window.obserable.trigger({
+					type: 'showModal',
+					data: {
+						type: 2,
+						id: 'addVideo'
+					}
+				})
+			})
+		});
+
+		window.obserable.on('deleteTalkImg', () => {
+			var s = this;
+			s.state.data.talk[s.state.currentTalkIndex].img = null;
+			s.forceUpdate()
+		});
+
+		window.obserable.on('deleteTalk', (i) => {
+			if (this.state.data.talk.length <= 1) {
+				message.error('至少得有一个聊天记录');
+				return;
+			}
+
+			this.state.currentTalkIndex = this.state.data.talk.length - 2;
+			this.forceUpdate();
+
+			this.state.data.talk.splice(i, 1);
+
+			this.forceUpdate();
+		});
+
+		window.obserable.on('modifyUserName', data => {
+			this.state.data.username = data;
+			this.forceUpdate();
+		});
+
+		window.obserable.on('modifyBackground', (data) => {
+			this.setState({
+				isShowBackgroundDialog: true
+			}, () => {
+				window.obserable.trigger({
+					type: "showModal",
+					data: {
+						type: 0,
+						id: 'showBackgroundDialog'
+					}
+				})
+			});
+		});
+
+		window.obserable.on('deleteBackground', () => {
+			this.state.data.background = ''; //清除背景图片
+			this.forceUpdate();
+		});
+
+		window.obserable.on('modifyBgSound', (e) => {
+			this.state.data.bgSound = e; //添加背景音乐
+			this.forceUpdate();
+		});
+
+		window.obserable.on('deleteBgSound', (e) => {
+			this.state.data.bgSound = ''; //添加背景音乐
+			this.forceUpdate();
+		});
+
+		window.obserable.on('backtoedit', () => { //返回编辑
+			this.setState({
+				isEntry: 1
+			});
+
+			window.obserable.trigger({
+				type: 'save'
+			})
+		});
+
+		window.obserable.on('publish', () => { //确定发布
+			/*window.obserable.trigger({
+				type: 'save'
+			});*/
+			var s = this;
+			var json = JSON.stringify(this.state.data);
+
+			json = JSON.parse(json);
+			json.isPublish = true;
+
+
+			json.loadingImg.forEach((item, i) => {
+				if (item.search(/^http/) > -1 && item.split('assets').length > 1) {
+					json.loadingImg[i] = './assets' + item.split('assets')[1]
+				}
+			});
+
+			json.memberList.forEach((item, i) => {
+				if (item.head) {
+					if (item.head.search(/^http/) > -1 && item.head.split('assets').length > 1) {
+						item.head = './assets' + item.split('assets')[1];
+					}
+				}
+			});
+
+			console.log(json);
+			message.info('功能暂缓');
+			return;
+
+
+			$.ajax({
+				url: window.baseUrl + 'works/release_works/',
+				type: window.ajaxType || 'get',
+				data: {
+					userid: s.userid,
+					getusersigid: s.getusersigid,
+					jsondata: JSON.stringify(json),
+					worksid: s.worksid
+				}
+			}).done((data) => {
+
+				message[data.getret === 0 ? 'success' : 'error'](data.getret === 0 ? '发布成功!!!' : '发布失败');
+				if (data.getret === 0) {
+					s.state.previewUrl = window.publishBaseUrl + data.url;
+					$.ajax({
+						url: window.baseUrl + 'share/create_qrcode',
+						type: window.ajaxType || 'get',
+						data: {
+							url: window.publishBaseUrl + data.url
+						}
+					}).done((d) => {
+						if (d.getret === 0) {
+							s.setState({
+								publishQrcodeUrl: d.qrcodeurl,
+								///workstate: window.workState.PUBLISHSED
+							});
+						}
+					});
+				}
+				s.forceUpdate();
+			});
+
+
+
+		});
+
+		window.obserable.on('modifyShareInfo', (data) => { //分享标题,描述
+			this.state.data[data.name] = data.title;
+			this.forceUpdate();
+		});
+
+		window.obserable.on("save", () => {
+			this.state.isEntry = 2;
+			var s = this;
+			if (this.state.data.memberList.length <= 1) {
+				message.error('聊天的人数不能少于两人');
+				return;
+			}
+			s.filterLoadingImg(s.state.data);
+			s.state.data.loadingImg = s.loadingImg; //把所有的资源图片统一加到页面上。
+			this.forceUpdate();
+			$.ajax({
+				url: window.baseUrl + '/works/update_works/',
+				type: 'post',
+				data: {
+					worksid: s.worksid,
+					userid: s.userid,
+					getusersigid: s.getusersigid,
+					datajson: JSON.stringify(s.state.data),
+					worksname: s.state.data.title,
+					workstag: '',
+					workico: s.state.data.shareImg
+				},
+				success(data) {
+
+					message[data.getret === 0 ? 'success' : 'error'](data.getmsg);
+				}
+
+			})
+
+		});
+
+		window.obserable.on('modifyCurrentTalkAudio', (data) => {
+			this.state.data.talk[this.state.currentTalkIndex].audioSrc = data;
+			this.state.data.talk[this.state.currentTalkIndex].text = '';
+			this.state.data.talk[this.state.currentTalkIndex].img = '';
+			this.state.data.talk[this.state.currentTalkIndex].videoSrc = '';
+			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};
+			this.forceUpdate();
+		});
+
+		window.obserable.on('modifyCurrentTalkVideo', (data) => {
+			this.state.data.talk[this.state.currentTalkIndex].videoSrc = data;
+			this.state.data.talk[this.state.currentTalkIndex].text = '';
+			this.state.data.talk[this.state.currentTalkIndex].img = '';
+			this.state.data.talk[this.state.currentTalkIndex].audioSrc = '';
+			this.state.data.talk[this.state.currentTalkIndex].linkObj = {};
+			this.forceUpdate(() => {
+				this.timer && clearTimeout(this.timer);
+				this.timer = setTimeout(() => {
+					window.obserable.trigger({
+						type: 'refreshTalkBodyScroll'
+					});
+				}, 370);
+			});
+		});
+
+		window.obserable.on('modifyLink', (data) => {
+			this.state.data.talk[this.state.currentTalkIndex].videoSrc = '';
+			this.state.data.talk[this.state.currentTalkIndex].text = '';
+			this.state.data.talk[this.state.currentTalkIndex].img = '';
+			this.state.data.talk[this.state.currentTalkIndex].audioSrc = '';
+			this.state.data.talk[this.state.currentTalkIndex].linkObj[data.name] = data.value;
+			this.forceUpdate();
+		});
+
+		window.obserable.on('modifyLinkImg', () => {
+			this.setState({
+				isShowLinkDialog: true
+			}, () => {
+				window.obserable.trigger({
+					type: 'showModal',
+					data: {
+						type: 0,
+						id: 'showLinkDialog'
 					}
 				})
 			})
@@ -755,21 +891,21 @@ class ZmitiWxChatApp extends Component {
 
 	}
 
-	filterLoadingImg(data){
+	filterLoadingImg(data) {
 		this.loadingImg = this.loadingImg || [];
 
-		for(var attr in data){
+		for (var attr in data) {
 
-			if(typeof data[attr] === 'object'){
+			if (typeof data[attr] === 'object') {
 				this.filterLoadingImg(data[attr]);
-			}else{
-				if(typeof data[attr] === 'string' && data[attr].split('.').length>1){
-					var suffix = data[attr].split('.')[data[attr].split('.').length-1];
-					
-					if(suffix === 'jpg'||suffix === 'png'||suffix === 'gif'||suffix === 'jpeg'){
-						var add =true;
-						this.loadingImg.forEach((item,i)=>{
-							if(item === data[attr]){
+			} else {
+				if (typeof data[attr] === 'string' && data[attr].split('.').length > 1) {
+					var suffix = data[attr].split('.')[data[attr].split('.').length - 1];
+
+					if (suffix === 'jpg' || suffix === 'png' || suffix === 'gif' || suffix === 'jpeg') {
+						var add = true;
+						this.loadingImg.forEach((item, i) => {
+							if (item === data[attr]) {
 								add = false;
 							}
 						});
@@ -779,7 +915,7 @@ class ZmitiWxChatApp extends Component {
 			}
 		}
 	}
- 
+
 }
 
 export default ZmitiValidateUser(ZmitiWxChatApp);

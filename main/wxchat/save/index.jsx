@@ -1,51 +1,60 @@
 import React from 'react';
 import './css/index.css';
-import { message,Row,Col,Input,Button } from '../../commoncomponent/common.jsx';
+import {
+  message,
+  Row,
+  Col,
+  Input,
+  Button
+} from '../../commoncomponent/common.jsx';
 import ZmitiUploadDialog from '../../components/zmiti-upload-dialog.jsx';
 export default class WXSaveApp extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-    	showShareDialog:false,
+      showShareDialog: false,
     }
   }
 
   render() {
 
-  	var shareStyle = {cursor:'pointer',position:'relative'};
-  	if(this.props.data.shareImg){
-  		shareStyle.background = 'url('+this.props.data.shareImg+') no-repeat center / cover'
-  	}
+    var shareStyle = {
+      cursor: 'pointer',
+      position: 'relative'
+    };
+    if (this.props.data.shareImg) {
+      shareStyle.background = 'url(' + this.props.data.shareImg + ') no-repeat center / cover'
+    }
 
-  	var s = this;
+    var s = this;
 
-  	const showShareProps  = {
+    const showShareProps = {
 
-  		baseUrl: window.baseUrl,
-        getusersigid: s.props.getusersigid,
-        userid: s.props.userid,
-        onFinish(imgData){
+      baseUrl: window.baseUrl,
+      getusersigid: s.props.getusersigid,
+      userid: s.props.userid,
+      onFinish(imgData) {
 
-        	s.props.copyfile({
-    			imgData,
-        	 	that:s,
-        	 	getusersigid:s.props.getusersigid,
-        	 	userid:s.props.userid,
-        	 	fn:src=>{
-		            window.obserable.trigger({
-				  		type:"modifyShareInfo",
-				  		data:{
-				  			name:'shareImg',
-				  			title:imgData.src
-				  		}
-				  	});
-                }
-        	});
-        }
-  	}
+        s.props.copyfile({
+          imgData,
+          that: s,
+          getusersigid: s.props.getusersigid,
+          userid: s.props.userid,
+          fn: src => {
+            window.obserable.trigger({
+              type: "modifyShareInfo",
+              data: {
+                name: 'shareImg',
+                title: imgData.src
+              }
+            });
+          }
+        });
+      }
+    }
     return (
-		<div className={'wxchat-save-main-ui '+( this.props.isEntry === 2 ? 'show':'')}>
+      <div className={'wxchat-save-main-ui '+( this.props.isEntry === 2 ? 'show':'')}>
 			<aside>
 				<div className='wxchat-phone-container' style={{background:'rgba(255,255,255,.7) url(./static/images/phone-bg.png) no-repeat  center / contain'}}>
 					<section className='wxchat-talk-main'>
@@ -91,7 +100,7 @@ export default class WXSaveApp extends React.Component {
 					<section style={{marginTop:20}}>
 						<Row type='flex' gutter={20}>
 							<Col span={12}>
-								<div className='wxchat-publish-btn'>确定发布</div>
+								<div onClick={this.publish.bind(this)} className='wxchat-publish-btn'>确定发布</div>
 							</Col>
 							<Col span={12}>
 								<div className='wxchat-back-edit' onClick={this.backToEdit.bind(this)}>返回编辑</div>
@@ -105,51 +114,56 @@ export default class WXSaveApp extends React.Component {
     );
   }
 
-  modifyShareInfo(name,e){
-  	window.obserable.trigger({
-  		type:"modifyShareInfo",
-  		data:{
-  			name,
-  			title:e.target?e.target.value : ''
-  		}
-  	});
+  modifyShareInfo(name, e) {
+    window.obserable.trigger({
+      type: "modifyShareInfo",
+      data: {
+        name,
+        title: e.target ? e.target.value : ''
+      }
+    });
   }
 
-  backToEdit(){
-  	window.obserable.trigger({
-  		type:"backtoedit"
-  	})
+  publish() {
+    window.obserable.trigger({
+      type: "publish"
+    })
   }
 
-  replaceShareImg(){
-
-  	this.setState({
-  		showShareDialog:true,
-  		showShareImgBtn:false
-  	},()=>{
-
-  		window.obserable.trigger({
-  			type:'showModal',
-  			data:{
-  				id:'showShareDialog',
-  				type:0
-  			}
-  		})
-  	})
+  backToEdit() {
+    window.obserable.trigger({
+      type: "backtoedit"
+    })
   }
 
-  modifyShareImg(){
+  replaceShareImg() {
 
-  	if(!this.props.data.shareImg){
-  		this.replaceShareImg()
-  	}
-  	else{
-  		this.setState({
-  			showShareImgBtn:true,
-  			showShareDialog:false
-  		});
-  	}
-  	
+    this.setState({
+      showShareDialog: true,
+      showShareImgBtn: false
+    }, () => {
+
+      window.obserable.trigger({
+        type: 'showModal',
+        data: {
+          id: 'showShareDialog',
+          type: 0
+        }
+      })
+    })
+  }
+
+  modifyShareImg() {
+
+    if (!this.props.data.shareImg) {
+      this.replaceShareImg()
+    } else {
+      this.setState({
+        showShareImgBtn: true,
+        showShareDialog: false
+      });
+    }
+
   }
 
 }
