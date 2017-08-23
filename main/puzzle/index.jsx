@@ -9,7 +9,7 @@ import PubSub from './static/js/pubsub';
 import { message ,notification,Button } from '../commoncomponent/common.jsx';
 
 import MainUI from '../components/Main.jsx';
-import  createjs from './static/js/createjs.js';
+//import  createjs from './static/js/createjs.js';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 class ZmitiPuzzleApp extends React.Component{

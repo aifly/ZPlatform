@@ -8,101 +8,91 @@
 
     <style>
     		body{margin: 0;padding:0;}
-    		.fly-loading-C{
-    			margin: 0;
-    			width:100vw;
-    			height:100vh;
-    			position: fixed;
-    			background:#60b4b4;
-    		}
-    		.fly-loading-center{
-    			width:220px;
-    			height: 220px;
-    			background: url('./static/images/path.png') no-repeat left top;
-					position: absolute;
-					left: 50%;
-					top:50%;
-					margin-left: -110px;
-					margin-top: -110px;
-					border-radius: 50%;
-					animation: loading 2s linear  infinite;
-					-webkit-animation: loading 2s linear  infinite;
-    		}
-    		.fly-loading-dog{
-    			position: absolute;
-    			left: 50%;
-    			top:50%;
-    			transform:translate(-50%,-50%);
-    			-webkit-transform:translate(-50%,-50%);
-    		}
-    		.fly-bone{
-    			position: absolute;
-    			top:178px;
-    			left: 146px;
-    			animation: loading 1s linear infinite;
-					-webkit-animation: loading 1s linear infinite;
-    		}
-				.fly-eyes{
-						width:6px;
-						height: 6px;
-						background: #000;
-						border-radius: 50%;
-						position: absolute;
-						top:43px;
-						left: 44px;
-						animation: loading 2s linear  infinite;
-						-webkit-animation: loading 2s linear  infinite;
-						transform-origin:1px 0;
-				}
-				.fly-eyes-right{
-						left: 84px;
-				}
+    		.zmiti-main-loading{
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                left: 0;
+                top: 0;
+                overflow: hidden;
+            }
+
+            .zmiti-main-loading canvas{
+                position: absolute;
+                left: 0;
+                top: 0;
+                background: #2d3148;
+            }
+            .zmiti-loading-line{
+                position: absolute;
+                left: 100px;
+                top: 100px;
+                width: 2px;
+                height: 100px;
+                background: linear-gradient(to top, #0a9cb5, #333);
+                
+                animation:drop linear  5s infinite;
 
 
-    		@-webkit-keyframes loading{
-    			 to{-webkit-transform:rotate(-360deg);}
-    		}
-    		@keyframes loading{
-    			 to{transform:rotate(-360deg);}
-    		}
-            .fr-separator{
-                display: none !important;
             }
-            .fr-input-line label{
-                display: none !important;
+            .zmiti-loading-line:after{
+                content:'';
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                background: #0a9cb5;
+                border-radius: 3px;
+                top: 102%;
+                left: -1px;
             }
-            .fr-popup.fr-active{
-                z-index:999999999 !important;
+
+            .zmiti-point{
+                width: 3px;
+                height: 3px;
+                background: #fff;
+                border-radius: 4px;
+                position: absolute;
+
+                animation:drop linear  5s infinite;
             }
-            #linkList-1{
-                display:none;
+
+            .zmiti-rocket{
+                position: absolute;
+                top: 100px;
+                left: 300px;
             }
+
+            @-webkit-keyframes drop{
+                100%{
+                    transform: translate(0,1300px);
+                }
+            }
+
     </style>
 </head>
 <body>
 
+<section class="zmiti-main-loading" id='zmiti-main-loading'>
+    <canvas  id="canvas" width="100%" height="100%"></canvas>
+</section>
+
 <div id="fly-main">
-	 <section class="fly-loading-C">
-			<div class="fly-loading-dog">
-				<img src="./static/images/dog.png" />
-				<div class="fly-eyes"></div>
-				<div class="fly-eyes fly-eyes-right"></div>
-			</div>
- 			<div class="fly-loading-center">
-				<div class="fly-bone">
-					<img src="./static/images/bone.png" alt="">
-				</div>
- 			</div>
-	 </section>
+	 
 </div>
 <!--
 
 <script src="./static/js/index.js"></script>
 -->
+
+<script src='./static/libs/createjs.js'></script>
+<script src='./static/js/loading.js'></script>
 <script src='./config/config.js'></script>
 <script src='./static/libs/socket.io.js'></script>
       
-<!-- <script src='./static/js/vendor.js'></script> -->
-<script src="http://localhost:3000/index.js"></script>
+<!-- 
+    <script src="http://localhost:3000/index.js"></script>
+    <script src='./static/js/vendor.js'></script>
+
+ -->
 </body>
 </html>

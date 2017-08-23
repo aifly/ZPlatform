@@ -617,13 +617,14 @@ class ZmitiWenmingApp extends React.Component {
 
                 s.userData = [];
                 s.geoCoordMap = {};
+                console.log(data.list)
                 data.list.map(function(item, i) {
-                    if (item.provicename) {
+                    if (item.cityname) {
                         s.userData.push({
-                            name: item.provicename,
+                            name: item.cityname,
                             value: item.usercount
                         });
-                        s.geoCoordMap[item.provicename] = [item.longitude, item.latitude];
+                        s.geoCoordMap[item.cityname] = [item.longitude, item.latitude];
                     }
 
                     ///s.geoCoordMap = JSON.parse(s.geoCoordMap);
