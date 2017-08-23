@@ -53,6 +53,9 @@
 		setSize: function() {
 			canvas.width = viewW;
 			canvas.height = viewH;
+
+			doc.getElementById('zmiti-dog').style.top = viewH/2 -300 +'px'
+			doc.getElementById('zmiti-dog').style.left = viewW/2 -70 +'px'
 		},
 
 		createLines: function() {
@@ -87,7 +90,7 @@
 					if (i > 8) {
 						i = 0
 					}
-					context.drawImage(img, 121 * i, 0, 121, 250, 0, 0, 121, 250);
+					context.drawImage(img, 84 * i, 0, 84, 222, (viewW-84)/2, (viewH - 222)/2, 84, 222);
 					i++;
 				}, 40)
 			}
