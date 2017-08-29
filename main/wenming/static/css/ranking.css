@@ -82,5 +82,12 @@
     width: 50px;
     line-height: 28px;
     text-align: right; }
+  .wenming-ranking-main-ui .wenming-ranking-sortlist {
+    position: relative;
+    zoom: 1; }
+  .wenming-ranking-main-ui .wenming-ranking-pos {
+    top: 0; }
+  .wenming-ranking-main-ui .ant-dropdown-trigger {
+    cursor: pointer; }
 
 /*# sourceMappingURL=ranking.css.map */

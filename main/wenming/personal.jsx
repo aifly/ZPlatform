@@ -22,6 +22,8 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             appid:window.WENMING.XCXAPPID,
             dataSource:[],
             keyword:'',
+            filterDropdownComment: false,
+            filterDropdownReport: false,
         } 
         
     }
@@ -59,6 +61,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
     }
 
     render(){
+        var s=this;
         let { sortedInfo, filteredInfo } = this.state;
         sortedInfo = sortedInfo || {};
         filteredInfo = filteredInfo || {};
@@ -84,14 +87,31 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             title: '评论数',
             dataIndex: 'commentCount',
             key: 'commentCount',
-            onFilter:(value,record)=>value*1===record.commentCount,
-            sorter:(a,b)=>a.commentCount-b.commentCount,
+            filterDropdown:(<div></div>),
+            filterIcon: <Icon type="caret-down" />,
+            filterDropdownVisible: this.state.filterDropdownComment,
+            onFilterDropdownVisibleChange: (visible) => {
+                if(visible==true){
+                    console.log(visible,'filterDropdownComment');
+                    s.bindNewdata('userCommentSort');
+
+                    
+                }            
+            },
         }, {
             title: '上报数',
             dataIndex: 'report',
             key: 'report',
-            onFilter:(value,record)=>value*1===record.report,
-            sorter:(a,b)=>a.report-b.report,
+            filterDropdown:(<div></div>),
+            filterIcon: <Icon type="caret-down" />,
+            filterDropdownVisible: this.state.filterDropdownReport,
+            onFilterDropdownVisibleChange: (visible) => {
+                if(visible==true){
+                    console.log(visible,'filterDropdownReport');
+                    s.bindNewdata('userReportSort');
+                    
+                }            
+            },
         }];
 
         var s =this;
@@ -103,35 +123,37 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             getusersigid: s.getusersigid,
             title,
             mainRight:<div className='wenming-ranking-main-ui' style={{height:this.state.mainHeight}}>
-                        <div className="wenming-ranking-header">
+                         <div className='wenming-ranking-pos'>
+                            <div className="wenming-ranking-header">
+                                <Row>
+                                    <Col span={16} className="wenming-ranking-header-inner">个人排行榜-身边文明事
+                                        
+                                    </Col>
+                                    <Col span={8} className='wenming-ranking-button-right'>
+                                        
+                                    </Col>
+                                </Row>
+                                <div className="clearfix"></div>
+                            </div>
+                            <div className='wenming-ranking-line'></div>
+                            <div className='hr15'></div>                        
                             <Row>
-                                <Col span={16} className="wenming-ranking-header-inner">个人排行榜-身边文明事
-                                    
+                                <Col span={6} className='wenming-ranking-label'>搜索：</Col>
+                                <Col span={18}>                                    
+                                    <Search
+                                    placeholder="输入昵称"
+                                    style={{ width: 200 }}
+                                    onSearch={function(value){                                   
+                                        //console.log(value,'value');
+                                        s.getpersonal(value);
+                                        //s.forceUpdate();   
+                                    }}
+                                    />
                                 </Col>
-                                <Col span={8} className='wenming-ranking-button-right'>
-                                    
-                                </Col>
-                            </Row>
-                            <div className="clearfix"></div>
+                            </Row>  
+                            <div className="hr10"></div>
                         </div>
-                        <div className='wenming-ranking-line'></div>
-                        <div className='hr15'></div>                        
-                        <Row>
-                            <Col span={6} className='wenming-ranking-label'>搜索：</Col>
-                            <Col span={18}>                                    
-                                <Search
-                                placeholder="输入昵称"
-                                style={{ width: 200 }}
-                                onSearch={function(value){                                   
-                                    //console.log(value,'value');
-                                    s.getpersonal(value);
-                                    //s.forceUpdate();   
-                                }}
-                                />
-                            </Col>
-                        </Row>  
-                        <div className="hr10"></div>
-                        <div>
+                        <div className='wenming-ranking-sortlist'>
                             <Table dataSource={this.state.dataSource} columns={columns} />
                         </div>
                         
@@ -151,9 +173,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
         
     }
 
-
-
-    bindNewdata(){
+    bindNewdata(type){
         var s = this;
         s.state.dataSource=[];
         $.ajax({
@@ -167,19 +187,49 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
                 getusersigid:s.getusersigid
             }
         }).done((data)=>{
+            console.log(data)
             if(typeof data === 'string'){
                 data = JSON.parse(data);
             }
             if(data.getret === 0 ){     
-                data.list.map((item,i)=>{
-                   s.state.dataSource.push({
-                    commentCount:item.commentCount,
-                    headerimgurl:item.headerimgurl,
-                    nickname:item.nickname,
-                    report:item.report,
-                    key:i+1,
-                   })
-                })
+                console.log(type,'type');
+                switch (type) {
+                    case "userCommentSort":
+                        data.list.map((item,i)=>{
+                           s.state.dataSource.push({
+                            commentCount:item.commentCount,
+                            headerimgurl:item.headerimgurl,
+                            nickname:item.nickname,
+                            report:item.report,
+                            key:i+1,
+                           })
+                        })
+                        
+                    break;
+                    case "userReportSort":
+                        data.list1.map((item,i)=>{
+                           s.state.dataSource.push({
+                            commentCount:item.commentCount,
+                            headerimgurl:item.headerimgurl,
+                            nickname:item.nickname,
+                            report:item.report,
+                            key:i+1,
+                           })
+                        })
+                        
+                    break;
+                    default:
+                        data.list.map((item,i)=>{
+                           s.state.dataSource.push({
+                            commentCount:item.commentCount,
+                            headerimgurl:item.headerimgurl,
+                            nickname:item.nickname,
+                            report:item.report,
+                            key:i+1,
+                           })
+                        })
+                        
+                }
                 s.forceUpdate();
             }
         });

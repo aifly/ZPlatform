@@ -85,6 +85,15 @@ $baseColor: #f4654c;
 		line-height: 28px;
 		text-align: right;
 	}
-
+	.wenming-ranking-sortlist{
+		position: relative;
+		zoom:1;		
+	}
+	.wenming-ranking-pos{		
+		top:0;
+	}
+	.ant-dropdown-trigger{
+		cursor: pointer;
+	}
 
 }
