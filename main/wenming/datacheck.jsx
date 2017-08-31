@@ -140,6 +140,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             scrollbars: true, //显示滚动条
             interactiveScrollbars: true, //允许用户拖动滚动条
             mouseWheel: true, //启用鼠标滚轮。
+            preventDefault: false
         });
 
         setTimeout(() => {
