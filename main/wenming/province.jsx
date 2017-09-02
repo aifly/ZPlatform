@@ -2,7 +2,7 @@ import './static/css/ranking.css';
 import React from 'react';
 import { Link } from 'react-router';
 
-import {message,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio} from '../commoncomponent/common.jsx';
+import {message,Select,Modal,Form,Icon,Input,Button, Row, Col,Table,moment,Checkbox,Radio,DatePicker} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 
@@ -12,7 +12,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 
 import MainUI from '../components/Main.jsx';
-
+const { MonthPicker, RangePicker } = DatePicker;
 class ZmitiWenmingProvinceRankApp extends React.Component{
     constructor(args){
         super(...args);
@@ -21,6 +21,9 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
             mainHeight:document.documentElement.clientHeight-50,
             appid:window.WENMING.XCXAPPID,
             dataSource:[],
+            startValue: null,
+			endValue: null,
+		    size:'small',
         } 
         
     }
@@ -99,13 +102,18 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
             getusersigid: s.getusersigid,
             title,
             mainRight:<div className='wenming-ranking-main-ui'>
+            			<div className="hr10"></div>
                         <div className="wenming-ranking-header">
                             <Row>
                                 <Col span={16} className="wenming-ranking-header-inner">省份排行榜-身边文明事
                                     
                                 </Col>
                                 <Col span={8} className='wenming-ranking-button-right'>
-                                    
+                                	<Button className='wenming-ranking-alldate' onClick={this.viewall.bind(this)} size={this.state.size}>全部</Button>
+                                	<div className='wenming-ranking-rangepicker'>
+                                		<RangePicker onChange={this.dateRangePicker.bind(this)} size={this.state.size} />
+                                	</div>
+                                	<div className="clearfix"></div>
                                 </Col>
                             </Row>
                             <div className="clearfix"></div>
@@ -113,7 +121,9 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
                         <div className='wenming-ranking-line'></div>
                         <div className="hr10"></div>
                         <div>
-                            <Table dataSource={this.state.dataSource} columns={columns} />
+                            <Table dataSource={this.state.dataSource} columns={columns} pagination={{
+                            	defaultPageSize:40
+                            }} />
                         </div>
                         
                         
@@ -136,12 +146,13 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
 
     bindNewdata(){
         var s = this;
+        s.state.dataSource=[];
         $.ajax({
             type:'post',
             url:window.baseUrl+'weixinxcx/provincesort/',
             data:{
                 appid:window.WENMING.XCXAPPID,
-                monthnum:3,
+                monthnum:12,
                 userid:s.userid,
                 getusersigid:s.getusersigid
             }
@@ -150,7 +161,46 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
                 data = JSON.parse(data);
             }
             if(data.getret === 0 ){ 
+                //console.log(data.list);
+                data.list.map((item,i)=>{
+                   s.state.dataSource.push({
+                    province:item.province,
+                    pv:item.pv,
+                    report:item.report,
+                    provincecode:item.provincecode,
+                    key:i+1,
+                   })
+                })
+                s.forceUpdate();
+            }
+        });
+    }
+    viewall(){
+    	window.location.reload();
+    }
+    dateRangePicker(date, dateString){
+    	var s = this;
+    	s.state.startValue=dateString[0];
+    	s.state.endValue=dateString[1];
+    	s.state.dataSource=[];
+    	//console.log(s.state.startValue,s.state.endValue);
+    	$.ajax({
+            type:'post',
+            url:window.baseUrl+'weixinxcx/month_daysort/',
+            data:{
+                appid:window.WENMING.XCXAPPID,
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                starttime:s.state.startValue,
+                endtime:s.state.endValue,
+            }
+        }).done((data)=>{
+            if(typeof data === 'string'){
+                data = JSON.parse(data);
+            }
+            if(data.getret === 0 ){ 
                 console.log(data.list);
+                //s.state.dataSource=data.list;
                 data.list.map((item,i)=>{
                    s.state.dataSource.push({
                     province:item.province,

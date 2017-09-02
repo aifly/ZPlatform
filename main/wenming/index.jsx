@@ -43,7 +43,12 @@ class ZmitiWenmingApp extends React.Component {
             provincePVSort: 'sort-down',
             provinceReportSort: '',
             userCommentSort: '',
-            userReportSort: 'sort-down'
+            userReportSort: 'sort-down',
+            totalComment:'总评论数',
+            totalReport:'总人数',
+            totalCommentNum:'',
+            totalReportNum:'',
+            totalView:0,
         }
     }
 
@@ -115,8 +120,6 @@ class ZmitiWenmingApp extends React.Component {
             this.request();
             this.setScroll();
         }, 300);
-
-
 
     }
 
@@ -340,7 +343,7 @@ class ZmitiWenmingApp extends React.Component {
                                 <aside className='weniming-statistics-list'>
                                     <section>
                                         <header className='wenming-header'>
-                                            省排行榜
+                                            <a href='#/wenmingprovince/'>省排行榜</a>
                                         </header>
                                         <section className='wenming-list-title'>
                                             <div>排名</div>
@@ -367,6 +370,7 @@ class ZmitiWenmingApp extends React.Component {
                                     <section>
                                         <header   className='wenming-header'>
                                             <a href='#/wenmingpersonal/'>个人排行榜</a>
+                                            <span style={{float:'right',color:'#999',fontSize:'12px',paddingTop:'5px',paddingRight:'5px'}}>{this.state.totalReport}：{this.state.totalView}</span>
                                         </header>
                                        <section className='wenming-list-title'>
                                             <div style={{opacity:1}}>头像</div>
@@ -448,24 +452,26 @@ class ZmitiWenmingApp extends React.Component {
                 break;
             case "userCommentSort":
                 this.setState({
+                    //totalReport:'评论数',
                     userCommentSort: 'sort-down',
                     userReportSort: '',
                     userRankingList: this.userRankingList
                 });
-
+                
                 this.requestUserRank('userCommentSort');
-
+                //this.state.totalView=this.state.totalCommentNum;//评论数
 
                 break;
             case 'userReportSort':
 
                 this.requestUserRank('userReportSort');
                 this.setState({
+                    totalReport:'总人数',
                     userCommentSort: '',
                     userReportSort: 'sort-down',
                     userRankingList: this.userRankingList1
                 });
-
+                //this.state.totalView=this.state.totalReportNum;//上报人数
                 /*this.state.userReportSort ='sort-down';// this.state.userReportSort === 'sort-down'?'sort-up':'sort-down';
                 this.state.userCommentSort = '';
                 if(this.state.userReportSort === 'sort-down'){
@@ -566,6 +572,13 @@ class ZmitiWenmingApp extends React.Component {
             }
             if (data.getret === 0) {
                 this.userRankingList = data.list.concat([]);
+                var commentCount=0;
+                data.list.map((item,i)=>{                    
+                    commentCount+=item.commentCount;
+                })
+                this.state.totalCommentNum=commentCount;//评论数
+                this.state.totalReportNum=data.list1.length;//上报数
+
                 this.userRankingList1 = (data.list1 || []).concat([])
                 this.setState({
                     userRankingList: type === 'userCommentSort' ? data.list : data.list1
@@ -640,6 +653,29 @@ class ZmitiWenmingApp extends React.Component {
         })
     }
 
+    //获取用户数
+    getusertotal(){
+        var s = this;
+        $.ajax({
+            type: 'post',
+            url:window.baseUrl +  'weixinxcx/xcxusercount',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                userid: this.userid,
+                getusersigid: this.getusersigid
+            }
+        }).done((data) => {
+            if (typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            if (data.getret === 0) {
+                //console.log(data.result.usercount,'用户数统计')
+                s.state.totalView=data.result.usercount;
+                s.forceUpdate();
+            }
+        });
+    }
+
     request() {
 
         var s = this;
@@ -671,7 +707,7 @@ class ZmitiWenmingApp extends React.Component {
         this.requestUserRank();
 
         this.getVisit();
-
+        this.getusertotal();
 
 
     }

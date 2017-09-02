@@ -52,9 +52,16 @@
       left: 0;
       -webkit-transform: scale(1, 0.7);
       transform: scale(1, 0.7); }
+  .wenming-ranking-main-ui .wenming-ranking-button-right {
+    width: 360px;
+    float: right; }
   .wenming-ranking-main-ui .wenming-ranking-button-right button {
     float: right;
     margin-top: 5px; }
+  .wenming-ranking-main-ui .wenming-ranking-button-right button.wenming-ranking-alldate {
+    display: inline-block;
+    float: left;
+    margin: 7px 0 0 10px; }
   .wenming-ranking-main-ui .wenming-ranking-line {
     clear: both;
     height: 15px;
@@ -82,5 +89,16 @@
     width: 50px;
     line-height: 28px;
     text-align: right; }
+  .wenming-ranking-main-ui .wenming-ranking-sortlist {
+    position: relative;
+    zoom: 1; }
+  .wenming-ranking-main-ui .wenming-ranking-pos {
+    top: 0; }
+  .wenming-ranking-main-ui .ant-dropdown-trigger {
+    cursor: pointer; }
+  .wenming-ranking-main-ui .wenming-ranking-rangepicker {
+    width: 302px;
+    float: right;
+    padding: 7px 0 0 0; }
 
 /*# sourceMappingURL=ranking.css.map */
