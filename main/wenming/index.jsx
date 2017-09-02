@@ -459,7 +459,7 @@ class ZmitiWenmingApp extends React.Component {
                 });
                 
                 this.requestUserRank('userCommentSort');
-                //this.state.totalView=this.state.totalCommentNum;
+                //this.state.totalView=this.state.totalCommentNum;//评论数
 
                 break;
             case 'userReportSort':
@@ -471,7 +471,7 @@ class ZmitiWenmingApp extends React.Component {
                     userReportSort: 'sort-down',
                     userRankingList: this.userRankingList1
                 });
-                //this.state.totalView=this.state.totalReportNum;
+                //this.state.totalView=this.state.totalReportNum;//上报人数
                 /*this.state.userReportSort ='sort-down';// this.state.userReportSort === 'sort-down'?'sort-up':'sort-down';
                 this.state.userCommentSort = '';
                 if(this.state.userReportSort === 'sort-down'){
