@@ -3,14 +3,16 @@
     border-color: #bf1616;
     box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
 }*/
-body {
-  font-family: Microsoft Yahei;
-  font-size: 12px; }
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
 
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0; }
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
 
 .hr10, .hr15 {
   clear: both;

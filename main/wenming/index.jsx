@@ -42,8 +42,8 @@ class ZmitiWenmingApp extends React.Component {
             userRankingList: list2,
             provincePVSort: 'sort-down',
             provinceReportSort: '',
-            userCommentSort: 'sort-down',
-            userReportSort: ''
+            userCommentSort: '',
+            userReportSort: 'sort-down'
         }
     }
 
@@ -547,7 +547,7 @@ class ZmitiWenmingApp extends React.Component {
 
     }
 
-    requestUserRank(type = 'userCommentSort') {
+    requestUserRank(type = 'userReportSort') {
         $.ajax({
             type: 'post',
             url: window.baseUrl + 'weixinxcx/usersort/',
@@ -617,7 +617,6 @@ class ZmitiWenmingApp extends React.Component {
 
                 s.userData = [];
                 s.geoCoordMap = {};
-                console.log(data.list)
                 data.list.map(function(item, i) {
                     if (item.cityname) {
                         s.userData.push({
