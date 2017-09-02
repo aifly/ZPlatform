@@ -96,6 +96,7 @@ class ZmitiWenmingCityRankApp extends React.Component{
             getusersigid: s.getusersigid,
             title,
             mainRight:<div className='wenming-ranking-main-ui'>
+                        <div className="hr10"></div>
                         <div className="wenming-ranking-header">
                             <Row>
                                 <Col span={16} className="wenming-ranking-header-inner">{this.state.province}-身边文明事

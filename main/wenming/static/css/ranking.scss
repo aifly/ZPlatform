@@ -45,10 +45,19 @@ $baseColor: #f4654c;
 			@include transform(scale(1,.7));
 		}
 	}
+	.wenming-ranking-button-right{
+		width:360px;
+	}
+	
 	.wenming-ranking-button-right button{
 		float:right;
 		margin-top: 5px;
 	}
+	.wenming-ranking-button-right button.wenming-ranking-alldate{
+		display:inline-block;
+		float:left;
+		margin: 7px 0 0 10px;
+	}	
 	.wenming-ranking-line{
 		clear:both;
 		height:15px;
@@ -94,6 +103,11 @@ $baseColor: #f4654c;
 	}
 	.ant-dropdown-trigger{
 		cursor: pointer;
+	}
+	.wenming-ranking-rangepicker{
+		width:302px;
+		float:right;
+		padding:7px 0 0 0;
 	}
 
 }

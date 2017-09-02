@@ -340,7 +340,7 @@ class ZmitiWenmingApp extends React.Component {
                                 <aside className='weniming-statistics-list'>
                                     <section>
                                         <header className='wenming-header'>
-                                            省排行榜
+                                            <a href='#/wenmingprovince/'>省排行榜</a>
                                         </header>
                                         <section className='wenming-list-title'>
                                             <div>排名</div>
@@ -367,6 +367,7 @@ class ZmitiWenmingApp extends React.Component {
                                     <section>
                                         <header   className='wenming-header'>
                                             <a href='#/wenmingpersonal/'>个人排行榜</a>
+                                            <span style={{float:'right',color:'#999',paddingRight:'5px'}}>共{this.state.userRankingList.length}人</span>
                                         </header>
                                        <section className='wenming-list-title'>
                                             <div style={{opacity:1}}>头像</div>
