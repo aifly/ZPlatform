@@ -656,7 +656,7 @@ class ZmitiWenmingApp extends React.Component {
         var s = this;
         $.ajax({
             type: 'post',
-            url: '',
+            url:window.baseUrl +  'weixinxcx/xcxusercount',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -667,7 +667,8 @@ class ZmitiWenmingApp extends React.Component {
                 data = JSON.parse(data);
             }
             if (data.getret === 0) {
-                s.state.totalView=10;
+                //console.log(data.result.usercount,'用户数统计')
+                s.state.totalView=data.result.usercount;
                 s.forceUpdate();
             }
         });
