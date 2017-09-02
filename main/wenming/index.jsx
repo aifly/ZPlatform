@@ -121,8 +121,6 @@ class ZmitiWenmingApp extends React.Component {
             this.setScroll();
         }, 300);
 
-
-
     }
 
     setScroll() {
@@ -454,14 +452,14 @@ class ZmitiWenmingApp extends React.Component {
                 break;
             case "userCommentSort":
                 this.setState({
-                    totalReport:'评论数',
+                    //totalReport:'评论数',
                     userCommentSort: 'sort-down',
                     userReportSort: '',
                     userRankingList: this.userRankingList
                 });
                 
                 this.requestUserRank('userCommentSort');
-                this.state.totalView=this.state.totalCommentNum;
+                //this.state.totalView=this.state.totalCommentNum;
 
                 break;
             case 'userReportSort':
@@ -473,7 +471,7 @@ class ZmitiWenmingApp extends React.Component {
                     userReportSort: 'sort-down',
                     userRankingList: this.userRankingList1
                 });
-                this.state.totalView=this.state.totalReportNum;
+                //this.state.totalView=this.state.totalReportNum;
                 /*this.state.userReportSort ='sort-down';// this.state.userReportSort === 'sort-down'?'sort-up':'sort-down';
                 this.state.userCommentSort = '';
                 if(this.state.userReportSort === 'sort-down'){
@@ -576,9 +574,9 @@ class ZmitiWenmingApp extends React.Component {
                 data.list.map((item,i)=>{                    
                     commentCount+=item.commentCount;
                 })
-                this.state.totalCommentNum=commentCount;
-                this.state.totalReportNum=data.list1.length;
-                this.state.totalView=data.list1.length;
+                this.state.totalCommentNum=commentCount;//评论数
+                this.state.totalReportNum=data.list1.length;//上报数
+
                 this.userRankingList1 = (data.list1 || []).concat([])
                 this.setState({
                     userRankingList: type === 'userCommentSort' ? data.list : data.list1
@@ -653,6 +651,28 @@ class ZmitiWenmingApp extends React.Component {
         })
     }
 
+    //获取用户数
+    getusertotal(){
+        var s = this;
+        $.ajax({
+            type: 'post',
+            url: '',
+            data: {
+                appid: window.WENMING.XCXAPPID,
+                userid: this.userid,
+                getusersigid: this.getusersigid
+            }
+        }).done((data) => {
+            if (typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            if (data.getret === 0) {
+                s.state.totalView=10;
+                s.forceUpdate();
+            }
+        });
+    }
+
     request() {
 
         var s = this;
@@ -684,7 +704,7 @@ class ZmitiWenmingApp extends React.Component {
         this.requestUserRank();
 
         this.getVisit();
-
+        this.getusertotal();
 
 
     }
