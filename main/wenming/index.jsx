@@ -534,6 +534,8 @@ class ZmitiWenmingApp extends React.Component {
         this.userData = userData;
         this.geoCoordMap = geoCoordMap;
 
+        window.s = s;
+
 
         //geoCoordMap = localStorage.getItem('geoCoordMap'+worksid) || '{}';
         //geoCoordMap = JSON.parse(geoCoordMap);
