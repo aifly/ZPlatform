@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Link } from 'react-router';
 
-import {Icon,Menu,Input,Badge,message,Modal,Col,Row} from '../commoncomponent/common.jsx';
+import {Icon,Menu,Input,Badge,message,Modal,Col,Row,notification} from '../commoncomponent/common.jsx';
 const SubMenu = Menu.SubMenu;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import $ from 'jquery';
-
+import IScroll from 'iscroll';
 import ZmitiHeader from './pub-header.jsx';
 
 
@@ -69,6 +69,7 @@ class MainUI extends React.Component {
           }, 200);
 
         }
+        
     }
 
     render() { 
@@ -204,38 +205,44 @@ class MainUI extends React.Component {
                             <Icon type="menu-fold" style={{display:this.state.isOpen?'inline-block':'none'}}/>
                             <Icon type="menu-unfold" style={{display:this.state.isOpen?'none':'inline-block'}}/>
                         </div>
-                        <div className="fly-menu-c">
-                            <Menu
-                                  style={{ width: 182 }}
-                                  defaultOpenKeys={[defaultOpenKeys]}
-                                  selectedKeys={[this.state.current]}
-                                  mode="inline">
-                                <SubMenu key="sub1"
-                                         title={<span><Icon onClick={()=>{this.setState({visible:true})}} type="setting" style={{marginRight:'22px'}} /><span>产品与服务</span></span>}>
-                                     {configMenus.map(item=>{
-                                        if(item.iconType === 'true'){
-                                            return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
-                                        }else{
-                                            return <Menu.Item key={item.key} ><img src={'http://www.zmiti.com/'+item.type} style={{marginRight:32}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
-                                        }
-                                     })}
-                                </SubMenu>
-                                {companyMenu}
-                                <SubMenu key="sub3"
-                                         title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>个人中心</span></span>}>
-                                    {this.singleUserMenuConfig.map(item=>{
-                                        return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
-                                    })}
-                                </SubMenu>
-                                 <SubMenu key="sub4"
-                                         title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>订制服务</span></span>}>
-                                    {this.customMenuConfig.map(item=>{
-                                        return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
-                                    })}
-                                </SubMenu>
-                            </Menu>
-                            <div className="fly-menu-bottom">
-                                系统日志
+                        <div className="fly-menu-c" style={{height:document.documentElement.clientHeight - 80}} ref='slider-scroller'>
+                            <div className='fly-menu-inner' >
+                                <div>
+                                    <Menu
+                                          style={{ width: 182 }}
+                                          defaultOpenKeys={[defaultOpenKeys]}
+                                          selectedKeys={[this.state.current]}
+                                          onOpenChange={this.scrollRefresh.bind(this)}
+                                          mode="inline">
+                                        <SubMenu key="sub1"
+                                                 title={<span><Icon onClick={()=>{this.setState({visible:true})}} type="setting" style={{marginRight:'22px'}} /><span>产品与服务</span></span>}>
+                                             {configMenus.map(item=>{
+                                                if(item.iconType === 'true'){
+                                                    return <Menu.Item key={item.key} ><Icon  type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                                }else{
+                                                    return <Menu.Item key={item.key} ><img src={'http://www.zmiti.com/'+item.type} style={{marginRight:32}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                                }
+                                             })}
+                                        </SubMenu>
+                                        {companyMenu}
+                                        <SubMenu key="sub3"
+                                                 title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>个人中心</span></span>}>
+                                            {this.singleUserMenuConfig.map(item=>{
+                                                return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                            })}
+                                        </SubMenu>
+                                         <SubMenu key="sub4"
+                                                 title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>订制服务</span></span>}>
+                                            {this.customMenuConfig.map(item=>{
+                                                return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
+                                            })}
+                                        </SubMenu>
+                                    </Menu>
+                                    <div className="fly-menu-bottom" style={{display:'none'}}>
+                                        系统日志
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </section>
@@ -282,7 +289,7 @@ class MainUI extends React.Component {
        this.usertypesign = usertypesign;
        this.username = username;
        this.usermobile = usermobile;
-       this.useremail = useremail;
+       this.useremail = useremail;       
     }
 
     logout(){//退出登录
@@ -305,7 +312,16 @@ class MainUI extends React.Component {
     			}
     		})
     }
-
+    setScroll() {
+        this.sliderScroll = new IScroll(this.refs['slider-scroller'], {
+            scrollbars: true, //显示滚动条
+            interactiveScrollbars: true, //允许用户拖动滚动条
+            mouseWheel: true, //启用鼠标滚轮。
+        });
+    }
+    scrollRefresh(){
+        this.sliderScroll.refresh();
+    }
     componentDidMount() {
 
 
@@ -343,6 +359,9 @@ class MainUI extends React.Component {
             currentAcc:this.usermobile || this.useremail,
             username:this.username
         });
+        setTimeout(() => {
+            this.setScroll();
+        }, 3000);
 
     }
 }
