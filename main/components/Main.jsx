@@ -19,7 +19,7 @@ class MainUI extends React.Component {
             visible:false,
             defaultClass: "fly-left-aside",
             isOpen: true,
-            current: '3',
+            current: '1',
             currentAcc:'iLinten@qq.com', 
             isCompany : true, //是否是企业用户。默认为false.
             rightWidth:0,
@@ -31,7 +31,7 @@ class MainUI extends React.Component {
             companyId:'',
             routers:[],
             removeCompany:false,
-            defaultOpenKeys:'sub1'
+            defaultOpenKeys:'sub1',
             
         }
     }
@@ -207,11 +207,12 @@ class MainUI extends React.Component {
                         </div>
                         <div className="fly-menu-c" style={{height:document.documentElement.clientHeight - 80}} ref='slider-scroller'>
                             <div className='fly-menu-inner' >
-                                <div>
+                                <div style={{paddingBottom:80}} >
                                     <Menu
                                           style={{ width: 182 }}
                                           defaultOpenKeys={[defaultOpenKeys]}
                                           selectedKeys={[this.state.current]}
+                                          onSelect={this.handleClick.bind(this)}
                                           onOpenChange={this.scrollRefresh.bind(this)}
                                           mode="inline">
                                         <SubMenu key="sub1"
@@ -317,9 +318,10 @@ class MainUI extends React.Component {
             scrollbars: true, //显示滚动条
             interactiveScrollbars: true, //允许用户拖动滚动条
             mouseWheel: true, //启用鼠标滚轮。
+            lockDirection:'up/down',
         });
     }
-    scrollRefresh(){
+    scrollRefresh(value){
         this.sliderScroll.refresh();
     }
     componentDidMount() {
@@ -361,7 +363,7 @@ class MainUI extends React.Component {
         });
         setTimeout(() => {
             this.setScroll();
-        }, 3000);
+        }, 2000);
 
     }
 }
