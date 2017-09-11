@@ -34,7 +34,10 @@
     z-index: 10000; }
     .wenming-datacheck-main-ui .wenming-mask img {
       width: auto;
-      height: auto; }
+      height: auto;
+      position: relative; }
+      .wenming-datacheck-main-ui .wenming-mask img.show {
+        z-index: 30; }
     .wenming-datacheck-main-ui .wenming-mask video {
       background: #000;
       position: relative;

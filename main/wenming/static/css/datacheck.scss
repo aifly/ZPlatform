@@ -17,6 +17,10 @@
         img {
             width: auto;
             height: auto;
+            @include pos(r);
+            &.show{
+                z-index:30;
+            }
         }
         video {
             background: #000;

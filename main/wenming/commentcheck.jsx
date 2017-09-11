@@ -321,7 +321,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                                 <ol>
                                                                     {datalist.imageslist.map((img,h)=>{
 
-                                                                        return <li key={h} onClick={this.viewArticlePic.bind(this,i,h)}  style={{cursor:'url(./static/images/big.cur),auto',background:'url('+img+') no-repeat center center / cover'}}></li>
+                                                                        return <li key={h} onClick={this.viewArticlePic.bind(this,i,h)}  style={{cursor:'url(./static/images/big.cur),auto',background:'url('+img+') no-repeat center center / cover'}}>
+                                                                            <img  src={img} style={{opacity:0,width:100,height:100}}/>
+                                                                        </li>
                                                                       
                                                                     })}
                                                                     {datalist.voidurl  && <li onClick={this.viewVideo.bind(this,datalist.voidurl )}><span>视频文件</span></li>}
@@ -375,8 +377,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                         </section>
                         {this.state.currentViewPic && <div className='wenming-mask'>
                             <aside onClick={()=>{this.setState({currentViewPic:''})}}></aside>
-                            <div>
-                                <img style={{maxHeight:this.state.mainHeight-100,maxWidth:this.viewW-window.mainLeftSize}}  src={this.state.currentViewPic} />
+                            <div onContextMenu={this.download.bind(this)}>
+                                <img onMouseDown={this.hideImg.bind(this)} className={this.state.showImg?'show':''} style={{maxHeight:this.state.mainHeight-100,maxWidth:this.viewW-window.mainLeftSize}}  src={this.state.currentViewPic} />
                                 <section onClick={this.viewPrev.bind(this)} style={{cursor:'url(./static/images/pic_prev.cur),auto'}}></section>
                                 <section onClick={()=>{this.setState({currentViewPic:''})}} style={{cursor:'url(./static/images/small.cur),auto'}}></section>
                                 <section onClick={this.viewNext.bind(this)} style={{cursor:'url(./static/images/pic_next.cur),auto'}}></section>
@@ -406,6 +408,18 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         );
 
 
+    }
+
+    hideImg(e) {
+        this.setState({
+            showImg: false
+        })
+    }
+
+    download() {
+        this.setState({
+            showImg: true
+        })
     }
 
 
