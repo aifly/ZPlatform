@@ -9,6 +9,7 @@ var ZmitiUtil = {
     requestWorktimeCount:function(worksid){
         var s = this;
         $.ajax({
+            type:'post',
             url:'http://api.zmiti.com/v2/count/get_worktimecount/',
             data:{
                 worksid:worksid
@@ -68,6 +69,7 @@ var ZmitiUtil = {
         var s = this;
         s.requestWorktimeCount(worksid);
         $.ajax({
+            type:'post',
             url:'http://api.zmiti.com/v2/weixin/get_wxuserviewcount/',
             data:{
                 worksid:worksid
@@ -98,6 +100,7 @@ var ZmitiUtil = {
 
         $.ajax({
             url:'http://api.zmiti.com/v2/count/get_workpvuv/',
+            type:'post',
             data:{
                 worksid:worksid
             }

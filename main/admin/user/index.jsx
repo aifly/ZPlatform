@@ -156,13 +156,12 @@ class ZmitiUserApp extends Component {
       pagesize: 100
     }
     let s = this;
-    console.log(params)
     $.ajax({
       type: "POST",
       url: window.baseUrl + "/user/get_userlist/",
       data: params,
       success(data) {
-        console.log(data);
+        ///console.log(data);
         if (data.getret === 0) {
 
           s.setState({
@@ -178,6 +177,19 @@ class ZmitiUserApp extends Component {
         }
       }
 
+    })
+
+    var auothParams = {
+      getusersigid: this.getusersigid,
+      userid: this.userid,
+      setuserid:'ad67eb0c-a717-05ac-4c2d-58e46534ea5f'
+    }
+    $.ajax({
+      url:window.baseUrl+'admin/getuserauth/',
+      type:'post',
+      data:auothParams
+    }).then(data=>{
+      console.log(data);
     })
   }
   disableUser(e) {
