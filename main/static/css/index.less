@@ -277,10 +277,12 @@ body {
         height: 100vh;
         top: -1px;
         overflow: hidden;
+
         .transition(.2s);
         .fly-menu-c{
-          .transition(.2s opacity -.2s);
-
+        	position: relative;
+		    overflow: hidden;
+          .transition(.2s opacity -.2s);          
         }
         &.unfold{
           width:60px;

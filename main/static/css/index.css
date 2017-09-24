@@ -195,6 +195,8 @@ body {
   transition: 0.2s;
 }
 #fly-main .main .fly-content .fly-left-aside .fly-menu-c {
+  position: relative;
+  overflow: hidden;
   -webkit-transition: 0.2s opacity -0.2s;
   transition: 0.2s opacity -0.2s;
 }

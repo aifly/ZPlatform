@@ -17,12 +17,20 @@
         img {
             width: auto;
             height: auto;
+            @include pos(r);
+
+            &.show {
+                z-index: 30;
+            }
+
         }
+
         video {
             background: #000;
             @include pos(r);
             z-index: 100;
         }
+
         div {
             @include pos(a);
             left: 50%;
@@ -41,12 +49,16 @@
                 &:nth-of-type(2) {
                     left: 33%;
                 }
+
                 &:nth-of-type(3) {
                     left: auto;
                     right: 0;
                 }
+
             }
+
         }
+
         aside {
             width: 50%;
             height: 100%;
@@ -59,8 +71,11 @@
                 left: auto;
                 right: 0;
             }
+
         }
+
     }
+
     &>header.wenming-datacheck-header {
         height: 50px;
         width: 98%;
@@ -75,6 +90,7 @@
             color: #88b7e0;
             font-weight: bold;
         }
+
         &:after {
             content: "";
             width: 100%;
@@ -83,6 +99,7 @@
             bottom: 0;
             @include pos(a);
         }
+
         &:before {
             content: '';
             @include pos(a);
@@ -92,17 +109,21 @@
             left: 0px;
             bottom: 12px;
         }
+
         &>div {
             &:nth-of-type(1) {
                 -webkit-flex: 1;
             }
+
             &:nth-of-type(2) {
                 -webkit-flex: 1;
 
                 span {
                     cursor: pointer;
                 }
+
             }
+
             &:nth-of-type(3) {
                 color: #36b1da;
                 text-align: right;
@@ -110,8 +131,11 @@
                 padding-right: 40px;
                 box-sizing: border-box;
             }
+
         }
+
     }
+
     .wenming-datacheck-bar {
         width: 100%;
         @include displayFlex(row);
@@ -132,11 +156,14 @@
             z-index: 0;
             box-shadow: 0 0 5px rgba(0, 0, 0, .1) inset;
         }
+
         &.wenming-detail-bar {
             &:after {
                 display: none;
             }
+
         }
+
         &>div {
             flex: 1;
             -webkit-flex: 1;
@@ -156,29 +183,38 @@
                         i {
                             color: red;
                         }
+
                     }
+
                 }
+
             }
+
             i {
                 color: #6db92c;
                 font-size: 18px;
                 margin-right: 4px;
             }
+
             .wenming-datacheck-batchcheck {
                 margin-right: 20px;
                 vertical-align: bottom;
             }
+
             .wenming-datacheck-unpass {
                 margin-right: 20px;
 
                 i {
                     color: #f4654c;
                 }
+
             }
+
             input {
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
             }
+
             button {
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;
@@ -186,15 +222,18 @@
                 i {
                     color: #fff
                 }
+
             }
+
         }
+
     }
+
     .wenming-datacheck-list {
         flex: 1;
         -webkit-flex: 1;
         overflow: hidden;
         @include pos(r);
-       
     }
-  
+
 }
