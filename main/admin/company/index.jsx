@@ -30,7 +30,7 @@ class ZmitiCompanyApp extends Component {
 
       ],
       productList: [],
-      showRole: true
+
 
     };
     this.condition = 0;
@@ -115,7 +115,7 @@ class ZmitiCompanyApp extends Component {
                            <Option value="1">负责人账号</Option>
                        </Select>
 
-      <ZmitiRoleModal showRole={this.state.showRole} productList={this.state.productList}></ZmitiRoleModal>
+      <ZmitiRoleModal  productList={this.state.productList}></ZmitiRoleModal>
         
       </div>
     }

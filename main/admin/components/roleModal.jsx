@@ -13,11 +13,17 @@ import {
 import './css/rolemodal.css'
 
 export default class ZmitiRoleModal extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+
+		}
+	}
 	render() {
-		console.log(this.props)
+
 		return <Modal title = '权限设置'
 		visible = {
-			this.props.showRole
+			this.state.showRole
 		}
 		onOk = {
 			() => {}
@@ -52,5 +58,20 @@ export default class ZmitiRoleModal extends Component {
                })}
              </ul> < /Modal>
 
+	}
+	componentDidMount() {
+
+		window.obserable.off("toggleRoleModal");
+
+		window.obserable.on('toggleRoleModal', (data) => {
+			this.toggleModal(data)
+		})
+
+	}
+
+	toggleModal(flag = true) {
+		this.setState({
+			showRole: flag
+		})
 	}
 }

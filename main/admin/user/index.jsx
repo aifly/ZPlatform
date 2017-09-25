@@ -13,6 +13,8 @@ import {
   ZmitiValidateUser
 } from '../../public/validate-user.jsx';
 import $ from 'jquery';
+
+import ZmitiRoleModal from '../components/roleModal.jsx'
 class ZmitiUserApp extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +23,7 @@ class ZmitiUserApp extends Component {
       current: 0,
       mainHeight: document.documentElement.clientHeight - 50,
       selectedIndex: 0,
+      productList: [],
       userList: [
 
       ],
@@ -76,7 +79,7 @@ class ZmitiUserApp extends Component {
       width: '30%',
       dataIndex: '',
       key: 'x',
-      render: (text, record) => <div data-userid={record.userid}><a href='javascript:void(0)' data-index='0'  style={{color:record.isover === 2?'':'red'}} onClick={this.disableUser}>{record.isover === 2?'启用':'禁用'}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>设置权限</a></div>
+      render: (text, record) => <div data-userid={record.userid}><a href='javascript:void(0)' data-index='0'  style={{color:record.isover === 2?'':'red'}} onClick={this.disableUser}>{record.isover === 2?'启用':'禁用'}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onClick={()=>{window.obserable.trigger({type:'toggleRoleModal',data:true})}}>设置权限</a></div>
     });
 
     var title = this.props.params.title;
@@ -108,9 +111,14 @@ class ZmitiUserApp extends Component {
           this.forceUpdate(() => {});
         }, 350);
       },
-      selectComponent: <Select placeholder='用户名' onChange={()=>{}}  style={{width:120}} size='small' >
+      selectComponent: <div>
+        
+      <Select placeholder='用户名' onChange={()=>{}}  style={{width:120}} size='small' >
                          <Option value="0">用户名</Option>
                      </Select>
+
+        <ZmitiRoleModal showRole={this.state.showRole} productList={this.state.productList}></ZmitiRoleModal>
+      </div>
     }
 
     //console.log(this.state.mainHeight);
@@ -182,13 +190,13 @@ class ZmitiUserApp extends Component {
     var auothParams = {
       getusersigid: this.getusersigid,
       userid: this.userid,
-      setuserid:'ad67eb0c-a717-05ac-4c2d-58e46534ea5f'
+      setuserid: 'ad67eb0c-a717-05ac-4c2d-58e46534ea5f'
     }
     $.ajax({
-      url:window.baseUrl+'admin/getuserauth/',
-      type:'post',
-      data:auothParams
-    }).then(data=>{
+      url: window.baseUrl + 'admin/getuserauth/',
+      type: 'post',
+      data: auothParams
+    }).then(data => {
       console.log(data);
     })
   }
