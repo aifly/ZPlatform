@@ -83,6 +83,12 @@ class ZmitiUserApp extends Component {
     });
 
     var title = this.props.params.title;
+
+    var auothParams = {
+      getusersigid: this.getusersigid,
+      userid: this.userid,
+      setuserid: 'c530b11e-06be-521f-420c-5934fdb423b1'
+    }
     let props = {
       userList: this.state.userList,
       columns: [columns1, columns2],
@@ -117,7 +123,7 @@ class ZmitiUserApp extends Component {
                          <Option value="0">用户名</Option>
                      </Select>
 
-        <ZmitiRoleModal showRole={this.state.showRole} productList={this.state.productList}></ZmitiRoleModal>
+        <ZmitiRoleModal {...auothParams} showRole={this.state.showRole} productList={this.state.productList}></ZmitiRoleModal>
       </div>
     }
 
@@ -141,8 +147,33 @@ class ZmitiUserApp extends Component {
     }, this);
 
   }
+
+  loadRoleData() {
+    var auothParams = {
+      getusersigid: this.getusersigid,
+      userid: this.userid,
+      setuserid: 'c530b11e-06be-521f-420c-5934fdb423b1'
+    }
+    $.ajax({
+      url: window.baseUrl + 'admin/getuserauth/',
+      type: 'post',
+      data: auothParams
+    }).then(data => {
+      if (data.getret === 0) {
+
+        console.log(data)
+        this.setState({
+          productList: data.list
+        })
+      }
+
+
+    })
+  }
+
   componentDidMount() {
-    /*  var {userid,getusersigid} = this.props.params;
+    this.loadRoleData()
+      /*  var {userid,getusersigid} = this.props.params;
 		  this.getusersigid = this.getusersigid = getusersigid;
       this.userid =userid;
       this.baseUrl = window.baseUrl;*/
@@ -154,6 +185,14 @@ class ZmitiUserApp extends Component {
       resizeLeftMenu
     } = this.props;
     resizeMainHeight(this, 'setAdminHeight');
+
+
+    window.obserable.off('modifyProductList')
+    window.obserable.on('modifyProductList', data => {
+      this.setState({
+        productList: data
+      })
+    })
 
 
 
@@ -187,18 +226,7 @@ class ZmitiUserApp extends Component {
 
     })
 
-    var auothParams = {
-      getusersigid: this.getusersigid,
-      userid: this.userid,
-      setuserid: 'ad67eb0c-a717-05ac-4c2d-58e46534ea5f'
-    }
-    $.ajax({
-      url: window.baseUrl + 'admin/getuserauth/',
-      type: 'post',
-      data: auothParams
-    }).then(data => {
-      console.log(data);
-    })
+
   }
   disableUser(e) {
     e.preventDefault();
