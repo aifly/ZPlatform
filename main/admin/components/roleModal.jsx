@@ -29,7 +29,11 @@ export default class ZmitiRoleModal extends Component {
 			this.state.showRole
 		}
 		onOk = {
-			() => {}
+			() => {
+				this.setState({
+					showRole: false
+				})
+			}
 		}
 		onCancel = {
 			() => {

@@ -76,9 +76,17 @@ class ZmitiCompanyApp extends Component {
       title: '操作',
       dataIndex: '',
       key: 'x',
-      render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)"> 设置权限</a></div>
+      render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.setRole.bind(this,record)}> 设置权限</a></div>
     })
     var title = this.props.params.title;
+
+
+    var auothParams = {
+      getusersigid: this.getusersigid,
+      userid: this.userid,
+      setuserid: this.state.setuserid
+    }
+
     let props = {
       userList: this.state.userList,
       columns: [columns1, columns2],
@@ -115,13 +123,50 @@ class ZmitiCompanyApp extends Component {
                            <Option value="1">负责人账号</Option>
                        </Select>
 
-      <ZmitiRoleModal  productList={this.state.productList}></ZmitiRoleModal>
+      {this.state.showRole && <ZmitiRoleModal {...auothParams} showRole={this.state.showRole} productList={this.state.productList}></ZmitiRoleModal>}
         
       </div>
     }
     return (
       <MainUI  component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
     );
+  }
+
+  setRole(record) {
+
+
+    this.setState({
+      setuserid: record.userid,
+      showRole: true
+    }, () => {
+      this.loadRoleData()
+      window.obserable.trigger({
+        type: 'toggleRoleModal',
+        data: true
+      })
+    });
+  }
+
+
+  loadRoleData() {
+    var auothParams = {
+      getusersigid: this.getusersigid,
+      userid: this.userid,
+      setuserid: this.state.setuserid
+    }
+    $.ajax({
+      url: window.baseUrl + 'admin/getuserauth/',
+      type: 'post',
+      data: auothParams
+    }).then(data => {
+      if (data.getret === 0) {
+
+        this.setState({
+          productList: data.list
+        })
+      }
+
+    })
   }
 
   componentWillMount() {
@@ -231,6 +276,13 @@ class ZmitiCompanyApp extends Component {
 
       }
     });
+
+    window.obserable.off('modifyProductList')
+    window.obserable.on('modifyProductList', data => {
+      this.setState({
+        productList: data
+      })
+    })
   }
   changeAccount(e) {
     // e : 0  1;

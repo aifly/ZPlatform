@@ -79,7 +79,7 @@ class ZmitiUserApp extends Component {
       width: '30%',
       dataIndex: '',
       key: 'x',
-      render: (text, record) => <div data-userid={record.userid}><a href='javascript:void(0)' data-index='0'  style={{color:record.isover === 2?'':'red'}} onClick={this.disableUser}>{record.isover === 2?'启用':'禁用'}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onClick={()=>{window.obserable.trigger({type:'toggleRoleModal',data:true})}}>设置权限</a></div>
+      render: (text, record) => <div data-userid={record.userid}><a href='javascript:void(0)' data-index='0'  style={{color:record.isover === 2?'':'red'}} onClick={this.disableUser}>{record.isover === 2?'启用':'禁用'}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)'>删除</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript:void(0)' onClick={this.setRole.bind(this,record)}>设置权限</a></div>
     });
 
     var title = this.props.params.title;
@@ -87,8 +87,9 @@ class ZmitiUserApp extends Component {
     var auothParams = {
       getusersigid: this.getusersigid,
       userid: this.userid,
-      setuserid: 'c530b11e-06be-521f-420c-5934fdb423b1'
+      setuserid: this.state.setuserid
     }
+
     let props = {
       userList: this.state.userList,
       columns: [columns1, columns2],
@@ -123,7 +124,7 @@ class ZmitiUserApp extends Component {
                          <Option value="0">用户名</Option>
                      </Select>
 
-        <ZmitiRoleModal {...auothParams} showRole={this.state.showRole} productList={this.state.productList}></ZmitiRoleModal>
+        {this.state.showRole && <ZmitiRoleModal {...auothParams} showRole={this.state.showRole} productList={this.state.productList}></ZmitiRoleModal>}
       </div>
     }
 
@@ -131,6 +132,20 @@ class ZmitiUserApp extends Component {
     return (
       <MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
     );
+  }
+
+
+  setRole(record) {
+    this.setState({
+      setuserid: record.userid,
+      showRole: true
+    }, () => {
+      this.loadRoleData()
+      window.obserable.trigger({
+        type: 'toggleRoleModal',
+        data: true
+      })
+    });
   }
 
   componentWillMount() {
@@ -152,7 +167,7 @@ class ZmitiUserApp extends Component {
     var auothParams = {
       getusersigid: this.getusersigid,
       userid: this.userid,
-      setuserid: 'c530b11e-06be-521f-420c-5934fdb423b1'
+      setuserid: this.state.setuserid
     }
     $.ajax({
       url: window.baseUrl + 'admin/getuserauth/',
@@ -172,8 +187,8 @@ class ZmitiUserApp extends Component {
   }
 
   componentDidMount() {
-    this.loadRoleData()
-      /*  var {userid,getusersigid} = this.props.params;
+
+    /*  var {userid,getusersigid} = this.props.params;
 		  this.getusersigid = this.getusersigid = getusersigid;
       this.userid =userid;
       this.baseUrl = window.baseUrl;*/
