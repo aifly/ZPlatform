@@ -1,89 +1,96 @@
-import React, { Component } from 'react';
+import React, {
+	Component
+} from 'react';
 import './css/user-list.css';
 
-import { Table ,Select ,Icon} from '../commoncomponent/common.jsx';
+import {
+	Table,
+	Select,
+	Icon
+} from '../commoncomponent/common.jsx';
 let Option = Select.Option;
-import  ZmitiSearchInput  from './zmiti-search-input.jsx';
+import ZmitiSearchInput from './zmiti-search-input.jsx';
 export default class ZmitiUserList extends Component {
 	constructor(props) {
-	  super(props);
-	
-	  this.state = {
-	  	current:0,
-	  	showPanel:true,
-	  	userList:[
-	  		
-	  	],
-	  	columns:[]
-	  };
-	  this.changeAccount = this.changeAccount.bind(this);
+		super(props);
+
+		this.state = {
+			current: 0,
+			showPanel: true,
+			userList: [
+
+			],
+			columns: []
+		};
+		this.changeAccount = this.changeAccount.bind(this);
 	}
 
 
 	render() {
 
- 
 
-		var userList =null;
-		switch(this.props.type) {
+
+		var userList = null;
+		switch (this.props.type) {
 			case "user":
-				userList = this.props.userList.filter(item=>{
-					return item.isover === this.state.current ||  item.isover === 2;//isover : 0 正式账号，1为试用账户
-				});		
+				userList = this.props.userList.filter(item => {
+					return item.isover === this.state.current || item.isover === 2; //isover : 0 正式账号，1为试用账户
+				});
 				break;
 			case "listorder":
-				userList = this.props.userList.filter(item=>{
-					return item.status === this.state.current;//status : 0 处理中，1已处理
-				});	
+				userList = this.props.userList.filter(item => {
+					return item.status === this.state.current; //status : 0 处理中，1已处理
+				});
 				break;
 			case 'workorder':
 				userList = this.props.userList
-	/*			userList = this.props.userList.filter(item=>{
-					//return item.isover === this.state.current ||  item.isover === 2;//isover : 0 正式账号，1为试用账户
-				});		*/
+					/*			userList = this.props.userList.filter(item=>{
+									//return item.isover === this.state.current ||  item.isover === 2;//isover : 0 正式账号，1为试用账户
+								});		*/
 				break;
 			case 'meeting':
+			case 'letter':
 
-				userList = this.props.userList.filter(item=>{
-					switch(this.state.current){
+				userList = this.props.userList.filter(item => {
+					switch (this.state.current) {
 						case 0:
 							return 1;
-						break;
+							break;
 						case 1:
-							return item.status === 0;//未审核
-						break;
+							return item.status === 0; //未审核
+							break;
 						case 2:
-							return item.status === 1;//已审核
-						break;
+							return item.status === 1; //已审核
+							break;
 						case 3:
-							return item.status === 2;//审核不通过。
-						break;
+							return item.status === 2; //审核不通过。
+							break;
 					}
 				});
 
-			break;
+				break;
 			case 'custom':
 
-				userList = this.props.userList.filter(item=>{
-					switch(this.state.current){
+				userList = this.props.userList.filter(item => {
+					switch (this.state.current) {
 						case 0:
 							return item.isshare !== 0;
-						break;
+							break;
 						case 1:
-							return this.props.userid === item.userid;//未审核
-						break;
+							return this.props.userid === item.userid; //未审核
+							break;
 					}
 				});
 
-			break;
+				break;
 		}
- 
+
 		let searchInputProps = {
-          	selectComponent:this.props.selectComponent,
-          	keyUpHandler:(e)=>{
-          		this.props.keyDown(e.target.value)
-          	}
-          }
+			selectComponent: this.props.selectComponent,
+			keyUpHandler: (e) => {
+				this.props.keyDown(e.target.value)
+			}
+		}
 
 		return (
 			<section className='user-main-ui' style={{height:this.props.mainHeight}}>
@@ -135,33 +142,30 @@ export default class ZmitiUserList extends Component {
 		);
 	}
 
-	togglePanel(){
+	togglePanel() {
 		this.setState({
-            showPanel:!this.state.showPanel
-        })
+			showPanel: !this.state.showPanel
+		})
 	}
-	componentDidMount() {
-	}
-	changeAccount(e){
+	componentDidMount() {}
+	changeAccount(e) {
 		var index = e;
-		if(this.props.rightType === 'custom'){
+		if (this.props.rightType === 'custom') {
 			this.props.changeAccount && this.props.changeAccount(index);
-		}
-		else{
+		} else {
 			this.setState({
-				current:e*1
-			});	
+				current: e * 1
+			});
 			this.props.changeAccount && this.props.changeAccount(index);
 		}
-		
-		
+
+
 	}
 }
 
 ZmitiUserList.defaultProps = {
-	tags:['试用人个账户','正式人个账户'],
-	type:'user',
-	rightType:'list',
+	tags: ['试用人个账户', '正式人个账户'],
+	type: 'user',
+	rightType: 'list',
 
 }
-

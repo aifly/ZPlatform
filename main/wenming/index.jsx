@@ -44,11 +44,11 @@ class ZmitiWenmingApp extends React.Component {
             provinceReportSort: '',
             userCommentSort: '',
             userReportSort: 'sort-down',
-            totalComment:'总评论数',
-            totalReport:'总人数',
-            totalCommentNum:'',
-            totalReportNum:'',
-            totalView:0,
+            totalComment: '总评论数',
+            totalReport: '总人数',
+            totalCommentNum: '',
+            totalReportNum: '',
+            totalView: 0,
         }
     }
 
@@ -457,7 +457,7 @@ class ZmitiWenmingApp extends React.Component {
                     userReportSort: '',
                     userRankingList: this.userRankingList
                 });
-                
+
                 this.requestUserRank('userCommentSort');
                 //this.state.totalView=this.state.totalCommentNum;//评论数
 
@@ -466,7 +466,7 @@ class ZmitiWenmingApp extends React.Component {
 
                 this.requestUserRank('userReportSort');
                 this.setState({
-                    totalReport:'总人数',
+                    totalReport: '总人数',
                     userCommentSort: '',
                     userReportSort: 'sort-down',
                     userRankingList: this.userRankingList1
@@ -572,12 +572,12 @@ class ZmitiWenmingApp extends React.Component {
             }
             if (data.getret === 0) {
                 this.userRankingList = data.list.concat([]);
-                var commentCount=0;
-                data.list.map((item,i)=>{                    
-                    commentCount+=item.commentCount;
+                var commentCount = 0;
+                data.list.map((item, i) => {
+                    commentCount += item.commentCount;
                 })
-                this.state.totalCommentNum=commentCount;//评论数
-                this.state.totalReportNum=data.list1.length;//上报数
+                this.state.totalCommentNum = commentCount; //评论数
+                this.state.totalReportNum = data.list1.length; //上报数
 
                 this.userRankingList1 = (data.list1 || []).concat([])
                 this.setState({
@@ -654,11 +654,11 @@ class ZmitiWenmingApp extends React.Component {
     }
 
     //获取用户数
-    getusertotal(){
+    getusertotal() {
         var s = this;
         $.ajax({
             type: 'post',
-            url:window.baseUrl +  'weixinxcx/xcxusercount',
+            url: window.baseUrl + 'weixinxcx/xcxusercount',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -670,7 +670,7 @@ class ZmitiWenmingApp extends React.Component {
             }
             if (data.getret === 0) {
                 //console.log(data.result.usercount,'用户数统计')
-                s.state.totalView=data.result.usercount;
+                s.state.totalView = data.result.usercount;
                 s.forceUpdate();
             }
         });
@@ -779,7 +779,7 @@ class ZmitiWenmingApp extends React.Component {
                 symbol: '',
                 data: s.convertData(userData),
                 symbolSize: function(val) {
-                    return val[2] / 50; //100
+                    return val[2] / 100; //100
                 },
                 label: {
                     normal: {

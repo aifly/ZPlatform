@@ -64,6 +64,7 @@ import ZmitiWenmingPersonalRankApp from './wenming/personal.jsx';
 import ZmitiWenmingProvinceRankApp from './wenming/province.jsx';
 import ZmitiWenmingCityRankApp from './wenming/city.jsx';
 import ZmitiWenmingCommentCheckApp from './wenming/commentcheck.jsx';
+import ZmitiLetterApp from './letter/index.jsx';
 
 import ZmitiWenmingCommentDetailApp from './wenming/commentdetail.jsx';
 import ZmitiBoardroomApp from './boardroom/index.jsx';
@@ -94,8 +95,11 @@ class App extends React.Component {
 			},
 			//{path: '/personalAcc/', app: ZmitiPersonalAccApp},
 			{
-				path: '/meeting/:title',
+				path: '/meeting/(:title)',
 				app: ZmitiMeetingApp
+			}, {
+				path: '/letter/(:title)',
+				app: ZmitiLetterApp
 			}, {
 				path: '/project/',
 				app: ZmitiProject
