@@ -231,7 +231,7 @@ class ZmitiLetterApp extends Component {
                   onOk={this.modifyUserQuestion.bind(this)}
                   onCancel={()=>{this.setState({questionDetailVisible:false})}}>
                 <Form >
-                 <FormItem
+                 <FormItem style={{display:'none'}}
                    {...formItemLayout}
                    label={<span><span style={{color:'red',marginRight:4,}}>*</span>性别</span>}
                    hasFeedback={true}
@@ -266,7 +266,7 @@ class ZmitiLetterApp extends Component {
                     <InputNumber size="large" value={this.state.sort} min={1} max={100000} onChange={(e)=>{this.setState({sort:e})}} />
                  </FormItem>
 
-                   <FormItem
+                   <FormItem style={{display:'none'}}
                    {...formItemLayout}
                    label={<span><span style={{color:'red',marginRight:4,}}>*</span>分类名称</span>}
                    hasFeedback={true}
