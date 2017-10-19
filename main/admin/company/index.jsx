@@ -219,8 +219,8 @@ class ZmitiCompanyApp extends Component {
   }
 
   componentDidMount() {
-
-
+    window.$ = $;
+    
     this.baseUrl = window.baseUrl;
     let {
       validateUser,

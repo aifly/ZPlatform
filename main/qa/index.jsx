@@ -1,6 +1,6 @@
 import './static/css/index.css';
 import React from 'react';
-import { message,Row,Col,Input,Button,Icon,InputNumber,Popover,Checkbox ,Modal} from '../commoncomponent/common.jsx';
+import { message,Row,Col,Input,Button,Icon,InputNumber,Popover,Checkbox ,Modal,Switch} from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
@@ -48,6 +48,7 @@ import MainUI from '../components/Main.jsx';
                 theme:'DANGJIAN',
                 duration:360,
                 type:'',
+                isUseWX:true,
                 level:[
                     {
                         score:0,
@@ -129,6 +130,8 @@ componentWillMount() {
                         s.state.data.duration  = s.state.data.duration || 360;
                         s.state.data.questionType  = s.state.data.questionType || 'single';
                         s.state.data.totalScore  = s.state.data.totalScore || 0;
+                        s.state.data.isUseWx  = s.state.data.isUseWx || false;
+                        s.state.data.isShowUseTime  = s.state.data.isShowUseTime || false;
                         s.state.data.level  = s.state.data.level || [{score:0,name:''}];
                         s.state.workstate = data.path.workstate;
                         s.forceUpdate(()=>{
@@ -314,7 +317,7 @@ componentWillMount() {
                                 <aside>
                                     <span>姓名：{this.state.username||'张三'}</span>
                                 </aside>
-                                <aside>
+                                <aside  style={{display:this.state.data.isShowUseTime?'none':'block'}}>
                                     <div className='editqa-clock-sm'><ZmitiClockApp animate={false} size={12}></ZmitiClockApp></div>
                                     <div>剩余时间：<span>{this.state.data.duration/60<10?'0'+(this.state.data.duration/60|0):this.state.data.duration/60|0}:{this.state.data.duration % 60<10?'0'+this.state.data.duration % 60:this.state.data.duration % 60}</span></div>
                                 </aside>
@@ -445,8 +448,8 @@ componentWillMount() {
                             <section>
                                 <InputNumber min={30} value={this.state.data.duration} onChange={e=>{this.state.data.duration = e;this.forceUpdate();}}/> S
                             </section>
-                            <section></section>
-                            <section></section>
+                            <section><Switch checked={this.state.data.isUseWx} style={{color:"#fff"}} onChange={this.toggleCheckedUseWX.bind(this)} checkedChildren={'开启微信接口'} unCheckedChildren={'关闭微信接口'} /></section>
+                            <section><Switch checked={this.state.data.isShowUseTime} style={{color:"#fff"}} onChange={this.toggleCheckedUseTime.bind(this)} checkedChildren={'显示用时'} unCheckedChildren={'不显示用时'} /></section>
                         </div>
 
                         <div className='editqa-q-tip'>
@@ -712,6 +715,18 @@ componentWillMount() {
         this.forceUpdate();
 
     }
+
+    toggleCheckedUseWX(e){
+        
+        this.state.data.isUseWx = e ;
+        this.forceUpdate(); 
+    }
+
+    toggleCheckedUseTime(e){
+        this.state.data.isShowUseTime = e ;
+        this.forceUpdate();    
+    }
+
     deleteQuestion(i){//删除题目
 
         if(this.state.data.question.length<=1){
@@ -1126,7 +1141,7 @@ componentWillMount() {
                     worksid:s.worksid
                 }
             }).done((data)=>{
-                
+                console.log(data);
                 s.state.isPublishing = false;
                 message[data.getret === 0?'success':'error'](data.getret === 0?'发布成功!!!':'发布失败');
                 if(data.getret === 0){

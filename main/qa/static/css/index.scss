@@ -916,5 +916,8 @@ h2,h3,h4,h5{
       @include transformOrigin(right);
       @include transform(scale(0,1));
     }
-    
+    .ant-switch-inner{
+      color:#fff !important;
+
+    }
  }
