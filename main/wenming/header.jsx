@@ -94,19 +94,36 @@ class ZmitiWenmingAsideBarApp extends React.Component {
             loginOut('登录失效，请重新登录', window.loginUrl, false);
         }, this);
 
-        var visit = false;
-        window.MENUCONFIG.map((item, i) => {
-            if (item.key === 'wenming') {
-                item.VISITUSERS.forEach((vis) => {
-                    if (vis === username) {
-                        visit = true;
-                    }
-                })
+        window.globalMenus.map((item, i) => {
+            console.log(item.linkTo)
+            if (item.linkTo.startsWith('/wenming')) {
+                this.productid = item.productid; //获取当前产品的id;
+                return;
             }
         });
-        if (!visit) {
-            loginOut('您没有访问的权限', window.mainUrl, true); //不是hash跳转。location.href跳转
+        if (!this.productid) {
+            loginOut('您没有访问权限', window.mainUrl, true);
+            return;
         }
+
+        $.ajax({
+            type: 'post',
+            url: window.baseUrl + '/admin/userhaveauth',
+            data: {
+                userid: userid,
+                getusersigid: getusersigid,
+                setuserid: userid,
+                productid: 'b274b278-3d08-9ac1-faf4-5975b042ca7b'
+            }
+        }).done(data => {
+            if (data.getret === 0) {
+                if (data.code === 1) { //无此权限
+                    loginOut('您没有访问权限', window.mainUrl, true);
+                }
+            }
+        })
+
+
 
     }
 
