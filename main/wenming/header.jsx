@@ -1,6 +1,7 @@
 import React from 'react';
 import {
-    Button
+    Button,
+    message
 } from '../commoncomponent/common.jsx';
 
 import $ from 'jquery';
@@ -102,7 +103,10 @@ class ZmitiWenmingAsideBarApp extends React.Component {
             }
         });
         if (!this.productid) {
-            loginOut('您没有访问权限', window.mainUrl, true);
+            message.error('您没有访问权限');
+            setTimeout(() => {
+                window.location.hash = '/'
+            }, 1000)
             return;
         }
 
@@ -113,12 +117,16 @@ class ZmitiWenmingAsideBarApp extends React.Component {
                 userid: userid,
                 getusersigid: getusersigid,
                 setuserid: userid,
-                productid: 'b274b278-3d08-9ac1-faf4-5975b042ca7b'
+                productid: this.productid || 'b274b278-3d08-9ac1-faf4-5975b042ca7b'
             }
         }).done(data => {
             if (data.getret === 0) {
                 if (data.code === 1) { //无此权限
-                    loginOut('您没有访问权限', window.mainUrl, true);
+                    message.error('您没有访问权限');
+                    setTimeout(() => {
+                        window.location.hash = '/'
+                    }, 1000)
+
                 }
             }
         })

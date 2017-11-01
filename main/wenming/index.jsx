@@ -125,17 +125,17 @@ class ZmitiWenmingApp extends React.Component {
 
     setScroll() {
 
-        this.proviceScroll = new IScroll(this.refs['provice-scroller'], {
+        this.refs['provice-scroller'] && (this.proviceScroll = new IScroll(this.refs['provice-scroller'], {
             scrollbars: true, //显示滚动条
             interactiveScrollbars: true, //允许用户拖动滚动条
             mouseWheel: true, //启用鼠标滚轮。
-        });
+        }));
 
-        this.userScroll = new IScroll(this.refs['user-scroller'], {
+        this.refs['user-scroller'] && (this.userScroll = new IScroll(this.refs['user-scroller'], {
             scrollbars: true, //显示滚动条
             interactiveScrollbars: true, //允许用户拖动滚动条
             mouseWheel: true, //启用鼠标滚轮。
-        });
+        }));
 
 
     }
@@ -521,11 +521,17 @@ class ZmitiWenmingApp extends React.Component {
     }
 
     initEcharts() {
+        if (!this.refs['map']) {
+            return;
+        }
         var s = this;
         var worksid = this.worksid;
         this.lastCityId = this.lastCityId || -1;
         var myChart = echarts.init(this.refs['map']);
 
+        if (!myChart) {
+            return;
+        }
 
         var userData = [
             /*  {
@@ -648,7 +654,7 @@ class ZmitiWenmingApp extends React.Component {
                 localStorage.setItem('userData' + this.worksid, JSON.stringify({
                     userData: s.userData
                 }));
-                s.myChart.setOption(s.dataConfig(s.userData), true);
+                s.myChart && s.myChart.setOption(s.dataConfig(s.userData), true);
             }
         })
     }

@@ -32,6 +32,8 @@ const {
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 
+import ZmitiProductServiceApp from '../components/productservice/index.jsx'
+
 import {
   Link
 } from 'react-router';
@@ -313,138 +315,71 @@ class ZmitiViewPersonalApp extends Component {
         
 				<div className="hr40"></div>
 				<div className="viewpersonal-works">
-					<div className="tit-a1">产品与服务</div>
-					
-							<ul>
-								<li>
-									<span className="rad b1"></span>
-									<span className="tit-c1">移动微场景</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-								<li>
-									<span className="rad b2"></span>
-									<span className="tit-c1">微信问答</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-								<li>
-									<span className="rad b3"></span>
-									<span className="tit-c1">交互式富图片</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-
-								<li>
-									<span className="rad b4"></span>
-									<span className="tit-c1">企业项目管理</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-								<li>
-									<span className="rad b5"></span>
-									<span className="tit-c1">设计图讨论工具</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-								<li>
-									<span className="rad b6"></span>
-									<span className="tit-c1">页面服务</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-
-								<li>
-									<span className="rad b7"></span>
-									<span className="tit-c1">互联网整体方案服务</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-								<li className="stateA">
-									<span className="rad b8"></span>
-									<span className="tit-c1">设计类服务</span>
-									<span className="tit-c2"><a href="#">已使用134个作品</a></span>
-								</li>
-								<li>
-									<span className="rad b9"></span>
-									<span className="tit-c1">交互方案服务</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-							
-								<li>
-									<span className="rad b10"></span>
-									<span className="tit-c1">会员服务问答</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-								<li>
-									<span className="rad b11"></span>
-									<span className="tit-c1">非会员服务问答</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-								<li>
-									<span className="rad b12"></span>
-									<span className="tit-c1">方案书服务</span>
-									<span className="tit-c2"><a href="#">申请使用</a></span>
-								</li>
-							</ul>
-						
+					  <ZmitiProductServiceApp></ZmitiProductServiceApp>
 				</div>
-                <Modal title='修改密码' visible={this.state.modifyUserPwdDialogVisible}
-                      onOk={this.modifyUserPwd.bind(this)}
-                      onCancel={()=>{this.setState({modifyUserPwdDialogVisible:false})}}>
+        <Modal title='修改密码' visible={this.state.modifyUserPwdDialogVisible}
+              onOk={this.modifyUserPwd.bind(this)}
+              onCancel={()=>{this.setState({modifyUserPwdDialogVisible:false})}}>
 
-                    <Form >
-                     <FormItem
-                       {...formItemLayout}
-                       label={<span><span style={{color:'red',marginRight:4,}}>*</span>原始密码</span>}
-                       hasFeedback={true}
-                     >
-                       <Input type='password' ref='old-pwd' onFocus={()=>{this.setState({showOldPwdError:false})}} defaultValue={this.state.oldPwd} placeholder='原始密码' onChange={()=>{}}/>
-                       {this.state.showOldPwdError && <div className='user-error'>原始密码不能为空</div>}
-                     </FormItem>
+            <Form >
+             <FormItem
+               {...formItemLayout}
+               label={<span><span style={{color:'red',marginRight:4,}}>*</span>原始密码</span>}
+               hasFeedback={true}
+             >
+               <Input type='password' ref='old-pwd' onFocus={()=>{this.setState({showOldPwdError:false})}} defaultValue={this.state.oldPwd} placeholder='原始密码' onChange={()=>{}}/>
+               {this.state.showOldPwdError && <div className='user-error'>原始密码不能为空</div>}
+             </FormItem>
 
-                      <FormItem
-                       {...formItemLayout}
-                       label={<span><span style={{color:'red',marginRight:4,}}>*</span>新密码</span>}
-                       hasFeedback={true}
-                     >
-                         <Input type='password' ref='new-pwd' onFocus={()=>{this.setState({showNewPwdError:false})}} defaultValue={this.state.newPwd} placeholder='新密码' onChange={()=>{}}/>
-                       {this.state.showNewPwdError && <div className='user-error'>新密码不能为空</div>}
-                     </FormItem>
+              <FormItem
+               {...formItemLayout}
+               label={<span><span style={{color:'red',marginRight:4,}}>*</span>新密码</span>}
+               hasFeedback={true}
+             >
+                 <Input type='password' ref='new-pwd' onFocus={()=>{this.setState({showNewPwdError:false})}} defaultValue={this.state.newPwd} placeholder='新密码' onChange={()=>{}}/>
+               {this.state.showNewPwdError && <div className='user-error'>新密码不能为空</div>}
+             </FormItem>
 
-                      <FormItem
-                       {...formItemLayout}
-                       label={<span><span style={{color:'red',marginRight:4,}}>*</span>确认新密码</span>}
-                       hasFeedback={true}
-                     >
-                         <Input type='password' ref='sure-pwd' onFocus={()=>{this.setState({showSurePwdError:false})}}  defaultValue={this.state.surePwd} placeholder='确认密码' onChange={()=>{}}/>
-                       {this.state.showSurePwdError && <div className='user-error'>确认新密码不能为空 </div>}
-                     </FormItem>
-                    
-                   </Form>    
-                 </Modal>
-                 <Modal title="修改手机与邮箱" visible={this.state.modPersonalDialogVisible}
-                    onOk={this.modmobilemailOk.bind(this)} 
-                    onCancel={()=>{this.setState({modPersonalDialogVisible:false})}}
-                  >
-                    <Form>
-                      <FormItem
-                        {...formItemLayout}
-                        label="手机"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="请输入正确格式" ref="usermobile"
-                            value={this.state.userData.usermobile} 
-                            onChange={(e)=>{this.state.userData.usermobile=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="E-mail"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="请输入正确格式" ref="useremail"
-                            value={this.state.userData.useremail} 
-                            onChange={(e)=>{this.state.userData.useremail=e.target.value;this.forceUpdate();}}
-                          />                       
-                      </FormItem>
-                    </Form>
-                  </Modal>
+              <FormItem
+               {...formItemLayout}
+               label={<span><span style={{color:'red',marginRight:4,}}>*</span>确认新密码</span>}
+               hasFeedback={true}
+             >
+                 <Input type='password' ref='sure-pwd' onFocus={()=>{this.setState({showSurePwdError:false})}}  defaultValue={this.state.surePwd} placeholder='确认密码' onChange={()=>{}}/>
+               {this.state.showSurePwdError && <div className='user-error'>确认新密码不能为空 </div>}
+             </FormItem>
+            
+           </Form>    
+         </Modal>
+         <Modal title="修改手机与邮箱" visible={this.state.modPersonalDialogVisible}
+            onOk={this.modmobilemailOk.bind(this)} 
+            onCancel={()=>{this.setState({modPersonalDialogVisible:false})}}
+          >
+            <Form>
+              <FormItem
+                {...formItemLayout}
+                label="手机"
+                hasFeedback
+              >                        
+                  
+ < Input placeholder = "请输入正确格式"    ref = "usermobile"
+                    value={this.state.userData.usermobile} 
+                    onChange={(e)=>{this.state.userData.usermobile=e.target.value;this.forceUpdate();}}
+                  />                      
+              </FormItem>
+              <FormItem
+                {...formItemLayout}
+                label="E-mail"
+                hasFeedback
+              >                        
+                  
+                  <Input placeholder="请输入正确格式" ref="useremail"
+                    value={this.state.userData.useremail} 
+                    onChange={(e)=>{this.state.userData.useremail=e.target.value;this.forceUpdate();}}
+                  />                       
+              </FormItem>
+            </Form>
+          </Modal>
            {!this.state.showCredentialsDiolog && <ZmitiUploadDialog id="personAcc" {...props}></ZmitiUploadDialog>}
             
             {this.state.showCredentialsDiolog && <ZmitiUploadDialog id="userCredentials" {...userProps}></ZmitiUploadDialog>}

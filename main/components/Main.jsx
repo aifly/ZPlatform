@@ -343,14 +343,14 @@ class MainUI extends React.Component {
         })
     }
     setScroll() {
-        this.sliderScroll = new IScroll(this.refs['slider-scroller'], {
+        this.refs['slider-scroller'] && (this.sliderScroll = new IScroll(this.refs['slider-scroller'], {
             scrollbars: true, //显示滚动条
             interactiveScrollbars: true, //允许用户拖动滚动条
             mouseWheel: true, //启用鼠标滚轮。
-        });
+        }));
     }
     scrollRefresh(value) {
-        this.sliderScroll.refresh();
+        this.sliderScroll && this.sliderScroll.refresh();
     }
     componentDidMount() {
 

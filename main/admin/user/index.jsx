@@ -223,7 +223,7 @@ class ZmitiUserApp extends Component {
       url: window.baseUrl + "/user/get_userlist/",
       data: params,
       success(data) {
-        ///console.log(data);
+
         if (data.getret === 0) {
 
           s.setState({
