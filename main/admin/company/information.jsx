@@ -52,7 +52,7 @@ class ZmitiCompanyinformationApp extends Component {
                 companynumratio:'',
                 worksNumber:'120',
                 departmentCount:'3',
-                companylogourl:'http://images.wenming.cn/web_wenming/images/Logo.jpg',
+                companylogourl:'./static/images/header.png',
                 contract:'',
                 companydocumetn:'',
                 companytotalprice:100,

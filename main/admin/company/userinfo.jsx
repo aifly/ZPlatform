@@ -2,12 +2,12 @@ import React, {
   Component
 } from 'react';
 
-import './static/css/index.css';
+import './static/css/userinfo.css';
 import ZmitiUserList from '../../components/zmiti-user-list.jsx';
 
 import {
   message,
-  Select,Modal,Button,DatePicker,Progress,Slider,InputNumber
+  Select,Modal,Button,DatePicker,Progress,Slider,InputNumber,Table, Row, Col
 } from '../../commoncomponent/common.jsx';
 var Option = Select.Option;
 const { MonthPicker, RangePicker } = DatePicker;
@@ -58,6 +58,7 @@ class ZmitiUserinfoApp extends Component {
       title: '序号',
       dataIndex: 'key',
       key: 'xx',
+      render:(text,record,e)=><div>{e+1}</div>
     }, {
       title: '用户名',
       dataIndex: 'username',
@@ -76,36 +77,23 @@ class ZmitiUserinfoApp extends Component {
       key: 'departmentname',
     }, {
       title: '状态',
-      dataIndex: 'userSpace',
-      key: 'userSpace',
+      dataIndex: 'isover',
+      key: 'isover',
     }];
-    var columns1 = columns.concat({
-      title: '操作',
-      dataIndex: '',
-      key: 'x',
-      render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)" >操作</a></div>
-    });
+
     
-    var title = this.props.params.title;
+    var title = this.props.params.title || '公司账户管理';
     var uid = this.props.params.id;
-
-    var auothParams = {
-      getusersigid: this.getusersigid,
-      userid: this.userid,
-      setuserid: this.state.setuserid
-    }
-
-    let props = {
-      userList: this.state.userList,
-      columns: [columns1],
-      changeAccount: this.changeAccount,
-      tags: ['试用公司账户', '正式公司账户'],
-      mainHeight: this.state.mainHeight,
-      title
-    }
-    var mainComponent = <div>
-		<ZmitiUserList {...props}></ZmitiUserList>
-	</div>;
+    var mainComponent = <div className="zmiti-companyuserinfo-main-ui pad-10" style={{height:this.state.mainHeight}}>
+      	<div className="hr5"></div>
+      	<Row className='zmiti-companyuserinfo-header'>
+			<Col span={8}  className='zmiti-companyuserinfo-header-inner' >公司账户管理</Col>
+            <Col span={8} offset={8} className='zmiti-companyuserinfo-button-right textright'><Button onClick={this.goback.bind(this)}>返回</Button></Col>
+		</Row>
+		<div className="zmiti-companyuserinfo-line"></div>
+		<div className="hr20"></div>
+      	<Table dataSource={this.state.userList} columns={columns} bordered/>
+      </div>;
 	return (<MainUI component={mainComponent}></MainUI>);
   }
 
@@ -124,7 +112,7 @@ class ZmitiUserinfoApp extends Component {
       setcompanyid:uid
     }
     /*$.ajax({
-      url:window.baseUrl + '/user/get_departmentlist/',
+      url:window.baseUrl + 'admin/getmanageruserlist/',
       type:'post',
       data:params,
       success:function(data){
@@ -140,6 +128,10 @@ class ZmitiUserinfoApp extends Component {
       }
     })*/
 
+  }
+  //goback
+  goback(){
+  	window.location='./index.html#/company/'+this.props.params.title;
   }
 
 

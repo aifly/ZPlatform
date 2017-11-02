@@ -162,7 +162,7 @@ class ZmitiCompanyApp extends Component {
       </div>
     }
     return (
-      <MainUI  component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
+      <MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
     );
   }
 
@@ -201,26 +201,6 @@ class ZmitiCompanyApp extends Component {
       }
 
     })
-  }
-  //获取用户
-  getmangeruserlist(uid){
-    var s = this;
-    var params = {
-      getusersigid: this.getusersigid,
-      userid: this.userid,
-      setuserid: this.state.setuserid,
-      setcompanyid:uid
-    }
-    $.ajax({
-      url:'http://api.zmiti.com/v2/user/get_departmentuserlist/',
-      type:'post',
-      data:params,
-      success(data) {
-        console.log(data,'getmanageruserlist');
-      }
-
-    })
-    //console.log(uid,"gggggggg")
   }
   componentWillMount() {
 
