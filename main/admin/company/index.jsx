@@ -7,10 +7,11 @@ import ZmitiUserList from '../../components/zmiti-user-list.jsx';
 
 import {
   message,
-  Select,
+  Select,Modal,Button,DatePicker,Progress,Slider,InputNumber
 } from '../../commoncomponent/common.jsx';
 var Option = Select.Option;
-
+const { MonthPicker, RangePicker } = DatePicker;
+const ButtonGroup = Button.Group;
 import ZmitiRoleModal from '../components/roleModal.jsx'
 
 import MainUI from '../components/main.jsx';
@@ -30,6 +31,9 @@ class ZmitiCompanyApp extends Component {
 
       ],
       productList: [],
+      visible:false,
+      datevalue: [],//延长时间
+      inputValue:100,//提升空间
 
 
     };
@@ -45,6 +49,10 @@ class ZmitiCompanyApp extends Component {
       title: '公司名称',
       dataIndex: 'companyName',
       key: 'companyName',
+      render:(text,record)=>{
+        //console.log('record.userid')
+        return <a href={'./index.html#/companyinformation/id/'+record.userid}>{text}</a>
+      }
     }, {
       title: '负责人账号',
       dataIndex: 'username',
@@ -70,13 +78,13 @@ class ZmitiCompanyApp extends Component {
       title: '操作',
       dataIndex: '',
       key: 'x',
-      render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.regular.bind(this)}> 转正</a></div>
+      render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)" onClick={this.timextends.bind(this)}>延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href={'./index.html#/companyuserinfo/试用公司账户/id/'+record.userid}>用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.timextends.bind(this)}>提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.regular.bind(this)}> 转正</a></div>
     });
     var columns2 = columns.concat({
       title: '操作',
       dataIndex: '',
       key: 'x',
-      render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)">延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)">提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.setRole.bind(this,record)}> 设置权限</a></div>
+      render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)" onClick={this.timextends.bind(this)}>延长时间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href={'./index.html#/companyuserinfo/正式公司账户/id/'+record.userid}>用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.timextends.bind(this)}>提升空间</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.setRole.bind(this,record)}> 设置权限</a></div>
     })
     var title = this.props.params.title;
 
@@ -122,7 +130,33 @@ class ZmitiCompanyApp extends Component {
                            <Option value="0">公司名称</Option>
                            <Option value="1">负责人账号</Option>
                        </Select>
+<Modal
+  title="时间延长与提升空间"
+  visible={this.state.visible}
+  onOk={this.handleOk.bind(this)}
+  onCancel={this.handleCancel.bind(this)}
+>
+  <div className="zmiti-system-extend-pane">
+    <div className="zmiti-system-t1">时间延长:</div>
+    <div>
+    <RangePicker onChange={this.datePickerChange.bind(this)} />
+    </div>
+    <br/>
 
+    <div className="zmiti-system-t1">提升空间：单位（M）</div>
+    <Slider min={100} max={1024} onChange={this.spaceChange.bind(this)} value={this.state.inputValue}  />
+    <div>
+      <InputNumber
+          min={100}
+          max={1024}
+          step={10}
+          value={this.state.inputValue}
+          onChange={this.spaceChange.bind(this)}
+        />
+        <div className="zmiti-system-t2">提示：最大可提升到1024M</div>
+    </div>
+  </div>
+</Modal>
       {this.state.showRole && <ZmitiRoleModal {...auothParams} showRole={this.state.showRole} productList={this.state.productList}></ZmitiRoleModal>}
         
       </div>
@@ -168,7 +202,26 @@ class ZmitiCompanyApp extends Component {
 
     })
   }
+  //获取用户
+  getmangeruserlist(uid){
+    var s = this;
+    var params = {
+      getusersigid: this.getusersigid,
+      userid: this.userid,
+      setuserid: this.state.setuserid,
+      setcompanyid:uid
+    }
+    $.ajax({
+      url:'http://api.zmiti.com/v2/user/get_departmentuserlist/',
+      type:'post',
+      data:params,
+      success(data) {
+        console.log(data,'getmanageruserlist');
+      }
 
+    })
+    //console.log(uid,"gggggggg")
+  }
   componentWillMount() {
 
     let {
@@ -217,7 +270,40 @@ class ZmitiCompanyApp extends Component {
       }
     })
   }
-
+  /*延长时间*/
+  timextends(){
+    this.setState({
+      visible: true,
+    });
+  }
+  handleOk(e){
+    var s = this;
+    this.setState({
+      visible: false,
+    });
+    var datevalue=s.state.datevalue;//延长时间
+    var inputValue=s.state.inputValue;//提升空间
+    console.log(datevalue,inputValue);
+  }
+  handleCancel(e){
+    var s = this;
+    this.setState({
+      visible: false,
+    });
+  }
+  /*date*/
+  datePickerChange(date, dateString) {
+    //console.log(dateString[0],dateString[1]);
+    var s = this;
+    s.state.datevalue=dateString;
+    //console.log(s.state.datevalue,'s.state.datevalue');
+  }
+  /*提升空间*/
+  spaceChange(value){
+    this.setState({
+      inputValue: value,
+    });
+  }
   componentDidMount() {
     window.$ = $;
     

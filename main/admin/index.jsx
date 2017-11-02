@@ -21,6 +21,8 @@ import ZmitiRepertoryPubApp from './repertorypub/index.jsx';
 import ZmitiRepertoryComApp from './repertorycom/index.jsx';
 import ZmitiRepertoryPerApp from './repertoryper/index.jsx';
 import ZmitiCategoryRepertoryApp from './categoryrepertory/index.jsx';
+import ZmitiUserinfoApp from './company/userinfo.jsx';
+import ZmitiCompanyinformationApp from './company/information.jsx';
 class App extends React.Component{
     constructor(args) {
       super(...args);
@@ -42,6 +44,8 @@ class App extends React.Component{
 				{path:'/repertorycom/',app:ZmitiRepertoryComApp},
 				{path:'/repertoryper/',app:ZmitiRepertoryPerApp},
 				{path:'/categoryrepertory/(:id)', app: ZmitiCategoryRepertoryApp},
+				{path:'/companyuserinfo/:title/id/(:id)', app: ZmitiUserinfoApp},
+				{path:'/companyinformation/id/(:id)', app: ZmitiCompanyinformationApp},
 			];
     return (
         <Router history={hashHistory} >
