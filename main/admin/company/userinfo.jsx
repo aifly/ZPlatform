@@ -27,14 +27,11 @@ class ZmitiUserinfoApp extends Component {
     this.state = {
       current: 0,
       mainHeight: document.documentElement.clientHeight - 50,
-      userList: [
-
-      ],
-      dataList: [{
+      userList: [{
           "key": "64c319ec-0dfc-0644-4b5f-58e48401031f",
           "isover": 1,
           "username": "wenmingzg",
-          "email": "",
+          "email": "wenmingzg@wenming.cn",
           "mobile": "15810753578",
           "departmentname": "",
           "departmentid": "",
@@ -43,7 +40,7 @@ class ZmitiUserinfoApp extends Component {
           "key": "b44fb05b-ec84-b823-d2d4-58e5f5b47d05",
           "isover": 0,
           "username": "wmw_yangf",
-          "email": "",
+          "email": "yangf@linten.cn",
           "mobile": "13141313322",
           "departmentname": "美编",
           "departmentid": "38b4a40a-e9f4-1c0b-ff38-58e5f505cdac",
@@ -63,20 +60,20 @@ class ZmitiUserinfoApp extends Component {
       key: 'xx',
     }, {
       title: '用户名',
-      dataIndex: 'companyName',
-      key: 'companyName'
+      dataIndex: 'username',
+      key: 'username'
     }, {
       title: '邮箱',
-      dataIndex: 'username',
-      key: 'username',
+      dataIndex: 'email',
+      key: 'email',
     }, {
       title: '手机',
-      dataIndex: 'totalUserNum',
-      key: 'totalUserNum',
+      dataIndex: 'mobile',
+      key: 'mobile',
     }, {
       title: '部门',
-      dataIndex: 'expirDate',
-      key: 'expirDate',
+      dataIndex: 'departmentname',
+      key: 'departmentname',
     }, {
       title: '状态',
       dataIndex: 'userSpace',
@@ -106,9 +103,10 @@ class ZmitiUserinfoApp extends Component {
       mainHeight: this.state.mainHeight,
       title
     }
-    return (
-      <MainUI  component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
-    );
+    var mainComponent = <div>
+		<ZmitiUserList {...props}></ZmitiUserList>
+	</div>;
+	return (<MainUI component={mainComponent}></MainUI>);
   }
 
 
@@ -119,21 +117,29 @@ class ZmitiUserinfoApp extends Component {
   	var uid = this.props.params.id;
   	console.log(uid,'uid');
     
-    /*var params = {
+    var params = {
       getusersigid: this.getusersigid,
       userid: this.userid,
       setuserid: this.state.setuserid,
       setcompanyid:uid
     }
-    $.ajax({
-      url:'http://api.zmiti.com/v2/user/get_departmentlist/',
+    /*$.ajax({
+      url:window.baseUrl + '/user/get_departmentlist/',
       type:'post',
       data:params,
       success:function(data){
         console.log(data,'getmanageruserlist');
+        if (data.getret === 0) {
+          s.setState({
+            userList: data.userlist
+          })
+        } else if (data.getret === -3) {
+          message.error('您没有访问的权限,请重新登录');
+          window.location.href = '/';
+        }
       }
-
     })*/
+
   }
 
 
@@ -189,23 +195,7 @@ class ZmitiUserinfoApp extends Component {
 
 
     let s = this;
-    $.ajax({
-      type: "POST",
-      url: window.baseUrl + "/user/get_userlist/",
-      data: params,
-      success(data) {
-        if (data.getret === 0) {
-          s.setState({
-            userList: data.userlist
-          })
-        } else if (data.getret === -3) {
-          message.error('您没有访问的权限,请重新登录');
-          window.location.href = '/';
-        }
 
-      }
-
-    })
     this.getProductList({
       s: this,
       fn: (data) => {
