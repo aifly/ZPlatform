@@ -79,6 +79,11 @@ class ZmitiUserinfoApp extends Component {
       title: '状态',
       dataIndex: 'isover',
       key: 'isover',
+    }, {
+      title: '操作',
+      dataIndex: '',
+      key: 'x',
+      render:(text,record)=><div><span><a href="javascript:void(0)" onClick={this.deluserinfo.bind(this,record.key)}>删除</a></span></div>
     }];
 
     
@@ -98,7 +103,11 @@ class ZmitiUserinfoApp extends Component {
   }
 
 
-
+  //删除用户
+  deluserinfo(uid){
+  	var s = this;
+  	console.log(uid,'del');
+  }
   //获取用户
   getmangeruserlist(){
   	var s = this;
