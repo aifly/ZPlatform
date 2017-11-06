@@ -1,63 +1,26 @@
-import React, { Component } from 'react';
+import React, {
+	Component
+} from 'react';
 import './static/css/index.css';
-import ZmitiUserList  from '../../components/zmiti-user-list.jsx';
-import { message,Select  } from '../../commoncomponent/common.jsx';
+import ZmitiUserList from '../../components/zmiti-user-list.jsx';
+import {
+	message,
+	Select
+} from '../../commoncomponent/common.jsx';
 let Option = Select.Option;
 import MainUI from '../components/main.jsx';
-import {ZmitiValidateUser} from '../../public/validate-user.jsx';
+import {
+	ZmitiValidateUser
+} from '../../public/validate-user.jsx';
 import $ from 'jquery';
 class ZmitiSystemApp extends Component {
 	constructor(props) {
 		super(props);
-		
-		this.state = {
-			current:0,
 
-			userList:[
-			{
-				key:1,
-				username:'bmyuan',
-				mobile:'13455422525',
-				email:'1345542525@163.com',
-				sigleUserTotalNum:'13|30',
-				companyUserTotalNum:'13|30'
-			},{
-				key:2,
-				username:'bmyuan',
-				mobile:'13455422525',
-				email:'1345542525@163.com',
-				sigleUserTotalNum:'13|30',
-				companyUserTotalNum:'13|30'
-			},{
-				key:3,
-				username:'bmyuan',
-				mobile:'13455422525',
-				email:'1345542525@163.com',
-				sigleUserTotalNum:'13|30',
-				companyUserTotalNum:'13|30'
-			},{
-				key:4,
-				username:'bmyuan',
-				mobile:'13455422525',
-				email:'1345542525@163.com',
-				sigleUserTotalNum:'13|30',
-				companyUserTotalNum:'13|30'
-			},{
-				key:5,
-				username:'bmyuan',
-				mobile:'13455422525',
-				email:'1345542525@163.com',
-				sigleUserTotalNum:'13|30',
-				companyUserTotalNum:'13|30'
-			},{
-				key:6,
-				username:'bmyuan',
-				mobile:'13455422525',
-				email:'1345542525@163.com',
-				sigleUserTotalNum:'13|30',
-				companyUserTotalNum:'13|30'
-			}
-			],
+		this.state = {
+			current: 0,
+
+			userList: [],
 
 		};
 		this.changeAccount = this.changeAccount.bind(this);
@@ -67,86 +30,132 @@ class ZmitiSystemApp extends Component {
 			title: '序号',
 			dataIndex: 'key',
 			key: 'xx',
-		},{
+		}, {
 			title: '用户名',
 			dataIndex: 'username',
 			key: 'username',
 		}, {
 			title: '手机',
-			dataIndex: 'mobile',
-			key: 'mobile',
+			dataIndex: 'usermobile',
+			key: 'usermobile',
 		}, {
 			title: '邮箱',
-			dataIndex: 'email',
-			key: 'email',
+			dataIndex: 'useremail',
+			key: 'useremail',
 		}, {
 			title: '个人用户数',
-			dataIndex: 'sigleUserTotalNum',
+			dataIndex: '',
 			key: 'sigleUserTotalNum',
+			render: (record) =>
+				<div>
+					<a href = 'javascript:void(0)' title='试用用户' > {record.trypersonusernum||0} </a>
+					 | <a href='javascript:void(0)' title='正式用户'>{record.formalpersonusernum||0}</a>
+				</div>
+
 		}, {
 			title: '公司用户数',
-			dataIndex: 'companyUserTotalNum',
+			dataIndex: '',
 			key: 'companyUserTotalNum',
-		}, { 
-			title: '操作', 
-			dataIndex: '', key: 'x',
-			render: () => <div><a href="#">转用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">删除</a></div>}];
+			render: (record) =>
+				<div>
+					<a href = 'javascript:void(0)' title='试用用户' > {record.trycompanyusernum||0} </a>
+					 | <a href='javascript:void(0)' title='正式用户'>{record.formalcompnayusernum||0}</a>
+				</div>
+		}, {
+			title: '操作',
+			dataIndex: '',
+			key: 'x',
+			render: () => <div><a href="#">转用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">删除</a></div>
+		}];
 
-			var title = this.props.params.title;
-			let props={
-				userList:this.state.userList,
-				columns:[columns,columns],
-				changeAccount:this.changeAccount,
-				tags:['账户管理','分配用户'],
-				mainHeight:this.state.mainHeight,
-				title,
-				keyDown:(value)=>{
-        clearTimeout(this.keyupTimer);
-        this.defautlUserList === undefined && (this.defautlUserList = this.state.userList.concat([]));
-        this.keyupTimer = setTimeout(()=>{
-          var userlists = this.defautlUserList;
-          var condition = 'username';
-          this.state.userList  = userlists.filter(user=>{
-            switch(this.condition*1){
-              case 0://提问内容
-                condition = 'username';
-              break;
-              case 1://类型
-                condition = 'username'
-              break;
-            }
+		var title = this.props.params.title;
+		let props = {
+			userList: this.state.userList,
+			columns: [columns, columns],
+			changeAccount: this.changeAccount,
+			tags: ['账户管理'],
+			mainHeight: this.state.mainHeight,
+			title,
+			type: 'system',
+			keyDown: (value) => {
+				clearTimeout(this.keyupTimer);
+				this.defautlUserList === undefined && (this.defautlUserList = this.state.userList.concat([]));
+				this.keyupTimer = setTimeout(() => {
+					var userlists = this.defautlUserList;
+					var condition = 'username';
+					this.state.userList = userlists.filter(user => {
+						switch (this.condition * 1) {
+							case 0: //提问内容
+								condition = 'username';
+								break;
+							case 1: //类型
+								condition = 'username'
+								break;
+						}
 
-           return user[condition].indexOf(value)>-1;
-          });
+						return user[condition].indexOf(value) > -1;
+					});
 
-          this.forceUpdate(()=>{
-          });
-        },350);
-    },
-    selectComponent:<Select placeholder='用户名' onChange={(e)=>{this.condition = e}}  style={{width:120}} size='small' >
+					this.forceUpdate(() => {});
+				}, 350);
+			},
+			selectComponent: <Select placeholder='用户名' onChange={(e)=>{this.condition = e}}  style={{width:120}} size='small' >
                        <Option value="0">用户名</Option>
                    </Select>
+		}
+		return (
+			<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
+		);
+	}
+
+	componentWillMount() {
+
+		let {
+			resizeMainHeight,
+			validateUser,
+			loginOut
+		} = this.props;
+		resizeMainHeight(this);
+		let {
+			userid,
+			getusersigid,
+			usertypesign
+		} = validateUser(() => {
+			loginOut(undefined, undefined, false);
+		}, this);
+		this.userid = userid;
+		this.getusersigid = getusersigid;
+	}
+	componentDidMount() {
+
+		$.ajax({
+			type: 'post',
+			url: window.baseUrl + 'admin/getadminuserlist',
+			data: {
+				userid: this.userid,
+				getusersigid: this.getusersigid
 			}
-			return (
-				<MainUI component={<ZmitiUserList {...props}></ZmitiUserList>}></MainUI>
-				);
-		}
+		}).done((data) => {
 
-		componentWillMount() {
+			if (data.getret === 0) {
 
-			let {resizeMainHeight,validateUser,loginOut} = this.props;
-			resizeMainHeight(this);
-			validateUser(()=>{loginOut(undefined,undefined,false);},this);
-		}
-		componentDidMount() {
-			
-		}
-		changeAccount(e){
+				data.list.forEach((item, i) => {
+					item.key = i + 1;
+				});
+
+				console.log(data.list);
+
+				this.setState({
+					userList: data.list
+				})
+			}
+		})
+
+	}
+	changeAccount(e) {
 		// e : 0  1;
 	}
+
 }
 
 export default ZmitiValidateUser(ZmitiSystemApp);
-
-
-/*ReactDOM.render(<ZmitiSystemApp></ZmitiSystemApp>,document.getElementById('fly-main'));*/

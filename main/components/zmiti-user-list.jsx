@@ -30,7 +30,7 @@ export default class ZmitiUserList extends Component {
 
 
 
-		var userList = null;
+		var userList = this.props.userList;
 		switch (this.props.type) {
 			case "user":
 				userList = this.props.userList.filter(item => {
@@ -91,6 +91,7 @@ export default class ZmitiUserList extends Component {
 				this.props.keyDown(e.target.value)
 			}
 		}
+
 
 		return (
 			<section className='user-main-ui' style={{height:this.props.mainHeight}}>

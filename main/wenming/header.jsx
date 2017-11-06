@@ -102,6 +102,7 @@ class ZmitiWenmingAsideBarApp extends React.Component {
                 return;
             }
         });
+
         if (!this.productid) {
             message.error('您没有访问权限');
             setTimeout(() => {
@@ -112,7 +113,7 @@ class ZmitiWenmingAsideBarApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + '/admin/userhaveauth',
+            url: window.baseUrl + '/admin/userauth/',
             data: {
                 userid: userid,
                 getusersigid: getusersigid,
@@ -121,6 +122,8 @@ class ZmitiWenmingAsideBarApp extends React.Component {
             }
         }).done(data => {
             if (data.getret === 0) {
+
+
                 if (data.code === 1) { //无此权限
                     message.error('您没有访问权限');
                     setTimeout(() => {
