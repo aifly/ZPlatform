@@ -1,31 +1,3 @@
-html, body, div, p, ul, li, ol, dl, dt, dd, header, footer, video, h1, h2, h3, h4, canvas, section, figure {
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  text-decoration: none;
-}
-
-li {
-  list-style: none;
-}
-
-html, body {
-  height: 100%;
-}
-
-img {
-  border: none;
-  vertical-align: top;
-  width: 100%;
-  height: auto;
-}
-
-input, textarea {
-  outline: none;
-}
-
 @mixin pos($v) {
   @if
   $v == a {
@@ -131,22 +103,57 @@ input, textarea {
   display: -webkit-flex;
   flex-flow: $v;
 }
-
-body {
-  font-family: 'Microsoft Yahei', Tahoma, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  height: 100%;
-  overflow: hidden;
-}
-.zmiti-system-extend-pane{
-  .zmiti-system-t1{
-    line-height:30px;
-    color:#000;
+.zmiti-companyuserinfo-main-ui{
+  font-size: 12px;
+  .hr20{
+    height:20px;
   }
-  .zmiti-system-t2{
-    line-height:30px;
-    color:#ff0000;
+  .hr10{
+    height:10px;
   }
+  .hr5{
+    height:5px;
+  }
+  .textright {
+      text-align: right;
+  }
+  .zmiti-companyuserinfo-header-inner {
+      padding-left: 8px;
+      position: relative;
+      line-height: 28px;
+  }
+  .zmiti-companyuserinfo-header-inner:before {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    background: #88b7e0;
+    left: 0;
+    -webkit-transform: scale(1,0.7);
+    transform: scale(1,0.7);
+  }
+  .companyuserinfo-search {
+      margin: 15px 0;
+      
+      .zmiti-companyuserinfo-with130 {
+          width: 130px;
+      }
+      .zmiti-companyuserinfo-with70 {
+          width: 70px;
+      }
+      .zmiti-companyuserinfo-with60 {
+          width: 60px;
+      }
+      .companyuserinfo-heigth30 {
+          height: 30px;
+          line-height: 30px;
+          overflow: hidden;
+      }
+  }
+  .zmiti-companyuserinfo-line {
+      height: 15px;
+      overflow: hidden;
+      border-bottom: 1px solid #ddd;
+  }
+
 }
-
-
