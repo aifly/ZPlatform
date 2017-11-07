@@ -65,7 +65,9 @@ class ZmitiSystemApp extends Component {
 			title: '操作',
 			dataIndex: '',
 			key: 'x',
-			render: () => <div><a href="#">转用户</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">删除</a></div>
+			render: () => <div>
+				<a href="javascript:void(0)">分配用户</a><a href="javascript:void(0)" className='system-operator'>转用户</a><a href="javascript:void(0)">删除</a>
+			</div>
 		}];
 
 		var title = this.props.params.title;
@@ -151,6 +153,39 @@ class ZmitiSystemApp extends Component {
 			}
 		})
 
+	}
+
+	getUserList() {
+
+		var params = {
+			getusersigid: this.getusersigid,
+			userid: this.userid,
+			setusertypesign: 1,
+			pagesize: 100
+		}
+		let s = this;
+		$.ajax({
+			type: "POST",
+			url: window.baseUrl + "/user/get_userlist/",
+			data: params,
+			success(data) {
+
+				if (data.getret === 0) {
+
+					s.setState({
+						userList: data.userlist
+					});
+				} else if (data.getret === -3) {
+					message.error('您没有访问的权限,2秒后跳转到首页');
+					setTimeout(() => {
+						location.href = '/';
+					}, 2000)
+				} else {
+					loginOut(data.getmsg, window.loginUrl, false);
+				}
+			}
+
+		})
 	}
 	changeAccount(e) {
 		// e : 0  1;

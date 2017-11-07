@@ -1,0 +1,36 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Users\\ltth-one\'s\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'start' ]
+2 info using npm@4.0.2
+3 info using node@v6.3.0
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info lifecycle knowledge@1.0.0~prestart: knowledge@1.0.0
+6 silly lifecycle knowledge@1.0.0~prestart: no script for prestart, continuing
+7 info lifecycle knowledge@1.0.0~start: knowledge@1.0.0
+8 verbose lifecycle knowledge@1.0.0~start: unsafe-perm in lifecycle true
+9 verbose lifecycle knowledge@1.0.0~start: PATH: C:\Users\ltth-one's\AppData\Roaming\npm\node_modules\npm\bin\node-gyp-bin;F:\xuchang2016\github\ZPlatform\main\node_modules\.bin;C:\Users\ltth-one's\AppData\Local\GitHub\PortableGit_d76a6a98c9315931ec4927243517bc09e9b731a0\cmd;C:\Users\ltth-one's\AppData\Local\GitHub\PortableGit_d76a6a98c9315931ec4927243517bc09e9b731a0\usr\bin;C:\Users\ltth-one's\AppData\Local\GitHub\PortableGit_d76a6a98c9315931ec4927243517bc09e9b731a0\usr\share\git-tfs;C:\Users\ltth-one's\AppData\Local\Apps\2.0\8DQGQ05M.1JA\17X0PDL8.8XO\gith..tion_317444273a93ac29_0003.0001_cbe40ecbe3e419d4;C:\Users\ltth-one's\AppData\Local\GitHub\lfs-amd64_1.2.0;F:\xuchang2017\Anaconda;F:\xuchang2017\Anaconda\Library\mingw-w64\bin;F:\xuchang2017\Anaconda\Library\usr\bin;F:\xuchang2017\Anaconda\Library\bin;F:\xuchang2017\Anaconda\Scripts;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Program Files\Broadcom\Broadcom 802.11 Network Adapter\Driver;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Lenovo\Bluetooth Software\;C:\Program Files\Lenovo\Bluetooth Software\syswow64;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\nodejs\;F:\xuchang2016\wamp\wamp\bin\mysql\mysql5.6.17\bin;C:\Program Files\TortoiseSVN\bin;C:\Ruby23-x64\bin;E:\less.js-windows-v2.6.1;G:\android\sdk\platform-tools;G:\android\sdk\tools;C:\Program Files\Java\jdk1.8.0_101\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;c:\Program Files (x86)\QuickTime\QTSystem\;E:\brackets\command;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit\;E:\Git\cmd;C:\Program Files\MySQL\MySQL Utilities 1.6\;C:\Ruby23-x64\bin;C:\Users\ltth-one's\AppData\Roaming\npm;C:\Users\ltth-one's\AppData\Local\Microsoft\WindowsApps;C:\Users\ltth-one's\AppData\Local\atom\bin;F:\xuchang2017\Anaconda;;C:\Program Files (x86)\MSBuild\14.0\bin\
+10 verbose lifecycle knowledge@1.0.0~start: CWD: F:\xuchang2016\github\ZPlatform\main
+11 silly lifecycle knowledge@1.0.0~start: Args: [ '/d /s /c',
+11 silly lifecycle   'webpack-dev-server --hot --inline --history-api-fallback' ]
+12 verbose stack Error: kill ENOSYS
+12 verbose stack     at exports._errnoException (util.js:1008:11)
+12 verbose stack     at process.kill (internal/process.js:172:13)
+12 verbose stack     at process.listener (C:\Users\ltth-one's\AppData\Roaming\npm\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:86:15)
+12 verbose stack     at emitNone (events.js:91:20)
+12 verbose stack     at process.emit (events.js:185:7)
+12 verbose stack     at processEmit (C:\Users\ltth-one's\AppData\Roaming\npm\node_modules\npm\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at processEmit (C:\Users\ltth-one's\AppData\Roaming\npm\node_modules\npm\node_modules\npm-registry-client\node_modules\npmlog\node_modules\gauge\node_modules\signal-exit\index.js:146:32)
+12 verbose stack     at Signal.wrap.onsignal (internal/process.js:199:44)
+13 verbose cwd F:\xuchang2016\github\ZPlatform\main
+14 error Windows_NT 10.0.15063
+15 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\ltth-one's\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js" "start"
+16 error node v6.3.0
+17 error npm  v4.0.2
+18 error code ENOSYS
+19 error errno ENOSYS
+20 error syscall kill
+21 error kill ENOSYS
+22 error If you need help, you may report this error at:
+22 error     <https://github.com/npm/npm/issues>
+23 verbose exit [ 1, true ]
