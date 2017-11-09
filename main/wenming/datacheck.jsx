@@ -309,8 +309,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                 </div>
                                                 <ol>
                                                     {item.imgs.map((img,k)=>{
-                                                        return <li onClick={this.viewPic.bind(this,i,k)} key={k} style={{cursor:'url(./static/images/big.cur),auto',background:'url('+img+') no-repeat center center / cover'}}>
-                                                            <img  src={img} style={{opacity:0,width:100,height:100}}/>
+                                                        return <li onClick={this.viewPic.bind(this,i,k)} key={k} style={{cursor:'url(./static/images/big.cur),auto',background:'url('+(item.imgs.imgList[k].loaded?img:'./static/images/default-loading.jpg')+') no-repeat center center / cover'}}>
+                                                            <img onLoad={()=>{item.imgs.imgList[k].loaded=  true ;this.forceUpdate()}} src={img} style={{opacity:0,width:100,height:100}}/>
                                                         </li>
                                                     })}
                                                     {item.voidurl  && <li onClick={this.viewVideo.bind(this,item.voidurl )}><Icon type="play-circle-o" /></li>}
@@ -765,6 +765,11 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                     console.log(data)
                     data.list.map((item, i) => {
                         var imgs = item.imageslist.split(',');
+                        imgs.imgList = [];
+                        imgs.map((item, i) => {
+                            imgs.imgList[i] = {}
+                            imgs.imgList[i].loaded = false;
+                        });
                         if (!imgs[0]) {
                             imgs.shift();
                         }
