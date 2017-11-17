@@ -141,7 +141,7 @@ class ZmitiCompanyApp extends Component {
     <div>
     <RangePicker onChange={this.datePickerChange.bind(this)} />
     </div>
-    <br/>
+    <div class="hr20"></div>
 
     <div className="zmiti-system-t1">提升空间：单位（M）</div>
     <Slider min={100} max={1024} onChange={this.spaceChange.bind(this)} value={this.state.inputValue}  />

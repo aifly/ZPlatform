@@ -16,13 +16,22 @@
 	-webkit-column-gap: $k;
 	column-gap: $k;
 }
-
+.zmiti-companyuserinfo-action{
+	span{
+		padding:0 15px 0 0;
+	}
+}
 .viewuserinfor-main {
 	padding: 50px;
 	min-width: 1130px;
 	overflow: auto;
 	background-color: #f1f1f1;
-
+	.hr20{
+		height:20px;
+	}
+	.hr50{
+		height:50px;
+	}
 	.companyupdatestyle {
 		position: relative;
 	}

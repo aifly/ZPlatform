@@ -83,7 +83,10 @@ class ZmitiUserinfoApp extends Component {
       title: '操作',
       dataIndex: '',
       key: 'x',
-      render:(text,record)=><div><span><a href="javascript:void(0)" onClick={this.deluserinfo.bind(this,record.key)}>删除</a></span></div>
+      render:(text,record)=><div className="zmiti-companyuserinfo-action">
+      	<span><a href="javascript:void(0)" onClick={this.deluserinfo.bind(this,record.key)}>设置权限</a></span>
+      	<span><a href="javascript:void(0)" onClick={this.deluserinfo.bind(this,record.key)}>删除</a></span>
+      </div>
     }];
 
     
