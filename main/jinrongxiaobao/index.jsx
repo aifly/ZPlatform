@@ -18,6 +18,13 @@ import MainUI from '../components/Main.jsx';
             loading:false,
             tip:'数据拉取中...',
             keyword:'',
+            visible:false,            
+            name:'',//名称            
+            city:'',//城市
+            positionbd:'',//百度地图坐标
+            positiongd:'',//高德地图坐标
+            address:'',//地址
+            decoration:'',//简介
             dataSource:[{
               key: '1',
               name: '名称1',
@@ -74,7 +81,10 @@ import MainUI from '../components/Main.jsx';
             </span>
           ),
         }];
-
+        const formItemLayout = {
+           labelCol: {span: 6},
+           wrapperCol: {span: 14},
+        };
         var title = this.props.params.title || '金融消保';
         const monthFormat = 'YYYY/MM';
         let props={
@@ -91,8 +101,8 @@ import MainUI from '../components/Main.jsx';
                 <div className='pad-10'>
                     <div className="zmiti-jinrongxb-header">
                         <Row>
-                            <Col span={8} className="zmiti-jinrongxb-header-inner">地址管理</Col>
-                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary'>添加</Button></Col>
+                            <Col span={8} className="zmiti-jinrongxb-header-inner">消保地址</Col>
+                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary' onClick={this.showModal.bind(this)}>添加</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
@@ -102,7 +112,85 @@ import MainUI from '../components/Main.jsx';
                     </Row>
                     <Table columns={columns} dataSource={this.state.dataSource} />
                 </div>
+                <Modal
+                  title="消保地址"
+                  width={800}
+                  visible={this.state.visible}
+                  onOk={this.handleOk.bind(this)}
+                  onCancel={this.handleCancel.bind(this)}
+                >
+                    <Form>
+                      <FormItem
+                        {...formItemLayout}
+                        label="名称"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="名称" 
+                            value={this.state.name}
+                            onChange={(e)=>{this.state.name=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="城市"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="城市" 
+                            value={this.state.city}
+                            onChange={(e)=>{this.state.city=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="地址"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="地址" 
+                            value={this.state.address}
+                            onChange={(e)=>{this.state.address=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="百度地图坐标"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="百度地图坐标" 
+                            value={this.state.positionbd}
+                            onChange={(e)=>{this.state.positionbd=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="高德地图坐标"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="高德地图坐标" 
+                            value={this.state.positiongd}
+                            onChange={(e)=>{this.state.positiongd=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="简介"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="简介" 
+                            value={this.state.decoration}
+                            onChange={(e)=>{this.state.decoration=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
 
+
+                    </Form>
+                    
+                </Modal>
             </div>
         }
         var mainComponent = <div>
@@ -144,19 +232,24 @@ import MainUI from '../components/Main.jsx';
             window.location.hash='jinrongxiaobaosetup/';
         }
     }
-    //search
-    /*searchByKeyword(e){
+    showModal() {
         this.setState({
-            keyword:e.target.value
-        },()=>{
-            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
+          visible: true,
+        });
+    }
 
-            this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.jobname.indexOf(this.state.keyword)>-1;
-            });
-            this.forceUpdate();
-        })
-    }*/
+    handleOk(e){
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+    }
+    handleCancel(e) {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+    }
 
 
 
