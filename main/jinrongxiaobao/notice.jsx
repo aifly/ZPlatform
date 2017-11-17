@@ -10,7 +10,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import MainUI from '../components/Main.jsx';
 
- class ZmitiJinrongxbApp extends React.Component{
+ class ZmitiJinrongxbNoticeApp extends React.Component{
     constructor(args){
         super(...args);
         this.state = {
@@ -20,19 +20,16 @@ import MainUI from '../components/Main.jsx';
             keyword:'',
             dataSource:[{
               key: '1',
-              name: '名称1',
-              city: '西安',
-              address: '未央区张家堡',
+              name: '标题标题标题标题',              
+              newsdate: '2017-11-17',
             }, {
               key: '2',
-              name: '名称2',
-              city: '西安',
-              address: '新城区西一路',
+              name: '标题标题标题标题标题标题标题标题2',
+              newsdate: '2017-11-17',
             }, {
               key: '3',
-              name: '名称3',
-              city: '西安',
-              address: '碑林区张家村',
+              name: '标题标题标题标题标题标题标题标题3',
+              newsdate: '2017-11-17',
             }],            
         }
         this.currentId = -1;
@@ -49,19 +46,15 @@ import MainUI from '../components/Main.jsx';
         resizeMainHeight(this);
         
         const columns = [{
-          title: '名称',
+          title: '标题',
           dataIndex: 'name',
           key: 'name',
           render: text => <a href="#">{text}</a>,
         }, {
-          title: '城市',
-          dataIndex: 'city',
-          key: 'city',
+          title: '时间',
+          dataIndex: 'newsdate',
+          key: 'newsdate',
           width:150,
-        }, {
-          title: '地址',
-          dataIndex: 'address',
-          key: 'address',
         }, {
           title: '操作',
           key: 'action',
@@ -91,14 +84,14 @@ import MainUI from '../components/Main.jsx';
                 <div className='pad-10'>
                     <div className="zmiti-jinrongxb-header">
                         <Row>
-                            <Col span={8} className="zmiti-jinrongxb-header-inner">地址管理</Col>
+                            <Col span={8} className="zmiti-jinrongxb-header-inner">公告管理</Col>
                             <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary'>添加</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
                     <Row gutter={10} type='flex' className='jinrongxb-search '>
-                        <Col className="jinrongxb-heigth45">名称：</Col>
-                        <Col className="jinrongxb-heigth45"><Input value={this.state.keyword} placeholder="名称" /></Col>
+                        <Col className="jinrongxb-heigth45">标题：</Col>
+                        <Col className="jinrongxb-heigth45"><Input value={this.state.keyword} placeholder="标题" /></Col>
                     </Row>
                     <Table columns={columns} dataSource={this.state.dataSource} />
                 </div>
@@ -166,4 +159,4 @@ import MainUI from '../components/Main.jsx';
   
 }
 
-export default ZmitiValidateUser(ZmitiJinrongxbApp);
+export default ZmitiValidateUser(ZmitiJinrongxbNoticeApp);

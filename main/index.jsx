@@ -69,7 +69,9 @@ import ZmitiLetterApp from './letter/index.jsx';
 import ZmitiWenmingCommentDetailApp from './wenming/commentdetail.jsx';
 import ZmitiBoardroomApp from './boardroom/index.jsx';
 import ZmitiJinrongxbApp from './jinrongxiaobao/index.jsx';
-
+import ZmitiJinrongxbPolicyApp from './jinrongxiaobao/policy.jsx';
+import ZmitiJinrongxbNoticeApp from './jinrongxiaobao/notice.jsx';
+import ZmitiJinrongxbSetupApp from './jinrongxiaobao/setup.jsx';
 import {
 	notification
 } from './commoncomponent/common.jsx';
@@ -253,6 +255,15 @@ class App extends React.Component {
 			}, {
 				path: '/jinrongxiaobao',
 				app: ZmitiJinrongxbApp
+			}, {
+				path: '/jinrongxiaobaopolicy',
+				app: ZmitiJinrongxbPolicyApp
+			}, {
+				path: '/jinrongxiaobaonotice',
+				app: ZmitiJinrongxbNoticeApp
+			}, {
+				path: '/jinrongxiaobaosetup',
+				app: ZmitiJinrongxbSetupApp
 			},
 
 		];
