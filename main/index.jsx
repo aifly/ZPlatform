@@ -68,7 +68,7 @@ import ZmitiLetterApp from './letter/index.jsx';
 
 import ZmitiWenmingCommentDetailApp from './wenming/commentdetail.jsx';
 import ZmitiBoardroomApp from './boardroom/index.jsx';
-
+import ZmitiJinrongxbApp from './jinrongxiaobao/index.jsx';
 
 import {
 	notification
@@ -250,6 +250,9 @@ class App extends React.Component {
 			}, {
 				path: '/boardroom',
 				app: ZmitiBoardroomApp
+			}, {
+				path: '/jinrongxiaobao',
+				app: ZmitiJinrongxbApp
 			},
 
 		];
