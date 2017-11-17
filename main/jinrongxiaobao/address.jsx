@@ -1,6 +1,6 @@
 import './static/css/index.css';
 import React from 'react';
-import {message,Select,Modal,Form,Icon,Tag,Tooltip, Input,Button, Row, Col,Switch,Radio,InputNumber,DatePicker,Table ,moment,Spin} from '../commoncomponent/common.jsx';
+import {message,Select,Modal,Form,Icon,Tag,Tooltip,Cascader, Input,Button, Row, Col,Switch,Radio,InputNumber,DatePicker,Table ,moment,Spin} from '../commoncomponent/common.jsx';
 let Search = Input.Search;
 const FormItem = Form.Item;
 let Option = Select.Option;
@@ -10,7 +10,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import MainUI from '../components/Main.jsx';
 
- class ZmitiJinrongxbApp extends React.Component{
+ class ZmitiJinrongxbaddressApp extends React.Component{
     constructor(args){
         super(...args);
         this.state = {
@@ -19,12 +19,24 @@ import MainUI from '../components/Main.jsx';
             tip:'数据拉取中...',
             keyword:'',
             visible:false,            
-            name:'',//名称            
+            name:'',//名称
+            province:'',//省份          
             city:'',//城市
             positionbd:'',//百度地图坐标
             positiongd:'',//高德地图坐标
             address:'',//地址
             decoration:'',//简介
+            options:[{
+              value: 'shanxi',
+              label: '陕西',
+              children: [{
+                value: 'xian',
+                label: '西安',
+              },{
+                value: 'xianyang',
+                label: '咸阳',
+              }],
+            }],
             dataSource:[{
               key: '1',
               name: '名称1',
@@ -82,8 +94,26 @@ import MainUI from '../components/Main.jsx';
           ),
         }];
         const formItemLayout = {
-           labelCol: {span: 6},
-           wrapperCol: {span: 14},
+          labelCol: {
+            xs: { span: 24 },
+            sm: { span: 6 },
+          },
+          wrapperCol: {
+            xs: { span: 24 },
+            sm: { span: 14 },
+          },
+        };
+        const tailFormItemLayout = {
+          wrapperCol: {
+            xs: {
+              span: 24,
+              offset: 0,
+            },
+            sm: {
+              span: 14,
+              offset: 6,
+            },
+          },
         };
         var title = this.props.params.title || '金融消保';
         const monthFormat = 'YYYY/MM';
@@ -102,23 +132,11 @@ import MainUI from '../components/Main.jsx';
                     <div className="zmiti-jinrongxb-header">
                         <Row>
                             <Col span={8} className="zmiti-jinrongxb-header-inner">消保地址</Col>
-                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary' onClick={this.address.bind(this)}>添加</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary' onClick={this.showModal.bind(this)}>添加</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
-                    <Row gutter={10} type='flex' className='jinrongxb-search '>
-                        <Col className="jinrongxb-heigth45">名称：</Col>
-                        <Col className="jinrongxb-heigth45"><Input value={this.state.keyword} placeholder="名称" /></Col>
-                    </Row>
-                    <Table columns={columns} dataSource={this.state.dataSource} />
-                </div>
-                <Modal
-                  title="消保地址"
-                  width={800}
-                  visible={this.state.visible}
-                  onOk={this.handleOk.bind(this)}
-                  onCancel={this.handleCancel.bind(this)}
-                >
+                    <div className="jinrongxb-heigth45"></div>
                     <Form>
                       <FormItem
                         {...formItemLayout}
@@ -135,12 +153,8 @@ import MainUI from '../components/Main.jsx';
                         {...formItemLayout}
                         label="城市"
                         hasFeedback
-                      >                        
-                          
-                          <Input placeholder="城市" 
-                            value={this.state.city}
-                            onChange={(e)=>{this.state.city=e.target.value;this.forceUpdate();}}
-                          />                      
+                      >  
+                        <Cascader options={this.state.options} onChange={this.selectcity.bind(this)} placeholder="选择城市" />
                       </FormItem>
                       <FormItem
                         {...formItemLayout}
@@ -181,16 +195,16 @@ import MainUI from '../components/Main.jsx';
                         hasFeedback
                       >                        
                           
-                          <Input placeholder="简介" 
-                            value={this.state.decoration}
-                            onChange={(e)=>{this.state.decoration=e.target.value;this.forceUpdate();}}
-                          />                      
+                          <textarea rows={4} className="ant-input ant-input-lg">
+                          </textarea>             
                       </FormItem>
 
-
-                    </Form>
+                      <FormItem {...tailFormItemLayout}>
+                        <Button type="primary" htmlType="submit">提交</Button>
+                      </FormItem>
+                    </Form> 
                     
-                </Modal>
+                </div>
             </div>
         }
         var mainComponent = <div>
@@ -232,8 +246,9 @@ import MainUI from '../components/Main.jsx';
             window.location.hash='jinrongxiaobaosetup/';
         }
     }
-    address(){
-        window.location.hash='jinrongxiaobaoaddress/';
+    //选择城市
+    selectcity(value) {
+      console.log(value);
     }
     showModal() {
         this.setState({
@@ -262,4 +277,4 @@ import MainUI from '../components/Main.jsx';
   
 }
 
-export default ZmitiValidateUser(ZmitiJinrongxbApp);
+export default ZmitiValidateUser(ZmitiJinrongxbaddressApp);

@@ -72,6 +72,7 @@ import ZmitiJinrongxbApp from './jinrongxiaobao/index.jsx';
 import ZmitiJinrongxbPolicyApp from './jinrongxiaobao/policy.jsx';
 import ZmitiJinrongxbNoticeApp from './jinrongxiaobao/notice.jsx';
 import ZmitiJinrongxbSetupApp from './jinrongxiaobao/setup.jsx';
+import ZmitiJinrongxbaddressApp from './jinrongxiaobao/address.jsx';
 import {
 	notification
 } from './commoncomponent/common.jsx';
@@ -264,6 +265,9 @@ class App extends React.Component {
 			}, {
 				path: '/jinrongxiaobaosetup',
 				app: ZmitiJinrongxbSetupApp
+			}, {
+				path: '/jinrongxiaobaoaddress',
+				app: ZmitiJinrongxbaddressApp
 			},
 
 		];
