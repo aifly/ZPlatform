@@ -367,7 +367,9 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
             success(data){
                 if(data.getret === 0){
                     message.success('删除成功！');                    
-                    s.bindNewdata();                  
+                    setTimeout(()=>{
+                        s.bindNewdata();
+                    },2000)               
                 }else{
 
                 	message.error(data.getmsg);
