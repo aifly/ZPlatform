@@ -1,0 +1,44 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
+.zmiti-jinrongxb-map {
+  width: 100%;
+  height: 300px; }
+
+.zmiti-xb-upload {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  cursor: pointer;
+  position: relative; }
+  .zmiti-xb-upload:hover > div {
+    opacity: 1; }
+  .zmiti-xb-upload > div {
+    position: absolute;
+    width: 100%;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+    opacity: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    left: 0;
+    top: 0;
+    color: red;
+    font-size: 40px;
+    line-height: 100px; }
+
+/*# sourceMappingURL=address.css.map */

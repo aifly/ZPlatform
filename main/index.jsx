@@ -266,7 +266,7 @@ class App extends React.Component {
 				path: '/jinrongxiaobaosetup',
 				app: ZmitiJinrongxbSetupApp
 			}, {
-				path: '/jinrongxiaobaoaddress',
+				path: '/jinrongxiaobaoaddress/(:id)',
 				app: ZmitiJinrongxbaddressApp
 			},
 
