@@ -26,7 +26,7 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
             content:'',
             sort:0,//排序
             istop:0,//是否置顶
-            textlength:50,
+            textlength:48,
             dataSource:[],          
         }
         this.currentId = -1;
@@ -160,10 +160,9 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
     writenotice(e){
         var s = this;
         s.state.content=e.target.value;
-        s.state.textlength=50-s.state.content.length;
-        if(s.state.content.length>50){
+        s.state.textlength=48-s.state.content.length;
+        if(s.state.content.length>48){
             s.state.textlength=0;
-            message.warning("内容超出字数限制！");
         }
         s.forceUpdate();
     }
@@ -177,7 +176,7 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
             sort:s.state.sort,
             noticeid:s.state.noticeid,
         }
-        if(s.state.content.length<51){
+        if(s.state.content.length<49){
             $.ajax({
               type:'POST',
               url:window.baseUrl + 'xbadmin/editnotice/',
@@ -209,7 +208,7 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
                 if(data.getret === 0){       
                     
                     s.state.content=data.detail.content;
-                    s.state.textlength=50-data.detail.content.length;
+                    s.state.textlength=48-data.detail.content.length;
                     s.forceUpdate();
                 }
             }

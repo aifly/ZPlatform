@@ -25,9 +25,10 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
             content:'',
             sort:0,//排序
             dataSource:[],
+            dataSearchSource:[],
             total:0,
 			pageIndex:1,
-			pagenum:5,        
+			pagenum:10,        
         }
         this.currentId = -1;
     }
@@ -104,7 +105,7 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
                         <Col className="jinrongxb-heigth45">搜索</Col>
                         <Col className="jinrongxb-heigth45">
                         	<Search
-                                placeholder="输入文章内容"
+                                placeholder="输入标题"
                                 style={{ width: 200 }}
                                 onSearch={function(value){                                    
                                     s.state.titleIndex=value;
@@ -228,9 +229,9 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
             success(data){
 
                 if(data.getret === 0){
-                    //console.log(data,"信息列表");
+                    console.log(data,"信息列表");
                     s.state.total=data.totalnum;
-                    s.state.dataSource = data.list;
+                    s.state.dataSource = data.list;              	
                     s.forceUpdate();
                 }
             }
@@ -239,6 +240,7 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
     //搜索
     searchNewdata(title){
     	var s = this;
+    	s.state.dataSource=[];
     	if(title.length>0){
     		$.ajax({
 	            url:window.baseUrl+'xbapp/searchpolicylist/',//接口地址
