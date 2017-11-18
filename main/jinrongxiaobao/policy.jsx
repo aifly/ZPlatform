@@ -51,8 +51,8 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
           key: 'title',
         }, {
           title: '时间',
-          dataIndex: 'updatetime',
-          key: 'updatetime',
+          dataIndex: 'createtime',
+          key: 'createtime',
           width:150,
         }, {
           title: '操作',
@@ -289,7 +289,7 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
         }
         if(this.currentId!==-1){//编辑        
             params.policyid = this.currentId;
-            console.log(params.policyid,'params');
+            //console.log(params.policyid,'params');
             $.ajax({
               type:'POST',
               url:window.baseUrl + 'xbadmin/editpolicyinfo/',
