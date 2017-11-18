@@ -78,7 +78,7 @@ import MainUI from '../components/Main.jsx';
           key: 'city',
           width:150,
         }, {
-          title: '地址',
+          title: '详细地址',
           dataIndex: 'address',
           key: 'address',
         }, {
@@ -176,7 +176,8 @@ import MainUI from '../components/Main.jsx';
                           <Input placeholder="百度地图坐标" 
                             value={this.state.positionbd}
                             onChange={(e)=>{this.state.positionbd=e.target.value;this.forceUpdate();}}
-                          />                      
+                          />
+                          <div className='zmiti-jinrongxb-map'></div>                     
                       </FormItem>
                       <FormItem
                         {...formItemLayout}
@@ -205,6 +206,15 @@ import MainUI from '../components/Main.jsx';
                     </Form> 
                     
                 </div>
+                <Modal
+                  title="消保地址"
+                  width={800}
+                  visible={this.state.visible}
+                  onOk={this.handleOk.bind(this)}
+                  onCancel={this.handleCancel.bind(this)}
+                >
+                  <p>123</p>
+                </Modal>
             </div>
         }
         var mainComponent = <div>
