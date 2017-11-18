@@ -11,6 +11,8 @@ import '../static/editor/font_size.min';
 import '../static/editor/link.min';
 import '../static/editor/table.min';
 
+import $ from 'jquery'
+
 
 export default class ZmitiEditor extends Component {
 	constructor(props) {
@@ -22,6 +24,8 @@ export default class ZmitiEditor extends Component {
 	}
 	
 	render() {
+
+		$('.fr-element.fr-view').html(this.props.html);
 		
 		 return <div className='zmiti-editor-main-ui'>
 		 	<div className={'zmiti-editor-preview '+(this.props.showPreview?' ':' hide')} style={{maxHeight:this.props.height+46||446}}>

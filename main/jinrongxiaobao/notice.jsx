@@ -5,12 +5,12 @@ let Search = Input.Search;
 const FormItem = Form.Item;
 let Option = Select.Option;
 import $ from 'jquery';
-
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import MainUI from '../components/Main.jsx';
+import ZmitiEditor from '../components/zmiti-editor.jsx';
 
- class ZmitiJinrongxbNoticeApp extends React.Component{
+class ZmitiJinrongxbNoticeApp extends React.Component{
     constructor(args){
         super(...args);
         this.state = {
@@ -18,19 +18,15 @@ import MainUI from '../components/Main.jsx';
             loading:false,
             tip:'数据拉取中...',
             keyword:'',
-            dataSource:[{
-              key: '1',
-              name: '标题标题标题标题',              
-              newsdate: '2017-11-17',
-            }, {
-              key: '2',
-              name: '标题标题标题标题标题标题标题标题2',
-              newsdate: '2017-11-17',
-            }, {
-              key: '3',
-              name: '标题标题标题标题标题标题标题标题3',
-              newsdate: '2017-11-17',
-            }],            
+            visible:false,
+            noticeid:'nilb248P',//文章id
+            title:'',
+            createtime:'',//创建时间
+            updatetime:'',//更新时间
+            content:'',
+            sort:0,//排序
+            istop:0,//是否置顶
+            dataSource:[],          
         }
         this.currentId = -1;
     }
@@ -44,16 +40,18 @@ import MainUI from '../components/Main.jsx';
             loginOut();
         },this);
         resizeMainHeight(this);
-        
+        const formItemLayout = {
+           labelCol: {span: 3},
+           wrapperCol: {span: 20},
+        };
         const columns = [{
-          title: '标题',
-          dataIndex: 'name',
-          key: 'name',
-          render: text => <a href="#">{text}</a>,
+          title: '内容',
+          dataIndex: 'content',
+          key: 'content',
         }, {
           title: '时间',
-          dataIndex: 'newsdate',
-          key: 'newsdate',
+          dataIndex: 'updatetime',
+          key: 'updatetime',
           width:150,
         }, {
           title: '操作',
@@ -61,14 +59,26 @@ import MainUI from '../components/Main.jsx';
           width:150,
           render: (text, record) => (
             <span>
-              <a href="#">编辑</a>
+              <a href="javascript:void(0)" onClick={this.getDetail.bind(this,record.policyid)}>编辑</a>
               <span className="ant-divider" />
-              <a href="#">删除</a>
+              <a href="javascript:void(0)" onClick={this.delcontent.bind(this,record.policyid)}>删除</a>
             </span>
           ),
         }];
-
+        let editorProps ={
+            onChange(editor){
+                s.setState({
+                    content:editor.el.innerHTML
+                });
+            },
+            height:200,
+            html:this.state.content,
+            $,
+            isAdmin:false,
+            showPreview:false,
+        }
         var title = this.props.params.title || '金融消保';
+        const dateFormat = 'YYYY-MM-DD';
         const monthFormat = 'YYYY/MM';
         let props={
             userList:this.state.userList,
@@ -85,17 +95,26 @@ import MainUI from '../components/Main.jsx';
                     <div className="zmiti-jinrongxb-header">
                         <Row>
                             <Col span={8} className="zmiti-jinrongxb-header-inner">公告管理</Col>
-                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary'>添加</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
-                    <Row gutter={10} type='flex' className='jinrongxb-search '>
-                        <Col className="jinrongxb-heigth45">标题：</Col>
-                        <Col className="jinrongxb-heigth45"><Input value={this.state.keyword} placeholder="标题" /></Col>
-                    </Row>
-                    <Table columns={columns} dataSource={this.state.dataSource} />
-                </div>
-
+                    <div>&nbsp;</div>
+                    <div>
+                        {
+                            /*
+<textarea className="ant-input ant-input-lg" value={this.state.content}
+                            onChange={(e)=>{this.state.content=e.target.value;this.forceUpdate();}}
+                        ></textarea>
+                            */
+                        }
+                        
+                        <ZmitiEditor {...editorProps} ></ZmitiEditor>
+                        <p style={{'line-height':'30px'}}>提示：公告内容限定在50字以内</p>
+                        <div><Button type="primary" onClick={this.addcontent.bind(this)}>提交</Button></div>
+                    </div>
+                    
+                </div>                
             </div>
         }
         var mainComponent = <div>
@@ -124,7 +143,7 @@ import MainUI from '../components/Main.jsx';
     componentDidMount(){
         var s=this;
         this.resizeMainHeight(this);
-
+        s.getDetail();//内容
     }
     changeAccount(i){
         if(i*1===0){
@@ -137,25 +156,51 @@ import MainUI from '../components/Main.jsx';
             window.location.hash='jinrongxiaobaosetup/';
         }
     }
-    //search
-    /*searchByKeyword(e){
-        this.setState({
-            keyword:e.target.value
-        },()=>{
-            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
 
-            this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.jobname.indexOf(this.state.keyword)>-1;
-            });
-            this.forceUpdate();
+    addcontent(){
+        var s = this;
+        var params = {
+            userid:this.userid,
+            getusersigid:this.getusersigid,         
+            title:s.state.title,            
+            content:s.state.content,
+            sort:s.state.sort,
+            noticeid:s.state.noticeid,
+        }
+        $.ajax({
+          type:'POST',
+          url:window.baseUrl + 'xbadmin/editnotice/',
+          data:params,
+          success(data){
+              message[data.getret === 0 ? 'success':'error'](data.getmsg);
+              s.getDetail();
+              s.forceUpdate();
+          }
+        });
+
+    }
+    //获取某一条详情
+    getDetail(){
+        var s=this;      
+        $.ajax({
+            url:window.baseUrl+'xbadmin/getnoticedetail/',
+            type:'post',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                noticeid:s.state.noticeid,
+            },
+            success(data){
+                if(data.getret === 0){                   
+                    s.setState({
+                        content:data.detail.content,
+                    })
+                    s.forceUpdate();
+                }
+            }
         })
-    }*/
-
-
-
-
-
-
+        //console.log(this.currentId,'this.currentId');
+    }
   
 }
 

@@ -5,12 +5,11 @@ let Search = Input.Search;
 const FormItem = Form.Item;
 let Option = Select.Option;
 import $ from 'jquery';
-
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import MainUI from '../components/Main.jsx';
 import ZmitiEditor from '../components/zmiti-editor.jsx';
- class ZmitiJinrongxbPolicyApp extends React.Component{
+class ZmitiJinrongxbPolicyApp extends React.Component{
     constructor(args){
         super(...args);
         this.state = {
@@ -19,29 +18,13 @@ import ZmitiEditor from '../components/zmiti-editor.jsx';
             tip:'数据拉取中...',
             keyword:'',
             visible:false,
-            aid:'',//文章id
+            policyid:'',//文章id
             title:'',
-            update:'',
+            createtime:'',//创建时间
+            updatetime:'',//更新时间
             content:'',
-            dataSource:[{
-              key: '1',
-              aid:'001',
-              title: '标题标题标题标题',              
-              update: '2017-11-17',
-              content:'内容',
-            }, {
-              key: '2',
-              aid:'002',
-              title: '标题标题标题标题222',              
-              update: '2017-11-17',
-              content:'内容222',
-            }, {
-              key: '3',
-              aid:'003',
-              title: '标题标题标题标题333',              
-              update: '2017-11-17',
-              content:'内容3333',
-            }],            
+            sort:0,//排序
+            dataSource:[],          
         }
         this.currentId = -1;
     }
@@ -63,11 +46,10 @@ import ZmitiEditor from '../components/zmiti-editor.jsx';
           title: '标题',
           dataIndex: 'title',
           key: 'title',
-          render: text => <a href="#">{text}</a>,
         }, {
           title: '时间',
-          dataIndex: 'update',
-          key: 'update',
+          dataIndex: 'updatetime',
+          key: 'updatetime',
           width:150,
         }, {
           title: '操作',
@@ -75,9 +57,9 @@ import ZmitiEditor from '../components/zmiti-editor.jsx';
           width:150,
           render: (text, record) => (
             <span>
-              <a href="#">编辑</a>
+              <a href="javascript:void(0)" onClick={this.getDetail.bind(this,record.policyid)}>编辑</a>
               <span className="ant-divider" />
-              <a href="#">删除</a>
+              <a href="javascript:void(0)" onClick={this.delcontent.bind(this,record.policyid)}>删除</a>
             </span>
           ),
         }];
@@ -94,6 +76,7 @@ import ZmitiEditor from '../components/zmiti-editor.jsx';
             showPreview:false,
         }
         var title = this.props.params.title || '金融消保';
+        const dateFormat = 'YYYY-MM-DD';
         const monthFormat = 'YYYY/MM';
         let props={
             userList:this.state.userList,
@@ -124,10 +107,21 @@ import ZmitiEditor from '../components/zmiti-editor.jsx';
                   title="政策管理"
                   width={800}
                   visible={this.state.visible}
-                  onOk={this.handleOk.bind(this)}
+                  onOk={this.addcontent.bind(this)}
                   onCancel={this.handleCancel.bind(this)}
                 >
                     <Form>
+                      <FormItem
+                        {...formItemLayout}
+                        label="序号"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="序号" 
+                            value={this.state.sort}
+                            onChange={(e)=>{this.state.sort=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
                       <FormItem
                         {...formItemLayout}
                         label="标题"
@@ -139,25 +133,14 @@ import ZmitiEditor from '../components/zmiti-editor.jsx';
                             onChange={(e)=>{this.state.title=e.target.value;this.forceUpdate();}}
                           />                      
                       </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="时间"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="时间" 
-                            value={this.state.update}
-                            onChange={(e)=>{this.state.update=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
 
                       <FormItem
                         {...formItemLayout}
                         label="内容"
                         hasFeedback
-                      >                        
-                          
-                          <ZmitiEditor {...editorProps} ></ZmitiEditor>                     
+                      > 
+                          <ZmitiEditor {...editorProps} ></ZmitiEditor>
+                                               
                       </FormItem>
 
 
@@ -192,7 +175,7 @@ import ZmitiEditor from '../components/zmiti-editor.jsx';
     componentDidMount(){
         var s=this;
         this.resizeMainHeight(this);
-
+        s.bindNewdata();//列表
     }
     changeAccount(i){
         if(i*1===0){
@@ -205,54 +188,146 @@ import ZmitiEditor from '../components/zmiti-editor.jsx';
             window.location.hash='jinrongxiaobaosetup/';
         }
     }
+	//列表
+	bindNewdata(){
+        var s = this;
+        var userid = this.props.params.userid?this.props.params.userid:this.userid;
+        $.ajax({
+            url:window.baseUrl+'xbadmin/getpolicyinfolist/',//接口地址
+            type:'post',
+            data:{
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				status:1,//有效文章
+				page:1,
+				pagenum:20,
+            },
+            success(data){
+
+                if(data.getret === 0){
+                    console.log(data,"信息列表");
+                    s.state.dataSource = data.list;
+                    s.forceUpdate();
+                }
+            }
+        })
+    }
     showModal() {    	
     	var s=this;
         this.currentId=-1;
         this.setState({
             visible:true,
             title:'',
-            update:'', 
-            content:'',           
+            //updatetime:'', 
+            content:'', 
+            sort:0,          
         })
         s.forceUpdate();
     }
-    addcontent(){
+    addcontent(policyid){
     	var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         var params = {
             userid:this.userid,
-            getusersigid:this.getusersigid,  
-            setuserid:userid,          
-            title:s.state.title,
-            update:s.state.update,
+            getusersigid:this.getusersigid,         
+            title:s.state.title,            
             content:s.state.content,
+            sort:s.state.sort,
         }
         if(this.currentId!==-1){//编辑        
-            params.aid = this.currentId; 
-            console.log(params,'params');
+            params.policyid = this.currentId;
+            console.log(params.policyid,'params');
+            $.ajax({
+              type:'POST',
+              url:window.baseUrl + 'xbadmin/editpolicyinfo/',
+              data:params,
+              success(data){
+                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                  s.setState({
+                    visible:false,
+                    title:'',
+                    content:'',
+                  });
+                  s.bindNewdata();
+                  s.forceUpdate();
+              }
+            });
         }else{//添加
-        	console.log(params,'params');
+        	$.ajax({
+              type:'POST',
+              url:window.baseUrl + 'xbadmin/addpolicyinfo/',
+              data:params,
+              success(data){
+                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                  s.setState({
+                    visible:false,
+                    title:'',
+                    updatetime:'',
+                    content:'',
+                    sort:0,
+                  });
+                  s.bindNewdata();
+                  s.forceUpdate();
+              }
+            });         	
         }
     }
-
-    handleOk(e){
-        //console.log(e);
-        this.setState({
-          visible: false,
-        });
+    //获取某一条详情
+    getDetail(policyid){
+        var s=this;
+        this.currentId = policyid;        
+        $.ajax({
+            url:window.baseUrl+'xbadmin/getpolicyinfodetail/',
+            type:'post',
+            data:{
+				userid:s.userid,
+				getusersigid:s.getusersigid,
+				policyid:policyid,
+            },
+            success(data){
+                if(data.getret === 0){
+                   
+                    s.setState({
+			            visible:true,
+			          	title:data.detail.title,
+			            updatetime:data.detail.updatetime,
+			            content:data.detail.content,
+			            sort:data.detail.sort,
+			        })
+                    s.forceUpdate();
+                }
+            }
+        })
+        //console.log(this.currentId,'this.currentId');
     }
+    delcontent(policyid){
+    	var s = this;
+        var userid = this.props.params.userid?this.props.params.userid:this.userid;
+        $.ajax({
+            url:window.baseUrl+'xbadmin/delpolicyinfo/',
+            type:'post',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                policyid:policyid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    message.success('删除成功！');                    
+                    s.bindNewdata();                  
+                }else{
+
+                	message.error(data.getmsg);
+                }
+            }
+        })
+    }
+
     handleCancel(e) {
-        //console.log(e);
         this.setState({
           visible: false,
         });
     }
-
-
-
-
-
-
   
 }
 
