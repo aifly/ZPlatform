@@ -16,7 +16,7 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
             mainHeight:document.documentElement.clientHeight-50,
             loading:false,
             tip:'数据拉取中...',
-            keyword:'',
+            titleIndex:'',
             visible:false,
             policyid:'',//文章id
             title:'',
@@ -24,7 +24,10 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
             updatetime:'',//更新时间
             content:'',
             sort:0,//排序
-            dataSource:[],          
+            dataSource:[],
+            total:0,
+			pageIndex:1,
+			pagenum:5,        
         }
         this.currentId = -1;
     }
@@ -98,10 +101,31 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
                     <Row gutter={10} type='flex' className='jinrongxb-search '>
-                        <Col className="jinrongxb-heigth45">标题：</Col>
-                        <Col className="jinrongxb-heigth45"><Input value={this.state.keyword} placeholder="标题" /></Col>
+                        <Col className="jinrongxb-heigth45">搜索</Col>
+                        <Col className="jinrongxb-heigth45">
+                        	<Search
+                                placeholder="输入文章内容"
+                                style={{ width: 200 }}
+                                onSearch={function(value){                                    
+                                    s.state.titleIndex=value;
+                                    s.forceUpdate();
+                                    s.searchNewdata(value);
+                                }}
+                                />
+                        </Col>
                     </Row>
-                    <Table columns={columns} dataSource={this.state.dataSource} />
+                    <Table columns={columns} dataSource={this.state.dataSource} 
+                    	pagination={{
+                           defaultCurrent:s.state.pageIndex,
+                           defaultPageSize:s.state.pagenum,
+                           total:s.state.total,
+                           onChange:function(page){                                    
+                            s.state.pageIndex=page;
+                            s.bindNewdata();
+                            s.forceUpdate();
+                           }
+                        }}
+                    />
                 </div>
                 <Modal
                   title="政策管理"
@@ -191,7 +215,6 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
 	//列表
 	bindNewdata(){
         var s = this;
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
         $.ajax({
             url:window.baseUrl+'xbadmin/getpolicyinfolist/',//接口地址
             type:'post',
@@ -199,18 +222,48 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
 				userid:s.userid,
 				getusersigid:s.getusersigid,
 				status:1,//有效文章
-				page:1,
-				pagenum:20,
+				page:s.state.pageIndex,
+				pagenum:s.state.pagenum,
             },
             success(data){
 
                 if(data.getret === 0){
-                    console.log(data,"信息列表");
+                    //console.log(data,"信息列表");
+                    s.state.total=data.totalnum;
                     s.state.dataSource = data.list;
                     s.forceUpdate();
                 }
             }
         })
+    }
+    //搜索
+    searchNewdata(title){
+    	var s = this;
+    	if(title.length>0){
+    		$.ajax({
+	            url:window.baseUrl+'xbapp/searchpolicylist/',//接口地址
+	            type:'post',
+	            data:{
+					userid:s.userid,
+					getusersigid:s.getusersigid,
+					status:1,//有效文章
+					keyword:title,
+	            },
+	            success(data){
+	                if(data.getret === 0){
+	                    //console.log(data,"信息列表");
+	                    s.state.total=0;
+	                    s.state.dataSource = data.list;
+	                    s.forceUpdate();
+	                }else{
+	                	message.warning("无数据");
+	                }
+	            }
+	        })
+    	}else{
+    		s.bindNewdata();
+    	}
+        
     }
     showModal() {    	
     	var s=this;
