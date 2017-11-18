@@ -26,6 +26,7 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
             content:'',
             sort:0,//排序
             istop:0,//是否置顶
+            textlength:50,
             dataSource:[],          
         }
         this.currentId = -1;
@@ -80,6 +81,12 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
         var title = this.props.params.title || '金融消保';
         const dateFormat = 'YYYY-MM-DD';
         const monthFormat = 'YYYY/MM';
+        let lineHeight={
+            lineHeight:'30px',
+        }
+        let fontcolor={
+            color:'red',
+        }
         let props={
             userList:this.state.userList,
             userid:this.userid,
@@ -101,16 +108,10 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
                     <div className="zmiti-jinrongxb-line"></div>
                     <div>&nbsp;</div>
                     <div>
-                        {
-                            /*
-<textarea className="ant-input ant-input-lg" value={this.state.content}
-                            onChange={(e)=>{this.state.content=e.target.value;this.forceUpdate();}}
-                        ></textarea>
-                            */
-                        }
-                        
-                        <ZmitiEditor {...editorProps} ></ZmitiEditor>
-                        <p style={{'line-height':'30px'}}>提示：公告内容限定在50字以内</p>
+                        <textarea className="ant-input ant-input-lg" value={this.state.content}
+                            onChange={this.writenotice.bind(this)}
+                        ></textarea>                           
+                        <p style={lineHeight}>提示：剩余字数<span style={fontcolor}>{this.state.textlength}</span>个</p>
                         <div><Button type="primary" onClick={this.addcontent.bind(this)}>提交</Button></div>
                     </div>
                     
@@ -156,7 +157,16 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
             window.location.hash='jinrongxiaobaosetup/';
         }
     }
-
+    writenotice(e){
+        var s = this;
+        s.state.content=e.target.value;
+        s.state.textlength=50-s.state.content.length;
+        if(s.state.content.length>50){
+            s.state.textlength=0;
+            message.warning("内容超出字数限制！");
+        }
+        s.forceUpdate();
+    }
     addcontent(){
         var s = this;
         var params = {
@@ -167,16 +177,21 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
             sort:s.state.sort,
             noticeid:s.state.noticeid,
         }
-        $.ajax({
-          type:'POST',
-          url:window.baseUrl + 'xbadmin/editnotice/',
-          data:params,
-          success(data){
-              message[data.getret === 0 ? 'success':'error'](data.getmsg);
-              s.getDetail();
-              s.forceUpdate();
-          }
-        });
+        if(s.state.content.length<51){
+            $.ajax({
+              type:'POST',
+              url:window.baseUrl + 'xbadmin/editnotice/',
+              data:params,
+              success(data){
+                  message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                  s.getDetail();
+                  s.forceUpdate();
+              }
+            }); 
+        }else{
+           message.error("内容超出字数限制！"); 
+        }
+
 
     }
     //获取某一条详情
@@ -191,10 +206,10 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
                 noticeid:s.state.noticeid,
             },
             success(data){
-                if(data.getret === 0){                   
-                    s.setState({
-                        content:data.detail.content,
-                    })
+                if(data.getret === 0){       
+                    
+                    s.state.content=data.detail.content;
+                    s.state.textlength=50-data.detail.content.length;
                     s.forceUpdate();
                 }
             }
