@@ -9,7 +9,7 @@ import $ from 'jquery';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import MainUI from '../components/Main.jsx';
-
+import ZmitiEditor from '../components/zmiti-editor.jsx';
  class ZmitiJinrongxbPolicyApp extends React.Component{
     constructor(args){
         super(...args);
@@ -18,18 +18,29 @@ import MainUI from '../components/Main.jsx';
             loading:false,
             tip:'数据拉取中...',
             keyword:'',
+            visible:false,
+            aid:'',//文章id
+            title:'',
+            update:'',
+            content:'',
             dataSource:[{
               key: '1',
-              name: '标题标题标题标题',              
-              newsdate: '2017-11-17',
+              aid:'001',
+              title: '标题标题标题标题',              
+              update: '2017-11-17',
+              content:'内容',
             }, {
               key: '2',
-              name: '标题标题标题标题标题标题标题标题2',
-              newsdate: '2017-11-17',
+              aid:'002',
+              title: '标题标题标题标题222',              
+              update: '2017-11-17',
+              content:'内容222',
             }, {
               key: '3',
-              name: '标题标题标题标题标题标题标题标题3',
-              newsdate: '2017-11-17',
+              aid:'003',
+              title: '标题标题标题标题333',              
+              update: '2017-11-17',
+              content:'内容3333',
             }],            
         }
         this.currentId = -1;
@@ -44,16 +55,19 @@ import MainUI from '../components/Main.jsx';
             loginOut();
         },this);
         resizeMainHeight(this);
-        
+        const formItemLayout = {
+           labelCol: {span: 3},
+           wrapperCol: {span: 20},
+        };
         const columns = [{
           title: '标题',
-          dataIndex: 'name',
-          key: 'name',
+          dataIndex: 'title',
+          key: 'title',
           render: text => <a href="#">{text}</a>,
         }, {
           title: '时间',
-          dataIndex: 'newsdate',
-          key: 'newsdate',
+          dataIndex: 'update',
+          key: 'update',
           width:150,
         }, {
           title: '操作',
@@ -67,7 +81,18 @@ import MainUI from '../components/Main.jsx';
             </span>
           ),
         }];
-
+        let editorProps ={
+            onChange(editor){
+                s.setState({
+                    content:editor.el.innerHTML
+                });
+            },
+            height:200,
+            html:this.state.content,
+            $,
+            isAdmin:false,
+            showPreview:false,
+        }
         var title = this.props.params.title || '金融消保';
         const monthFormat = 'YYYY/MM';
         let props={
@@ -78,14 +103,14 @@ import MainUI from '../components/Main.jsx';
             tags:['消保地址','政策管理','公告管理','设置'],
             mainHeight:this.state.mainHeight,
             title:title,
-            selectedIndex: 100,
+            selectedIndex: 1,
             rightType: "custom",
             customRightComponent:<div className='jinrongxb-main-ui' style={{height:this.state.mainHeight}}>
                 <div className='pad-10'>
                     <div className="zmiti-jinrongxb-header">
                         <Row>
                             <Col span={8} className="zmiti-jinrongxb-header-inner">政策管理</Col>
-                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary'>添加</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary' onClick={this.showModal.bind(this)}>添加</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
@@ -95,7 +120,50 @@ import MainUI from '../components/Main.jsx';
                     </Row>
                     <Table columns={columns} dataSource={this.state.dataSource} />
                 </div>
+                <Modal
+                  title="政策管理"
+                  width={800}
+                  visible={this.state.visible}
+                  onOk={this.handleOk.bind(this)}
+                  onCancel={this.handleCancel.bind(this)}
+                >
+                    <Form>
+                      <FormItem
+                        {...formItemLayout}
+                        label="标题"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="标题" 
+                            value={this.state.title}
+                            onChange={(e)=>{this.state.title=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="时间"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="时间" 
+                            value={this.state.update}
+                            onChange={(e)=>{this.state.update=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
 
+                      <FormItem
+                        {...formItemLayout}
+                        label="内容"
+                        hasFeedback
+                      >                        
+                          
+                          <ZmitiEditor {...editorProps} ></ZmitiEditor>                     
+                      </FormItem>
+
+
+                    </Form>
+                    
+                </Modal>
             </div>
         }
         var mainComponent = <div>
@@ -137,19 +205,48 @@ import MainUI from '../components/Main.jsx';
             window.location.hash='jinrongxiaobaosetup/';
         }
     }
-    //search
-    /*searchByKeyword(e){
+    showModal() {    	
+    	var s=this;
+        this.currentId=-1;
         this.setState({
-            keyword:e.target.value
-        },()=>{
-            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
-
-            this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.jobname.indexOf(this.state.keyword)>-1;
-            });
-            this.forceUpdate();
+            visible:true,
+            title:'',
+            update:'', 
+            content:'',           
         })
-    }*/
+        s.forceUpdate();
+    }
+    addcontent(){
+    	var s = this;
+        var userid = this.props.params.userid?this.props.params.userid:this.userid;
+        var params = {
+            userid:this.userid,
+            getusersigid:this.getusersigid,  
+            setuserid:userid,          
+            title:s.state.title,
+            update:s.state.update,
+            content:s.state.content,
+        }
+        if(this.currentId!==-1){//编辑        
+            params.aid = this.currentId; 
+            console.log(params,'params');
+        }else{//添加
+        	console.log(params,'params');
+        }
+    }
+
+    handleOk(e){
+        //console.log(e);
+        this.setState({
+          visible: false,
+        });
+    }
+    handleCancel(e) {
+        //console.log(e);
+        this.setState({
+          visible: false,
+        });
+    }
 
 
 

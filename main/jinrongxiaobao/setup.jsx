@@ -86,7 +86,7 @@ import MainUI from '../components/Main.jsx';
             tags:['消保地址','政策管理','公告管理','设置'],
             mainHeight:this.state.mainHeight,
             title:title,
-            selectedIndex: 100,
+            selectedIndex: 3,
             rightType: "custom",
             customRightComponent:<div className='jinrongxb-main-ui' style={{height:this.state.mainHeight}}>
                 <div className='pad-10'>
@@ -145,19 +145,7 @@ import MainUI from '../components/Main.jsx';
             window.location.hash='jinrongxiaobaosetup/';
         }
     }
-    //search
-    /*searchByKeyword(e){
-        this.setState({
-            keyword:e.target.value
-        },()=>{
-            this.dataSource = this.dataSource  || this.state.dataSource.concat([]) ;
 
-            this.state.dataSource = this.dataSource.filter((item)=>{
-                return  item.jobname.indexOf(this.state.keyword)>-1;
-            });
-            this.forceUpdate();
-        })
-    }*/
 
 
 

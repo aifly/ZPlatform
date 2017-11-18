@@ -125,14 +125,14 @@ import MainUI from '../components/Main.jsx';
             tags:['消保地址','政策管理','公告管理','设置'],
             mainHeight:this.state.mainHeight,
             title:title,
-            selectedIndex: 100,
+            selectedIndex: 0,
             rightType: "custom",
             customRightComponent:<div className='jinrongxb-main-ui' style={{height:this.state.mainHeight}}>
                 <div className='pad-10'>
                     <div className="zmiti-jinrongxb-header">
                         <Row>
                             <Col span={8} className="zmiti-jinrongxb-header-inner">消保地址</Col>
-                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary' onClick={this.showModal.bind(this)}>添加</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
@@ -206,15 +206,7 @@ import MainUI from '../components/Main.jsx';
                     </Form> 
                     
                 </div>
-                <Modal
-                  title="消保地址"
-                  width={800}
-                  visible={this.state.visible}
-                  onOk={this.handleOk.bind(this)}
-                  onCancel={this.handleCancel.bind(this)}
-                >
-                  <p>123</p>
-                </Modal>
+
             </div>
         }
         var mainComponent = <div>
@@ -260,24 +252,7 @@ import MainUI from '../components/Main.jsx';
     selectcity(value) {
       console.log(value);
     }
-    showModal() {
-        this.setState({
-          visible: true,
-        });
-    }
 
-    handleOk(e){
-        console.log(e);
-        this.setState({
-          visible: false,
-        });
-    }
-    handleCancel(e) {
-        console.log(e);
-        this.setState({
-          visible: false,
-        });
-    }
 
 
 

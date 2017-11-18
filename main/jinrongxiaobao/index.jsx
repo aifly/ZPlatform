@@ -95,7 +95,7 @@ import MainUI from '../components/Main.jsx';
             tags:['消保地址','政策管理','公告管理','设置'],
             mainHeight:this.state.mainHeight,
             title:title,
-            selectedIndex: 100,
+            selectedIndex: 0,
             rightType: "custom",
             customRightComponent:<div className='jinrongxb-main-ui' style={{height:this.state.mainHeight}}>
                 <div className='pad-10'>
@@ -112,85 +112,7 @@ import MainUI from '../components/Main.jsx';
                     </Row>
                     <Table columns={columns} dataSource={this.state.dataSource} />
                 </div>
-                <Modal
-                  title="消保地址"
-                  width={800}
-                  visible={this.state.visible}
-                  onOk={this.handleOk.bind(this)}
-                  onCancel={this.handleCancel.bind(this)}
-                >
-                    <Form>
-                      <FormItem
-                        {...formItemLayout}
-                        label="名称"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="名称" 
-                            value={this.state.name}
-                            onChange={(e)=>{this.state.name=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="城市"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="城市" 
-                            value={this.state.city}
-                            onChange={(e)=>{this.state.city=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="地址"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="地址" 
-                            value={this.state.address}
-                            onChange={(e)=>{this.state.address=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="百度地图坐标"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="百度地图坐标" 
-                            value={this.state.positionbd}
-                            onChange={(e)=>{this.state.positionbd=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="高德地图坐标"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="高德地图坐标" 
-                            value={this.state.positiongd}
-                            onChange={(e)=>{this.state.positiongd=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="简介"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="简介" 
-                            value={this.state.decoration}
-                            onChange={(e)=>{this.state.decoration=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
 
-
-                    </Form>
-                    
-                </Modal>
             </div>
         }
         var mainComponent = <div>
@@ -235,24 +157,7 @@ import MainUI from '../components/Main.jsx';
     address(){
         window.location.hash='jinrongxiaobaoaddress/';
     }
-    showModal() {
-        this.setState({
-          visible: true,
-        });
-    }
 
-    handleOk(e){
-        console.log(e);
-        this.setState({
-          visible: false,
-        });
-    }
-    handleCancel(e) {
-        console.log(e);
-        this.setState({
-          visible: false,
-        });
-    }
 
 
 

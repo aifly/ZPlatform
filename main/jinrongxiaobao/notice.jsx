@@ -78,7 +78,7 @@ import MainUI from '../components/Main.jsx';
             tags:['消保地址','政策管理','公告管理','设置'],
             mainHeight:this.state.mainHeight,
             title:title,
-            selectedIndex: 100,
+            selectedIndex: 2,
             rightType: "custom",
             customRightComponent:<div className='jinrongxb-main-ui' style={{height:this.state.mainHeight}}>
                 <div className='pad-10'>
