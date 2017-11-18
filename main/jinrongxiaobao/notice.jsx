@@ -213,7 +213,7 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
                 if(data.getret === 0){       
                     
                     s.state.content=data.detail.content;
-                    console.log(data.detail,'data.detail');
+                    //console.log(data.detail,'data.detail');
                     if(data.detail.status==1){
                         s.state.datacheck=true;
                     }else{
@@ -240,10 +240,7 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
 
         var params = {
             userid:this.userid,
-            getusersigid:this.getusersigid,         
-            title:s.state.title,            
-            content:s.state.content,
-            sort:s.state.sort,
+            getusersigid:this.getusersigid,
             noticeid:s.state.noticeid,
             status:value,
         }
@@ -256,7 +253,7 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
                 message[data.getret === 0 ? 'success':'error'](data.getmsg);
                 //console.log(value,checked,'value');
                 s.state.datacheck=checked;
-                s.getDetail();            
+                //s.getDetail();            
                 s.forceUpdate();  
               }
         });
