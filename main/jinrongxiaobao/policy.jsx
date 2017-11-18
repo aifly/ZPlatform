@@ -47,9 +47,17 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
            wrapperCol: {span: 20},
         };
         const columns = [{
+          title: '序号',
+          dataIndex: 'sort',
+          key: 'sort',
+        },{
           title: '标题',
           dataIndex: 'title',
           key: 'title',
+        },{
+          title: '浏览量',
+          dataIndex: 'totalview',
+          key: 'totalview',
         }, {
           title: '时间',
           dataIndex: 'createtime',
@@ -136,17 +144,7 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
                   onCancel={this.handleCancel.bind(this)}
                 >
                     <Form>
-                      <FormItem
-                        {...formItemLayout}
-                        label="序号"
-                        hasFeedback
-                      >                        
-                          
-                          <Input placeholder="序号" 
-                            value={this.state.sort}
-                            onChange={(e)=>{this.state.sort=e.target.value;this.forceUpdate();}}
-                          />                      
-                      </FormItem>
+                      
                       <FormItem
                         {...formItemLayout}
                         label="标题"
@@ -166,6 +164,18 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
                       > 
                           <ZmitiEditor {...editorProps} ></ZmitiEditor>
                                                
+                      </FormItem>
+
+                      <FormItem
+                        {...formItemLayout}
+                        label="序号"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="序号" 
+                            value={this.state.sort}
+                            onChange={(e)=>{this.state.sort=e.target.value;this.forceUpdate();}}
+                          />                      
                       </FormItem>
 
 
@@ -229,7 +239,7 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
             success(data){
 
                 if(data.getret === 0){
-                    console.log(data,"信息列表");
+                    //console.log(data,"信息列表");
                     s.state.total=data.totalnum;
                     s.state.dataSource = data.list;              	
                     s.forceUpdate();
