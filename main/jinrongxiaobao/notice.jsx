@@ -27,7 +27,8 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
             sort:0,//排序
             istop:0,//是否置顶
             textlength:48,
-            dataSource:[],          
+            dataSource:[], 
+            datacheck:false,//开关         
         }
         this.currentId = -1;
     }
@@ -101,8 +102,12 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
                 <div className='pad-10'>
                     <div className="zmiti-jinrongxb-header">
                         <Row>
-                            <Col span={8} className="zmiti-jinrongxb-header-inner">公告管理</Col>
-                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'></Col>
+                            <Col span={12} className="zmiti-jinrongxb-header-inner">公告管理</Col>
+                            <Col span={12} className='zmiti-jinrongxb-button-right'>
+                                <div style={{width:'60px'}}>
+                                    <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.datacheck.bind(this)} checked={this.state.datacheck} />
+                                </div>
+                            </Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
@@ -208,12 +213,53 @@ class ZmitiJinrongxbNoticeApp extends React.Component{
                 if(data.getret === 0){       
                     
                     s.state.content=data.detail.content;
+                    console.log(data.detail,'data.detail');
+                    if(data.detail.status==1){
+                        s.state.datacheck=true;
+                    }else{
+                        s.state.datacheck=false;
+                    }
                     s.state.textlength=48-data.detail.content.length;
                     s.forceUpdate();
                 }
             }
         })
         //console.log(this.currentId,'this.currentId');
+    }
+    //开关
+    datacheck(checked){ 
+        var s = this;      
+        //console.log(checked,'datacheck');
+
+        var value='';
+        if(checked==true){
+            value=1;
+        }else{
+            value=0;
+        }
+
+        var params = {
+            userid:this.userid,
+            getusersigid:this.getusersigid,         
+            title:s.state.title,            
+            content:s.state.content,
+            sort:s.state.sort,
+            noticeid:s.state.noticeid,
+            status:value,
+        }
+
+        $.ajax({
+              type:'POST',
+              url:window.baseUrl + 'xbadmin/editnotice/',
+              data:params,
+              success(data){
+                message[data.getret === 0 ? 'success':'error'](data.getmsg);
+                //console.log(value,checked,'value');
+                s.state.datacheck=checked;
+                s.getDetail();            
+                s.forceUpdate();  
+              }
+        });
     }
   
 }
