@@ -9,7 +9,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 import MainUI from '../components/Main.jsx';
 import ZmitiEditor from '../components/zmiti-editor.jsx';
-class ZmitiJinrongxbPolicyApp extends React.Component{
+class ZmitiJinrongxbPolicyinfoApp extends React.Component{
     constructor(args){
         super(...args);
         this.state = {
@@ -28,10 +28,9 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
             dataSource:[],
             dataSearchSource:[],
             total:0,
-			pageIndex:1,
-			pagenum:10,        
+            pageIndex:1,
+            pagenum:10,        
         }
-        this.currentId = -1;
     }
 
 
@@ -44,8 +43,34 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
         },this);
         resizeMainHeight(this);
         const formItemLayout = {
-           labelCol: {span: 3},
-           wrapperCol: {span: 20},
+          labelCol: {
+            xs: {
+              span: 24
+            },
+            sm: {
+              span: 6
+            },
+          },
+          wrapperCol: {
+            xs: {
+              span: 24
+            },
+            sm: {
+              span: 14
+            },
+          },
+        };
+        const tailFormItemLayout = {
+          wrapperCol: {
+            xs: {
+              span: 24,
+              offset: 0,
+            },
+            sm: {
+              span: 14,
+              offset: 6,
+            },
+          },
         };
         const columns = [{
           title: '序号',
@@ -70,7 +95,7 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
           width:150,
           render: (text, record) => (
             <span>
-              <a href={'./#/jinrongxiaobaopolicyinfo/'+record.policyid} >编辑</a>
+              <a href="javascript:void(0)" onClick={this.getDetail.bind(this,record.policyid)}>编辑</a>
               <span className="ant-divider" />
               <a href="javascript:void(0)" onClick={this.delcontent.bind(this,record.policyid)}>删除</a>
             </span>
@@ -106,37 +131,69 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
                     <div className="zmiti-jinrongxb-header">
                         <Row>
                             <Col span={8} className="zmiti-jinrongxb-header-inner">政策管理</Col>
-                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary'><a href="./#/jinrongxiaobaopolicyinfo/">添加</a></Button></Col>
+                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary'><a href="./#/jinrongxiaobaopolicyinfo/" onClick={this.openform.bind(this)}>添加</a></Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
-                    <Row gutter={10} type='flex' className='jinrongxb-search '>
-                        <Col className="jinrongxb-heigth45">搜索</Col>
-                        <Col className="jinrongxb-heigth45">
-                        	<Search
-                                placeholder="输入标题"
-                                style={{ width: 200 }}
-                                onSearch={function(value){                                    
-                                    s.state.titleIndex=value;
-                                    s.forceUpdate();
-                                    s.searchNewdata(value);
-                                }}
-                                />
-                        </Col>
-                    </Row>
-                    <Table columns={columns} dataSource={this.state.dataSource} 
-                    	pagination={{
-                           defaultCurrent:s.state.pageIndex,
-                           defaultPageSize:s.state.pagenum,
-                           total:s.state.total,
-                           onChange:function(page){                                    
-                            s.state.pageIndex=page;
-                            s.bindNewdata();
-                            s.forceUpdate();
-                           }
-                        }}
-                    />
+                    <div>&nbsp;</div>
+                    <Form>
+                      
+                      <FormItem
+                        {...formItemLayout}
+                        label="标题"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="标题" 
+                            value={this.state.title}
+                            onChange={(e)=>{this.state.title=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="摘要"
+                        hasFeedback
+                      >                        
+                          
+                          <textarea className="ant-input ant-input-lg" 
+                            style={{"resize":"none"}}
+                            placeholder="摘要" 
+                            value={this.state.excerpt}
+                            onChange={(e)=>{this.state.excerpt=e.target.value;this.forceUpdate();}}
+                          >
+                          </textarea>                    
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="内容"
+                        hasFeedback
+                      > 
+                          <ZmitiEditor {...editorProps} ></ZmitiEditor>
+                                               
+                      </FormItem>
+
+                      <FormItem
+                        {...formItemLayout}
+                        label="序号"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="序号" 
+                            value={this.state.sort}
+                            onChange={(e)=>{this.state.sort=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem {...tailFormItemLayout}>
+                        <Button type="primary" onClick={this.addcontent.bind(this)} htmlType="submit">提交</Button>
+                      </FormItem>
+
+                      
+                    </Form>
+
                 </div>
+
+
+                    
 
             </div>
         }
@@ -166,7 +223,7 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
     componentDidMount(){
         var s=this;
         this.resizeMainHeight(this);
-        s.bindNewdata();//列表
+        s.getDetail();//详情
     }
     changeAccount(i){
         if(i*1===0){
@@ -179,63 +236,10 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
             window.location.hash='jinrongxiaobaosetup/';
         }
     }
-	//列表
-	bindNewdata(){
-        var s = this;
-        $.ajax({
-            url:window.baseUrl+'xbadmin/getpolicyinfolist/',//接口地址
-            type:'post',
-            data:{
-				userid:s.userid,
-				getusersigid:s.getusersigid,
-				status:1,//有效文章
-				page:s.state.pageIndex,
-				pagenum:s.state.pagenum,
-            },
-            success(data){
 
-                if(data.getret === 0){
-                    //console.log(data,"信息列表");
-                    s.state.total=data.totalnum;
-                    s.state.dataSource = data.list;              	
-                    s.forceUpdate();
-                }
-            }
-        })
-    }
-    //搜索
-    searchNewdata(title){
-    	var s = this;
-    	s.state.dataSource=[];
-    	if(title.length>0){
-    		$.ajax({
-	            url:window.baseUrl+'xbapp/searchpolicylist/',//接口地址
-	            type:'post',
-	            data:{
-					userid:s.userid,
-					getusersigid:s.getusersigid,
-					status:1,//有效文章
-					keyword:title,
-	            },
-	            success(data){
-	                if(data.getret === 0){
-	                    //console.log(data,"信息列表");
-	                    s.state.total=0;
-	                    s.state.dataSource = data.list;
-	                    s.forceUpdate();
-	                }else{
-	                	message.warning("无数据");
-	                }
-	            }
-	        })
-    	}else{
-    		s.bindNewdata();
-    	}
-        
-    }
-
-    addcontent(policyid){
-    	var s = this;
+    addcontent(){
+      var s = this;
+      var policyid = s.props.params.id;    	
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         var params = {
             userid:this.userid,
@@ -245,21 +249,14 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
             sort:s.state.sort,
             excerpt:s.state.excerpt,
         }
-        if(this.currentId!==-1){//编辑        
-            params.policyid = this.currentId;
-            //console.log(params.policyid,'params');
+        if(policyid){//编辑        
+            params.policyid = s.props.params.id;
             $.ajax({
               type:'POST',
               url:window.baseUrl + 'xbadmin/editpolicyinfo/',
               data:params,
               success(data){
                   message[data.getret === 0 ? 'success':'error'](data.getmsg);
-                  s.setState({
-                    visible:false,
-                    title:'',
-                    content:'',
-                  });
-                  s.bindNewdata();
                   s.forceUpdate();
               }
             });
@@ -271,73 +268,53 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
               success(data){
                   message[data.getret === 0 ? 'success':'error'](data.getmsg);
                   s.setState({
-                    visible:false,
                     title:'',
                     excerpt:'',
                     content:'',
                     sort:0,
                   });
-                  s.bindNewdata();
                   s.forceUpdate();
               }
             });         	
         }
     }
     //获取某一条详情
-    getDetail(policyid){
-        var s=this;
-        this.currentId = policyid;        
+    getDetail(){
+        var s=this;      
         $.ajax({
             url:window.baseUrl+'xbadmin/getpolicyinfodetail/',
             type:'post',
             data:{
-				userid:s.userid,
-				getusersigid:s.getusersigid,
-				policyid:policyid,
+				      userid:s.userid,
+				      getusersigid:s.getusersigid,
+				      policyid:s.props.params.id,
             },
             success(data){
-                if(data.getret === 0){
-                   
-                    s.setState({
-			            visible:true,
-			          	title:data.detail.title,
-			            updatetime:data.detail.updatetime,
-			            content:data.detail.content,
-			            sort:data.detail.sort,
-			            excerpt:data.detail.excerpt,
-			        })
-                    s.forceUpdate();
-                }
-            }
-        })
-        //console.log(this.currentId,'this.currentId');
-    }
-    delcontent(policyid){
-    	var s = this;
-        var userid = this.props.params.userid?this.props.params.userid:this.userid;
-        $.ajax({
-            url:window.baseUrl+'xbadmin/delpolicyinfo/',
-            type:'post',
-            data:{
-                userid:s.userid,
-                getusersigid:s.getusersigid,
-                policyid:policyid,
-            },
-            success(data){
-                if(data.getret === 0){
-                    message.success('删除成功！');                    
-                    setTimeout(()=>{
-                        s.bindNewdata();
-                    },2000)               
-                }else{
-
-                	message.error(data.getmsg);
+                if(data.getret === 0){                   
+                  s.setState({
+                    visible:true,
+                    title:data.detail.title,
+                    updatetime:data.detail.updatetime,
+                    content:data.detail.content,
+                    sort:data.detail.sort,
+                    excerpt:data.detail.excerpt,
+                  })
+                  s.forceUpdate();
                 }
             }
         })
     }
-
+    openform(){
+      var s = this;
+      s.setState({
+        title:'',
+        excerpt:'',
+        content:'',
+        sort:0,
+      });
+      s.forceUpdate();
+    }
   
 }
 
-export default ZmitiValidateUser(ZmitiJinrongxbPolicyApp);
+export default ZmitiValidateUser(ZmitiJinrongxbPolicyinfoApp);
