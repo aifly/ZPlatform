@@ -14,9 +14,60 @@
   word-wrap: break-word;
   word-break: break-all; }
 
+.zmiti-jinrongxb-map-C {
+  width: 100%;
+  height: 300px;
+  position: relative; }
+  .zmiti-jinrongxb-map-C.active span.zmiti-map-mask {
+    display: block; }
+  .zmiti-jinrongxb-map-C span.zmiti-map-mask {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    line-height: 300px;
+    cursor: pointer; }
+
 .zmiti-jinrongxb-map {
   width: 100%;
-  height: 300px; }
+  height: 100%; }
+
+.zmiti-xbmap-C {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100; }
+  .zmiti-xbmap-C #zmiti-bx-map-C {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: #fff; }
+  .zmiti-xbmap-C .zmiti-xb-map-search, .zmiti-xbmap-C .zmiti-xb-map-close {
+    position: absolute;
+    z-index: 1000;
+    left: 100px;
+    top: 50px;
+    width: 500px; }
+  .zmiti-xbmap-C .zmiti-xb-map-close {
+    width: 50px;
+    font-size: 50px;
+    left: auto;
+    right: 100px;
+    top: 30px;
+    cursor: pointer;
+    color: #f00; }
 
 .zmiti-xb-upload {
   width: 100px;

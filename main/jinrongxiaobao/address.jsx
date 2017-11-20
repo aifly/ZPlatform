@@ -50,35 +50,12 @@ class ZmitiJinrongxbaddressApp extends React.Component {
       positiongd: '', //高德地图坐标
       address: '', //地址
       decoration: '', //简介
-      cityid: -1,
-      proviceid: -1,
-      options: [{
-        value: 'shanxi',
-        label: '陕西',
-        children: [{
-          value: 'xian',
-          label: '西安',
-        }, {
-          value: 'xianyang',
-          label: '咸阳',
-        }],
-      }],
-      dataSource: [{
-        key: '1',
-        name: '名称1',
-        city: '西安',
-        address: '未央区张家堡',
-      }, {
-        key: '2',
-        name: '名称2',
-        city: '西安',
-        address: '新城区西一路',
-      }, {
-        key: '3',
-        name: '名称3',
-        city: '西安',
-        address: '碑林区张家村',
-      }],
+      cityid: 320,
+      countyid: 1,
+      isShowBaiduMap: false,
+      isShowGaodeMap: false,
+      proviceid: 24,
+      options: [],
     }
     this.currentId = -1;
   }
@@ -248,25 +225,35 @@ class ZmitiJinrongxbaddressApp extends React.Component {
                         {...formItemLayout}
                         label="百度地图坐标"
                         hasFeedback
-                      >                        
-                          
-                          <Input placeholder="百度地图坐标" 
-                            value={this.state.positionbd}
-                            onChange={(e)=>{this.state.positionbd=e.target.value;this.forceUpdate();}}
-                          />
-                          <div className='zmiti-jinrongxb-map' id='zmiti-xb-baidumap'></div>                     
+                      >    
+                            <Row  type='flex' gutter={12}>
+                               <Col span={21}>
+                                  <Input placeholder="百度地图坐标" 
+                                     value={this.state.positionbd}
+                                     onChange={(e)=>{this.state.positionbd=e.target.value;this.forceUpdate();}}
+                                   />   
+                               </Col>
+                               <Col span={3}>
+                                 <Button onClick={this.showMap.bind(this,'baidu')}  type='primary'>显示地图</Button>
+                               </Col>
+                             </Row>
                       </FormItem>
                       <FormItem
                         {...formItemLayout}
                         label="高德地图坐标"
                         hasFeedback
                       >                        
-                          
-                          <Input placeholder="高德地图坐标" 
-                            value={this.state.positiongd}
-                            onChange={(e)=>{this.state.positiongd=e.target.value;this.forceUpdate();}}
-                          />     
-                          <div className='zmiti-jinrongxb-map' id='zmiti-xb-gaodemap'></div>                                      
+                          <Row  type='flex' gutter={12}>
+                              <Col span={21}>
+                                <Input placeholder="高德地图坐标" 
+                                  value={this.state.positiongd}
+                                  onChange={(e)=>{this.state.positiongd=e.target.value;this.forceUpdate();}}
+                                />   
+                              </Col>
+                              <Col span={3}>
+                                <Button onClick={this.showMap.bind(this,'gaode')}   type='primary'>显示地图</Button>
+                              </Col>
+                            </Row>  
                       </FormItem>
                       <FormItem
                         {...formItemLayout}
@@ -279,11 +266,16 @@ class ZmitiJinrongxbaddressApp extends React.Component {
                       </FormItem>
 
                       <FormItem {...tailFormItemLayout}>
-                        <Button type="primary" onClick={this.addAddress.bind(this)} htmlType="submit">{this.state.xbid?'更新':"添加"}</Button>
+                        <Button type="primary" onClick={this.addAddress.bind(this)}>{this.state.xbid?'更新':"添加"}</Button>
                       </FormItem>
                     </Form> 
                     
                 </div>
+                {this.state.showMap&&<div className='zmiti-xbmap-C'>
+                                      <Input onChange={this.searchAddress.bind(this)} type='text' className='zmiti-xb-map-search' placeholder='请输入您要查询的地址'/>
+                                      <Icon title='关闭地图' onClick={()=>{this.setState({showMap:false})}} type='close' className='zmiti-xb-map-close'></Icon>
+                                    <div  id='zmiti-bx-map-C'></div>
+                                </div>}
                 {this.state.showDialog && <ZmitiUploadDialog id='zmiti-upload-xb-logo' {...xbLogoProps}></ZmitiUploadDialog>}
             </div>
     }
@@ -365,8 +357,32 @@ class ZmitiJinrongxbaddressApp extends React.Component {
     document.body.appendChild(script1);
 
 
+    $(window).on('keydown', e => {
+      if (e.keyCode === 27) {
+        this.setState({
+          showMap: false
+        })
+      }
+    })
+
+
 
     // document.body.appendChild(script2)
+  }
+
+  bindMaker(longitude, latitude) {
+
+
+    var pt = new BMap.Point(longitude, latitude);
+    var myIcon = new BMap.Icon("./static/images/xb-pos.png", new BMap.Size(26, 35));
+    var marker2 = new BMap.Marker(pt, {
+      icon: myIcon
+    }); // 创建标注
+
+    this.currentMarker = marker2;
+    this.baiduMap.addOverlay(marker2);
+
+
   }
 
   loadXBById() {
@@ -384,7 +400,6 @@ class ZmitiJinrongxbaddressApp extends React.Component {
         xbid: id
       }
     }).done(data => {
-      console.log(data)
 
       if (data.getret === 0) {
         var detail = data.detail;
@@ -397,10 +412,12 @@ class ZmitiJinrongxbaddressApp extends React.Component {
           logo: detail.xblogourl,
           xbcontent: detail.xbcontent,
           address: detail.xbaddress,
-          positiongd: detail.latitude + ',' + detail.longitude,
-          positionbd: detail.bdlatitude + ',' + detail.bdlongitude,
+          positiongd: detail.longitude + ',' + detail.latitude,
+          positionbd: detail.bdlongitude + ',' + detail.bdlatitude,
           cityid: detail.cityid
-        }, () => {})
+        })
+
+        //this.bindMaker(detail.bdlongitude, detail.bdlatitude);
       }
     })
   }
@@ -446,23 +463,25 @@ class ZmitiJinrongxbaddressApp extends React.Component {
       }).done((data) => {
         console.log(data);
         //window.location.hash = 'jinrongxiaobaoaddress/' + data.xbid;
-
-        this.setState({
-          name: '',
-          phone: '',
-          latitude: '',
-          longitude: '',
-          bdlatitude: '',
-          bdlongitude: '',
-          cityid: -1,
-          proviceid: -1,
-          countyid: -1,
-          logo: '',
-          address: '',
-          xbcontent: '',
-          positionbd: '',
-          positiongd: ''
-        })
+        if(data.getret === 0){
+          
+          this.setState({
+            name: '',
+            phone: '',
+            latitude: '',
+            longitude: '',
+            bdlatitude: '',
+            bdlongitude: '',
+            cityid: 320,
+            proviceid: 24,
+            countyid: 1,
+            logo: '',
+            address: '',
+            xbcontent: '',
+            positionbd: '',
+            positiongd: ''
+          })
+        }
         message[data.getret === 0 ? 'success' : 'error'](data.getmsg);
 
       })
@@ -499,8 +518,8 @@ class ZmitiJinrongxbaddressApp extends React.Component {
     this.state.address = e.target.value;
     this.forceUpdate();
 
-    this.fillAddress();
-    this.theLocation(e.target.value)
+    //this.fillAddress();
+    //this.theLocation(e.target.value)
   }
 
   loadCity() {
@@ -518,37 +537,87 @@ class ZmitiJinrongxbaddressApp extends React.Component {
     })
   }
 
+  searchAddress(e) {
+    var address = e.target.value;
+    if (!address) {
+      return;
+    }
+    this.baiduLocal && this.baiduLocal.search(address);
+    this.gaodeLocal && this.gaodeLocal.search(address);
+    console.log(this.gaodeLocal)
+  }
+
+  showMap(type) {
+    this.setState({
+      showMap: true
+    }, () => {
+      switch (type) {
+        case 'baidu':
+          var map = new BMap.Map("zmiti-bx-map-C");
+          this.baiduMap = map;
+          map.enableScrollWheelZoom(); //启用滚轮放大缩小，默认禁用
+          map.enableContinuousZoom(); //启用地图惯性拖拽，默认禁用
+          var point = new BMap.Point(116.331398, 39.897445);
+          map.centerAndZoom(point, 11);
+
+          //var pt = new BMap.Point(this.state.bdlatitude, this.state.bdlongitude);
+
+
+          map.addEventListener("click", (e) => {
+
+            this.setState({
+              positionbd: e.point.lng + ", " + e.point.lat
+            });
+
+            this.currentMarker && this.currentMarker.setPosition(new BMap.Point(e.point.lng, e.point.lat))
+            message.success('地点选取成功')
+          });
+
+          var local = new BMap.LocalSearch(map, {
+            renderOptions: {
+              map: map
+            }
+          });
+          this.baiduLocal = local;
+          this.gaodeLocal = null;
+          break;
+        case 'gaode':
+          var gdmap = new AMap.Map('zmiti-bx-map-C', {
+            resizeEnable: true,
+            zoom: 11,
+
+          });
+
+          gdmap.on('click', e => {
+            console.log(e.lnglat.getLng() + ',' + e.lnglat.getLat())
+            this.setState({
+              positiongd: e.lnglat.getLng() + ',' + e.lnglat.getLat()
+            })
+            message.success('地点选取成功')
+          })
+
+
+          AMap.service(["AMap.PlaceSearch"], function() {
+            var placeSearch = new AMap.PlaceSearch({ //构造地点查询类
+              pageSize: 5,
+              pageIndex: 1,
+              city: "", //城市
+              map: gdmap //,
+                //panel: "panel"
+            });
+            //关键字查询
+            this.gaodeLocal = placeSearch;
+            this.baiduLocal = null;
+            //placeSearch.search('中国工商银行榆林分行', function(status, result) {
+          }.bind(this));
+
+          this.gaodeMap = gdmap;
+          break;
+      }
+    })
+  }
   loadMap() {
 
-    var map = new BMap.Map("zmiti-xb-baidumap");
-    this.baiduMap = map;
-    map.enableScrollWheelZoom(); //启用滚轮放大缩小，默认禁用
-    map.enableContinuousZoom(); //启用地图惯性拖拽，默认禁用
-    var point = new BMap.Point(116.331398, 39.897445);
-    map.centerAndZoom(point, 11);
-
-
-    map.addEventListener("click", (e) => {
-
-      this.setState({
-        positionbd: e.point.lng + ", " + e.point.lat
-      })
-    });
-
-
-    var gdmap = new AMap.Map('zmiti-xb-gaodemap', {
-      resizeEnable: true,
-      zoom: 11,
-
-    });
-
-    gdmap.on('click', e => {
-      this.setState({
-        positiongd: e.lnglat.getLng() + ',' + e.lnglat.getLat()
-      })
-    })
-
-    this.gaodeMap = gdmap;
 
 
     this.loadXBById();
@@ -589,10 +658,10 @@ class ZmitiJinrongxbaddressApp extends React.Component {
       cityid: value[2]
     });
 
-    this.searchByStationName(a[2] || a[1]);
+    //this.searchByStationName(a[2] || a[1]);
 
     //city1 && this.gaodeMap.setCity(city1);
-    this.theLocation(city);
+    //this.theLocation(city);
   }
 
   searchByStationName(keyword, fn) {　　

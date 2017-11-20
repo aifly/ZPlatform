@@ -75,7 +75,7 @@ class ZmitiJinrongxbApp extends React.Component {
       title: '名称',
       dataIndex: 'xbname',
       key: 'xbname',
-      render: text => <a href="#">{text}</a>,
+      render: text => <a href="javascript:void(0)">{text}</a>,
     }, {
       title: '城市',
       dataIndex: 'cityname',
@@ -199,8 +199,10 @@ class ZmitiJinrongxbApp extends React.Component {
       if (data.getret === 0) {
         this.state.dataSource.forEach((item, i) => {
           if (item.xbid === id) {
+            console.log(this.state.dataSource)
             this.state.dataSource.split(i, 1);
             this.forceUpdate();
+
           }
         });
       }
@@ -231,6 +233,7 @@ class ZmitiJinrongxbApp extends React.Component {
           dataSource: data.list
         })
       } else {
+
         message.error('获取店门列表失败')
       }
     });
