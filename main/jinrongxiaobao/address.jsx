@@ -56,6 +56,7 @@ class ZmitiJinrongxbaddressApp extends React.Component {
       isShowGaodeMap: false,
       proviceid: 24,
       options: [],
+      keyword:''
     }
     this.currentId = -1;
   }
@@ -272,7 +273,7 @@ class ZmitiJinrongxbaddressApp extends React.Component {
                     
                 </div>
                 {this.state.showMap&&<div className='zmiti-xbmap-C'>
-                                      <Input onChange={this.searchAddress.bind(this)} type='text' className='zmiti-xb-map-search' placeholder='请输入您要查询的地址'/>
+                                      <Input value={this.state.keyword} onChange={this.searchAddress.bind(this)} type='text' className='zmiti-xb-map-search' placeholder='请输入您要查询的地址'/>
                                       <Icon title='关闭地图' onClick={()=>{this.setState({showMap:false})}} type='close' className='zmiti-xb-map-close'></Icon>
                                     <div  id='zmiti-bx-map-C'></div>
                                 </div>}
@@ -538,19 +539,25 @@ class ZmitiJinrongxbaddressApp extends React.Component {
   }
 
   searchAddress(e) {
-    var address = e.target.value;
+
+    var address = e.target ? e.target.value : e.split(' ')[0];
+    
+    this.setState({
+      keyword:address
+    });
     if (!address) {
       return;
     }
     this.baiduLocal && this.baiduLocal.search(address);
     this.gaodeLocal && this.gaodeLocal.search(address);
-    console.log(this.gaodeLocal)
+    
   }
 
   showMap(type) {
     this.setState({
       showMap: true
     }, () => {
+      
       switch (type) {
         case 'baidu':
           var map = new BMap.Map("zmiti-bx-map-C");
@@ -614,6 +621,11 @@ class ZmitiJinrongxbaddressApp extends React.Component {
           this.gaodeMap = gdmap;
           break;
       }
+
+      setTimeout(()=>{
+
+        this.searchAddress(this.state.address);
+      },100);
     })
   }
   loadMap() {
