@@ -56,7 +56,8 @@ class ZmitiJinrongxbaddressApp extends React.Component {
       isShowGaodeMap: false,
       proviceid: 24,
       options: [],
-      keyword:''
+      keyword:'',
+      managername:''
     }
     this.currentId = -1;
   }
@@ -178,6 +179,17 @@ class ZmitiJinrongxbaddressApp extends React.Component {
                           <Input placeholder="名称" 
                             value={this.state.name}
                             onChange={(e)=>{this.state.name=e.target.value;this.forceUpdate();}}
+                          />                      
+                      </FormItem>
+                      <FormItem
+                        {...formItemLayout}
+                        label="经办人"
+                        hasFeedback
+                      >                        
+                          
+                          <Input placeholder="经办人" 
+                            value={this.state.managername}
+                            onChange={(e)=>{this.state.managername=e.target.value;this.forceUpdate();}}
                           />                      
                       </FormItem>
                       <FormItem
@@ -403,6 +415,7 @@ class ZmitiJinrongxbaddressApp extends React.Component {
     }).done(data => {
 
       if (data.getret === 0) {
+        console.log(data);
         var detail = data.detail;
         this.setState({
           name: detail.xbname,
@@ -410,6 +423,7 @@ class ZmitiJinrongxbaddressApp extends React.Component {
           countyid: 1,
           phone: detail.phone,
           proviceid: detail.proviceid,
+          managername:detail.managername,
           logo: detail.xblogourl,
           xbcontent: detail.xbcontent,
           address: detail.xbaddress,
@@ -434,6 +448,7 @@ class ZmitiJinrongxbaddressApp extends React.Component {
       xbname: this.state.name,
       xblogourl: this.state.logo,
       xbcontent: this.state.xbcontent,
+      managername: this.state.managername,
       proviceid: this.state.proviceid,
       cityid: this.state.cityid,
       xbaddress: this.state.address,
@@ -473,6 +488,7 @@ class ZmitiJinrongxbaddressApp extends React.Component {
             longitude: '',
             bdlatitude: '',
             bdlongitude: '',
+            managername:'',
             cityid: 320,
             proviceid: 24,
             countyid: 1,
@@ -623,7 +639,6 @@ class ZmitiJinrongxbaddressApp extends React.Component {
       }
 
       setTimeout(()=>{
-
         this.searchAddress(this.state.address);
       },100);
     })
