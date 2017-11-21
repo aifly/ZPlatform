@@ -1,35 +1,47 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 
-import { message , Icon , Menu , Input , Badge } from '../../commoncomponent/common.jsx';
+import {
+  message,
+  Icon,
+  Menu,
+  Input,
+  Badge
+} from '../../commoncomponent/common.jsx';
 
 import '../../static/css/index.css';
-import { Link } from 'react-router';
+import {
+  Link
+} from 'react-router';
 
 import ZmitiHeader from '../../components/pub-header.jsx';
 
-import {ZmitiValidateUser} from '../../public/validate-user.jsx';
+import {
+  ZmitiValidateUser
+} from '../../public/validate-user.jsx';
 const SubMenu = Menu.SubMenu;
 
 
 class MainUI extends Component {
-	constructor(props) {
-	  super(props);
-	
-	  this.state = {
-	  	 defaultClass: "fly-left-aside",
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      defaultClass: "fly-left-aside",
       isOpen: true,
       current: '3',
-      currentAcc:'iLinten@qq.com',
-      rightWidth:0,
-      userid:'',
-      getusersigid:''
+      currentAcc: 'iLinten@qq.com',
+      rightWidth: 0,
+      userid: '',
+      getusersigid: ''
 
-	  };
-    
-	}
+    };
 
-  menuClickHandler(e){
-     /* e.preventDefault();
+  }
+
+  menuClickHandler(e) {
+    /* e.preventDefault();
         this.setState({
           frameSrc:e.target.href
       });
@@ -38,82 +50,92 @@ class MainUI extends Component {
 
   handleClick(e) {
 
-   
-  
-      // this.context.router.replace('/company');
 
-      //window.location.hash =  'company';
+
+    // this.context.router.replace('/company');
+
+    //window.location.hash =  'company';
   }
 
   toggleMenu() {
 
-      if (this.state.defaultClass === "fly-left-aside") {
-          window.mainLeftSize = 60;
-          this.setState({defaultClass: "fly-left-aside unfold", isOpen: false,rightWidth:document.documentElement.clientWidth - window.mainLeftSize});
-      } else {
-          this.setState({defaultClass: "fly-left-aside"});
-          window.mainLeftSize = 180;
-          setTimeout(()=> {
-              this.setState({isOpen: true,rightWidth:document.documentElement.clientWidth - window.mainLeftSize});
-          }, 200);
-      }
+    if (this.state.defaultClass === "fly-left-aside") {
+      window.mainLeftSize = 60;
+      this.setState({
+        defaultClass: "fly-left-aside unfold",
+        isOpen: false,
+        rightWidth: document.documentElement.clientWidth - window.mainLeftSize
+      });
+    } else {
+      this.setState({
+        defaultClass: "fly-left-aside"
+      });
+      window.mainLeftSize = 180;
+      setTimeout(() => {
+        this.setState({
+          isOpen: true,
+          rightWidth: document.documentElement.clientWidth - window.mainLeftSize
+        });
+      }, 200);
+    }
   }
-	render() {
+  render() {
 
-    let params = '';//this.state.userid+'/'+this.state.getusersigid;
+    let params = ''; //this.state.userid+'/'+this.state.getusersigid;
 
-    this.userManagerMenuConfig = [
-       {
-          "linkTo":"/user/个人账户管理",
-          "key":"user",
-          "title":"个人账户管理",
-          "isIcon":true,
-          "type":"user",
-          "isShow":true
-      }, {
-          "linkTo":"/company/公司账户管理",
-          "key":"company",
-          "title":"公司账户管理",
-          "isIcon":true,
-          "type":"customerservice",
-          "isShow":true
-      }
-    ];
+    this.userManagerMenuConfig = [{
+      "linkTo": "/user/个人账户管理",
+      "key": "user",
+      "title": "个人账户管理",
+      "isIcon": true,
+      "type": "user",
+      "isShow": true
+    }, {
+      "linkTo": "/company/公司账户管理",
+      "key": "company",
+      "title": "公司账户管理",
+      "isIcon": true,
+      "type": "customerservice",
+      "isShow": true
+    }];
 
-    this.productServiceMenuConfig = [
-      {
-          "linkTo":"/product/",
-          "key":"product",
-          "title":"新增产品",
-          "isIcon":true,
-          "type":"edit",
-          "isShow":true
-      },
-      {
-          "linkTo":"/listorder/工单管理",
-          "key":"workorder",
-          "title":"工单管理",
-          "isIcon":true,
-          "type":"edit",
-          "isShow":true
-      },
-      {
-          "linkTo":"/datum/",
-          "key":"datum",
-          "title":"资料管理",
-          "isIcon":true,
-          "type":"edit",
-          "isShow":true
-      }
-    ]
-    if(this.usertypesign===4){//超级管理员
-      this.userManagerMenuConfig.push( {
-          "linkTo":"/system/系统账户管理",
-          "key":"system",
-          "title":"系统账户管理",
-          "isIcon":true,
-          "type":"edit",
-          "isShow":true
+    this.productServiceMenuConfig = [{
+      "linkTo": "/product/",
+      "key": "product",
+      "title": "新增产品",
+      "isIcon": true,
+      "type": "edit",
+      "isShow": true
+    }, {
+      "linkTo": "/listorder/工单管理",
+      "key": "workorder",
+      "title": "工单管理",
+      "isIcon": true,
+      "type": "edit",
+      "isShow": true
+    }, {
+      "linkTo": "/datum/",
+      "key": "datum",
+      "title": "资料管理",
+      "isIcon": true,
+      "type": "edit",
+      "isShow": true
+    }, {
+      "linkTo": "/sysauth/",
+      "key": "sysauth",
+      "title": "权限管理",
+      "isIcon": true,
+      "type": "user",
+      "isShow": true
+    }]
+    if (this.usertypesign === 4) { //超级管理员
+      this.userManagerMenuConfig.push({
+        "linkTo": "/system/系统账户管理",
+        "key": "system",
+        "title": "系统账户管理",
+        "isIcon": true,
+        "type": "edit",
+        "isShow": true
       })
     }
 
@@ -121,22 +143,22 @@ class MainUI extends Component {
 
     var hash = window.location.hash;
     var openKey = 'sub5';
-    this.productServiceMenuConfig.forEach((item,i)=>{
-        if(hash.indexOf(item.key)>-1){
-            openKey = 'sub6';
-        }    
+    this.productServiceMenuConfig.forEach((item, i) => {
+      if (hash.indexOf(item.key) > -1) {
+        openKey = 'sub6';
+      }
     });
     var headerProps = {
-            usertypesign:this.usertypesign,
-            currentAcc:this.state.currentAcc,
-            userid:this.userid,
-            type:'admin',
-            getusersigid:this.getusersigid,
-            logo:'../static/images/logo.png'
-        }
+      usertypesign: this.usertypesign,
+      currentAcc: this.state.currentAcc,
+      userid: this.userid,
+      type: 'admin',
+      getusersigid: this.getusersigid,
+      logo: '../static/images/logo.png'
+    }
 
-		return (
-			 <section className="main">
+    return (
+      <section className="main">
           <ZmitiHeader {...headerProps}></ZmitiHeader>
             <article className="fly-content">
                 <section className={this.state.defaultClass}>
@@ -170,49 +192,61 @@ class MainUI extends Component {
                 </section>
             </article>
         </section>
-		);
-	}
+    );
+  }
   componentWillMount() {
-      
-       let {resizeMainHeight,validateUser,loginOut,resizeLeftMenu} = this.props;
-        resizeMainHeight(this,'setAdminHeight');
-        resizeLeftMenu(this,'setAdminMenu');
-      var {userid, getusersigid, companyid,username,isover,usertypesign}=validateUser(()=>{
-        
-          loginOut(undefined,undefined,false);
-      });
-      this.userid = userid;
-      this.getusersigid = getusersigid;
-      this.companyid = companyid;
-      this.isover = isover;
-      this.usertypesign = usertypesign;
-      this.loginOut = loginOut;
-   
-    if(this.usertypesign !== window.Role.NORMALADMINUSER &&  this.usertypesign !== window.Role.SUPERADMINUSER){
 
-      loginOut('您没有访问的权限',window.mainUrl,false);//不是hash跳转。location.href跳转
+    let {
+      resizeMainHeight,
+      validateUser,
+      loginOut,
+      resizeLeftMenu
+    } = this.props;
+    resizeMainHeight(this, 'setAdminHeight');
+    resizeLeftMenu(this, 'setAdminMenu');
+    var {
+      userid,
+      getusersigid,
+      companyid,
+      username,
+      isover,
+      usertypesign
+    } = validateUser(() => {
+
+      loginOut(undefined, undefined, false);
+    });
+    this.userid = userid;
+    this.getusersigid = getusersigid;
+    this.companyid = companyid;
+    this.isover = isover;
+    this.usertypesign = usertypesign;
+    this.loginOut = loginOut;
+
+    if (this.usertypesign !== window.Role.NORMALADMINUSER && this.usertypesign !== window.Role.SUPERADMINUSER) {
+
+      loginOut('您没有访问的权限', window.mainUrl, false); //不是hash跳转。location.href跳转
     }
 
   }
-	componentDidMount() {
-    
-		var hash = window.location.hash;
+  componentDidMount() {
+
+    var hash = window.location.hash;
     var configs = this.userManagerMenuConfig.concat(this.productServiceMenuConfig);
-    var current =  '';
-    configs.forEach(item=>{
-      if(hash.indexOf('#'+item.linkTo)>-1){
+    var current = '';
+    configs.forEach(item => {
+      if (hash.indexOf('#' + item.linkTo) > -1) {
         current = item.key;
       }
     });
     this.setState({
-        current: current,
-        rightWidth:document.documentElement.clientWidth - 180,
-        userid:this.userid,
-        isover:this.isover,
-        getusersigid:this.getusersigid
+      current: current,
+      rightWidth: document.documentElement.clientWidth - 180,
+      userid: this.userid,
+      isover: this.isover,
+      getusersigid: this.getusersigid
     });
-   
-		
-	}
+
+
+  }
 }
 export default ZmitiValidateUser(MainUI);

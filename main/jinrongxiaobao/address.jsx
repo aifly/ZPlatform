@@ -56,8 +56,8 @@ class ZmitiJinrongxbaddressApp extends React.Component {
       isShowGaodeMap: false,
       proviceid: 24,
       options: [],
-      keyword:'',
-      managername:''
+      keyword: '',
+      managername: ''
     }
     this.currentId = -1;
   }
@@ -286,7 +286,7 @@ class ZmitiJinrongxbaddressApp extends React.Component {
                 </div>
                 {this.state.showMap&&<div className='zmiti-xbmap-C'>
                                       <Input value={this.state.keyword} onChange={this.searchAddress.bind(this)} type='text' className='zmiti-xb-map-search' placeholder='请输入您要查询的地址'/>
-                                      <Icon title='关闭地图' onClick={()=>{this.setState({showMap:false})}} type='close' className='zmiti-xb-map-close'></Icon>
+                                      <Icon title='关闭地图' onClick={this.closeMap.bind(this)} type='close' className='zmiti-xb-map-close'></Icon>
                                     <div  id='zmiti-bx-map-C'></div>
                                 </div>}
                 {this.state.showDialog && <ZmitiUploadDialog id='zmiti-upload-xb-logo' {...xbLogoProps}></ZmitiUploadDialog>}
@@ -372,15 +372,33 @@ class ZmitiJinrongxbaddressApp extends React.Component {
 
     $(window).on('keydown', e => {
       if (e.keyCode === 27) {
-        this.setState({
-          showMap: false
-        })
+        this.closeMap();
       }
     })
 
 
 
     // document.body.appendChild(script2)
+  }
+
+
+  closeMap() {
+    if (this.baiduLocal) {
+      if (!this.state.positionbd) {
+        message.error('请先选取一个地址');
+        return;
+      }
+    }
+    if (this.gaodeLocal) {
+      if (!this.state.positiongd) {
+        message.error('请先选取一个地址')
+        return
+      }
+    }
+
+    this.setState({
+      showMap: false
+    })
   }
 
   bindMaker(longitude, latitude) {
@@ -423,7 +441,7 @@ class ZmitiJinrongxbaddressApp extends React.Component {
           countyid: 1,
           phone: detail.phone,
           proviceid: detail.proviceid,
-          managername:detail.managername,
+          managername: detail.managername,
           logo: detail.xblogourl,
           xbcontent: detail.xbcontent,
           address: detail.xbaddress,
@@ -479,8 +497,8 @@ class ZmitiJinrongxbaddressApp extends React.Component {
       }).done((data) => {
         console.log(data);
         //window.location.hash = 'jinrongxiaobaoaddress/' + data.xbid;
-        if(data.getret === 0){
-          
+        if (data.getret === 0) {
+
           this.setState({
             name: '',
             phone: '',
@@ -488,7 +506,7 @@ class ZmitiJinrongxbaddressApp extends React.Component {
             longitude: '',
             bdlatitude: '',
             bdlongitude: '',
-            managername:'',
+            managername: '',
             cityid: 320,
             proviceid: 24,
             countyid: 1,
@@ -557,23 +575,23 @@ class ZmitiJinrongxbaddressApp extends React.Component {
   searchAddress(e) {
 
     var address = e.target ? e.target.value : e.split(' ')[0];
-    
+
     this.setState({
-      keyword:address
+      keyword: address
     });
     if (!address) {
       return;
     }
     this.baiduLocal && this.baiduLocal.search(address);
     this.gaodeLocal && this.gaodeLocal.search(address);
-    
+
   }
 
   showMap(type) {
     this.setState({
       showMap: true
     }, () => {
-      
+
       switch (type) {
         case 'baidu':
           var map = new BMap.Map("zmiti-bx-map-C");
@@ -638,9 +656,9 @@ class ZmitiJinrongxbaddressApp extends React.Component {
           break;
       }
 
-      setTimeout(()=>{
+      setTimeout(() => {
         this.searchAddress(this.state.address);
-      },100);
+      }, 100);
     })
   }
   loadMap() {

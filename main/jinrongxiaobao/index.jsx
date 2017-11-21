@@ -75,11 +75,16 @@ class ZmitiJinrongxbApp extends React.Component {
       title: '名称',
       dataIndex: 'xbname',
       key: 'xbname',
-      render: text => <a href="javascript:void(0)">{text}</a>,
+      render: (text, record) => <a href={'#/jinrongxiaobaoaddress/'+record.xbid}>{text}</a>,
     }, {
       title: '城市',
       dataIndex: 'cityname',
       key: 'cityname',
+      width: 150,
+    }, {
+      title: '负责人',
+      dataIndex: 'managername',
+      key: 'managername',
       width: 150,
     }, {
       title: '地址',
@@ -133,7 +138,7 @@ class ZmitiJinrongxbApp extends React.Component {
                         <Col className="jinrongxb-heigth45">名称：</Col>
                         <Col className="jinrongxb-heigth45"><Input value={this.state.keyword} placeholder="名称" /></Col>
                     </Row>
-                    <Table columns={columns} dataSource={this.state.dataSource} />
+                    <Table columns={columns} pagination={{pageSize:30}}  dataSource={this.state.dataSource} />
                 </div>
 
             </div>
