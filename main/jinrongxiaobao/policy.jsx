@@ -124,7 +124,7 @@ class ZmitiJinrongxbPolicyApp extends React.Component{
                                 />
                         </Col>
                     </Row>
-                    <Table columns={columns} dataSource={this.state.dataSource} 
+                    <Table columns={columns} rowKey={record => record.policyid} dataSource={this.state.dataSource} 
                     	pagination={{
                            defaultCurrent:s.state.pageIndex,
                            defaultPageSize:s.state.pagenum,
