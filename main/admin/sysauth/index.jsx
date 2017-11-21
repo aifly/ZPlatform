@@ -40,7 +40,7 @@ class ZmitiSysAuthApp extends Component {
 			loading: false,
 			tip: '数据拉取中...',
 
-			visible: true,
+			visible: false,
 
 			dataSource: [],
 
@@ -63,28 +63,28 @@ class ZmitiSysAuthApp extends Component {
 		resizeMainHeight(this);
 
 		const columns = [{
-			title: '城市',
-			dataIndex: 'cityname',
-			key: 'cityname',
+			title: '权限名称',
+			dataIndex: 'actionname',
+			key: 'actionname',
 			width: 150,
 		}, {
-			title: '负责人',
-			dataIndex: 'managername',
-			key: 'managername',
+			title: '权限地址',
+			dataIndex: 'actionurl',
+			key: 'actionurl',
 			width: 150,
 		}, {
-			title: '地址',
-			dataIndex: 'xbaddress',
-			key: 'xbaddress',
+			title: '权限编号',
+			dataIndex: 'actionnumber',
+			key: 'actionnumber',
 		}, {
 			title: '操作',
 			key: 'action',
 			width: 150,
 			render: (text, record) => (
 				<span>
-              <a href='javascript:void(0)'>编辑</a>
+              <a href='javascript:void(0)' onClick={this.editAction.bind(this)}>编辑</a>
               <span className="ant-divider" />
-              <Popconfirm placement="top" title={'确定要删除该门店吗？'} onConfirm={this.deleteAddress.bind(this,record.xbid)} okText="确定" cancelText="取消">
+              <Popconfirm placement="top" title={'确定要删除该门店吗？'} onConfirm={this.deleteAction.bind(this,record.xbid)} okText="确定" cancelText="取消">
                 <a href='javascript:void(0)'>删除</a>
               </Popconfirm>
               
@@ -129,7 +129,7 @@ class ZmitiSysAuthApp extends Component {
                     <div className="zmiti-jinrongxb-header">
                         <Row>
                             <Col span={8} className="zmiti-jinrongxb-header-inner">权限管理</Col>
-                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary' onClick={this.addRole.bind(this)}>添加</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary' onClick={this.showRoleModal.bind(this)}>添加</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
@@ -238,7 +238,7 @@ class ZmitiSysAuthApp extends Component {
                         hasFeedback
                       >                        
                           
-                          <Switch checkedChildren="开" unCheckedChildren="关" />
+                          <Switch checkedChildren="是" unCheckedChildren="否" checked={this.state.isparent} />
                       </FormItem>
 
                       <FormItem
@@ -266,7 +266,7 @@ class ZmitiSysAuthApp extends Component {
                       </FormItem>
 
                       <FormItem {...tailFormItemLayout}>
-                        <Button type="primary">{this.state.xbid?'更新':"添加"}</Button>
+                        <Button onClick={this.addAction.bind(this)} type="primary">{this.state.actionid?'更新':"添加"}</Button>
                       </FormItem>
                     </Form> 
 		        </Modal>
@@ -320,10 +320,45 @@ class ZmitiSysAuthApp extends Component {
 	}
 
 
-	addRole() {
+	showRoleModal() {
+		this.setState({
+			visible:true
+		})
+	}
+
+	deleteAction(){
 
 	}
 
+	editAction(record){//
+		this.showRoleModal();
+	}
+
+	addAction(){
+		var params = {
+			userid:this.userid,
+			getusersigid:this.getusersigid,
+			actionname:this.state.actionname,
+			englishname:this.state.englishname,
+			parentactionid:this.state.parentactionid,
+			actionurl:this.state.actionurl,
+			worksid:this.state.worksid,
+			actionnumber:this.state.actionnumber,
+			urllevel:this.state.urllevel,
+			sort:this.state.sort,
+			isparent:this.state.isparent,
+			keyword:this.state.keyword,
+			comment:this.state.comment
+		}
+		$.ajax({
+			type:'post',
+			url:window.baseUrl+'admin/adduserauthurl/',
+			data:params
+		}).done((data)=>{
+			message.info(data.getmsg);
+			console.log(data);
+		})
+	}
 
 
 	loadXBList() {
