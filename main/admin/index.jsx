@@ -30,6 +30,7 @@ import ZmitiCategoryRepertoryApp from './categoryrepertory/index.jsx';
 import ZmitiUserinfoApp from './company/userinfo.jsx';
 import ZmitiCompanyinformationApp from './company/information.jsx';
 import ZmitiSysAuthApp from './sysauth/index.jsx';
+import ZmitiSysRoleApp from './sysauth/role.jsx';
 class App extends React.Component {
 	constructor(args) {
 		super(...args);
@@ -87,9 +88,12 @@ class App extends React.Component {
 			path: '/companyinformation/id/(:id)',
 			app: ZmitiCompanyinformationApp
 		}, {
-			path: '/sysauth/(:id)',
+			path: '/sysauth/',
 			app: ZmitiSysAuthApp
-		}, ];
+		}, {
+			path: '/sysrole/',
+			app: ZmitiSysRoleApp
+		}];
 		return (
 			<Router history={hashHistory} >
          	{apps.map((app,i) =>{

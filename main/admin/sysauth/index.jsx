@@ -42,6 +42,14 @@ class ZmitiSysAuthApp extends Component {
 
 			visible: false,
 
+			currentActionId: '',
+
+			pageSize: 10,
+
+			pageNum: 1,
+
+			pageCount: 40,
+
 			dataSource: [],
 
 		}
@@ -63,28 +71,29 @@ class ZmitiSysAuthApp extends Component {
 		resizeMainHeight(this);
 
 		const columns = [{
+			title: '权限编号',
+			dataIndex: 'actionnumber',
+			key: 'actionnumber',
+			width: 100,
+		}, {
 			title: '权限名称',
 			dataIndex: 'actionname',
 			key: 'actionname',
-			width: 150,
+			width: 300,
 		}, {
 			title: '权限地址',
 			dataIndex: 'actionurl',
 			key: 'actionurl',
-			width: 150,
-		}, {
-			title: '权限编号',
-			dataIndex: 'actionnumber',
-			key: 'actionnumber',
+			width: 300,
 		}, {
 			title: '操作',
 			key: 'action',
 			width: 150,
 			render: (text, record) => (
 				<span>
-              <a href='javascript:void(0)' onClick={this.editAction.bind(this)}>编辑</a>
+              <a href='javascript:void(0)' onClick={this.editAction.bind(this,record)}>编辑</a>
               <span className="ant-divider" />
-              <Popconfirm placement="top" title={'确定要删除该门店吗？'} onConfirm={this.deleteAction.bind(this,record.xbid)} okText="确定" cancelText="取消">
+              <Popconfirm placement="top" title={'确定要删除该门店吗？'} onConfirm={this.deleteAction.bind(this,record)} okText="确定" cancelText="取消">
                 <a href='javascript:void(0)'>删除</a>
               </Popconfirm>
               
@@ -129,7 +138,7 @@ class ZmitiSysAuthApp extends Component {
                     <div className="zmiti-jinrongxb-header">
                         <Row>
                             <Col span={8} className="zmiti-jinrongxb-header-inner">权限管理</Col>
-                            <Col span={8} offset={8} className='zmiti-jinrongxb-button-right'><Button type='primary' onClick={this.showRoleModal.bind(this)}>添加</Button></Col>
+                            <Col span={2} offset={14} className='zmiti-jinrongxb-button-right'><Button type='primary' onClick={this.showRoleModal.bind(this,'')}>添加</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
@@ -137,16 +146,33 @@ class ZmitiSysAuthApp extends Component {
                         <Col className="jinrongxb-heigth45">名称：</Col>
                         <Col className="jinrongxb-heigth45"><Input value={this.state.keyword} placeholder="名称" /></Col>
                     </Row>
-                    <Table columns={columns} pagination={{pageSize:30}}  dataSource={this.state.dataSource} />
+                    <Table columns={columns} 
+                    pagination={{
+                    	total:this.state.pageCount,
+                    	onChange:this.loadAuth.bind(this)
+                    }} 
+                    dataSource={this.state.dataSource} />
                 </div>
                 <Modal
 		          title="添加权限"
 		          width={800}
+		          okText={!this.state.currentActionId?'添加':'更新'}
 		          visible={this.state.visible}
-		          onOk={this.handleOk}
-		          onCancel={this.handleCancel}
+		          onOk={this.addAction.bind(this)}
+		          onCancel={()=>{this.setState({visible:false})}}
 		        >
 		          <Form>
+
+		          	 <FormItem
+                        {...formItemLayout}
+                        label="权限编号"
+                        hasFeedback
+                      >                        
+                         <Input placeholder="权限编号" 
+                                  value={this.state.actionnumber}
+                                  onChange={(e)=>{this.state.actionnumber=e.target.value;this.forceUpdate();}}
+                                />   
+                      </FormItem>
                       <FormItem
                         {...formItemLayout}
                         label="权限中文名称"
@@ -176,7 +202,14 @@ class ZmitiSysAuthApp extends Component {
                         label="父级权限"
                         hasFeedback
                       >  
-                        <Cascader options={this.state.options}  placeholder="父级权限" />
+						<Select  onChange={(e)=>{this.setState({parentactionid:e})}}>
+							<Option value='0'>无</Option>
+							{this.state.dataSource.filter((data,i)=>{
+								return data.parentactionid === '';
+							}).map((item,i)=>{
+								return <Option key={i} value={item.actionid}>{item.actionname}</Option>
+							})}
+			 			</Select>
                       </FormItem>
                       <FormItem
                         {...formItemLayout}
@@ -186,7 +219,7 @@ class ZmitiSysAuthApp extends Component {
                           
                           <Input placeholder="权限url地址" 
                             value={this.state.actionurl}
-                            onChange={()=>{}}
+                            onChange={(e)=>{this.setState({actionurl:e.target.value})}}
                           />                      
                       </FormItem>
                       <FormItem
@@ -199,16 +232,7 @@ class ZmitiSysAuthApp extends Component {
                                      onChange={(e)=>{this.state.worksid=e.target.value;this.forceUpdate();}}
                                    />   
                       </FormItem>
-                      <FormItem
-                        {...formItemLayout}
-                        label="权限编号"
-                        hasFeedback
-                      >                        
-                         <Input placeholder="权限编号" 
-                                  value={this.state.actionnumber}
-                                  onChange={(e)=>{this.state.actionnumber=e.target.value;this.forceUpdate();}}
-                                />   
-                      </FormItem>
+                     
                       <FormItem
                         {...formItemLayout}
                         label="权限等级"
@@ -238,7 +262,7 @@ class ZmitiSysAuthApp extends Component {
                         hasFeedback
                       >                        
                           
-                          <Switch checkedChildren="是" unCheckedChildren="否" checked={this.state.isparent} />
+                          <Switch onChange={()=>{this.setState({isparent:!this.state.isparent})}} checkedChildren="是" unCheckedChildren="否" checked={this.state.isparent} />
                       </FormItem>
 
                       <FormItem
@@ -258,16 +282,12 @@ class ZmitiSysAuthApp extends Component {
                         label="备注"
                         hasFeedback
                       >                        
-                          
-                          <Input placeholder="备注" 
+                          <Input type='textarea' placeholder="备注" 
                                   value={this.state.comment}
                                   onChange={(e)=>{this.state.comment=e.target.value;this.forceUpdate();}}
                                 />        
                       </FormItem>
 
-                      <FormItem {...tailFormItemLayout}>
-                        <Button onClick={this.addAction.bind(this)} type="primary">{this.state.actionid?'更新':"添加"}</Button>
-                      </FormItem>
                     </Form> 
 		        </Modal>
             </div>
@@ -316,60 +336,139 @@ class ZmitiSysAuthApp extends Component {
 	componentDidMount() {
 		var s = this;
 		this.resizeMainHeight(this);
-		this.loadXBList();
+		this.loadAuthList();
 	}
 
 
-	showRoleModal() {
+	showRoleModal(type = '') {
 		this.setState({
-			visible:true
+			visible: true,
+			currentActionId: type,
+			actionname: '',
+			actionurl: '',
+
+		})
+
+		this.initState();
+	}
+
+	initState() {
+		this.setState({
+			actionname: '',
+			actionurl: '',
+			actionnumber: '',
+			comment: '',
+			isparent: false,
+			sort: '',
+			keyword: '',
+			urllevel: '',
+			worksid: '',
+			englishname: ''
 		})
 	}
 
-	deleteAction(){
+	deleteAction(record) {
 
-	}
-
-	editAction(record){//
-		this.showRoleModal();
-	}
-
-	addAction(){
-		var params = {
-			userid:this.userid,
-			getusersigid:this.getusersigid,
-			actionname:this.state.actionname,
-			englishname:this.state.englishname,
-			parentactionid:this.state.parentactionid,
-			actionurl:this.state.actionurl,
-			worksid:this.state.worksid,
-			actionnumber:this.state.actionnumber,
-			urllevel:this.state.urllevel,
-			sort:this.state.sort,
-			isparent:this.state.isparent,
-			keyword:this.state.keyword,
-			comment:this.state.comment
-		}
 		$.ajax({
-			type:'post',
-			url:window.baseUrl+'admin/adduserauthurl/',
-			data:params
-		}).done((data)=>{
-			message.info(data.getmsg);
-			console.log(data);
+			type: 'post',
+			url: window.baseUrl + 'admin/deluserauthurl',
+			data: {
+				userid: this.userid,
+				getusersigid: this.getusersigid,
+				actionid: record.actionid
+			}
+		}).done(data => {
+			if (data.getret === 0) {
+				message.success(data.getmsg);
+
+				this.state.dataSource.forEach((item, i) => {
+					if (item.actionid === record.actionid) {
+						this.state.dataSource.splice(i, 1)
+						this.forceUpdate();
+					}
+				})
+			} else {
+				console.log(data);
+			}
+		})
+	}
+
+	editAction(record) { //
+		this.showRoleModal(record.actionid);
+		this.setState(record)
+
+	}
+
+	addAction() {
+
+		var params = {
+			userid: this.userid,
+			getusersigid: this.getusersigid,
+			actionname: this.state.actionname,
+			englishname: this.state.englishname,
+			parentactionid: this.state.parentactionid,
+			actionurl: this.state.actionurl,
+			worksid: this.state.worksid,
+			actionnumber: this.state.actionnumber,
+			urllevel: this.state.urllevel,
+			sort: this.state.sort,
+			isparent: this.state.isparent | 0,
+			keyword: this.state.keyword,
+			comment: this.state.comment
+		}
+		if (!this.state.currentActionId) { //新增
+			$.ajax({
+				type: 'post',
+				url: window.baseUrl + 'admin/adduserauthurl/',
+				data: params
+			}).done((data) => {
+				message.info(data.getmsg);
+				console.log(data);
+				if (data.getret === 0) {
+					this.setState({
+						//	visible: false,
+					})
+					this.initState();
+					this.loadAuthList();
+				}
+			})
+		} else {
+			params.actionid = this.state.currentActionId;
+			$.ajax({
+				type: 'post',
+				url: window.baseUrl + 'admin/edituserauthurl/',
+				data: params
+			}).done((data) => {
+				message[data.getret === 0 ? 'success' : 'error'](data.getmsg);
+				if (data.getret === 0) {
+					this.setState({
+						visible: false
+					})
+				}
+			})
+		}
+	}
+
+
+	loadAuth(pageNum) {
+
+		this.setState({
+			pageNum
+		}, () => {
+			this.loadAuthList();
 		})
 	}
 
 
-	loadXBList() {
+	loadAuthList() {
 		var s = this;
 		$.ajax({
 			url: window.baseUrl + 'admin/getuserauthurllist',
 			data: {
 				userid: s.userid,
 				getusersigid: s.getusersigid,
-				page: 1,
-				pagenum: 20
+				page: this.state.pageNum,
+				pagenum: this.state.pageSize
 			},
 			type: 'post'
 
@@ -378,23 +477,33 @@ class ZmitiSysAuthApp extends Component {
 			if (data.getret === 0) {
 
 				data.list.forEach((list, i) => {
-					list.key = i;
-				})
+						list.key = i;
+					})
+					/*data.list.filter((d, i) => {
+						return d.parentactionid === ''
+					}).forEach((item, i) => {
+
+						data.list.forEach((d, i) => {
+							if (d.parentactionid === item.actionid) {
+								d.pareantaction = <div style={{color:"green",fontWeight:'bold'}}>{item.actionname}</div>;
+							}
+						})
+					})*/
 				this.setState({
 					dataSource: data.list
 				})
 			} else {
 
-				message.error('获取店门列表失败')
+				//message.error('获取店门列表失败')
 			}
 		});
 	}
 
 	changeAccount(i) {
 		if (i * 1 === 0) {
-			window.location.hash = '/sysauth';
+			window.location.hash = '/sysauth/';
 		} else if (i * 1 === 1) {
-			window.location.hash = '/sysrole';
+			window.location.hash = '/sysrole/';
 		} else if (i * 1 === 2) {
 			window.location.hash = 'jinrongxiaobaonotice/';
 		} else if (i * 1 === 3) {
