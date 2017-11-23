@@ -19,6 +19,7 @@ import {
 
 
 } from '../../commoncomponent/common.jsx';
+
 let Option = Select.Option;
 const FormItem = Form.Item;
 
@@ -40,7 +41,7 @@ class ZmitiSysRoleApp extends Component {
 			loading: false,
 			tip: '数据拉取中...',
 
-			visible: false,
+			visible: true,
 
 			currentActionId: '',
 
@@ -126,8 +127,13 @@ class ZmitiSysRoleApp extends Component {
 		var children = [];
 		this.state.authList.map((item, i) => {
 			children.push(<Option key={i} value={item.actionid}>{item.actionname}</Option>)
+				//		children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
 				//children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>)
 		})
+		for (let i = 10; i < 36; i++) {
+			//children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+		}
+
 		var title = this.props.params.title || '角色管理';
 		const monthFormat = 'YYYY/MM';
 		let props = {
@@ -146,12 +152,16 @@ class ZmitiSysRoleApp extends Component {
                         <Row>
 			<Col span={8} className="zmiti-jinrongxb-header-inner">{title}</Col>
                             <Col span={2} offset={14} className='zmiti-jinrongxb-button-right'><Button type='primary' onClick={this.showRoleModal.bind(this,'')}>添加</Button></Col>
+
                         </Row>                      
+
                     </div>
                     <div className="zmiti-jinrongxb-line"></div>
                     <Row gutter={10} type='flex' className='jinrongxb-search '>
                         <Col className="jinrongxb-heigth45">名称：</Col>
-                        <Col className="jinrongxb-heigth45"><Input value={this.state.keyword} placeholder="名称" /></Col>
+                        <Col className="jinrongxb-heigth45"><Input value={this.state.keyword} placeholder="名称" />
+                        	
+                        </Col>
                     </Row>
                     <Table columns={columns} 
                     pagination={{
@@ -169,7 +179,6 @@ class ZmitiSysRoleApp extends Component {
 		          onCancel={()=>{this.setState({visible:false})}}
 		        >
 		          <Form>
-
 		          	
                       <FormItem
                         {...formItemLayout}
@@ -189,9 +198,14 @@ class ZmitiSysRoleApp extends Component {
                         label="权限"
                         hasFeedback
                       >  
-						<Select mode="multiple" onChange={(e)=>{}}>
-							{children}
-			 			</Select>
+						  <Select
+						    mode="multiple"
+						    style={{ width: '100%' }}
+						    placeholder="Please select"
+						    defaultValue={['a10', 'c12']}
+						  >
+						    {children}
+						  </Select>  
                       </FormItem>
 
                        <FormItem
@@ -442,18 +456,18 @@ class ZmitiSysRoleApp extends Component {
 			if (data.getret === 0) {
 
 				data.list.forEach((list, i) => {
-						list.key = i;
-					})
-					/*data.list.filter((d, i) => {
-						return d.parentactionid === ''
-					}).forEach((item, i) => {
+					list.key = i;
+				})
+				data.list.filter((d, i) => {
+					return d.parentactionid === ''
+				}).forEach((item, i) => {
 
-						data.list.forEach((d, i) => {
-							if (d.parentactionid === item.actionid) {
-								d.pareantaction = <div style={{color:"green",fontWeight:'bold'}}>{item.actionname}</div>;
-							}
-						})
-					})*/
+					data.list.forEach((d, i) => {
+						if (d.parentactionid === item.actionid) {
+							d.pareantaction = <div style={{color:"green",fontWeight:'bold'}}>{item.actionname}</div>;
+						}
+					})
+				})
 				this.setState({
 					dataSource: data.list
 				})

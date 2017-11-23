@@ -202,8 +202,8 @@ class ZmitiSysAuthApp extends Component {
                         label="父级权限"
                         hasFeedback
                       >  
-						<Select  onChange={(e)=>{this.setState({parentactionid:e})}}>
-							<Option value='0'>无</Option>
+						<Select   onChange={(e)=>{this.setState({parentactionid:e})}}>
+							<Option value=''>无</Option>
 							{this.state.dataSource.filter((data,i)=>{
 								return data.parentactionid === '';
 							}).map((item,i)=>{
@@ -463,12 +463,11 @@ class ZmitiSysAuthApp extends Component {
 	loadAuthList() {
 		var s = this;
 		$.ajax({
-			url: window.baseUrl + 'admin/getuserauthurllist',
+			url: window.baseUrl + 'admin/getalluserauthurllist',
 			data: {
 				userid: s.userid,
-				getusersigid: s.getusersigid,
-				page: this.state.pageNum,
-				pagenum: this.state.pageSize
+				getusersigid: s.getusersigid
+
 			},
 			type: 'post'
 

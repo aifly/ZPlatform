@@ -42,8 +42,7 @@ class App extends React.Component {
 		var apps = [{
 			path: '/',
 			app: AdminIndex
-		}, {
-			path: '/user/:title',
+}, {			path: '/user/:title',
 			app: ZmitiUserApp
 		}, {
 			path: '/company/:title',

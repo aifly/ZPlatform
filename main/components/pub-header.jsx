@@ -1,18 +1,30 @@
-import React, { Component } from 'react';
-import {Icon,Menu,Input,Badge,message,Row,Col} from '../commoncomponent/common.jsx';
+import React, {
+    Component
+} from 'react';
+import {
+    Icon,
+    Menu,
+    Input,
+    Badge,
+    message,
+    Row,
+    Col
+} from '../commoncomponent/common.jsx';
 import $ from 'jquery';
-import { Link } from 'react-router';
+import {
+    Link
+} from 'react-router';
 export default class ZmitiHeader extends Component {
-	constructor(props) {
-		super(props);
-        this.state ={
-            serviceShow:false,
-            serviceCate:0
+    constructor(props) {
+        super(props);
+        this.state = {
+            serviceShow: false,
+            serviceCate: 0
         }
-	}
-	render() {
-		return (
-				<header className="fly-header" >
+    }
+    render() {
+        return (
+            <header className="fly-header" >
                     <div className="fly-logo"><a href={window.mainUrl}><img src={this.props.logo} alt=""/></a></div>
                     <div className="fly-nav"><a href={window.mainUrl}>控制平台</a></div>
                     <div className="fly-nav">
@@ -57,49 +69,49 @@ export default class ZmitiHeader extends Component {
                         </Row>
                     </div>
             </header>
-		);
-	}
-	componentWillMount() {
-		 window.getCookie = function(cname){
-				 var name = cname + "=";  
-		    var ca = document.cookie.split(';');  
-		    for(var i=0; i<ca.length; i++) {  
-		        var c = ca[i];  
-		        while (c.charAt(0)==' ') c = c.substring(1);  
-		        if (c.indexOf(name) != -1) return c.substring(name.length, c.length);  
-		    }  
-		    return "";  
-			}
-	}
-	 logout(){//退出登录
-    	var s=  this;
-
-    		$.ajax({
-                type:window.ajaxType || 'get',
-    			url:window.baseUrl+'user/user_loginout/',
-    			data:{
-    				userid:s.props.userid,
-    				getusersigid:s.props.getusersigid
-    			},
-    			success(data){
-    				s.clearCookie('login');
-    				if(data.getret === 0){
-    					
-    					message.success(data.getmsg);
-    				}
-    				window.location.href= window.loginUrl;	
-    			}
-    		})
+        );
     }
-    clearCookie (cname){
-        var d = new Date();  
-		    d.setTime(d.getTime() + (-1*24*60*60*1000));  
-		    var expires = "expires="+d.toUTCString();  
-		    document.cookie = cname + "=" + '' + "; " + expires+';path=/';  
+    componentWillMount() {
+        window.getCookie = function(cname) {
+            var name = cname + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1);
+                if (c.indexOf(name) != -1) return c.substring(name.length, c.length);
+            }
+            return "";
+        }
+    }
+    logout() { //退出登录
+        var s = this;
+
+        $.ajax({
+            type: window.ajaxType || 'get',
+            url: window.baseUrl + 'user/user_loginout/',
+            data: {
+                userid: s.props.userid,
+                getusersigid: s.props.getusersigid
+            },
+            success(data) {
+                s.clearCookie('login');
+                if (data.getret === 0) {
+
+                    message.success(data.getmsg);
+                }
+                window.location.href = window.loginUrl;
+            }
+        })
+    }
+    clearCookie(cname) {
+        var d = new Date();
+        d.setTime(d.getTime() + (-1 * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + '' + "; " + expires + ';path=/';
     }
 }
 
-ZmitiHeader.defaultProps={
-	logo:'./static/images/logo.png',
-    type:'main'
+ZmitiHeader.defaultProps = {
+    logo: './static/images/logo.png',
+    type: 'main'
 }
