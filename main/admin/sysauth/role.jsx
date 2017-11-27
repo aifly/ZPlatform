@@ -15,7 +15,8 @@ import {
 	Cascader,
 	Button,
 	Modal,
-	Switch
+	Switch,
+	Checkbox
 
 
 } from '../../commoncomponent/common.jsx';
@@ -43,7 +44,7 @@ class ZmitiSysRoleApp extends Component {
 
 			visible: true,
 
-			currentActionId: '',
+			currentRoleId: '',
 
 			pageSize: 10,
 
@@ -80,9 +81,12 @@ class ZmitiSysRoleApp extends Component {
 			width: 100,
 		}, {
 			title: '是否系统默认角色',
-			dataIndex: 'isdefault',
 			key: 'isdefault',
 			width: 300,
+			render: (text, record) => {
+
+				return <span>{record.isdefault ? '是':'否'}</span>
+			}
 		}, {
 			title: '备注',
 			dataIndex: 'comment',
@@ -96,7 +100,7 @@ class ZmitiSysRoleApp extends Component {
 				<span>
               <a href='javascript:void(0)' onClick={this.editAction.bind(this,record)}>编辑</a>
               <span className="ant-divider" />
-              <Popconfirm placement="top" title={'确定要删除该门店吗？'} onConfirm={this.deleteAction.bind(this,record)} okText="确定" cancelText="取消">
+              <Popconfirm placement="top" title={'确定要删除该门店吗？'} onConfirm={this.deleteRole.bind(this,record)} okText="确定" cancelText="取消">
                 <a href='javascript:void(0)'>删除</a>
               </Popconfirm>
               
@@ -130,9 +134,34 @@ class ZmitiSysRoleApp extends Component {
 				//		children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
 				//children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>)
 		})
-		for (let i = 10; i < 36; i++) {
-			//children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-		}
+
+		var authItems = [];
+
+		this.state.authList.map((auth, i) => {
+			authItems.push({
+				[auth.actionid]: <h2 data-id={auth.actionid} key={auth.actionid}><Checkbox onChange={this.toggleAuthAllItem.bind(this,auth)}> {auth.actionname}</Checkbox></h2>
+			})
+			return this.state.defaultAuthList.map((dt, k) => {
+				if (dt.parentactionid === auth.actionid) {
+					authItems.push({
+						[auth.actionid]: <div  key={dt.actionid+k}><Checkbox onChange={this.toggleAuthItem.bind(this,k)} checked={dt.checked}> {dt.actionname}</Checkbox></div>
+					})
+				}
+			})
+		})
+
+
+		var authItemsArr = [];
+
+		this.state.authList.map((item, i) => {
+			var arr = [];
+			authItems.map((auth, k) => {
+				auth[item.actionid] && arr.push(auth[item.actionid])
+			});
+			authItemsArr.push(arr)
+		})
+
+		this.authItemsArr = authItemsArr;
 
 		var title = this.props.params.title || '角色管理';
 		const monthFormat = 'YYYY/MM';
@@ -166,16 +195,16 @@ class ZmitiSysRoleApp extends Component {
                     <Table columns={columns} 
                     pagination={{
                     	total:this.state.pageCount,
-                    	onChange:this.loadAuth.bind(this)
+                    	//onChange:this.loadAuth.bind(this)
                     }} 
                     dataSource={this.state.dataSource} />
                 </div>
                 <Modal
 		          title="添加角色"
 		          width={800}
-		          okText={!this.state.currentActionId?'添加':'更新'}
+		          okText={!this.state.currentRoleId?'添加':'更新'}
 		          visible={this.state.visible}
-		          onOk={this.addAction.bind(this)}
+		          onOk={this.addRole.bind(this)}
 		          onCancel={()=>{this.setState({visible:false})}}
 		        >
 		          <Form>
@@ -198,14 +227,18 @@ class ZmitiSysRoleApp extends Component {
                         label="权限"
                         hasFeedback
                       >  
-						  <Select
+						 {/* <Select
 						    mode="multiple"
 						    style={{ width: '100%' }}
-						    placeholder="Please select"
-						    defaultValue={['a10', 'c12']}
+						    placeholder="请选择权限"
+						    defaultValue={[]}
 						  >
 						    {children}
-						  </Select>  
+						  </Select>  */}
+
+						 {authItemsArr.map((auth,i)=>{
+						 	return <div className='zmiti-auth-cate-C' key={i}>{auth}</div>
+						 })}
                       </FormItem>
 
                        <FormItem
@@ -295,9 +328,8 @@ class ZmitiSysRoleApp extends Component {
 	showRoleModal(type = '') {
 		this.setState({
 			visible: true,
-			currentActionId: type,
-			actionname: '',
-			actionurl: '',
+			//currentActionId: type,
+			currentRoleId: type,
 
 		})
 
@@ -319,22 +351,38 @@ class ZmitiSysRoleApp extends Component {
 		})
 	}
 
-	deleteAction(record) {
+	toggleAuthAllItem(record, e) {
+		this.state.defaultAuthList.map((item, i) => {
+			if (item.parentactionid === record.actionid) {
+				item.checked = e.target.checked;
+			}
+		})
+		this.forceUpdate();
+	}
+
+	toggleAuthItem(index, e) {
+
+		this.state.defaultAuthList[index].checked = e.target.checked;
+
+		this.forceUpdate();
+	}
+
+	deleteRole(record) {
+
 
 		$.ajax({
 			type: 'post',
-			url: window.baseUrl + 'admin/deluserauthurl',
+			url: window.baseUrl + 'admin/delrole',
 			data: {
 				userid: this.userid,
 				getusersigid: this.getusersigid,
-				actionid: record.actionid
+				roleids: record.roleid
 			}
 		}).done(data => {
 			if (data.getret === 0) {
 				message.success(data.getmsg);
-
 				this.state.dataSource.forEach((item, i) => {
-					if (item.actionid === record.actionid) {
+					if (item.roleid === record.roleid) {
 						this.state.dataSource.splice(i, 1)
 						this.forceUpdate();
 					}
@@ -346,26 +394,37 @@ class ZmitiSysRoleApp extends Component {
 	}
 
 	editAction(record) { //
-		this.showRoleModal(record.actionid);
+		this.showRoleModal(record.roleid);
+
+		console.log(record)
+		record.isdefault = !!record.isdefault;
 		this.setState(record)
 
 	}
 
-	addAction() {
+	addRole() {
+		var actionids = [];
+		this.state.defaultAuthList.map((item, i) => {
 
+			if (item.parentactionid !== '' && item.checked) {
+
+				actionids.push(item.actionid)
+			}
+		})
 		var params = {
 			userid: this.userid,
 			getusersigid: this.getusersigid,
 			rolename: this.state.rolename,
-			actionids: '',
+			actionids: actionids.join(','),
 			sort: this.state.sort,
 			isdefault: this.state.isdefault | 0,
 			comment: this.state.comment
 		}
-		if (!this.state.currentActionId) { //新增
+		console.log(params);
+		if (!this.state.currentRoleId) { //新增权限
 			$.ajax({
 				type: 'post',
-				url: window.baseUrl + 'admin/adduserauthurl/',
+				url: window.baseUrl + 'admin/addrole/',
 				data: params
 			}).done((data) => {
 				message.info(data.getmsg);
@@ -379,10 +438,10 @@ class ZmitiSysRoleApp extends Component {
 				}
 			})
 		} else {
-			params.actionid = this.state.currentActionId;
+			params.actionid = this.state.currentRoleId;
 			$.ajax({
 				type: 'post',
-				url: window.baseUrl + 'admin/edituserauthurl/',
+				url: window.baseUrl + 'admin/editrole/',
 				data: params
 			}).done((data) => {
 				message[data.getret === 0 ? 'success' : 'error'](data.getmsg);
@@ -409,27 +468,29 @@ class ZmitiSysRoleApp extends Component {
 	loadAuthList() {
 		var s = this;
 		$.ajax({
-			url: window.baseUrl + 'admin/getuserauthurllist',
+			url: window.baseUrl + 'admin/getalluserauthurllist',
 			data: {
 				userid: s.userid,
 				getusersigid: s.getusersigid,
-				page: this.state.pageNum,
-				pagenum: this.state.pageSize
 			},
 			type: 'post'
 
 		}).done((data) => {
 
 
-
 			if (data.getret === 0) {
 
 				data.list.forEach((list, i) => {
 					list.key = i;
-				})
+				});
+
+
 
 				this.setState({
-					authList: data.list
+					defaultAuthList: data.list.concat([]),
+					authList: data.list.filter((item) => {
+						return item.parentactionid === ''
+					})
 				})
 			} else {
 

@@ -52,6 +52,8 @@ class ZmitiSysAuthApp extends Component {
 
 			dataSource: [],
 
+			currentParentActionName: '',
+
 		}
 		this.currentId = -1;
 	}
@@ -148,8 +150,7 @@ class ZmitiSysAuthApp extends Component {
                     </Row>
                     <Table columns={columns} 
                     pagination={{
-                    	total:this.state.pageCount,
-                    	onChange:this.loadAuth.bind(this)
+                    	pageSize:30
                     }} 
                     dataSource={this.state.dataSource} />
                 </div>
@@ -202,7 +203,7 @@ class ZmitiSysAuthApp extends Component {
                         label="父级权限"
                         hasFeedback
                       >  
-						<Select   onChange={(e)=>{this.setState({parentactionid:e})}}>
+						<Select  value={this.state.currentParentActionName}  onChange={(e)=>{this.setState({parentactionid:e})}}>
 							<Option value=''>无</Option>
 							{this.state.dataSource.filter((data,i)=>{
 								return data.parentactionid === '';
@@ -262,7 +263,7 @@ class ZmitiSysAuthApp extends Component {
                         hasFeedback
                       >                        
                           
-                          <Switch onChange={()=>{this.setState({isparent:!this.state.isparent})}} checkedChildren="是" unCheckedChildren="否" checked={this.state.isparent} />
+                          <Switch onChange={()=>{this.setState({isparent:!this.state.isparent})}} checkedChildren="是" unCheckedChildren="否" checked={!!this.state.isparent} />
                       </FormItem>
 
                       <FormItem
@@ -395,8 +396,22 @@ class ZmitiSysAuthApp extends Component {
 
 	editAction(record) { //
 		this.showRoleModal(record.actionid);
-		this.setState(record)
 
+		var r = this.getParentNameById(record);
+
+		this.setState(r)
+
+	}
+
+	getParentNameById(record) {
+		var r = record;
+		this.state.dataSource.map((item) => {
+			if (item.actionid === record.parentactionid) {
+				r.currentParentActionName = item.actionname;
+			}
+		})
+
+		return r;
 	}
 
 	addAction() {
