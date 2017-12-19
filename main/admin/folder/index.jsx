@@ -63,6 +63,20 @@ class ZmitiFolderApp extends Component {
               title: '0-2',
               key: '0-2',
             }],
+            treeListData: [{
+              title: '我的空间',
+              key: 'AA',
+              children: [
+                { title: '公司培训', key: 'AA-1' ,
+                  children:[{
+                    title: '设计', key: 'AA-1-1',
+                  },{
+                    title: '制作', key: 'AA-1-2',
+                  }]
+                },
+                { title: '公司文件', key: 'AA-2'},
+              ]
+            }]
             
         };
 
@@ -74,7 +88,7 @@ class ZmitiFolderApp extends Component {
             }
             setTimeout(() => {
               this.setState({
-                treeData: [...this.state.treeData],
+                treeListData: [...this.state.treeListData],
               });
               resolve();
             }, 1000);
@@ -120,30 +134,35 @@ class ZmitiFolderApp extends Component {
         }];
         var title = '素材管理';
 
-        let component =<div className="folder-main-ui" style={{height:this.state.mainHeight}}>
-          <div className="pad-10">
+        let component =<div className="zmiti-folder-main-ui" style={{height:this.state.mainHeight}}>
+          <div className="pad-10-a">
             <Row className='zmiti-folder-header'>
               <Col span={8}  className='zmiti-folder-header-inner' >素材管理</Col>
               <Col span={8} offset={8} className='zmiti-folder-button-right'></Col>
             </Row>
             <div className="zmiti-folder-line"></div>
-            <Row>
-              <Col span={4}>
-                 <div>
+          </div>
+          <div className="pad-10-b zmiti-folder-container">
+            
+            <div className="zmiti-folder-mainpane">
+              <div className="zmiti-folder-leftpane">
+                <div className="zmiti-folder-treelist">
                   <Tree loadData={this.onLoadData}
+                    defaultExpandAll={true}
+                    showIcon={true}
+                    prefixCls={'ant-tree'}
                     onSelect={this.onSelect.bind(this)}
                   >
-                    {this.renderTreeNodes(this.state.treeData)}
+                    {this.renderTreeNodes(this.state.treeListData)}
                   </Tree>
                 </div>
-              </Col>
-              <Col span={20}>
-                <div className="folder-heigth20"></div>
-                <div>
+              </div>
+              <div className="zmiti-folder-rightpane">
+                <div className="zmiti-folder-rightpane-inner">
                   <Table dataSource={this.state.dataSource} columns={columns} />
                 </div>
-              </Col>
-            </Row>            
+              </div>
+            </div>          
            
           </div>
         </div>
@@ -156,7 +175,7 @@ class ZmitiFolderApp extends Component {
 
     componentWillMount() {
       let {resizeMainHeight,validateUser,loginOut,resizeLeftMenu} = this.props;
-      validateUser(()=>{loginOut(undefined,undefined,false);},this);
+      validateUser(() => {loginOut(undefined,undefined,false);},this);
     }
     componentDidMount() {
 
