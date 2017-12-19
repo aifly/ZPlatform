@@ -116,19 +116,19 @@ class ZmitiFolderApp extends Component {
         let  {validateUser,loginOut,resizeMainHeight} = this.props;
 
         const columns = [{
-          title: '姓名',
+          title: '名称',
           dataIndex: 'name',
           key: 'name',
         }, {
-          title: '文件大小',
+          title: '大小',
           dataIndex: 'filelong',
           key: 'filelong',
         }, {
-          title: '文件类型',
+          title: '类型',
           dataIndex: 'filetype',
           key: 'filetype',
         }, {
-          title: '创建日期',
+          title: '修改日期',
           dataIndex: 'creatime',
           key: 'creatime',
         }];
