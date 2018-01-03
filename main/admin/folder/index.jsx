@@ -28,41 +28,6 @@ class ZmitiFolderApp extends Component {
               filetype:'0',
               creatime: '2017-10-02',
             }],
-            treeData: [{
-              title: '0-0',
-              key: '0-0',
-              children: [{
-                title: '0-0-0',
-                key: '0-0-0',
-                children: [
-                  { title: '0-0-0-0', key: '0-0-0-0',isLeaf: true },
-                  { title: '0-0-0-1', key: '0-0-0-1',isLeaf: true },
-                  { title: '0-0-0-2', key: '0-0-0-2',isLeaf: true },
-                ],
-              }, {
-                title: '0-0-1',
-                key: '0-0-1',
-                children: [
-                  { title: '0-0-1-0', key: '0-0-1-0',isLeaf: true },
-                  { title: '0-0-1-1', key: '0-0-1-1',isLeaf: true },
-                  { title: '0-0-1-2', key: '0-0-1-2',isLeaf: true},
-                ],
-              }, {
-                title: '0-0-2',
-                key: '0-0-2',
-              }],
-            }, {
-              title: '0-1',
-              key: '0-1',
-              children: [
-                { title: '0-1-0-0', key: '0-1-0-0' },
-                { title: '0-1-0-1', key: '0-1-0-1' },
-                { title: '0-1-0-2', key: '0-1-0-2' },
-              ],
-            }, {
-              title: '0-2',
-              key: '0-2',
-            }],
             treeListData: [{
               title: '我的空间',
               key: 'AA',
