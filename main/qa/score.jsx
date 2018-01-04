@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Table,Row,Col,Input,Button,Popconfirm,Tooltip ,Icon,Modal,Pagination } from '../commoncomponent/common.jsx';
+import { Table,Row,Col,Input,Button,Popconfirm,Tooltip ,Icon,Modal,Pagination,message } from '../commoncomponent/common.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
@@ -62,9 +62,17 @@ class ZmitiQAScoreApp extends Component {
             title: '日期',
             dataIndex: '',
             key: '',   
-            width:200,         
-            render:(text,recoder,index)=>(
+            width:150,         
+            render:(text,recoder,index) =>(
                 <span>{recoder.posttime}</span>              
+            )
+        },{
+            title: '操作',
+            dataIndex: '',
+            key: '',   
+            width:120,         
+            render:(text,recoder,index) =>(
+                <span><Button onClick={this.delData.bind(this,recoder.id)}>删除</Button></span>              
             )
         }]
 
@@ -77,11 +85,12 @@ class ZmitiQAScoreApp extends Component {
 			onChange:function(page,pageSize){
 				s.state.defaultCurrent=page;
 				s.bindNewdata(page);
+				s.forceUpdate();
 				//console.log('第'+page+'页');
 			}
 		}
 
-		var component = <div className="qa-main-ui qa-score-main-ui">
+		var component = <div className="qa-main-ui qa-score-main-ui" style={{height:this.state.mainHeight}}>
 				<div className='pad-10'>
                     <div className="zmiti-qa-score-header">
                         <Row>
@@ -135,6 +144,36 @@ class ZmitiQAScoreApp extends Component {
     //返回
     goback(){
         window.location='#/qa/'
+    }
+    //删除
+    delData(ids){
+    	var s = this;
+    	$.ajax({
+            url:window.baseUrl + 'h5/delete_userscore/',
+            type:'post',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                ids:ids,
+            },
+            success(data){
+            	if(data.getret === 0){
+                    message.success('删除成功！');
+                    setTimeout(() =>{
+                        s.bindNewdata();
+                    },2000)
+                }
+                else if(data.getret === -3){
+                    message.error('您没有访问的权限,2秒后跳转到首页');
+                    setTimeout(() =>{
+                        location.href='/';
+                    },2000)
+                }
+                else{
+                    message.error(data.getmsg);
+                }
+            }
+        })
     }
     //获取数据列表
     bindNewdata(page){
