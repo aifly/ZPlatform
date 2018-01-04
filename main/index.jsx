@@ -12,6 +12,7 @@ import {
 import ZmitiHomeApp from './home/index.jsx';
 import ZmitiPuzzleApp from './puzzle/index.jsx';
 import ZmitiQAListApp from './qa/list.jsx';
+import ZmitiQAScoreApp from './qa/score.jsx';
 import ZmitiQAApp from './qa/index.jsx';
 import ZmitiMeetingApp from './meeting/index.jsx';
 import ZmitiUserDepartmentApp from './userdepartment/index.jsx';
@@ -194,6 +195,9 @@ class App extends React.Component {
 			}, {
 				path: '/qaedit/:id',
 				app: ZmitiQAApp
+			}, {
+				path: '/qascore/:id',
+				app: ZmitiQAScoreApp
 			}, {
 				path: '/viewanswer/(:title)/(:id)',
 				app: ZmitiViewAnswerApp

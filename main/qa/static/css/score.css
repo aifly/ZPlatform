@@ -1,0 +1,42 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
+.qa-score-main-ui {
+  background-color: #ffffff;
+  overflow: auto; }
+  .qa-score-main-ui .zmiti-qa-score-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .qa-score-main-ui .zmiti-qa-score-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .qa-score-main-ui .zmiti-qa-score-button-right button {
+    float: right;
+    margin-top: 5px;
+    margin-left: 10px; }
+  .qa-score-main-ui .zmiti-qa-score-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+
+/*# sourceMappingURL=score.css.map */
