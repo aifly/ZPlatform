@@ -35,15 +35,7 @@ class ZmitiQAScoreApp extends Component {
 
 		var s = this;
 		const columns = [{
-            title: '序号',
-            dataIndex: 'key',
-            width:80,
-            key: 'xx',                         
-            render:(value,recorder,index)=>{
-                return <div>{index+1}</div>
-            }
-        },{
-            title: '昵称',           
+            title: '姓名',           
             dataIndex: 'username',
             key: 'username',
         },{
@@ -53,12 +45,18 @@ class ZmitiQAScoreApp extends Component {
             width:200,
 
         },{
-            title: '操作',
+            title: '得分',
+            dataIndex: 'score',
+            key: 'score',
+            width:200,
+
+        },{
+            title: '日期',
             dataIndex: '',
             key: '',
             width:160,
             render:(text,recoder,index)=>(
-                <span><Button>删除</Button></span>              
+                <span>{recoder.createtime}</span>              
             )
         }]
 
@@ -75,14 +73,13 @@ class ZmitiQAScoreApp extends Component {
                         </Row>                      
                     </div>
                     <div className="zmiti-qa-score-line"></div>
+                    <div className="hr20"></div>
                     <Row>
                         <Col span={18} >
                             <Row>
-                                <Col span={18} className="zmiti-training-inputext" style={{width:250}}>
+                                <Col span={18} className="zmiti-training-inputext" style={{width:150}}>
                                     
                                     <Row>
-                                        <Col span={14} style={{width:110}}>
-                                        </Col>
                                         <Col span={10} style={{width:140}}>
                                             <Input style={{width:138}} placeholder="请输入名称" onChange={this.searchtext.bind(this)} />
                                         </Col>
