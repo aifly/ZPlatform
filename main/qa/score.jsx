@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Table,Row,Col,Input,Button,Popconfirm,Tooltip ,Icon,Modal } from '../commoncomponent/common.jsx';
+import { Table,Row,Col,Input,Button,Popconfirm,Tooltip ,Icon,Modal,Pagination } from '../commoncomponent/common.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
@@ -68,7 +68,14 @@ class ZmitiQAScoreApp extends Component {
 
 
 
-
+		const pagination={
+			total:12,
+			defaultCurrent:1,
+			defaultPageSize:5,
+			onChange:function(page,pageSize){
+				console.log('第'+page+'页');
+			}
+		}
 
 		var component = <div className="qa-main-ui qa-score-main-ui">
 				<div className='pad-10'>
@@ -104,9 +111,13 @@ class ZmitiQAScoreApp extends Component {
                         </Col>
                     </Row>
                     <div className="hr20"></div>
-                    <Table rowKey={record => record.autoid}  bordered={true} 
-                    dataSource={this.state.dataSource} 
-                    columns={columns} />
+                    <Table 
+	                    rowKey={record => record.autoid}  
+	                    bordered={true}
+	                    dataSource={this.state.dataSource} 
+	                    columns={columns} 
+	                    pagination={pagination}
+                    />
                 </div>
 
 
@@ -212,7 +223,8 @@ class ZmitiQAScoreApp extends Component {
 			 }
 
 		});
-
+		var aid=this.props.params.id;
+		console.log(aid,'id');
 		s.bindNewdata();
 
 	}
