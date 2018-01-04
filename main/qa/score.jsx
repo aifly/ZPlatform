@@ -39,8 +39,8 @@ class ZmitiQAScoreApp extends Component {
 		var s = this;
 		const columns = [{
             title: '用户',           
-            dataIndex: 'viewuserid',
-            key: 'viewuserid',
+            dataIndex: 'realname',
+            key: 'realname',
         },{
             title: '手机号',
             dataIndex: 'mobile',
