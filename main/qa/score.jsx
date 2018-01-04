@@ -25,6 +25,9 @@ class ZmitiQAScoreApp extends Component {
 			isEntry:0,
 			showTitle:false,
 			dataSource:[],
+			totalnum:0,
+			defaultCurrent:1,
+			defaultPageSize:10,
 
 		}; 
 	}
@@ -35,15 +38,13 @@ class ZmitiQAScoreApp extends Component {
 
 		var s = this;
 		const columns = [{
-            title: '姓名',           
-            dataIndex: 'username',
-            key: 'username',
-            width:200,
+            title: '用户',           
+            dataIndex: 'viewuserid',
+            key: 'viewuserid',
         },{
             title: '手机号',
             dataIndex: 'mobile',
             key: 'mobile',
-            width:200,
 
         },{
             title: '得分',
@@ -60,20 +61,23 @@ class ZmitiQAScoreApp extends Component {
         },{
             title: '日期',
             dataIndex: '',
-            key: '',            
+            key: '',   
+            width:200,         
             render:(text,recoder,index)=>(
-                <span>{recoder.createtime}</span>              
+                <span>{recoder.posttime}</span>              
             )
         }]
 
 
-
+        var s = this;
 		const pagination={
-			total:12,
-			defaultCurrent:1,
-			defaultPageSize:5,
+			total:s.state.totalnum,
+			defaultCurrent:s.state.defaultCurrent,
+			defaultPageSize:s.state.defaultPageSize,
 			onChange:function(page,pageSize){
-				console.log('第'+page+'页');
+				s.state.defaultCurrent=page;
+				s.bindNewdata(page);
+				//console.log('第'+page+'页');
 			}
 		}
 
@@ -87,7 +91,7 @@ class ZmitiQAScoreApp extends Component {
                     </div>
                     <div className="zmiti-qa-score-line"></div>
                     <div className="hr20"></div>
-                    <Row>
+                    {/*<Row>
                         <Col span={18} >
                             <Row>
                                 <Col span={18} className="zmiti-training-inputext" style={{width:150}}>
@@ -110,7 +114,7 @@ class ZmitiQAScoreApp extends Component {
 
                         </Col>
                     </Row>
-                    <div className="hr20"></div>
+                    <div className="hr20"></div>*/}
                     <Table 
 	                    rowKey={record => record.autoid}  
 	                    bordered={true}
@@ -133,21 +137,24 @@ class ZmitiQAScoreApp extends Component {
         window.location='#/qa/'
     }
     //获取数据列表
-    bindNewdata(){
+    bindNewdata(page){
         var s=this;
         $.ajax({
-            url:window.baseUrl + 'wenming/get_wmclasslist/',
+            url:window.baseUrl + 'h5/select_userscore/',
             type:'post',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
+                workid:s.props.params.id,//7697038640
+                page:page,
+                pagenum:s.state.defaultPageSize,
             },
             success(data){
                 console.log(data,'data');
                 if(data.getret === 0){
-                    s.state.dataSource=data.list;              
-                    s.forceUpdate();
-                    console.log(this.url);
+                    s.state.dataSource=data.list;  
+                    s.state.totalnum=data.totalnum;            
+                    s.forceUpdate();                    
                 }
             }
         });
@@ -163,39 +170,24 @@ class ZmitiQAScoreApp extends Component {
     searchbtn(){
         var s=this;
         $.ajax({
-            url:window.baseUrl + 'wenming/get_wmclasslist/',
-            type:window.ajaxType || 'get',
+            url:window.baseUrl + 'h5/select_userscore/',
+            type:'post',
             data:{
                 userid:s.userid,
-                cityid:s.state.provinceText,
                 getusersigid:s.getusersigid,
-                username:s.state.searchtext
+                workid:s.props.params.id,//7697038640
             },
             success(data){
             	
                 if(data.getret === 0){
                     s.state.dataSource=data.list;
-                    s.state.loading=false;
                     s.forceUpdate();
                     console.log(this.url)    
                 }
             }
         });
-        this.state.countNum=this.state.dataSource.length;
         this.forceUpdate();
     }
-	//
-	modifyTitle(e){
-		this.state.data.title = e.target.value;
-		this.forceUpdate();
-	}
-
-
-
-
-
-
-
 
 
 	componentWillMount() {
@@ -223,9 +215,9 @@ class ZmitiQAScoreApp extends Component {
 			 }
 
 		});
-		var aid=this.props.params.id;
-		console.log(aid,'id');
-		s.bindNewdata();
+		//workid
+		//var aid=this.props.params.id;
+		s.bindNewdata(1);
 
 	}
  

@@ -98,6 +98,7 @@ class ZmitiQAListApp extends Component {
 										<div className='qa-item-operator'>
 											<div><a href={item.viewpath} target='_blank'>预览</a></div>
 											<div><Link to={'/qaedit/'+item.worksid}>编辑</Link></div>
+											<div><Link to={'/qascore/'+item.worksid}>统计</Link></div>
 											<Popconfirm placement="top" title={'确定要删除吗？'} onConfirm={this.deleteqa.bind(this,item.worksid,i)}>
 												<div>删除</div>
 											</Popconfirm>
