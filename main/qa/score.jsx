@@ -38,6 +38,7 @@ class ZmitiQAScoreApp extends Component {
             title: '姓名',           
             dataIndex: 'username',
             key: 'username',
+            width:200,
         },{
             title: '手机号',
             dataIndex: 'mobile',
@@ -48,13 +49,18 @@ class ZmitiQAScoreApp extends Component {
             title: '得分',
             dataIndex: 'score',
             key: 'score',
-            width:200,
+            width:100,
+
+        },{
+            title: '答题用时',
+            dataIndex: 'usetime',
+            key: 'usetime',
+            width:100,
 
         },{
             title: '日期',
             dataIndex: '',
-            key: '',
-            width:160,
+            key: '',            
             render:(text,recoder,index)=>(
                 <span>{recoder.createtime}</span>              
             )
