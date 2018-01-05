@@ -84,7 +84,7 @@ class ZmitiQAScoreApp extends Component {
 			defaultPageSize:s.state.defaultPageSize,
 			onChange:function(page,pageSize){
 				s.state.defaultCurrent=page;
-				s.bindNewdata(page);
+				s.bindNewdata();
 				s.forceUpdate();
 				//console.log('第'+page+'页');
 			}
@@ -185,7 +185,7 @@ class ZmitiQAScoreApp extends Component {
                 userid:s.userid,
                 getusersigid:s.getusersigid,
                 workid:s.props.params.id,//7697038640
-                page:page,
+                page:s.state.defaultCurrent,
                 pagenum:s.state.defaultPageSize,
             },
             success(data){
@@ -256,7 +256,7 @@ class ZmitiQAScoreApp extends Component {
 		});
 		//workid
 		//var aid=this.props.params.id;
-		s.bindNewdata(1);
+		s.bindNewdata();
 
 	}
  
