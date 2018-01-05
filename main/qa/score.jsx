@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Table,Row,Col,Input,Button,Popconfirm,Tooltip ,Icon,Modal,Pagination,message } from '../commoncomponent/common.jsx';
+import { Table,Row,Col,Input,Button,Popconfirm,Tooltip ,Icon,Modal,Pagination,message,Spin } from '../commoncomponent/common.jsx';
 
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 
@@ -24,6 +24,8 @@ class ZmitiQAScoreApp extends Component {
 			mainHeight:document.documentElement.clientHeight - 50,
 			isEntry:0,
 			showTitle:false,
+            loading:false,
+            tip:'数据拉取中...',
 			dataSource:[],
 			totalnum:0,
 			defaultCurrent:1,
@@ -90,7 +92,7 @@ class ZmitiQAScoreApp extends Component {
 			}
 		}
 
-		var component = <div className="qa-main-ui qa-score-main-ui" style={{height:this.state.mainHeight}}>
+		var component =<Spin tip={this.state.tip} spinning={this.state.loading}> <div className="qa-main-ui qa-score-main-ui" style={{height:this.state.mainHeight}}>
 				<div className='pad-10'>
                     <div className="zmiti-qa-score-header">
                         <Row>
@@ -125,7 +127,7 @@ class ZmitiQAScoreApp extends Component {
                     </Row>
                     <div className="hr20"></div>*/}
                     <Table 
-	                    rowKey={record => record.autoid}  
+	                    rowKey={record => record.id}  
 	                    bordered={true}
 	                    dataSource={this.state.dataSource} 
 	                    columns={columns} 
@@ -135,6 +137,7 @@ class ZmitiQAScoreApp extends Component {
 
 
 		</div>
+        </Spin>
 		return (
 			<MainUI component={component}></MainUI>
 		);
@@ -190,6 +193,7 @@ class ZmitiQAScoreApp extends Component {
             },
             success(data){
                 console.log(data,'data');
+                s.state.loading=false;
                 if(data.getret === 0){
                     s.state.dataSource=data.list;  
                     s.state.totalnum=data.totalnum;            
@@ -228,7 +232,12 @@ class ZmitiQAScoreApp extends Component {
         this.forceUpdate();
     }
 
-
+    //loading
+    loadData(){   
+        var s = this;
+        this.state.loading = true;
+        this.forceUpdate();
+    }
 	componentWillMount() {
 		
 		let {resizeMainHeight,validateUser,loginOut} = this.props;
@@ -239,6 +248,7 @@ class ZmitiQAScoreApp extends Component {
 		this.userid = userid;
 		this.getusersigid = getusersigid;
 		this.usertypesign = usertypesign;
+        this.resizeMainHeight = resizeMainHeight;
 	}
 
 	componentDidMount() {
@@ -256,7 +266,9 @@ class ZmitiQAScoreApp extends Component {
 		});
 		//workid
 		//var aid=this.props.params.id;
+        this.resizeMainHeight(this);
 		s.bindNewdata();
+        s.loadData();
 
 	}
  
