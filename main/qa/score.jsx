@@ -97,7 +97,7 @@ class ZmitiQAScoreApp extends Component {
                     <div className="zmiti-qa-score-header">
                         <Row>
                             <Col span={8} className="zmiti-qa-score-header-inner">得分统计</Col>
-                            <Col span={8} offset={8} className='zmiti-qa-score-button-right'><Button type="primary" onClick={this.goback.bind(this)}><Icon type="left" />返回</Button></Col>
+                            <Col span={8} offset={8} className='zmiti-qa-score-button-right'><Button type="primary" onClick={this.goback.bind(this)}><Icon type="left" />返回</Button><Button onClick={this.exportData.bind(this)}><Icon type="download" />导出数据</Button></Col>
                         </Row>                      
                     </div>
                     <div className="zmiti-qa-score-line"></div>
@@ -192,12 +192,34 @@ class ZmitiQAScoreApp extends Component {
                 pagenum:s.state.defaultPageSize,
             },
             success(data){
-                console.log(data,'data');
+                //console.log(data,'data');
                 s.state.loading=false;
                 if(data.getret === 0){
                     s.state.dataSource=data.list;  
                     s.state.totalnum=data.totalnum;            
                     s.forceUpdate();                    
+                }
+            }
+        });
+    }
+    //导出
+    exportData(){
+    	var s=this;
+        $.ajax({
+            url:window.baseUrl + 'h5/export_excel/',
+            type:'post',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                workid:s.props.params.id,//7697038640
+                iscreatefile:1,
+            },
+            success(data){
+                console.log(data,'data');                
+                if(data.getret === 0){
+                	//console.log(data.downloadurl,'下载地址');
+                	window.location.href=data.downloadurl;
+                	message.success('导出成功！');
                 }
             }
         });
