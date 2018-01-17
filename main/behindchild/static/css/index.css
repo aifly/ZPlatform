@@ -1,0 +1,13 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.qa-content {
+  width: 285px;
+  border-color: #2db7f5 !important;
+  border-radius: 3px;
+  height: 100px;
+  padding: 6px 7px; }
+
+/*# sourceMappingURL=index.css.map */

@@ -697,8 +697,9 @@
 
 <span id="keleyivisitorip" style="opacity: 0;z-index: -1;position:fixed;"></span>
 <script>
-    window.mainUrl = 'http://www.zmiti.com/main';
-    window.mainUrl = 'http://localhost:3000';
+    var protocol = location.protocol;
+    window.mainUrl = protocol+'//www.zmiti.com/main';
+    window.mainUrl = protocol+'//localhost:3000';
 </script>
 <script src='./main/static/libs/socket.io.js'></script>
 <script src="./statices/js/createjs.js" ></script>

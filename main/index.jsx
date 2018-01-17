@@ -66,6 +66,7 @@ import ZmitiWenmingProvinceRankApp from './wenming/province.jsx';
 import ZmitiWenmingCityRankApp from './wenming/city.jsx';
 import ZmitiWenmingCommentCheckApp from './wenming/commentcheck.jsx';
 import ZmitiLetterApp from './letter/index.jsx';
+import ZmitiBehindChildApp from './behindchild/index.jsx';
 
 import ZmitiWenmingCommentDetailApp from './wenming/commentdetail.jsx';
 import ZmitiBoardroomApp from './boardroom/index.jsx';
@@ -105,6 +106,9 @@ class App extends React.Component {
 			}, {
 				path: '/letter/(:title)',
 				app: ZmitiLetterApp
+			}, {
+				path: '/behindchild/(:title)',
+				app: ZmitiBehindChildApp
 			}, {
 				path: '/project/',
 				app: ZmitiProject
@@ -289,7 +293,7 @@ class App extends React.Component {
 	}
 
 	listen(opt = {}) {
-		var socket = io('http://socket.zmiti.com:2120');
+		var socket = io(protocol + '//socket.zmiti.com:2120');
 
 		/*socket.on('connect', function(){
 			socket.emit('login', opt.uid||'');

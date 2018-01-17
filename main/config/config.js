@@ -1,11 +1,17 @@
 //全局配置
-window.baseUrl = 'http://api.zmiti.com/v2/'; //接口地址http://api.zmiti.com/v2/  || http://beta.zmiti.com:90/
-window.loginUrl = 'http://localhost:5000'; //登录地址.http://webapi.zmiti.com/public/zmiti
-window.mainUrl = 'http://localhost:3000'; //智媒体的首页.
+
+var protocol = location.protocol;
+
+window.baseUrl = protocol + '//api.zmiti.com/v2/'; //接口地protocol+址//api.zmiti.com/v2/  ||protocol+ //beta.zmiti.com:90/
+window.loginUrl = protocol + '//localhost:5000'; //登录地址protocol+.//webapi.zmiti.com/public/zmiti
+window.mainUrl = protocol + '//localhost:3000'; //智媒体的首页.
 window.isDebug = false; //是否为调试版本
 window.adminUrl = './admin/index.html'; //后台首面的地址 线上应该用 ./
 window.menuConfigUrl = './config/menuconfig.js';
-window.publishBaseUrl = 'http://h5.zmiti.com/'; //作品发布后预览的地址 发布后发送到windows服务器上.
+window.publishBaseUrl = protocol + '//h5.zmiti.com/'; //作品发布后预览的地址 发布后发送到windows服务器上.
+
+
+
 window.ajaxType = 'POST'; //ajax请求类型。
 
 window.Role = {
@@ -26,6 +32,8 @@ window.MEETINGUSERLIST = ['xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan']; //�
 
 window.LETTERUSERLIST = ['xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan', 'mafazhan']; //配置十九大的页面哪些用户可以访问。
 
+window.BEHINDCHILDUSERLIST = ['xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan', 'mafazhan']; //配置征集留守儿童的页面哪些用户可以访问。
+
 window.WENMING = {
 	XCXAPPID: 'wx32e63224f58f2cb5'
 }
@@ -44,4 +52,4 @@ window.MENUCONFIG = [{
 }, {
 	key: 'letter',
 	VISITUSERS: ['mafazhan', 'xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan']
-}, ];
+}];

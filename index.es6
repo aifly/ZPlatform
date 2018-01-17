@@ -52,7 +52,7 @@ window.addEventListener('load', ()=> {
         animationEnd: 'onwebkitanimationend' in window ? 'webkitAnimationEnd' : 'animationend',
         transitionEnd: 'onwebkittransitionend' in window ? 'webkitTransitionEnd' : 'transitionend',
         regType: $("#reg-type"),
-        baseUrl:'http://api.zmiti.com/v2/'// 'http://webapi.zmiti.com/v1/'//
+        baseUrl:protocol+'//api.zmiti.com/v2/'// 'http://webapi.zmiti.com/v1/'//
     };
 
     let utilMethods = {
