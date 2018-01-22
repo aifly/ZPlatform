@@ -17,6 +17,7 @@ import {
 	Switch,
 	Radio,
 	InputNumber,
+	Pagination,
 	Popconfirm
 } from '../commoncomponent/common.jsx';
 const RadioGroup = Radio.Group;
@@ -43,17 +44,10 @@ class ZmitiBehindChildApp extends Component {
 			sort: 0,
 			classname: '',
 			questionDetailVisible: false,
+			page: 0,
+			pageNum: 20,
 			mainHeight: document.documentElement.clientHeight - 50,
-			userList: [{
-				key: 1,
-				sex: '男',
-				content: '医疗还会再涨吗？',
-				hymn: 100,
-				createtime: '2017-02-24',
-				classname: '教育',
-				status: '未审核',
-				sort: 1
-			}],
+			userList: [],
 
 		};
 
@@ -120,58 +114,93 @@ class ZmitiBehindChildApp extends Component {
 
 		const columns = [{
 			title: '编号',
-			dataIndex: 'qid',
-			key: 'xx',
-			width: '8%'
+			dataIndex: 'key',
+			key: 'key',
+			//width: '8%'
+		}, {
+			title: '姓名',
+			dataIndex: 'username',
+			key: 'username',
+		}, {
+			title: '性别',
+			dataIndex: 'sexname',
+			key: 'sexname',
+		}, {
+			title: '民族',
+			dataIndex: 'nation',
+			key: 'nation',
+		}, {
+			title: '年龄',
+			dataIndex: 'userage',
+			key: 'userage',
 
 		}, {
-			title: '评论内容',
-			dataIndex: 'content',
-			key: 'content',
+			title: '电话',
+			dataIndex: 'mobile',
+			key: 'mobile',
+			//width: '10%',
 		}, {
-			title: '点赞数量',
+			title: '孩子居住地',
+			dataIndex: 'address1',
+			key: 'address1',
+			//width: '4%',
+		}, {
+			title: '现父母工作地',
+			dataIndex: 'address2',
+			key: 'address2',
+			//width: '4%',
+		}, {
+			title: '就读学校',
+			dataIndex: 'schoolname',
+			key: 'schoolname',
+			//width: '10%',
+		}, {
+			title: '目前监护人',
+			dataIndex: 'gname',
+			key: 'gname',
+			//width: '10%',
+		}, {
+			title: '助力值',
 			dataIndex: 'hymn',
 			key: 'hymn',
-			width: '10%',
 			sorter: (a, b) => a.hymn - b.hymn
-		}, {
-			title: '评论时间',
-			dataIndex: 'createtime',
-			key: 'createtime',
-			width: '10%',
-			sorter: (a, b) => a.qid - b.qid
 		}, {
 			title: '审核状态',
 			dataIndex: 'statusname',
 			key: 'statusname',
-			width: '8%'
+			//width: '8%'
+		}, {
+			title: '备注',
+			dataIndex: 'content',
+			key: 'content',
+			//width: '10%'
 		}, {
 			title: '排序',
 			dataIndex: 'sort',
 			key: 'sort',
-			width: '8%',
+			//width: '8%',
 			sorter: (a, b) => a.sort - b.sort
 		}];
 		var columns1 = columns.concat({
 			title: '操作',
-			width: '13%',
+			//width: '40%',
 			dataIndex: '',
 			key: 'x',
-			render: (text, record) => <div  data-userid={record.qid}><a href="javascrit:void(0)" onClick={this.editQuestion.bind(this,record.qid)}>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style={{display:record.status === 0?'block':'none'}} onClick={this.checkQuestion.bind(this,record.qid,1)} href="javascrit:void(0)">审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style={{display:record.status === 0?'block':'none'}} onClick={this.checkQuestion.bind(this,record.qid,2)} href="javascrit:void(0)">审核不通过</a>&nbsp;&nbsp;&nbsp;&nbsp; <Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,record.qid)} okText="确定" cancelText="取消"><a href='javascrit:void' style={{color:'red'}}>删除</a></Popconfirm></div>
+			render: (text, record) => <div  data-userid={record.qid}><a  href="javascrit:void(0)" onClick={this.editQuestion.bind(this,record.qid)} hidden>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style={{display:record.status === 0?'block':'none'}} onClick={this.checkQuestion.bind(this,record.qid,1)} href="javascrit:void(0)">审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style={{display:record.status === 0?'block':'none'}} onClick={this.checkQuestion.bind(this,record.qid,2)} href="javascrit:void(0)">审核不通过</a>&nbsp;&nbsp;&nbsp;&nbsp; <Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,record.qid)} okText="确定" cancelText="取消"><a href='javascrit:void' style={{color:'red'}}>删除</a></Popconfirm></div>
 		});
 		var columns2 = columns.concat({
 			title: '操作',
-			width: '13%',
+			//width: '40%',
 			dataIndex: '',
 			key: 'x1',
-			render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)" onClick={this.editQuestion.bind(this,record.qid)}>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.checkQuestion.bind(this,record.qid,1)}>审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.checkQuestion.bind(this,record.qid,2)}>审核不通过</a>&nbsp;&nbsp;&nbsp;&nbsp; <Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,record.qid)} okText="确定" cancelText="取消"><a href='javascrit:void' style={{color:'red'}}>删除</a></Popconfirm></div>
+			render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)" onClick={this.editQuestion.bind(this,record.qid)} hidden>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.checkQuestion.bind(this,record.qid,1)}>审核通过</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascrit:void(0)" onClick={this.checkQuestion.bind(this,record.qid,2)}>审核不通过</a>&nbsp;&nbsp;&nbsp;&nbsp; <Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,record.qid)} okText="确定" cancelText="取消"><a href='javascrit:void' style={{color:'red'}}>删除</a></Popconfirm></div>
 		});
 		var columns3 = columns.concat({
 			title: '操作',
-			width: '13%',
+			//width: '40%',
 			dataIndex: '',
 			key: 'x2',
-			render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)" onClick={this.editQuestion.bind(this,record.qid)}>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,record.qid)} okText="确定" cancelText="取消"><a href='javascrit:void' style={{color:'red'}}>删除</a></Popconfirm></div>
+			render: (text, record) => <div  data-userid={record.userid}><a href="javascrit:void(0)" onClick={this.editQuestion.bind(this,record.qid)} hidden>编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;<Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,record.qid)} okText="确定" cancelText="取消"><a href='javascrit:void' style={{color:'red'}}>删除</a></Popconfirm></div>
 		});
 		var title = this.props.params.title || '征集留守儿童';
 		let props = {
@@ -282,9 +311,70 @@ class ZmitiBehindChildApp extends Component {
                </Form>    
              </Modal>
 		</div>;
+		/*mainComponent = <div>
+			<header></header>
+			<div className='zmiti-child-main-ui'>
+				{this.state.userList.map((list,i)=>{
+					return <div key={i} className='zmiti-child-list'>
+								<div className='zmiti-child-label'>
+									<div>
+										<span>编号</span>
+										<span>{list.key}</span>
+									</div>
+
+									<Button onClick={this.checkQuestion.bind(this,list.qid,1)} >审核通过</Button>
+									<Button onClick={this.checkQuestion.bind(this,list.qid,2)} >审核不通过</Button>
+									
+									<Popconfirm placement="topLeft" title={'确定要删除么？'} onConfirm={this.deleteQuestion.bind(this,list.qid)} okText="确定" cancelText="取消"><Button icon='delete'>删除</Button></Popconfirm>
+									
+								</div>
+								<table>
+
+									<tr>
+										<td>姓名</td>
+										<td>{list.username}</td>
+										<td>性别</td>
+										<td>{list.sexname}</td>
+										<td>民族</td>
+										<td>{list.nation}</td>
+									</tr>
+									<tr>
+										<td>年龄</td>
+										<td>{list.userage}</td>
+										<td>电话</td>
+										<td>{list.mobile}</td>
+										<td>就读学校</td>
+										<td>{list.schoolname}</td>
+									</tr>
+									<tr>
+										<td>孩子居住地</td>
+										<td  colSpan={5}>{list.address1}</td>
+									</tr>
+									<tr>
+										<td>现父母工作地</td>
+										<td  colSpan={5}>{list.address2}</td>
+									</tr>
+									<tr>
+										<td>目前监护人</td>
+										<td  colSpan={5}>{list.gname}</td>
+									</tr>
+									<tr>
+										<td>备注</td>
+										<td  colSpan={5}>{list.content}</td>
+									</tr>
+								</table>
+					</div>
+				})}
+			</div>
+			<div className='zmiti-child-pagination'><Pagination showSizeChanger onShowSizeChange={this.onShowSizeChange.bind(this)} current={1} total={500} /></div>
+		</div>;*/
 		return (
 			<MainUI component={mainComponent}></MainUI>
 		);
+	}
+
+	onShowSizeChange() {
+
 	}
 
 	refreshData() {
@@ -359,7 +449,7 @@ class ZmitiBehindChildApp extends Component {
 				status: status
 			},
 			success(data) {
-				message[data.getret === 0 ? "success" : 'error'](data.getmsg);
+				message[data.getret === 0 ? "success" : 'error'](data.getret === 0 ? '审核成功' : '审核失败');
 				s.state.userList.forEach((item, i) => {
 					if (item.qid === qid) {
 						item.status = status;
@@ -494,13 +584,17 @@ class ZmitiBehindChildApp extends Component {
 
 		var s = this;
 		$.ajax({
-			url: window.baseUrl + 'h5/select_question/',
+			url: window.baseUrl + '/h5/select_list/',
 			type: "POST",
 			data: {
-				worksclassid: 1
+				userid: s.userid,
+				getusersigid: s.getusersigid,
+				worksclassid: 2,
+				page: 1,
+				pagenum: 20
 			},
 			success(data) {
-
+				console.log(data);
 				if (data.getret === 0) {
 					s.fill(s, data);
 				}
@@ -531,11 +625,11 @@ class ZmitiBehindChildApp extends Component {
 	fill(s, data) {
 		if (data) {
 
-			s.state.userList = data.questionlist;
+			s.state.userList = data.questionlist || data.list;
 		}
 		s.state.userList.forEach((item, i) => {
 			item.createtime && (item.createtime = item.createtime.substring(0, 10));
-			item.key = i;
+			item.key = i + 1;
 			item.sexname = !item.sex ? '女' : '男';
 			switch (item.status) {
 				case 0:
