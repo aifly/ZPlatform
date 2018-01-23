@@ -114,73 +114,75 @@ class ZmitiBehindChildApp extends Component {
 	render() {
 
 		const columns = [{
-			title: '编号',
-			dataIndex: 'key',
-			key: 'key',
-			//width: '8%'
-		}, {
-			title: '姓名',
-			dataIndex: 'username',
-			key: 'username',
-		}, {
-			title: '性别',
-			dataIndex: 'sexname',
-			key: 'sexname',
-		}, {
-			title: '民族',
-			dataIndex: 'nation',
-			key: 'nation',
-		}, {
-			title: '年龄',
-			dataIndex: 'userage',
-			key: 'userage',
+				title: '编号',
+				dataIndex: 'key',
+				key: 'key',
+				//width: '8%'
+			}, {
+				title: '姓名',
+				dataIndex: 'username',
+				key: 'username',
+			}, {
+				title: '性别',
+				dataIndex: 'sexname',
+				key: 'sexname',
+			}, {
+				title: '民族',
+				dataIndex: 'nation',
+				key: 'nation',
+			}, {
+				title: '年龄',
+				dataIndex: 'userage',
+				key: 'userage',
 
-		}, {
-			title: '电话',
-			dataIndex: 'mobile',
-			key: 'mobile',
-			//width: '10%',
-		}, {
-			title: '孩子居住地',
-			dataIndex: 'address1',
-			key: 'address1',
-			//width: '4%',
-		}, {
-			title: '现父母工作地',
-			dataIndex: 'address2',
-			key: 'address2',
-			//width: '4%',
-		}, {
-			title: '就读学校',
-			dataIndex: 'schoolname',
-			key: 'schoolname',
-			//width: '10%',
-		}, {
-			title: '目前监护人',
-			dataIndex: 'gname',
-			key: 'gname',
-			//width: '10%',
-		}, {
-			title: '创建时间',
-			dataIndex: 'createtime',
-			key: 'createtime'
-		}, {
-			title: '审核状态',
-			dataIndex: 'statusname',
-			key: 'statusname',
-			//width: '8%'
-		}, {
-			title: '备注',
-			dataIndex: 'content',
-			key: 'content',
-			//width: '10%'
-		}, {
-			title: '排序',
-			dataIndex: 'sort',
-			key: 'sort',
-			//width: '8%',
-			sorter: (a, b) => a.sort - b.sort
-		}];
+			}, {
+				title: '电话',
+				dataIndex: 'mobile',
+				key: 'mobile',
+				//width: '10%',
+			}, {
+				title: '孩子居住地',
+				dataIndex: 'address1',
+				key: 'address1',
+				//width: '4%',
+			}, {
+				title: '现父母工作地',
+				dataIndex: 'address2',
+				key: 'address2',
+				//width: '4%',
+			}, {
+				title: '就读学校',
+				dataIndex: 'schoolname',
+				key: 'schoolname',
+				//width: '10%',
+			}, {
+				title: '目前监护人',
+				dataIndex: 'gname',
+				key: 'gname',
+				//width: '10%',
+			}, {
+				title: '创建时间',
+				dataIndex: 'createtime',
+				key: 'createtime'
+			}, {
+				title: '审核状态',
+				dataIndex: 'statusname',
+				key: 'statusname',
+				//width: '8%'
+			}, {
+				title: '备注',
+				dataIndex: 'content',
+				key: 'content',
+				width: '10%'
+			}
+			/*, {
+						title: '排序',
+						dataIndex: 'sort',
+						key: 'sort',
+						//width: '8%',
+						sorter: (a, b) => a.sort - b.sort
+					}*/
+		];
 		var columns1 = columns.concat({
 			title: '操作',
 			//width: '40%',
@@ -216,14 +218,17 @@ class ZmitiBehindChildApp extends Component {
 				this.defautlUserList === undefined && (this.defautlUserList = this.state.userList.concat([]));
 				this.keyupTimer = setTimeout(() => {
 					var userlists = this.defautlUserList;
-					var condition = 'content';
+					var condition = 'username';
 					this.state.userList = userlists.filter(user => {
 						switch (this.condition * 1) {
 							case 0: //提问内容
 
 								break;
-							case 1: //类型
-								condition = 'classname'
+							case 1: //备注
+								condition = 'content'
+								break;
+							case 2: //监护人
+								condition = 'gname'
 								break;
 						}
 						return user[condition].indexOf(value) > -1;
@@ -232,8 +237,10 @@ class ZmitiBehindChildApp extends Component {
 					this.forceUpdate(() => {});
 				}, 350);
 			},
-			selectComponent: <Select placeholder='评论内容' onChange={this.changeCondition.bind(this)}  style={{width:120}} size='small' >
-                         <Option value="0">评论内容</Option>
+			selectComponent: <Select placeholder='姓名' onChange={this.changeCondition.bind(this)}  style={{width:120}} size='small' >
+                         <Option value="0">姓名</Option>
+                         <Option value="1">备注</Option>
+                         <Option value="2">监护人</Option>
                      </Select>,
 			customerComponent: <div>
                      			 <Row type="flex" justify="center" align="top">
@@ -609,7 +616,8 @@ class ZmitiBehindChildApp extends Component {
 				getusersigid: s.getusersigid,
 				worksclassid: 2,
 				page: 1,
-				pagenum: 20
+				pagenum: 20,
+				order: 'createtime desc'
 			},
 			success(data) {
 				console.log(data);
