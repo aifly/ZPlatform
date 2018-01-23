@@ -36,6 +36,7 @@ class ZmitiBehindChildApp extends Component {
 		super(props);
 
 		this.state = {
+			totalPV: 0,
 			checked: false,
 			loading: false,
 			sex: 1,
@@ -160,10 +161,9 @@ class ZmitiBehindChildApp extends Component {
 			key: 'gname',
 			//width: '10%',
 		}, {
-			title: '助力值',
-			dataIndex: 'hymn',
-			key: 'hymn',
-			sorter: (a, b) => a.hymn - b.hymn
+			title: '创建时间',
+			dataIndex: 'createtime',
+			key: 'createtime'
 		}, {
 			title: '审核状态',
 			dataIndex: 'statusname',
@@ -241,6 +241,7 @@ class ZmitiBehindChildApp extends Component {
 			<Col span={4}> <Switch checked={this.state.checked} onChange={this.toggleChecked.bind(this)} checkedChildren={'开启审核'} unCheckedChildren={'关闭审核'} /></Col>
 												      <Col span={4}><Button type='primary' icon='reload' loading={this.state.loading} onClick={this.refreshData.bind(this)}>刷新</Button></Col>
 												    </Row>
+								<div style={{marginLeft:20}}>总浏览量：<span style={{fontSize:20,color:'#f00'}}>{this.state.totalPV}</span></div>
                      </div>
 
 		}
@@ -505,6 +506,23 @@ class ZmitiBehindChildApp extends Component {
 		})
 	}
 
+	getPV() {
+		$.ajax({
+			url: window.baseUrl + 'custom/get_customdetial/',
+			type: 'post',
+			data: {
+				customid: 34
+			}
+		}).done((data) => {
+			console.log(data);
+			if (data.getret === 0) {
+				this.setState({
+					totalPV: data.detial.totalpv
+				})
+			}
+		})
+	}
+
 	modifyUserQuestion() { //确定修改问题
 		var s = this;
 		if (this.qid > -1) {
@@ -584,7 +602,7 @@ class ZmitiBehindChildApp extends Component {
 
 		var s = this;
 		$.ajax({
-			url: window.baseUrl + '/h5/select_list/',
+			url: window.baseUrl + '/h5/select_question/',
 			type: "POST",
 			data: {
 				userid: s.userid,
@@ -600,6 +618,8 @@ class ZmitiBehindChildApp extends Component {
 				}
 			}
 		});
+
+		this.getPV();
 
 		//获取是否需要审核
 		$.ajax({

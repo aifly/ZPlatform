@@ -50,6 +50,7 @@ export default class ZmitiUserList extends Component {
 				break;
 			case 'meeting':
 			case 'letter':
+			case 'behindchild':
 
 				userList = this.props.userList.filter(item => {
 					switch (this.state.current) {
