@@ -243,12 +243,23 @@ class ZmitiBehindChildApp extends Component {
                          <Option value="2">监护人</Option>
                      </Select>,
 			customerComponent: <div>
-                     			 <Row type="flex" justify="center" align="top">
-												      <Col span={4}><Button type='primary' onClick={this.addQuestion.bind(this)}>新增留守儿童</Button></Col>
-			<Col span={4}> <Switch checked={this.state.checked} onChange={this.toggleChecked.bind(this)} checkedChildren={'开启审核'} unCheckedChildren={'关闭审核'} /></Col>
-												      <Col span={4}><Button type='primary' icon='reload' loading={this.state.loading} onClick={this.refreshData.bind(this)}>刷新</Button></Col>
-												    </Row>
-								<div style={{marginLeft:20}}>总浏览量：<span style={{fontSize:20,color:'#f00'}}>{this.state.totalPV}</span></div>
+                     			<Row type="flex" justify="center" align="top">
+									<Col span={4}><Button type='primary' onClick={this.addQuestion.bind(this)}>新增留守儿童</Button></Col>
+									<Col span={4}> <Switch checked={this.state.checked} onChange={this.toggleChecked.bind(this)} checkedChildren={'开启审核'} unCheckedChildren={'关闭审核'} /></Col>
+									<Col span={4}><Button type='primary' icon='reload' loading={this.state.loading} onClick={this.refreshData.bind(this)}>刷新</Button></Col>
+								</Row>
+								<Row>
+									<Col span={12}>
+										<div style={{marginLeft:20}}>
+											总浏览量：<span style={{fontSize:20,color:'#f00'}}>{this.state.totalPV}</span>
+										</div>
+									</Col>
+									<Col span={12}>
+										<div style={{textAlign:'right'}}>
+											<Button onClick={this.exportData.bind(this)} icon="download">导出数据</Button>
+										</div>
+									</Col>
+								</Row>
                      </div>
 
 		}
@@ -604,7 +615,28 @@ class ZmitiBehindChildApp extends Component {
 	changeCondition(value) {
 		this.condition = value;
 	}
-
+    //导出
+    exportData(){
+    	var s=this;
+        $.ajax({
+            url:window.baseUrl + 'h5/chd_export_excel/',
+            type:'post',
+            data:{
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                worksclassid:2,
+                iscreatefile:1,
+            },
+            success(data){
+                console.log(data,'data');                
+                if(data.getret === 0){
+                	//console.log(data.downloadurl,'下载地址');
+                	window.location.href=data.downloadurl;
+                	message.success('导出成功！');
+                }
+            }
+        });
+    }
 	componentDidMount() {
 
 		var s = this;
