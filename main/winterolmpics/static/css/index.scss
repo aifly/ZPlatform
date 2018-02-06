@@ -1,0 +1,76 @@
+@import '../../../public/css/base.scss';
+
+body {
+}
+
+.qa-content {
+	width: 285px;
+	border-color: #2db7f5 !important;
+	@include br(3px);
+	height: 100px;
+	padding: 6px 7px;
+}
+
+.user-main-ui {
+	table {
+		a {
+		}
+
+	}
+
+}
+
+.zmiti-child-main-ui {
+	width: 80%;
+	margin: 20px auto;
+}
+
+.zmiti-child-pagination {
+	width: 72%;
+	margin: 20px auto;
+	@include displayFlex(row);
+	justify-content: flex-end;
+}
+
+.zmiti-child-list {
+	width: 100%;
+	///float: left;
+	margin: 20px 0;
+
+	.zmiti-child-label {
+		width: 90%;
+		margin: 0 auto 4px;
+
+		&>div {
+			line-height: 30px;
+		}
+
+		justify-content: space-between;
+		@include displayFlex(row);
+	}
+
+	table {
+		border-collapse: separate;
+		border-spacing: 0;
+		width: 90%;
+		margin: 0 auto;
+		border: 1px solid #ccc;
+		border-right: none;
+		border-bottom: none;
+
+		td {
+			border-bottom: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+			text-indent: 1em;
+			height: 2rem;
+		}
+
+		tr {
+		}
+
+		td {
+		}
+
+	}
+
+}

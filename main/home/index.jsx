@@ -1,6 +1,6 @@
 import './static/css/index.css';
 import React from 'react';
-import {Progress,Tabs,Card,Button,DatePicker,moment,notification} from '../commoncomponent/common.jsx';
+import {Progress,Tabs,Button,DatePicker,moment,notification} from '../commoncomponent/common.jsx';
 
 const MonthPicker = DatePicker.MonthPicker;
 
@@ -291,42 +291,42 @@ import MainUI from '../components/Main.jsx';
                     <div className="fly-home-service">
                         <h2 className="fly-home-ser-title">产品与服务</h2>
                         <div className="fly-home-service-C">
-                            <figure className="fly-home-service-item">
-                                <Card  title="产品工具系列" style={style} >
-                                    <ul>
-                                        <li>移动微场景 <a href="#">申请使用</a></li>
-                                        <li>微信问答</li>
-                                        <li>交互式富图片</li>
-                                    </ul>
-                                </Card>
-                            </figure>
-                            <figure className="fly-home-service-item">
-                                <Card  title="产品交互系列"  style={style}>
-                                    <ul>
-                                        <li>企业项目管理</li>
-                                        <li>设计图讨论工具</li>
-                                    </ul>
-                                </Card>
-                            </figure>
-                            <figure className="fly-home-service-item">
-                                <Card  title="项目服务系列" style={style} >
-                                    <ul>
-                                        <li>互联网整体文字服务</li>
-                                        <li>设计类服务<a href="#"><i>已使用 134个作品</i></a></li>
-                                        <li>交互方案服务</li>
-                                        <li>页面服务</li>
-                                        <li>方案书服务</li>
-                                    </ul>
-                                </Card>
-                            </figure>
-                            <figure className="fly-home-service-item">
-                                <Card  title="人工工具系列" style={style} >
-                                    <ul>
-                                        <li>会员服务问答</li>
-                                        <li>非会员服务问答</li>
-                                    </ul>
-                                </Card>
-                            </figure>
+                            {/*<figure className="fly-home-service-item">
+                                                            <Card  title="产品工具系列" style={style} >
+                                                                <ul>
+                                                                    <li>移动微场景 <a href="#">申请使用</a></li>
+                                                                    <li>微信问答</li>
+                                                                    <li>交互式富图片</li>
+                                                                </ul>
+                                                            </Card>
+                                                        </figure>
+                                                        <figure className="fly-home-service-item">
+                                                            <Card  title="产品交互系列"  style={style}>
+                                                                <ul>
+                                                                    <li>企业项目管理</li>
+                                                                    <li>设计图讨论工具</li>
+                                                                </ul>
+                                                            </Card>
+                                                        </figure>
+                                                        <figure className="fly-home-service-item">
+                                                            <Card  title="项目服务系列" style={style} >
+                                                                <ul>
+                                                                    <li>互联网整体文字服务</li>
+                                                                    <li>设计类服务<a href="#"><i>已使用 134个作品</i></a></li>
+                                                                    <li>交互方案服务</li>
+                                                                    <li>页面服务</li>
+                                                                    <li>方案书服务</li>
+                                                                </ul>
+                                                            </Card>
+                                                        </figure>
+                                                        <figure className="fly-home-service-item">
+                                                            <Card  title="人工工具系列" style={style} >
+                                                                <ul>
+                                                                    <li>会员服务问答</li>
+                                                                    <li>非会员服务问答</li>
+                                                                </ul>
+                                                            </Card>
+                                                        </figure>*/}
                         </div>
                     </div>
                 </article>

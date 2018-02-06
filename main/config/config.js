@@ -33,6 +33,7 @@ window.MEETINGUSERLIST = ['xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan']; //�
 window.LETTERUSERLIST = ['xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan', 'mafazhan']; //配置十九大的页面哪些用户可以访问。
 
 window.BEHINDCHILDUSERLIST = ['xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan', 'mafazhan']; //配置征集留守儿童的页面哪些用户可以访问。
+window.WINTEROLMPICSUSERLIST = ['xuchang', 'xinmeiti', 'bmyuan', 'mafazhan']; //配置冬奥会的页面哪些用户可以访问。
 
 window.WENMING = {
 	XCXAPPID: 'wx32e63224f58f2cb5'

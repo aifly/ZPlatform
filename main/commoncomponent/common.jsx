@@ -30,7 +30,7 @@ import Tabs from 'antd/lib/tabs';
 
 import Switch from 'antd/lib/switch';
 
-import Card from 'antd/lib/card';
+//import Card from 'antd/lib/card';
 
 import Menu from 'antd/lib/menu';
 
@@ -84,7 +84,7 @@ export default {
 	Radio,
 	Progress,
 	Tabs,
-	Card,
+	////Card,
 	DatePicker,
 	moment,
 	Select,
