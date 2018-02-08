@@ -1,0 +1,29 @@
+@import "../../../public/css/base.scss";
+.zmiti-keys-main-ui{
+    background-color: #ffffff;
+    overflow:auto;
+    .zmiti-keys-header-inner{
+        padding-left: 8px;
+        margin-top: 10px;
+        @include pos(r);
+        &:before{
+            content: '';
+            @include pos(a);
+            width:2px;
+            height:100%;
+            background:#88B7E0 ;
+            left:0;
+            @include transform(scale(1,.7));
+        }
+    }
+    .zmiti-keys-button-right button{
+        float:right;
+        margin-top: 5px;
+        margin-left:10px;
+    }
+    .zmiti-keys-line{
+        height:15px;
+        overflow: hidden;
+        border-bottom: 1px solid #dddddd;
+    }
+}

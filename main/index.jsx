@@ -77,6 +77,7 @@ import ZmitiJinrongxbPolicyinfoApp from './jinrongxiaobao/policyinfo.jsx';
 import ZmitiJinrongxbNoticeApp from './jinrongxiaobao/notice.jsx';
 import ZmitiJinrongxbSetupApp from './jinrongxiaobao/setup.jsx';
 import ZmitiJinrongxbaddressApp from './jinrongxiaobao/address.jsx';
+import ZmitiKeysApp from './keys/index.jsx';
 import {
 	notification
 } from './commoncomponent/common.jsx';
@@ -285,6 +286,9 @@ class App extends React.Component {
 			},{
 				path: '/winterolmpics/',
 				app: ZmitiWinterOlmpicsApp
+			}, {
+				path: '/keys/:id',
+				app: ZmitiKeysApp
 			},
 
 		];
