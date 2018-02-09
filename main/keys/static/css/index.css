@@ -42,5 +42,27 @@
     color: #cccccc; }
     .zmiti-keys-main-ui .zmiti-keys-spt span {
       margin: 0 10px; }
+  .zmiti-keys-main-ui .zmiti-keys-sel-font {
+    width: 50px;
+    float: left;
+    line-height: 30px;
+    height: 30px; }
+  .zmiti-keys-main-ui .zmiti-keys-sel-1 {
+    width: 225px; }
+  .zmiti-keys-main-ui .zmiti-keys-sel-2 {
+    width: 120px; }
+  .zmiti-keys-main-ui .zmiti-keys-sel-3 {
+    width: 175px; }
+  .zmiti-keys-main-ui .zmiti-keys-sel-4 {
+    width: 175px; }
+  .zmiti-keys-main-ui .zmiti-keys-sel-5 {
+    width: 100px; }
+  .zmiti-keys-main-ui .zmiti-keys-count em {
+    font-style: normal; }
+  .zmiti-keys-main-ui .zmiti-keys-count .zmiti-keys-red {
+    color: red; }
+  .zmiti-keys-main-ui .zmiti-keys-ls {
+    padding: 0 10px;
+    color: #cccccc; }
 
 /*# sourceMappingURL=index.css.map */
