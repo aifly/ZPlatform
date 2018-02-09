@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import './static/css/index.css';
 import ZmitiUserList  from '../components/zmiti-user-list.jsx';
 
-import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment  } from '../commoncomponent/common.jsx';
+import { message,Select,Modal,Form , Input,Button, Row, Col,Switch,Radio,InputNumber,Popconfirm,DatePicker,Table ,moment,Icon} from '../commoncomponent/common.jsx';
 import 'moment/locale/zh-cn';
 moment.locale('zh-cn');
 const Option = Select.Option;
@@ -74,7 +74,7 @@ class ZmitiKeysApp extends Component {
                 <div className="zmiti-keys-header">
                     <Row>
                         <Col span={8} className="zmiti-keys-header-inner">两会热词</Col>
-                        <Col span={8} offset={8} className='zmiti-keys-button-right'><Button type="primary" >返回</Button></Col>
+                        <Col span={8} offset={8} className='zmiti-keys-button-right'><Button type="primary" onClick={this.openkey.bind(this)}><Icon type="setting" />设置热词</Button></Col>
                     </Row>                      
                 </div>
                 <div className="zmiti-keys-line"></div>
@@ -88,7 +88,10 @@ class ZmitiKeysApp extends Component {
         );
 	}
 
-
+	/*设置热词*/
+	openkey(){
+		window.location.href='./#/keysopt/';
+	}
 
 	componentDidMount() {
 		var s=  this;

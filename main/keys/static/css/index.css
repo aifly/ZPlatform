@@ -38,5 +38,9 @@
     height: 15px;
     overflow: hidden;
     border-bottom: 1px solid #dddddd; }
+  .zmiti-keys-main-ui .zmiti-keys-spt {
+    color: #cccccc; }
+    .zmiti-keys-main-ui .zmiti-keys-spt span {
+      margin: 0 10px; }
 
 /*# sourceMappingURL=index.css.map */
