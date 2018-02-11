@@ -110,106 +110,106 @@ class ZmitiKeysApp extends Component {
         label: '博士及博士以上学历',
       }],
       optionsProvince:[{
-        value: 'beijing ',
+        value: 1,
         label: '北京',
       },{
-        value: 'tianjin',
+        value: 2,
         label: '天津',
       },{
-        value: 'shanghai',
+        value: 3,
         label: '上海',
       },{
-        value: 'chongqing',
+        value: 4,
         label: '重庆',
       },{
-        value: 'hebei',
+        value: 5,
         label: '河北',
       },{
-        value: 'shanxi',
+        value: 6,
         label: '山西',
       },{
-        value: 'liaoning',
+        value: 7,
         label: '辽宁',
       },{
-        value: 'jilin',
+        value: 8,
         label: '吉林',
       },{
-        value: 'heilongjiang',
+        value: 9,
         label: '黑龙江',
       },{
-        value: 'jiangsu',
+        value: 10,
         label: '江苏',
       },{
-        value: 'zhejiang',
+        value: 11,
         label: '浙江',
       },{
-        value: 'anhui',
+        value: 12,
         label: '安徽',
       },{
-        value: 'fujian',
+        value: 13,
         label: '福建',
       },{
-        value: 'jiangxi',
+        value: 14,
         label: '江西',
       },{
-        value: 'shandong',
+        value: 15,
         label: '山东',
       },{
-        value: 'henan',
+        value: 16,
         label: '河南',
       },{
-        value: 'hubei',
+        value: 17,
         label: '湖北',
       },{
-        value: 'hunan',
+        value: 18,
         label: '湖南',
       },{
-        value: 'guangdong',
+        value: 19,
         label: '广东',
       },{
-        value: 'hainan',
+        value: 20,
         label: '海南',
       },{
-        value: 'sichuan',
+        value: 21,
         label: '四川',
       },{
-        value: 'guizhou',
+        value: 22,
         label: '贵州',
       },{
-        value: 'yunnan',
+        value: 23,
         label: '云南',
       },{
-        value: 'shanxi2',
+        value: 24,
         label: '陕西',
       },{
-        value: 'gansu',
+        value: 25,
         label: '甘肃',
       },{
-        value: 'qinghai',
+        value: 26,
         label: '青海',
       },{
-        value: 'taiwan',
+        value: 27,
         label: '台湾',
       },{
-        value: 'neimenggu',
+        value: 28,
         label: '内蒙古',
       },{
-        value: 'guangxi',
+        value: 29,
         label: '广西',
       },{
-        value: 'xizang',
+        value: 30,
         label: '西藏',
       },{
-        value: 'ningxia',
+        value: 31,
         label: '宁夏',
       },{
-        value: 'xinjiang',
+        value: 32,
         label: '新疆',
       },{
-        value: 'xianggang',
+        value: 33,
         label: '香港',
       },{
-        value: 'aomen',
+        value: 34,
         label: '澳门',
       }],
       
@@ -316,6 +316,26 @@ class ZmitiKeysApp extends Component {
       eduval:this.state.eduval,
     }
     console.log(pargams,'pargams');
+  }
+  //显示列表
+  bindNewdata(){
+    var s = this;
+    var userid = this.props.params.userid?this.props.params.userid:this.userid;
+    $.ajax({
+      url:window.baseUrl+'h5/select_hotword/',
+      type:'post',
+      data:{
+        userid:s.userid,
+        getusersigid:s.getusersigid
+      },
+      success(data){
+        if(data.getret === 0){
+            console.log(data,"信息列表");
+            s.state.dataSource = data.list;
+            s.forceUpdate();
+        }
+      }
+    })
   }
 	/*设置热词*/
 	openkey(){
