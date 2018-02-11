@@ -12,206 +12,164 @@ import MainUI from '../components/Main.jsx';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 const FormItem = Form.Item;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
-
 import $ from 'jquery';
-
+/*计算两个整数的百分比值*/ 
+function GetPercent(num, total) { 
+    num = parseFloat(num); 
+    total = parseFloat(total); 
+    if (isNaN(num) || isNaN(total)) { 
+    return "-"; 
+    } 
+    return total <= 0 ? "0%" : (Math.round(num / total * 10000) / 100.00 + "%"); 
+} 
 class ZmitiKeysApp extends Component {
 	constructor(props) {
 		super(props);
 		
 		this.state = {
-			mainHeight:document.documentElement.clientHeight-50,
-      countVal:100,
-      provinceval:'',
-      genderval:'',
-      ageval:'',
-      eduval:'',
-			dataSource:[{
-        key: '1',
-        keyname: '十九大',
-        votes: 100,
-        persent:'10%',
-      }, {
-        key: '2',
-        keyname: '新时代',
-        votes: 150,
-        persent:'10%',
-      }, {
-        key: '3',
-        keyname: '共享经济（实体经济）',
-        votes: 170,
-        persent:'10%',
-      }, {
-        key: '4',
-        keyname: '租购并举',
-        votes: 175,
-        persent:'10%',
-      }, {
-        key: '5',
-        keyname: '雄安新区',
-        votes: 190,
-        persent:'10%',
-      }, {
-        key: '6',
-        keyname: '人工智能',
-        votes: 200,
-        persent:'10%',
-      }, {
-        key: '7',
-        keyname: '中国创造',
-        votes: 210,
-        persent:'10%',
-      }, {
-        key: '8',
-        keyname: '食品安全',
-        votes: 220,
-        persent:'10%',
-      }, {
-        key: '9',
-        keyname: '教育质量',
-        votes: 230,
-        persent:'10%',
-      }, {
-        key: '10',
-        keyname: '美丽中国',
-        votes: 250,
-        persent:'10%',
-      }],
-      optionsAge:[{
-        value: '0 ',
-        label: '20岁以下',
-      },{
-        value: '1',
-        label: '20-30岁',
-      },{
-        value: '2',
-        label: '30-40岁',
-      },{
-        value: '3',
-        label: '40-50岁',
-      },{
-        value: '4',
-        label: '50-60岁',
-      },{
-        value: '5',
-        label: '60岁以上',
-      }],
-      optionsEdu:[{
-        value: '0 ',
-        label: '本科及以下',
-      },{
-        value: '1',
-        label: '硕士',
-      },{
-        value: '2',
-        label: '博士',
-      },{
-        value: '3',
-        label: '博士及博士以上学历',
-      }],
-      optionsProvince:[{
-        value: 1,
-        label: '北京',
-      },{
-        value: 2,
-        label: '天津',
-      },{
-        value: 3,
-        label: '上海',
-      },{
-        value: 4,
-        label: '重庆',
-      },{
-        value: 5,
-        label: '河北',
-      },{
-        value: 6,
-        label: '山西',
-      },{
-        value: 7,
-        label: '辽宁',
-      },{
-        value: 8,
-        label: '吉林',
-      },{
-        value: 9,
-        label: '黑龙江',
-      },{
-        value: 10,
-        label: '江苏',
-      },{
-        value: 11,
-        label: '浙江',
-      },{
-        value: 12,
-        label: '安徽',
-      },{
-        value: 13,
-        label: '福建',
-      },{
-        value: 14,
-        label: '江西',
-      },{
-        value: 15,
-        label: '山东',
-      },{
-        value: 16,
-        label: '河南',
-      },{
-        value: 17,
-        label: '湖北',
-      },{
-        value: 18,
-        label: '湖南',
-      },{
-        value: 19,
-        label: '广东',
-      },{
-        value: 20,
-        label: '海南',
-      },{
-        value: 21,
-        label: '四川',
-      },{
-        value: 22,
-        label: '贵州',
-      },{
-        value: 23,
-        label: '云南',
-      },{
-        value: 24,
-        label: '陕西',
-      },{
-        value: 25,
-        label: '甘肃',
-      },{
-        value: 26,
-        label: '青海',
-      },{
-        value: 27,
-        label: '台湾',
-      },{
-        value: 28,
-        label: '内蒙古',
-      },{
-        value: 29,
-        label: '广西',
-      },{
-        value: 30,
-        label: '西藏',
-      },{
-        value: 31,
-        label: '宁夏',
-      },{
-        value: 32,
-        label: '新疆',
-      },{
-        value: 33,
-        label: '香港',
-      },{
-        value: 34,
-        label: '澳门',
-      }],
+            mainHeight:document.documentElement.clientHeight-50,
+            countVal:0,
+            usernumVal:0,
+            provinceval:'',
+            genderval:'',
+            ageval:'',
+            eduval:'',
+            dataSource:[],
+              optionsAge:[{
+                value: 0,
+                label: '20岁以下',
+              },{
+                value: 1,
+                label: '20-30岁',
+              },{
+                value: 2,
+                label: '30-40岁',
+              },{
+                value: 3,
+                label: '40-50岁',
+              },{
+                value: 4,
+                label: '50-60岁',
+              },{
+                value: 5,
+                label: '60岁以上',
+              }],
+              optionsEdu:[{
+                value: 0,
+                label: '本科及以下',
+              },{
+                value: 1,
+                label: '硕士',
+              },{
+                value: 2,
+                label: '博士',
+              },{
+                value: 3,
+                label: '博士及博士以上学历',
+              }],
+              optionsProvince:[{
+                value: 1,
+                label: '北京',
+              },{
+                value: 2,
+                label: '天津',
+              },{
+                value: 3,
+                label: '上海',
+              },{
+                value: 4,
+                label: '重庆',
+              },{
+                value: 5,
+                label: '河北',
+              },{
+                value: 6,
+                label: '山西',
+              },{
+                value: 7,
+                label: '辽宁',
+              },{
+                value: 8,
+                label: '吉林',
+              },{
+                value: 9,
+                label: '黑龙江',
+              },{
+                value: 10,
+                label: '江苏',
+              },{
+                value: 11,
+                label: '浙江',
+              },{
+                value: 12,
+                label: '安徽',
+              },{
+                value: 13,
+                label: '福建',
+              },{
+                value: 14,
+                label: '江西',
+              },{
+                value: 15,
+                label: '山东',
+              },{
+                value: 16,
+                label: '河南',
+              },{
+                value: 17,
+                label: '湖北',
+              },{
+                value: 18,
+                label: '湖南',
+              },{
+                value: 19,
+                label: '广东',
+              },{
+                value: 20,
+                label: '海南',
+              },{
+                value: 21,
+                label: '四川',
+              },{
+                value: 22,
+                label: '贵州',
+              },{
+                value: 23,
+                label: '云南',
+              },{
+                value: 24,
+                label: '陕西',
+              },{
+                value: 25,
+                label: '甘肃',
+              },{
+                value: 26,
+                label: '青海',
+              },{
+                value: 27,
+                label: '台湾',
+              },{
+                value: 28,
+                label: '内蒙古',
+              },{
+                value: 29,
+                label: '广西',
+              },{
+                value: 30,
+                label: '西藏',
+              },{
+                value: 31,
+                label: '宁夏',
+              },{
+                value: 32,
+                label: '新疆',
+              },{
+                value: 33,
+                label: '香港',
+              },{
+                value: 34,
+                label: '澳门',
+              }],
       
 		};
 
@@ -222,18 +180,21 @@ class ZmitiKeysApp extends Component {
 
     const columns = [{
       title: '热词',
-      dataIndex: 'keyname',
-      key: 'keyname',
+      dataIndex: 'hotword',
+      key: 'hotword',
     },{
       title: '投票数',
-      dataIndex: 'votes',
-      key: 'votes',
+      dataIndex: 'num',
+      key: 'num',
       width:150,
     },{
       title: '百分比',
       dataIndex: 'persent',
       key: 'persent',
       width:120,
+      render:(text,recoder,index) =>(
+           <div>{GetPercent(recoder.num,this.state.countVal)}</div>
+        )
     }];
 
     var component =<div className="zmiti-keys-main-ui" style={{height:this.state.mainHeight}}>
@@ -247,7 +208,7 @@ class ZmitiKeysApp extends Component {
             <div className="zmiti-keys-line"></div>
             <div className="hr20"></div>
             <div className="zmiti-keys-count">
-              <em>总投票数：</em><span className="zmiti-keys-red">{this.state.countVal}</span><span className="zmiti-keys-ls">|</span><em>总人数：</em><span className="zmiti-keys-red">{this.state.countVal}</span>
+              <em>总投票数：</em><span className="zmiti-keys-red">{this.state.countVal}</span><span className="zmiti-keys-ls">|</span><em>总人数：</em><span className="zmiti-keys-red">{this.state.usernumVal}</span>
             </div>
             <div className="hr20"></div>
             <Row>
@@ -278,7 +239,7 @@ class ZmitiKeysApp extends Component {
               </Col>
             </Row>
             <div className="hr20"></div>
-            <Table dataSource={this.state.dataSource} columns={columns} />
+            <Table dataSource={this.state.dataSource} columns={columns} rowKey={record => record.hotword} />
         </div>
     </div>
 
@@ -315,36 +276,61 @@ class ZmitiKeysApp extends Component {
       ageval:this.state.ageval,
       eduval:this.state.eduval,
     }
-    console.log(pargams,'pargams');
+    //console.log(pargams,'pargams');
+        $.ajax({
+          url:'http://api.zmiti.com/v2/h5/count_user/',
+          type:'post',
+          data:{
+            userid:s.userid,
+            getusersigid:s.getusersigid,
+            worksclassid:3,
+            proviceid:this.state.provinceval,
+            sex:this.state.genderval,
+            age:this.state.ageval,
+            education:this.state.eduval,
+          },
+          success(data){
+            if(data.getret === 0){
+                //console.log(data,"获取总人数");
+                s.state.dataSource = data.list;
+                s.state.countVal = data.totalnum;
+                s.state.usernumVal = data.totalusernum;
+                s.forceUpdate();
+            }
+          }
+        })
   }
-  //显示列表
-  bindNewdata(){
-    var s = this;
-    var userid = this.props.params.userid?this.props.params.userid:this.userid;
-    $.ajax({
-      url:window.baseUrl+'h5/select_hotword/',
-      type:'post',
-      data:{
-        userid:s.userid,
-        getusersigid:s.getusersigid
-      },
-      success(data){
-        if(data.getret === 0){
-            console.log(data,"信息列表");
-            s.state.dataSource = data.list;
-            s.forceUpdate();
-        }
-      }
-    })
-  }
+    //获取总人数
+    getusercound(){
+        var s = this;
+        $.ajax({
+          url:'http://api.zmiti.com/v2/h5/count_user/',
+          type:'post',
+          data:{
+            userid:s.userid,
+            getusersigid:s.getusersigid,
+            worksclassid:3,
+          },
+          success(data){
+            if(data.getret === 0){
+                //console.log(data,"获取总人数");
+                s.state.dataSource = data.list;
+                s.state.countVal = data.totalnum;
+                s.state.usernumVal = data.totalusernum;
+                s.forceUpdate();
+            }
+          }
+        })
+    }
+
 	/*设置热词*/
 	openkey(){
 		window.location.href='./#/keysopt/';
 	}
 
 	componentDidMount() {
-		var s=  this;
-
+	   var s=  this;
+       s.getusercound();
 	}	
 
 	componentWillMount() {
