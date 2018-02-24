@@ -56,16 +56,19 @@ class ZmitiKeysApp extends Component {
               }],
               optionsEdu:[{
                 value: 0,
-                label: '本科及以下',
+                label: '高中及以下',
               },{
                 value: 1,
-                label: '硕士',
+                label: '本科',
               },{
                 value: 2,
-                label: '博士',
+                label: '硕士',
               },{
                 value: 3,
-                label: '博士及博士以上学历',
+                label: '博士',
+              },{
+                value: 4,
+                label: '其它',
               }],
               optionsProvince:[{
                 value: 1,
