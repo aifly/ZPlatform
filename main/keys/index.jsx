@@ -71,6 +71,9 @@ class ZmitiKeysApp extends Component {
                 label: '其它',
               }],
               optionsProvince:[{
+                value: '',
+                label: '全部',
+              },{
                 value: 1,
                 label: '北京',
               },{
@@ -222,7 +225,8 @@ class ZmitiKeysApp extends Component {
                 </div>
               </Col>
               <Col span={3} className="zmiti-keys-sel-2">
-                <Select defaultValue="0" style={{width:100}} onChange={this.handleChangeGender.bind(this)}>
+                <Select defaultValue="" style={{width:100}} onChange={this.handleChangeGender.bind(this)}>
+                  <Option value="">性别</Option>
                   <Option value="0">男</Option>
                   <Option value="1">女</Option>
                 </Select>
