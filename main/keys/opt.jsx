@@ -188,13 +188,16 @@ class ZmitiKeysOptApp extends Component {
       type:'post',
       data:{
         userid:s.userid,
-        getusersigid:s.getusersigid
+        getusersigid:s.getusersigid,
+        page:1,
+        pagenum:100
       },
       success(data){
         if(data.getret === 0){
-            s.state.dataSource = data.list;
-            s.state.loading = false;
-            s.forceUpdate();
+          console.log(data.list,'data.list')
+          s.state.dataSource = data.list;
+          s.state.loading = false;
+          s.forceUpdate();
         }
       }
     })
