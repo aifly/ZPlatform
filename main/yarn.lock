@@ -89,7 +89,7 @@ ansi-styles@^3.1.0:
   dependencies:
     color-convert "^1.9.0"
 
-antd@^2.13.10, antd@^2.8.3:
+antd@^2.8.3:
   version "2.13.10"
   resolved "https://registry.yarnpkg.com/antd/-/antd-2.13.10.tgz#bfb8cab3405b93b0b98f6a38e2069697017ebcd7"
   dependencies:
@@ -101,6 +101,52 @@ antd@^2.13.10, antd@^2.8.3:
     dom-closest "^0.2.0"
     lodash.debounce "^4.0.8"
     moment "^2.18.1"
+    omit.js "^1.0.0"
+    prop-types "^15.5.7"
+    rc-animate "^2.4.1"
+    rc-calendar "~9.0.0"
+    rc-cascader "~0.11.3"
+    rc-checkbox "~2.0.3"
+    rc-collapse "~1.7.5"
+    rc-dialog "~6.5.10"
+    rc-dropdown "~1.5.0"
+    rc-editor-mention "~0.6.12"
+    rc-form "~1.4.0"
+    rc-input-number "~3.6.0"
+    rc-menu "~5.0.10"
+    rc-notification "~2.0.0"
+    rc-pagination "~1.12.4"
+    rc-progress "~2.2.2"
+    rc-rate "~2.1.1"
+    rc-select "~6.9.0"
+    rc-slider "~8.3.0"
+    rc-steps "~2.5.1"
+    rc-switch "~1.5.1"
+    rc-table "~5.6.9"
+    rc-tabs "~9.1.2"
+    rc-time-picker "~2.4.1"
+    rc-tooltip "~3.4.6"
+    rc-tree "~1.7.0"
+    rc-tree-select "~1.10.2"
+    rc-upload "~2.4.0"
+    rc-util "^4.0.4"
+    react-lazy-load "^3.0.12"
+    react-slick "~0.15.4"
+    shallowequal "^1.0.1"
+    warning "~3.0.0"
+
+antd@^2.9.0:
+  version "2.13.11"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-2.13.11.tgz#59c0c1e79db07092fa6ee8d00f77668e88c72fb0"
+  dependencies:
+    array-tree-filter "~1.0.0"
+    babel-runtime "6.x"
+    classnames "~2.2.0"
+    create-react-class "^15.6.0"
+    css-animation "^1.2.5"
+    dom-closest "^0.2.0"
+    lodash.debounce "^4.0.8"
+    moment "^2.19.3"
     omit.js "^1.0.0"
     prop-types "^15.5.7"
     rc-animate "^2.4.1"
@@ -2290,6 +2336,10 @@ minimist@^1.1.0, minimist@^1.2.0:
 moment@2.x, moment@^2.18.1:
   version "2.19.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.2.tgz#8a7f774c95a64550b4c7ebd496683908f9419dbe"
+
+moment@^2.19.3:
+  version "2.20.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 
 ms@0.7.1:
   version "0.7.1"

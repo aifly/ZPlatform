@@ -42,7 +42,7 @@ window.WENMING = {
 
 window.MENUCONFIG = [{
 	key: 'wenming',
-	VISITUSERS: ['xuchang', 'wenmingzg', 'wmw_yangf', 'bmyuan', 'liuhaijun', 'zl461555626', 'songxian']
+	VISITUSERS: ['xuchang', 'wenmingzg', 'wmw_yangf', 'bmyuan', 'liuhaijun', 'zl461555626', 'songxian', 'zuimcyr']
 }, {
 	key: 'tripexpence',
 	VISITUSERS: ['zgrmyh']
