@@ -67,6 +67,7 @@ import ZmitiWenmingCityRankApp from './wenming/city.jsx';
 import ZmitiWenmingCommentCheckApp from './wenming/commentcheck.jsx';
 import ZmitiLetterApp from './letter/index.jsx';
 import ZmitiBehindChildApp from './behindchild/index.jsx';
+import ZmitiWinterOlmpicsApp from './winterolmpics/index.jsx';
 
 import ZmitiWenmingCommentDetailApp from './wenming/commentdetail.jsx';
 import ZmitiBoardroomApp from './boardroom/index.jsx';
@@ -76,6 +77,8 @@ import ZmitiJinrongxbPolicyinfoApp from './jinrongxiaobao/policyinfo.jsx';
 import ZmitiJinrongxbNoticeApp from './jinrongxiaobao/notice.jsx';
 import ZmitiJinrongxbSetupApp from './jinrongxiaobao/setup.jsx';
 import ZmitiJinrongxbaddressApp from './jinrongxiaobao/address.jsx';
+import ZmitiKeysApp from './keys/index.jsx';
+import ZmitiKeysOptApp from './keys/opt.jsx';
 import {
 	notification
 } from './commoncomponent/common.jsx';
@@ -92,7 +95,8 @@ class App extends React.Component {
 		var apps = [{
 				path: '/',
 				app: ZmitiHomeApp
-			}, {
+			}
+			, {
 				path: '/puzzle/',
 				app: ZmitiPuzzleApp
 			}, {
@@ -280,6 +284,15 @@ class App extends React.Component {
 			}, {
 				path: '/jinrongxiaobaoaddress/(:id)',
 				app: ZmitiJinrongxbaddressApp
+			},{
+				path: '/winterolmpics/',
+				app: ZmitiWinterOlmpicsApp
+			}, {
+				path: '/keys/',
+				app: ZmitiKeysApp
+			}, {
+				path: '/keysopt/',
+				app: ZmitiKeysOptApp
 			},
 
 		];
