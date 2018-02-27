@@ -35,6 +35,9 @@ window.LETTERUSERLIST = ['xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan', 'mafaz
 window.BEHINDCHILDUSERLIST = ['xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan', 'mafazhan']; //配置征集留守儿童的页面哪些用户可以访问。
 window.WINTEROLMPICSUSERLIST = ['xuchang', 'xinmeiti', 'bmyuan', 'mafazhan']; //配置冬奥会的页面哪些用户可以访问。
 
+window.HOTWORDSLIST = ['xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan', 'mafazhan']; //两会热词
+
+
 window.WENMING = {
 	XCXAPPID: 'wx32e63224f58f2cb5'
 }
