@@ -52,8 +52,9 @@ class ZmitiKeysApp extends Component {
 
     this.state = {
       mainHeight: document.documentElement.clientHeight - 50,
+      totalpv:0,//访问量
       countVal: 0,
-      usernumVal: 0,
+      usernumVal: 0,//投票人数
       provinceval: '',
       genderval: '',
       ageval: '',
@@ -238,7 +239,7 @@ class ZmitiKeysApp extends Component {
             <div className="zmiti-keys-line"></div>
             <div className="hr20"></div>
             <div className="zmiti-keys-count">
-              <em>总投票数：</em><span className="zmiti-keys-red">{this.state.countVal}</span><span className="zmiti-keys-ls">|</span><em>总人数：</em><span className="zmiti-keys-red">{this.state.usernumVal}</span>
+              <em>总投票数：</em><span className="zmiti-keys-red">{this.state.countVal}</span><span className="zmiti-keys-ls">|</span><em>总访问量：</em><span className="zmiti-keys-red">{this.state.totalpv}</span>
             </div>
             <div className="hr20"></div>
             <Row>
@@ -353,6 +354,26 @@ class ZmitiKeysApp extends Component {
       }
     })
   }
+  //获取访问量
+  pageViewCount(){
+    var s = this;
+    $.ajax({
+      url:window.baseUrl+'custom/get_customdetial/',
+      type:'post',
+      data:{
+        userid:s.userid,
+        getusersigid:s.getusersigid,
+        customid:39,
+      },
+      success(data){
+        if(data.getret === 0){
+            //console.log(data.detial.totalpv,"访问量");
+            s.state.totalpv = data.detial.totalpv;
+            s.forceUpdate();
+        }
+      }
+    })
+  }
 
   /*设置热词*/
   openkey() {
@@ -362,6 +383,7 @@ class ZmitiKeysApp extends Component {
   componentDidMount() {
     var s = this;
     s.getusercound();
+    s.pageViewCount();
   }
 
   componentWillMount() {
