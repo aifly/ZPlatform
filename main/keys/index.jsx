@@ -363,7 +363,7 @@ class ZmitiKeysApp extends Component {
       data:{
         userid:s.userid,
         getusersigid:s.getusersigid,
-        customid:39,
+        customid:35,
       },
       success(data){
         if(data.getret === 0){
