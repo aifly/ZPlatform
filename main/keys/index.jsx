@@ -52,9 +52,9 @@ class ZmitiKeysApp extends Component {
 
     this.state = {
       mainHeight: document.documentElement.clientHeight - 50,
-      totalpv:0,//访问量
+      totalpv: 0, //访问量
       countVal: 0,
-      usernumVal: 0,//投票人数
+      usernumVal: 0, //投票人数
       provinceval: '',
       genderval: '',
       ageval: '',
@@ -358,18 +358,18 @@ class ZmitiKeysApp extends Component {
   pageViewCount(){
     var s = this;
     $.ajax({
-      url:window.baseUrl+'custom/get_customdetial/',
-      type:'post',
-      data:{
-        userid:s.userid,
-        getusersigid:s.getusersigid,
-        customid:35,
+      url: window.baseUrl + 'custom/get_customdetial/',
+      type: 'post',
+      data: {
+        userid: s.userid,
+        getusersigid: s.getusersigid,
+        customid: 39,
       },
-      success(data){
-        if(data.getret === 0){
-            //console.log(data.detial.totalpv,"访问量");
-            s.state.totalpv = data.detial.totalpv;
-            s.forceUpdate();
+      success(data) {
+        if (data.getret === 0) {
+          //console.log(data.detial.totalpv,"访问量");
+          s.state.totalpv = data.detial.totalpv;
+          s.forceUpdate();
         }
       }
     })
