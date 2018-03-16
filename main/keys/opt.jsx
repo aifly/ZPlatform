@@ -190,6 +190,7 @@ class ZmitiKeysOptApp extends Component {
         userid:s.userid,
         getusersigid:s.getusersigid,
         page:1,
+        worksclassid:3,
         pagenum:100
       },
       success(data){
