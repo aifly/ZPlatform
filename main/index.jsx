@@ -79,6 +79,8 @@ import ZmitiJinrongxbSetupApp from './jinrongxiaobao/setup.jsx';
 import ZmitiJinrongxbaddressApp from './jinrongxiaobao/address.jsx';
 import ZmitiKeysApp from './keys/index.jsx';
 import ZmitiKeysOptApp from './keys/opt.jsx';
+import ZmitiWenmingKeysApp from './wenming/keys.jsx';
+import ZmitiWenmingKeysOptApp from './wenming/keysopt.jsx';
 import {
 	notification
 } from './commoncomponent/common.jsx';
@@ -293,6 +295,12 @@ class App extends React.Component {
 			}, {
 				path: '/keysopt/',
 				app: ZmitiKeysOptApp
+			},{
+				path: '/wenmingkeys',
+				app: ZmitiWenmingKeysApp
+			}, {
+				path: '/wenmingkeysopt',
+				app: ZmitiWenmingKeysOptApp
 			},
 
 		];
