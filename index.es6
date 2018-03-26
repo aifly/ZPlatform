@@ -877,6 +877,20 @@ window.addEventListener('load', ()=> {
                                 capacity:d.capacity,//最大空间使用量。
                             }
 
+
+                          var p = JSON.stringify(params);
+                           // document.cookie = p;
+                            self.clearCookie('login');
+                            self.setCookie('login',p,1);
+                           // url+='/'+d.userid+'/'+d.getusersigid;
+
+                           // alert(url)
+                            a.href =url;// './main/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
+                            a.style.position = 'fixed';
+                            a.style.zIndex = -1;
+                            a.style.opacity = 0;
+                            a.click();
+
                             var opt = {
                                 userids:[d.userid],
                                 content:"您的账号已经在其它地方登录，请重新登录",
@@ -892,22 +906,12 @@ window.addEventListener('load', ()=> {
                                 },
                                 success(data){
                                     if(data.getret === 0){
-                                        var p = JSON.stringify(params);
-                                       // document.cookie = p;
-                                        self.clearCookie('login');
-                                        self.setCookie('login',p,1);
-                                       // url+='/'+d.userid+'/'+d.getusersigid;
-
-                                       // alert(url)
-                                        a.href =url;// './main/index.html?getusersigid='+d.getusersigid+'&userId='+d.userid;
-                                        a.style.position = 'fixed';
-                                        a.style.zIndex = -1;
-                                        a.style.opacity = 0;
-                                        a.click();
+                                      
                  
                                     }
                                     else{
-                                        alert('error');
+                                        console.log('msg/send_msg error =>',data);
+                                        
                                     }
                                 }
                             });
