@@ -7,7 +7,8 @@ import {
     Table,
     Modal,
     Form,
-    Input
+    Input,
+    message
 } from '../commoncomponent/common.jsx';
 let FormItem = Form.Item;
 import $ from 'jquery';
@@ -54,24 +55,64 @@ class ZmitiBoardroomApp extends React.Component {
                 },
                 {
                     title: '房间号',
-                    dataIndex: 'room',
+                    dataIndex: 'roomnumber',
                     align: 'center',
                     key: 'room'
                 }, {
                     title: '座位号',
-                    dataIndex: 'seat',
+                    dataIndex: 'seatnumber',
                     align: 'center',
                     key: 'seat'
+                }, {
+                    title: '职位',
+                    dataIndex: 'job',
+                    align: 'center',
+                    key: 'job'
+                }, {
+                    title: '省份',
+                    dataIndex: 'provicename',
+                    align: 'center',
+                    key: 'provicename'
+                }, {
+                    title: '民族',
+                    dataIndex: 'nation',
+                    align: 'center',
+                    key: 'nation'
                 },{
-                    title:'操作',
+                    title:'状态',
+                    dataIndex:'status',
+                    align:'center',
+                    key:'status',
+                    filters: [
+                        { text: '未审核', value: 0 },
+                        { text: '审核通过', value: 1 },
+                        { text: '审核未通过', value: 2 }
+                    ],
+                    render:(value,record,index)=>{
+                        return <div className={'zmiti-board-status-'+record.status}>{record.status === 0 ? '未审核' : record.status === 1 ? '审核通过':record.status===2 ? '审核不通过':'已删除'}</div>
+                    }
+                },{
+                    title:'审核',
                     dataIndex:'',
                     key:'2',
                     align: 'center',
                     width:220,
                     render:(value,record,index)=>{
+                        return <div >
+                            <Button onClick={this.check.bind(this,record,1)} type='primary'  size='small' style={{marginLeft:10}}>审核通过</Button>
+                            <Button onClick={this.check.bind(this, record,2)} type='danger' size='small' style={{marginLeft:10}}>审核不通过</Button>
+                        </div>
+                    }
+                }, {
+                    title: '操作',
+                    dataIndex: '',
+                    key: '3',
+                    align: 'center',
+                    width: 200,
+                    render: (value, record, index) => {
                         return <div>
-                            <Button type='primary' icon='edit' size='small' onClick={this.edit.bind(this, value, record, index)}>编辑</Button> 
-                            <Button type='danger' icon='delete' size='small' style={{marginLeft:10}}>删除</Button>
+                            <Button type='primary' icon='edit' size='small' onClick={this.edit.bind(this, value, record, index)}>编辑</Button>
+                            <Button onClick={this.deleteUser.bind(this,record)} type='danger' icon='delete' size='small' style={{ marginLeft: 10 }}>删除</Button>
                         </div>
                     }
                 }
@@ -140,26 +181,32 @@ class ZmitiBoardroomApp extends React.Component {
         var mainComponent = <div className='board-main-ui' ref='board-main-ui' style={{ height: this.state.mainHeight }}>
                 <header>
                     <div>人员管理</div>
-                    <div><Button size='small' type='primary' icon='reload'>刷新</Button></div>
+                    <div><Button size='small' type='primary' icon='reload' onClick={this.getUserList.bind(this)}>刷新</Button></div>
                 </header>
                 <div className='board-list'>
-                <Table dataSource={this.state.dataSource} columns={this.state.columns} />
+                <Table pagination={{ pageSize: (this.viewH - 200)/50|0}} onChange={this.handleTableChange.bind(this)} dataSource={this.state.dataSource} bordered={true} columns={this.state.columns} />
                 </div>
 
             <Modal title="出差事由" visible={this.state.visible}
-                
+                onOk={this.editUser.bind(this)}
                 onCancel={() => { this.setState({ visible: false }) }}
             >
                 <Form>
                     <FormItem
                         {...formItemLayout}
-                        label="用户名"
+                        label="房间号"
                         hasFeedback
                     >
-
-                        <Input placeholder="用户名" defaultValue='xx' value={this.state.formUser.username}/>
+                        <Input onChange={this.changeRoomnumber.bind(this)} placeholder="房间号" defaultValue='xx' value={this.state.formUser.roomnumber} />
                     </FormItem>
-                   
+
+                    <FormItem
+                        {...formItemLayout}
+                        label="座位号"
+                        hasFeedback
+                    >
+                        <Input onChange={this.changeSeatnumber.bind(this)} placeholder="座位号" defaultValue='xx' value={this.state.formUser.seatnumber} />
+                    </FormItem>
 
                 </Form>
             </Modal>
@@ -168,17 +215,128 @@ class ZmitiBoardroomApp extends React.Component {
             <MainUI component={mainComponent}></MainUI>
         );
     }
+    check(record,type){
+        var s = this;
+        $.ajax({
+            url: window.baseUrl + 'admin/editsignup',
+            type: 'post',
+            data: {
+                userid: s.userid,
+                getusersigid: s.getusersigid,
+                signupid: record.signupid,
+                status:type
+            },
+            success(data) {
+                if (data.getret === 0) {
+                    message.success('审核成功')
+                    s.getUserList();
+                } else {
+                    message.error('审核失败')
+                }
+            }
+        })
+    }
 
+    handleTableChange(pagination, filters, sorter){
+        console.log(this.dataSource, filters.status);
+        this.state.dataSource = this.dataSource.filter((item)=>{
+            return item.status === filters.status[0]*1;
+        })
+        if(filters.status.length<=0){
+            this.state.dataSource = this.dataSource.concat([]);
+        }
+        this.forceUpdate();
+        console.log(this.state.dataSource);
+    }
+    deleteUser(record){
+        var s =this;
+        $.ajax({
+            url: window.baseUrl + 'admin/editsignup',
+            type: 'post',
+            data: {
+                userid:s.userid,
+                getusersigid:s.getusersigid,
+                signupid: record.signupid,
+                status:3
+            },
+            success(data) {
+
+                if (data.getret === 0) {
+                    message.success('删除成功')
+                    s.getUserList();
+                }else{
+                    message.error('删除失败')
+                }
+            }
+        })
+    }
     edit(value,record,index){
         this.setState({
             visible:true,
             formUser:record
         })
     }
+    changeRoomnumber(e){
+        this.state.formUser.roomnumber = e.target.value;
+        this.forceUpdate();
+    }
+    changeSeatnumber(e){
+        this.state.formUser.seatnumber = e.target.value;
+        this.forceUpdate();
+    }
+    editUser(){
+        var s = this;
+        var p = this.state.formUser;
+        p.userid = s.userid;
+        p.getusersigid = s.getusersigid;
+        $.ajax({
+            url: window.baseUrl + 'admin/editsignup',
+            type:'post',
+            data:p,
+            success(data){
+                
+                if(data.getret === 0){
+                    s.setState({
+                        visible:false
+                    });
+                    s.getUserList();
+                }
+            }
+        })
+    }
+    getUserList(){
+        var s = this;
+        $.ajax({
+            type:'post',
+            url: window.baseUrl +'/admin/getwmsignuplist',
+            data:{
+                pageindex:1,
+                pagenum:1000,
+                userid: s.userid,
+                getusersigid: s.getusersigid,
+            },
+            success(data){
+                if(data.getret === 0){
+                    data.list.filter((item,i)=>{
+                        item.key = i+'-1';
+                        return item.status*1 !== 3;//过滤掉已经删除的人员、
+                    }).forEach((item,i)=>{
+                        item.key = i;
+                    })
+                    s.setState({
+                        dataSource : data.list
+                    });
+                    s.dataSource = data.list.concat([]);
+                    console.log(s.dataSource )
+
+                }
+            }
+        })
+    }
   
     componentDidMount() {
 
-
+        this.getUserList();
     }
  
 

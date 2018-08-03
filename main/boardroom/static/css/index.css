@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
     background-color: #fff;
     border-color: #bf1616;
@@ -61,4 +62,53 @@
   -webkit-flex-grow: 1;
   flex-grow: 1;
   width: 100%;
+}
+
+.board-main-ui .zmiti-board-status-0 {
+  color: #333;
+}
+
+.board-main-ui .zmiti-board-status-1 {
+  color: green;
+  font-weight: bold;
+}
+
+.board-main-ui .zmiti-board-status-2 {
+  color: red;
+  font-weight: bold;
+}
+
+.board-main-ui .zmiti-board-status-3 {
+  color: red;
+  font-weight: bold;
+}
+
+.board-main-ui .ant-table-tbody > tr > td,
+.board-main-ui .ant-table-thead > tr > th {
+  padding: 12px 8px;
+}
+
+.ant-table-wrapper::-webkit-scrollbar,
+.wm-scroll::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 8px;
+  /*高宽分别对应横竖滚动条的尺寸*/
+  height: 8px;
+}
+
+.ant-table-wrapper::-webkit-scrollbar-thumb,
+.wm-scroll::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.ant-table-wrapper::-webkit-scrollbar-track,
+.wm-scroll::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.1);
 }
