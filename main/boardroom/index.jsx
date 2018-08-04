@@ -8,10 +8,12 @@ import {
     Modal,
     Form,
     Input,
-    message
+    message,
+    Select 
 } from '../commoncomponent/common.jsx';
 let FormItem = Form.Item;
 import $ from 'jquery';
+const Option = Select.Option;
 
 import {
     ZmitiValidateUser
@@ -31,7 +33,47 @@ class ZmitiBoardroomApp extends React.Component {
             list: [],
             visible:false,
             formUser:{},
+            provinceList: [
+                "北京",
+                "安徽",
+                "福建",
+                "甘肃",
+                "广东",
+                "广西",
+                "贵州",
+                "海南",
+                "河北",
+                "河南",
+                "黑龙江",
+                "湖北",
+                "湖南",
+                "吉林",
+                "江苏",
+                "江西",
+                "辽宁",
+                "内蒙古",
+                "宁夏",
+                "青海",
+                "山东",
+                "山西",
+                "陕西",
+                "上海",
+                "四川",
+                "天津",
+                "西藏",
+                "新疆",
+                "兵团",
+                "云南",
+                "浙江",
+                "重庆"
+            ],
             columns:[
+                {
+                    title: '序号',
+                    dataIndex: 'key',
+                    key: 'key',
+                    align: 'center'
+                },
                 {
                     title:'姓名',
                     dataIndex:'username',
@@ -99,8 +141,8 @@ class ZmitiBoardroomApp extends React.Component {
                     width:220,
                     render:(value,record,index)=>{
                         return <div >
-                            <Button onClick={this.check.bind(this,record,1)} type='primary'  size='small' style={{marginLeft:10}}>审核通过</Button>
-                            <Button onClick={this.check.bind(this, record,2)} type='danger' size='small' style={{marginLeft:10}}>审核不通过</Button>
+                            <Button onClick={this.check.bind(this, record, 1)} disabled={record.status === 0 ? false :'disabled'} type='primary'  size='small' style={{marginLeft:10}}>审核通过</Button>
+                            <Button onClick={this.check.bind(this, record, 2)} type='danger' size='small' style={{ marginLeft: 10 }} disabled={record.status === 0 ? false : 'disabled'}>审核不通过</Button>
                         </div>
                     }
                 }, {
@@ -184,11 +226,18 @@ class ZmitiBoardroomApp extends React.Component {
                     <div><Button size='small' type='primary' icon='reload' onClick={this.getUserList.bind(this)}>刷新</Button></div>
                 </header>
                 <div className='board-list'>
-                <Table pagination={{ pageSize: (this.viewH - 200)/50|0}} onChange={this.handleTableChange.bind(this)} dataSource={this.state.dataSource} bordered={true} columns={this.state.columns} />
+                    <label htmlFor="">按省份查询：</label><Select defaultValue="北京" style={{ width: 120 }} onChange={this.handleChange.bind(this)}>
+                        {this.state.provinceList.map((item,i)=>{
+                            return <Option key={i} value={item}>{item}</Option>
+                        })}
+                    </Select>
+                <Table style={{marginTop:10}} pagination={{ pageSize: (this.viewH - 200)/50|0}} onChange={this.handleTableChange.bind(this)} dataSource={this.state.dataSource} bordered={true} columns={this.state.columns} />
                 </div>
 
-            <Modal title="出差事由" visible={this.state.visible}
+            <Modal title="编辑人员信息" visible={this.state.visible}
                 onOk={this.editUser.bind(this)}
+                okText='确定'
+                cancelText='取消'
                 onCancel={() => { this.setState({ visible: false }) }}
             >
                 <Form>
@@ -215,6 +264,30 @@ class ZmitiBoardroomApp extends React.Component {
             <MainUI component={mainComponent}></MainUI>
         );
     }
+    handleChange(e){
+        var s = this;
+        $.ajax({
+            url: window.baseUrl + '/wenming/getsignuplist/',
+            type: 'post',
+            data: {
+                type: 2,
+                name: e,
+                status: 1
+            },
+            success(data) {
+                if (data.getret === 0) {
+                    data.list.forEach((item, i) => {
+                        item.key = i + 1;
+                    })
+                    s.setState({
+                        dataSource: data.list
+                    });
+                    s.dataSource = data.list.concat([]);
+                }
+                console.log(data);
+            }
+        })
+    }
     check(record,type){
         var s = this;
         $.ajax({
@@ -229,6 +302,26 @@ class ZmitiBoardroomApp extends React.Component {
             success(data) {
                 if (data.getret === 0) {
                     message.success('审核成功')
+                    $.ajax({
+                        url: window.baseUrl + '/share/wmsendsms/',
+                        type: 'post',
+                        data: {
+                            mobile: record.mobile,
+                            smstype: type + 1,//1.报名成功短信,2.审核通过短信,3.审核未通过短信
+                            username: record.username,
+                            getaddress:"全国宣传干部学院怀柔校区5号楼（教学楼）",
+                            projectname: '2018年地方文明网站建设管理工作培训班',
+                            getdate: '2018年8月13日20时',
+                            getcompany:"中国文明网",
+                        },
+                        error() {
+                        },
+                        success(data) {
+                            if(data.getret === 0){
+                                message.success('短信已发送');
+                            }
+                        }
+                    })
                     s.getUserList();
                 } else {
                     message.error('审核失败')
@@ -321,7 +414,7 @@ class ZmitiBoardroomApp extends React.Component {
                         item.key = i+'-1';
                         return item.status*1 !== 3;//过滤掉已经删除的人员、
                     }).forEach((item,i)=>{
-                        item.key = i;
+                        item.key = i+1;
                     })
                     s.setState({
                         dataSource : data.list
