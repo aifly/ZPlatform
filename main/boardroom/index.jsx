@@ -35,37 +35,37 @@ class ZmitiBoardroomApp extends React.Component {
             formUser:{},
             provinceList: [
                 "北京",
-                "安徽",
-                "福建",
-                "甘肃",
-                "广东",
-                "广西",
-                "贵州",
-                "海南",
-                "河北",
-                "河南",
-                "黑龙江",
-                "湖北",
-                "湖南",
-                "吉林",
-                "江苏",
-                "江西",
-                "辽宁",
-                "内蒙古",
-                "宁夏",
-                "青海",
-                "山东",
-                "山西",
-                "陕西",
-                "上海",
-                "四川",
                 "天津",
-                "西藏",
-                "新疆",
-                "兵团",
-                "云南",
-                "浙江",
-                "重庆"
+                "河北",
+                "山西",
+                "内蒙古",
+                "辽宁",
+                '吉林',
+                '黑龙江',
+                '上海',
+                '江苏',
+                '浙江',
+                '安徽',
+                '福建',
+                '江西',
+                '山东',
+                '河南',
+                '湖北',
+                '湖南',
+                '广东',
+                '广西',
+                '海南',
+                '重庆',
+                '四川',
+                '贵州',
+                '云南',
+                '西藏',
+                '陕西',
+                '甘肃',
+                '青海',
+                '宁夏',
+                '新疆',
+                '兵团'
             ],
             columns:[
                 {
@@ -143,6 +143,16 @@ class ZmitiBoardroomApp extends React.Component {
                         return <div >
                             <Button onClick={this.check.bind(this, record, 1)} disabled={record.status === 0 ? false :'disabled'} type='primary'  size='small' style={{marginLeft:10}}>审核通过</Button>
                             <Button onClick={this.check.bind(this, record, 2)} type='danger' size='small' style={{ marginLeft: 10 }} disabled={record.status === 0 ? false : 'disabled'}>审核不通过</Button>
+                        </div>
+                    }
+                }, {
+                    title: '是否签到',
+                    dataIndex: '',
+                    key: '4',
+                    align: 'center',
+                    render: (value, record, index) => {
+                        return <div style={{ color: record.issign? 'green':'#f00',fontWeight:'bold'}}>
+                            {record.issign ? '已签到':"未签到"}
                         </div>
                     }
                 }, {
