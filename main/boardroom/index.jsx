@@ -413,6 +413,7 @@ class ZmitiBoardroomApp extends React.Component {
             type:'post',
             url: window.baseUrl +'/admin/getwmsignuplist',
             data:{
+                pnumber:1, 
                 pageindex:1,
                 pagenum:1000,
                 userid: s.userid,
@@ -430,8 +431,22 @@ class ZmitiBoardroomApp extends React.Component {
                         dataSource : data.list
                     });
                     s.dataSource = data.list.concat([]);
-                    console.log(s.dataSource )
 
+                }
+            }
+        })
+
+
+        $.ajax({
+            type:'post',
+            url: window.baseUrl +'/admin/getpnumberlist',
+            data:{
+                userid: s.userid,
+                getusersigid: s.getusersigid,
+            },
+            success(data){
+                console.log(data,'getpnumberlist');
+                if(data.getret === 0){
                 }
             }
         })
