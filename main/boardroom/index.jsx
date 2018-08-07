@@ -281,6 +281,7 @@ class ZmitiBoardroomApp extends React.Component {
             type: 'post',
             data: {
                 type: 2,
+                pnumber:window.pNumber ,
                 name: e,
                 status: 1
             },
