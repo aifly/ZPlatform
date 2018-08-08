@@ -241,7 +241,7 @@ class ZmitiBoardroomApp extends React.Component {
                             return <Option key={i} value={item}>{item}</Option>
                         })}
                     </Select>
-                <Table style={{marginTop:10}} pagination={{ pageSize: (this.viewH - 200)/50|0}} onChange={this.handleTableChange.bind(this)} dataSource={this.state.dataSource} bordered={true} columns={this.state.columns} />
+                <Table style={{marginTop:10}} pagination={{ pageSize: (this.viewH - 230)/50|0}} onChange={this.handleTableChange.bind(this)} dataSource={this.state.dataSource} bordered={true} columns={this.state.columns} />
                 </div>
 
             <Modal title="编辑人员信息" visible={this.state.visible}
@@ -320,8 +320,8 @@ class ZmitiBoardroomApp extends React.Component {
                             mobile: record.mobile,
                             smstype: type + 1,//1.报名成功短信,2.审核通过短信,3.审核未通过短信
                             username: record.username,
-                            getaddress:"全国宣传干部学院怀柔校区5号楼（教学楼）",
-                            projectname: '2018年地方文明网站建设管理工作培训班',
+                            getaddress:"全国宣传干部学院怀柔校区5号楼（教学楼）大厅现场扫描二维码",
+                            projectname: '2018年第一期地方文明网站建设管理工作培训班',
                             getdate: '2018年8月13日20时',
                             getcompany:"中国文明网",
                         },
