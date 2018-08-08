@@ -32,6 +32,7 @@ class ZmitiBoardroomApp extends React.Component {
             mainHeight: document.documentElement.clientHeight - 50,
             list: [],
             visible:false,
+            pNumber:1,
             formUser:{},
             provinceList: [
                 "北京",
@@ -281,7 +282,7 @@ class ZmitiBoardroomApp extends React.Component {
             type: 'post',
             data: {
                 type: 2,
-                pnumber:window.pNumber ,
+                pnumber:s.state.pNumber,
                 name: e,
                 status: 1
             },
@@ -290,6 +291,7 @@ class ZmitiBoardroomApp extends React.Component {
                     data.list.forEach((item, i) => {
                         item.key = i + 1;
                     })
+
                     s.setState({
                         dataSource: data.list
                     });
