@@ -9,7 +9,8 @@ import {
     Form,
     Input,
     message,
-    Select 
+    Select ,
+    Popconfirm
 } from '../commoncomponent/common.jsx';
 let FormItem = Form.Item;
 import $ from 'jquery';
@@ -32,9 +33,11 @@ class ZmitiBoardroomApp extends React.Component {
             mainHeight: document.documentElement.clientHeight - 50,
             list: [],
             visible:false,
+            defaultProvince:'全部',
             pNumber:1,
             formUser:{},
             provinceList: [
+                "全部",
                 "北京",
                 "天津",
                 "河北",
@@ -66,7 +69,8 @@ class ZmitiBoardroomApp extends React.Component {
                 '青海',
                 '宁夏',
                 '新疆',
-                '兵团'
+                '兵团',
+                '中国文明网'
             ],
             columns:[
                 {
@@ -121,6 +125,16 @@ class ZmitiBoardroomApp extends React.Component {
                     dataIndex: 'nation',
                     align: 'center',
                     key: 'nation'
+                }, {
+                    title: '办公电话',
+                    dataIndex: 'telphone',
+                    align: 'center',
+                    key: 'telphone'
+                }, {
+                    title: '邮箱',
+                    dataIndex: 'email',
+                    align: 'center',
+                    key: 'email'
                 },{
                     title:'状态',
                     dataIndex:'status',
@@ -161,24 +175,23 @@ class ZmitiBoardroomApp extends React.Component {
                     dataIndex: '',
                     key: '3',
                     align: 'center',
-                    width: 200,
+                    width: 180,
                     render: (value, record, index) => {
                         return <div>
-                            <Button type='primary' icon='edit' size='small' onClick={this.edit.bind(this, value, record, index)}>编辑</Button>
-                            <Button onClick={this.deleteUser.bind(this,record)} type='danger' icon='delete' size='small' style={{ marginLeft: 10 }}>删除</Button>
-                        </div>
+                            <Button type="primary" icon="edit" size="small" onClick={this.edit.bind(this, value, record, index)}>
+                              编辑
+                            </Button>
+                            <Popconfirm title="确定删除吗？" okText="确定" cancelText="取消" onConfirm={this.deleteUser.bind(this, record)}>
+                              <Button type="danger" icon="delete" size="small" style={{ marginLeft: 10 }}>
+                                删除
+                              </Button>
+                            </Popconfirm>
+                          </div>;
                     }
                 }
             ],
             dataSource:[
-                {
-                    username:'张三',
-                    sex:1,
-                    seat:'5排13号',
-                    room:'503',
-                    mobile:'15718879215',
-                    key:'1'
-                }
+               
             ]
         }
 
@@ -234,15 +247,15 @@ class ZmitiBoardroomApp extends React.Component {
         var mainComponent = <div className='board-main-ui' ref='board-main-ui' style={{ height: this.state.mainHeight }}>
                 <header>
                     <div>人员管理</div>
-                    <div><Button size='small' type='primary' icon='reload' onClick={this.getUserList.bind(this)}>刷新</Button></div>
+                    <div><Button size='small' type='primary' icon='reload' onClick={this.refresh.bind(this)}>刷新</Button></div>
                 </header>
                 <div className='board-list'>
-                    <label htmlFor="">按省份查询：</label><Select defaultValue="北京" style={{ width: 120 }} onChange={this.handleChange.bind(this)}>
+                    <label htmlFor="">按省份查询：</label><Select value={this.state.defaultProvince} style={{ width: 120 }} onChange={this.handleChange.bind(this)}>
                         {this.state.provinceList.map((item,i)=>{
                             return <Option key={i} value={item}>{item}</Option>
                         })}
                     </Select>
-                <Table style={{marginTop:10}} pagination={{ pageSize: (this.viewH - 230)/50|0}} onChange={this.handleTableChange.bind(this)} dataSource={this.state.dataSource} bordered={true} columns={this.state.columns} />
+                <Table style={{marginTop:10}} pagination={{ pageSize: (this.viewH - 400)/50|0}} onChange={this.handleTableChange.bind(this)} dataSource={this.state.dataSource} bordered={true} columns={this.state.columns} />
                 </div>
 
             <Modal title="编辑人员信息" visible={this.state.visible}
@@ -275,8 +288,24 @@ class ZmitiBoardroomApp extends React.Component {
             <MainUI component={mainComponent}></MainUI>
         );
     }
+    refresh(){
+        this.currentType = '';
+        this.setState({ defaultProvince:'全部' });
+        this.getUserList();
+    }
     handleChange(e){
         var s = this;
+        
+        this.setState({ defaultProvince: e });
+       
+        if(e === '全部'){
+            this.currentType = '';
+            this.getUserList();
+            return;
+        }
+
+        this.currentType = e;
+        
         $.ajax({
             url: window.baseUrl + '/wenming/getsignuplist/',
             type: 'post',
@@ -412,32 +441,37 @@ class ZmitiBoardroomApp extends React.Component {
     }
     getUserList(){
         var s = this;
+        if (this.currentType){
+            this.handleChange(this.currentType);
+            return;
+        }
         $.ajax({
-            type:'post',
-            url: window.baseUrl +'/admin/getwmsignuplist',
-            data:{
-                pnumber:1, 
-                pageindex:1,
-                pagenum:1000,
-                userid: s.userid,
-                getusersigid: s.getusersigid,
+            type: "post",
+            url: window.baseUrl + "/admin/getwmsignuplist",
+            data: {
+              pnumber: 1,
+              pageindex: 1,
+              pagenum: 1000,
+              userid: s.userid,
+              getusersigid: s.getusersigid
             },
-            success(data){
-                if(data.getret === 0){
-                    data.list.filter((item,i)=>{
-                        item.key = i+'-1';
-                        return item.status*1 !== 3;//过滤掉已经删除的人员、
-                    }).forEach((item,i)=>{
-                        item.key = i+1;
-                    })
-                    s.setState({
-                        dataSource : data.list
-                    });
-                    s.dataSource = data.list.concat([]);
-
-                }
+            success(data) {
+              if (data.getret === 0) {
+                data.list
+                  .filter((item, i) => {
+                    item.key = i + "-1";
+                    return item.status * 1 !== 3; //过滤掉已经删除的人员、
+                  })
+                  .forEach((item, i) => {
+                    item.key = i + 1;
+                  });
+                s.setState({
+                  dataSource: data.list
+                });
+                s.dataSource = data.list.concat([]);
+              }
             }
-        })
+          });
 
 
         $.ajax({
