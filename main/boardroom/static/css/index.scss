@@ -5,6 +5,7 @@
 		padding: 10px;
 		box-sizing: border-box;
 		&>header{
+
 			height: 40px;
 			line-height: 40px;;
 			@include displayFlex(row);
@@ -12,9 +13,11 @@
 			background: #f4f4f4;
 			@include br(3px);
 			overflow: hidden;
-			width:100%;
-			margin: 10px auto;
+			width:100% !important;
+			
+			//margin: 10px auto;
 			&>div{
+				
 				width: 100px;
 				&:nth-of-type(1){
 					text-indent:2em;
@@ -36,7 +39,8 @@
 			-webkit-flex-grow:1;
 			flex-grow:1;
 			width: 100%;
-
+			margin-top: 10px;;
+			height: 80%;
 		}
 
 		.zmiti-board-status-0{

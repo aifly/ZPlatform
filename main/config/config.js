@@ -42,6 +42,21 @@ window.WENMING = {
 	XCXAPPID: 'wx32e63224f58f2cb5'
 }
 
+window.wmMeetingSmsTempConfig = {
+	"1":{
+		getaddress: '全国宣传干部学院怀柔校区5号楼（教学楼）大厅现场扫描二维码',
+		projectname: "2018年第一期地方文明网站建设管理工作培训班",
+		getdate: "2018年8月13日20时",
+		getcompany: "中国文明网"
+	},
+	"2": {
+		getaddress: '全国宣传干部学院怀柔校区6号楼（教学楼）大厅现场扫描二维码',
+		projectname: "2018年第一期地方文明网站建设管理工作培训班",
+		getdate: "2018年8月13日20时",
+		getcompany: "中国文明网"
+	}
+}
+
 
 
 window.MENUCONFIG = [{

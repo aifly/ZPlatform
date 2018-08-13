@@ -35,8 +35,7 @@
   background: #f4f4f4;
   border-radius: 3px;
   overflow: hidden;
-  width: 100%;
-  margin: 10px auto;
+  width: 100% !important;
 }
 
 .board-main-ui > header > div {
@@ -62,6 +61,8 @@
   -webkit-flex-grow: 1;
   flex-grow: 1;
   width: 100%;
+  margin-top: 10px;
+  height: 80%;
 }
 
 .board-main-ui .zmiti-board-status-0 {

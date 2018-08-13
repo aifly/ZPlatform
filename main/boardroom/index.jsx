@@ -20,6 +20,8 @@ import {
     ZmitiValidateUser
 } from '../public/validate-user.jsx';
 
+import ZmitiUserList from "../components/zmiti-user-list.jsx";
+
 import MainUI from '../components/Main.jsx';
 
 class ZmitiBoardroomApp extends React.Component {
@@ -32,9 +34,9 @@ class ZmitiBoardroomApp extends React.Component {
         this.state = {
             mainHeight: document.documentElement.clientHeight - 50,
             list: [],
+            selectedIndex:0,
             visible:false,
             defaultProvince:'全部',
-            pNumber:1,
             formUser:{},
             provinceList: [
                 "全部",
@@ -140,6 +142,7 @@ class ZmitiBoardroomApp extends React.Component {
                     dataIndex:'status',
                     align:'center',
                     key:'status',
+                    //filterMultiple: false,
                     filters: [
                         { text: '未审核', value: 0 },
                         { text: '审核通过', value: 1 },
@@ -163,8 +166,13 @@ class ZmitiBoardroomApp extends React.Component {
                 }, {
                     title: '是否签到',
                     dataIndex: '',
-                    key: '4',
+                    key: 'issign',
                     align: 'center',
+                    //filterMultiple: false,
+                    filters: [
+                    { text: '已签到', value: 1 },
+                    { text: '未签到', value: 0 }
+                ],
                     render: (value, record, index) => {
                         return <div style={{ color: record.issign? 'green':'#f00',fontWeight:'bold'}}>
                             {record.issign ? '已签到':"未签到"}
@@ -284,14 +292,25 @@ class ZmitiBoardroomApp extends React.Component {
                 </Form>
             </Modal>
             </div>;
-        return (
-            <MainUI component={mainComponent}></MainUI>
-        );
+        var props = { userList: this.state.userList, userid: this.userid, changeAccount: this.changeAccount.bind(this), type: "signup", tags: ["第一期", "第二期"], //mainHeight: mainComponent,
+          title: "会议系统", selectedIndex: this.state.selectedIndex, rightType: "custom", customRightComponent: mainComponent };
+
+        var userListApp = <ZmitiUserList {...props}></ZmitiUserList>
+        
+        return <MainUI component={userListApp} />;
     }
     refresh(){
         this.currentType = '';
         this.setState({ defaultProvince:'全部' });
         this.getUserList();
+    }
+    changeAccount(e){
+        this.setState({
+            selectedIndex:e
+        },()=>{
+            this.getUserList();
+        });
+        
     }
     handleChange(e){
         var s = this;
@@ -311,13 +330,16 @@ class ZmitiBoardroomApp extends React.Component {
             type: 'post',
             data: {
                 type: 2,
-                pnumber:s.state.pNumber,
+                pnumber:s.state.selectedIndex+1,
                 name: e,
                 status: 1
             },
             success(data) {
                 if (data.getret === 0) {
-                    data.list.forEach((item, i) => {
+                   
+                    data.list.filter((d)=>{
+                        return d.status*1 !== 3;
+                    }).forEach((item, i) => {
                         item.key = i + 1;
                     })
 
@@ -344,26 +366,31 @@ class ZmitiBoardroomApp extends React.Component {
             success(data) {
                 if (data.getret === 0) {
                     message.success('审核成功')
+                    var SMSConfig = window.wmMeetingSmsTempConfig[
+                            s.state.selectedIndex + 1
+                          ];
+                    
                     $.ajax({
-                        url: window.baseUrl + '/share/wmsendsms/',
-                        type: 'post',
-                        data: {
-                            mobile: record.mobile,
-                            smstype: type + 1,//1.报名成功短信,2.审核通过短信,3.审核未通过短信
-                            username: record.username,
-                            getaddress:"全国宣传干部学院怀柔校区5号楼（教学楼）大厅现场扫描二维码",
-                            projectname: '2018年第一期地方文明网站建设管理工作培训班',
-                            getdate: '2018年8月13日20时',
-                            getcompany:"中国文明网",
-                        },
-                        error() {
-                        },
-                        success(data) {
-                            if(data.getret === 0){
-                                message.success('短信已发送');
-                            }
+                      url:
+                        window.baseUrl +
+                        "/share/wmsendsms/",
+                      type: "post",
+                      data: {
+                        mobile: record.mobile,
+                        smstype: type + 1, //1.报名成功短信,2.审核通过短信,3.审核未通过短信
+                        username: record.username,
+                        getaddress: SMSConfig.getaddress,
+                        projectname:SMSConfig.projectname,
+                        getdate:SMSConfig.getdate,
+                        getcompany:SMSConfig.getcompany
+                      },
+                      error() {},
+                      success(data) {
+                        if (data.getret === 0) {
+                          message.success("短信已发送");
                         }
-                    })
+                      }
+                    });
                     s.getUserList();
                 } else {
                     message.error('审核失败')
@@ -373,15 +400,23 @@ class ZmitiBoardroomApp extends React.Component {
     }
 
     handleTableChange(pagination, filters, sorter){
-        console.log(this.dataSource, filters.status);
+        //console.log(filters.issign);
         this.state.dataSource = this.dataSource.filter((item)=>{
-            return item.status === filters.status[0]*1;
+            if(filters.status){
+                return item.status === filters.status[0]*1;
+            }else if(filters.issign){
+                return item.issign === filters.issign[0] * 1;
+            }
         })
-        if(filters.status.length<=0){
-            this.state.dataSource = this.dataSource.concat([]);
+
+         
+        if (filters.status && filters.status.length <= 0) {
+          this.state.dataSource = this.dataSource.concat([]);
+        }
+        if (filters.issign && filters.issign.length <= 0) {
+          this.state.dataSource = this.dataSource.concat([]);
         }
         this.forceUpdate();
-        console.log(this.state.dataSource);
     }
     deleteUser(record){
         var s =this;
@@ -449,7 +484,7 @@ class ZmitiBoardroomApp extends React.Component {
             type: "post",
             url: window.baseUrl + "/admin/getwmsignuplist",
             data: {
-              pnumber: 1,
+              pnumber: s.state.selectedIndex+1,
               pageindex: 1,
               pagenum: 1000,
               userid: s.userid,
@@ -457,24 +492,24 @@ class ZmitiBoardroomApp extends React.Component {
             },
             success(data) {
               if (data.getret === 0) {
-                data.list
+                var list = data.list
                   .filter((item, i) => {
-                    item.key = i + "-1";
+                    //item.key = i + "-1";
                     return item.status * 1 !== 3; //过滤掉已经删除的人员、
-                  })
-                  .forEach((item, i) => {
+                  });
+                  list.forEach((item, i) => {
                     item.key = i + 1;
                   });
                 s.setState({
-                  dataSource: data.list
+                  dataSource: list
                 });
-                s.dataSource = data.list.concat([]);
+                s.dataSource = list.concat([]);
               }
             }
           });
 
 
-        $.ajax({
+        /* $.ajax({
             type:'post',
             url: window.baseUrl +'/admin/getpnumberlist',
             data:{
@@ -486,7 +521,7 @@ class ZmitiBoardroomApp extends React.Component {
                 if(data.getret === 0){
                 }
             }
-        })
+        }) */
     }
   
     componentDidMount() {
