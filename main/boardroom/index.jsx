@@ -38,6 +38,7 @@ class ZmitiBoardroomApp extends React.Component {
             visible:false,
             defaultProvince:'全部',
             formUser:{},
+            kw:"",
             provinceList: [
                 "全部",
                 "北京",
@@ -263,6 +264,7 @@ class ZmitiBoardroomApp extends React.Component {
                             return <Option key={i} value={item}>{item}</Option>
                         })}
                     </Select>
+                    <input placeholder='按姓名查询' value={this.state.kw} onChange={this.filterDataSource.bind(this)} />
                 <Table style={{marginTop:10}} pagination={{ pageSize: (this.viewH - 500)/50|0}} onChange={this.handleTableChange.bind(this)} dataSource={this.state.dataSource} bordered={true} columns={this.state.columns} />
                 </div>
 
@@ -306,11 +308,22 @@ class ZmitiBoardroomApp extends React.Component {
     }
     changeAccount(e){
         this.setState({
-            selectedIndex:e
+            selectedIndex:e,
+            kw:''
         },()=>{
             this.getUserList();
         });
         
+    }
+    filterDataSource(e){
+        var kw = e.target.value;
+        this.setState({
+            kw
+        })
+        this.state.dataSource = this.dataSource.filter((d)=>{
+            return d.username.indexOf(kw)>-1;
+        });
+        this.forceUpdate();
     }
     handleChange(e){
         var s = this;

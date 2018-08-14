@@ -1,93 +1,118 @@
 @import "../../../public/css/base.scss";
 
 .board-main-ui {
-		@include displayFlex(column);
-		padding: 10px;
-		box-sizing: border-box;
-		&>header{
+    @include displayFlex(column);
 
-			height: 40px;
-			line-height: 40px;;
-			@include displayFlex(row);
-			 justify-content: space-between;
-			background: #f4f4f4;
-			@include br(3px);
-			overflow: hidden;
-			width:100% !important;
+    padding: 10px;
+    box-sizing: border-box;
+
+    & > header {
+        height: 40px;
+        line-height: 40px;
+
+        @include displayFlex(row);
+
+        justify-content: space-between;
+        background: #f4f4f4;
+
+        @include br(3px);
+
+        overflow: hidden;
+        width: 100% !important;
+
+        //margin: 10px auto;
+        & > div {
+            width: 100px;
+
+            &:nth-of-type(1) {
+                text-indent: 2em;
+
+                @include pos(r);
+
+                &:before {
+                    content: '';
+
+                    @include pos(a);
+
+                    width: 4px;
+                    height: 100%;
+                    background: #99071e;
+                    left: 0;
+                    top: 0;
+                }
+            }
+        }
+    }
+
+    & > .board-list {
+        -webkit-flex-grow: 1;
+        flex-grow: 1;
+        width: 100%;
+        margin-top: 10px;
+        height: 80%;
+
+        input {
+            margin-left: 20px;
+
+            @include br(6px);
+
+            font-size: 12px;
+            padding: 3px 8px;
+			border: 1px solid #d9d9d9;
 			
-			//margin: 10px auto;
-			&>div{
-				
-				width: 100px;
-				&:nth-of-type(1){
-					text-indent:2em;
-					@include pos(r);
-					&:before{
-						content:'';
-						@include pos(a);
-						width: 4px;
-						height: 100%;
-						background:#99071e;
-						left: 0;
-						top: 0;
-					}
-				}
+			&::-webkit-input-placeholder{
+				color:#d9d9d9;
 			}
+        }
+    }
 
-		}
-		&>.board-list{
-			-webkit-flex-grow:1;
-			flex-grow:1;
-			width: 100%;
-			margin-top: 10px;;
-			height: 80%;
-		}
+    .zmiti-board-status-0 {
+        color: #333;
+    }
 
-		.zmiti-board-status-0{
-			color:#333;
-		}
-		.zmiti-board-status-1 {
-			color:green;
-			font-weight: bold;
-		}
-		.zmiti-board-status-2 {
-			color:red;
-			font-weight: bold;
-		}
-		.zmiti-board-status-3 {
-			color: red;
-			font-weight: bold;
-		}
+    .zmiti-board-status-1 {
+        color: green;
+        font-weight: bold;
+    }
 
-		.ant-table-tbody>tr>td,
-		.ant-table-thead>tr>th{
-			padding: 12px 8px;
-		}
+    .zmiti-board-status-2 {
+        color: red;
+        font-weight: bold;
+    }
 
-	
+    .zmiti-board-status-3 {
+        color: red;
+        font-weight: bold;
+    }
+
+    .ant-table-tbody > tr > td,
+    .ant-table-thead > tr > th {
+        padding: 12px 8px;
+    }
 }
 
 .ant-table-wrapper::-webkit-scrollbar,
 .wm-scroll::-webkit-scrollbar {
-	/*滚动条整体样式*/
-	width: 8px;
-	/*高宽分别对应横竖滚动条的尺寸*/
-	height: 8px;
+    /*滚动条整体样式*/
+    width: 8px;
+
+    /*高宽分别对应横竖滚动条的尺寸*/
+    height: 8px;
 }
 
 .ant-table-wrapper::-webkit-scrollbar-thumb,
 .wm-scroll::-webkit-scrollbar-thumb {
-	/*滚动条里面小方块*/
-	border-radius: 5px;
-	-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-	box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-	background: rgba(0, 0, 0, 0.2);
+    /*滚动条里面小方块*/
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .ant-table-wrapper::-webkit-scrollbar-track,
 .wm-scroll::-webkit-scrollbar-track {
-	/*滚动条里面轨道*/
-	-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-	border-radius: 0;
-	background: rgba(0, 0, 0, 0.1);
+    /*滚动条里面轨道*/
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.1);
 }

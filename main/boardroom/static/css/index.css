@@ -65,6 +65,18 @@
   height: 80%;
 }
 
+.board-main-ui > .board-list input {
+  margin-left: 20px;
+  border-radius: 6px;
+  font-size: 12px;
+  padding: 3px 8px;
+  border: 1px solid #d9d9d9;
+}
+
+.board-main-ui > .board-list input::-webkit-input-placeholder {
+  color: #d9d9d9;
+}
+
 .board-main-ui .zmiti-board-status-0 {
   color: #333;
 }
