@@ -189,7 +189,7 @@ class ZmitiBoardroomApp extends React.Component {
                             <Button type="primary" icon="edit" size="small" onClick={this.edit.bind(this, value, record, index)}>
                               编辑
                             </Button>
-                            <Popconfirm title="确定删除吗？" okText="确定" cancelText="取消" onConfirm={this.deleteUser.bind(this, record)}>
+                            <Popconfirm title="删除后数据将无法恢复,确定删除吗？" okText="确定" cancelText="取消" onConfirm={this.deleteUser.bind(this, record)}>
                               <Button type="danger" icon="delete" size="small" style={{ marginLeft: 10 }}>
                                 删除
                               </Button>
@@ -263,7 +263,7 @@ class ZmitiBoardroomApp extends React.Component {
                             return <Option key={i} value={item}>{item}</Option>
                         })}
                     </Select>
-                <Table style={{marginTop:10}} pagination={{ pageSize: (this.viewH - 400)/50|0}} onChange={this.handleTableChange.bind(this)} dataSource={this.state.dataSource} bordered={true} columns={this.state.columns} />
+                <Table style={{marginTop:10}} pagination={{ pageSize: (this.viewH - 500)/50|0}} onChange={this.handleTableChange.bind(this)} dataSource={this.state.dataSource} bordered={true} columns={this.state.columns} />
                 </div>
 
             <Modal title="编辑人员信息" visible={this.state.visible}
@@ -409,6 +409,7 @@ class ZmitiBoardroomApp extends React.Component {
             }
         })
 
+        console.log(filters)
          
         if (filters.status && filters.status.length <= 0) {
           this.state.dataSource = this.dataSource.concat([]);
@@ -416,21 +417,22 @@ class ZmitiBoardroomApp extends React.Component {
         if (filters.issign && filters.issign.length <= 0) {
           this.state.dataSource = this.dataSource.concat([]);
         }
+        if (JSON.stringify(filters) === "{}"){
+            this.state.dataSource = this.dataSource.concat([]);
+        }
         this.forceUpdate();
     }
     deleteUser(record){
         var s =this;
         $.ajax({
-            url: window.baseUrl + 'admin/editsignup',
+            url: window.baseUrl + 'admin/delsignup',
             type: 'post',
             data: {
                 userid:s.userid,
                 getusersigid:s.getusersigid,
-                signupid: record.signupid,
-                status:3
+                signupids: record.signupid
             },
             success(data) {
-
                 if (data.getret === 0) {
                     message.success('删除成功')
                     s.getUserList();
@@ -492,17 +494,14 @@ class ZmitiBoardroomApp extends React.Component {
             },
             success(data) {
               if (data.getret === 0) {
-                var list = data.list
-                  .filter((item, i) => {
-                    //item.key = i + "-1";
-                    return item.status * 1 !== 3; //过滤掉已经删除的人员、
-                  });
+                var list = data.list;
                   list.forEach((item, i) => {
                     item.key = i + 1;
                   });
                 s.setState({
                   dataSource: list
                 });
+                
                 s.dataSource = list.concat([]);
               }
             }
