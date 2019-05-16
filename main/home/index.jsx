@@ -337,6 +337,8 @@ import MainUI from '../components/Main.jsx';
     }
 
     notify(){
+
+        return;
         var content = JSON.stringify({content:"签退了",userids:['45b8b818-95de-8e38-f1af-581fe4f5a3ac','c30182ee-f371-4c69-810c-1921aaae4bfa','4db789b2-3152-4d48-92f7-4a8a9becd0fe']});
         this.send({
             userid:this.userid,

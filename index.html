@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
-    <title>智媒体首页---测试</title>
+    <title>智媒体首页---文明网</title>
     <style>
 
         body{
@@ -545,13 +545,13 @@
 <div id="main-ui">
     <header class="fly-header">
         <aside class="logo-box">
-            <div class="logo"><img draggable="false" src="statices/images/logo.png" alt=""></div>
+            <div class="logo"><img draggable="false" src="statices/images/logo1.png" alt=""></div>
         </aside>
         <aside class="login-box">
             <!--<a href="#" class="btn-login">登录</a>-->
             <button class="btn-login button button--rayen button--border-thin button--text-thick button--text-upper button--size-s" data-text="登录"><span>登录</span></button>
 
-            <button class="btn-reg button button--rayen button--border-thin button--text-thick button--text-upper button--size-s" data-text="注册"><span>注册</span></button>
+            <button style='display:none' class="btn-reg button button--rayen button--border-thin button--text-thick button--text-upper button--size-s" data-text="注册"><span>注册</span></button>
             <span style="margin-left: 20%">beta</span>
         </aside>
     </header>
@@ -577,7 +577,7 @@
             <div class="fly-login-container">
                 <div class="fly-login-box">
                     <header>
-                        <div class="title"><img draggable="false" src="./statices/images/login-title.png" alt=""></div>
+                        <div class="title"><img draggable="false" src="./statices/images/login-title1.png" alt=""></div>
                         <div class="close"><span>&times;</span></div>
                     </header>
                     <section class="fly-login-text">
@@ -609,15 +609,15 @@
 
                     </div>
 
-                    <div class="other-login-box">
-                        <span class="three">第三方登录</span>
-                        <div class="share-box">
+                    <div class="other-login-box" >
+                        <span class="three">中国文明网版权所有</span>
+<div style="display:none;" class="share-box">
                             <span class="qq"></span>
                             <span class="wx"></span>
                             <span class="txwb"></span>
                             <span class="weibo"></span>
                         </div>
-                        <div class="forget">
+<div style="display:none;" class="forget">
                             <a href="javascrpt:void(0)">忘记密码</a> |
                             <a href="javascript:void(0)" class="go-to-reg">注册</a>
                         </div>
@@ -625,7 +625,7 @@
                 </div>
                 <div class="fly-reg-box">
                     <header>
-                        <div class="title"><img draggable="false" src="./statices/images/login-title.png" alt=""></div>
+                        <div class="title"><img draggable="false" src="./statices/images/login-title1.png" alt=""></div>
                         <div class="close"><span>&times;</span></div>
                     </header>
                     <section class="fly-login-text">
@@ -698,15 +698,16 @@
 <span id="keleyivisitorip" style="opacity: 0;z-index: -1;position:fixed;"></span>
 <script>
     var protocol = location.protocol;
-    window.mainUrl = protocol+'//www.zmiti.com/main';
+    window.mainUrl = protocol + '//h5.wenming.cn/sbwms/main';
     window.mainUrl = protocol+'//localhost:3000';
 </script>
 <script src='./main/static/libs/socket.io.js'></script>
-<script src="./statices/js/createjs.js" ></script>
+<script src="./statices/js/createjs.js"></script>
 
-<script src="./statices/js/index.js"  onload="var loading =document.getElementById('loading') ;loading.parentNode.removeChild(loading);document.getElementById('main-ui').classList.add('active')"></script>
-<!--
+
 <script src="http://localhost:5000/index.js" onload="var loading =document.getElementById('loading') ;loading.parentNode.removeChild(loading);document.getElementById('main-ui').classList.add('active')"></script>
+<!--
+    <script src="./statices/js/index.js" onload="var loading =document.getElementById('loading') ;loading.parentNode.removeChild(loading);document.getElementById('main-ui').classList.add('active')"></script>
 -->
 
 <!--<script type="text/javascript" src="http://tool.keleyi.com/ip/visitoriphost/"></script>-->

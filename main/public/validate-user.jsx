@@ -167,6 +167,10 @@ export let ZmitiValidateUser = ComponsedComponent => class extends Component {
 	}
 
 	listen(opt) {
+
+		if (!window.io) {
+			return;
+		}
 		var socket = io('http://socket.zmiti.com:2120');
 
 		socket.on('connect', function() {

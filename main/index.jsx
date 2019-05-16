@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
-
 import {
 	Router,
 	Route,
@@ -10,48 +9,9 @@ import {
 	browserHistory
 } from 'react-router';
 import ZmitiHomeApp from './home/index.jsx';
-import ZmitiPuzzleApp from './puzzle/index.jsx';
-import ZmitiQAListApp from './qa/list.jsx';
-import ZmitiQAScoreApp from './qa/score.jsx';
-import ZmitiQAApp from './qa/index.jsx';
-import ZmitiMeetingApp from './meeting/index.jsx';
 import ZmitiUserDepartmentApp from './userdepartment/index.jsx';
 //import ZmitiPersonalAccApp from './personalAcc/index.jsx';
-import ZmitiRenewalApp from './renewal/index.jsx';
-import ZmitiProject from './project/index.jsx';
-import ZmitiCustom from './custom/index.jsx';
-import ZmitiMycustom from './mycustom/index.jsx';
-import ZmitiWxChatApp from './wxchat/index.jsx';
-import ZmitiWorkOrderApp from './workorder/index.jsx';
-import ZmitiCommitWorkOrderApp from './commitworkorder/index.jsx';
-import ZmitiWorkOrderQuestionApp from './workorderquestion/index.jsx';
-import ZmitiWxChatListApp from './wxchat/list.jsx';
-import ZmitiViewQuestionApp from './viewquestion/index.jsx';
-import ZmitiViewUserInforApp from './viewuserinfor/index.jsx';
-import ZmitiStatisticsListApp from './statistics/index.jsx';
-import ZmitiViewPersonalApp from './viewpersonal/index.jsx';
-import ZmitiWXUserInfoApp from './wxuserinfo/index.jsx';
-import ZmitiPoetryListApp from './poetry/list.jsx';
-import ZmitiPoetryApp from './poetry/index.jsx';
-import ZmitiViewxChatApp from './viewxchat/index.jsx';
-import ZmitiTripostApp from './tripost/index.jsx';
-import ZmitiTripseasonApp from './tripseason/index.jsx';
-import ZmitiTriptrafficApp from './triptraffic/index.jsx';
-import ZmitiTripexpenceApp from './tripexpence/index.jsx';
-import ZmitiWorkWxchatApp from './workwxchat/index.jsx';
-import ZmitiInforListApp from './inforlist/index.jsx';
-import ZmitiRepertoryListApp from './repertorylist/index.jsx';
-
-import ZmitiViewBookListApp from './viewcustombooklist/index.jsx';
-import ZmitiViewCustomUserApp from './viewcustomuser/index.jsx';
-import ZmitiViewCustomUserListApp from './viewcustomuserlist/index.jsx';
-import ZmitiViewUserBookApp from './viewcustomuserbook/index.jsx';
-import ZmitiViewAnswerApp from './viewanswer/index.jsx';
 import Obserable from './static/libs/obserable.js';
-import ZmitiTrainingApp from './training/index.jsx';
-import ZmitiTripReasonApp from './tripreason/index.jsx';
-import ZmitiTripSettingApp from './tripsetting/index.jsx';
-import ZmitiTripNoticeApp from './tripnotice/index.jsx';
 import ZmitwxWmwGroupApp from './wxwmwgroup/index.jsx';
 import ZmitwxWmwReportApp from './wxwmwreport/index.jsx';
 import ZmitiWenmingApp from './wenming/index.jsx';
@@ -65,22 +25,24 @@ import ZmitiWenmingPersonalRankApp from './wenming/personal.jsx';
 import ZmitiWenmingProvinceRankApp from './wenming/province.jsx';
 import ZmitiWenmingCityRankApp from './wenming/city.jsx';
 import ZmitiWenmingCommentCheckApp from './wenming/commentcheck.jsx';
-import ZmitiLetterApp from './letter/index.jsx';
-import ZmitiBehindChildApp from './behindchild/index.jsx';
-import ZmitiWinterOlmpicsApp from './winterolmpics/index.jsx';
-
 import ZmitiWenmingCommentDetailApp from './wenming/commentdetail.jsx';
-import ZmitiBoardroomApp from './boardroom/index.jsx';
-import ZmitiJinrongxbApp from './jinrongxiaobao/index.jsx';
-import ZmitiJinrongxbPolicyApp from './jinrongxiaobao/policy.jsx';
-import ZmitiJinrongxbPolicyinfoApp from './jinrongxiaobao/policyinfo.jsx';
-import ZmitiJinrongxbNoticeApp from './jinrongxiaobao/notice.jsx';
-import ZmitiJinrongxbSetupApp from './jinrongxiaobao/setup.jsx';
-import ZmitiJinrongxbaddressApp from './jinrongxiaobao/address.jsx';
-import ZmitiKeysApp from './keys/index.jsx';
-import ZmitiKeysOptApp from './keys/opt.jsx';
-import ZmitiWenmingKeysApp from './wenming/keys.jsx';
-import ZmitiWenmingKeysOptApp from './wenming/keysopt.jsx';
+
+import ZmitiWenmingEyeApp from './wenmingeye/index.jsx';
+import ZmitiWenmingEyeDataCheckApp from './wenmingeye/datacheck.jsx';
+import ZmitiWenmingEyeReportApp from './wenmingeye/report.jsx';
+import ZmitiWenmingEyeSettingApp from './wenmingeye/setting.jsx';
+import ZmitiWenmingEyeAddApp from './wenmingeye/add.jsx';
+import ZmitiWenmingEyeReportaddApp from './wenmingeye/reportadd.jsx';
+import ZmitiWenmingEyeAboutApp from './wenmingeye/about.jsx';
+import ZmitiWenmingEyePersonalRankApp from './wenmingeye/personal.jsx';
+import ZmitiWenmingEyeProvinceRankApp from './wenmingeye/province.jsx';
+import ZmitiWenmingEyeCityRankApp from './wenmingeye/city.jsx';
+import ZmitiWenmingEyeCommentCheckApp from './wenmingeye/commentcheck.jsx';
+import ZmitiWenmingEyeCommentDetailApp from './wenmingeye/commentdetail.jsx';
+
+import ZmitiViewPersonalApp from "./viewpersonal/index.jsx";
+import ZmitiViewUserInforApp from "./viewuserinfor/index.jsx";
+
 import {
 	notification
 } from './commoncomponent/common.jsx';
@@ -97,133 +59,18 @@ class App extends React.Component {
 		var apps = [{
 				path: '/',
 				app: ZmitiHomeApp
-			}
-			, {
-				path: '/puzzle/',
-				app: ZmitiPuzzleApp
 			}, {
 				path: '/userdepartment/',
 				app: ZmitiUserDepartmentApp
 			},
 			//{path: '/personalAcc/', app: ZmitiPersonalAccApp},
-			{
-				path: '/meeting/(:title)',
-				app: ZmitiMeetingApp
-			}, {
-				path: '/letter/(:title)',
-				app: ZmitiLetterApp
-			}, {
-				path: '/behindchild/(:title)',
-				app: ZmitiBehindChildApp
-			}, {
-				path: '/project/',
-				app: ZmitiProject
-			}, {
-				path: '/renewal/',
-				app: ZmitiRenewalApp
-			}, {
-				path: '/custom/',
-				app: ZmitiCustom
-			}, {
-				path: '/myorder/',
-				app: ZmitiMycustom
-			}, {
-				path: '/wxchat/:id',
-				app: ZmitiWxChatApp
-			}, {
-				path: '/wxchatlist/',
-				app: ZmitiWxChatListApp
-			}, {
-				path: '/commitworkorder/',
-				app: ZmitiCommitWorkOrderApp
-			}, {
-				path: '/workorder/',
-				app: ZmitiWorkOrderApp
-			}, {
-				path: '/workorderquestion/(:id)',
-				app: ZmitiWorkOrderQuestionApp
-			}, {
-				path: '/statistics/:productname/:id',
-				app: ZmitiStatisticsListApp
-			}, {
-				path: '/viewquestion/(:id)',
-				app: ZmitiViewQuestionApp
-			}, {
+			 {
 				path: '/viewuserinfor/(:id)',
 				app: ZmitiViewUserInforApp
 			}, {
 				path: '/viewpersonal/(:id)',
 				app: ZmitiViewPersonalApp
-			}, {
-				path: '/viewxchat/(:id)',
-				app: ZmitiViewxChatApp
-			}, {
-				path: '/wxuserinfo/',
-				app: ZmitiWXUserInfoApp
-			}, {
-				path: '/poetry/',
-				app: ZmitiPoetryListApp
-			}, {
-				path: '/poetryedit/:id',
-				app: ZmitiPoetryApp
-			}, {
-				path: '/tripost/',
-				app: ZmitiTripostApp
-			}, {
-				path: '/tripseason/(:id)',
-				app: ZmitiTripseasonApp
-			}, {
-				path: '/triptraffic/(:title)/(:id)',
-				app: ZmitiTriptrafficApp
-			}, {
-				path: '/tripexpence/(:id)',
-				app: ZmitiTripexpenceApp
-			}, {
-				path: '/workwxchat/(:id)',
-				app: ZmitiWorkWxchatApp
-			}, {
-				path: '/inforlist/',
-				app: ZmitiInforListApp
-			}, {
-				path: '/repertorylist/',
-				app: ZmitiRepertoryListApp
-			}, {
-				path: '/viewcustombooklist/(:title)/(:id)',
-				app: ZmitiViewBookListApp
-			}, {
-				path: '/viewcustomuser/(:title)/(:id)',
-				app: ZmitiViewCustomUserApp
-			}, {
-				path: '/viewcustomuserlist/(:title)/(:id)',
-				app: ZmitiViewCustomUserListApp
-			}, {
-				path: '/viewcustomuserbook/(:wxuserid)/(:id)',
-				app: ZmitiViewUserBookApp
-			}, {
-				path: '/qa/',
-				app: ZmitiQAListApp
-			}, {
-				path: '/qaedit/:id',
-				app: ZmitiQAApp
-			}, {
-				path: '/qascore/:id',
-				app: ZmitiQAScoreApp
-			}, {
-				path: '/viewanswer/(:title)/(:id)',
-				app: ZmitiViewAnswerApp
-			}, {
-				path: '/training/(:title)/(:id)',
-				app: ZmitiTrainingApp
-			}, {
-				path: '/tripreason/',
-				app: ZmitiTripReasonApp
-			}, {
-				path: 'tripnotice/',
-				app: ZmitiTripNoticeApp
-			}, {
-				path: 'tripsetting/',
-				app: ZmitiTripSettingApp
-			}, {
+			},  {
 				path: 'wxwmwgroup/',
 				app: ZmitwxWmwGroupApp
 			}, {
@@ -265,43 +112,44 @@ class App extends React.Component {
 			}, {
 				path: '/wenmingcommentdetail/:id',
 				app: ZmitiWenmingCommentDetailApp
+			}
+			, {
+				path: '/wmeye',
+				app: ZmitiWenmingEyeApp
 			}, {
-				path: '/boardroom',
-				app: ZmitiBoardroomApp
+				path: '/wmeyedatacheck',
+				app: ZmitiWenmingEyeDataCheckApp
 			}, {
-				path: '/jinrongxiaobao',
-				app: ZmitiJinrongxbApp
+				path: '/wmeyereport',
+				app: ZmitiWenmingEyeReportApp
 			}, {
-				path: '/jinrongxiaobaopolicy',
-				app: ZmitiJinrongxbPolicyApp
+				path: '/wmeyereportadd/(:id)',
+				app: ZmitiWenmingEyeReportaddApp
 			}, {
-				path: '/jinrongxiaobaopolicyinfo/(:id)',
-				app: ZmitiJinrongxbPolicyinfoApp
+				path: '/wmeyesetting',
+				app: ZmitiWenmingEyeSettingApp
 			}, {
-				path: '/jinrongxiaobaonotice',
-				app: ZmitiJinrongxbNoticeApp
+				path: '/wmeyeadd',
+				app: ZmitiWenmingEyeAddApp
 			}, {
-				path: '/jinrongxiaobaosetup',
-				app: ZmitiJinrongxbSetupApp
+				path: '/wmeyeabout',
+				app: ZmitiWenmingEyeAboutApp
 			}, {
-				path: '/jinrongxiaobaoaddress/(:id)',
-				app: ZmitiJinrongxbaddressApp
-			},{
-				path: '/winterolmpics/',
-				app: ZmitiWinterOlmpicsApp
+				path: '/wmeyepersonal',
+				app: ZmitiWenmingEyePersonalRankApp
 			}, {
-				path: '/keys/',
-				app: ZmitiKeysApp
+				path: '/wmeyeprovince',
+				app: ZmitiWenmingEyeProvinceRankApp
 			}, {
-				path: '/keysopt/',
-				app: ZmitiKeysOptApp
-			},{
-				path: '/wenmingkeys',
-				app: ZmitiWenmingKeysApp
+				path: '/wmeyecity/(:id)',
+				app: ZmitiWenmingEyeCityRankApp
 			}, {
-				path: '/wenmingkeysopt',
-				app: ZmitiWenmingKeysOptApp
-			},
+				path: '/wmeyecommentcheck',
+				app: ZmitiWenmingEyeCommentCheckApp
+			}, {
+				path: '/wmeyecommentdetail/:id',
+				app: ZmitiWenmingEyeCommentDetailApp
+			}
 
 		];
 		return (
@@ -314,6 +162,11 @@ class App extends React.Component {
 	}
 
 	listen(opt = {}) {
+		if(!window.io){
+			return
+		}
+
+		return;
 		var socket = io(protocol + '//socket.zmiti.com:2120');
 
 		/*socket.on('connect', function(){
@@ -411,7 +264,7 @@ class App extends React.Component {
 
 	componentWillMount() {
 
-		this.listen();
+		//this.listen();
 
 		window.obserable = new Obserable();
 

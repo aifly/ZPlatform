@@ -206,7 +206,7 @@ class MainUI extends React.Component {
                 <ZmitiHeader {...headerProps}></ZmitiHeader>
                 
                 <article className="fly-content">
-                    <section className={this.state.defaultClass}>
+                    <section className={this.state.defaultClass} style={{height:window.innerHeight-50,top:0}}>
                         <div className="fly-toggle-menu" onClick={this.toggleMenu.bind(this)}>
                             <Icon type="menu-fold" style={{display:this.state.isOpen?'inline-block':'none'}}/>
                             <Icon type="menu-unfold" style={{display:this.state.isOpen?'none':'inline-block'}}/>

@@ -1,0 +1,127 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
+.wenming-setting-main-ui {
+  display: flex;
+  display: -webkit-flex;
+  flex-flow: column;
+  padding: 0 10px 0 10px;
+  background: #ffffff;
+  box-sizing: border-box; }
+  .wenming-setting-main-ui header.setting-header {
+    width: 100%;
+    height: 52px;
+    background: #fff;
+    margin: 10px auto 1px;
+    position: relative;
+    line-height: 52px;
+    color: #000;
+    font-size: 16px;
+    text-indent: 20px; }
+    .wenming-setting-main-ui header.setting-header:before {
+      content: "";
+      position: absolute;
+      width: 4px;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background: #f4654c; }
+  .wenming-setting-main-ui .wenming-setting-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .wenming-setting-main-ui .wenming-setting-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .wenming-setting-main-ui .wenming-setting-button-right button {
+    float: right;
+    margin-top: 5px; }
+  .wenming-setting-main-ui .wenming-setting-line {
+    clear: both;
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .wenming-setting-main-ui .wenming-setting-form {
+    padding: 20px 0 0 0; }
+    .wenming-setting-main-ui .wenming-setting-form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 6px 7px;
+      resize: none;
+      border-color: #2db7f5;
+      border-radius: 3px; }
+  .wenming-setting-main-ui .wenming-setting-actbtn button {
+    margin: 0 5px; }
+  .wenming-setting-main-ui .wenming-setting-uploadbtn {
+    width: 102px;
+    height: 32px;
+    overflow: hidden;
+    position: relative; }
+    .wenming-setting-main-ui .wenming-setting-uploadbtn .wenming-add-file {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0; }
+  .wenming-setting-main-ui .wenming-setting-thumbnail {
+    width: 120px;
+    height: 90px;
+    clear: both;
+    position: relative;
+    zoom: 1;
+    box-sizing: border-box; }
+  .wenming-setting-main-ui .ant-radio-group {
+    margin: 6px 0 0 0; }
+  .wenming-setting-main-ui .wenming-setting-classlist {
+    clear: both; }
+    .wenming-setting-main-ui .wenming-setting-classlist li {
+      padding: 0 60px 0 0;
+      position: relative;
+      margin: 0 0 8px 0;
+      zoom: 1; }
+      .wenming-setting-main-ui .wenming-setting-classlist li .wenming-setting-classact {
+        position: absolute;
+        right: 0;
+        top: 0; }
+      .wenming-setting-main-ui .wenming-setting-classlist li .ant-btn:not(.ant-btn-circle):not(.ant-btn-circle-outline).ant-btn-icon-only {
+        padding: 0; }
+      .wenming-setting-main-ui .wenming-setting-classlist li button {
+        background: none;
+        border: none;
+        padding: 0;
+        width: auto;
+        height: auto;
+        margin: 0 5px; }
+  .wenming-setting-main-ui .hr15 {
+    width: 100%; }
+  .wenming-setting-main-ui .wenming-setting-textleft {
+    text-align: left; }
+  .wenming-setting-main-ui .wenming-setting-textright {
+    text-align: right; }
+  .wenming-setting-main-ui .wenming-setting-table {
+    margin: 0 20px; }
+    .wenming-setting-main-ui .wenming-setting-table td {
+      padding: 8px 5px;
+      vertical-align: top; }
+  .wenming-setting-main-ui .wenming-setting-leftpane {
+    width: 125px; }
+
+/*# sourceMappingURL=setting.css.map */

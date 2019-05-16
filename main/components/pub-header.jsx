@@ -23,53 +23,72 @@ export default class ZmitiHeader extends Component {
         }
     }
     render() {
-        return (
-            <header className="fly-header" >
-                    <div className="fly-logo"><a href={window.mainUrl}><img src={this.props.logo} alt=""/></a></div>
-                    <div className="fly-nav"><a href={window.mainUrl}>控制平台</a></div>
-                    <div className="fly-nav">
-                        <a href="javascript:void(0)" onClick={()=>{this.setState({serviceShow:true})}} style={{background:this.state.serviceShow?'#fff':'transparent',color:this.state.serviceShow?'#000':'#fff'}}>产品与服务</a>
-                    </div>
-                    {(this.props.usertypesign*1 === window.Role.SUPERADMINUSER||this.props.usertypesign*1 === window.Role.NORMALADMINUSER) && <div className="fly-nav"><a href={window.adminUrl}>系统管理</a></div>}
-                    <div className="fly-nav"><a href="#">项目洽谈</a></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div className="fly-search icon">
-                        <div onClick={this.logout.bind(this)}><Icon type="logout" /></div>
-                    </div>
-                    <div className="fly-search icon fly-workorder">
-                        <div>{this.props.type==='admin'?<a href={window.mainUrl+'/#/workorder/'}>工单</a>:<Link to={'/workorder/'}>工单</Link>}</div>
-                    </div>
-                    <div className="fly-msg icon">
-                        <Badge count={0} overflowCount={9}>
-                            <Icon type="mail"/>
-                        </Badge>
-                    </div>
-                    <div className="curAcc">{this.props.currentAcc}</div>
+        return <header className="fly-header">
+            <div className="fly-logo">
+              <a href={window.mainUrl}>
+                <img style={{ width: "auto", height: "auto" }} src={this.props.logo} alt="" />
+              </a>
+            </div>
+            <div className="fly-nav">
+              <a href={window.mainUrl}></a>
+            </div>
+            <div className="fly-nav">
+              <a href="javascript:void(0)" onClick={() => {
+                  this.setState({ serviceShow: true });
+                }} style={{ background: this.state.serviceShow ? "#fff" : "transparent", color: this.state.serviceShow ? "#000" : "#fff" }}>
+                
+              </a>
+            </div>
+            <div className="fly-nav"></div>
+            <div className="fly-nav"></div>
+            <div className="fly-nav"></div>
+            <div className="fly-nav"></div>
+            <div className="fly-nav"></div>
 
-                    <div onClick={()=>{this.setState({serviceShow:false})}} style={{display:this.state.serviceShow?'block':'none'}} className='fly-main-product-service-C'>
-                         <Row>
-                          <Col span={3} style={{width:180}}>
-                            <div className='fly-cate-C'>
-                                <ul>
-                                    <li className={'fly-service-item ' +(this.state.serviceCate===0?'active':'')}>全部</li>
-                                </ul>
-                            </div>
-                          </Col>
-                          <Col span={21}>
-                              <ul  className='fly-service-list'>
-                                  {window.globalMenus && window.globalMenus.map((item,i)=>{
-                                    return <li key={i}>
-                                        <Link to={item.linkTo}>{item.title}</Link>
-                                    </li>
-                                  })}
-                              </ul>
-                          </Col>
-                        </Row>
-                    </div>
-            </header>
-        );
+            {/* {(this.props.usertypesign*1 === window.Role.SUPERADMINUSER||this.props.usertypesign*1 === window.Role.NORMALADMINUSER && false) && <div className="fly-nav"><a href={window.adminUrl}>系统管理</a></div>}
+                    {false && <div className="fly-nav"><a href="#">项目洽谈</a></div>}*/}
+            
+            <div className="fly-search icon">
+              <div onClick={this.logout.bind(this)}>
+                <Icon type="logout" />
+              </div>
+            </div>
+            <div className="curAcc">{this.props.currentAcc}</div>
+
+            <div onClick={() => {
+                this.setState({ serviceShow: false });
+              }} style={{ display: this.state.serviceShow ? "block" : "none" }} className="fly-main-product-service-C">
+              <Row>
+                <Col span={3} style={{ width: 180 }}>
+                  <div className="fly-cate-C">
+                    <ul>
+                      <li
+                        className={
+                          "fly-service-item " +
+                          (this.state.serviceCate === 0 ? "active" : "")
+                        }
+                      >
+                        全部
+                      </li>
+                    </ul>
+                  </div>
+                </Col>
+                <Col span={21}>
+                  <ul className="fly-service-list">
+                    {window.globalMenus && window.globalMenus.map(
+                        (item, i) => {
+                          return (
+                            <li key={i}>
+                              <Link to={item.linkTo}>{item.title}</Link>
+                            </li>
+                          );
+                        }
+                      )}
+                  </ul>
+                </Col>
+              </Row>
+            </div>
+          </header>;
     }
     componentWillMount() {
         window.getCookie = function(cname) {

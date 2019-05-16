@@ -243,6 +243,9 @@ class ZmitiWenmingApp extends React.Component {
 
     socket() {
 
+        if(!window.io){
+            return;
+        }
 
         var socket = io('http://socket.zmiti.com:2120');
         var worksid = this.worksid;
@@ -785,7 +788,7 @@ class ZmitiWenmingApp extends React.Component {
                 symbol: '',
                 data: s.convertData(userData),
                 symbolSize: function(val) {
-                    return val[2] / 100; //100
+                    return val[2] / 300; //100
                 },
                 label: {
                     normal: {

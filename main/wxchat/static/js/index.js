@@ -543,10 +543,13 @@ var ZmitiUtil = {
             this.userData = userData;
             this.geoCoordMap = geoCoordMap;
             myChart.setOption(this.dataConfig(userData));
+            this.request(worksid);
             window.userlist = [];
+            if (!window.io) {
+                return;
+            }
             var socket = io('http://socket.zmiti.com:2120');
             var box = document.getElementById('box');
-            this.request(worksid);
             /*socket.on('connect', function(){
               socket.emit('login', opt.uid||'');
             });*/

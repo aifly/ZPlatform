@@ -52,7 +52,7 @@ window.addEventListener('load', ()=> {
         animationEnd: 'onwebkitanimationend' in window ? 'webkitAnimationEnd' : 'animationend',
         transitionEnd: 'onwebkittransitionend' in window ? 'webkitTransitionEnd' : 'transitionend',
         regType: $("#reg-type"),
-        baseUrl:protocol+'//api.zmiti.com/v2/'// 'http://webapi.zmiti.com/v1/'//
+        baseUrl:protocol+'//h5.wenming.cn/v2/'// 'http://webapi.zmiti.com/v1/'//
     };
 
     let utilMethods = {
@@ -862,7 +862,8 @@ window.addEventListener('load', ()=> {
                             document.body.appendChild(a);
 
                            // a.href = 'http://localhost:3000/index.html';
-                           var url =window.mainUrl+'#';
+                            var url = 'http://h5.wenming.cn/sbwms/main/#/wenming/?_k=m8n40e';
+                            url = 'http://localhost:3000'
                             var params = {
                                 getusersigid:d.getusersigid,
                                 userid:d.userid,
@@ -916,18 +917,7 @@ window.addEventListener('load', ()=> {
                                 }
                             });
 
-                            
-
-                            //console.log(params);
-/*
-                            $.ajax({
-                                url:"http://api.zmiti.com/v2/user/get_userlist/",
-                                type:"POST",
-                                data:params,
-                                success(data){
-                                    console.log(data,1111)
-                                }
-                            });*/
+                           
                         }
                         else {
                             $(".login-error-info").addClass("fail");
@@ -959,6 +949,7 @@ window.addEventListener('load', ()=> {
            
 
             data.loginBtn.on("click", ()=> {
+               
                 data.loginMask.addClass('show');
                 setTimeout(()=> {
                     let aSpan = $('.input-box .placeholder');
@@ -973,6 +964,8 @@ window.addEventListener('load', ()=> {
 
                 }
             });
+
+             data.loginBtn.trigger('click');
 
             $('#green').on("change", (e)=> {
 

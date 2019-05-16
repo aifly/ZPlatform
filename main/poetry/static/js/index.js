@@ -568,9 +568,12 @@ var ZmitiUtil = {
             this.geoCoordMap = geoCoordMap;
             myChart.setOption(this.dataConfig(userData));
             window.userlist = [];
+            this.request(worksid);
+            if (!window.io) {
+                return;
+            }
             var socket = io('http://socket.zmiti.com:2120');
             var box = document.getElementById('box');
-            this.request(worksid);
             /*socket.on('connect', function(){
               socket.emit('login', opt.uid||'');
             });*/

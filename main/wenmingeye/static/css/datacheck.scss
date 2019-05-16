@@ -1,0 +1,584 @@
+﻿@import "../../../public/css/base.scss";
+
+.wenming-datacheck-main-ui {
+    width: 100%;
+    overflow: hidden;
+    @include displayFlex();
+
+    .wenming-mask {
+        @include pos(a);
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, .6);
+        z-index: 10000;
+
+        img {
+            width: auto;
+            height: auto;
+            @include pos(r);
+            &.show{
+                z-index:30;
+            }
+        }
+        video {
+            background: #000;
+            @include pos(r);
+            z-index: 100;
+        }
+        div {
+            @include pos(a);
+            left: 50%;
+            top: 50%;
+            z-index: 13;
+            @include transform(translate3d(-50%, -50%, 0));
+
+            &>section {
+                z-index: 22;
+                @include pos(a);
+                width: 33.3%;
+                height: 100%;
+                left: 0;
+                top: 0;
+
+                &:nth-of-type(2) {
+                    left: 33%;
+                }
+                &:nth-of-type(3) {
+                    left: auto;
+                    right: 0;
+                }
+            }
+        }
+        aside {
+            width: 50%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 10;
+            @include pos(a);
+
+            &:nth-of-type(2) {
+                left: auto;
+                right: 0;
+            }
+        }
+    }
+    &>header.wenming-datacheck-header {
+        height: 50px;
+        width: 98%;
+        margin: 0 auto;
+        @include displayFlex(row);
+        box-sizing: border-box;
+        line-height: 60px;
+        text-indent: 1em;
+        @include pos(r);
+
+        span.active {
+            color: #88b7e0;
+            font-weight: bold;
+        }
+        &:after {
+            content: "";
+            width: 100%;
+            height: 1px;
+            background: #dddddd;
+            bottom: 0;
+            @include pos(a);
+        }
+        &:before {
+            content: '';
+            @include pos(a);
+            width: 2px;
+            height: 14px;
+            background: #88b7e0;
+            left: 0px;
+            bottom: 12px;
+        }
+        &>div {
+            &:nth-of-type(1) {
+                -webkit-flex: 1;
+            }
+            &:nth-of-type(2) {
+                -webkit-flex: 1;
+
+                span {
+                    cursor: pointer;
+                }
+            }
+            &:nth-of-type(3) {
+                color: #36b1da;
+                text-align: right;
+                -webkit-flex: 4;
+                padding-right: 40px;
+                box-sizing: border-box;
+            }
+        }
+    }
+    .wenming-datacheck-bar {
+        width: 100%;
+        @include displayFlex(row);
+        height: 50px;
+        line-height: 50px;
+        width: 98%;
+        margin: 0 auto;
+        @include pos(r);
+        z-index: 10;
+
+        &:after {
+            content: '';
+            @include pos(a);
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 1px;
+            z-index: 0;
+            box-shadow: 0 0 5px rgba(0, 0, 0, .1) inset;
+        }
+        &.wenming-detail-bar {
+            &:after {
+                display: none;
+            }
+        }
+        &>div {
+            flex: 1;
+            -webkit-flex: 1;
+
+            &:nth-of-type(1) {
+                flex: 3;
+                -webkit-flex: 3;
+                @include displayFlex(row);
+
+                &>div {
+                    cursor: pointer;
+
+                    &.wenming-del {
+                        margin: 0 20px;
+                        color: #88b7e0;
+
+                        i {
+                            color: red;
+                        }
+                    }
+                }
+            }
+            i {
+                color: #6db92c;
+                font-size: 18px;
+                margin-right: 4px;
+            }
+            .wenming-datacheck-batchcheck {
+                margin-right: 20px;
+                vertical-align: bottom;
+            }
+            .wenming-datacheck-unpass {
+                margin-right: 20px;
+
+                i {
+                    color: #f4654c;
+                }
+            }
+            input {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+            button {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+
+                i {
+                    color: #fff
+                }
+            }
+        }
+    }
+    .wenming-datacheck-list {
+        flex: 1;
+        -webkit-flex: 1;
+        overflow: hidden;
+        @include pos(r);
+
+        ul {
+            &>li {
+                border: 1px solid #ddd;
+
+                &.pass, &.unpass {
+                    @include pos(r);
+                    border-color: #6db92c;
+                    overflow: hidden;
+
+                    &:before {
+                        content: '已通过';
+                        @include pos(a);
+                        background: #6db92c;
+                        color: #fff;
+                        height: 20px;
+                        left: 0;
+                        width: 90px;
+                        height: 50px;
+                        text-align: center;
+                        line-height: 70px;
+                        font-size: 12px;
+                        top: 0;
+                        @include transform(translate3d(-35px, -15px, 0) rotate(-45deg));
+                    }
+                }
+                &:last-of-type {
+                    background: transparent;
+                    border: none;
+                }
+                &.unpass {
+                    border-color: #f4654c;
+
+                    &:before {
+                        content: '未通过';
+                        background: #f4654c;
+                    }
+                }
+                &.wenming-datacheck-item-delete {
+                    @include transition(.5s opacity);
+                    opacity: 0;
+                    overflow: hidden;
+                }
+                width: 98%;
+                margin: 10px auto;
+                background: #f9f9f9;
+                @include displayFlex(row);
+                padding: 10px 0;
+
+                &>aside {
+                    &:nth-of-type(1) {
+                        width: 70px;
+                        text-align: center;
+                        @include pos(r);
+
+                        .ant-checkbox-wrapper {
+                            @include pos(r);
+                            top: 40%;
+                            left: 10%;
+                        }
+                    }
+                    &.wenming-datacheck-item-C {
+                        flex: 1;
+                        -webkit-flex: 1;
+                        @include displayFlex(row);
+
+                        .wenming-datacheck-item-head {
+                            width: 40px;
+                            margin-right: 10px;
+
+                            img {
+                                @include br();
+                            }
+                        }
+                        .wenming-datacheck-item-main-content {
+                            flex: 1;
+                            -webkit-flex: 1;
+
+                            .wenming-expand {
+                                float: right;
+                                margin: 10px 0;
+
+                                &:after {
+                                    content: '';
+                                    clear: right;
+                                }
+                            }
+                            .wenming-pass {
+                                color: #6db92c;
+                                margin-right: 4px;
+                                @include transform(scale(1.3));
+                            }
+                            .wenming-unpass {
+                                color: #f4654c;
+                                margin-right: 4px;
+                                @include transform(scale(1.3));
+                            }
+                            h2 {
+                                font-size: 16px;
+                            }
+                            .wenming-datacheck-date {
+                                color: #999;
+                            }
+                            .wenming-datacheck-content {
+                                font-size: 14px;
+                                max-width: 79%;
+                                word-break: break-all;
+
+                                a {
+                                    font-size: 12px;
+                                }
+                            }
+                            ol {
+                                clear: both;
+                                min-width: 660px;
+                                @include displayFlex(row);
+                                -webkit-flex-wrap: wrap;
+
+                                li {
+                                    width: 100px;
+                                    height: 100px;
+                                    margin: 10px 10px 10px 0;
+
+                                    i {
+                                        ///border: 1px solid #999;
+                                        display: block;
+                                        cursor: pointer;
+                                        width: 100%;
+                                        height: 100%;
+                                        font-size: 100px;
+                                    }
+                                    &:last-of-type {
+                                        span {
+                                            text-decoration: underline;
+                                            color: #007aff;
+                                            cursor: pointer;
+                                            font-size: 20px;
+                                        }
+                                    }
+                                }
+                            }
+                            .wenming-datacheck-operator {
+                                @include displayFlex(row);
+                                justify-content: flex-end;
+                                clear: both;
+                                margin-top: 10px;
+
+                                &>div {
+                                    @include displayFlex(row);
+
+                                    &>div {
+                                        margin: 0 20px;
+                                        cursor: pointer;
+                                        @include transition(.2s);
+
+                                        &:hover {
+                                            @include transform(scale(1.1));
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    &:nth-of-type(3) {
+                        width: 100px;
+
+                        &>div.wenming-datacheck-delete {
+                            cursor: pointer;
+                            @include pos(a);
+                            top: 10px;
+                        }
+                        @include pos(r);
+
+                        .wenming-sentiment {
+                            @include pos(a);
+                            left: -50px;
+
+                            img {
+                                width: 40px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .wenming-article-detail-list {
+        flex: 1;
+        -webkit-flex: 1;
+        overflow: hidden;
+        @include pos(r);
+
+        .wenming-detail-comment-delete {
+            @include displayFlex(row);
+            justify-content: flex-end;
+            font-size: 14px;
+            margin: 10px 0;
+
+            &>div {
+                cursor: pointer;
+                margin-left: 10px;
+
+                .wenming-pass {
+                    color: #6db92c;
+                    margin-right: 4px;
+                    @include transform(scale(1.3));
+                }
+                .wenming-unpass {
+                    color: #f4654c;
+                    margin-right: 4px;
+                    @include transform(scale(1.3));
+                }
+                .wenming-delete {
+                    color: #f00;
+                    margin-right: 4px;
+                    @include transform(scale(1.3));
+                }
+            }
+        }
+        .wenming-comment-load-more {
+            text-align: center;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            cursor: pointer;
+        }
+        &>div {
+            padding-bottom: 30px;
+            @include displayFlex(row);
+
+            &>aside {
+                &:nth-of-type(1), &:nth-of-type(3) {
+                    width: 100px;
+                    text-align: center;
+
+                    img {
+                        width: 40px;
+                        @include br();
+                    }
+                }
+                &:nth-of-type(2) {
+                    flex: 1;
+                    -webkit-flex: 1;
+
+                    &>section {
+                        margin: 6px 0 0 0;
+                    }
+                    .wenming-detail-seecomment {
+                        width: 100%;
+                        @include displayFlex(row);
+                        justify-content: flex-end;
+                    }
+                    .wenming-detail-comment-list {
+                        background: #EAEDF1;
+                        @include pos(r);
+
+                        &:before {
+                            content: '';
+                            @include pos(a);
+                            width: 10px;
+                            height: 10px;
+                            background: inherit;
+                            right: 50px;
+                            top: -4px;
+                            @include transform(rotate(45deg));
+                        }
+                        box-sizing: border-box;
+
+                        &>div.ant-radio-group {
+                            margin: 10px 30px;
+                        }
+                        ul {
+                            li {
+                                &.wenming-datacheck-item-delete {
+                                    @include transition(.5s opacity);
+                                    opacity: 0;
+                                    overflow: hidden;
+                                }
+                                margin: 10px auto;
+                                width: 90%;
+                                padding: 10px 0;
+                                border-bottom: 1px solid #999;
+
+                                &:last-of-type {
+                                    //border-bottom: none;
+                                }
+                                &>div {
+                                    @include  displayFlex(row);
+
+                                    &>aside {
+                                        img {
+                                            width: 40px;
+                                            @include br();
+                                        }
+                                        &:nth-of-type(1) {
+                                            width: 80px;
+                                        }
+                                        &:nth-of-type(2) {
+                                            flex: 2;
+                                            -webkit-flex: 2;
+                                        }
+                                        &:nth-of-type(3) {
+                                            text-align: right;
+                                            flex: 1;
+                                            -webkit-flex: 1;
+
+                                            img {
+                                                width: 100px;
+                                            }
+                                        }
+                                    }
+                                }
+                                ol {
+                                    clear: both;
+                                    min-width: 660px;
+                                    @include displayFlex(row);
+                                    -webkit-flex-wrap: wrap;
+
+                                    li {
+                                        width: 100px;
+                                        height: 100px;
+                                        margin: 10px 10px 10px 0;
+
+                                        i {
+                                            ///border: 1px solid #999;
+                                            display: block;
+                                            cursor: pointer;
+                                            width: 100%;
+                                            height: 100%;
+                                            font-size: 100px;
+                                        }
+                                        &:last-of-type {
+                                            span {
+                                                text-decoration: underline;
+                                                color: #007aff;
+                                                cursor: pointer;
+                                                font-size: 20px;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        ol {
+            clear: both;
+            min-width: 660px;
+            @include displayFlex(row);
+            -webkit-flex-wrap: wrap;
+
+            li {
+                width: 100px;
+                height: 100px;
+                margin: 10px 10px 10px 0;
+
+                i {
+                    ///border: 1px solid #999;
+                    display: block;
+                    cursor: pointer;
+                    width: 100%;
+                    height: 100%;
+                    font-size: 100px;
+                }
+                &:last-of-type {
+                    span {
+                        text-decoration: underline;
+                        color: #007aff;
+                        cursor: pointer;
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+    .wenming-pagination {
+        height: 50px;
+        @include displayFlex(row);
+        justify-content: flex-end;
+        padding-right: 30px;
+    }
+}

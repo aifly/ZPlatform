@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>跳跃的输入框</title>
+    <style>
+        *{margin:0;
+            padding:0;}
+        canvas{
+            position: absolute;
+            top:20px;
+
+        }
+        div{
+            width:350px;
+            margin:100px auto;
+            position: relative;
+
+        }
+        input{
+            width:100%;
+            height:30px;
+            position: absolute;
+            background: transparent;
+            border:none;
+            border-bottom: 2px solid #a0a0a0;
+            outline: none;
+        }
+        .placeholder{
+            display: inline-block;
+            position: absolute;
+            top:10px;
+            transition: .4s;
+            color:#ccc;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <canvas id="canvas" height="20" width="350"></canvas>
+        <span class="placeholder">请输入内容...</span>
+        <input type="text">
+
+    </div>
+    <script>
+
+
+        var input = document.querySelector('input');
+        var span = document.querySelector('.placeholder');
+        input.addEventListener('focus',function(){
+            if(input.value.length<=0){
+                span.style.transform = 'scale(.8) translate(-20px,-30px)';
+                animate(false);
+            }
+        });
+        input.addEventListener('blur',function(){
+            if(input.value.length<=0){
+                span.style.transform = 'none';
+                animate(true);
+            }
+
+        })
+
+        function animate(isBack){
+            var canvas = document.getElementById("canvas");
+
+            //canvas.width = document.documentElement.clientWidth;
+            var context = canvas.getContext("2d");
+            if(!this.border){
+                this.border=1;
+                input.style.borderBottom = 'none';
+            }
+
+            var width = canvas.width,
+                    height = canvas.height;
+            var m = Math;
+            var scale = 50;
+            var ang = 0,
+                    value =  height*.6;
+            var deg = m.ceil(width / m.PI * 4 ),
+                    k = isBack ? -12 : 12;
+            input.style.borderBottom='none';
+            var t = setInterval(function () {
+                ang += k;
+                context.clearRect(0, 0, width, height);
+                context.beginPath();
+                for (var i = 0; i < deg; i++) {
+                    context.lineTo(m.PI * i / 180 * scale,.3 * m.sin(m.PI * (i - ang) / 180) * scale / 2 + value);
+                }
+                context.stroke();
+                if(m.abs(ang) > width){//动画完成。重新绘制线条。
+                    context.clearRect(0,0,canvas.width,canvas.height);
+                     context.beginPath();
+                     context.moveTo(0,value);
+                     context.lineTo(width,value);
+                     context.strokeStyle= '#000';
+                     context.stroke();
+                    clearInterval(t);
+                }
+            }, 20);
+        }
+    </script>
+</body>
+</html>

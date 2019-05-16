@@ -1,0 +1,68 @@
+/*.ant-btn:focus, .ant-btn:hover,.ant-input:focus, .ant-input:hover {
+    background-color: #fff;
+    border-color: #bf1616;
+    box-shadow: 0 0 0 2px rgba(191, 22, 22, 0.1);
+}*/
+.zmiti-text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-text-overflow: ellipsis; }
+
+.zmiti-break-all {
+  word-wrap: break-word;
+  word-break: break-all; }
+
+.zmitiwenming-keys-main-ui {
+  background-color: #ffffff;
+  overflow: auto; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-header-inner {
+    padding-left: 8px;
+    margin-top: 10px;
+    position: relative; }
+    .zmitiwenming-keys-main-ui .zmiti-keys-header-inner:before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background: #88B7E0;
+      left: 0;
+      -webkit-transform: scale(1, 0.7);
+      transform: scale(1, 0.7); }
+  .zmitiwenming-keys-main-ui .zmiti-keys-button-right button {
+    float: right;
+    margin-top: 5px;
+    margin-left: 10px; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-line {
+    height: 15px;
+    overflow: hidden;
+    border-bottom: 1px solid #dddddd; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-spt {
+    color: #cccccc; }
+    .zmitiwenming-keys-main-ui .zmiti-keys-spt span {
+      margin: 0 10px; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-sel-font {
+    width: 50px;
+    float: left;
+    line-height: 30px;
+    height: 30px; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-sel-1 {
+    width: 225px; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-sel-2 {
+    width: 120px; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-sel-3 {
+    width: 175px; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-sel-4 {
+    width: 175px; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-sel-5 {
+    width: 100px; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-count em {
+    font-style: normal; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-count .zmiti-keys-red {
+    color: red; }
+  .zmitiwenming-keys-main-ui .zmiti-keys-ls {
+    padding: 0 10px;
+    color: #cccccc; }
+
+/*# sourceMappingURL=keys.css.map */

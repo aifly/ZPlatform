@@ -2,7 +2,7 @@
 
 var protocol = location.protocol;
 
-window.baseUrl = protocol + '//api.zmiti.com/v2/'; //接口地protocol+址//api.zmiti.com/v2/  ||protocol+ //beta.zmiti.com:90/
+window.baseUrl = protocol + '//h5.wenming.cn/v2/'; //接口地protocol+址//api.zmiti.com/v2/  ||protocol+ //beta.zmiti.com:90/
 window.loginUrl = protocol + '//localhost:5000'; //登录地址protocol+.//webapi.zmiti.com/public/zmiti
 window.mainUrl = protocol + '//localhost:3000'; //智媒体的首页.
 window.isDebug = false; //是否为调试版本
