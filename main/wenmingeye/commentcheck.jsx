@@ -17,7 +17,7 @@ import {
 } from '../commoncomponent/common.jsx';
 const RadioGroup = Radio.Group;
 import $ from 'jquery';
-
+import { WMURLS, title } from './url';
 
 
 import {
@@ -156,11 +156,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
 
     render() {
-
-
-        var title = '身边文明事';
-
-
+  
         var showBatchbars = false;
         this.state.dataSource.map((item, i) => {
             item.comments.map((com, k) => {
@@ -500,7 +496,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/hot_articles/',
+            url: window.baseUrl + WMURLS+'/hot_articles/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -621,7 +617,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         $.ajax({
             async: false,
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/del_articlecomment/',
+            url: window.baseUrl + WMURLS+'/del_articlecomment/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -689,7 +685,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         $.ajax({
             type: 'post',
             async: false,
-            url: window.baseUrl + 'weixinxcx/look_articlecomment/',
+            url: window.baseUrl + WMURLS+'/look_articlecomment/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -770,7 +766,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             }
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + 'weixinxcx/get_articlecomment/',
+                url: window.baseUrl + WMURLS+'/get_articlecomment/',
                 data
             }).done((data) => {
                 if (typeof data === 'string') {
@@ -816,7 +812,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/search_articleclass',
+            url: window.baseUrl + WMURLS+'/search_articleclass',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,

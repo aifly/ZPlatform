@@ -18,7 +18,7 @@ import {
 const RadioGroup = Radio.Group;
 import $ from 'jquery';
 
-
+import { WMURLS, title } from './url';
 
 import {
     ZmitiValidateUser
@@ -155,8 +155,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
     render() {
 
-
-        var title = '身边文明事';
+ 
 
 
         var showBatchbars = false;
@@ -319,8 +318,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                     <div>
                                                         
                                                         {item.status === 1 && <div><a href={'#/wenmingcommentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
-                                                        {this.state.status === 0 &&  <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐</Checkbox></div>}
-                                                        {this.state.status === 1 && item.status !==2  && <div><Checkbox onChange={this.recommentArticle.bind(this,item)} checked={item.isHost} >推荐</Checkbox></div>}
+                                                        {this.state.status === 0 &&  <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐到首页</Checkbox></div>}
+														{this.state.status === 1 && item.status !== 2 && <div><Checkbox onChange={this.recommentArticle.bind(this, item)} checked={item.isHost} >推荐到首页</Checkbox></div>}
                                                         {item.status*1 === 0 && <div onClick={this.checkedArticle.bind(this,item,'pass',i)}>
                                                            <Icon className='wenming-pass' type="check-circle" /> 通过审核
                                                         </div>}
@@ -479,7 +478,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/hot_articles/',
+            url: window.baseUrl + WMURLS+'/hot_articles/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -566,7 +565,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/del_articles/',
+            url: window.baseUrl + WMURLS+'/del_articles/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -645,7 +644,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                     $.ajax({
                         async: false,
                         type: 'post',
-                        url: window.baseUrl + 'weixinxcx/hot_articles/',
+                        url: window.baseUrl + WMURLS+'/hot_articles/',
                         data: {
                             appid: window.WENMING.XCXAPPID,
                             userid: this.userid,
@@ -671,7 +670,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/look_articles//',
+            url: window.baseUrl + WMURLS+'/look_articles//',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -754,7 +753,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + 'weixinxcx/search_articlelist/',
+                url: window.baseUrl + WMURLS+'/search_articlelist/',
                 data
             }).done((data) => {
                 if (typeof data === 'string') {
@@ -816,7 +815,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/search_articleclass',
+            url: window.baseUrl + WMURLS+'/search_articleclass',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,

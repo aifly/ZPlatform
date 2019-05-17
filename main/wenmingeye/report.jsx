@@ -19,6 +19,7 @@ import '../static/echarts/china';
 import IScroll from 'iscroll';
 const Search = Input.Search;
 const FormItem = Form.Item;
+import {WMURLS,title} from './url';
  class ZmitiWenmingReportApp extends React.Component{
     constructor(args){
         super(...args);
@@ -69,8 +70,7 @@ const FormItem = Form.Item;
 
     render(){
 
-        var s = this;
-        var title = '身边文明事';
+        var s = this; 
         const formItemLayout = {
           labelCol: {
             xs: { span: 24 },
@@ -127,7 +127,7 @@ const FormItem = Form.Item;
             mainRight:<div className='wenming-report-main-ui' style={{height:this.state.mainHeight}}>
                         <div className="wenming-report-header">
                             <Row>
-                                <Col span={16} className="wenming-report-header-inner">文明播报-身边文明事
+                                <Col span={16} className="wenming-report-header-inner">文明播报-{title}
                                     
                                 </Col>
                                 <Col span={8} className='wenming-report-button-right'>

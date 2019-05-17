@@ -19,7 +19,7 @@ const RadioGroup = Radio.Group;
 import $ from 'jquery';
 
 
-
+import { WMURLS, title } from './url';
 import {
     ZmitiValidateUser
 } from '../public/validate-user.jsx';
@@ -425,7 +425,7 @@ class ZmitiWenmingCommentDetailApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/hot_articles/',
+            url: window.baseUrl + WMURLS+'/hot_articles/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -524,7 +524,7 @@ class ZmitiWenmingCommentDetailApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/del_articlecomment/',
+            url: window.baseUrl + WMURLS+'/del_articlecomment/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -565,7 +565,7 @@ class ZmitiWenmingCommentDetailApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/look_articlecomment/',
+            url: window.baseUrl + WMURLS+'/look_articlecomment/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -637,7 +637,7 @@ class ZmitiWenmingCommentDetailApp extends React.Component {
 
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + 'weixinxcx/get_articlecomment/',
+                url: window.baseUrl + WMURLS+'/get_articlecomment/',
                 data
             }).done((data) => {
                 if (typeof data === 'string') {
@@ -685,7 +685,7 @@ class ZmitiWenmingCommentDetailApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/search_articleclass',
+            url: window.baseUrl + WMURLS+'/search_articleclass',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,

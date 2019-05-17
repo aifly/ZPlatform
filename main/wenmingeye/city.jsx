@@ -8,7 +8,7 @@ import $ from 'jquery';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import ZmitiWenmingAsideBarApp from './header.jsx';
-
+import { WMURLS, title } from './url';
 
 import MainUI from '../components/Main.jsx';
 
@@ -137,7 +137,7 @@ class ZmitiWenmingCityRankApp extends React.Component{
         var provinceid=this.props.params.id;
         $.ajax({
             type:'post',
-            url:window.baseUrl+'weixinxcx/citysort/',
+            url:window.baseUrl+WMURLS+'/citysort/',
             data:{                
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -170,7 +170,7 @@ class ZmitiWenmingCityRankApp extends React.Component{
         var provinceid=this.props.params.id;
         $.ajax({
             type:'post',
-            url:window.baseUrl+'weixinxcx/provincesort/',
+            url:window.baseUrl+WMURLS+'/provincesort/',
             data:{
                 appid:window.WENMING.XCXAPPID,
                 monthnum:3,

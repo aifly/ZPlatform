@@ -19,7 +19,7 @@ import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/map';
 
 import '../static/echarts/china';
-
+import { WMURLS, title } from './url';
 import IScroll from 'iscroll';
 var defaulturl = 'http://www.zmti.com/main/static/images/zmiti-logo.jpg';
 
@@ -301,7 +301,7 @@ class ZmitiWenmingApp extends React.Component {
     }
 
     render() {
-        var title = '文明眼';
+       
         var props = {
             title,
             selectedIndex: 0,
@@ -560,7 +560,7 @@ class ZmitiWenmingApp extends React.Component {
     requestUserRank(type = 'userReportSort') {
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/usersort/',
+            url: window.baseUrl + WMURLS + '/usersort/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 monthnum: 3,
@@ -597,7 +597,7 @@ class ZmitiWenmingApp extends React.Component {
 
         this.totalpvAjax = $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/totalpv/',
+            url: window.baseUrl + WMURLS + '/totalpv/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -620,7 +620,7 @@ class ZmitiWenmingApp extends React.Component {
 
         this.userareatotalpv = $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/userareatotalpv/',
+            url: window.baseUrl + WMURLS + '/userareatotalpv/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -660,7 +660,7 @@ class ZmitiWenmingApp extends React.Component {
         var s = this;
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/xcxusercount',
+            url: window.baseUrl + WMURLS + '/xcxusercount',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -683,7 +683,7 @@ class ZmitiWenmingApp extends React.Component {
         var s = this;
         $.ajax({
             type: 'post',
-            url: window.baseUrl + 'weixinxcx/provincesort/',
+            url: window.baseUrl + WMURLS + '/provincesort/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 monthnum: 3,

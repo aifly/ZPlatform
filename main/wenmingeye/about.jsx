@@ -9,7 +9,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import ZmitiWenmingAsideBarApp from './header.jsx';
 
-
+import { WMURLS, title } from './url';
 import MainUI from '../components/Main.jsx';
 import IScroll from 'iscroll';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
@@ -64,7 +64,7 @@ class ZmitiWenmingAboutApp extends React.Component{
     render(){
 
         var s =this;
-        var title = '身边文明事';
+        var title = '文明眼';
         const userProps ={
             documentbaseUrl: window.baseUrl,
             getusersigid: s.getusersigid,
@@ -113,7 +113,7 @@ class ZmitiWenmingAboutApp extends React.Component{
             mainRight:<div className='wenming-report-main-ui' style={{height:this.state.mainHeight}}>
                         <div className="wenming-report-header">
                             <Row>
-                                <Col span={16} className="wenming-report-header-inner">关于我们-身边文明事
+                                <Col span={16} className="wenming-report-header-inner">关于我们-文明眼
                                     
                                 </Col>
                                 <Col span={8} className='wenming-report-button-right'>
@@ -162,7 +162,7 @@ class ZmitiWenmingAboutApp extends React.Component{
         var s = this;
         $.ajax({
             type:'POST',
-            url:window.baseUrl + 'weixinxcx/get_signpage/',
+            url:window.baseUrl + WMURLS + '/get_signpage/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -189,7 +189,7 @@ class ZmitiWenmingAboutApp extends React.Component{
         pageid=s.state.pageid;
         $.ajax({
             type:'POST',
-            url:window.baseUrl + 'weixinxcx/edit_singpage/',
+            url:window.baseUrl + WMURLS + '/edit_singpage/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,

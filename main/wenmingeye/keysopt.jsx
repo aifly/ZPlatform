@@ -12,7 +12,7 @@ import MainUI from '../components/Main.jsx';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 const FormItem = Form.Item;
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
-
+import WMURLS from './url';
 import $ from 'jquery';
 
 class ZmitiWenmingKeysOptApp extends Component {

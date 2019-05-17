@@ -14,7 +14,7 @@ import MainUI from '../components/Main.jsx';
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-import IScroll from 'iscroll';
+import { WMURLS, title } from './url';
 
  class ZmitiWenmingSettingApp extends React.Component{
     constructor(args){
@@ -70,8 +70,7 @@ import IScroll from 'iscroll';
 
     render(){
 
-
-        var title = '身边文明事';
+ 
         const formItemLayout = {
            labelCol: {span: 6},
            wrapperCol: {span: 14},
@@ -88,7 +87,7 @@ import IScroll from 'iscroll';
                         
                         <div className="wenming-setting-header">
                             <Row>
-                                <Col span={16} className="wenming-setting-header-inner">通用设置-身边文明事
+							<Col span={16} className="wenming-setting-header-inner">通用设置-{title}
                                     
                                 </Col>
                                 <Col span={8} className='wenming-setting-button-right'>
@@ -215,7 +214,7 @@ import IScroll from 'iscroll';
     bindtreedata(){
         var s = this;
         $.ajax({
-            url:window.baseUrl+'weixinxcx/search_articleclass',
+            url:window.baseUrl+WMURLS+'/search_articleclass',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -248,7 +247,7 @@ import IScroll from 'iscroll';
         if(this.currentId!==-1){//edit
             params.classid=this.currentId;
             $.ajax({
-                url:window.baseUrl+'weixinxcx/edit_articleclass/',
+                url:window.baseUrl+WMURLS+'/edit_articleclass/',
                 type:'POST',
                 data:params,
                 success(data){
@@ -267,7 +266,7 @@ import IScroll from 'iscroll';
         }else{
             //add
             $.ajax({
-                url:window.baseUrl+'weixinxcx/add_articleclass/',
+                url:window.baseUrl+WMURLS+'/add_articleclass/',
                 type:'POST',
                 data:params,
                 success(data){
@@ -301,7 +300,7 @@ import IScroll from 'iscroll';
     delConfirm(classid){
         var s = this;
         $.ajax({
-            url:window.baseUrl+'weixinxcx/del_articleclass/',
+            url:window.baseUrl+WMURLS+'/del_articleclass/',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -320,7 +319,7 @@ import IScroll from 'iscroll';
     deletetype(classid){
         var s = this;
         $.ajax({
-            url:window.baseUrl+'weixinxcx/del_articleclass/',
+            url:window.baseUrl+WMURLS+'/del_articleclass/',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -368,7 +367,7 @@ import IScroll from 'iscroll';
     getsetting(){
         var s = this;
         $.ajax({
-            url:window.baseUrl+'weixinxcx/get_xcxconfilist',
+            url:window.baseUrl+WMURLS+'/get_xcxconfilist',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -430,7 +429,7 @@ import IScroll from 'iscroll';
             value=0;
         }
         $.ajax({
-            url:window.baseUrl+'weixinxcx/edit_xcxconfig/',
+            url:window.baseUrl+WMURLS+'/edit_xcxconfig/',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -460,7 +459,7 @@ import IScroll from 'iscroll';
             value=0;
         }
         $.ajax({
-            url:window.baseUrl+'weixinxcx/edit_xcxconfig/',
+            url:window.baseUrl+WMURLS+'/edit_xcxconfig/',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -490,7 +489,7 @@ import IScroll from 'iscroll';
             value=0;
         }
         $.ajax({
-            url:window.baseUrl+'weixinxcx/edit_xcxconfig/',
+            url:window.baseUrl+WMURLS+'/edit_xcxconfig/',
             type:'POST',
             data:{
                 userid:s.userid,

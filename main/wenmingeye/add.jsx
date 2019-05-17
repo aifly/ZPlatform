@@ -10,7 +10,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 
 import MainUI from '../components/Main.jsx';
-
+import { WMURLS, title } from './url';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import ZmitiEditor from '../components/zmiti-editor.jsx';
 import IScroll from 'iscroll';
@@ -121,8 +121,7 @@ const TextArea = Input;
           },
         };
 
-
-        var title = '身边文明事';
+ 
         let editorProps ={
             onChange(editor){
                 s.setState({
@@ -208,7 +207,7 @@ const TextArea = Input;
             mainRight:<div className='wenming-add-main-ui' style={{height:this.state.mainHeight}}>
                         <div className="wenming-add-header">
                             <Row>
-                                <Col span={16} className="wenming-add-header-inner">上报数据-身边文明事
+                                <Col span={16} className="wenming-add-header-inner">上报数据-{title}
                                     
                                 </Col>
                                 <Col span={8} className='wenming-add-button-right'>
@@ -427,7 +426,7 @@ const TextArea = Input;
         }
         $.ajax({
             type:'POST',
-            url:window.baseUrl + 'weixinxcx/add_articles/',
+            url:window.baseUrl + WMURLS+'/add_articles/',
             data:params,
             success(data){
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -455,7 +454,7 @@ const TextArea = Input;
     bindtreedata(){
         var s = this;
         $.ajax({
-            url:window.baseUrl+'weixinxcx/search_articleclass',
+            url:window.baseUrl+WMURLS+'/search_articleclass',
             type:'POST',
             data:{
                 userid:s.userid,
