@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './static/css/index.css';
+import Obserable from './static/libs/obserable.js';
 import {
 	Router,
 	Route,
@@ -11,9 +12,9 @@ import {
 import ZmitiHomeApp from './home/index.jsx';
 import ZmitiUserDepartmentApp from './userdepartment/index.jsx';
 //import ZmitiPersonalAccApp from './personalAcc/index.jsx';
-import Obserable from './static/libs/obserable.js';
+
 import ZmitwxWmwGroupApp from './wxwmwgroup/index.jsx';
-import ZmitwxWmwReportApp from './wxwmwreport/index.jsx';
+import ZmitwxWmwReportApp from './wxwmwreport/index.jsx'; 
 import ZmitiWenmingApp from './wenming/index.jsx';
 import ZmitiWenmingDataCheckApp from './wenming/datacheck.jsx';
 import ZmitiWenmingReportApp from './wenming/report.jsx';
@@ -38,11 +39,16 @@ import ZmitiWenmingEyePersonalRankApp from './wenmingeye/personal.jsx';
 import ZmitiWenmingEyeProvinceRankApp from './wenmingeye/province.jsx';
 import ZmitiWenmingEyeCityRankApp from './wenmingeye/city.jsx';
 import ZmitiWenmingEyeCommentCheckApp from './wenmingeye/commentcheck.jsx';
-import ZmitiWenmingEyeCommentDetailApp from './wenmingeye/commentdetail.jsx';
 
+import ZmitiWenmingEyeCommentDetailApp from './wenmingeye/commentdetail.jsx'; 
+ 
 import ZmitiViewPersonalApp from "./viewpersonal/index.jsx";
+
 import ZmitiViewUserInforApp from "./viewuserinfor/index.jsx";
 
+/***
+ * 
+ */
 import {
 	notification
 } from './commoncomponent/common.jsx';
@@ -56,7 +62,8 @@ class App extends React.Component {
 		}
 	}
 	render() {
-		var apps = [{
+		var apps = [
+			{
 				path: '/',
 				app: ZmitiHomeApp
 			}, {
@@ -64,13 +71,13 @@ class App extends React.Component {
 				app: ZmitiUserDepartmentApp
 			},
 			//{path: '/personalAcc/', app: ZmitiPersonalAccApp},
-			 {
+			/*  {		
 				path: '/viewuserinfor/(:id)',
 				app: ZmitiViewUserInforApp
-			}, {
+			}*/, {
 				path: '/viewpersonal/(:id)',
 				app: ZmitiViewPersonalApp
-			},  {
+			} ,  {
 				path: 'wxwmwgroup/',
 				app: ZmitwxWmwGroupApp
 			}, {
@@ -155,9 +162,10 @@ class App extends React.Component {
 		return (
 			<Router history={hashHistory}>
 				{apps.map((app, i) => {
-					return <Route key={i} path={app.path} component={app.app}/>
+					return <Route key={i} path={app.path} component={app.app} />
 				})}
-			</Router>
+			</Router> 
+			
 		)
 	}
 

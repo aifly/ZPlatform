@@ -766,12 +766,14 @@ export default class ZmitiUploadDialog extends React.Component {
 
 
             var imgType = type === 0 ? 'src':'imgSrc';
-          
+             
             return (
                 <figcaption key={i} onClick={this.chooseImg}
                             data-id={img.id+(img.index === undefined?'_none':'_'+img.index)} className="figcaption"
                             style={{position:'relative',zIndex:100-i}}>
-                    
+                    <span className='zmiti-checked-img'>
+						<img src={window.wmImgs.check} />
+					</span>
                     <div className="zmiti-img-C"><img src={img[imgType]} style={style} draggable="false" alt=""/></div>
                     <div className="zmiti-img-info">
                         <section className="zmiti-img-i">

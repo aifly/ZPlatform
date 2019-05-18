@@ -9,7 +9,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import ZmitiWenmingAsideBarApp from './header.jsx';
 
-import { WMURLS, title } from './url';
+import { WMURLS, title,baseUrl } from './url';
 import MainUI from '../components/Main.jsx';
 import IScroll from 'iscroll';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
@@ -109,7 +109,7 @@ class ZmitiWenmingAboutApp extends React.Component{
                 //s.forceUpdate();
             },
             title,
-            selectedIndex:5,
+            selectedIndex:4,
             mainRight:<div className='wenming-report-main-ui' style={{height:this.state.mainHeight}}>
                         <div className="wenming-report-header">
                             <Row>

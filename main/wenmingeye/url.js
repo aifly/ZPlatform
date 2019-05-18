@@ -1,3 +1,4 @@
-var WMURLS = 'weixinxcx';
+var WMURLS = 'weixinxcxwmy';
 var title = '文明眼';
-export { WMURLS,title};
+var baseUrl = window.baseUrl;//+ 'http://api.zmiti.com/v2/';
+export { WMURLS, title, baseUrl};

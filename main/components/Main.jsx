@@ -177,19 +177,7 @@ class MainUI extends React.Component {
         ]
 
         this.customMenuConfig = [ //订制服务 的菜单列表
-            {
-                "linkTo": "/custom/",
-                "key": "custom",
-                "title": "订制作品",
-                "isIcon": true,
-                "type": "edit"
-            }, {
-                "linkTo": "/myorder/",
-                "key": "myorder",
-                "title": "我要订制",
-                "isIcon": true,
-                "type": "user"
-            }
+          
         ]
 
         var configMenus = window.globalMenus;
@@ -248,12 +236,7 @@ class MainUI extends React.Component {
                                                 return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
                                             })}
                                         </SubMenu>
-                                         <SubMenu key="sub4"
-                                                 title={<span><Icon type="setting" style={{marginRight:'22px'}} /><span>订制服务</span></span>}>
-                                            {this.customMenuConfig.map(item=>{
-                                                return <Menu.Item key={item.key} ><Icon type={item.type} style={{marginRight:'32px'}}/><Link to={item.linkTo}>{item.title}</Link></Menu.Item> 
-                                            })}
-                                        </SubMenu>
+                                         
                                     </Menu>
                                     <div className="fly-menu-bottom" style={{display:'none'}}>
                                         系统日志

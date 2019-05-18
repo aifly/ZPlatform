@@ -19,7 +19,8 @@ import '../static/echarts/china';
 import IScroll from 'iscroll';
 const Search = Input.Search;
 const FormItem = Form.Item;
-import {WMURLS,title} from './url';
+import { WMURLS, title, baseUrl} from './url';
+
  class ZmitiWenmingReportApp extends React.Component{
     constructor(args){
         super(...args);
@@ -199,7 +200,7 @@ import {WMURLS,title} from './url';
         var s = this;
         $.ajax({
             type:'POST',
-            url:window.baseUrl + 'weixinxcx/search_articlelist/',
+			url: window.baseUrl + WMURLS +'/search_articlelist/',
             data:{
                 userid:s.userid,
                 getusersigid:s.getusersigid,
@@ -211,7 +212,9 @@ import {WMURLS,title} from './url';
                 keyword:title,
             },
             success(data){                    
-                //s.state.dataSource=data.list;
+				//s.state.dataSource=data.list;
+				console.log(data);
+				return;
                 s.state.total=data.countRow.countrows;
                 //console.log(data.list,this.url,'data.result');
                 data.list.map((item,key)=>{
@@ -246,7 +249,7 @@ import {WMURLS,title} from './url';
     delData(articlid){
         var s = this;
         $.ajax({
-            url:window.baseUrl+'weixinxcx/del_articles/',
+			url: window.baseUrl + WMURLS+ '/del_articles/',
             type:'POST',
             data:{
                 userid:s.userid,

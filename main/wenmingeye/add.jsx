@@ -10,7 +10,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 
 import MainUI from '../components/Main.jsx';
-import { WMURLS, title } from './url';
+import { WMURLS, title, baseUrl } from './url';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import ZmitiEditor from '../components/zmiti-editor.jsx';
 import IScroll from 'iscroll';
@@ -135,7 +135,7 @@ const TextArea = Input;
             showPreview:false,
         }
         const addVideoProps = {//添加视频
-            baseUrl: window.baseUrl,
+            baseUrl: baseUrl,
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
@@ -268,7 +268,6 @@ const TextArea = Input;
                                     >
                                     <Button onClick={this.addImage.bind(this)}>选择图片</Button>
                                     <div className='wenming-add-imgs5' >
-                                         
                                         <ul>
                                             {this.state.fileList.map((item,i)=>{
                                                 return <li key={i}><img src={item}/>
@@ -333,7 +332,7 @@ const TextArea = Input;
         formData.append('uploadtype', 1);
 
         $.ajax({
-            url:window.baseUrl+ 'share/upload_file',
+            url:baseUrl+ 'share/upload_file',
             type:'post',
             data:formData,
             contentType: false,
@@ -426,7 +425,7 @@ const TextArea = Input;
         }
         $.ajax({
             type:'POST',
-            url:window.baseUrl + WMURLS+'/add_articles/',
+            url:baseUrl + WMURLS+'/add_articles/',
             data:params,
             success(data){
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -454,7 +453,7 @@ const TextArea = Input;
     bindtreedata(){
         var s = this;
         $.ajax({
-            url:window.baseUrl+WMURLS+'/search_articleclass',
+            url:baseUrl+WMURLS+'/search_articleclass',
             type:'POST',
             data:{
                 userid:s.userid,

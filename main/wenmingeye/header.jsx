@@ -13,7 +13,7 @@ import {
 
 import ZmitiUserList from '../components/zmiti-user-list.jsx';
 
-var path = ['/wmeye', '/wmeyedatacheck', '/wmeyecommentcheck', '/wmeyereport', '/wmeyesetting', '/wmeyeabout'];
+var path = ['/wmeye', '/wmeyedatacheck', '/wmeyecommentcheck',  '/wmeyesetting', '/wmeyeabout'];//'/wmeyereport'
 
 class ZmitiWenmingAsideBarApp extends React.Component {
     constructor(args) {
@@ -32,7 +32,10 @@ class ZmitiWenmingAsideBarApp extends React.Component {
 
     changeAccount(i) {
 
-        window.location.hash = path[i];
+
+		
+		window.location.hash = path[i];
+		
         if (i === 0) {
             // window.location.reload();
 
@@ -47,20 +50,20 @@ class ZmitiWenmingAsideBarApp extends React.Component {
 
 
 
-        var title = this.props.title;
-
+		var title = this.props.title;
         let props = {
             userList: this.state.userList,
             userid: this.userid,
             changeAccount: this.changeAccount.bind(this),
             type: 'custom-1',
-            tags: ['首页', '数据审核', '评论审核', '文明播报', '通用设置', '关于我们'],
+			tags: ['首页', '数据审核', '评论审核', '通用设置', '关于我们'],//文明播报
             mainHeight: this.state.mainHeight,
             title: title,
             selectedIndex: this.props.selectedIndex,
             rightType: "custom",
             customRightComponent: this.props.mainRight
         }
+
 
 
         return (
@@ -96,13 +99,14 @@ class ZmitiWenmingAsideBarApp extends React.Component {
 
         window.globalMenus.map((item, i) => {
             console.log(item.linkTo)
-            if (item.linkTo.startsWith('/wenming')) {
+            if (item.linkTo.startsWith('/wmeye')) {
                 this.productid = item.productid; //获取当前产品的id;
                 return;
             }
         });
 
         if (!this.productid) {
+			
             message.error('您没有访问权限');
             setTimeout(() => {
                 window.location.hash = '/'
@@ -124,7 +128,8 @@ class ZmitiWenmingAsideBarApp extends React.Component {
 
 
                 if (data.code === 1) { //无此权限
-                    message.error('您没有访问权限');
+					message.error('您没有访问权限');
+					
                     setTimeout(() => {
                         window.location.hash = '/'
                     }, 1000)

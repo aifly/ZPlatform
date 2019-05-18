@@ -53,7 +53,9 @@ window.addEventListener('load', ()=> {
         transitionEnd: 'onwebkittransitionend' in window ? 'webkitTransitionEnd' : 'transitionend',
         regType: $("#reg-type"),
         baseUrl:protocol+'//h5.wenming.cn/v2/'// 'http://webapi.zmiti.com/v1/'//
-    };
+	};
+	
+	data.baseUrl= protocol + '//api.zmiti.com/v2/'// 'http://webapi.zmiti.com/v1/'//
 
     let utilMethods = {
 

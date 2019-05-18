@@ -125,7 +125,7 @@
       @include pos(r);
       &:before{
         content: '';
-        background:rgba(0,0,0,.5) url('../richimg/static/images/checked.png') no-repeat center center;
+        //background:rgba(0,0,0,.5) url('../richimg/static/images/checked.png') no-repeat center center;
         @include pos(a);
         left:0;
         top:0;
@@ -279,16 +279,27 @@ $baseColor:#99071e;
       figcaption{
         width:134px;
         height:134px;
-        border:1px solid #ccc;
+		border:1px solid #ccc;
+		&>span.zmiti-checked-img{
+			display: none;
+		}
         &.active{
-          &:before{
-            content: '';
-            @include pos(a);
-            width:100%;
-            height:100%;
-            background:rgba(0,0,0,.5) url(../richimg/static/images/checked.png) no-repeat center center;
-            z-index:1;
-          }
+			&>span.zmiti-checked-img{
+				display: block;
+				@include pos(a);
+				width:100%;
+				height:100%;
+				background: rgba(0,0,0,.5);
+				img{
+					width: 80px;
+					left:50%;
+					top: 50%;
+					margin: -40px 0 0 -40px;
+				}
+			// background:rgba(0,0,0,.5) url(../richimg/static/images/checked.png) no-repeat center center;
+				z-index:1;
+			}
+         
         }
         margin:2px;
         box-sizing: border-box;

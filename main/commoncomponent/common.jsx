@@ -73,7 +73,7 @@ import Dropdown from 'antd/lib/dropdown';
 import moment from 'moment';
 
 
-export default {
+export  {
 	Button,
 	message,
 	Input,
@@ -107,5 +107,6 @@ export default {
 	Cascader,
 	Popover,
 	Pagination,
-	Dropdown
+	Dropdown,
+	
 };

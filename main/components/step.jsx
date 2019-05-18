@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Steps  } from '../commoncomponent/common.jsx';
+import {Steps} from '../commoncomponent/common.jsx';
 const Step = Steps.Step;
 
 export default class ZmitiStep extends React.Component{

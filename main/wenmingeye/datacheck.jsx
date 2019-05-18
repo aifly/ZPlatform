@@ -12,14 +12,17 @@ import {
     message,
     Menu,
     Dropdown,
-    Switch,
-    Radio
+	Switch,
+	Form,
+	Radio,
+	Modal,
 } from '../commoncomponent/common.jsx';
 const RadioGroup = Radio.Group;
+let FormItem = Form.Item;
 import $ from 'jquery';
 
-import { WMURLS, title } from './url';
-
+import { WMURLS, title, baseUrl } from './url';
+import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import {
     ZmitiValidateUser
 } from '../public/validate-user.jsx';
@@ -39,9 +42,17 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             mainHeight: document.documentElement.clientHeight - 50,
             selectAll: false,
             allCount: 1,
-            pageIndex: 1,
+			pageIndex: 1,
+			replyCompany:'',
+			replyContent:'',
+			fileList: [
+			],
 
-            pageSize: 10,
+			pageSize: 10,
+			
+			replyObj:{
+				id:-1
+			},
 
             currentPicIndex: -1,
 
@@ -84,7 +95,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             isNormalAdmin,
             getUserDetail,
             listen,
-            send
+			send,
+			copyfileto
+			
         } = this.props;
         var {
             userid,
@@ -106,7 +119,10 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         this.isNormalAdmin = isNormalAdmin;
         this.validateUserRole = validateUserRole;
         this.getUserDetail = getUserDetail;
-        this.resizeMainHeight = resizeMainHeight;
+		this.resizeMainHeight = resizeMainHeight;
+		this.copyfileto = copyfileto;
+
+	
     }
     componentDidMount() {
         this.resizeMainHeight(this);
@@ -162,8 +178,16 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         this.state.dataSource.map((item, i) => {
             if (item.checked) {
                 showBatchbars = true;
-            }
-        });
+			}
+			
+		});
+		
+		const formItemLayout = {
+			labelCol: { span: 4 },
+			wrapperCol: { span: 20 },
+		};
+
+		
         var menu = (
             <Menu>
                 <Menu.Item >
@@ -175,7 +199,49 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                     </Menu.Item>
                 })}
                     
-              </Menu>)
+			  </Menu>)
+
+		var s = this;
+			  
+		var replyProps = {
+			userid: s.userid,
+			getusersigid: s.getusersigid,
+			onFinish(imgData) {
+				s.state.type = 1;
+				//console.log(s.state.type,'图片');
+				var imgDatasrc = imgData.src;
+				if (s.state.fileList.length < 5) {
+					s.copyfileto({
+						userid: s.userid,
+						getusersigid: s.getusersigid,
+						fileurl: imgDatasrc,
+						isover: 0,
+						dirname: 'wx_xcx',
+						success(fileurl) {
+							s.state.fileList.push(fileurl);
+							console.log(fileurl, '新图片');
+							s.forceUpdate();
+						}
+					})
+
+				} else {
+					message.warning('最多只能添加5张图片');
+				}
+
+				s.state.imageslist = s.state.fileList.join();
+
+				s.state.selectvideo = 'none';
+				s.forceUpdate();
+
+				
+			},
+			onCancel() {
+				
+			},
+			title,
+			selectedIndex: 100,
+			 
+		}
 
         var plainOptions = [{
             label: '全部',
@@ -200,7 +266,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                         <header className='wenming-datacheck-header'>
                             <div>数据审核-{title}</div>   
                             <div><Switch onChange={this.getCheckedData.bind(this)} checkedChildren="已审" unCheckedChildren="未审" /></div>
-                            <div><a href='#/wenmingadd'><Icon type="upload"/>上报数据</a></div>   
+                            <div><a href='#/wmeyeadd'><Icon type="upload"/>上报数据</a></div>   
                         </header>
                         <section className='wenming-datacheck-bar'>
                             <div>
@@ -302,6 +368,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                             <section className='wenming-datacheck-item-main-content'>
                                                 <h2>{item.nickname}</h2>
                                                 <div className='wenming-datacheck-date'>{item.date}</div>
+												<h2>{item.title}</h2>
                                                 <div className='wenming-datacheck-content'>
                                                     <div dangerouslySetInnerHTML={this.createMarkup(item.content)}></div>
                                                     {showMore}
@@ -316,13 +383,34 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                 </ol>
                                                 <section className='wenming-datacheck-operator'>
                                                     <div>
-                                                        
+                                                        {item.status * 1 === 1 && (item.adminreplyimg || item.adminreplycompanyname || item.adminreplycontent) && <div onClick={this.reply.bind(this, item, 'pass', i)}>
+															<Icon className='wenming-edit' type="edit" />编辑回复
+														</div>}
+
+
+														{item.status * 1 === 1 && (item.adminreplyimg || item.adminreplycompanyname || item.adminreplycontent) && <div>
+															<Popconfirm placement="top" title={'删除后些文章将为成未审核状态，确定要删除吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
+																<Icon className='wenming-edit' type="delete" />删除回复	
+															</Popconfirm>
+														</div>}
                                                         {item.status === 1 && <div><a href={'#/wenmingcommentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
                                                         {this.state.status === 0 &&  <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐到首页</Checkbox></div>}
 														{this.state.status === 1 && item.status !== 2 && <div><Checkbox onChange={this.recommentArticle.bind(this, item)} checked={item.isHost} >推荐到首页</Checkbox></div>}
-                                                        {item.status*1 === 0 && <div onClick={this.checkedArticle.bind(this,item,'pass',i)}>
-                                                           <Icon className='wenming-pass' type="check-circle" /> 通过审核
-                                                        </div>}
+                                                        {item.status*1 === 0 && (!item.adminreplyimg && !item.adminreplycompanyname && !item.adminreplycontent)&& <div onClick={this.reply.bind(this,item,'pass',i)}>
+                                                           <Icon className='wenming-pass' type="check-circle" />回复
+														</div>}
+
+														{item.status * 1 === 0 && (item.adminreplyimg || item.adminreplycompanyname || item.adminreplycontent) && <div onClick={this.reply.bind(this, item, 'pass', i)}>
+															<Icon className='wenming-edit' type="edit" />编辑回复
+														</div>}
+
+
+														{item.status * 1 === 0 && (item.adminreplyimg || item.adminreplycompanyname || item.adminreplycontent) && <div>
+															<Popconfirm placement="top" title={'确定要删除吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
+																<Icon className='wenming-edit' type="delete" />删除回复	
+															</Popconfirm>
+														</div>}
+														
                                                         {item.status*1 === 0 && <div onClick={this.checkedArticle.bind(this,item,'unpass',i)}>
                                                             <Icon className='wenming-unpass' type="close-circle" /> 拒绝通过审核
                                                         </div>}
@@ -366,8 +454,65 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                 <section onClick={()=>{this.setState({voidurl:''})}}></section>
                             </div>
                             <aside onClick={()=>{this.setState({voidurl:''})}}></aside>
-                        </div>}
-                    </div>
+						</div>}
+						
+				<Modal title="我的回复" 
+					width={830}
+					wrapClassName='wm-reply-modal-ui'
+					maskClosable={false} visible={this.state.replyObj.id!==-1}
+					
+					onCancel={this.closedialog.bind(this)}
+					footer={[
+						<Button key="back" onClick={this.replyAction.bind(this,1)}>
+							保存
+						</Button>,
+						<Button key="submit" type="primary" onClick={this.replyAction.bind(this,2)} >
+							保存并发布
+						</Button>
+					]}
+				>
+					<Form>
+						<FormItem
+							{...formItemLayout}
+							label="标题"
+						>
+							<div dangerouslySetInnerHTML={this.createMarkup(this.state.replyObj.content)}></div>
+						</FormItem>
+						<FormItem
+							{...formItemLayout}
+							label="回复单位"
+						>
+							<Input placeholder='' value={this.state.replyObj.replyCompany} onChange={e => { this.state.replyObj.replyCompany = e.target.value;this.forceUpdate() }}/>
+						</FormItem>
+						<FormItem
+							{...formItemLayout}
+							label="回复内容"
+						>
+							<textarea className='wm-reply-content' value={this.state.replyObj.replyContent} onChange={e => { this.state.replyObj.replyContent = e.target.value ;this.forceUpdate() }}></textarea>
+						</FormItem>
+						<FormItem
+							{...formItemLayout}
+							label="附加图片"
+						>
+							<Button onClick={this.addImage.bind(this)}>选择图片</Button>
+							<div className='wenming-add-imgs5' >
+								<ul>
+									{this.state.fileList.map((item, i) => {
+										return <li key={i}><img src={item} />
+											<div className='wenming-reportadd-delimgs'>
+												<Button shape="circle" icon="delete" onClick={this.delpic.bind(this, i)} />
+											</div>
+										</li>
+									})}
+								</ul>
+								<div className='clearfix'></div>
+							</div>
+						</FormItem>
+
+					</Form>
+					</Modal>
+				<ZmitiUploadDialog id="addReplyImage" {...replyProps}></ZmitiUploadDialog>
+            </div>
         }
         var mainComponent = <div>
             <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>
@@ -376,13 +521,93 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         return (
             <MainUI component={mainComponent}></MainUI>
         );
-    }
+	}
+	delPeplyitem(item){
+		
+		
+		this.operatorReply(3,item);
+
+	}
+
+	operatorReply(savetype,obj){
+		var s = this;
+		var item =  obj || this.state.replyObj;
+
+		$.ajax({
+			type: 'post',
+			url: baseUrl + WMURLS + '/reply_articles/',
+			data: {
+				appid: window.WENMING.XCXAPPID,
+				userid: this.userid,
+				getusersigid: this.getusersigid,
+				articleids: item.id,
+				savetype,
+				adminreplycompanyname: item.replyCompany,
+				adminreplycontent: item.replyContent,
+				adminreplyimg: s.state.fileList.join('')
+			}
+		}).done((data) => {
+			if (typeof data === 'string') {
+				data = JSON.parse(data);
+			}
+			if (data.getret === 0) {
+
+				this.forceUpdate();
+				message.success(data.getmsg);
+				this.loadArticle(this.state.status);
+				this.state.replyObj = {
+					id: -1
+				};
+				this.forceUpdate();
+
+			}
+		})
+	}
+
+	replyAction(savetype){
+		this.operatorReply(savetype);
+	}
+
+
+
+	addImage(){
+		var obserable = window.obserable;
+		this.setState({
+			
+		}, () => {
+			obserable.trigger({
+				type: 'showModal',
+				data: { type: 0, id: 'addReplyImage' }
+			})
+		})
+	}
+
+	delpic(i) {
+		var s = this;
+		//console.log(i,'del');
+		s.state.fileList.splice(i, 1);
+		if (s.state.fileList.length < 1) {
+			s.state.type = 3;
+		}
+		console.log(s.state.type, '恢复默认');
+		s.forceUpdate();
+	}
 
     hideImg(e) {
         this.setState({
             showImg: false
         })
-    }
+	}
+	
+	closedialog(){
+		var s = this;
+		s.setState({
+			replyObj:{
+				id:-1
+			}			
+		})
+		//s.forceUpdate(); 
+	}
 
     download() {
         this.setState({
@@ -478,7 +703,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + WMURLS+'/hot_articles/',
+            url:baseUrl + WMURLS+'/hot_articles/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -565,7 +790,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + WMURLS+'/del_articles/',
+            url:baseUrl + WMURLS+'/del_articles/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -633,7 +858,20 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             return;
         }
 
-    }
+	}
+	
+	reply(item,type,index){
+		
+		
+		this.state.replyObj = item;
+		this.state.replyObj.replyContent = item.adminreplycontent;
+		this.state.replyObj.replyCompany = item.adminreplycompanyname;
+		this.state.fileList =  item.adminreplyimg.split(',');
+		if (this.state.fileList[0] === ''){
+			this.state.fileList = [];
+		}
+		this.forceUpdate();
+	}
 
     checkedArticle(item, type, index, showMsg = true) {
 
@@ -644,7 +882,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                     $.ajax({
                         async: false,
                         type: 'post',
-                        url: window.baseUrl + WMURLS+'/hot_articles/',
+                        url:baseUrl + WMURLS+'/hot_articles/',
                         data: {
                             appid: window.WENMING.XCXAPPID,
                             userid: this.userid,
@@ -670,7 +908,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + WMURLS+'/look_articles//',
+            url:baseUrl + WMURLS+'/look_articles//',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -753,7 +991,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + WMURLS+'/search_articlelist/',
+                url:baseUrl + WMURLS+'/search_articlelist/',
                 data
             }).done((data) => {
                 if (typeof data === 'string') {
@@ -776,13 +1014,18 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             nickname: item.nickname,
                             headimgurl: item.headimgurl,
                             date: item.looktime,
-                            content: item.content,
+							content: item.content,
+							adminreplycompanyname: item.adminreplycompanyname,
+							adminreplyimg:item.adminreplyimg,
+							adminreplycontent:item.adminreplycontent,
                             defaultContent: item.content,
-                            comments: item.commentnum,
+							comments: item.commentnum,
+							
                             imgs,
                             sentiment: item.sentiment,
                             voidurl: item.voidurl,
                             isHost: item.ishost,
+                            title: item.title,
                             status: item.status,
                             ///videos:[],
                             id: item.articlid,
@@ -815,7 +1058,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + WMURLS+'/search_articleclass',
+            url:baseUrl + WMURLS+'/search_articleclass',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,

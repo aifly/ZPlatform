@@ -14,7 +14,7 @@ import MainUI from '../components/Main.jsx';
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-import { WMURLS, title } from './url';
+import { WMURLS, title, baseUrl } from './url';
 
  class ZmitiWenmingSettingApp extends React.Component{
     constructor(args){
@@ -82,7 +82,7 @@ import { WMURLS, title } from './url';
         };
         var props = {
             title,
-            selectedIndex:4,
+            selectedIndex:3,
             mainRight:<div className='wenming-setting-main-ui' style={{height:this.state.mainHeight}}>
                         
                         <div className="wenming-setting-header">
@@ -214,7 +214,7 @@ import { WMURLS, title } from './url';
     bindtreedata(){
         var s = this;
         $.ajax({
-            url:window.baseUrl+WMURLS+'/search_articleclass',
+            url:baseUrl+WMURLS+'/search_articleclass',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -247,7 +247,7 @@ import { WMURLS, title } from './url';
         if(this.currentId!==-1){//edit
             params.classid=this.currentId;
             $.ajax({
-                url:window.baseUrl+WMURLS+'/edit_articleclass/',
+                url:baseUrl+WMURLS+'/edit_articleclass/',
                 type:'POST',
                 data:params,
                 success(data){
@@ -266,7 +266,7 @@ import { WMURLS, title } from './url';
         }else{
             //add
             $.ajax({
-                url:window.baseUrl+WMURLS+'/add_articleclass/',
+                url:baseUrl+WMURLS+'/add_articleclass/',
                 type:'POST',
                 data:params,
                 success(data){
@@ -300,7 +300,7 @@ import { WMURLS, title } from './url';
     delConfirm(classid){
         var s = this;
         $.ajax({
-            url:window.baseUrl+WMURLS+'/del_articleclass/',
+            url:baseUrl+WMURLS+'/del_articleclass/',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -319,7 +319,7 @@ import { WMURLS, title } from './url';
     deletetype(classid){
         var s = this;
         $.ajax({
-            url:window.baseUrl+WMURLS+'/del_articleclass/',
+            url:baseUrl+WMURLS+'/del_articleclass/',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -367,7 +367,7 @@ import { WMURLS, title } from './url';
     getsetting(){
         var s = this;
         $.ajax({
-            url:window.baseUrl+WMURLS+'/get_xcxconfilist',
+            url:baseUrl+WMURLS+'/get_xcxconfilist',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -429,7 +429,7 @@ import { WMURLS, title } from './url';
             value=0;
         }
         $.ajax({
-            url:window.baseUrl+WMURLS+'/edit_xcxconfig/',
+            url:baseUrl+WMURLS+'/edit_xcxconfig/',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -459,7 +459,7 @@ import { WMURLS, title } from './url';
             value=0;
         }
         $.ajax({
-            url:window.baseUrl+WMURLS+'/edit_xcxconfig/',
+            url:baseUrl+WMURLS+'/edit_xcxconfig/',
             type:'POST',
             data:{
                 userid:s.userid,
@@ -489,7 +489,7 @@ import { WMURLS, title } from './url';
             value=0;
         }
         $.ajax({
-            url:window.baseUrl+WMURLS+'/edit_xcxconfig/',
+            url:baseUrl+WMURLS+'/edit_xcxconfig/',
             type:'POST',
             data:{
                 userid:s.userid,

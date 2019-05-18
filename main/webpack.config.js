@@ -1,14 +1,14 @@
 var webpack = require('webpack');
-
+var path = require('path');
 var config = {
     entry: {
         'index': "./index.jsx",
-        'admin':'./admin/index.jsx',
+       // 'admin':'./admin/index.jsx',
         //vendor: ['react','react-dom','iscroll','jquery']
     },
     output: {
         //publicPath: './static/js',
-        path: './static/js',
+		path: path.resolve(__dirname, './static/js'),
         filename: "[name].js",
         chunkFilename: "[name].js"
     },
@@ -29,10 +29,12 @@ var config = {
       }),*/
     ],
     module: {
-        loaders: [{
-            test: /\.jsx|\.js|\.es6$/,
-            exclude: /node_modules/,
-            loaders: ['react-hot','babel']
+		rules: [{
+				test: /\.jsx|\.js|\.es6$/,
+				exclude: /node_modules/,
+				use: {
+					loader: 'babel-loader'
+				}
             },
             {
                 test: /\.(css)$/,
@@ -40,7 +42,7 @@ var config = {
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png)\w*/,
-                loader: 'file'
+                loader: 'file-loader'
             },
             {
                 test: /\.(png|jpg)$/,

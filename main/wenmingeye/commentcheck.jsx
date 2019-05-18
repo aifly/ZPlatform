@@ -17,7 +17,7 @@ import {
 } from '../commoncomponent/common.jsx';
 const RadioGroup = Radio.Group;
 import $ from 'jquery';
-import { WMURLS, title } from './url';
+import { WMURLS, title, baseUrl} from './url';
 
 
 import {
@@ -496,7 +496,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + WMURLS+'/hot_articles/',
+            url: baseUrl + WMURLS+'/hot_articles/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -617,7 +617,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         $.ajax({
             async: false,
             type: 'post',
-            url: window.baseUrl + WMURLS+'/del_articlecomment/',
+            url: baseUrl + WMURLS+'/del_articlecomment/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -685,7 +685,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         $.ajax({
             type: 'post',
             async: false,
-            url: window.baseUrl + WMURLS+'/look_articlecomment/',
+            url: baseUrl + WMURLS+'/look_articlecomment/',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,
@@ -766,7 +766,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             }
             $.ajax({
                 type: 'post',
-                url: window.baseUrl + WMURLS+'/get_articlecomment/',
+                url: baseUrl + WMURLS+'/get_articlecomment/',
                 data
             }).done((data) => {
                 if (typeof data === 'string') {
@@ -812,7 +812,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
         $.ajax({
             type: 'post',
-            url: window.baseUrl + WMURLS+'/search_articleclass',
+            url: baseUrl + WMURLS+'/search_articleclass',
             data: {
                 appid: window.WENMING.XCXAPPID,
                 userid: this.userid,

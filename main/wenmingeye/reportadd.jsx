@@ -12,6 +12,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 import MainUI from '../components/Main.jsx';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import ZmitiEditor from '../components/zmiti-editor.jsx';
+import { WMURLS, title, baseUrl } from './url';
 import IScroll from 'iscroll';
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -79,7 +80,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
         var s =this;
         const { disabled } = s.state;
         const userProps ={
-            documentbaseUrl: window.baseUrl,
+            documentbaseUrl: baseUrl,
             getusersigid: s.getusersigid,
             userid: s.userid,
             onFinish(imgData){
@@ -304,7 +305,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
             console.log(s.state.classid,'文章分类');         
             $.ajax({
                 type:'POST',
-                url:window.baseUrl + 'weixinxcx/edit_articles/',
+                url:baseUrl + WMURLS + '/edit_articles/',
                 data:params,
                 success(data){
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -315,7 +316,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
             //添加
             $.ajax({
                 type:'POST',
-                url:window.baseUrl + 'weixinxcx/add_articles/',
+                url:baseUrl + WMURLS + '/add_articles/',
                 data:params,
                 success(data){
                         message[data.getret === 0 ? 'success':'error'](data.getmsg);
@@ -335,7 +336,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
         if(articlid!==undefined){
             $.ajax({
                 type:'POST',
-                url:window.baseUrl + 'weixinxcx/get_articledetial/',
+                url:baseUrl + WMURLS + '/get_articledetial/',
                 data:{
                     userid:s.userid,
                     getusersigid:s.getusersigid,

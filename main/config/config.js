@@ -3,6 +3,7 @@
 var protocol = location.protocol;
 
 window.baseUrl = protocol + '//h5.wenming.cn/v2/'; //接口地protocol+址//api.zmiti.com/v2/  ||protocol+ //beta.zmiti.com:90/
+window.baseUrl = protocol + '//api.zmiti.com/v2/'; //接口地protocol+址//api.zmiti.com/v2/  ||protocol+ //beta.zmiti.com:90/
 window.loginUrl = protocol + '//localhost:5000'; //登录地址protocol+.//webapi.zmiti.com/public/zmiti
 window.mainUrl = protocol + '//localhost:3000'; //智媒体的首页.
 window.isDebug = false; //是否为调试版本
@@ -22,7 +23,9 @@ window.Role = {
 	COMPANYADMINUSER: 5, //公司管理员
 
 }
-
+window.wmImgs = {
+	check:'./static/images/checked.png'
+};
 window.workState = {
 	PUBLISHSED: 3, //作品状态,0 草稿 1正常 2已删除 3 发布 4 未发布,
 	DRAFT: 0
@@ -39,7 +42,7 @@ window.HOTWORDSLIST = ['xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan', 'mafazha
 
 
 window.WENMING = {
-	XCXAPPID: 'wx32e63224f58f2cb5'
+	XCXAPPID: 'wxe4462d1ed31ba71d',//'wx32e63224f58f2cb5'
 }
 
 window.wmMeetingSmsTempConfig = {
@@ -72,3 +75,9 @@ window.MENUCONFIG = [{
 	key: 'letter',
 	VISITUSERS: ['mafazhan', 'xuchang', 'xinmeiti', 'huangqinghua', 'bmyuan']
 }];
+
+`
+	分享下我的观点
+	1、先说下百度。百度近几年可谓是负面新闻不断，反而以为自身拥有互联网的主要入口而置若罔闻。听说近最也是股价大跌。有被头条反超的趋势。
+	2、再来谈头条。我接触头条给我的最深印象就是它的推荐系统。作为一个技术人，不禁为之震撼。同时，头条这几年也是汇集了大量的自媒体都在给头条做产出。因此就会有大量的优质的内容可供我们搜索选择。最重要的一点是，头条没有所谓的竞价排名这一被人诟病的条款。优先展示优质的内容。人人平等。这样下去，在搜索一块，头条一定会侵蚀百度的市场份额，只是时间的问题而已。
+`

@@ -178,7 +178,9 @@
                 i {
                     color: #f4654c;
                 }
-            }
+			}
+			
+			
             input {
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
@@ -292,6 +294,11 @@
                             }
                             .wenming-unpass {
                                 color: #f4654c;
+                                margin-right: 4px;
+                                @include transform(scale(1.3));
+							}
+							.wenming-edit {
+                                color: #999;
                                 margin-right: 4px;
                                 @include transform(scale(1.3));
                             }
@@ -581,4 +588,20 @@
         justify-content: flex-end;
         padding-right: 30px;
     }
+}
+
+.wm-reply-modal-ui{
+	
+	.wm-reply-content{
+		width:100%;
+		@include br(6px);
+		border-color:#2db7f5 ;
+		resize:none;
+		padding:10px;
+		box-sizing: border-box;
+	}
+	.ant-form-item-control{
+		line-height: 32px !important;
+	}
+
 }
