@@ -604,4 +604,10 @@
 		line-height: 32px !important;
 	}
 
+	@at-root.ant-modal-close-x{
+		svg{
+			display:none;
+		}
+	}
+
 }

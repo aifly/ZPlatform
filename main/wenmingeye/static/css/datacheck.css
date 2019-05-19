@@ -689,3 +689,7 @@
 .wm-reply-modal-ui .ant-form-item-control {
   line-height: 32px !important;
 }
+
+.ant-modal-close-x svg {
+  display: none;
+}

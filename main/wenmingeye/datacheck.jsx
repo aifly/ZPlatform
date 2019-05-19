@@ -266,7 +266,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                         <header className='wenming-datacheck-header'>
                             <div>数据审核-{title}</div>   
                             <div><Switch onChange={this.getCheckedData.bind(this)} checkedChildren="已审" unCheckedChildren="未审" /></div>
-                            <div><a href='#/wmeyeadd'><Icon type="upload"/>上报数据</a></div>   
+                            <div></div>   
+							
                         </header>
                         <section className='wenming-datacheck-bar'>
                             <div>
@@ -393,7 +394,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 																<Icon className='wenming-edit' type="delete" />删除回复	
 															</Popconfirm>
 														</div>}
-                                                        {item.status === 1 && <div><a href={'#/wenmingcommentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
+                                                        {item.status === 1 && <div><a href={'#/wmeyecommentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
                                                         {this.state.status === 0 &&  <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐到首页</Checkbox></div>}
 														{this.state.status === 1 && item.status !== 2 && <div><Checkbox onChange={this.recommentArticle.bind(this, item)} checked={item.isHost} >推荐到首页</Checkbox></div>}
                                                         {item.status*1 === 0 && (!item.adminreplyimg && !item.adminreplycompanyname && !item.adminreplycontent)&& <div onClick={this.reply.bind(this,item,'pass',i)}>
@@ -460,7 +461,6 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 					width={830}
 					wrapClassName='wm-reply-modal-ui'
 					maskClosable={false} visible={this.state.replyObj.id!==-1}
-					
 					onCancel={this.closedialog.bind(this)}
 					footer={[
 						<Button key="back" onClick={this.replyAction.bind(this,1)}>
@@ -544,7 +544,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 				savetype,
 				adminreplycompanyname: item.replyCompany,
 				adminreplycontent: item.replyContent,
-				adminreplyimg: s.state.fileList.join('')
+				adminreplyimg: s.state.fileList.join(',')
 			}
 		}).done((data) => {
 			if (typeof data === 'string') {
