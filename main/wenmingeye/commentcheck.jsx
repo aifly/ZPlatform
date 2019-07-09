@@ -17,7 +17,7 @@ import {
 } from '../commoncomponent/common.jsx';
 const RadioGroup = Radio.Group;
 import $ from 'jquery';
-import { WMURLS, title, baseUrl} from './url';
+import { WMURLS, title, baseUrl, WMEYEAPPID} from './url';
 
 
 import {
@@ -197,7 +197,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                         <header className='wenming-datacheck-header'>
                             <div>评论审核-{title}</div>   
                             <div><Switch onChange={this.getCheckedData.bind(this)} checkedChildren="已审" unCheckedChildren="未审" /></div>
-                            <div><a href='#/wenmingadd'><Icon type="upload"/>上报数据</a></div>   
+                            <div><a href='#/wmeyeadd'><Icon type="upload"/>上报数据</a></div>   
                         </header>
                         <section className='wenming-datacheck-bar'>
                             <div>
@@ -309,8 +309,14 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                                 }
                                                             </ol>
                                                             <div>{item.createtime}</div>
-                                                            <div style={{maxWidth:'50%'}}>
-                                                                <span style={{color:'#0099cc'}}>来自：</span>
+                                                            <div style={{color:'#0099cc',fontWeigt:'bold'}} className='wenming-from'>来自：</div>
+                                                            <div style={{maxWidth:'90%',marginTop:10}}>
+																<div className='wenming-comment-user'>
+																	<img src={datalist.headimgurl} alt=""/>
+																	<span>{datalist.nickname}</span>
+																	<span>{datalist.looktime}</span>
+																</div>
+																<div className='wenming-comment-title'>{datalist.title}</div>
                                                                 <div dangerouslySetInnerHTML={this.createMarkup(datalist.content)}></div>
                                                                 {showMore1}
 
@@ -498,7 +504,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             type: 'post',
             url: baseUrl + WMURLS+'/hot_articles/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
                 articleids: item.id,
@@ -619,7 +625,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             type: 'post',
             url: baseUrl + WMURLS+'/del_articlecomment/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
                 commentid: articleids
@@ -687,7 +693,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             async: false,
             url: baseUrl + WMURLS+'/look_articlecomment/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
                 commentid: item.commentid,
@@ -743,7 +749,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         }
         this.setState(state, () => {
             var data = {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
 
@@ -814,7 +820,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             type: 'post',
             url: baseUrl + WMURLS+'/search_articleclass',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid
             }

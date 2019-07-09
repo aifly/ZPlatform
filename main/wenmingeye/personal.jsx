@@ -8,6 +8,7 @@ import $ from 'jquery';
 import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import ZmitiWenmingAsideBarApp from './header.jsx';
+import { WMURLS, title, baseUrl, WMEYEAPPID } from './url';
 
 const Search = Input.Search;
 import MainUI from '../components/Main.jsx';
@@ -19,7 +20,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
 
         this.state = {
             mainHeight:document.documentElement.clientHeight-50,
-            appid:window.WENMING.XCXAPPID,
+            appid:WMEYEAPPID,
             dataSource:[],
             keyword:'',
             filterDropdownComment: false,
@@ -114,8 +115,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             },
         }];
 
-        var s =this;
-        var title = '身边文明事';
+        var s =this; 
 
 
         var props = {
@@ -126,7 +126,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
                          <div className='wenming-ranking-pos'>
                             <div className="wenming-ranking-header">
                                 <Row>
-                                    <Col span={16} className="wenming-ranking-header-inner">个人排行榜-身边文明事
+								<Col span={16} className="wenming-ranking-header-inner">个人排行榜-{title}
                                         
                                     </Col>
                                     <Col span={8} className='wenming-ranking-button-right'>
@@ -178,9 +178,9 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
         s.state.dataSource=[];
         $.ajax({
             type:'post',
-            url:window.baseUrl+'weixinxcx/usersort/',
+            url:baseUrl + WMURLS +'/usersort/',
             data:{
-                appid:window.WENMING.XCXAPPID,
+                appid:WMEYEAPPID,
                 monthnum:3,
                 usernum:200,
                 userid:s.userid,
@@ -191,8 +191,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
             if(typeof data === 'string'){
                 data = JSON.parse(data);
             }
-            if(data.getret === 0 ){     
-                console.log(type,'type');
+            if(data.getret === 0 ){      
                 switch (type) {
                     case "userCommentSort":
                         data.list.map((item,i)=>{
@@ -245,7 +244,7 @@ class ZmitiWenmingPersonalRankApp extends React.Component{
         }else{
             $.ajax({
                 type:'POST',
-                url:window.baseUrl + 'weixinxcx/personcount/',
+                url:baseUrl +  WMURLS + '/personcount/',
                 data:{
                     userid:s.userid,
                     getusersigid:s.getusersigid,

@@ -19,7 +19,7 @@ import '../static/echarts/china';
 import IScroll from 'iscroll';
 const Search = Input.Search;
 const FormItem = Form.Item;
-import { WMURLS, title, baseUrl} from './url';
+import { WMURLS, title, baseUrl, WMEYEAPPID} from './url';
 
  class ZmitiWenmingReportApp extends React.Component{
     constructor(args){
@@ -27,7 +27,7 @@ import { WMURLS, title, baseUrl} from './url';
 
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
-           appid:window.WENMING.XCXAPPID,
+           appid:WMEYEAPPID,
            classid:'A7CZ1YE3',
            total:0,
            pageIndex:1,

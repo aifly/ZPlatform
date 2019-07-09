@@ -12,7 +12,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 import MainUI from '../components/Main.jsx';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import ZmitiEditor from '../components/zmiti-editor.jsx';
-import { WMURLS, title, baseUrl } from './url';
+import { WMURLS, title, baseUrl, WMEYEAPPID } from './url';
 import IScroll from 'iscroll';
 const Option = Select.Option;
 const FormItem = Form.Item;
@@ -27,7 +27,7 @@ class ZmitiWenmingReportaddApp extends React.Component{
            mainHeight:document.documentElement.clientHeight-50,
            showCredentialsDiolog:false,
            classid:'A7CZ1YE3',
-           appid:window.WENMING.XCXAPPID,
+           appid:WMEYEAPPID,
            imgshow:'none',
            articleid:'',
            content:'',

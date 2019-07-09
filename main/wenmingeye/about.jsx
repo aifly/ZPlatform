@@ -9,7 +9,7 @@ import {ZmitiValidateUser} from '../public/validate-user.jsx';
 
 import ZmitiWenmingAsideBarApp from './header.jsx';
 
-import { WMURLS, title,baseUrl } from './url';
+import { WMURLS, title, baseUrl, WMEYEAPPID } from './url';
 import MainUI from '../components/Main.jsx';
 import IScroll from 'iscroll';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
@@ -20,7 +20,7 @@ class ZmitiWenmingAboutApp extends React.Component{
 
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
-           appid:window.WENMING.XCXAPPID,
+		   appid: WMEYEAPPID,
            imgshow:'none',
            pageid:'gywm',
            imageurl:'',
@@ -196,7 +196,7 @@ class ZmitiWenmingAboutApp extends React.Component{
                 appid:s.state.appid,
                 pageid:s.state.pageid,
                 imageurl:s.state.imageurl,
-                content:s.delHtmlTag(s.state.content),
+                content:s.state.content,
             },
             success(data){
                 //console.log(data,'data.result');

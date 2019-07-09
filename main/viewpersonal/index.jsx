@@ -327,7 +327,7 @@ class ZmitiViewPersonalApp extends Component {
                label={<span><span style={{color:'red',marginRight:4,}}>*</span>原始密码</span>}
                hasFeedback={true}
              >
-               <Input type='password' ref='old-pwd' onFocus={()=>{this.setState({showOldPwdError:false})}} defaultValue={this.state.oldPwd} placeholder='原始密码' onChange={()=>{}}/>
+						<Input type='password' ref='old-pwd' onFocus={() => { this.setState({ showOldPwdError: false }) }} value={this.state.oldPwd} placeholder='原始密码' onChange={(e) => { this.setState({ oldPwd:e.target.value})}}/>
                {this.state.showOldPwdError && <div className='user-error'>原始密码不能为空</div>}
              </FormItem>
 
@@ -336,7 +336,7 @@ class ZmitiViewPersonalApp extends Component {
                label={<span><span style={{color:'red',marginRight:4,}}>*</span>新密码</span>}
                hasFeedback={true}
              >
-                 <Input type='password' ref='new-pwd' onFocus={()=>{this.setState({showNewPwdError:false})}} defaultValue={this.state.newPwd} placeholder='新密码' onChange={()=>{}}/>
+						<Input type='password' ref='new-pwd' onFocus={() => { this.setState({ showNewPwdError: false }) }} value={this.state.newPwd} placeholder='新密码' onChange={(e) => { this.setState({ newPwd: e.target.value }) }}/>
                {this.state.showNewPwdError && <div className='user-error'>新密码不能为空</div>}
              </FormItem>
 
@@ -345,7 +345,7 @@ class ZmitiViewPersonalApp extends Component {
                label={<span><span style={{color:'red',marginRight:4,}}>*</span>确认新密码</span>}
                hasFeedback={true}
              >
-                 <Input type='password' ref='sure-pwd' onFocus={()=>{this.setState({showSurePwdError:false})}}  defaultValue={this.state.surePwd} placeholder='确认密码' onChange={()=>{}}/>
+						<Input type='password' ref='sure-pwd' onFocus={() => { this.setState({ showSurePwdError: false }) }} value={this.state.surePwd} placeholder='确认密码' onChange={(e) => { this.setState({ surePwd: e.target.value })}}/>
                {this.state.showSurePwdError && <div className='user-error'>确认新密码不能为空 </div>}
              </FormItem>
             
@@ -603,9 +603,9 @@ class ZmitiViewPersonalApp extends Component {
     })
   }
   modifyUserPwd() { //修改密码
-      var oldPwd = this.refs['old-pwd'].refs.input.value;
-      var newPwd = this.refs['new-pwd'].refs.input.value;
-      var surePwd = this.refs['sure-pwd'].refs.input.value;
+      var oldPwd = this.state.oldPwd;
+      var newPwd = this.state.newPwd;
+      var surePwd = this.state.surePwd;
 
       if (oldPwd.length <= 0) {
         this.setState({

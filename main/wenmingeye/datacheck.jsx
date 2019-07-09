@@ -16,12 +16,14 @@ import {
 	Form,
 	Radio,
 	Modal,
+	Select
 } from '../commoncomponent/common.jsx';
 const RadioGroup = Radio.Group;
 let FormItem = Form.Item;
+const Option = Select.Option;
 import $ from 'jquery';
 
-import { WMURLS, title, baseUrl } from './url';
+import { WMURLS, title, baseUrl, WMEYEAPPID } from './url';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import {
     ZmitiValidateUser
@@ -47,7 +49,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 			replyContent:'',
 			fileList: [
 			],
-
+			defaultProvince:"",
 			pageSize: 10,
 			
 			replyObj:{
@@ -64,7 +66,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             tab: 'all',
 
             currentWhere: {},
-
+			provinceRankingList:[],
             keywords: '',
 
             status: -1,
@@ -137,8 +139,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         }, this);
 
 
-        resizeMainHeight(this);
-
+		resizeMainHeight(this);
+		
 
         window.addEventListener('keydown', (e) => {
             switch (e.keyCode) {
@@ -162,8 +164,16 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         setTimeout(() => {
             this.scroll.refresh();
         }, 100)
-
-        this.request();
+		
+		var id = this.props.params.id;
+		if(id){
+			this.refs['switch'].querySelector('button').click();
+		}
+		else{
+			this.request();
+		}
+		this.getProvinceList();
+		
 
 
     }
@@ -265,8 +275,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             mainRight: <div className='wenming-datacheck-main-ui' style={{height:this.state.mainHeight}}>
                         <header className='wenming-datacheck-header'>
                             <div>数据审核-{title}</div>   
-                            <div><Switch onChange={this.getCheckedData.bind(this)} checkedChildren="已审" unCheckedChildren="未审" /></div>
-                            <div></div>   
+                            <div  ref='switch' ><Switch onChange={this.getCheckedData.bind(this)} checkedChildren="已审" unCheckedChildren="未审" /></div>
+						<div><a href='#/wmeyeadd'><Icon type="upload" />上报数据</a></div>   
 							
                         </header>
                         <section className='wenming-datacheck-bar'>
@@ -276,8 +286,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                {showBatchbars && <Popconfirm onConfirm={this.batchDelete.bind(this)} placement="top" title="删除后数据将无法恢复，确定要删除吗？" okText="确定" cancelText="取消">
                                                                    <div className='wenming-del'><Icon type='delete'/>批量删除</div>
                                                                </Popconfirm>}
-                                {showBatchbars && this.state.status === 0 && <div onClick={this.batchChecked.bind(this,'pass')} className='wenming-datacheck-batchcheck'><Icon type="check-circle" />批量审核通过</div>}
-                                {showBatchbars && this.state.status === 0 && <div onClick={this.batchChecked.bind(this,'unpass')} className='wenming-datacheck-unpass'><Icon type="close-circle" />拒绝通过审核</div>}
+                                {showBatchbars && this.state.status === 0 && false && <div onClick={this.batchChecked.bind(this,'pass')} className='wenming-datacheck-batchcheck'><Icon type="check-circle" />批量审核通过</div>}
+                                {showBatchbars && this.state.status === 0 && false && <div onClick={this.batchChecked.bind(this,'unpass')} className='wenming-datacheck-unpass'><Icon type="close-circle" />拒绝通过审核</div>}
                                 <div>
                                      <Dropdown overlay={menu}>
                                         <a className="ant-dropdown-link" href="javascript:">
@@ -291,7 +301,15 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                             return <Radio key={i} value={item.value}>{item.label}</Radio>
                                         })}
                                     </RadioGroup>
-                                </div>}
+									<Select style={{width:120}} value={this.state.defaultProvince} onChange={this.searchByProvince.bind(this)}>
+										{
+										this.state.provinceRankingList.map((p,i)=>{
+											return <Option key={i} value={p.provicecode}>{p.provicename}</Option>
+										})
+										}
+									</Select>
+								</div>
+							}
                             </div>
                             <div>
                                 <Row type='flex'>
@@ -302,6 +320,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                         </section>
                         <section className='wenming-datacheck-list' ref='wenming-datacheck-list'>
                             <ul>
+								{this.state.dataSource.length<=0 && <li style={{textAlign:'center'}}>
+									<span style={{position:'relative',left:'50%',marginLeft:-26}}>暂无数据</span>
+								</li>}
                                 {this.state.dataSource.map((item,i)=>{
                                     var className='';
 
@@ -367,7 +388,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                 <img src={item.headimgurl||defaulturl}/>
                                             </section>
                                             <section className='wenming-datacheck-item-main-content'>
-                                                <h2>{item.nickname}</h2>
+												<h2>{item.nickname} <span style={{ fontSize: '12px', fontWeight: 'normal' }}>({item.mobile} &nbsp;&nbsp;&nbsp; {item.provicename})</span></h2>
                                                 <div className='wenming-datacheck-date'>{item.date}</div>
 												<h2>{item.title}</h2>
                                                 <div className='wenming-datacheck-content'>
@@ -397,6 +418,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                         {item.status === 1 && <div><a href={'#/wmeyecommentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
                                                         {this.state.status === 0 &&  <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐到首页</Checkbox></div>}
 														{this.state.status === 1 && item.status !== 2 && <div><Checkbox onChange={this.recommentArticle.bind(this, item)} checked={item.isHost} >推荐到首页</Checkbox></div>}
+														{item.status * 1 === 0 && (!item.adminreplyimg && !item.adminreplycompanyname && !item.adminreplycontent) && <div onClick={this.quickReply.bind(this, item, 'pass', i)}>
+															<Icon className='wenming-pass' type="check-circle" />快捷回复
+														</div>}
                                                         {item.status*1 === 0 && (!item.adminreplyimg && !item.adminreplycompanyname && !item.adminreplycontent)&& <div onClick={this.reply.bind(this,item,'pass',i)}>
                                                            <Icon className='wenming-pass' type="check-circle" />回复
 														</div>}
@@ -529,6 +553,85 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
 	}
 
+	searchByProvince(provicecode){
+ 
+		window.location.hash ='#/wmeyedatacheck/';
+		this.setState({
+			defaultProvince:provicecode
+		});
+		$.ajax({
+			type: 'post',
+			url: baseUrl + WMURLS + '/get_articlelistbyprovice/',
+			data: {
+				appid: WMEYEAPPID,
+				userid: this.userid,
+				getusersigid: this.getusersigid,
+				provicecode
+			}
+		}).done((data) => {
+			if (typeof data === 'string') {
+				data = JSON.parse(data);
+			}
+			if (data.getret === 0) {
+				 this.state.dataSource = [];
+					 
+                    data.list.map((item, i) => {
+                        var imgs = item.imageslist.split(',');
+                        imgs.imgList = [];
+                        imgs.map((item, i) => {
+                            imgs.imgList[i] = {}
+                            imgs.imgList[i].loaded = false;
+                        });
+                        if (!imgs[0]) {
+                            imgs.shift();
+                        }
+                        this.state.dataSource.push({
+                            nickname: item.nickname,
+                            headimgurl: item.headimgurl,
+                            date: item.looktime,
+							content: item.content,
+							adminreplycompanyname: item.adminreplycompanyname,
+							adminreplyimg:item.adminreplyimg,
+							adminreplycontent:item.adminreplycontent,
+                            defaultContent: item.content,
+							comments: item.commentnum,
+
+							 
+							
+                            imgs,
+                            sentiment: item.sentiment,
+                            mobile: item.mobile,
+							provicename: item.provicename,
+                            voidurl: item.voidurl,
+                            isHost: item.ishost,
+                            title: item.title,
+                            status: item.status,
+                            ///videos:[],
+                            id: item.articlid,
+                        });
+                    });
+                    this.state.loadByKeyWords = false;
+                    var rows = typeof data.countRow === 'nnumber' ? data.countRow : data.countRow.countrows
+                    this.state.allCount = data.countRow.countrows
+
+
+                    this.forceUpdate(() => {
+                        this.scroll.refresh();
+                    });
+
+			}
+		})
+	}
+	quickReply(item) {//快捷回复
+		var obj = {
+			id:item.id,
+			replyCompany:'中国文明网',
+			replyContent:'您提供的线索已收到，请继续关注！'
+
+		};
+		this.operatorReply(2, obj);
+	}
+
 	operatorReply(savetype,obj){
 		var s = this;
 		var item =  obj || this.state.replyObj;
@@ -537,7 +640,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 			type: 'post',
 			url: baseUrl + WMURLS + '/reply_articles/',
 			data: {
-				appid: window.WENMING.XCXAPPID,
+				appid: WMEYEAPPID,
 				userid: this.userid,
 				getusersigid: this.getusersigid,
 				articleids: item.id,
@@ -563,6 +666,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 			}
 		})
 	}
+
+	
+
 
 	replyAction(savetype){
 		this.operatorReply(savetype);
@@ -684,12 +790,56 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
 
     getCheckedData(index) {
-        this.setState({
-            pageIndex: 1
-        }, () => {
-            this.loadArticle(index * 1);
-        })
+		var id = this.props.params.id;
+		window.location.hash = '#/wmeyedatacheck/';
+		if(!index){
+			this.setState({
+				pageIndex: 1,
+				status:index,
+				defaultProvince:''
+			}, () => {
+				this.loadArticle(index * 1);
+			})
+		}else{
+			if(id){
+				
+				var type = id.split('_')[1];
+				
+				switch (type) {
+					case 'city':
+						this.setState({
+							pageIndex: 1,
+							status:1,
+							
+							defaultProvince:id.split('_')[0]
+						}, () => {
+							this.searchByProvince(id.split('_')[0]);
+						})
+						
+						break;
+					case 'openid':
+						this.setState({
+							pageIndex: 1,
+							status:1,
+							openid:	id.split('_')[0]
+						}, () => {
+							this.loadArticle(index * 1);
+						})
 
+					break;
+				}
+			}
+			else{
+				this.setState({
+					pageIndex: 1,
+					status:index
+				}, () => {
+					this.loadArticle(index * 1);
+				})
+			}
+		}
+
+		
     }
 
     recommentArticle(item) {
@@ -705,7 +855,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             type: 'post',
             url:baseUrl + WMURLS+'/hot_articles/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
                 articleids: item.id,
@@ -792,7 +942,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             type: 'post',
             url:baseUrl + WMURLS+'/del_articles/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
                 articleids: articleids
@@ -859,9 +1009,10 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         }
 
 	}
+
+
 	
 	reply(item,type,index){
-		
 		
 		this.state.replyObj = item;
 		this.state.replyObj.replyContent = item.adminreplycontent;
@@ -884,7 +1035,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                         type: 'post',
                         url:baseUrl + WMURLS+'/hot_articles/',
                         data: {
-                            appid: window.WENMING.XCXAPPID,
+                            appid: WMEYEAPPID,
                             userid: this.userid,
                             getusersigid: this.getusersigid,
                             articleids: item.id,
@@ -910,7 +1061,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             type: 'post',
             url:baseUrl + WMURLS+'/look_articles//',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
                 articleids: item.id,
@@ -949,7 +1100,32 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         }, () => {
             this.loadArticle(this.state.status, e);
         })
-    }
+	}
+	
+	getProvinceList(){
+		var s = this;
+		$.ajax({
+			type: 'post',
+			url: baseUrl + WMURLS + '/get_articleprovince/',
+			data: {
+				appid: WMEYEAPPID,
+				monthnum: 3,
+				userid: this.userid,
+				getusersigid: this.getusersigid
+			}
+		}).done((data) => {
+			if (typeof data === 'string') {
+				data = JSON.parse(data);
+			}
+			if (data.getret === 0) {
+				this.provinceRankingList = data.list.concat([]);
+				this.setState({
+					provinceRankingList: data.list
+				});
+
+			}
+		});
+	}
 
     loadArticle(index, e) {
 
@@ -963,7 +1139,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         }
         this.setState(state, () => {
             var data = {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
 
@@ -983,7 +1159,12 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
             if (this.state.keywords && this.state.loadByKeyWords) {
                 data.keyword = this.state.keywords;
-            }
+			}
+			
+			if(this.state.openid){
+				data.wxopenid = this.state.openid;
+			}
+
 
             if (this.state.classid) {
                 data.classid = this.state.classid;
@@ -999,7 +1180,6 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 }
                 if (data.getret === 0) {
                     this.state.dataSource = [];
-                    console.log(data)
                     data.list.map((item, i) => {
                         var imgs = item.imageslist.split(',');
                         imgs.imgList = [];
@@ -1023,6 +1203,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 							
                             imgs,
                             sentiment: item.sentiment,
+                            mobile: item.mobile,
+							provicename: item.provicename,
                             voidurl: item.voidurl,
                             isHost: item.ishost,
                             title: item.title,
@@ -1060,7 +1242,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             type: 'post',
             url:baseUrl + WMURLS+'/search_articleclass',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid
             }

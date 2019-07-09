@@ -10,7 +10,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 
 import MainUI from '../components/Main.jsx';
-import { WMURLS, title, baseUrl } from './url';
+import { WMURLS, title, baseUrl, WMEYEAPPID } from './url';
 import ZmitiUploadDialog from '../components/zmiti-upload-dialog.jsx';
 import ZmitiEditor from '../components/zmiti-editor.jsx';
 import IScroll from 'iscroll';
@@ -26,17 +26,18 @@ const TextArea = Input;
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
            classid:'',
-           appid:window.WENMING.XCXAPPID,
+			appid: WMEYEAPPID,
            content:'',
-           title:'',
+		   title:'',
+			provinceList:[],
            wxopenid:'zhongguowenmingwang',
            imageslist:'',
            source:'',
            type:3,
            ishost:0,
            voidurl:'',
-           longitude:'',
-           latitude:'',
+			longitude: '116.585856',
+			latitude: '40.364989',
            fileList:[],
            isAddImage:false,
            isAddVideo:false,
@@ -75,7 +76,9 @@ const TextArea = Input;
 
 
         resizeMainHeight(this);
-        window.s = this;
+		window.s = this;
+		
+		this.getProvinceList();
         window.obserable.on('addImage',()=>{
             this.setState({isAddImage:true},()=>{
                 window.obserable.trigger({
@@ -237,6 +240,17 @@ const TextArea = Input;
                                                       
                                 </FormItem>
 
+								<FormItem
+									{...formItemLayout}
+									label="标题"
+									hasFeedback
+								>
+
+									<Input
+										onChange={(e) => { this.state.title = e.target.value; this.forceUpdate(); }} value={this.state.title}
+									/>
+								</FormItem>
+
                                 <FormItem
                                 {...formItemLayout}
                                 label="内容"
@@ -247,6 +261,33 @@ const TextArea = Input;
                                     onChange={(e)=>{this.state.content=e.target.value;this.forceUpdate();}} value={this.state.content}
                                   />                   
                                 </FormItem>
+
+								<FormItem
+									{...formItemLayout}
+									label="省份"
+									hasFeedback
+								>
+
+									<Select value={this.state.provicename} onChange={this.changeProvince.bind(this)}>
+										{this.state.provinceList.map((item,i)=>{
+											return <Option value={item.name + '-' + item.log + '-' + item.lat}  key={i}>
+												 {item.name}
+											</Option>
+										})}
+									</Select>
+								</FormItem>
+
+								<FormItem
+									{...formItemLayout}
+									label="手机号"
+									hasFeedback
+								>
+
+									<Input
+										onChange={(e) => { this.state.mobile = e.target.value; this.forceUpdate(); }} value={this.state.mobile}
+									/>
+								</FormItem>
+								
                                 <FormItem
                                 {...formItemLayout}
                                 label="推荐"
@@ -321,7 +362,21 @@ const TextArea = Input;
         window.location='#/wenmingdatacheck'
     }
     //video
-    
+	changeProvince(e){
+		var info = e.split('-');
+		if(info[1] && info[2]){
+			this.setState({
+				provicename:info[0],
+				longitude: info[1],
+				latitude: info[2],
+			});
+		}
+		else{
+			this.setState({
+				provicename:info[0],
+			});
+		}
+	}
     uploadVideo(){//上传视频
 
         let formData = new FormData(),
@@ -339,7 +394,6 @@ const TextArea = Input;
             processData: false,
             success(data){
                 data.getfileurl[0].key = s.props.randomString(8);
-                console.log(data.getfileurl[0].datainfourl,'data.getfileurl[0]');
                 s.state.voidurl=data.getfileurl[0].datainfourl;
                 s.forceUpdate();
             }
@@ -403,15 +457,34 @@ const TextArea = Input;
         }
         console.log(s.state.type,'恢复默认');
         s.forceUpdate();
-    }
+	}
+	getProvinceList(){
+		var s = this;
+		$.ajax({
+			url: baseUrl + WMURLS +  '/get_provicelist',
+			data:{},
+			success(data){
+				if(data.getret === 0){
+					s.setState({
+						provinceList:data.result
+					});
+
+					
+				}
+			}
+		});
+	}
     addProduct(){//添加
         var s = this;
         var userid = this.props.params.userid?this.props.params.userid:this.userid;
         var params = {
             userid:s.userid,
-            getusersigid:s.getusersigid,
+			getusersigid:s.getusersigid,
+			title:s.state.title,
             classid:s.state.classid,
             appid:s.state.appid,
+            mobile:s.state.mobile,    
+            provicename:s.state.provicename,    
             content:s.state.content,    
             title:s.state.title,
             wxopenid:s.state.wxopenid,
@@ -422,7 +495,11 @@ const TextArea = Input;
             voidurl:s.state.voidurl,
             longitude:s.state.longitude,
             latitude:s.state.latitude,
-        }
+		}
+		if(!this.state.title){
+			message.error('标题不为能为空');
+			return;
+		}
         $.ajax({
             type:'POST',
             url:baseUrl + WMURLS+'/add_articles/',
@@ -430,7 +507,7 @@ const TextArea = Input;
             success(data){
                     message[data.getret === 0 ? 'success':'error'](data.getmsg);
                     s.setState({                        
-                        appid:window.WENMING.XCXAPPID,
+                        appid:WMEYEAPPID,
                         content:'',
                         title:'',
                         wxopenid:'zhongguowenmingwang',//

@@ -10,6 +10,11 @@ $baseColor: #f4654c;
 	background: #ffffff;
 	box-sizing: border-box;
 
+	.ant-table-column-sorter{
+		width:auto  !important;
+		height:auto !important;
+	}
+
 	header.wenming-ranking {
 		width: 100%;
 		height: $height;

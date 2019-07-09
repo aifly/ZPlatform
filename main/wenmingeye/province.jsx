@@ -12,6 +12,7 @@ import ZmitiWenmingAsideBarApp from './header.jsx';
 
 
 import MainUI from '../components/Main.jsx';
+import { WMEYEAPPID } from './url';
 const { MonthPicker, RangePicker } = DatePicker;
 class ZmitiWenmingProvinceRankApp extends React.Component{
     constructor(args){
@@ -19,7 +20,7 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
 
         this.state = {
             mainHeight:document.documentElement.clientHeight-50,
-            appid:window.WENMING.XCXAPPID,
+            appid:WMEYEAPPID,
             dataSource:[],
             startValue: null,
 			endValue: null,
@@ -151,7 +152,7 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
             type:'post',
             url:window.baseUrl+'weixinxcx/provincesort/',
             data:{
-                appid:window.WENMING.XCXAPPID,
+                appid:WMEYEAPPID,
                 monthnum:12,
                 userid:s.userid,
                 getusersigid:s.getusersigid
@@ -188,7 +189,7 @@ class ZmitiWenmingProvinceRankApp extends React.Component{
             type:'post',
             url:window.baseUrl+'weixinxcx/month_daysort/',
             data:{
-                appid:window.WENMING.XCXAPPID,
+                appid:WMEYEAPPID,
                 userid:s.userid,
                 getusersigid:s.getusersigid,
                 starttime:s.state.startValue,

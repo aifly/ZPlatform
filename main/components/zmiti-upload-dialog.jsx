@@ -1006,7 +1006,7 @@ export default class ZmitiUploadDialog extends React.Component {
 }
 
 ZmitiUploadDialog.defaultProps = {
-    baseUrl: 'http://api.zmiti.com/v2/',//http://webapi.zmiti.com/v1/
+    baseUrl: window.baseUrl,//http://webapi.zmiti.com/v1/
     cateUrl: "datainfoclass/",
     uploadUrl: 'upload/upload_file/',
     getImgInfoUrl: 'datainfoclass/resinfo/',//获取当前分类下的所有图片资源

@@ -19,7 +19,7 @@ import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/chart/map';
 
 import '../static/echarts/china';
-import { WMURLS, title, baseUrl} from './url';
+import { WMURLS, title, baseUrl, WMEYEAPPID} from './url';
 import IScroll from 'iscroll';
 var defaulturl = 'http://www.zmti.com/main/static/images/zmiti-logo.jpg';
 
@@ -170,14 +170,14 @@ class ZmitiWenmingApp extends React.Component {
                     if (s.geoCoordMap[address]) { //存在
                         s.userData.forEach(function(item, i) {
                             if (item.name === address) {
-                                item.value++;
+								item.value++;
                             }
                         });
 
                     } else {
                         s.geoCoordMap[address] = data.pos;
                         s.userData.push({
-                            name: address,
+							name: address,
                             value: 1
                         });
                     }
@@ -202,8 +202,7 @@ class ZmitiWenmingApp extends React.Component {
                     var headimgurl = data.headimgurl;
 
 
-                    s.myChart.setOption(s.dataConfig(s.userData));
-
+                   	s.myChart.setOption(s.dataConfig(s.userData));
 
                 } else {
 
@@ -339,7 +338,7 @@ class ZmitiWenmingApp extends React.Component {
                                 <aside className='weniming-statistics-list'>
                                     <section>
                                         <header className='wenming-header'>
-                                            <a href='#/wenmingprovince/'>省排行榜</a>
+											<a href='#/wmeyeprovince/'>省排行榜</a>
                                         </header>
                                         <section className='wenming-list-title'>
                                             <div>排名</div>
@@ -351,9 +350,9 @@ class ZmitiWenmingApp extends React.Component {
                                             <ul>
                                                 {this.state.provinceRankingList.map((item,i)=>{
                                                     return <li key={i}>
-                                                        <a href={'#/wenmingcity/'+item.provincecode}>
+														<a href={'#/wmeyecity/'+item.provincecode}>
                                                             <div>{i+1}</div>
-                                                            <div title={item.province} className='zmiti-text-overflow'>{item.province}</div>
+                                                            <div title={item.province||'其它'} className='zmiti-text-overflow'>{item.province|| '其它'}</div>
                                                             <div>{item.pv}</div>
                                                             <div>{item.report}</div>
                                                         </a>
@@ -365,7 +364,7 @@ class ZmitiWenmingApp extends React.Component {
                                     </section>
                                     <section>
                                         <header   className='wenming-header'>
-                                            <a href='#/wenmingpersonal/'>个人排行榜</a>
+								<a href='#/wmeyepersonal/'>个人排行榜</a>
                                             <span style={{float:'right',color:'#999',fontSize:'12px',paddingTop:'5px',paddingRight:'5px'}}>{this.state.totalReport}：{this.state.totalView}</span>
                                         </header>
                                        <section className='wenming-list-title'>
@@ -380,7 +379,7 @@ class ZmitiWenmingApp extends React.Component {
                                                     return <li key={i}>
                                                             <a href="javascript:void(0)" style={{cursor:'default'}}>
                                                                 <div><img src={item.headerimgurl||defaulturl}/></div>
-                                                                <div title={item.nickname} className='zmiti-text-overflow'>{item.nickname}</div>
+                                                                <div onClick={this.toPage.bind(this,item)} title={item.nickname} className='zmiti-text-overflow'>{item.nickname}</div>
                                                                 <div>{item.commentCount}</div>
                                                                 <div>{item.report}</div>
                                                             </a>
@@ -423,7 +422,12 @@ class ZmitiWenmingApp extends React.Component {
             }
             return 1;
         }
-    }
+	}
+	
+	toPage(item){
+		console.log(item);
+		window.location.hash = '#/wmeyedatacheck/' + item.wxopenid+"_openid";
+	}
 
     sortList(type, e) {
         window.ss = this;
@@ -551,7 +555,15 @@ class ZmitiWenmingApp extends React.Component {
         //var userArr = localStorage.getItem('userData' + worksid) || '{}';
         // userData = JSON.parse(userArr).userData || [];
 
-        this.myChart = myChart;
+		this.myChart = myChart;
+		myChart.on('click',  (params)=> {
+			var city = params.name; 
+			this.provinceRankingList.forEach(item=>{
+				if(item.province.indexOf(city)>-1){
+					window.location.hash = '#/wmeyedatacheck/' + item.provincecode+"_city";
+				}
+			})
+		});
 
         myChart.setOption(this.dataConfig(userData), true);
 
@@ -562,7 +574,7 @@ class ZmitiWenmingApp extends React.Component {
             type: 'post',
             url: baseUrl + WMURLS + '/usersort/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 monthnum: 3,
                 usernum: 30,
                 userid: this.userid,
@@ -599,7 +611,7 @@ class ZmitiWenmingApp extends React.Component {
             type: 'post',
             url: baseUrl + WMURLS + '/totalpv/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid
             }
@@ -622,7 +634,7 @@ class ZmitiWenmingApp extends React.Component {
             type: 'post',
             url: baseUrl + WMURLS + '/userareatotalpv/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid
             }
@@ -662,7 +674,7 @@ class ZmitiWenmingApp extends React.Component {
             type: 'post',
             url: baseUrl + WMURLS + '/xcxusercount',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid
             }
@@ -685,7 +697,7 @@ class ZmitiWenmingApp extends React.Component {
             type: 'post',
             url: baseUrl + WMURLS + '/provincesort/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 monthnum: 3,
                 userid: this.userid,
                 getusersigid: this.getusersigid
@@ -808,7 +820,7 @@ class ZmitiWenmingApp extends React.Component {
     convertData(data) {
         var res = [];
         for (var i = 0; i < data.length; i++) {
-            var geoCoord = this.geoCoordMap[data[i].name];
+			var geoCoord = this.geoCoordMap[data[i].name];
             if (geoCoord) {
                 res.push({
                     name: data[i].name,

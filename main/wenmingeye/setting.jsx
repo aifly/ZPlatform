@@ -14,7 +14,7 @@ import MainUI from '../components/Main.jsx';
 const FormItem = Form.Item;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-import { WMURLS, title, baseUrl } from './url';
+import { WMURLS, title, baseUrl, WMEYEAPPID } from './url';
 
  class ZmitiWenmingSettingApp extends React.Component{
     constructor(args){
@@ -22,7 +22,7 @@ import { WMURLS, title, baseUrl } from './url';
 
         this.state = {
            mainHeight:document.documentElement.clientHeight-50,
-           appid:window.WENMING.XCXAPPID,
+           appid:WMEYEAPPID,
            modpostDialogVisible:false,
            datacheck:false,//数据审核
            messagecheck:false,//评论审核
@@ -99,14 +99,14 @@ import { WMURLS, title, baseUrl } from './url';
                         <div className="wenming-setting-line"></div>
                         <div className='hr10'></div>
                         <div className='wenming-setting-table'>
-                            <Row>
+                            {false && <Row>
                                 <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>数据自动审核：</div></Col>
                                 <Col span={16}>
                                     <div>
                                     <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.datacheck.bind(this)} checked={this.state.datacheck} />
                                     </div>
                                 </Col>
-                            </Row>
+                            </Row>}
                             <div className='hr15'></div>
                             <Row>
                                 <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>评论自动审核：</div></Col>
@@ -117,16 +117,16 @@ import { WMURLS, title, baseUrl } from './url';
                                 </Col>
                             </Row>
                             <div className='hr15'></div>
-                            <Row>
+                           {false && <Row>
                                 <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>文明播报：</div></Col>
                                 <Col span={16}>
                                     <div>
                                     <Switch checkedChildren="开" unCheckedChildren="关" onChange={this.noticecheck.bind(this)} checked={this.state.noticecheck} />
                                     </div>
                                 </Col>
-                            </Row>
+                            </Row>}
                             <div className='hr15'></div>
-                            <Row>
+                           {false && <Row>
                                 <Col span={8} className='wenming-setting-leftpane'><div className='wenming-setting-textright'>栏目设置：</div></Col>
                                 <Col span={16}>
                                     <div className='wenming-setting-classlist'>                                                
@@ -151,7 +151,7 @@ import { WMURLS, title, baseUrl } from './url';
                                         </div>
                                     </div>
                                 </Col>
-                            </Row>
+                            </Row>}
                             
                         </div>
                         <Modal title="栏目设置" visible={this.state.modpostDialogVisible}

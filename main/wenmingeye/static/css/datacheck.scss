@@ -276,7 +276,26 @@
                         }
                         .wenming-datacheck-item-main-content {
                             flex: 1;
-                            -webkit-flex: 1;
+							-webkit-flex: 1;
+							.wenming-from{
+								margin: 10px 0;
+								width:100%;
+								line-height: 40px;
+								border-top: 1px solid #ddd;
+							}
+							.wenming-comment-user{
+								margin-bottom: 10px;
+								img{
+									width: 40px;
+									@include br();
+								}
+								span{
+									margin-left: 10px;
+								}
+							}
+							.wenming-comment-title{
+								font-weight: bold;
+							}
 
                             .wenming-expand {
                                 float: right;

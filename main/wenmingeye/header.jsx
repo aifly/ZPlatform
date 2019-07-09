@@ -13,7 +13,7 @@ import {
 
 import ZmitiUserList from '../components/zmiti-user-list.jsx';
 
-var path = ['/wmeye', '/wmeyedatacheck', '/wmeyecommentcheck',  '/wmeyesetting', '/wmeyeabout'];//'/wmeyereport'
+var path = ['/wmeye', '/wmeyedatacheck/', '/wmeyecommentcheck',  '/wmeyesetting', '/wmeyeabout'];//'/wmeyereport'
 
 class ZmitiWenmingAsideBarApp extends React.Component {
     constructor(args) {

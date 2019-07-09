@@ -124,7 +124,7 @@ class App extends React.Component {
 				path: '/wmeye',
 				app: ZmitiWenmingEyeApp
 			}, {
-				path: '/wmeyedatacheck',
+				path: '/wmeyedatacheck/(:id)',
 				app: ZmitiWenmingEyeDataCheckApp
 			}, {
 				path: '/wmeyereport',

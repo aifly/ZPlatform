@@ -19,7 +19,7 @@ const RadioGroup = Radio.Group;
 import $ from 'jquery';
 
 
-import { WMURLS, title, baseUrl} from './url';
+import { WMURLS, title, baseUrl, WMEYEAPPID} from './url';
 import {
     ZmitiValidateUser
 } from '../public/validate-user.jsx';
@@ -427,7 +427,7 @@ class ZmitiWenmingCommentDetailApp extends React.Component {
             type: 'post',
             url:baseUrl + WMURLS+'/hot_articles/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
                 articleids: item.id,
@@ -526,7 +526,7 @@ class ZmitiWenmingCommentDetailApp extends React.Component {
             type: 'post',
             url:baseUrl + WMURLS+'/del_articlecomment/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
                 commentid: articleids
@@ -567,7 +567,7 @@ class ZmitiWenmingCommentDetailApp extends React.Component {
             type: 'post',
             url:baseUrl + WMURLS+'/look_articlecomment/',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid,
                 commentid: item.commentid,
@@ -627,7 +627,7 @@ class ZmitiWenmingCommentDetailApp extends React.Component {
         }
         this.setState(state, () => {
             var data = {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 pagenum: this.state.pageSize,
                 page: this.state.pageIndex,
@@ -687,7 +687,7 @@ class ZmitiWenmingCommentDetailApp extends React.Component {
             type: 'post',
             url:baseUrl + WMURLS+'/search_articleclass',
             data: {
-                appid: window.WENMING.XCXAPPID,
+                appid: WMEYEAPPID,
                 userid: this.userid,
                 getusersigid: this.getusersigid
             }
