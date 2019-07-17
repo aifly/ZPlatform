@@ -630,3 +630,24 @@
 	}
 
 }
+.wm-edit-modal-ui{
+    
+    .wm-edit-content{
+        width:100%;
+        @include br(6px);
+        border-color:#2db7f5 ;
+        resize:none;
+        padding:10px;
+        box-sizing: border-box;
+    }
+    .ant-form-item-control{
+        line-height: 32px !important;
+    }
+
+    @at-root.ant-modal-close-x{
+        svg{
+            display:none;
+        }
+    }
+
+}

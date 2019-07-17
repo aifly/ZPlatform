@@ -829,6 +829,7 @@ window.addEventListener('load', ()=> {
                     $(e.target).parent().find('span').removeClass("shadow").removeClass('hide').parents('.loaded').find('.loading').removeClass("show");
                 },10000);
 
+
                 $.ajax({
                     url: data.baseUrl + "user/login_user",
                     type: "POST",

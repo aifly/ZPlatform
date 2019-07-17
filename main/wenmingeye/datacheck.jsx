@@ -55,6 +55,11 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 			replyObj:{
 				id:-1
 			},
+            editObj:{
+                id:-1
+            },
+            editTitle:'',
+            editContent:'',
 
             currentPicIndex: -1,
 
@@ -439,6 +444,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                         {item.status*1 === 0 && <div onClick={this.checkedArticle.bind(this,item,'unpass',i)}>
                                                             <Icon className='wenming-unpass' type="close-circle" /> 拒绝通过审核
                                                         </div>}
+
+                                                        <div onClick={this.editBtn.bind(this,item,'pass',i)}><Icon className='wenming-edit' type="edit" /> 编辑内容</div>
                                                     </div>
                                                 </section>
                                             </section>
@@ -535,6 +542,32 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
 					</Form>
 					</Modal>
+                    <Modal title="编辑" 
+                    width={830}
+                    wrapClassName='wm-edit-modal-ui'
+                    maskClosable={false} visible={this.state.editObj.id!==-1}
+                    onCancel={this.closeEditdialog.bind(this)}
+                    footer={[
+                        <Button key="back" onClick={this.editAction.bind(this,1)}>
+                            保存
+                        </Button>
+                    ]}
+                >
+                    <Form>
+                        <FormItem
+                            {...formItemLayout}
+                            label="标题"
+                        >
+                            <Input placeholder='' value={this.state.editObj.title} onChange={e => { this.state.editObj.title = e.target.value;this.forceUpdate() }}/>
+                        </FormItem>
+                         <FormItem
+                            {...formItemLayout}
+                            label="内容"
+                        >
+                            <textarea className='wm-edit-content' value={this.state.editObj.content} onChange={e => { this.state.editObj.content = e.target.value ;this.forceUpdate() }}></textarea>
+                        </FormItem>
+                    </Form>
+                    </Modal>
 				<ZmitiUploadDialog id="addReplyImage" {...replyProps}></ZmitiUploadDialog>
             </div>
         }
@@ -1231,7 +1264,51 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
     }
 
+    closeEditdialog(){
+        var s = this;
+        s.setState({
+            editObj:{
+                id:-1
+            }           
+        })
+    }
 
+    editBtn(item,type,index){
+        this.state.editObj = item;
+        this.forceUpdate();
+    }
+
+    editAction(){
+        var s = this;
+        var item = this.state.editObj;
+        var classid=this.state.typeList[0].classid;
+        $.ajax({
+            type: 'post',
+            url: baseUrl + WMURLS + '/edit_articles/',
+            data: {
+                appid: WMEYEAPPID,
+                userid: this.userid,
+                getusersigid: this.getusersigid,
+                articlid: item.id,
+                title: item.title,
+                content: item.content,
+                classid
+            }
+        }).done((data) => {
+            if (typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            if (data.getret === 0) {
+
+                message.success(data.getmsg);
+                this.state.editObj = {
+                    id: -1
+                };
+                this.forceUpdate();
+
+            }
+        })
+    }
 
     request() {
 
