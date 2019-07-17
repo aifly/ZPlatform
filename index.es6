@@ -55,7 +55,7 @@ window.addEventListener('load', ()=> {
         baseUrl:protocol+'//h5.wenming.cn/v2/'// 'http://webapi.zmiti.com/v1/'//
 	};
 	
-	data.baseUrl= protocol + '//api.zmiti.com/v2/'// 'http://webapi.zmiti.com/v1/'//
+	///data.baseUrl= protocol + '//api.zmiti.com/v2/'// 'http://webapi.zmiti.com/v1/'//
 
     let utilMethods = {
 
