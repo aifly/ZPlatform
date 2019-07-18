@@ -91,8 +91,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             previewImage: '',
             fileImgList: [],
             editImgStr:'',
-            isAddImage:false,
-            isAddVideo:false
+            isReplyImage:false,
+            isEditImage:false,
+            isEditVideo:false
         }
 
         this.viewW = document.documentElement.clientWidth;
@@ -186,15 +187,6 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             this.request();
         }
         this.getProvinceList();
-        
-        window.obserable.on('addImage',()=>{
-            this.setState({isAddImage:true},()=>{
-                window.obserable.trigger({
-                    type:'showModal',
-                    data:{type:0,id:'addImage'}
-                });
-            });
-        });
 
     }
 
@@ -655,11 +647,13 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                     </Form>
                         
                     </Modal>
-                <ZmitiUploadDialog id="addReplyImage" {...replyProps}></ZmitiUploadDialog>
-                <ZmitiUploadDialog id="editImage" {...editProps}></ZmitiUploadDialog>
+                
+                
             </div>
         }
         var mainComponent = <div>
+        	{!this.state.isEditImage && this.state.isEditVideo && this.state.isReplyImage && <ZmitiUploadDialog id="editImage" {...editProps}></ZmitiUploadDialog>}
+        	{!this.state.isReplyImage && this.state.isEditVideo && this.state.isEditImage && <ZmitiUploadDialog id="addReplyImage" {...replyProps}></ZmitiUploadDialog>}
             <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>            
         </div>;
         return (
@@ -799,7 +793,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
     addImage(){
         var obserable = window.obserable;
         this.setState({
-            
+            isEditImage:true,
+          	isEditVideo:true,
+          	isReplyImage:false
         }, () => {
             obserable.trigger({
                 type: 'showModal',
@@ -1359,12 +1355,22 @@ class ZmitiWenmingDataCheckApp extends React.Component {
     }
 
     editBtn(item,type,index){
+    	var s = this;
         this.state.editObj = item;
         var content=this.state.editObj.content;
         var defaultContent=this.state.editObj.defaultContent;
-        console.log('当前内容',item);
+        //console.log('当前内容',item.imgs);
         this.state.editContent=this.state.editObj.defaultContent.replace(new RegExp("<br/>", "gm"), "\r\n");
         this.state.editIndex=index;
+        var curItems=item.imgs.join(',');
+        this.state.editImgStr=item.imgs.join(',');
+        console.log(this.state.editImgStr,'join-join');
+        curItems=curItems.split(',');
+        s.state.fileImgList=[];
+        curItems.map(function(elem,index) {
+        	s.state.fileImgList.push(elem);
+        })
+        console.log(this.state.fileImgList,'fileImgList')
         this.forceUpdate();
     }
 
@@ -1412,8 +1418,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
     editImage(){
         var obserable=window.obserable;
         this.setState({
-          isAddImage:false,
-          isAddVideo:true,
+          isEditImage:false,
+          isEditVideo:true,
+          isReplyImage:true
         },()=>{
           obserable.trigger({
               type:'showModal',
@@ -1428,6 +1435,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             s.state.type = 3;
         }
         console.log(s.state.type, '恢复默认');
+        s.state.editImgStr=s.state.fileImgList.join(',');
         s.forceUpdate();
     }
     request() {
