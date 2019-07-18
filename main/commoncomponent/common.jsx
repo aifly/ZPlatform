@@ -108,5 +108,5 @@ export  {
 	Popover,
 	Pagination,
 	Dropdown,
-	
+	Upload
 };
