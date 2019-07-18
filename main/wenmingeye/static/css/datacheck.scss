@@ -651,3 +651,22 @@
     }
 
 }
+.wenming-edit-imgs5{
+    margin:5px 0 0 0;
+     ul li {
+        width: 120px;
+        display: inline-block;
+        overflow: hidden;
+        margin-right: 10px;
+        position: relative;
+        img {
+            max-width: 120px;
+            max-height: 90px;
+        }
+        span{
+            margin-right: 10px;
+            cursor: pointer;
+            color: #333;
+        }
+    }
+}

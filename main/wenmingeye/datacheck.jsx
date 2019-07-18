@@ -16,7 +16,8 @@ import {
     Form,
     Radio,
     Modal,
-    Select
+    Select,
+    Upload
 } from '../commoncomponent/common.jsx';
 const RadioGroup = Radio.Group;
 let FormItem = Form.Item;
@@ -85,7 +86,13 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
             dataSource: [
 
-            ]
+            ],
+            previewVisible: false,
+            previewImage: '',
+            fileImgList: [],
+            editImgStr:'',
+            isAddImage:false,
+            isAddVideo:false
         }
 
         this.viewW = document.documentElement.clientWidth;
@@ -180,7 +187,14 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         }
         this.getProvinceList();
         
-
+        window.obserable.on('addImage',()=>{
+            this.setState({isAddImage:true},()=>{
+                window.obserable.trigger({
+                    type:'showModal',
+                    data:{type:0,id:'addImage'}
+                });
+            });
+        });
 
     }
 
@@ -250,6 +264,55 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 s.forceUpdate();
 
                 
+            },
+            onCancel() {
+                
+            },
+            title,
+            selectedIndex: 100,
+             
+        }
+        var editProps = {
+            userid: s.userid,
+            getusersigid: s.getusersigid,
+            onFinish(imgData) {
+                s.state.type = 1;
+                var imgDatasrc = imgData.src;
+                if (s.state.fileImgList.length < 5) {
+                    s.copyfileto({
+                        userid: s.userid,
+                        getusersigid: s.getusersigid,
+                        fileurl: imgDatasrc,
+                        isover: 0,
+                        dirname: 'wx_xcx',
+                        success(fileurl) {
+                            /*var len=s.state.fileImgList.length;
+                            if(s.state.fileImgList.length===0){
+                                len=0
+                            }else{
+                                len=s.state.fileImgList.length;
+                            }
+                            console.log(len,'len-len')
+                            s.state.fileImgList.push({
+                                uid:len,
+                                name:'qqq',
+                                status:'done',
+                                url:fileurl
+                            });*/
+                            s.state.fileImgList.push(fileurl);
+                            console.log(fileurl, '新图片',s.state.fileImgList);
+
+                            s.state.editImgStr = s.state.fileImgList.join(',');
+                            console.log(s.state.fileImgList.join(','),'拼接图片地址');
+                            s.forceUpdate();
+                        }
+                    })
+
+                } else {
+                    message.warning('最多只能添加5张图片');
+                }                
+                
+                s.forceUpdate();
             },
             onCancel() {
                 
@@ -553,7 +616,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             保存
                         </Button>
                     ]}
-                >
+                    >
                     <Form>
                         <FormItem
                             {...formItemLayout}
@@ -561,20 +624,43 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                         >
                             <Input placeholder='' value={this.state.editObj.title} onChange={e => { this.state.editObj.title = e.target.value;this.forceUpdate() }}/>
                         </FormItem>
-                         <FormItem
+                        <FormItem
                             {...formItemLayout}
                             label="内容"
                         >
                             <textarea className='wm-edit-content' value={this.state.editContent} onChange={e => { this.state.editContent = e.target.value ;this.forceUpdate() }}></textarea>
                         </FormItem>
+                        <FormItem
+                            {...formItemLayout}
+                            label="图片"
+                        >
+                            
+                            <div className='editUploaderBtn' style={{clear:'both'}}>
+                                <Button onClick={this.editImage.bind(this)}>选择图片</Button>
+                            </div>
+                            <div className='wenming-edit-imgs5' >
+                                <ul>
+                                    {this.state.fileImgList.map((item, i) => {
+                                        return <li key={i}><img src={item} />
+                                            <div className='wenming-reportedit-delimgs'>
+                                                <span onClick={this.editRemovepic.bind(this, i)} ><Icon type="download" style={{ fontSize: 16, color: '#333' }} />下载</span>
+                                                <span onClick={this.editRemovepic.bind(this, i)} ><Icon type="delete" style={{ fontSize: 16, color: '#333' }} />删除</span>
+                                            </div>
+                                        </li>
+                                    })}
+                                </ul>
+                                <div className='clearfix'></div>
+                            </div>
+                        </FormItem>
                     </Form>
+                        
                     </Modal>
                 <ZmitiUploadDialog id="addReplyImage" {...replyProps}></ZmitiUploadDialog>
+                <ZmitiUploadDialog id="editImage" {...editProps}></ZmitiUploadDialog>
             </div>
         }
         var mainComponent = <div>
-            <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>
-            
+            <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>            
         </div>;
         return (
             <MainUI component={mainComponent}></MainUI>
@@ -1276,7 +1362,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         this.state.editObj = item;
         var content=this.state.editObj.content;
         var defaultContent=this.state.editObj.defaultContent;
-        //console.log(defaultContent,'content',item);
+        console.log('当前内容',item);
         this.state.editContent=this.state.editObj.defaultContent.replace(new RegExp("<br/>", "gm"), "\r\n");
         this.state.editIndex=index;
         this.forceUpdate();
@@ -1293,6 +1379,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         var editIndex=this.state.editIndex;
         var status=this.state.status;//当前状态
         var pageIndex=this.state.pageIndex;//当前页
+        var editImgStr=this.state.editImgStr
         $.ajax({
             type: 'post',
             url: baseUrl + WMURLS + '/edit_articles/',
@@ -1303,6 +1390,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 articlid: item.id,
                 title: item.title,
                 content: content,
+                imageslist:editImgStr,
                 classid
             }
         }).done((data) => {
@@ -1320,7 +1408,28 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             }
         })
     }
-
+    //编辑图片
+    editImage(){
+        var obserable=window.obserable;
+        this.setState({
+          isAddImage:false,
+          isAddVideo:true,
+        },()=>{
+          obserable.trigger({
+              type:'showModal',
+              data:{type:0,id:'editImage'}
+          })  
+        })        
+    }
+    editRemovepic(i) {
+        var s = this;
+        s.state.fileImgList.splice(i, 1);
+        if (s.state.fileImgList.length < 1) {
+            s.state.type = 3;
+        }
+        console.log(s.state.type, '恢复默认');
+        s.forceUpdate();
+    }
     request() {
 
         this.loadArticle(0);

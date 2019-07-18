@@ -510,4 +510,20 @@
 .ant-modal-close-x svg {
   display: none; }
 
+.wenming-edit-imgs5 {
+  margin: 5px 0 0 0; }
+  .wenming-edit-imgs5 ul li {
+    width: 120px;
+    display: inline-block;
+    overflow: hidden;
+    margin-right: 10px;
+    position: relative; }
+    .wenming-edit-imgs5 ul li img {
+      max-width: 120px;
+      max-height: 90px; }
+    .wenming-edit-imgs5 ul li span {
+      margin-right: 10px;
+      cursor: pointer;
+      color: #333; }
+
 /*# sourceMappingURL=datacheck.css.map */
