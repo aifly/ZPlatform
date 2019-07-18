@@ -58,6 +58,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             editObj:{
                 id:-1
             },
+            editIndex:-1,
             editTitle:'',
             editContent:'',
 
@@ -564,7 +565,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             {...formItemLayout}
                             label="内容"
                         >
-                            <textarea className='wm-edit-content' value={this.state.editObj.content} onChange={e => { this.state.editObj.content = e.target.value ;this.forceUpdate() }}></textarea>
+                            <textarea className='wm-edit-content' value={this.state.editContent} onChange={e => { this.state.editContent = e.target.value ;this.forceUpdate() }}></textarea>
                         </FormItem>
                     </Form>
                     </Modal>
@@ -1275,6 +1276,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
     editBtn(item,type,index){
         this.state.editObj = item;
+        var content=this.state.editObj.content;
+        this.state.editContent=this.state.editObj.content.replace(new RegExp("<br/>", "gm"), "\r\n");
+        this.state.editIndex=index;
         this.forceUpdate();
     }
 
@@ -1282,8 +1286,12 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         var s = this;
         var item = this.state.editObj;
         var classid=this.state.typeList[0].classid;
-        var content=item.content;
-        content=content.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');//给内容加<br>换行
+        /*给内容加<br>换行*/
+        var content=this.state.editContent;
+        content=content.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');
+        //console.log(content,'new-content');
+        var editIndex=this.state.editIndex;
+        this.state.dataSource[editIndex].content=content;
         $.ajax({
             type: 'post',
             url: baseUrl + WMURLS + '/edit_articles/',
@@ -1301,7 +1309,6 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 data = JSON.parse(data);
             }
             if (data.getret === 0) {
-
                 message.success(data.getmsg);
                 this.state.editObj = {
                     id: -1
