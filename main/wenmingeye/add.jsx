@@ -183,6 +183,8 @@ const TextArea = Input;
                         success(fileurl){
                             s.state.fileList.push(fileurl);
                             console.log(fileurl,'新图片');
+                            s.state.imageslist=s.state.fileList.join();
+                            s.state.selectvideo='none';
                             s.forceUpdate();
                         }
                     })
@@ -191,9 +193,9 @@ const TextArea = Input;
                     message.warning('最多只能添加5张图片');
                 }
                              
-                s.state.imageslist=s.state.fileList.join();
+                /*s.state.imageslist=s.state.fileList.join();
 
-                s.state.selectvideo='none';
+                s.state.selectvideo='none';*/
                 s.forceUpdate();
                 
                 //console.log(s.state.fileList,'s.state.fileList');
