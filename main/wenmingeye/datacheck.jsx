@@ -1282,6 +1282,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         var s = this;
         var item = this.state.editObj;
         var classid=this.state.typeList[0].classid;
+        var content=item.content;
+        content=content.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');//给内容加<br>换行
         $.ajax({
             type: 'post',
             url: baseUrl + WMURLS + '/edit_articles/',
@@ -1291,7 +1293,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 getusersigid: this.getusersigid,
                 articlid: item.id,
                 title: item.title,
-                content: item.content,
+                content: content,
                 classid
             }
         }).done((data) => {
