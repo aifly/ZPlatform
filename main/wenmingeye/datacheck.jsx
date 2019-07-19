@@ -490,8 +490,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
 
                                                         {item.status * 1 === 1 && (item.adminreplyimg || item.adminreplycompanyname || item.adminreplycontent) && <div>
-                                                            <Popconfirm placement="top" title={'删除后些文章将为成未审核状态，确定要删除吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
-                                                                <Icon className='wenming-edit' type="delete" />删除回复 
+                                                            <Popconfirm placement="top" title={'撤销后些文章将为成未审核状态，确定要撤销吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
+                                                                <Icon className='wenming-edit' type="delete" />撤销审核 
                                                             </Popconfirm>
                                                         </div>}
                                                         {item.status === 1 && <div><a href={'#/wmeyecommentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
@@ -510,8 +510,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
 
                                                         {item.status * 1 === 0 && (item.adminreplyimg || item.adminreplycompanyname || item.adminreplycontent) && <div>
-                                                            <Popconfirm placement="top" title={'确定要删除吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
-                                                                <Icon className='wenming-edit' type="delete" />删除回复 
+                                                            <Popconfirm placement="top" title={'确定要撤销吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
+                                                                <Icon className='wenming-edit' type="delete" />撤销审核 
                                                             </Popconfirm>
                                                         </div>}
                                                         
