@@ -511,7 +511,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
                                                         {item.status * 1 === 0 && (item.adminreplyimg || item.adminreplycompanyname || item.adminreplycontent) && <div>
                                                             <Popconfirm placement="top" title={'确定要撤销吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
-                                                                <Icon className='wenming-edit' type="delete" />撤销审核 
+                                                                <Icon className='wenming-edit' type="delete" />撤销回复 
                                                             </Popconfirm>
                                                         </div>}
                                                         
