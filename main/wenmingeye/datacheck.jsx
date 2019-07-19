@@ -37,6 +37,7 @@ import MainUI from '../components/Main.jsx';
 
 import IScroll from 'iscroll';
 var defaulturl = 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
+
 class ZmitiWenmingDataCheckApp extends React.Component {
     constructor(args) {
         super(...args);
@@ -632,14 +633,16 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             </div>
                             <div className='wenming-edit-imgs5' >
                                 <ul>
-                                    {this.state.fileImgList.map((item, i) => {
+                                    {
+                                        this.state.fileImgList.map((item, i) => {
                                         return <li key={i}><img src={item} />
                                             <div className='wenming-reportedit-delimgs'>
-                                                <span onClick={this.editRemovepic.bind(this, i)} ><Icon type="download" style={{ fontSize: 16, color: '#333' }} />下载</span>
+                                                <span onClick={this.downloadIamge.bind(this,item)}><Icon type="download" style={{ fontSize: 16, color: '#333' }} />下载</span>
                                                 <span onClick={this.editRemovepic.bind(this, i)} ><Icon type="delete" style={{ fontSize: 16, color: '#333' }} />删除</span>
                                             </div>
                                         </li>
-                                    })}
+                                        })
+                                    }
                                 </ul>
                                 <div className='clearfix'></div>
                             </div>
@@ -1359,18 +1362,22 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         this.state.editObj = item;
         var content=this.state.editObj.content;
         var defaultContent=this.state.editObj.defaultContent;
-        //console.log('当前内容',item.imgs);
+        
         this.state.editContent=this.state.editObj.defaultContent.replace(new RegExp("<br/>", "gm"), "\r\n");
         this.state.editIndex=index;
+        s.state.fileImgList=[];//清空编辑图片
+        //console.log('当前内容',item.imgs);
         var curItems=item.imgs.join(',');
         this.state.editImgStr=item.imgs.join(',');
-        console.log(this.state.editImgStr,'join-join');
-        curItems=curItems.split(',');
-        s.state.fileImgList=[];
-        curItems.map(function(elem,index) {
-        	s.state.fileImgList.push(elem);
-        })
-        console.log(this.state.fileImgList,'fileImgList')
+        //console.log(this.state.editImgStr,'join');
+        var curItemsArr=new Array();        
+        if(curItems!=""){
+            curItemsArr=curItems.split(',');
+            curItemsArr.map(function(elem,index) {
+            	s.state.fileImgList.push(elem);
+            })            
+            //console.log(this.state.fileImgList,'fileImgList')
+        }
         this.forceUpdate();
     }
 
@@ -1408,6 +1415,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 this.state.editObj = {
                     id: -1
                 };
+                s.state.fileImgList=[];//清空编辑图片
                 this.loadArticle(status,pageIndex);//加载当前页
                 this.forceUpdate();
 
@@ -1437,6 +1445,27 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         console.log(s.state.type, '恢复默认');
         s.state.editImgStr=s.state.fileImgList.join(',');
         s.forceUpdate();
+    }
+    downloadIamge (imgsrc) {
+      let image = new Image();
+      let obj=imgsrc.lastIndexOf("/");
+      let name=imgsrc.substr(obj+1);//图片名称
+      // 解决跨域 Canvas 污染问题
+      image.setAttribute("crossOrigin", "anonymous")
+      image.onload = function() {
+        let canvas = document.createElement("canvas")
+        canvas.width = image.width
+        canvas.height = image.height
+        let context = canvas.getContext("2d");
+        context.drawImage(image, 0, 0, image.width, image.height)
+        let url = canvas.toDataURL("image/png") //得到图片的base64编码数据
+        let a = document.createElement("a") // 生成一个a元素
+        let event = new MouseEvent("click") // 创建一个单击事件
+        a.download = name || "photo" // 设置图片名称
+        a.href = url // 将生成的URL设置为a.href属性
+        a.dispatchEvent(event) // 触发a的单击事件
+      }
+      image.src = imgsrc
     }
     request() {
 

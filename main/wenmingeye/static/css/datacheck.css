@@ -521,8 +521,11 @@
     .wenming-edit-imgs5 ul li img {
       max-width: 120px;
       max-height: 90px; }
+    .wenming-edit-imgs5 ul li .wenming-reportedit-delimgs {
+      background: #d9d9d9;
+      text-align: center; }
     .wenming-edit-imgs5 ul li span {
-      margin-right: 10px;
+      margin: 0 10px;
       cursor: pointer;
       color: #333; }
 
