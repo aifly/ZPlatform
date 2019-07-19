@@ -92,6 +92,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             previewImage: '',
             fileImgList: [],
             editImgStr:'',
+            editVideoUrl:'',
             isReplyImage:false,
             isEditImage:false,
             isEditVideo:false
@@ -279,19 +280,6 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                         isover: 0,
                         dirname: 'wx_xcx',
                         success(fileurl) {
-                            /*var len=s.state.fileImgList.length;
-                            if(s.state.fileImgList.length===0){
-                                len=0
-                            }else{
-                                len=s.state.fileImgList.length;
-                            }
-                            console.log(len,'len-len')
-                            s.state.fileImgList.push({
-                                uid:len,
-                                name:'qqq',
-                                status:'done',
-                                url:fileurl
-                            });*/
                             s.state.fileImgList.push(fileurl);
                             console.log(fileurl, '新图片',s.state.fileImgList);
 
@@ -304,6 +292,35 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 } else {
                     message.warning('最多只能添加5张图片');
                 }                
+                
+                s.forceUpdate();
+            },
+            onCancel() {
+                
+            },
+            title,
+            selectedIndex: 100,
+             
+        }
+
+        var videoProps = {
+            userid: s.userid,
+            getusersigid: s.getusersigid,
+            onFinish(imgData) {
+                var imgDatasrc=imgData.src;
+                s.copyfileto({
+                    userid:s.userid,
+                    getusersigid:s.getusersigid,
+                    fileurl:imgDatasrc,
+                    isover:0,
+                    dirname:'wx_xcx',
+                    success(fileurl){
+                        s.state.editVideoUrl=fileurl;
+                        console.log(fileurl,'新video');
+                        s.state.type=2;
+                        s.forceUpdate();
+                    }
+                })               
                 
                 s.forceUpdate();
             },
@@ -623,6 +640,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                         >
                             <textarea className='wm-edit-content' value={this.state.editContent} onChange={e => { this.state.editContent = e.target.value ;this.forceUpdate() }}></textarea>
                         </FormItem>
+                        {!this.state.editVideoUrl &&
                         <FormItem
                             {...formItemLayout}
                             label="图片"
@@ -647,6 +665,23 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                 <div className='clearfix'></div>
                             </div>
                         </FormItem>
+                        }
+                        {this.state.editVideoUrl &&
+                            <FormItem
+                                {...formItemLayout}
+                                label="视频"                            
+                            >                            
+                                <div className='editUploaderBtn' style={{clear:'both'}}>
+                                    <Button onClick={this.editVideo.bind(this)}>选择视频</Button>
+                                </div>
+                                <div className='wenming-edit-imgs5' >                                
+                                    <Input addonBefore='视频URL' value={this.state.editVideoUrl}
+                                            onChange={e => {this.state.editVideoUrl = e.target.value ; this.forceUpdate()}}
+                                            type='text' placeholder='http://www.'/>
+                                    <div className='clearfix'></div>
+                                </div>
+                            </FormItem>
+                        }
                     </Form>
                         
                     </Modal>
@@ -657,6 +692,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         var mainComponent = <div>
         	{!this.state.isEditImage && this.state.isEditVideo && this.state.isReplyImage && <ZmitiUploadDialog id="editImage" {...editProps}></ZmitiUploadDialog>}
         	{!this.state.isReplyImage && this.state.isEditVideo && this.state.isEditImage && <ZmitiUploadDialog id="addReplyImage" {...replyProps}></ZmitiUploadDialog>}
+            {!this.state.isEditVideo && this.state.isReplyImage && this.state.isEditImage && <ZmitiUploadDialog id="editVideo" {...videoProps}></ZmitiUploadDialog>}
             <ZmitiWenmingAsideBarApp {...props}></ZmitiWenmingAsideBarApp>            
         </div>;
         return (
@@ -1366,7 +1402,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         this.state.editContent=this.state.editObj.defaultContent.replace(new RegExp("<br/>", "gm"), "\r\n");
         this.state.editIndex=index;
         s.state.fileImgList=[];//清空编辑图片
-        //console.log('当前内容',item.imgs);
+        console.log('当前内容',item);
         var curItems=item.imgs.join(',');
         this.state.editImgStr=item.imgs.join(',');
         //console.log(this.state.editImgStr,'join');
@@ -1378,6 +1414,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             })            
             //console.log(this.state.fileImgList,'fileImgList')
         }
+        this.state.editVideoUrl=item.voidurl;
         this.forceUpdate();
     }
 
@@ -1392,7 +1429,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         var editIndex=this.state.editIndex;
         var status=this.state.status;//当前状态
         var pageIndex=this.state.pageIndex;//当前页
-        var editImgStr=this.state.editImgStr
+        var editImgStr=this.state.editImgStr;
+        var editVideoUrl=this.state.editVideoUrl;
         $.ajax({
             type: 'post',
             url: baseUrl + WMURLS + '/edit_articles/',
@@ -1404,6 +1442,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 title: item.title,
                 content: content,
                 imageslist:editImgStr,
+                voidurl:editVideoUrl,
                 classid
             }
         }).done((data) => {
@@ -1466,6 +1505,21 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         a.dispatchEvent(event) // 触发a的单击事件
       }
       image.src = imgsrc
+    }
+    //更换视频
+    editVideo(){
+        console.log('editVideo');
+        var obserable=window.obserable;
+        this.setState({
+          isEditVideo:false,
+          isEditImage:true,
+          isReplyImage:true
+        },()=>{
+          obserable.trigger({
+              type:'showModal',
+              data:{type:2,id:'editVideo'}
+          })  
+        })
     }
     request() {
 
