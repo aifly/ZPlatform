@@ -47,8 +47,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             selectAll: false,
             allCount: 1,
             pageIndex: 1,
-            replyCompany:'',
-            replyContent:'',
+            replycompanyname:'',
+            replycontent:'',
             fileList: [
             ],
             defaultProvince:"",
@@ -93,6 +93,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             fileImgList: [],
             editImgStr:'',
             editVideoUrl:'',
+            editusername:'',
             isReplyImage:false,
             isEditImage:false,
             isEditVideo:false
@@ -500,11 +501,11 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                         {item.status * 1 === 0 && (!item.adminreplyimg && !item.adminreplycompanyname && !item.adminreplycontent) && <div onClick={this.quickReply.bind(this, item, 'pass', i)}>
                                                             <Icon className='wenming-pass' type="check-circle" />快捷回复
                                                         </div>}
-                                                        {item.status*1 === 0 && (!item.adminreplyimg && !item.adminreplycompanyname && !item.adminreplycontent)&& <div onClick={this.reply.bind(this,item,'pass',i)}>
+                                                        {item.status*1 === 0 && (!item.replyimg && !item.replycompanyname && !item.replycontent)&& <div onClick={this.reply.bind(this,item,'pass',i)}>
                                                            <Icon className='wenming-pass' type="check-circle" />回复
                                                         </div>}
 
-                                                        {item.status * 1 === 0 && (item.adminreplyimg || item.adminreplycompanyname || item.adminreplycontent) && <div onClick={this.reply.bind(this, item, 'pass', i)}>
+                                                        {item.status * 1 === 0 && (item.replyimg || item.replycompanyname || item.replycontent) && <div onClick={this.reply.bind(this, item, 'pass', i)}>
                                                             <Icon className='wenming-edit' type="edit" />编辑回复
                                                         </div>}
 
@@ -587,13 +588,13 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             {...formItemLayout}
                             label="回复单位"
                         >
-                            <Input placeholder='' value={this.state.replyObj.replyCompany} onChange={e => { this.state.replyObj.replyCompany = e.target.value;this.forceUpdate() }}/>
+                            <Input placeholder='' value={this.state.replyObj.replycompanyname} onChange={e => { this.state.replyObj.replycompanyname = e.target.value;this.forceUpdate() }}/>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
                             label="回复内容"
                         >
-                            <textarea className='wm-reply-content' value={this.state.replyObj.replyContent} onChange={e => { this.state.replyObj.replyContent = e.target.value ;this.forceUpdate() }}></textarea>
+                            <textarea className='wm-reply-content' value={this.state.replyObj.replycontent} onChange={e => { this.state.replyObj.replycontent = e.target.value ;this.forceUpdate() }}></textarea>
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -628,6 +629,12 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                     ]}
                     >
                     <Form>
+                        <FormItem
+                            {...formItemLayout}
+                            label="姓名"
+                        >
+                            <Input placeholder='' value={this.state.editObj.username} onChange={e => { this.state.editObj.username = e.target.value;this.forceUpdate() }}/>
+                        </FormItem>
                         <FormItem
                             {...formItemLayout}
                             label="标题"
@@ -746,11 +753,14 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             adminreplycompanyname: item.adminreplycompanyname,
                             adminreplyimg:item.adminreplyimg,
                             adminreplycontent:item.adminreplycontent,
+                            replytime:item.replytime,
+                            replycompanyname: item.replycompanyname,
+                            replyimg:item.replyimg,
+                            replycontent:item.replycontent,                            
+                            replytime2:item.replytime2,
                             defaultContent: item.content,
                             comments: item.commentnum,
-
-                             
-                            
+                            username:item.username,
                             imgs,
                             sentiment: item.sentiment,
                             mobile: item.mobile,
@@ -778,8 +788,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
     quickReply(item) {//快捷回复
         var obj = {
             id:item.id,
-            replyCompany:'中国文明网',
-            replyContent:'您提供的线索已收到，请继续关注！'
+            adminreplycompanyname:'中国文明网',
+            adminreplycontent:'您提供的线索已收到，请继续关注！'
 
         };
         this.operatorReply(2, obj);
@@ -788,8 +798,27 @@ class ZmitiWenmingDataCheckApp extends React.Component {
     operatorReply(savetype,obj){
         var s = this;
         var item =  obj || this.state.replyObj;
-
-        $.ajax({
+        console.log(item,'点击了回复');
+        //console.log(this.state.replyObj,'获取了回复的内容');
+        var params={
+            appid: WMEYEAPPID,
+            userid: this.userid,
+            getusersigid: this.getusersigid,
+            articleids: item.id,
+            savetype:savetype,
+            adminreplyimg: s.state.fileList.join(','),
+            adminreplycompanyname:item.adminreplycompanyname,
+            adminreplycontent:item.adminreplycontent,
+            replycompanyname: item.replycompanyname,
+            replycontent: item.replycontent
+        }
+        console.log(params,'params','回复成功');
+        /*提交成功后*/
+        this.state.replyObj = {
+            id: -1
+        };
+        this.forceUpdate();
+        /*$.ajax({
             type: 'post',
             url: baseUrl + WMURLS + '/reply_articles/',
             data: {
@@ -817,7 +846,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 this.forceUpdate();
 
             }
-        })
+        })*/
     }
 
     
@@ -1168,14 +1197,14 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
     
     reply(item,type,index){
-        
         this.state.replyObj = item;
-        this.state.replyObj.replyContent = item.adminreplycontent;
-        this.state.replyObj.replyCompany = item.adminreplycompanyname;
-        this.state.fileList =  item.adminreplyimg.split(',');
+        this.state.replyObj.replycontent = item.replycontent || '';
+        this.state.replyObj.replycompanyname = item.replycompanyname || '';
+        this.state.fileList = item.adminreplyimg.split(',');
         if (this.state.fileList[0] === ''){
             this.state.fileList = [];
         }
+        console.log(item,'地方回复');
         this.forceUpdate();
     }
 
@@ -1326,6 +1355,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             $.ajax({
                 type: 'post',
                 url:baseUrl + WMURLS+'/search_articlelist/',
+                //url:'http://192.168.1.116/wmy/system2.json',
                 data
             }).done((data) => {
                 if (typeof data === 'string') {
@@ -1351,9 +1381,14 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             adminreplycompanyname: item.adminreplycompanyname,
                             adminreplyimg:item.adminreplyimg,
                             adminreplycontent:item.adminreplycontent,
+                            replycompanyname: item.replycompanyname,
+                            replyimg:item.replyimg,
+                            replycontent:item.replycontent,
                             defaultContent: item.content,
                             comments: item.commentnum,
-                            
+                            username:item.username,                            
+                            replytime:item.replytime,
+                            replytime2:item.replytime2,
                             imgs,
                             sentiment: item.sentiment,
                             mobile: item.mobile,
@@ -1398,7 +1433,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         this.state.editObj = item;
         var content=this.state.editObj.content;
         var defaultContent=this.state.editObj.defaultContent;
-        
+        //console.log(this.state.editObj,'this.state.editOb')
         this.state.editContent=this.state.editObj.defaultContent.replace(new RegExp("<br/>", "gm"), "\r\n");
         this.state.editIndex=index;
         s.state.fileImgList=[];//清空编辑图片
@@ -1439,6 +1474,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 userid: this.userid,
                 getusersigid: this.getusersigid,
                 articlid: item.id,
+                username:item.username,
                 title: item.title,
                 content: content,
                 imageslist:editImgStr,
