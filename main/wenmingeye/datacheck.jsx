@@ -813,24 +813,10 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             replycontent: item.replycontent
         }
         console.log(params,'params','回复成功');
-        /*提交成功后*/
-        this.state.replyObj = {
-            id: -1
-        };
-        this.forceUpdate();
-        /*$.ajax({
+        $.ajax({
             type: 'post',
             url: baseUrl + WMURLS + '/reply_articles/',
-            data: {
-                appid: WMEYEAPPID,
-                userid: this.userid,
-                getusersigid: this.getusersigid,
-                articleids: item.id,
-                savetype,
-                adminreplycompanyname: item.replyCompany,
-                adminreplycontent: item.replyContent,
-                replyimg: s.state.fileList.join(',')
-            }
+            data:params
         }).done((data) => {
             if (typeof data === 'string') {
                 data = JSON.parse(data);
@@ -846,7 +832,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 this.forceUpdate();
 
             }
-        })*/
+        })
     }
 
     
