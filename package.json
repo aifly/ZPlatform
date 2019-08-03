@@ -20,7 +20,6 @@
     "gulp-minify-css": "^1.2.2",
     "gulp-plumber": "^1.1.0",
     "gulp-watch": "^4.3.5",
-    "ifanrx-react-ueditor": "^2.3.0",
     "jquery": "^2.2.4",
     "jquery.cookie": "^1.4.1",
     "react": "^15.4.1",
