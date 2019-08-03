@@ -37,7 +37,7 @@ import MainUI from '../components/Main.jsx';
 
 import IScroll from 'iscroll';
 var defaulturl = 'http://www.zmiti.com/main/static/images/zmiti-logo.jpg';
-
+import ReactUeditor from 'ifanrx-react-ueditor'
 class ZmitiWenmingDataCheckApp extends React.Component {
     constructor(args) {
         super(...args);
@@ -595,7 +595,13 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             {...formItemLayout}
                             label="回复内容"
                         >
-                            <textarea className='wm-reply-content' value={this.state.replyObj.replycontent} onChange={e => { this.state.replyObj.replycontent = e.target.value ;this.forceUpdate() }}></textarea>
+                            <ReactUeditor
+                              config={{zIndex: 1001}}
+                              onChange={this.updateEditorContent.bind(this)}
+                              plugins={['insertCode']}
+                              ueditorPath={`${window.YOUR_PATH}/ueditor`}
+                              value={this.state.replyObj.replycontent}
+                            />
                         </FormItem>
                         <FormItem
                             {...formItemLayout}
@@ -710,7 +716,9 @@ class ZmitiWenmingDataCheckApp extends React.Component {
     delPeplyitem(item){//撤销回复        
         this.operatorReply(3,item);
     }
-
+    updateEditorContent(content){
+        this.state.replyObj.replycontent = content
+    }
     searchByProvince(provicecode){
  
         window.location.hash ='#/wmeyedatacheck/';
@@ -845,7 +853,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             adminreplycontent:item.replycontent,
             adminreplyimg: s.state.fileList.join(',')
         }
-        //console.log(params,'回复成功');
+        console.log(params,'回复成功');
         $.ajax({
             type: 'post',
             url: baseUrl + WMURLS + '/reply_articles/',
@@ -872,7 +880,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         var s = this;
         var item =  obj || this.state.replyObj;
         console.log(item,'提交了第2次回复');
-        //console.log(this.state.replyObj,'获取了回复的内容');
+        console.log(this.state.replyObj,'获取了回复的内容');
         var params={
             appid: WMEYEAPPID,
             userid: this.userid,
@@ -885,7 +893,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             companyname: item.replycompanyname,
             content: item.replycontent
         }
-        //console.log(params,'params','编辑回复成功');
+        console.log(params,'params','编辑回复成功');
         var url=baseUrl + WMURLS + '/edit_replycontent/';
         console.log(url,'url地址')
         $.ajax({
@@ -1269,7 +1277,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         this.state.replyObj.replycompanyname = item.replycompanyname || '';
         //console.log(item.replyimg,'回复的图片图片路径')
         if(item.replyimg===null){
-           console.log('没有回复的图片')
+           //console.log('没有回复的图片');
         }else{
             this.state.fileList = item.replyimg.split(',');
             if (this.state.fileList[0] === ''){
@@ -1277,7 +1285,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             }
         }
         //console.log(item,'地方回复');
-        //console.log(this.state.replyObj,'有内容编辑回复');
+        console.log(this.state.replyObj,'编辑回复');
         //console.log(this.state.fileList,'图片地址');
         this.forceUpdate();
     }
