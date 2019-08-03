@@ -55,7 +55,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             pageSize: 10,
             
             replyObj:{
-                id:-1
+                id:-1,
+                replyid:-1
             },
             editObj:{
                 id:-1
@@ -706,11 +707,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             <MainUI component={mainComponent}></MainUI>
         );
     }
-    delPeplyitem(item){
-        
-        
+    delPeplyitem(item){//撤销回复        
         this.operatorReply(3,item);
-
     }
 
     searchByProvince(provicecode){
@@ -756,7 +754,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             replytime:item.replytime,
                             replycompanyname: item.replycompanyname,
                             replyimg:item.replyimg,
-                            replycontent:item.replycontent,                            
+                            replycontent:item.replycontent,
+                            replyid:item.replayid,                          
                             replytime2:item.replytime2,
                             defaultContent: item.content,
                             comments: item.commentnum,
@@ -792,30 +791,106 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             adminreplycontent:'您提供的线索已收到，请继续关注！'
 
         };
-        this.operatorReply(2, obj);
+        this.onlineReply(2, obj);
     }
-
-    operatorReply(savetype,obj){
+    onlineReply(savetype,obj){//仅快捷回复
         var s = this;
         var item =  obj || this.state.replyObj;
-        console.log(item,'点击了回复');
-        //console.log(this.state.replyObj,'获取了回复的内容');
+        //console.log(item,'提交了快捷回复');
         var params={
             appid: WMEYEAPPID,
             userid: this.userid,
             getusersigid: this.getusersigid,
             articleids: item.id,
-            savetype:savetype,
-            replyimg: s.state.fileList.join(','),
+            savetype,
+            usertype:1,
             adminreplycompanyname:item.adminreplycompanyname,
-            adminreplycontent:item.adminreplycontent,
-            replycompanyname: item.replycompanyname,
-            replycontent: item.replycontent
+            adminreplycontent:item.adminreplycontent
         }
-        console.log(params,'params','回复成功');
+        //console.log(params,'快捷回复回复成功');
         $.ajax({
             type: 'post',
             url: baseUrl + WMURLS + '/reply_articles/',
+            data: params
+        }).done((data) => {
+            if (typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            if (data.getret === 0) {
+
+                this.forceUpdate();
+                message.success(data.getmsg);
+                this.loadArticle(this.state.status);
+                this.state.replyObj = {
+                    id: -1
+                };
+                this.forceUpdate();
+
+            }
+        })
+    }
+
+    operatorReply(savetype,obj){
+        var s = this;
+        var item =  obj || this.state.replyObj;
+        //console.log(item,'提交了第1次回复');
+        var params={
+            appid: WMEYEAPPID,
+            userid: this.userid,
+            getusersigid: this.getusersigid,
+            articleids: item.id,
+            savetype,
+            usertype:2,
+            adminreplycompanyname:item.replycompanyname,
+            adminreplycontent:item.replycontent,
+            adminreplyimg: s.state.fileList.join(',')
+        }
+        //console.log(params,'回复成功');
+        $.ajax({
+            type: 'post',
+            url: baseUrl + WMURLS + '/reply_articles/',
+            data: params
+        }).done((data) => {
+            if (typeof data === 'string') {
+                data = JSON.parse(data);
+            }
+            if (data.getret === 0) {
+
+                this.forceUpdate();
+                message.success(data.getmsg);
+                this.loadArticle(this.state.status);
+                this.state.replyObj = {
+                    id: -1
+                };
+                this.forceUpdate();
+
+            }
+        })
+    }
+
+    editReply(savetype,obj){//编辑回复
+        var s = this;
+        var item =  obj || this.state.replyObj;
+        console.log(item,'提交了第2次回复');
+        //console.log(this.state.replyObj,'获取了回复的内容');
+        var params={
+            appid: WMEYEAPPID,
+            userid: this.userid,
+            replyuserid: 0,
+            replyid: item.replyid,
+            getusersigid: this.getusersigid,
+            articlid: item.id,
+            savetype:savetype,
+            replyimg: s.state.fileList.join(','),
+            companyname: item.replycompanyname,
+            content: item.replycontent
+        }
+        //console.log(params,'params','编辑回复成功');
+        var url=baseUrl + WMURLS + '/edit_replycontent/';
+        console.log(url,'url地址')
+        $.ajax({
+            type: 'post',
+            url: baseUrl + WMURLS + '/edit_replycontent/',
             data:params
         }).done((data) => {
             if (typeof data === 'string') {
@@ -839,7 +914,13 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
 
     replyAction(savetype){
-        this.operatorReply(savetype);
+        /*地方文明网回复后返回当前replyid，快捷回复提交后不生成replyid*/
+        if(this.state.replyObj.replyid>0){
+            this.editReply(savetype);//编辑地方文明网回复内容
+        }else{
+            this.operatorReply(savetype);//添加地方文明网回复内容
+        }
+        
     }
 
 
@@ -1186,11 +1267,18 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         this.state.replyObj = item;
         this.state.replyObj.replycontent = item.replycontent || '';
         this.state.replyObj.replycompanyname = item.replycompanyname || '';
-        this.state.fileList = item.adminreplyimg.split(',');
-        if (this.state.fileList[0] === ''){
-            this.state.fileList = [];
+        //console.log(item.replyimg,'回复的图片图片路径')
+        if(item.replyimg===null){
+           console.log('没有回复的图片')
+        }else{
+            this.state.fileList = item.replyimg.split(',');
+            if (this.state.fileList[0] === ''){
+                this.state.fileList = [];
+            }
         }
-        console.log(item,'地方回复');
+        //console.log(item,'地方回复');
+        //console.log(this.state.replyObj,'有内容编辑回复');
+        //console.log(this.state.fileList,'图片地址');
         this.forceUpdate();
     }
 
@@ -1372,7 +1460,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             replycontent:item.replycontent,
                             defaultContent: item.content,
                             comments: item.commentnum,
-                            username:item.username,                            
+                            username:item.username,
+                            replyid:item.replyid,                            
                             replytime:item.replytime,
                             replytime2:item.replytime2,
                             imgs,
