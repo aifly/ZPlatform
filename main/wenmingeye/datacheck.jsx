@@ -511,7 +511,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                         </div>}
 
 
-                                                        {item.status * 1 === 0 && (item.replyimg || item.adminreplycompanyname || item.adminreplycontent || item.replycompanyname || item.replycontent) && <div>
+                                                        {item.status * 1 === 0 && (item.replyimg || item.replycompanyname || item.replycontent) && <div>
                                                             <Popconfirm placement="top" title={'确定要撤销吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
                                                                 <Icon className='wenming-edit' type="delete" />撤销回复 
                                                             </Popconfirm>
@@ -598,7 +598,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             <ReactUeditor
                               config={{zIndex: 1001}}
                               onChange={this.updateEditorContent.bind(this)}
-                              plugins={['insertCode']}
+                              plugins={['']}
                               ueditorPath={`${window.YOUR_PATH}/ueditor`}
                               value={this.state.replyObj.replycontent}
                             />
@@ -713,7 +713,10 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             <MainUI component={mainComponent}></MainUI>
         );
     }
-    delPeplyitem(item){//撤销回复        
+    delPeplyitem(item){//撤销回复
+        item.adminreplycompanyname="";
+        item.adminreplycontent="";
+        //console.log(item,'撤销回复事件')
         this.operatorReply(3,item);
     }
     updateEditorContent(content){
@@ -842,6 +845,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         var s = this;
         var item =  obj || this.state.replyObj;
         //console.log(item,'提交了第1次回复');
+        var replycompanyname=item.replycompanyname;
+        var replycontent=item.replycontent;
         var params={
             appid: WMEYEAPPID,
             userid: this.userid,
@@ -849,11 +854,12 @@ class ZmitiWenmingDataCheckApp extends React.Component {
             articleids: item.id,
             savetype,
             usertype:2,
-            adminreplycompanyname:item.replycompanyname,
-            adminreplycontent:item.replycontent,
+            adminreplycompanyname:replycompanyname,
+            adminreplycontent:replycontent,
             adminreplyimg: s.state.fileList.join(',')
         }
         console.log(params,'回复成功');
+
         $.ajax({
             type: 'post',
             url: baseUrl + WMURLS + '/reply_articles/',
@@ -874,6 +880,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
             }
         })
+
     }
 
     editReply(savetype,obj){//编辑回复
@@ -895,7 +902,8 @@ class ZmitiWenmingDataCheckApp extends React.Component {
         }
         console.log(params,'params','编辑回复成功');
         var url=baseUrl + WMURLS + '/edit_replycontent/';
-        console.log(url,'url地址')
+        console.log(url,'url地址');
+        
         $.ajax({
             type: 'post',
             url: baseUrl + WMURLS + '/edit_replycontent/',
@@ -916,6 +924,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
             }
         })
+        
     }
 
     
