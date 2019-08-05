@@ -596,9 +596,12 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                             label="回复内容"
                         >
                             <ReactUeditor
-                              config={{zIndex: 1001}}
+                              config={{
+                                zIndex: 1001,
+                                toolbars:[['indent']]
+
+                              }}
                               onChange={this.updateEditorContent.bind(this)}
-                              plugins={['']}
                               ueditorPath={`${window.YOUR_PATH}/ueditor`}
                               value={this.state.replyObj.replycontent}
                             />
