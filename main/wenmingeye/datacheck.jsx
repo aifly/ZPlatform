@@ -486,12 +486,13 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                 </ol>
                                                 <section className='wenming-datacheck-operator'>
                                                     <div>
-                                                        {item.status * 1 === 1 && (item.replyimg || item.replycompanyname || item.replycontent) && <div onClick={this.reply.bind(this, item, 'pass', i)}>
-                                                            <Icon className='wenming-edit' type="edit" />编辑回复
+                                                        {item.status * 1 === 1 &&( (item.replyimg || item.replycompanyname || item.replycontent) || (item.adminreplycompanyname || item.adminreplycontent)) && <div onClick={this.reply.bind(this, item, 'pass', i)}>
+                                                            <Icon className='wenming-edit' type="edit" /> 
+                                                            {(item.replyimg || item.replycompanyname || item.replycontent) ? '编辑地方回复':'地方回复' }
                                                         </div>}
 
 
-                                                        {item.status * 1 === 1 && (item.replyimg || item.adminreplycompanyname || item.adminreplycontent || item.replycompanyname || item.replycontent) && <div>
+                                                        {item.status * 1 === 1 && ( (item.replyimg || item.replycompanyname || item.replycontent) || (item.adminreplycompanyname || item.adminreplycontent)) && <div>
                                                             <Popconfirm placement="top" title={'撤销后些文章将为成未审核状态，确定要撤销吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
                                                                 <Icon className='wenming-edit' type="delete" />撤销审核 
                                                             </Popconfirm>
@@ -499,19 +500,20 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                                         {item.status === 1 && <div><a href={'#/wmeyecommentdetail/'+item.id}><Icon type="message" /> 查看评论 ({item.comments}条)</a></div>}
                                                         {this.state.status === 0 &&  <div><Checkbox checked={item.recommend} onChange={()=>{item.recommend = !item.recommend;this.forceUpdate();}}>推荐到首页</Checkbox></div>}
                                                         {this.state.status === 1 && item.status !== 2 && <div><Checkbox onChange={this.recommentArticle.bind(this, item)} checked={item.isHost} >推荐到首页</Checkbox></div>}
+                                                        
                                                         {item.status * 1 === 0 && (!item.adminreplycompanyname && !item.adminreplycontent) && <div onClick={this.quickReply.bind(this, item, 'pass', i)}>
                                                             <Icon className='wenming-pass' type="check-circle" />快捷回复
                                                         </div>}
-                                                        {item.status*1 === 0 && (!item.replyimg && !item.replycompanyname && !item.replycontent)&& <div onClick={this.reply.bind(this,item,'pass',i)}>
-                                                           <Icon className='wenming-pass' type="check-circle" />回复
+
+                                                        {item.status*1 === 0 && (!item.replycompanyname && !item.replycontent)&& <div onClick={this.reply.bind(this,item,'pass',i)}>
+                                                           <Icon className='wenming-pass' type="check-circle" />地方回复
                                                         </div>}
 
-                                                        {item.status * 1 === 0 && (item.replyimg || item.replycompanyname || item.replycontent) && <div onClick={this.reply.bind(this, item, 'pass', i)}>
-                                                            <Icon className='wenming-edit' type="edit" />编辑回复
+                                                        {item.status * 1 === 0 && (item.replycompanyname || item.replycontent) && <div onClick={this.reply.bind(this, item, 'pass', i)}>
+                                                            <Icon className='wenming-edit' type="edit" />编辑地方回复
                                                         </div>}
 
-
-                                                        {item.status * 1 === 0 && (item.replyimg || item.replycompanyname || item.replycontent) && <div>
+                                                        {item.status * 1 === 0 && (item.replycompanyname || item.replycontent) && <div>
                                                             <Popconfirm placement="top" title={'确定要撤销吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
                                                                 <Icon className='wenming-edit' type="delete" />撤销回复 
                                                             </Popconfirm>
