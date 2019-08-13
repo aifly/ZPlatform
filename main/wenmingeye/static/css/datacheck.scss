@@ -3,8 +3,7 @@
 .wenming-datacheck-main-ui {
     width: 100%;
     overflow: hidden;
-    @include displayFlex();
-
+    @include displayFlex();    
     .wenming-mask {
         @include pos(a);
         left: 0;
@@ -674,3 +673,4 @@
         }
     }
 }
+.redfontcolor .ant-popover-message-title{color:#ff0000;}

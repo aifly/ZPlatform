@@ -529,4 +529,7 @@
       cursor: pointer;
       color: #333; }
 
+.redfontcolor .ant-popover-message-title {
+  color: #ff0000; }
+
 /*# sourceMappingURL=datacheck.css.map */

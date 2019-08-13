@@ -493,7 +493,13 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
 
                                                         {item.status * 1 === 1 && ( (item.replyimg || item.replycompanyname || item.replycontent) || (item.adminreplycompanyname || item.adminreplycontent)) && <div>
-                                                            <Popconfirm placement="top" title={'撤销后些文章将为成未审核状态，确定要撤销吗'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
+                                                            <Popconfirm placement="top" title={'撤销后文章将为成“未审核”状态，原回复内容将清空。确定要撤销吗？'} overlayClassName={'redfontcolor'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
+                                                                <Icon className='wenming-edit' type="delete" />撤销审核 
+                                                            </Popconfirm>
+                                                        </div>}
+
+                                                        {item.status * 1 === 2 &&  <div>
+                                                            <Popconfirm placement="top" title={'撤销后文章将为成“未审核”状态，原回复内容将清空。确定要撤销吗？'} overlayClassName={'redfontcolor'} onConfirm={this.delPeplyitem.bind(this, item)} okText="确定" cancelText="取消">
                                                                 <Icon className='wenming-edit' type="delete" />撤销审核 
                                                             </Popconfirm>
                                                         </div>}
