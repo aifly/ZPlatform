@@ -937,7 +937,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
 
     replyAction(savetype){
         /*地方文明网回复后返回当前replyid，快捷回复提交后不生成replyid*/
-        if(this.state.replyObj.replyid>0){
+        if(savetype===1){
             this.editReply(savetype);//编辑地方文明网回复内容
         }else{
             this.operatorReply(savetype);//添加地方文明网回复内容
@@ -1229,9 +1229,7 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                 message.success('删除成功');
 
                 /*if(index>-1){
-
                    
-
                 }else{
                      setTimeout(()=>{
                          articleids.split(",").map((id,i)=>{
@@ -1241,7 +1239,6 @@ class ZmitiWenmingDataCheckApp extends React.Component {
                                 }
                             })
                         });
-
                         this.state.allCount = this.state.allCount -articleids.split(",").length;
                         this.forceUpdate(()=>{
                             this.scroll.refresh();
