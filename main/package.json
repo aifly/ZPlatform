@@ -42,7 +42,7 @@
     "react-addons": "^0.9.0",
     "react-contenteditable": "^1.1.0",
     "react-dom": "^15.5.4",
-    "react-draft-wysiwyg": "^1.9.4",
+    "react-draft-wysiwyg": "^1.14.6",
     "react-editor": "^1.2.16",
     "react-hot-loader": "^1.3.0",
     "react-lz-editor": "^0.10.13",
